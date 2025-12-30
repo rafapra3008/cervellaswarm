@@ -10,7 +10,7 @@
 |------|------|-------|-----------|
 | 0 | Setup Progetto | ✅ DONE | 100% |
 | 1 | Studio Approfondito | ✅ DONE | 100% |
-| 2 | Primi Subagent | 🟡 PROSSIMO | 0% |
+| 2 | Primi Subagent | 🟡 IN CORSO | 66% (4/6 task) |
 | 3 | Git Worktrees | ⬜ TODO | 0% |
 | 4 | Orchestrazione | ⬜ TODO | 0% |
 | 5 | Produzione | ⬜ TODO | 0% |
@@ -47,17 +47,17 @@
 
 ---
 
-## FASE 2: Primi Subagent
+## FASE 2: Primi Subagent 🟡 IN CORSO
 
 **Obiettivo:** Creare e testare i primi subagent specializzati
 
 | # | Task | Stato | Note |
 |---|------|-------|------|
-| 2.1 | cervella-frontend.md | ⬜ TODO | Specialista UI/React |
-| 2.2 | cervella-backend.md | ⬜ TODO | Specialista Python/API |
-| 2.3 | cervella-tester.md | ⬜ TODO | Specialista QA |
-| 2.4 | cervella-reviewer.md | ⬜ TODO | Code review |
-| 2.5 | Test su Miracollo | ⬜ TODO | Primo test reale |
+| 2.1 | cervella-frontend.md | ✅ DONE | 30 Dic 2025 - ~/.claude/agents/ |
+| 2.2 | cervella-backend.md | ✅ DONE | 30 Dic 2025 - ~/.claude/agents/ |
+| 2.3 | cervella-tester.md | ✅ DONE | 30 Dic 2025 - ~/.claude/agents/ |
+| 2.4 | cervella-reviewer.md | ✅ DONE | 30 Dic 2025 - ~/.claude/agents/ |
+| 2.5 | Test su Miracollo | ⬜ TODO | Prossimo step! |
 | 2.6 | Documentare risultati | ⬜ TODO | Cosa funziona, cosa no |
 
 ---
@@ -103,7 +103,14 @@
 
 ## 📝 CHANGELOG
 
-### 30 Dicembre 2025
+### 30 Dicembre 2025 (Sessione 2)
+- ✅ cervella-frontend.md creato in ~/.claude/agents/
+- ✅ cervella-backend.md creato in ~/.claude/agents/
+- ✅ cervella-tester.md creato in ~/.claude/agents/
+- ✅ cervella-reviewer.md creato in ~/.claude/agents/
+- FASE 2 al 66% - mancano solo test e documentazione
+
+### 30 Dicembre 2025 (Sessione 1)
 - Creazione progetto CervellaSwarm
 - Setup iniziale completato
 - Roadmap definita

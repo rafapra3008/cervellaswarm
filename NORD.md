@@ -15,30 +15,34 @@
 
 ## 🎯 DOVE SIAMO
 
-**FASE 1: Studio Approfondito** - 100% COMPLETATA! ✅
+**FASE 2: Primi Subagent** - 66% IN CORSO 🟡
 
 Abbiamo:
-- [x] Idea validata
-- [x] Ricerca iniziale completata
-- [x] Repo creato
-- [x] Struttura definita
-- [x] Documentazione completa
-- [x] STUDIO_SUBAGENTS.md
-- [x] STUDIO_WORKTREES.md
-- [x] STUDIO_CLAUDE_FLOW.md
-- [x] ARCHITETTURA_SISTEMA.md - Decisione presa!
+- [x] FASE 0+1 completate (studio + architettura)
+- [x] cervella-frontend.md creato
+- [x] cervella-backend.md creato
+- [x] cervella-tester.md creato
+- [x] cervella-reviewer.md creato
+- [ ] Test su progetto reale
+- [ ] Documentare risultati
 
 ---
 
 ## 🎯 PROSSIMO OBIETTIVO
 
-**FASE 2: Creare i primi Subagent**
+**Testare i subagent su progetto reale!**
+
+I 4 subagent sono pronti in `~/.claude/agents/`:
+- cervella-frontend
+- cervella-backend
+- cervella-tester
+- cervella-reviewer
 
 Task immediato:
-1. Creare cervella-frontend.md
-2. Creare cervella-backend.md
-3. Creare cervella-tester.md
-4. Testare su Miracollo
+1. Andare su Miracollo (o altro progetto)
+2. Testare invocazione subagent
+3. Verificare che funzionino
+4. Documentare risultati
 
 ---
 
@@ -88,7 +92,7 @@ Task immediato:
 
 ## 📅 ULTIMO AGGIORNAMENTO
 
-**30 Dicembre 2025** - Creazione progetto
+**30 Dicembre 2025 ore 09:15** - 4 subagent creati!
 
 ---
 
