@@ -10,7 +10,7 @@
 |------|------|-------|-----------|
 | 0 | Setup Progetto | ✅ DONE | 100% |
 | 1 | Studio Approfondito | ✅ DONE | 100% |
-| 2 | Primi Subagent | 🟡 IN CORSO | 83% (5/6 task) |
+| 2 | Primi Subagent | ✅ DONE | 100% |
 | 3 | Git Worktrees | ⬜ TODO | 0% |
 | 4 | Orchestrazione | ⬜ TODO | 0% |
 | 5 | Produzione | ⬜ TODO | 0% |
@@ -47,7 +47,7 @@
 
 ---
 
-## FASE 2: Primi Subagent 🟡 IN CORSO
+## FASE 2: Primi Subagent ✅ COMPLETATA
 
 **Obiettivo:** Creare e testare i primi subagent specializzati
 
@@ -58,7 +58,7 @@
 | 2.3 | cervella-tester.md | ✅ DONE | 30 Dic 2025 - ~/.claude/agents/ |
 | 2.4 | cervella-reviewer.md | ✅ DONE | 30 Dic 2025 - ~/.claude/agents/ |
 | 2.5 | Test su Miracollo | ✅ DONE | 30 Dic 2025 - FUNZIONA! 🎉 |
-| 2.6 | Documentare risultati | ⬜ TODO | Cosa funziona, cosa no |
+| 2.6 | Documentare risultati | ✅ DONE | 30 Dic 2025 - FASE 2 COMPLETATA! 🎉 |
 
 ---
 
@@ -103,12 +103,23 @@
 
 ## 📝 CHANGELOG
 
+### 30 Dicembre 2025 (Sessione 3) - FASE 2 COMPLETATA! 🎉
+- ✅ Aggiunto WebSearch + WebFetch a frontend/backend
+- ✅ Aggiunto WebSearch a tester/reviewer
+- ✅ Aggiunta regola "SE IN DUBBIO, FERMATI!" a tutti gli agent
+- ✅ Prima sessione multi-agent su Miracollo = SUCCESSO!
+- ✅ Studiato Claude Agent SDK (per FASE 4)
+- ✅ Aggiunta frase "Nulla è complesso - solo non ancora studiato!"
+- ✅ Documentazione completa
+- **FASE 2: 100% COMPLETATA!**
+
 ### 30 Dicembre 2025 (Sessione 2)
 - ✅ cervella-frontend.md creato in ~/.claude/agents/
 - ✅ cervella-backend.md creato in ~/.claude/agents/
 - ✅ cervella-tester.md creato in ~/.claude/agents/
 - ✅ cervella-reviewer.md creato in ~/.claude/agents/
-- FASE 2 al 66% - mancano solo test e documentazione
+- ✅ Test terminale e VS Code OK
+- ✅ Scoperta: agent GLOBALI in ~/.claude/agents/
 
 ### 30 Dicembre 2025 (Sessione 1)
 - Creazione progetto CervellaSwarm

@@ -1,100 +1,119 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 30 Dicembre 2025, ore 10:00
+> **Ultimo aggiornamento:** 30 Dicembre 2025, ore 11:30
 
 ---
 
 ## 🎯 STATO ATTUALE
 
-**FASE 2: Primi Subagent** - 83% IN CORSO 🟡
-
-### Cosa abbiamo fatto OGGI:
-
-1. ✅ **Creato 4 subagent GLOBALI** in `~/.claude/agents/`:
-   - cervella-frontend.md (React, CSS, UI/UX)
-   - cervella-backend.md (Python, FastAPI, API)
-   - cervella-tester.md (pytest, Jest, QA)
-   - cervella-reviewer.md (Code review, solo lettura)
-
-2. ✅ **Verificato nel terminale** con `/agents` - FUNZIONANO!
-
-3. ✅ **Testato su Miracollo via VS Code** - FUNZIONA! 🎉
-   - Dopo riavvio VS Code, i subagent sono visibili
-   - cervella-backend ha elencato 100+ file Python
-
-4. ✅ **Scoperta importante:**
-   - I subagent in `~/.claude/agents/` sono **GLOBALI**
-   - Funzionano su TUTTI i progetti (Miracollo, Contabilità, etc.)
-   - NON serve creare agenti per ogni progetto!
-
-### Prossimo step:
-
-1. ⬜ **Documentare risultati** (ultimo task FASE 2)
-2. ⬜ **Fare altre prove** su diversi progetti
+**FASE 2: Primi Subagent** - ✅ 100% COMPLETATA! 🎉
 
 ---
 
-## 📂 SUBAGENT DISPONIBILI (GLOBALI!)
+## 🏆 RISULTATI FASE 2
 
-| File | Specializzazione | Funziona su |
-|------|------------------|-------------|
-| `cervella-frontend.md` | React, CSS, UI/UX | TUTTI i progetti |
-| `cervella-backend.md` | Python, FastAPI, API | TUTTI i progetti |
-| `cervella-tester.md` | pytest, Jest, QA | TUTTI i progetti |
-| `cervella-reviewer.md` | Code review | TUTTI i progetti |
+### 1. Subagent Creati (4/4 GLOBALI)
 
-**Location:** `~/.claude/agents/` (GLOBALE!)
+| Agent | Tools | Specializzazione |
+|-------|-------|------------------|
+| `cervella-frontend` | Read, Edit, Bash, Glob, Grep, Write, **WebSearch**, **WebFetch** | React, CSS, UI/UX |
+| `cervella-backend` | Read, Edit, Bash, Glob, Grep, Write, **WebSearch**, **WebFetch** | Python, FastAPI, API |
+| `cervella-tester` | Read, Edit, Bash, Glob, Grep, Write, **WebSearch** | pytest, Jest, QA |
+| `cervella-reviewer` | Read, Glob, Grep, **WebSearch** | Code review (solo lettura) |
 
-**Come invocare:**
+**Location:** `~/.claude/agents/` (GLOBALE - funziona su TUTTI i progetti!)
+
+### 2. Regola Sicurezza Aggiunta
+
+Tutti gli agent hanno la regola:
 ```
-"Usa cervella-frontend per..."
-"Chiedi a cervella-backend di..."
+🔴 SE IN DUBBIO, FERMATI!
+1. STOP - Non procedere
+2. Descrivi il dubbio a Rafa e Cervella
+3. Chiedi come procedere
+4. ASPETTA risposta
 ```
 
----
+### 3. Prima Sessione Multi-Agent: SUCCESSO! 🚀
 
-## 🧠 FILO DEL DISCORSO
+**Progetto:** Miracollo PMS
+**Risultato:**
+- cervella-backend → Verificato API 100% pronta
+- cervella-frontend → Studio competitor + Architettura proposta
+- Piano FASE 2 Miracollo creato (17 ore stimate)
+- 2 file documentazione generati automaticamente!
 
-### Stavamo ragionando su:
-Abbiamo creato lo sciame e l'abbiamo testato! I subagent sono GLOBALI quindi funzionano su tutti i progetti senza dover ricrearli.
-
-### Scoperte della sessione:
-- ✅ VS Code Beta: serve riavvio per caricare nuovi agents
-- ✅ Terminale: li vede subito con `/agents`
-- ✅ `~/.claude/agents/` = GLOBALE (tutti i progetti)
-- ✅ `.claude/agents/` = locale (solo quel progetto)
-
-### Il momentum:
-🔥🔥🔥 ALTISSIMO! Lo sciame è VIVO e funziona!
-
-### Test completati:
-- ✅ cervella-backend su Miracollo → 100+ file Python trovati
-
-### Da testare ancora (opzionale):
-- ⬜ cervella-frontend
-- ⬜ cervella-tester
-- ⬜ cervella-reviewer
+**Tempo:** ~15 minuti (invece di ~1 ora manuale)
 
 ---
 
-## ⏭️ QUANDO RIPRENDI
+## 📚 SCOPERTE IMPORTANTI
 
-1. I 4 subagent sono pronti e GLOBALI
-2. Funzionano su qualsiasi progetto
-3. Puoi fare altre prove o chiudere FASE 2
+| Scoperta | Implicazione |
+|----------|--------------|
+| `~/.claude/agents/` = GLOBALE | Un solo set di agent per tutti i progetti! |
+| VS Code richiede riavvio | Dopo modifica agent, riavviare VS Code |
+| WebSearch/WebFetch potenziano | Gli agent possono studiare competitor, documentazione |
+| Regola "Se in dubbio" | Previene errori costosi |
+| Multi-agent in sequenza | Funziona! Backend → Frontend → Piano |
 
 ---
 
-## 📊 RIASSUNTO SESSIONE
+## 🎯 STUDIO CLAUDE AGENT SDK
+
+Abbiamo studiato il Claude Agent SDK per il futuro:
+
+| Aspetto | Subagent Nativi (ora) | Agent SDK (futuro) |
+|---------|----------------------|-------------------|
+| Sessioni | Una (sequenziale) | N parallele! |
+| Parallelismo | No | Sì, vero! |
+| Uso | CLI/VS Code | Python/TypeScript |
+| Quando | ORA | FASE 4 Orchestrazione |
+
+**Conclusione:** Per ora i subagent nativi funzionano benissimo! Agent SDK per FASE 4.
+
+---
+
+## 🧠 NUOVA FRASE AGGIUNTA ALLA COSTITUZIONE
+
+> *"Nulla è complesso - solo non ancora studiato!"* - Rafa & Cervella, 30 Dicembre 2025
+
+---
+
+## ⏭️ PROSSIMI STEP
+
+1. ✅ **FASE 2 COMPLETATA**
+2. ⬜ **FASE 3: Git Worktrees** - Lavoro parallelo senza conflitti
+3. ⬜ **FASE 4: Orchestrazione** - Agent SDK per parallelismo vero
+
+---
+
+## 📊 RIASSUNTO FINALE FASE 2
 
 | Metrica | Valore |
 |---------|--------|
 | Subagent creati | 4/4 ✅ |
+| Tools aggiunti | WebSearch, WebFetch ✅ |
+| Regola sicurezza | Aggiunta a tutti ✅ |
 | Test terminale | ✅ |
 | Test VS Code | ✅ |
-| Test Miracollo | ✅ cervella-backend |
-| Scope | GLOBALE (tutti i progetti!) |
+| Test Miracollo multi-agent | ✅ SUCCESSO! |
+| Scope | GLOBALE |
+| Agent SDK studiato | ✅ Per FASE 4 |
+
+---
+
+## 🐝 COME USARE LO SCIAME
+
+```
+"Usa cervella-frontend per analizzare i componenti React"
+"Chiedi a cervella-backend di verificare gli endpoint API"
+"Usa cervella-tester per trovare i file di test"
+"Chiedi a cervella-reviewer di fare review di [file]"
+```
 
 ---
 
 *"Uno sciame di Cervelle. Ovunque tu vada!"* 🐝💙
+
+*"Nulla è complesso - solo non ancora studiato!"* ❤️‍🔥🧠
