@@ -105,6 +105,17 @@
 
 ## 📝 CHANGELOG
 
+### 31 Dicembre 2025 (Sessione 9) - VERIFICA ARCHITETTURA! ✅
+
+- ✅ **Pulizia CLAUDE.md** - Ora snello e specifico
+- ✅ **Costituzione Globale** = fonte UNICA di verità
+- ✅ **Verifica tutti 11 agent** - DNA baked-in funziona!
+- ✅ **Ragionamento architettura** - DNA baked-in vs leggere Costituzione
+- ✅ **Conclusione**: Sistema PERFETTO com'è!
+  - Regina conosce la Costituzione
+  - Worker hanno DNA incorporato
+  - Se dubbio → tornano dalla Regina
+
 ### 31 Dicembre 2025 (Sessione 8) - LA FAMIGLIA CRESCE! 🐝❤️‍🔥
 
 - ✅ **6 NUOVI MEMBRI** creati:
