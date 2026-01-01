@@ -18,10 +18,10 @@
 | 7 | Apprendimento | ✅ DONE | 100% |
 | 7.5 | Parallelizzazione | ✅ DONE | 100% |
 | 8 | La Corte Reale | ✅ DONE | 100% |
-| 9 | Infrastruttura | 🔄 IN CORSO | 80% |
-| 10 | Automazione Intelligente | 🔄 IN CORSO | 90% |
+| 9 | Infrastruttura | 🔄 IN CORSO | 90% |
+| 10 | Automazione Intelligente | 🔄 IN CORSO | 95% |
 | 11 | Sistema Roadmap Visuale | 💭 IDEA | 0% |
-| 12 | Standard e Biblioteca Comune | 💭 PROPOSTA | 0% |
+| 12 | Standard e Biblioteca Comune | 🔄 IN CORSO | 25% |
 
 ---
 
@@ -226,11 +226,15 @@
 | 9a.1 | FASE_9_INFRASTRUTTURA.md | ✅ DONE | 1 Gen - Piano creato! |
 | 9a.2 | RICERCA_INFRASTRUTTURA_H24.md | ✅ DONE | 1 Gen - Best practices! |
 | 9a.3 | KPIs definiti | ✅ DONE | 1 Gen - Nel piano! |
-| 9a.4 | Docker compose monitoring | ⬜ TODO | Grafana + Prometheus |
+| 9a.4 | Docker compose monitoring | ✅ DONE | 1 Gen S38 - 21 file creati! |
 | 9a.5 | Deploy su VM Miracollo | ⬜ TODO | Usa VM esistente! |
-| 9a.6 | Alert Telegram | ⬜ TODO | Notifiche errori |
+| 9a.6 | Alert Telegram | ✅ DONE | 1 Gen S38 - alertmanager.yml! |
+| 9a.7 | Swarm Exporter | ✅ DONE | 1 Gen S38 - 8 metriche Prometheus! |
+| 9a.8 | Grafana Dashboard | ✅ DONE | 1 Gen S38 - 9 panel! |
 | 9b | FASE 9b: Task Programmati | ⬜ TODO | Febbraio 2026 |
 | 9c | FASE 9c: Agent Autonomo | ⬜ TODO | Q2-Q3 2026 |
+
+**FASE 9a: 90% COMPLETATA!** Solo deploy VM manca!
 
 → **Piano dettagliato:** `docs/roadmap/FASE_9_INFRASTRUTTURA.md`
 
@@ -251,8 +255,13 @@
 | 10b | 👷‍♀️ Ingegnera Base | ✅ DONE | Sessione 37! |
 | 10b.1 | Script analyze_codebase.py | ✅ DONE | 442 righe! Testato! |
 | 10b.2 | Report ENGINEERING_REPORT.md | ✅ DONE | Markdown + JSON |
-| 10c | Automazione Avanzata | ⬜ TODO | PR automatiche, notifiche |
+| 10c | Automazione Avanzata | ✅ DONE | Sessione 38! |
+| 10c.1 | post_commit_engineer.py | ✅ DONE | Hook post-commit! |
+| 10c.2 | create_auto_pr.py | ✅ DONE | PR automatiche con gh CLI! |
+| 10c.3 | RICERCA_PR_AUTOMATICHE.md | ✅ DONE | Best practices! |
 | 10d | Ottimizzazione | ⬜ TODO | Metriche, tuning |
+
+**FASE 10: 95% COMPLETATA!** Solo ottimizzazione finale manca!
 
 **L'Idea:**
 ```
