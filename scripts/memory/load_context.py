@@ -105,8 +105,8 @@ def get_agent_stats(conn: sqlite3.Connection) -> dict:
                 "projects": [],
             }
 
-        stats[agent]["total_tasks"] += row[1]
-        stats[agent]["successful_tasks"] += row[2]
+        stats[agent]["total_tasks"] += row[1] or 0
+        stats[agent]["successful_tasks"] += row[2] or 0
         if row[3] and row[3] not in stats[agent]["projects"]:
             stats[agent]["projects"].append(row[3])
 
