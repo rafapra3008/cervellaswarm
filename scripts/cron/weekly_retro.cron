@@ -1,0 +1,39 @@
+# CervellaSwarm Weekly Retrospective - Cron Configuration
+#
+# Questo file contiene la configurazione cron per eseguire automaticamente
+# la retrospettiva settimanale ogni venerdì alle 18:00
+#
+# Per installare:
+#   crontab -e
+#   Copia la linea sotto nel crontab
+#
+# Per verificare cron attivi:
+#   crontab -l
+
+# Variabili ambiente
+SHELL=/bin/bash
+PATH=/usr/local/bin:/usr/bin:/bin
+
+# Weekly Retrospective - Ogni venerdì alle 18:00
+# Min Hour Day Month DayOfWeek Command
+0 18 * * 5 cd /Users/rafapra/Developer/CervellaSwarm && python3 scripts/memory/weekly_retro.py --save --quiet >> /Users/rafapra/Developer/CervellaSwarm/data/logs/weekly_retro.log 2>&1
+
+# Note:
+# - Min: 0 (minuto 0)
+# - Hour: 18 (6 PM)
+# - Day: * (ogni giorno del mese)
+# - Month: * (ogni mese)
+# - DayOfWeek: 5 (venerdì, 0=domenica, 5=venerdì)
+# - Output salvato in data/logs/weekly_retro.log
+# - Report salvato in data/retro/YYYY-MM-DD.md
+
+# Alternative schedules (commentate):
+
+# Ogni lunedì alle 9:00
+# 0 9 * * 1 cd /Users/rafapra/Developer/CervellaSwarm && python3 scripts/memory/weekly_retro.py --save --quiet
+
+# Ogni giorno alle 23:00 (daily retro)
+# 0 23 * * * cd /Users/rafapra/Developer/CervellaSwarm && python3 scripts/memory/weekly_retro.py -d 1 --save --quiet
+
+# Ogni primo del mese alle 10:00 (monthly retro)
+# 0 10 1 * * cd /Users/rafapra/Developer/CervellaSwarm && python3 scripts/memory/weekly_retro.py -d 30 --save --quiet
