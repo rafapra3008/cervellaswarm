@@ -27,13 +27,15 @@ Trasformare CervellaSwarm da tool senza memoria a **PARTNER che ricorda**.
 
 **Settimana 1 Progresso:** 100% ✅
 
-### Settimana 2 (8-14 Gennaio 2026)
+### Settimana 2 (8-14 Gennaio 2026) - INIZIATA OGGI! 🚀
 
-| # | Task | Stato | Note |
-|---|------|-------|------|
-| 6.2.1 | UI view logs | ⬜ TODO | Visualizzare eventi |
-| 6.2.2 | Query "task falliti" | ⬜ TODO | Pattern discovery |
-| 6.2.3 | PRIME_LEZIONI.md | ⬜ TODO | Documentare lezioni |
+| # | Task | Stato | Data | Note |
+|---|------|-------|------|------|
+| 6.2.0 | Schema upgrade v1.1.0 | ✅ DONE | 1 Gen | +error_patterns +9 colonne |
+| 6.2.1 | analytics.py | ✅ DONE | 1 Gen | CLI con 5 comandi! |
+| 6.2.2 | 5 Lezioni storiche | ✅ DONE | 1 Gen | Dalla Costituzione! |
+| 6.2.3 | UI view logs | ⬜ TODO | - | Prossimo step |
+| 6.2.4 | Pattern discovery | ⬜ TODO | - | Auto-detection |
 
 ### Settimana 3 (15-21 Gennaio 2026)
 
@@ -56,29 +58,30 @@ Trasformare CervellaSwarm da tool senza memoria a **PARTNER che ricorda**.
 
 ```
 scripts/memory/
-├── init_db.py       ✅ v1.0.0
+├── init_db.py       ✅ v1.1.0 (+error_patterns, upgrade schema)
 ├── log_event.py     ✅ v1.0.0
 ├── load_context.py  ✅ v1.0.0
 ├── query_events.py  ✅ v1.0.0
+├── analytics.py     ✅ v1.0.0 (NEW! CLI analytics)
 ├── test_system.sh   ✅ v1.0.0
 ├── example_usage.sh ✅ v1.0.0
 └── README.md        ✅ v1.0.0
 
 data/
-└── swarm_memory.db  ✅ 49KB
+└── swarm_memory.db  ✅ 53KB (3 tabelle!)
 ```
 
 ---
 
 ## METRICHE
 
-| Metrica | Target Gen | Attuale |
-|---------|------------|---------|
-| Eventi loggati | 100+ | 3 (test) |
-| Lezioni apprese | 10+ | 0 |
-| Pattern scoperti | 5+ | 0 |
+| Metrica | Target Gen | Attuale | Progresso |
+|---------|------------|---------|-----------|
+| Eventi loggati | 100+ | 3 | 🔄 In corso |
+| Lezioni apprese | 10+ | **5** | 50% ✅ |
+| Pattern scoperti | 5+ | 0 | ⏳ Prossimo |
 
 ---
 
-*Ultimo aggiornamento: 1 Gennaio 2026*
-*"Lo sciame che RICORDA!" 🧠🐝*
+*Ultimo aggiornamento: 1 Gennaio 2026 - Sessione 13*
+*"Lo sciame che RICORDA e ANALIZZA!" 🧠📊🐝*

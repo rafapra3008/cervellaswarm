@@ -14,7 +14,7 @@
 | 3 | Git Worktrees | ✅ DONE | 100% |
 | 4 | Orchestrazione | ✅ DONE | 100% |
 | 5 | Produzione | ✅ DONE | 100% |
-| 6 | Memoria | 🚀 IN CORSO | 25% |
+| 6 | Memoria | 🚀 IN CORSO | 40% |
 
 ---
 
@@ -145,6 +145,28 @@
 ---
 
 ## 📝 CHANGELOG
+
+### 1 Gennaio 2026 (Sessione 13) - FASE 6.2 INIZIATA! 📊🧠
+
+- ✅ **Schema v1.1.0** - Upgrade database completo:
+  - Nuova tabella `error_patterns` (14 colonne)
+  - 9 colonne aggiunte a `lessons_learned`
+  - Totale: 3 tabelle, 9 indici
+- ✅ **analytics.py v1.0.0** - CLI analytics con 5 comandi:
+  - `summary`, `lessons`, `events`, `agents`, `patterns`
+  - Output formattato con colori ANSI e box drawing
+- ✅ **5 Lezioni Storiche** inserite dalla Costituzione:
+  - deploy-without-test (CRITICAL)
+  - deploy-order (HIGH)
+  - deploy-batch-size (MEDIUM)
+  - blind-retry (MEDIUM) - ancora ACTIVE!
+  - project-confusion (HIGH)
+- ✅ **Ricerca Lessons Learned** - Report completo da cervella-researcher
+- ✅ **FASE_6_MEMORIA.md** aggiornato
+
+**Lo sciame che RICORDA e ANALIZZA!** 🐝📊
+
+**Versione:** 3.1.0 (Minor: Analytics + Lezioni Storiche)
 
 ### 1 Gennaio 2026 (Sessione 12) - SISTEMA MEMORIA! 🧠🎉
 

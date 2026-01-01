@@ -1,14 +1,60 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 1 Gennaio 2026 - BUON ANNO! 🎆
+> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 13
 
 ---
 
 ## STATO ATTUALE
 
-**FASE 6: Memoria** - 🧠 Settimana 1 COMPLETATA! (25%)
+**FASE 6: Memoria** - 🧠 Settimana 2 INIZIATA! (40%)
 
-**Sessione 12:** Sistema Memoria Implementato! ✅
+**Sessione 13:** Analytics + Lezioni Storiche! 📊✅
+
+---
+
+## 🏆 RISULTATI SESSIONE 13 - ANALYTICS + LEZIONI! 📊🧠
+
+### Cosa Abbiamo Fatto
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   📊 FASE 6.2 INIZIATA!                                         ║
+║                                                                  ║
+║   ✅ Schema v1.1.0 (3 tabelle + 9 indici)                       ║
+║      - error_patterns (14 colonne - NUOVA!)                     ║
+║      - lessons_learned (+9 colonne upgrade)                     ║
+║   ✅ analytics.py v1.0.0 - CLI con 5 comandi:                   ║
+║      - summary, lessons, events, agents, patterns               ║
+║   ✅ 5 LEZIONI STORICHE dalla Costituzione!                     ║
+║      - deploy-without-test (CRITICAL)                           ║
+║      - deploy-order, deploy-batch-size, blind-retry             ║
+║      - project-confusion (HIGH)                                 ║
+║   ✅ Ricerca Lessons Learned (cervella-researcher)              ║
+║   ✅ FASE_6_MEMORIA.md aggiornato                               ║
+║                                                                  ║
+║   "Lo sciame che RICORDA e ANALIZZA!" 🐝📊                      ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+### File Creati/Modificati
+
+| File | Azione |
+|------|--------|
+| scripts/memory/init_db.py | ✅ UPGRADE v1.1.0 (+error_patterns) |
+| scripts/memory/analytics.py | ✅ CREATO v1.0.0 |
+| data/swarm_memory.db | ✅ 53KB (3 tabelle!) |
+| docs/roadmap/FASE_6_MEMORIA.md | ✅ Aggiornato |
+| NORD.md | ✅ Aggiornato |
+| ROADMAP_SACRA.md | ✅ CHANGELOG + v3.1.0 |
+
+### FILO DEL DISCORSO
+
+- 🧠 **Stavamo implementando:** FASE 6.2 - Analytics e Lessons Learned
+- 🎯 **La direzione:** Lo sciame che ANALIZZA i propri errori
+- ⚡ **Il momentum:** ALTISSIMO! Sistema analytics funzionante!
+- 🚫 **Da NON fare:** Hook PostToolUse logga solo Task - verificare se ampliare
 
 ---
 
@@ -36,7 +82,7 @@
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
-### File Creati/Modificati
+### File Creati/Modificati (Sessione 12)
 
 | File | Azione |
 |------|--------|
@@ -49,13 +95,6 @@
 | data/swarm_memory.db | ✅ CREATO (49KB) |
 | docs/roadmap/FASE_6_MEMORIA.md | ✅ CREATO |
 | ~/.claude/settings.json | ✅ Aggiornato (hook) |
-
-### FILO DEL DISCORSO
-
-- 🧠 **Stavamo implementando:** Sistema memoria per CervellaSwarm
-- 🎯 **La direzione:** FASE 6 - Lo sciame che RICORDA
-- ⚡ **Il momentum:** ALTO! Prima sessione 2026, tutto funziona!
-- 🚫 **Da NON fare:** L'hook live si attiva dalla prossima sessione (serve restart)
 
 ---
 

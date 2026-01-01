@@ -15,28 +15,29 @@
 
 ## 🎯 DOVE SIAMO
 
-**FASE 6: Memoria** - 🧠 SETTIMANA 1 COMPLETATA!
+**FASE 6: Memoria** - 🧠 SETTIMANA 2 INIZIATA! (40%)
 
 Abbiamo:
 - [x] FASE 0+1+2+3+4+5 completate!
 - [x] 11 subagent GLOBALI (famiglia completa!)
 - [x] VISIONE 2026 definita
-- [x] **SISTEMA MEMORIA v0.1 FUNZIONANTE!** ✅
-  - Schema SQLite (2 tabelle + 7 indici)
-  - 4 script Python (init, log, load, query)
+- [x] **SISTEMA MEMORIA v1.1.0 FUNZIONANTE!** ✅
+  - Schema SQLite (3 tabelle + 9 indici)
+  - 5 script Python (init, log, load, query, **analytics**)
   - Hook configurati (SessionStart + PostToolUse)
-  - Test 100% passato!
+  - **5 LEZIONI STORICHE** dalla Costituzione!
+  - **analytics.py** con CLI completa!
 
 ---
 
 ## 🎯 PROSSIMO OBIETTIVO
 
-**FASE 6.2: Lessons Learned** 📚 - Settimana 2
+**FASE 6.2: UI Logs + Pattern Discovery** 📊 - Settimana 2
 
-**Prossimi passi (8-14 Gennaio 2026):**
-1. UI per visualizzare logs
-2. Query "quali task falliscono?"
-3. Prime lezioni apprese documentate
+**Prossimi passi:**
+1. ⬜ UI per visualizzare logs (dashboard CLI avanzata)
+2. ⬜ Auto-detection pattern (≥3 errori simili)
+3. ⬜ Weekly retro automatica
 
 ---
 
@@ -77,7 +78,7 @@ APRILE+:   🧬 EVOLUZIONE - Lo sciame che SI MIGLIORA
 
 ## 📅 ULTIMO AGGIORNAMENTO
 
-**1 Gennaio 2026** - FASE 6.1 COMPLETATA! Sistema Memoria funzionante! 🧠🎉
+**1 Gennaio 2026 - Sessione 13** - FASE 6.2 INIZIATA! Schema v1.1.0 + analytics.py + 5 lezioni storiche! 🧠📊
 
 ---
 
