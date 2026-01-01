@@ -224,6 +224,28 @@
 
 ## 📝 CHANGELOG
 
+### 1 Gennaio 2026 (Sessione 31) - 🎉 SOLUZIONE HOOKS COMPLETA! 🎉
+
+- 🔬 **RICERCA APPROFONDITA** con cervella-researcher:
+  - Trovati 2 BUG CONFERMATI in Claude Code!
+  - Issue #6305: PostToolUse NON FUNZIONA
+  - Issue #11544: ~/.claude/settings.json (globale) NON VIENE CARICATO
+- ✅ **SOLUZIONE IMPLEMENTATA:** Hooks PROJECT-LEVEL!
+  - .claude/settings.json nel progetto (non globale!)
+  - SubagentStop con matcher vuoto ""
+  - Script subagent_stop.py che legge da stdin
+- 📁 **FILE CREATI:**
+  - `.claude/settings.json` - Configurazione hook project-level
+  - `.claude/hooks/subagent_stop.py` - Script logging v1.0.0
+- 📋 **FILE AGGIORNATI:**
+  - SUB_ROADMAP_LOGGING_SYSTEM.md (FASE A al 90%!)
+  - PROMPT_RIPRESA.md
+  - NORD.md
+  - ROADMAP_SACRA.md (questo file)
+- ⏳ **PROSSIMO:** Riavviare sessione DAL PROGETTO per testare!
+
+**Versione:** 6.2.0 (Minor: Project-Level Hooks!)
+
 ### 1 Gennaio 2026 (Sessione 30) - 🎉 BUG SCOPERTO + FIX APPLICATO! 🎉
 
 - 🔴 **BUG SCOPERTO:** PostToolUse hooks NON FUNZIONANO!

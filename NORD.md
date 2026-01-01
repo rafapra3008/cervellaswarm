@@ -162,12 +162,17 @@ APRILE+:   🧬 EVOLUZIONE - Lo sciame che SI MIGLIORA
 
 ## 📅 ULTIMO AGGIORNAMENTO
 
-**1 Gennaio 2026 - Sessione 30** - 🎉 **BUG SCOPERTO + FIX APPLICATO!**
+**1 Gennaio 2026 - Sessione 31** - 🎉 **SOLUZIONE HOOKS IMPLEMENTATA!**
 
-- **SCOPERTO:** PostToolUse = BUG CONFERMATO (GitHub Issue #6305)!
-- **SOLUZIONE:** Usare SubagentStop invece! (FUNZIONA!)
-- **APPLICATO:** settings.json aggiornato (PostToolUse → SubagentStop)
-- **PROSSIMO:** Riavviare Claude Code e testare!
+- **SCOPERTO:** 2 BUG CONFERMATI:
+  - Issue #6305: PostToolUse NON FUNZIONA
+  - Issue #11544: ~/.claude/settings.json (globale) NON CARICATO
+- **SOLUZIONE:** Hooks PROJECT-LEVEL in .claude/settings.json!
+- **CREATO:** .claude/settings.json + .claude/hooks/subagent_stop.py
+- **PROSSIMO:** Riavviare sessione DAL PROGETTO e testare!
+  ```
+  cd ~/Developer/CervellaSwarm && claude
+  ```
 
 ---
 

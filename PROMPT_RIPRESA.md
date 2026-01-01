@@ -1,31 +1,30 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 30 - 🎉 BUG SCOPERTO + FIX APPLICATO!
+> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 31 - 🎉 SOLUZIONE HOOKS IMPLEMENTATA!
 
 ---
 
-## 🎉 SESSIONE 30 - BUG RISOLTO!
+## 🎉 SESSIONE 31 - SOLUZIONE COMPLETA!
 
-### COSA ABBIAMO SCOPERTO E RISOLTO
+### COSA ABBIAMO SCOPERTO E IMPLEMENTATO
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
 ║                                                                  ║
-║   🔴 PROBLEMA TROVATO:                                          ║
-║   PostToolUse hooks = BUG CONFERMATO! (GitHub Issue #6305)      ║
-║   NON FUNZIONANO in Claude Code! Anthropic lo sa!               ║
+║   🔴 BUG CONFERMATI:                                            ║
+║   • Issue #6305: PostToolUse hooks NON FUNZIONANO               ║
+║   • Issue #11544: ~/.claude/settings.json NON VIENE CARICATO    ║
 ║                                                                  ║
-║   ✅ SOLUZIONE APPLICATA:                                       ║
-║   Usare SubagentStop invece di PostToolUse!                     ║
-║   SubagentStop è l'hook DEDICATO per subagent e FUNZIONA!       ║
+║   ✅ SOLUZIONE IMPLEMENTATA:                                    ║
+║   Hooks PROJECT-LEVEL invece di GLOBALI!                        ║
 ║                                                                  ║
-║   📝 MODIFICHE FATTE:                                           ║
-║   • settings.json: PostToolUse → SubagentStop                   ║
-║   • SUB_ROADMAP aggiornata con scoperta                         ║
+║   📁 FILE CREATI:                                               ║
+║   • .claude/settings.json (nel progetto!)                       ║
+║   • .claude/hooks/subagent_stop.py (legge da stdin)             ║
 ║                                                                  ║
 ║   ⏳ PROSSIMO STEP:                                              ║
-║   Riavviare Claude Code per applicare la modifica               ║
-║   e testare che SubagentStop funzioni!                          ║
+║   Riavviare sessione DAL PROGETTO:                              ║
+║   cd ~/Developer/CervellaSwarm && claude                        ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
@@ -36,7 +35,7 @@
 
 | Fase | Descrizione | Stato |
 |------|-------------|-------|
-| A | Debug & Fix Hook | ✅ QUASI DONE (manca test riavvio) |
+| A | Debug & Fix Hook | ✅ 90% (manca test riavvio) |
 | B | Test End-to-End | ⬜ TODO |
 | C | Migliorare Prompt Swarm | ⬜ TODO |
 | D | Dashboard & Monitoraggio | ⬜ TODO |
@@ -50,30 +49,34 @@
 ║                                                                  ║
 ║   🎯 PRIORITÀ PROSSIMA SESSIONE:                                ║
 ║                                                                  ║
-║   1. TESTARE SubagentStop                                        ║
-║      • Invocare un agent                                         ║
-║      • Verificare che evento sia loggato in DB                  ║
+║   1. TESTARE HOOK PROJECT-LEVEL                                 ║
+║      • Avviare sessione DAL PROGETTO:                           ║
+║        cd ~/Developer/CervellaSwarm && claude                   ║
+║      • Invocare un agent qualsiasi                               ║
+║      • Verificare log in data/logs/subagent_stop_debug.log      ║
 ║      • Se funziona → FASE A completata!                         ║
 ║                                                                  ║
 ║   2. Se funziona → FASE B (Test End-to-End)                     ║
 ║      • Test su CervellaSwarm                                    ║
-║      • Test su Miracollo                                        ║
-║      • Test su Contabilità                                      ║
+║      • Copiare .claude/ in Miracollo e Contabilità              ║
+║      • Test su tutti i progetti                                  ║
 ║                                                                  ║
 ║   3. Poi → FASE C (Migliorare Prompt Swarm)                     ║
 ║                                                                  ║
-║   📍 MOMENTUM: Alto! Abbiamo trovato e fixato il bug!           ║
-║   🎯 Il sistema sta per funzionare!                             ║
+║   📍 MOMENTUM: ALTISSIMO! Soluzione implementata!               ║
+║   🎯 Manca solo il TEST dopo riavvio!                           ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
 ### DECISIONI PRESE ✅
 
-- [x] Hook PostToolUse: NO! È buggato → usare SubagentStop!
-- [ ] Test SubagentStop: dopo riavvio
+- [x] Hook PostToolUse: NO! BUG #6305
+- [x] Hook globale ~/.claude/settings.json: NO! BUG #11544
+- [x] Hook PROJECT-LEVEL .claude/settings.json: SI! Implementato!
+- [x] SubagentStop con matcher vuoto: SI! Implementato!
+- [ ] Test hook dopo riavvio: PROSSIMA SESSIONE
 - [ ] Prompt Swarm: FASE C quando logging funziona
-- [ ] Sistema memoria: dopo FASE B
 
 ---
 

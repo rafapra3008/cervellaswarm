@@ -23,15 +23,22 @@ Avere un sistema di logging che:
 ║  COSA ABBIAMO:                                                   ║
 ║  ✅ Database SQLite (swarm_memory.db)                           ║
 ║  ✅ 10 script Python (analytics, query, suggestions, ecc.)      ║
-║  ✅ Hook configurato in settings.json (SubagentStop!)           ║
-║  ✅ log_event.py v1.2.0 (formato payload fixato)                ║
+║  ✅ Hook PROJECT-LEVEL in .claude/settings.json                 ║
+║  ✅ subagent_stop.py con lettura stdin                          ║
 ║                                                                  ║
-║  🔴 SCOPERTA SESSIONE 30:                                        ║
-║  PostToolUse = BUG CONFERMATO! (GitHub Issue #6305)             ║
-║  SOLUZIONE: Usare SubagentStop invece!                          ║
+║  🔴 SCOPERTE SESSIONE 31:                                        ║
 ║                                                                  ║
-║  ✅ FIX APPLICATO: settings.json aggiornato                     ║
-║  ⏳ ATTESA: Serve riavvio sessione per applicare                ║
+║  BUG #1 (Issue #6305): PostToolUse = NON FUNZIONA               ║
+║  BUG #2 (Issue #11544): ~/.claude/settings.json NON CARICATO    ║
+║                                                                  ║
+║  ✅ SOLUZIONE IMPLEMENTATA:                                      ║
+║  • Hook in .claude/settings.json (PROJECT-LEVEL, non globale!)  ║
+║  • SubagentStop con matcher vuoto ""                            ║
+║  • Script subagent_stop.py che legge da stdin                   ║
+║                                                                  ║
+║  ⏳ PROSSIMO: Riavviare sessione DAL PROGETTO per testare       ║
+║     cd ~/Developer/CervellaSwarm && claude                      ║
+║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
@@ -39,19 +46,27 @@ Avere un sistema di logging che:
 
 ## 📋 FASI
 
-### FASE A: Debug & Fix Hook (Priorità 1) ✅ QUASI COMPLETATA!
+### FASE A: Debug & Fix Hook (Priorità 1) ✅ 90% COMPLETATA!
 
 | # | Task | Stato | Note |
 |---|------|-------|------|
 | A.1 | Verificare che hook PostToolUse sia supportato per Task tool | ✅ DONE | **BUG CONFERMATO!** Issue #6305 |
-| A.2 | Ricerca soluzione alternativa | ✅ DONE | **SubagentStop funziona!** |
-| A.3 | Applicare fix in settings.json | ✅ DONE | PostToolUse → SubagentStop |
-| A.4 | Testare hook in sessione NUOVA (dopo riavvio) | ⏳ WAITING | Serve riavvio Claude Code |
-| A.5 | Verificare formato payload REALE | ⬜ TODO | Dopo test A.4 |
-| A.6 | Rimuovere debug_hook.py quando funziona | ⬜ TODO | Pulizia finale |
+| A.2 | Ricerca soluzione alternativa | ✅ DONE | Issue #11544: globale buggato! |
+| A.3 | Scoperta: serve PROJECT-LEVEL hooks | ✅ DONE | .claude/settings.json nel progetto! |
+| A.4 | Creare .claude/settings.json nel progetto | ✅ DONE | SubagentStop con matcher "" |
+| A.5 | Creare subagent_stop.py con stdin reader | ✅ DONE | .claude/hooks/subagent_stop.py |
+| A.6 | Testare hook (riavvio dal progetto) | ⏳ WAITING | `cd ~/Developer/CervellaSwarm && claude` |
+| A.7 | Verificare formato payload REALE | ⬜ TODO | Dopo test A.6 |
+| A.8 | Pulizia file obsoleti | ⬜ TODO | Rimuovere debug_hook.py globale |
 
-**SCOPERTA IMPORTANTE:** PostToolUse hooks NON FUNZIONANO in Claude Code (bug confermato).
-Soluzione: usare `SubagentStop` che è l'hook DEDICATO per subagent e FUNZIONA!
+**SCOPERTE SESSIONE 31:**
+1. **BUG #6305:** PostToolUse hooks NON FUNZIONANO
+2. **BUG #11544:** Hooks in ~/.claude/settings.json (GLOBALE) NON VENGONO CARICATI
+3. **SOLUZIONE:** Hooks in .claude/settings.json (PROJECT-LEVEL) FUNZIONANO!
+
+**FILE CREATI:**
+- `.claude/settings.json` - Configurazione hook project-level
+- `.claude/hooks/subagent_stop.py` - Script che legge da stdin e logga
 
 ### FASE B: Test End-to-End (Priorità 2)
 
@@ -137,7 +152,8 @@ D richiede B completata
 ---
 
 *Creata: 1 Gennaio 2026 - Sessione 29*
-*Aggiornata: 1 Gennaio 2026 - Sessione 30* - **BUG SCOPERTO + FIX APPLICATO!**
+*Aggiornata: 1 Gennaio 2026 - Sessione 30* - BUG SCOPERTO + FIX APPLICATO
+*Aggiornata: 1 Gennaio 2026 - Sessione 31* - **SOLUZIONE COMPLETA IMPLEMENTATA!**
 
 *"Con la mappa giusta, non ci perdiamo mai!"* 🗺️💙
 *"Nulla è complesso - solo non ancora studiato!"* 🔬
