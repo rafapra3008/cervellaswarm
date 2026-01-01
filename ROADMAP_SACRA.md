@@ -473,6 +473,24 @@
 
 **Versione:** 3.3.0 (Minor: FASE 6.3 Completata!)
 
+### 1 Gennaio 2026 (Sessione 15) - LESSON INJECTION SYSTEM! 🎯🧠
+
+- ✅ **load_context.py v2.0.0** - Upgrade con lesson injection:
+  - `get_relevant_lessons()` - Filtra lezioni con scoring intelligente
+  - `format_lessons_for_agent()` - Formatta lezioni per agent prompt
+  - Context scoring: agent match (+50), project (+30), severity (+20), confidence (+10)
+  - Backward compatible (parametri agent_name/project opzionali)
+- ✅ **Test completo** - 4 scenari testati:
+  - No filters (backward compatible)
+  - Filter by agent (cervella-frontend)
+  - Filter by agent + project
+  - Filter by project only
+- ✅ **Scoring verificato** - Lezioni più rilevanti sempre in top 3!
+
+**Le 🐝 ora ricevono lezioni RILEVANTI al loro ruolo!** 🎯📚
+
+**Versione:** 3.4.0 (Minor: Lesson Injection)
+
 ### 1 Gennaio 2026 (Sessione 14) - FASE 6.2 COMPLETATA! 🎉📊
 
 - ✅ **analytics.py v2.0.0** - Upgrade completo con Rich:

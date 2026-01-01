@@ -4,9 +4,14 @@ Sistema Memoria CervellaSwarm - Caricamento Contesto
 
 Carica contesto rilevante per SessionStart hook.
 Include eventi recenti e lezioni apprese attive.
+
+v2.0.0 Novità:
+- Lesson Injection: lezioni rilevanti iniettate nel contesto
+- Context Scoring: ranking lezioni per rilevanza (agent + project + severity)
+- Agent Filtering: filtra lezioni per agente specifico
 """
 
-__version__ = "1.1.0"
+__version__ = "2.0.0"
 __version_date__ = "2026-01-01"
 
 import json
@@ -149,6 +154,186 @@ def get_lessons_learned(conn: sqlite3.Connection, min_confidence: float = 0.7) -
     return lessons
 
 
+def get_relevant_lessons(
+    conn: sqlite3.Connection,
+    agent_name: str = None,
+    project: str = None,
+    limit: int = 3
+) -> list:
+    """
+    Filtra lezioni rilevanti per l'agente corrente con scoring.
+
+    Scoring:
+    - agents_involved contiene agent_name: +50
+    - project match: +30
+    - severity CRITICAL: +20, HIGH: +15, MEDIUM: +10, LOW: +5
+    - times_applied > 5: +10
+    - confidence > 0.9: +10
+
+    Args:
+        conn: Connessione al database
+        agent_name: Nome dell'agent (es. cervella-frontend)
+        project: Nome progetto corrente
+        limit: Numero massimo di lezioni
+
+    Returns:
+        Lista di lezioni ordinate per rilevanza
+    """
+    cursor = conn.cursor()
+
+    # Query completa con tutti i campi necessari
+    cursor.execute("""
+        SELECT
+            trigger,
+            context,
+            problem,
+            root_cause,
+            solution,
+            prevention,
+            example,
+            severity,
+            agents_involved,
+            tags,
+            pattern,
+            confidence,
+            times_applied,
+            project
+        FROM lessons_learned
+        WHERE status = 'ACTIVE'
+        ORDER BY confidence DESC, times_applied DESC
+    """)
+
+    lessons = []
+    for row in cursor.fetchall():
+        # Calcola score
+        score = 0
+
+        # Agent match (+50 se presente in agents_involved)
+        agents_involved = row[8] or ""
+        if agent_name and agent_name in agents_involved:
+            score += 50
+
+        # Project match (+30)
+        lesson_project = row[13] or ""
+        if project and lesson_project and project.lower() in lesson_project.lower():
+            score += 30
+
+        # Severity
+        severity = row[7] or "MEDIUM"
+        severity_scores = {
+            "CRITICAL": 20,
+            "HIGH": 15,
+            "MEDIUM": 10,
+            "LOW": 5
+        }
+        score += severity_scores.get(severity, 0)
+
+        # Times applied
+        times_applied = row[12] or 0
+        if times_applied > 5:
+            score += 10
+
+        # High confidence
+        confidence = row[11] or 0.5
+        if confidence > 0.9:
+            score += 10
+
+        lessons.append({
+            "trigger": row[0],
+            "context": row[1],
+            "problem": row[2],
+            "root_cause": row[3],
+            "solution": row[4],
+            "prevention": row[5],
+            "example": row[6],
+            "severity": severity,
+            "agents_involved": agents_involved,
+            "tags": row[9],
+            "pattern": row[10],
+            "confidence": confidence,
+            "times_applied": times_applied,
+            "project": lesson_project,
+            "score": score
+        })
+
+    # Ordina per score e prendi top N
+    lessons.sort(key=lambda x: x["score"], reverse=True)
+    return lessons[:limit]
+
+
+def format_lessons_for_agent(lessons: list) -> str:
+    """
+    Formatta lezioni per prompt agent in markdown.
+
+    Args:
+        lessons: Lista di lezioni da formattare
+
+    Returns:
+        Markdown formattato
+    """
+    if not lessons:
+        return ""
+
+    output = []
+    output.append("## 📚 LEZIONI RILEVANTI PER QUESTO TASK\n")
+    output.append("*Lezioni apprese da errori passati - APPLICALE!*\n\n")
+
+    for lesson in lessons:
+        severity = lesson.get("severity", "MEDIUM")
+        emoji = {
+            "CRITICAL": "🔴",
+            "HIGH": "🟠",
+            "MEDIUM": "🟡",
+            "LOW": "🟢"
+        }.get(severity, "⚪")
+
+        pattern = lesson.get("pattern") or "Pattern Unknown"
+        output.append(f"### {emoji} {severity} - {pattern}\n")
+
+        # Trigger
+        trigger = lesson.get("trigger")
+        if trigger:
+            output.append(f"**Trigger:** {trigger}\n\n")
+
+        # Problem
+        problem = lesson.get("problem")
+        if problem:
+            output.append(f"**Problem:** {problem}\n\n")
+
+        # Root Cause
+        root_cause = lesson.get("root_cause")
+        if root_cause:
+            output.append(f"**Root Cause:** {root_cause}\n\n")
+
+        # Solution
+        solution = lesson.get("solution")
+        if solution:
+            output.append(f"**Solution:** {solution}\n\n")
+
+        # Prevention
+        prevention = lesson.get("prevention")
+        if prevention:
+            output.append(f"**Prevention:** {prevention}\n\n")
+
+        # Example
+        example = lesson.get("example")
+        if example:
+            output.append(f"**Example:** {example}\n\n")
+
+        # Metadata
+        confidence = lesson.get("confidence", 0)
+        times_applied = lesson.get("times_applied", 0)
+        score = lesson.get("score", 0)
+        output.append(
+            f"*Confidence: {confidence:.0%} | "
+            f"Applicata {times_applied}x | "
+            f"Score: {score}*\n\n"
+        )
+        output.append("---\n\n")
+
+    return "".join(output)
+
+
 def get_active_suggestions(project: str = None) -> list:
     """
     Recupera suggerimenti attivi.
@@ -239,9 +424,13 @@ def format_context(events: list, stats: dict, lessons: list, suggestions: list =
     return "".join(output)
 
 
-def load_context() -> dict:
+def load_context(agent_name: str = None, project: str = None) -> dict:
     """
     Carica contesto per SessionStart hook.
+
+    Args:
+        agent_name: Nome agente (opzionale) - per filtrare lezioni
+        project: Nome progetto (opzionale) - per filtrare lezioni
 
     Returns:
         Dict con hookSpecificOutput
@@ -264,13 +453,26 @@ def load_context() -> dict:
         stats = get_agent_stats(conn)
         lessons = get_lessons_learned(conn)
 
+        # 🆕 NOVITÀ v2.0.0: Lezioni rilevanti per agent/project
+        relevant_lessons = get_relevant_lessons(
+            conn,
+            agent_name=agent_name,
+            project=project,
+            limit=3
+        )
+
         conn.close()
 
         # Carica suggerimenti attivi
-        suggestions = get_active_suggestions()
+        suggestions = get_active_suggestions(project=project)
 
         # Formatta contesto
         context_md = format_context(events, stats, lessons, suggestions)
+
+        # 🆕 NOVITÀ v2.0.0: Aggiungi lezioni rilevanti formattate
+        if relevant_lessons:
+            lessons_md = format_lessons_for_agent(relevant_lessons)
+            context_md = context_md + "\n" + lessons_md
 
         return {
             "hookSpecificOutput": {
@@ -280,6 +482,7 @@ def load_context() -> dict:
                 "events_count": len(events),
                 "agents_count": len(stats),
                 "lessons_count": len(lessons),
+                "relevant_lessons_count": len(relevant_lessons),
             }
         }
 
