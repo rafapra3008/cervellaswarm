@@ -18,7 +18,9 @@
 
 ## 🎯 DOVE SIAMO
 
-**FASE 8: LA CORTE REALE - COMPLETATA 100%!** 👑🛡️🐝🎉
+**FASE 9: INFRASTRUTTURA - IN CORSO 20%!** 🏭🐝
+
+> *"Mettiamo le ragazze online... prendono i dati... VERITA!"* - Rafa
 
 Abbiamo:
 - [x] FASE 0+1+2+3+4+5+6 completate!
@@ -100,28 +102,33 @@ Abbiamo:
 
 ## 🎯 PROSSIMI STEP
 
-### 🔧 SUB-ROADMAP ATTIVA: Sistema Logging!
+### 🏭 FASE 9a: Monitoring H24 (IN CORSO!)
 
-> **File:** `docs/roadmap/SUB_ROADMAP_LOGGING_SYSTEM.md`
+> **File:** `docs/roadmap/FASE_9_INFRASTRUTTURA.md`
 
-Prima di FASE 9, dobbiamo sistemare il logging:
-- **FASE A:** Debug & Fix Hook PostToolUse
-- **FASE B:** Test End-to-End
-- **FASE C:** Migliorare Prompt Swarm
-- **FASE D:** Dashboard & Monitoraggio
+| Task | Stato |
+|------|-------|
+| FASE_9_INFRASTRUTTURA.md | ✅ DONE |
+| RICERCA_INFRASTRUTTURA_H24.md | ✅ DONE |
+| KPIs definiti | ✅ DONE |
+| Docker compose monitoring | ⬜ TODO |
+| Deploy su VM Miracollo | ⬜ TODO |
+| Alert Telegram | ⬜ TODO |
 
-### PRIORITÀ 1: Sistemare Logging (SUB-ROADMAP) 🔧
-- Hook non funziona → da debuggare
-- Sistema deve funzionare AUTOMATICAMENTE
-- Senza dati → niente apprendimento!
+### PRIORITÀ 1: Completare Monitoring H24 🏭
+- Docker compose per Grafana + Prometheus
+- Deploy sulla VM Miracollo (gia esistente!)
+- Alert Telegram per errori
 
-### PRIORITÀ 2: FASE 9 - Infrastruttura 🏭
-- Setup VM per CervellaSwarm H24
-- Dashboard Grafana
+### PRIORITÀ 2: FASE 9b - Task Programmati 📅
+- Code review automatica Lun/Ven
+- GitHub webhooks
+- Weekly retrospective
 
-### PRIORITÀ 3: Metriche e Ottimizzazione 📊
-- Tracciare performance pattern
-- Iterare su ciò che funziona
+### PRIORITÀ 3: FASE 9c - Agent Autonomo 🤖
+- Queue system (Redis)
+- Agent SDK vs Claude CLI
+- Lo sciame che lavora mentre dormi!
 
 ---
 
@@ -162,21 +169,21 @@ APRILE+:   🧬 EVOLUZIONE - Lo sciame che SI MIGLIORA
 
 ## 📅 ULTIMO AGGIORNAMENTO
 
-**1 Gennaio 2026 - Sessione 34** - 🧪 **HARDTESTS PASSATI! DNA FUNZIONA!**
+**1 Gennaio 2026 - Sessione 35** - 🏭 **FASE 9 INIZIATA! INFRASTRUTTURA!**
 
-- **HARDTESTS ESEGUITI:** 6/6 completati!
-  - ✅ TEST 1: Prompt completo → PROCEDE (zero domande!)
-  - ✅ TEST 2: Dettaglio manca → ASSUME e procede
-  - 🟡 TEST 3: Info critica manca → 1 roundtrip (era 3-4!)
-  - 🟡 TEST 4: Azione irreversibile → Codice con dry_run
-  - ✅ TEST 5: Cross-domain → SEGNALA correttamente
-  - ✅ TEST 6: Guardiana → DECIDE autonomamente!
-- **RISULTATO:** 4 PASS + 2 PARZIALI = **SUCCESSO!** 🎉
-- **CONCLUSIONE:** Il DNA della Sessione 33 FUNZIONA!
-- **FILE AGGIORNATI:**
-  - docs/tests/HARDTESTS_AUTONOMY.md (risultati documentati)
-  - test-hardtests/ (file di test creati)
-- **PROSSIMO:** Test su Miracollo (progetto REALE!)
+- **FASE 9 AVVIATA!** Lo sciame H24!
+- **PIANO CREATO:** FASE_9_INFRASTRUTTURA.md
+- **RICERCA:** RICERCA_INFRASTRUTTURA_H24.md
+- **ARCHITETTURA:**
+  - Usare VM Miracollo (gia esistente!)
+  - Docker + Grafana + Prometheus
+  - Alert Telegram
+- **APPROCCIO GRADUALE:**
+  - 9a: Monitoring H24 (Gennaio)
+  - 9b: Task Programmati (Febbraio)
+  - 9c: Agent Autonomo (Q2-Q3)
+- **KPIs DEFINITI:** Success rate, Task/giorno, Costo/task
+- **PROSSIMO:** Docker compose per monitoring!
 
 ---
 

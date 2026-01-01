@@ -18,7 +18,7 @@
 | 7 | Apprendimento | ✅ DONE | 100% |
 | 7.5 | Parallelizzazione | ✅ DONE | 100% |
 | 8 | La Corte Reale | ✅ DONE | 100% |
-| 9 | Infrastruttura | ⬜ TODO | 0% |
+| 9 | Infrastruttura | 🔄 IN CORSO | 20% |
 
 ---
 
@@ -211,18 +211,51 @@
 
 ---
 
-## FASE 9: Infrastruttura 🏭 (Marzo 2026)
+## FASE 9: Infrastruttura 🏭 (Gennaio-Marzo 2026)
 
-**Obiettivo:** Lo sciame H24
+**Obiettivo:** Lo sciame H24 - Imparare dagli errori, tornare piu robusti!
+
+> *"Mettiamo le ragazze online... prendono i dati... VERITA!"* - Rafa
 
 | # | Task | Stato | Note |
 |---|------|-------|------|
-| 9.1 | VM Setup | ⬜ TODO | Settimana 1-2 |
-| 9.2 | Dashboard Grafana | ⬜ TODO | Settimana 3-4 |
+| 9a | FASE 9a: Monitoring H24 | 🔄 IN CORSO | Gennaio 2026 |
+| 9a.1 | FASE_9_INFRASTRUTTURA.md | ✅ DONE | 1 Gen - Piano creato! |
+| 9a.2 | RICERCA_INFRASTRUTTURA_H24.md | ✅ DONE | 1 Gen - Best practices! |
+| 9a.3 | KPIs definiti | ✅ DONE | 1 Gen - Nel piano! |
+| 9a.4 | Docker compose monitoring | ⬜ TODO | Grafana + Prometheus |
+| 9a.5 | Deploy su VM Miracollo | ⬜ TODO | Usa VM esistente! |
+| 9a.6 | Alert Telegram | ⬜ TODO | Notifiche errori |
+| 9b | FASE 9b: Task Programmati | ⬜ TODO | Febbraio 2026 |
+| 9c | FASE 9c: Agent Autonomo | ⬜ TODO | Q2-Q3 2026 |
+
+→ **Piano dettagliato:** `docs/roadmap/FASE_9_INFRASTRUTTURA.md`
 
 ---
 
 ## 📝 CHANGELOG
+
+### 1 Gennaio 2026 (Sessione 35) - 🏭 FASE 9 INIZIATA! INFRASTRUTTURA! 🏭
+
+- 🏭 **FASE 9 AVVIATA!** Lo sciame H24!
+  - Piano strategico creato: FASE_9_INFRASTRUTTURA.md
+  - Ricerca best practices: RICERCA_INFRASTRUTTURA_H24.md
+  - KPIs definiti per misurare lo sciame
+- 📊 **ARCHITETTURA DECISA:**
+  - Usare VM Miracollo (gia esistente!)
+  - Docker Compose per monitoring
+  - Grafana + Prometheus (GRATIS!)
+  - Alert Telegram
+- 🎯 **APPROCCIO GRADUALE:**
+  - FASE 9a: Monitoring H24 (Gennaio)
+  - FASE 9b: Task Programmati (Febbraio)
+  - FASE 9c: Agent Autonomo (Q2-Q3)
+- 💎 **PRINCIPIO:** "Non accendiamo la luce in una stanza vuota!"
+- 📂 **FILE CREATI:**
+  - docs/roadmap/FASE_9_INFRASTRUTTURA.md (piano completo)
+  - docs/studio/RICERCA_INFRASTRUTTURA_H24.md (best practices)
+
+**Versione:** 7.0.0 (MAJOR: FASE 9 Iniziata!)
 
 ### 1 Gennaio 2026 (Sessione 34) - 🧪 HARDTESTS PASSATI! DNA FUNZIONA! 🧪
 

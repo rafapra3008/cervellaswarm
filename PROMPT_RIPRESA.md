@@ -1,6 +1,48 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 34 - 🧪 HARDTESTS PASSATI!
+> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 35 - 🏭 FASE 9 INIZIATA!
+
+---
+
+## 🏭 SESSIONE 35 - INFRASTRUTTURA! LO SCIAME H24! 🏭
+
+### COSA ABBIAMO FATTO
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   🏭 FASE 9 AVVIATA - LO SCIAME H24!                            |
+|                                                                  |
+|   ✅ FASE_9_INFRASTRUTTURA.md creato (piano completo!)          |
+|   ✅ RICERCA_INFRASTRUTTURA_H24.md (best practices)             |
+|   ✅ KPIs definiti per misurare lo sciame                       |
+|   ✅ Architettura decisa: VM Miracollo + Docker + Grafana       |
+|                                                                  |
+|   APPROCCIO GRADUALE:                                            |
+|   9a: Monitoring H24 (Gennaio) <- IN CORSO!                     |
+|   9b: Task Programmati (Febbraio)                               |
+|   9c: Agent Autonomo (Q2-Q3)                                    |
+|                                                                  |
+|   PRINCIPIO: "Non accendiamo la luce in una stanza vuota!"      |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+### FILE CREATI/AGGIORNATI
+
+| File | Azione |
+|------|--------|
+| docs/roadmap/FASE_9_INFRASTRUTTURA.md | ✅ CREATO (piano completo!) |
+| docs/studio/RICERCA_INFRASTRUTTURA_H24.md | ✅ CREATO (best practices) |
+| ROADMAP_SACRA.md | ✅ AGGIORNATO (v7.0.0!) |
+| NORD.md | ✅ AGGIORNATO (FASE 9 in corso!) |
+
+### DECISIONI PRESE
+
+- VM Miracollo (gia esistente) invece di nuova Hetzner
+- Docker gia presente nei progetti -> usare quello!
+- Grafana + Prometheus (GRATIS, open source)
+- Approccio graduale: Monitoring -> Task -> Autonomia
 
 ---
 
