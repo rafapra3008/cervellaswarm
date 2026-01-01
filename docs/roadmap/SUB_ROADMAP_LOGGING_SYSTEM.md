@@ -23,13 +23,15 @@ Avere un sistema di logging che:
 ║  COSA ABBIAMO:                                                   ║
 ║  ✅ Database SQLite (swarm_memory.db)                           ║
 ║  ✅ 10 script Python (analytics, query, suggestions, ecc.)      ║
-║  ✅ Hook configurato in settings.json                           ║
+║  ✅ Hook configurato in settings.json (SubagentStop!)           ║
 ║  ✅ log_event.py v1.2.0 (formato payload fixato)                ║
 ║                                                                  ║
-║  COSA NON FUNZIONA:                                              ║
-║  ❌ Hook PostToolUse non viene chiamato                         ║
-║  ❌ Nessun evento loggato automaticamente                       ║
-║  ❌ Sistema non testato end-to-end                              ║
+║  🔴 SCOPERTA SESSIONE 30:                                        ║
+║  PostToolUse = BUG CONFERMATO! (GitHub Issue #6305)             ║
+║  SOLUZIONE: Usare SubagentStop invece!                          ║
+║                                                                  ║
+║  ✅ FIX APPLICATO: settings.json aggiornato                     ║
+║  ⏳ ATTESA: Serve riavvio sessione per applicare                ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
@@ -37,15 +39,19 @@ Avere un sistema di logging che:
 
 ## 📋 FASI
 
-### FASE A: Debug & Fix Hook (Priorità 1)
+### FASE A: Debug & Fix Hook (Priorità 1) ✅ QUASI COMPLETATA!
 
 | # | Task | Stato | Note |
 |---|------|-------|------|
-| A.1 | Verificare che hook PostToolUse sia supportato per Task tool | ⬜ TODO | Documentazione Claude Code |
-| A.2 | Testare hook in sessione NUOVA (dopo riavvio) | ⬜ TODO | Settings caricate all'avvio |
-| A.3 | Verificare formato payload REALE | ⬜ TODO | Usare debug_hook.py |
-| A.4 | Fixare log_event.py se necessario | ⬜ TODO | Adattare al payload reale |
-| A.5 | Rimuovere debug_hook.py quando funziona | ⬜ TODO | Pulizia |
+| A.1 | Verificare che hook PostToolUse sia supportato per Task tool | ✅ DONE | **BUG CONFERMATO!** Issue #6305 |
+| A.2 | Ricerca soluzione alternativa | ✅ DONE | **SubagentStop funziona!** |
+| A.3 | Applicare fix in settings.json | ✅ DONE | PostToolUse → SubagentStop |
+| A.4 | Testare hook in sessione NUOVA (dopo riavvio) | ⏳ WAITING | Serve riavvio Claude Code |
+| A.5 | Verificare formato payload REALE | ⬜ TODO | Dopo test A.4 |
+| A.6 | Rimuovere debug_hook.py quando funziona | ⬜ TODO | Pulizia finale |
+
+**SCOPERTA IMPORTANTE:** PostToolUse hooks NON FUNZIONANO in Claude Code (bug confermato).
+Soluzione: usare `SubagentStop` che è l'hook DEDICATO per subagent e FUNZIONA!
 
 ### FASE B: Test End-to-End (Priorità 2)
 
@@ -131,4 +137,7 @@ D richiede B completata
 ---
 
 *Creata: 1 Gennaio 2026 - Sessione 29*
+*Aggiornata: 1 Gennaio 2026 - Sessione 30* - **BUG SCOPERTO + FIX APPLICATO!**
+
 *"Con la mappa giusta, non ci perdiamo mai!"* 🗺️💙
+*"Nulla è complesso - solo non ancora studiato!"* 🔬

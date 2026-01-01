@@ -162,12 +162,12 @@ APRILE+:   🧬 EVOLUZIONE - Lo sciame che SI MIGLIORA
 
 ## 📅 ULTIMO AGGIORNAMENTO
 
-**1 Gennaio 2026 - Sessione 29** - 🔧 **SUB-ROADMAP LOGGING ATTIVA!**
+**1 Gennaio 2026 - Sessione 30** - 🎉 **BUG SCOPERTO + FIX APPLICATO!**
 
-- **SCOPERTO:** Hook PostToolUse non viene chiamato!
-- **CREATA:** `docs/roadmap/SUB_ROADMAP_LOGGING_SYSTEM.md`
-- **FIXATO:** `log_event.py` v1.2.0 (formato payload corretto)
-- **PROSSIMO:** Debug hook in sessione NUOVA (riavvio richiesto)
+- **SCOPERTO:** PostToolUse = BUG CONFERMATO (GitHub Issue #6305)!
+- **SOLUZIONE:** Usare SubagentStop invece! (FUNZIONA!)
+- **APPLICATO:** settings.json aggiornato (PostToolUse → SubagentStop)
+- **PROSSIMO:** Riavviare Claude Code e testare!
 
 ---
 

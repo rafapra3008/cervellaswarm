@@ -1,38 +1,42 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 29 - 🔧 SUB-ROADMAP LOGGING ATTIVA!
+> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 30 - 🎉 BUG SCOPERTO + FIX APPLICATO!
 
 ---
 
-## 🔧 SESSIONE 29 - DEBUG LOGGING SYSTEM
+## 🎉 SESSIONE 30 - BUG RISOLTO!
 
-### COSA ABBIAMO SCOPERTO
+### COSA ABBIAMO SCOPERTO E RISOLTO
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
 ║                                                                  ║
-║   🔴 PROBLEMA: Hook PostToolUse NON viene chiamato!             ║
+║   🔴 PROBLEMA TROVATO:                                          ║
+║   PostToolUse hooks = BUG CONFERMATO! (GitHub Issue #6305)      ║
+║   NON FUNZIONANO in Claude Code! Anthropic lo sa!               ║
 ║                                                                  ║
-║   CAUSA PROBABILE:                                               ║
-║   • Settings.json modificato DOPO avvio sessione                ║
-║   • Claude Code carica settings all'AVVIO                       ║
-║   • Serve RIAVVIO per applicare modifiche                       ║
+║   ✅ SOLUZIONE APPLICATA:                                       ║
+║   Usare SubagentStop invece di PostToolUse!                     ║
+║   SubagentStop è l'hook DEDICATO per subagent e FUNZIONA!       ║
 ║                                                                  ║
-║   ✅ FIXATO: log_event.py v1.2.0                                ║
-║   • Supporta formato PostToolUse hook                           ║
-║   • tool_name, tool_input, cwd a root level                     ║
-║   • Fallback per formato vecchio                                ║
+║   📝 MODIFICHE FATTE:                                           ║
+║   • settings.json: PostToolUse → SubagentStop                   ║
+║   • SUB_ROADMAP aggiornata con scoperta                         ║
+║                                                                  ║
+║   ⏳ PROSSIMO STEP:                                              ║
+║   Riavviare Claude Code per applicare la modifica               ║
+║   e testare che SubagentStop funzioni!                          ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
-### SUB-ROADMAP CREATA
+### SUB-ROADMAP LOGGING
 
 📂 `docs/roadmap/SUB_ROADMAP_LOGGING_SYSTEM.md`
 
 | Fase | Descrizione | Stato |
 |------|-------------|-------|
-| A | Debug & Fix Hook | ⬜ TODO |
+| A | Debug & Fix Hook | ✅ QUASI DONE (manca test riavvio) |
 | B | Test End-to-End | ⬜ TODO |
 | C | Migliorare Prompt Swarm | ⬜ TODO |
 | D | Dashboard & Monitoraggio | ⬜ TODO |
@@ -44,39 +48,32 @@
 ```
 ╔══════════════════════════════════════════════════════════════════╗
 ║                                                                  ║
-║   🧠 MENTE LOCALE DA FARE!                                      ║
+║   🎯 PRIORITÀ PROSSIMA SESSIONE:                                ║
 ║                                                                  ║
-║   Prima di continuare a fixare, dobbiamo RAGIONARE:             ║
+║   1. TESTARE SubagentStop                                        ║
+║      • Invocare un agent                                         ║
+║      • Verificare che evento sia loggato in DB                  ║
+║      • Se funziona → FASE A completata!                         ║
 ║                                                                  ║
-║   1. HOOK SYSTEM                                                 ║
-║      • Funziona davvero il PostToolUse per Task?                ║
-║      • Serve riavvio o c'è altro problema?                      ║
-║      • È il modo GIUSTO per loggare?                            ║
+║   2. Se funziona → FASE B (Test End-to-End)                     ║
+║      • Test su CervellaSwarm                                    ║
+║      • Test su Miracollo                                        ║
+║      • Test su Contabilità                                      ║
 ║                                                                  ║
-║   2. PROMPT SWARM                                                ║
-║      • Cosa manca? Cosa funziona?                               ║
-║      • Come collegare con memoria?                              ║
-║      • Regole per ogni progetto?                                ║
+║   3. Poi → FASE C (Migliorare Prompt Swarm)                     ║
 ║                                                                  ║
-║   3. VISIONE GENERALE                                            ║
-║      • Come deve funzionare il sistema COMPLETO?                ║
-║      • Cosa serve per FASE 9 (Apprendimento)?                   ║
-║      • Stiamo costruendo nel modo giusto?                       ║
-║                                                                  ║
-║   📍 APPROCCIO: Calma, studio, decisioni belle!                 ║
-║   🎯 OBIETTIVO: Sistema che funziona DA SOLO                    ║
-║                                                                  ║
-║   "Nulla è complesso - solo non ancora studiato!"               ║
+║   📍 MOMENTUM: Alto! Abbiamo trovato e fixato il bug!           ║
+║   🎯 Il sistema sta per funzionare!                             ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
-### DECISIONI DA PRENDERE
+### DECISIONI PRESE ✅
 
-- [ ] Hook PostToolUse: è il modo giusto o c'è alternativa migliore?
-- [ ] Prompt Swarm: cosa aggiungere per ogni progetto?
-- [ ] Sistema memoria: come collegare tutto?
-- [ ] Prossimi step: cosa prima, cosa dopo?
+- [x] Hook PostToolUse: NO! È buggato → usare SubagentStop!
+- [ ] Test SubagentStop: dopo riavvio
+- [ ] Prompt Swarm: FASE C quando logging funziona
+- [ ] Sistema memoria: dopo FASE B
 
 ---
 
