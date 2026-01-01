@@ -6,8 +6,8 @@ Riceve payload da hook PostToolUse e logga eventi nel database.
 Gestisce errori gracefully per non bloccare mai il workflow.
 """
 
-__version__ = "1.0.0"
-__version_date__ = "2026-01-01"
+__version__ = "1.1.0"
+__version_date__ = "2026-01-01"  # Fix: cerca agent in subagent_type + tutti i 14 agent
 
 import json
 import sqlite3
@@ -26,22 +26,39 @@ def get_db_path() -> Path:
 
 def extract_agent_info(payload: dict) -> dict:
     """Estrae informazioni sull'agent dal payload."""
-    tool_name = payload.get("tool", {}).get("name", "")
+    tool = payload.get("tool", {})
+    tool_name = tool.get("name", "")
+    tool_input = tool.get("input", {})
 
-    # Mapping agent basato su pattern
+    # L'agent è in subagent_type (per Task tool) o nel nome del tool
+    subagent_type = tool_input.get("subagent_type", "")
+    agent_source = subagent_type if subagent_type else tool_name
+
+    # Mapping COMPLETO di tutti i 14 agent (11 worker + 3 guardiane)
     agent_map = {
+        # Worker (Sonnet)
         "cervella-frontend": "Frontend Specialist",
         "cervella-backend": "Backend Specialist",
         "cervella-tester": "Quality Assurance",
         "cervella-reviewer": "Code Reviewer",
         "cervella-researcher": "Research Specialist",
+        "cervella-marketing": "Marketing Specialist",
+        "cervella-devops": "DevOps Specialist",
+        "cervella-docs": "Documentation Specialist",
+        "cervella-data": "Data Specialist",
+        "cervella-security": "Security Specialist",
+        "cervella-orchestrator": "Orchestrator (Regina)",
+        # Guardiane (Opus)
+        "cervella-guardiana-qualita": "Guardiana Qualità",
+        "cervella-guardiana-ricerca": "Guardiana Ricerca",
+        "cervella-guardiana-ops": "Guardiana Ops",
     }
 
     agent_name = None
     agent_role = None
 
     for name, role in agent_map.items():
-        if name in tool_name.lower():
+        if name in agent_source.lower():
             agent_name = name
             agent_role = role
             break
