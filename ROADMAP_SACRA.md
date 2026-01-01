@@ -17,7 +17,7 @@
 | 6 | Memoria | ✅ DONE | 100% |
 | 7 | Apprendimento | 🚀 IN CORSO | 40% |
 | 7.5 | Parallelizzazione | 🚀 IN CORSO | 20% |
-| 8 | La Corte Reale | 🚀 IMPLEMENTAZIONE! | 80% |
+| 8 | La Corte Reale | ✅ DONE | 100% |
 | 9 | Infrastruttura | ⬜ TODO | 0% |
 
 ---
@@ -198,8 +198,8 @@
 | 8.4 | Studio Background Technical Agent | ✅ DONE | Branch separati per sicurezza |
 | 8.5 | Regola VERIFICA ATTIVA POST-AGENT | ✅ DONE | SWARM_RULES.md Regola 4! |
 | 8.6 | Ricerche Best Practices | ✅ DONE | 3 documenti studio creati! |
-| 8.7 | Proposta Architettura v2.0 | ⬜ TODO | Sintesi finale |
-| 8.8 | Primo Prototipo | ⬜ TODO | Una Guardiana + Un Background Agent |
+| 8.7 | PoC Cugini su task reale | ✅ DONE | 3 ricerche parallele! |
+| 8.8 | PoC Background Agent | ✅ DONE | Bash + TaskOutput validato! |
 
 **Principi chiave (definiti 1 Gennaio 2026):**
 - 💎 **IL 100000%** - Il processo ci porta a risultati MIGLIORI
@@ -223,6 +223,22 @@
 ---
 
 ## 📝 CHANGELOG
+
+### 1 Gennaio 2026 (Sessione 25) - 🎉 FASE 8 COMPLETATA AL 100%! 🎉
+
+- 🎉 **FASE 8: LA CORTE REALE - 100%!**
+  - ✅ PoC Cugini: 3 cervella-researcher in parallelo
+  - ✅ 3 ricerche create simultaneamente, zero conflitti!
+  - ✅ Pattern Partitioning VALIDATO!
+  - ✅ PoC Background: Bash + run_in_background + TaskOutput
+  - ✅ Pattern call-now-fetch-later VALIDATO!
+- 📂 **3 NUOVI DOCUMENTI DI RICERCA:**
+  - docs/studio/RICERCA_MEMORY_SYSTEMS.md
+  - docs/studio/RICERCA_TASK_DISTRIBUTION.md
+  - docs/studio/RICERCA_BACKGROUND_AGENTS.md
+- 🚀 **PRONTI PER FASE 7d + 7e!**
+
+**Versione:** 5.0.0 (MAJOR: FASE 8 COMPLETATA!)
 
 ### 1 Gennaio 2026 (Sessione 24) - 📋 ARCHITETTURA V2.0 COMPLETATA! 🎉
 
