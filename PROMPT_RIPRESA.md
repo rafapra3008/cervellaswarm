@@ -4,51 +4,54 @@
 
 ---
 
-## ✅ SESSIONE 40 - DNA COSTITUZIONE AGGIORNATO! ✅
+## ✅ SESSIONE 40 - RICERCA REALE + ROADMAP AGGIUSTATA! ✅
 
 ### COSA ABBIAMO FATTO
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
 ║                                                                  ║
-║   ✅ TODO SESSIONE 39 COMPLETATO!                               ║
+║   ✅ PARTE 1: DNA AGGIORNATO!                                   ║
+║   🐝 14 Agent ora leggono COSTITUZIONE.md                       ║
 ║                                                                  ║
-║   🐝 14 AGENT AGGIORNATI con lettura COSTITUZIONE!              ║
-║      • Ogni agent ora legge ~/.claude/COSTITUZIONE.md           ║
-║      • Sezione "PRIMA DI TUTTO" in cima a ogni file             ║
-║      • Per SCRITTO, non con hook (come voleva Rafa!)            ║
+║   ✅ PARTE 2: RICERCA REALE!                                    ║
+║   🔬 3 ricerche parallele completate:                           ║
+║      • RICERCA_VM_INFRASTRUTTURA_SESSIONE40.md                  ║
+║      • RICERCA_ML_AGENTI_SESSIONE40.md                          ║
+║      • RICERCA_AGENT_SDK_AUTOMAZIONE_SESSIONE40.md              ║
 ║                                                                  ║
-║   📂 File modificati in ~/.claude/agents/:                      ║
-║      • cervella-frontend.md      ✅                              ║
-║      • cervella-backend.md       ✅                              ║
-║      • cervella-tester.md        ✅                              ║
-║      • cervella-reviewer.md      ✅                              ║
-║      • cervella-researcher.md    ✅                              ║
-║      • cervella-devops.md        ✅                              ║
-║      • cervella-docs.md          ✅                              ║
-║      • cervella-data.md          ✅                              ║
-║      • cervella-security.md      ✅                              ║
-║      • cervella-marketing.md     ✅                              ║
-║      • cervella-orchestrator.md  ✅                              ║
-║      • cervella-guardiana-qualita.md    ✅                       ║
-║      • cervella-guardiana-ricerca.md    ✅                       ║
-║      • cervella-guardiana-ops.md        ✅                       ║
+║   ❌ FASE 9 ELIMINATA:                                          ║
+║      • Claude Code NON progettato per H24                       ║
+║      • Rate limits Anthropic fermano uso H24                    ║
+║      • Docker monitoring = OVERKILL (archiviato)                ║
+║                                                                  ║
+║   🆕 NUOVE FASI (Quick Wins!):                                  ║
+║      • FASE 10b: GitHub Actions (1-2 ore!)                      ║
+║      • FASE 10c: Prompt Caching (-90% costi!)                   ║
+║                                                                  ║
+║   🎯 VERITA DALLA RICERCA:                                      ║
+║      • Prompt Engineering = 90% impatto                         ║
+║      • Fine-tuning = solo Haiku via AWS = non per noi           ║
+║      • ML pattern detection = overkill (<1000 eventi)           ║
+║      • difflib Python = sufficiente per noi                     ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
 ### FILO DEL DISCORSO
 
-- 🧠 **Oggi:** Completato TODO sessione 39 - DNA aggiornato
-- 🎯 **La direzione:** USARE lo sciame su progetti REALI
-- ⚡ **Momentum:** Pronto per test su Miracollo/Contabilita!
+- 🧠 **Oggi:** DNA aggiornato + Ricerca REALE completata
+- 🎯 **La direzione:** Quick wins (GitHub Actions, Prompt Caching)
+- ⚡ **Momentum:** Roadmap aggiustata su basi REALI!
 - 🚫 **Mai piu:** Costruire infrastruttura senza bisogno reale
-- ✅ **Prossimo:** Miracollo o Contabilita con lo sciame
+- ✅ **Prossimo:** USARE lo sciame su progetti REALI
 
 ### TODO PROSSIMA SESSIONE
 
 - [ ] **USARE lo sciame su Miracollo** (qualcosa di REALE!)
 - [ ] **USARE lo sciame su Contabilita** (qualcosa di REALE!)
+- [ ] **FASE 10b.1:** Setup GitHub Actions (quick win - 1-2 ore!)
+- [ ] **FASE 10c.1:** Implementare Prompt Caching (quick win - 1-2 ore!)
 
 ---
 
@@ -641,19 +644,21 @@ FASI COMPLETATE: 8/9 (89%)
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-01 20:24 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-01 20:49 (auto)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 18ad622 - 📋 Sessione 39 Chiusura: TODO per prossima sessione
+- **Ultimo commit**: 5440a55 - ✅ Sessione 40: DNA 🐝 aggiornato con lettura Costituzione
 - **File modificati** (4):
-  - ROMPT_RIPRESA.md
+  - OADMAP_SACRA.md
   - data/logs/hook_debug.log
   - data/logs/subagent_stop_debug.log
   - data/swarm_memory.db
 
 ### Note
 - Checkpoint automatico generato da hook
-- Trigger: unknown
+- Trigger: auto
 
 ---

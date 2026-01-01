@@ -6,6 +6,8 @@
 
 ## 📊 OVERVIEW
 
+> **Aggiornato:** 1 Gennaio 2026 - Sessione 40 - Ricerca REALE completata!
+
 | Fase | Nome | Stato | Progresso |
 |------|------|-------|-----------|
 | 0 | Setup Progetto | ✅ DONE | 100% |
@@ -18,10 +20,39 @@
 | 7 | Apprendimento | ✅ DONE | 100% |
 | 7.5 | Parallelizzazione | ✅ DONE | 100% |
 | 8 | La Corte Reale | ✅ DONE | 100% |
-| 9 | Infrastruttura | ⏸️ ARCHIVIATA | 10% |
+| 9 | ~~Infrastruttura H24~~ | ❌ ELIMINATA | - |
 | 10 | Automazione Intelligente | ✅ REALE | 75% |
-| 11 | Sistema Roadmap Visuale | 💭 IDEA | 0% |
-| 12 | Standard e Biblioteca Comune | 🔄 IN CORSO | 25% |
+| 10b | GitHub Actions | 🆕 NUOVO | 0% |
+| 10c | Prompt Caching | 🆕 NUOVO | 0% |
+| 11 | Roadmap Visuale | 💭 BASSA PRIORITÀ | 0% |
+| 12 | Biblioteca Comune | 💭 QUANDO SERVE | 25% |
+
+### 🔬 RICERCA SESSIONE 40 - COSA ABBIAMO IMPARATO
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   🔬 VERITÀ DALLA RICERCA:                                      ║
+║                                                                  ║
+║   ❌ FASE 9 ELIMINATA - Claude NON è progettato per H24         ║
+║      • Anthropic ha rate limits proprio per fermare questo     ║
+║      • Nessun progetto serio usa Grafana per session-based     ║
+║      • Docker monitoring = OVERKILL (già archiviato ✅)          ║
+║                                                                  ║
+║   ✅ QUICK WINS DISPONIBILI ORA:                                 ║
+║      • Prompt Caching → -90% costi token (1-2 ore!)             ║
+║      • GitHub Actions → Automazione PR (1-2 ore!)               ║
+║      • Abbiamo GIÀ il 90% di ciò che serve!                    ║
+║                                                                  ║
+║   ❌ ML/FINE-TUNING = NON SERVE                                  ║
+║      • Troppo pochi dati (<1000 eventi)                         ║
+║      • Fine-tuning solo Haiku via AWS = non per noi             ║
+║      • Prompt Engineering = 90% dell'impatto                    ║
+║                                                                  ║
+║   → Fonti: docs/studio/RICERCA_*.md                             ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
 
 ---
 
@@ -214,29 +245,32 @@
 
 ---
 
-## FASE 9: Infrastruttura 🏭 (Gennaio-Marzo 2026)
+## ~~FASE 9: Infrastruttura H24~~ ❌ ELIMINATA
 
-**Obiettivo:** Lo sciame H24 - Imparare dagli errori, tornare piu robusti!
+> **Eliminata:** 1 Gennaio 2026 - Sessione 40 - Dopo ricerca REALE
 
-> *"Mettiamo le ragazze online... prendono i dati... VERITA!"* - Rafa
-
-| # | Task | Stato | Note |
-|---|------|-------|------|
-| 9a | FASE 9a: Monitoring H24 | 🔄 IN CORSO | Gennaio 2026 |
-| 9a.1 | FASE_9_INFRASTRUTTURA.md | ✅ DONE | 1 Gen - Piano creato! |
-| 9a.2 | RICERCA_INFRASTRUTTURA_H24.md | ✅ DONE | 1 Gen - Best practices! |
-| 9a.3 | KPIs definiti | ✅ DONE | 1 Gen - Nel piano! |
-| 9a.4 | Docker compose monitoring | ✅ DONE | 1 Gen S38 - 21 file creati! |
-| 9a.5 | Deploy su VM Miracollo | ⬜ TODO | Usa VM esistente! |
-| 9a.6 | Alert Telegram | ✅ DONE | 1 Gen S38 - alertmanager.yml! |
-| 9a.7 | Swarm Exporter | ✅ DONE | 1 Gen S38 - 8 metriche Prometheus! |
-| 9a.8 | Grafana Dashboard | ✅ DONE | 1 Gen S38 - 9 panel! |
-| 9b | FASE 9b: Task Programmati | ⬜ TODO | Febbraio 2026 |
-| 9c | FASE 9c: Agent Autonomo | ⬜ TODO | Q2-Q3 2026 |
-
-**FASE 9a: ⏸️ ARCHIVIATA (10%)** - Codice creato ma NIENTE da monitorare H24. Archiviato in `archived/docker/`
-
-→ **Piano dettagliato:** `docs/roadmap/FASE_9_INFRASTRUTTURA.md`
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   ❌ FASE ELIMINATA - ECCO PERCHÉ:                              ║
+║                                                                  ║
+║   1. Claude Code NON è progettato per girare H24                ║
+║      • Anthropic ha messo rate limits per fermare questo uso   ║
+║      • È trigger-based, non daemon-based                        ║
+║                                                                  ║
+║   2. Costi H24 = INSOSTENIBILI                                  ║
+║      • 14 agents × 24h = migliaia $/mese                        ║
+║      • Rate limits bloccano comunque                            ║
+║                                                                  ║
+║   3. Monitoring complesso = OVERKILL                            ║
+║      • Grafana/Prometheus per session-based? No.                ║
+║      • SQLite + hooks + console logs = sufficiente              ║
+║                                                                  ║
+║   📂 Codice archiviato: archived/docker/                        ║
+║   📚 Ricerca: docs/studio/RICERCA_VM_INFRASTRUTTURA.md          ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
 
 ---
 
@@ -275,7 +309,51 @@ RISULTATO: Il progetto si MIGLIORA DA SOLO mentre lavoriamo!
 
 ---
 
-## FASE 11: Sistema Roadmap Visuale 🗺️ (Q2 2026)
+## FASE 10b: GitHub Actions Automation 🤖 (Q1 2026) 🆕
+
+> **Aggiunta:** 1 Gennaio 2026 - Sessione 40 - Dopo ricerca Agent SDK
+
+**Obiettivo:** Automazione CI/CD con Claude via GitHub Actions
+
+| # | Task | Stato | Note |
+|---|------|-------|------|
+| 10b.1 | Setup claude-code-action | ⬜ TODO | 1-2 ore! |
+| 10b.2 | PR Review automatico | ⬜ TODO | Ogni PR = review automatica |
+| 10b.3 | Scheduled maintenance | ⬜ TODO | Weekly health check |
+| 10b.4 | Issue triage | 💭 FUTURO | Labeling automatico |
+
+**Quick Win:** L'action ufficiale `anthropics/claude-code-action@v1` è production-ready!
+
+→ **Ricerca:** `docs/studio/RICERCA_AGENT_SDK_AUTOMAZIONE.md`
+
+---
+
+## FASE 10c: Prompt Caching 💰 (Q1 2026) 🆕
+
+> **Aggiunta:** 1 Gennaio 2026 - Sessione 40 - Dopo ricerca ML
+
+**Obiettivo:** Ridurre costi token del 90%!
+
+| # | Task | Stato | Note |
+|---|------|-------|------|
+| 10c.1 | Implementare cache_control | ⬜ TODO | 1-2 ore! |
+| 10c.2 | Cache DNA di Famiglia | ⬜ TODO | ~500 token/agent |
+| 10c.3 | Cache Costituzione | ⬜ TODO | Ripetuta ogni sessione |
+| 10c.4 | Cache SWARM_RULES | ⬜ TODO | Ripetuta ogni delega |
+| 10c.5 | Misurare risparmio | ⬜ TODO | Target: -90% costi |
+
+**Impatto stimato:**
+```
+SENZA cache: 100% costo token ripetuti
+CON cache: 10% costo dopo primo call
+RISPARMIO: ~85-90%!
+```
+
+→ **Ricerca:** `docs/studio/RICERCA_ML_AGENT_CLAUDE.md`
+
+---
+
+## FASE 11: Sistema Roadmap Visuale 🗺️ (💭 BASSA PRIORITÀ)
 
 **Obiettivo:** Un sito web per visualizzare e gestire le roadmap
 
@@ -339,6 +417,31 @@ Condividiamo PATTERN e STANDARD, non file.
 ---
 
 ## 📝 CHANGELOG
+
+### 1 Gennaio 2026 (Sessione 40) - 🔬 RICERCA REALE + ROADMAP AGGIUSTATA!
+
+- 🔬 **3 RICERCHE PARALLELE COMPLETATE:**
+  - RICERCA_VM_INFRASTRUTTURA_SESSIONE40.md
+  - RICERCA_ML_AGENTI_SESSIONE40.md
+  - RICERCA_AGENT_SDK_AUTOMAZIONE_SESSIONE40.md
+- ❌ **FASE 9 ELIMINATA:**
+  - Claude Code NON progettato per H24
+  - Anthropic rate limits fermano uso H24
+  - Docker monitoring = OVERKILL (archiviato)
+- 🆕 **NUOVE FASI AGGIUNTE:**
+  - FASE 10b: GitHub Actions (quick win!)
+  - FASE 10c: Prompt Caching (-90% costi!)
+- 🎯 **ROADMAP BASATA SU REALTÀ:**
+  - Prompt Engineering = 90% impatto
+  - Fine-tuning = non per noi (solo Haiku)
+  - ML = overkill per <1000 eventi
+- ✅ **14 AGENT DNA AGGIORNATI:**
+  - Ogni agent legge COSTITUZIONE.md
+  - Sezione "PRIMA DI TUTTO" in cima
+
+**Versione:** 10.2.0 (Minor: Ricerca Reale + Roadmap Aggiustata!)
+
+---
 
 ### 2 Gennaio 2026 (Sessione 39 - PARTE 2) - 🔧 SISTEMA HOOKS OTTIMIZZATO
 
