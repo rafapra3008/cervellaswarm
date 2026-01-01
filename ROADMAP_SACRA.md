@@ -14,7 +14,7 @@
 | 3 | Git Worktrees | ✅ DONE | 100% |
 | 4 | Orchestrazione | ✅ DONE | 100% |
 | 5 | Produzione | ✅ DONE | 100% |
-| 6 | Memoria | 🚀 IN CORSO | 85% |
+| 6 | Memoria | 🚀 IN CORSO | 90% |
 | 7 | Apprendimento | ⬜ TODO | 0% |
 | 7.5 | Parallelizzazione | ⬜ TODO | 0% |
 | 8 | Infrastruttura | ⬜ TODO | 0% |

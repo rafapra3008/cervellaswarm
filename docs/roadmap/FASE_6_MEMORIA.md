@@ -77,7 +77,7 @@ scripts/memory/
 ├── suggestions.py      ✅ v1.0.0 (NEW! Suggerimenti automatici!)
 ├── test_system.sh      ✅ v1.0.0
 ├── example_usage.sh    ✅ v1.0.0
-└── README.md           ✅ v1.0.0
+└── README.md           ✅ v2.0.0 (8 script documentati!)
 
 data/
 └── swarm_memory.db  ✅ 69KB (3 tabelle!)
@@ -90,7 +90,7 @@ data/
 | Metrica | Target Gen | Attuale | Progresso |
 |---------|------------|---------|-----------|
 | Eventi loggati | 100+ | 3 | 🔄 In corso |
-| Lezioni apprese | 10+ | **5** | 50% ✅ |
+| Lezioni apprese | 10+ | **7** | 70% ✅ |
 | Pattern scoperti | 5+ | 0 | ⏳ Prossimo |
 
 ---

@@ -15,7 +15,7 @@
 
 ## 🎯 DOVE SIAMO
 
-**FASE 6: Memoria** - 🧠 SETTIMANA 3 COMPLETATA! (85%)
+**FASE 6: Memoria** - 🧠 SETTIMANA 3+4 COMPLETATE! (90%)
 
 Abbiamo:
 - [x] FASE 0+1+2+3+4+5 completate!
