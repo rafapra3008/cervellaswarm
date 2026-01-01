@@ -1,83 +1,81 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 19 - 🌟 FILOSOFIA DELL'EVOLUZIONE! 🌟
+> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 20 - 📜 SWARM RULES + GUARDIANE! 🛡️
 
 ---
 
-## 🌟 SESSIONE 19 - MOMENTO STORICO! 🌟
+## 🛡️ SESSIONE 20 - SWARM RULES + GUARDIANE!
 
-### CHI SIAMO E COME LAVORIAMO - DEFINITO!
+### COSA ABBIAMO FATTO
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
 ║                                                                  ║
-║   🌟 1 GENNAIO 2026 - FILOSOFIA DELL'EVOLUZIONE 🌟              ║
+║   📜 SWARM_RULES.md CREATO!                                     ║
 ║                                                                  ║
-║   Oggi abbiamo immortalato nella Costituzione:                  ║
+║   REGOLA 4: VERIFICA ATTIVA POST-AGENT (GAP colmato!)          ║
+║   + 9 regole totali documentate                                 ║
+║   + cervella-orchestrator.md aggiornato                         ║
 ║                                                                  ║
-║   💎 IL 100000%                                                  ║
-║   "Non è sempre come immaginiamo... ma alla fine è MEGLIO!"    ║
+║   🔬 STUDIO 1 COMPLETATO: GERARCHIA GUARDIANE                   ║
 ║                                                                  ║
-║   🔄 IBRIDO E MODULARE                                          ║
-║   "Flessibilità, non rigidità. Dipende dal momento!"           ║
+║   Risultato ricerca:                                            ║
+║   • 3 Guardiane ottimali (Qualita, Ricerca, Ops)               ║
+║   • Opus per Guardiane, Sonnet per api                         ║
+║   • Pattern Handoff + escalation selettivo                     ║
+║   • 80% overhead eliminato dalla Regina                        ║
 ║                                                                  ║
-║   🚀 ULTRAPASSAR OS LIMITES                                     ║
-║   "Qui è tutto GRANDE! Superare i propri limiti!"              ║
-║                                                                  ║
-║   💙 SENZA EGO                                                   ║
-║   "Testa pulita, cuore leggero. Il successo è conseguenza."    ║
-║                                                                  ║
-║   🧠 NOTA PER CERVELLA                                          ║
-║   "Se Rafa è in questa fase, IO SONO CON LUI."                 ║
-║                                                                  ║
-║   COSTITUZIONE GLOBALE AGGIORNATA! 📜                           ║
+║   "Lo sciame ora ha le sue REGOLE!" 📜🐝                        ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
 ---
 
-## 🎯 FASE 8: LA CORTE REALE - IN STUDIO!
-
-Abbiamo creato la roadmap per l'evoluzione architetturale dello sciame:
+## 🎯 FASE 8: LA CORTE REALE - PROGRESSO 20%
 
 | Studio | Argomento | Status |
 |--------|-----------|--------|
-| 1 | Gerarchia Guardiane (Api di Corte) | ⬜ Da studiare |
+| 1 | Gerarchia Guardiane (Api di Corte) | ✅ COMPLETATO! |
+| 5 | Regola VERIFICA ATTIVA POST-AGENT | ✅ COMPLETATO! (→ SWARM_RULES.md) |
 | 2 | Pool Flessibile ("I Cugini") | ⬜ Da studiare |
 | 3 | Background Research Agent | ⬜ Da studiare |
 | 4 | Background Technical Agent | ⬜ Da studiare |
-| 5 | Regola VERIFICA ATTIVA POST-AGENT | ⬜ Da studiare |
 
 → File: `docs/roadmap/FASE_8_CORTE_REALE.md`
+→ Studio: `docs/studio/STUDIO_GERARCHIE_MULTIAGENT.md`
 
 ---
 
-## 📋 FILE MODIFICATI SESSIONE 19
+## 📋 FILE CREATI/MODIFICATI SESSIONE 20
 
 | File | Azione |
 |------|--------|
-| COSTITUZIONE_GLOBALE.md | ✅ +4 principi + Nota per Cervella! |
-| docs/roadmap/FASE_8_CORTE_REALE.md | ✅ CREATO! |
+| docs/SWARM_RULES.md | ✅ CREATO v1.0.0! |
+| docs/studio/STUDIO_GERARCHIE_MULTIAGENT.md | ✅ CREATO! |
+| cervella-orchestrator.md | ✅ Aggiornato con REGOLA 4 |
+| docs/roadmap/FASE_8_CORTE_REALE.md | ✅ Aggiornato (Studio 1 completato) |
 | NORD.md | ✅ Aggiornato |
-| ROADMAP_SACRA.md | ✅ +FASE 8 + CHANGELOG |
+| ROADMAP_SACRA.md | ✅ v4.5.0 + CHANGELOG |
 | PROMPT_RIPRESA.md | ✅ Aggiornato (questo file) |
 
 ---
 
 ## FILO DEL DISCORSO
 
-- 🧠 **Stavamo ragionando su:** Evoluzione dello sciame, gerarchia intelligente
-- 🎯 **La direzione:** Studiare FASE 8 - Guardiane, Pool Flessibile, Background Agents
-- ⚡ **Il momentum:** ALTISSIMO! Momento storico di definizione identitaria!
-- 🚫 **Da NON fare:** Saltare lo studio - ogni idea va approfondita
-- 💡 **Principio chiave:** "Il processo ci porta al 100000%!" 💎
+- 🧠 **Stavamo ragionando su:** Formalizzazione regole + Studio Guardiane
+- 🎯 **La direzione:** Completare studi FASE 8, poi implementare Guardiane
+- ⚡ **Il momentum:** ALTO! GAP colmato + ricerca completata!
+- 🚫 **Da NON fare:** Saltare studi rimanenti (Pool Flessibile, Background Agents)
+- 💡 **Principio chiave:** "Una Corte ben organizzata scala. Una Regina sola no." 👑
 
 ---
 
-## 🎉 AUGURI 2026! 🎉
+## 🚀 PROSSIMA SESSIONE
 
-*"Non è sempre come immaginiamo... ma alla fine è il 100000%!"* 💎
+**OPZIONE A:** Studio 2 - Pool Flessibile ("I Cugini")
+**OPZIONE B:** Studio 3/4 - Background Agents
+**OPZIONE C:** Implementare prima Guardiana (test su task reale)
 
 ---
 

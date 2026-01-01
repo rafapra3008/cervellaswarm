@@ -29,7 +29,7 @@
 
 ## 📋 AREE DI STUDIO
 
-### STUDIO 1: 🛡️ LE GUARDIANE (Api di Corte)
+### STUDIO 1: 🛡️ LE GUARDIANE (Api di Corte) - COMPLETATO!
 
 **Problema da risolvere:**
 - La Regina riceve TUTTO da TUTTE le api
@@ -38,16 +38,18 @@
 
 **Domande da rispondere:**
 
-| # | Domanda | Status |
-|---|---------|--------|
-| 1.1 | Quante Guardiane servono? (2? 3? 5?) | ⬜ Da studiare |
-| 1.2 | Quali specializzazioni? (Qualità? Tecnica? Dominio?) | ⬜ Da studiare |
-| 1.3 | Guardiane = opus o sonnet? | ⬜ Da studiare |
-| 1.4 | Come comunicano con la Regina? (Report strutturati?) | ⬜ Da studiare |
-| 1.5 | Cosa delegano vs cosa escalano? | ⬜ Da studiare |
-| 1.6 | Come gestiamo conflitti tra Guardiane? | ⬜ Da studiare |
+| # | Domanda | Status | Risposta |
+|---|---------|--------|----------|
+| 1.1 | Quante Guardiane servono? | ✅ RISPOSTO | **3 Guardiane** |
+| 1.2 | Quali specializzazioni? | ✅ RISPOSTO | **Per DOMINIO** (Qualita, Ricerca, Ops) |
+| 1.3 | Guardiane = opus o sonnet? | ✅ RISPOSTO | **OPUS** (reasoning profondo) |
+| 1.4 | Come comunicano con la Regina? | ✅ RISPOSTO | **Escalation solo se necessario** |
+| 1.5 | Cosa delegano vs cosa escalano? | ✅ RISPOSTO | **Tutto tranne decisioni strategiche** |
+| 1.6 | Come gestiamo conflitti tra Guardiane? | ✅ RISPOSTO | **Handoff pattern** |
 
-**Ipotesi iniziale (da validare):**
+**STUDIO COMPLETO:** `docs/studio/STUDIO_GERARCHIE_MULTIAGENT.md`
+
+**Ipotesi VALIDATA:**
 
 ```
 🛡️ GUARDIANA QUALITÀ (opus)
@@ -66,10 +68,12 @@
    - Escalation: rischi security o decisioni infrastrutturali
 ```
 
-**Ricerche da fare:**
-- [ ] Come funzionano gerarchie in sistemi multi-agent (papers)
-- [ ] Pattern "Supervisor Agent" in LangChain/AutoGen
-- [ ] Esempi reali di team AI gerarchici
+**Ricerche COMPLETATE:**
+- [x] Come funzionano gerarchie in sistemi multi-agent (papers)
+- [x] Pattern "Supervisor Agent" in LangChain/AutoGen
+- [x] Esempi reali di team AI gerarchici
+
+**Risultato:** 2-3 livelli ottimale, raggruppamento per dominio, Opus per supervisori
 
 ---
 

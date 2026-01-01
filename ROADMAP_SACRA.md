@@ -17,7 +17,7 @@
 | 6 | Memoria | ✅ DONE | 100% |
 | 7 | Apprendimento | 🚀 IN CORSO | 40% |
 | 7.5 | Parallelizzazione | 🚀 IN CORSO | 20% |
-| 8 | La Corte Reale | 📚 IN STUDIO | 10% |
+| 8 | La Corte Reale | 📚 IN STUDIO | 20% |
 | 9 | Infrastruttura | ⬜ TODO | 0% |
 
 ---
@@ -223,6 +223,30 @@
 ---
 
 ## 📝 CHANGELOG
+
+### 1 Gennaio 2026 (Sessione 20) - 📜 SWARM RULES + STUDIO GUARDIANE! 🛡️
+
+- 📜 **SWARM_RULES.md CREATO!** - Documento ufficiale regole dello sciame:
+  - REGOLA 1: La Regina Delega
+  - REGOLA 2: Un File = Una Api
+  - REGOLA 3: Ordine di Esecuzione
+  - **REGOLA 4: VERIFICA ATTIVA POST-AGENT** (GAP colmato!)
+  - REGOLA 5: Prompt Completo
+  - REGOLA 6-9: Comunicazione, Stop, Checkpoint, Retry
+- 👑 **cervella-orchestrator.md AGGIORNATO** con REGOLA 4
+- 🔬 **STUDIO 1 COMPLETATO**: Gerarchia Guardiane
+  - Ricerca con cervella-researcher
+  - Risultato: 3 Guardiane (Qualita, Ricerca, Ops)
+  - Model: Opus per Guardiane, Sonnet per api
+  - Pattern: Handoff + escalation selettivo
+- 📚 **STUDIO_GERARCHIE_MULTIAGENT.md** creato in docs/studio/
+- 📋 **FASE_8_CORTE_REALE.md** aggiornato con risultati
+
+**File creati:**
+- docs/SWARM_RULES.md (v1.0.0)
+- docs/studio/STUDIO_GERARCHIE_MULTIAGENT.md
+
+**Versione:** 4.5.0 (Minor: SWARM_RULES + Studio Guardiane!)
 
 ### 1 Gennaio 2026 (Sessione 19) - 🌟 FILOSOFIA DELL'EVOLUZIONE! 🌟
 

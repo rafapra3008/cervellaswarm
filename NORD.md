@@ -27,34 +27,33 @@ Abbiamo:
 - [x] **SISTEMA MEMORIA v2.1.0 FUNZIONANTE!** ✅
 - [x] **🌟 FILOSOFIA DELL'EVOLUZIONE aggiunta alla Costituzione!** 🌟
 
-### 🌟 SESSIONE 19 - 1 GENNAIO 2026 - MOMENTO STORICO!
+### 🛡️ SESSIONE 20 - 1 GENNAIO 2026 - SWARM RULES + GUARDIANE!
 
 ```
 ╔════════════════════════════════════════════════════════════════╗
 ║                                                                ║
-║   🌟 FILOSOFIA DELL'EVOLUZIONE 🌟                              ║
+║   📜 SWARM_RULES.md CREATO!                                   ║
 ║                                                                ║
-║   Oggi abbiamo definito CHI SIAMO e COME LAVORIAMO:           ║
+║   + REGOLA 4: VERIFICA ATTIVA POST-AGENT (GAP colmato!)      ║
+║   + 9 regole totali documentate                               ║
+║   + cervella-orchestrator.md aggiornato                       ║
 ║                                                                ║
-║   💎 IL 100000% - Il processo ci porta a risultati MIGLIORI   ║
-║   🔄 IBRIDO E MODULARE - Flessibilità, non rigidità           ║
-║   🚀 ULTRAPASSAR OS LIMITES - Qui è tutto GRANDE              ║
-║   💙 SENZA EGO - Testa pulita, cuore leggero                  ║
+║   🔬 STUDIO GUARDIANE COMPLETATO!                              ║
 ║                                                                ║
-║   + NOTA PER CERVELLA (ricordo per me stessa)                 ║
-║                                                                ║
-║   Costituzione Globale aggiornata! 📜                         ║
+║   Risultato: 3 Guardiane (Qualita, Ricerca, Ops)             ║
+║   Model: Opus per Guardiane, Sonnet per api                   ║
+║   Pattern: Handoff + escalation selettivo                     ║
 ║                                                                ║
 ╚════════════════════════════════════════════════════════════════╝
 ```
 
-### 🚀 FASE 8 - La Corte Reale (IN STUDIO!)
+### 🚀 FASE 8 - La Corte Reale (IN STUDIO! 20%)
 - [x] **FASE_8_CORTE_REALE.md** creata! ✅
-- ⬜ Studio 1: Gerarchia Guardiane
+- [x] **Studio 1: Gerarchia Guardiane** ✅ COMPLETATO!
+- [x] **Studio 5: VERIFICA ATTIVA POST-AGENT** ✅ COMPLETATO! (→ SWARM_RULES.md)
 - ⬜ Studio 2: Pool Flessibile ("I Cugini")
 - ⬜ Studio 3: Background Research Agent
 - ⬜ Studio 4: Background Technical Agent
-- ⬜ Studio 5: Regola VERIFICA ATTIVA POST-AGENT
 
 ### 🚀 FASE 7 + 7.5 - (Continuano dopo FASE 8 study)
 - [x] 7a/7b/7c: COMPLETATI! ✅
@@ -117,19 +116,19 @@ APRILE+:   🧬 EVOLUZIONE - Lo sciame che SI MIGLIORA
 
 ## 📅 ULTIMO AGGIORNAMENTO
 
-**1 Gennaio 2026 - Sessione 19** - 🌟 **FILOSOFIA DELL'EVOLUZIONE!** 🌟
+**1 Gennaio 2026 - Sessione 20** - 📜 **SWARM RULES + GUARDIANE!** 🛡️
 
-- **MOMENTO STORICO:** Definito CHI SIAMO e COME LAVORIAMO!
-- **COSTITUZIONE AGGIORNATA:** 4 nuovi principi + Nota per Cervella
-  - 💎 IL 100000% - Il processo ci porta al meglio possibile
-  - 🔄 IBRIDO E MODULARE - Flessibilità, dipende dal momento
-  - 🚀 ULTRAPASSAR OS LIMITES - Qui è tutto GRANDE
-  - 💙 SENZA EGO - Testa pulita, cuore leggero
-- **FASE 8:** La Corte Reale - ROADMAP creata!
-  - Guardiane (Api di Corte)
-  - Pool Flessibile ("I Cugini")
-  - Background Agents (Ricerca + Tecnico)
-- **AUGURI 2026!** 🎉
+- **SWARM_RULES.md CREATO!** - Documento ufficiale regole dello sciame
+  - REGOLA 4: VERIFICA ATTIVA POST-AGENT (GAP colmato!)
+  - 9 regole totali documentate
+- **STUDIO 1 COMPLETATO!** - Gerarchia Guardiane
+  - 3 Guardiane: Qualita, Ricerca, Ops
+  - Opus per Guardiane, Sonnet per api
+  - Pattern Handoff + escalation
+- **FILE CREATI:**
+  - docs/SWARM_RULES.md (v1.0.0)
+  - docs/studio/STUDIO_GERARCHIE_MULTIAGENT.md
+- **PROSSIMO:** Studio 2 (Pool Flessibile) o Studio 3/4 (Background Agents)
 
 ---
 
