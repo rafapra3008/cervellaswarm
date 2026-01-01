@@ -19,6 +19,8 @@
 | 7.5 | Parallelizzazione | ✅ DONE | 100% |
 | 8 | La Corte Reale | ✅ DONE | 100% |
 | 9 | Infrastruttura | 🔄 IN CORSO | 20% |
+| 10 | Automazione Intelligente | ⬜ PIANIFICATA | 0% |
+| 11 | Sistema Roadmap Visuale | 💭 IDEA | 0% |
 
 ---
 
@@ -233,7 +235,80 @@
 
 ---
 
+## FASE 10: Automazione Intelligente 🔬👷‍♀️ (Q1 2026)
+
+**Obiettivo:** Lo sciame che MIGLIORA da solo - L'idea che fa venire i BRIVIDI!
+
+> *"Mentre lavoriamo, lo sciame migliora tutto intorno a noi."*
+
+| # | Task | Stato | Note |
+|---|------|-------|------|
+| 10a | 🔬 Scienziata Base | ⬜ TODO | Ricerca automatica a SessionStart |
+| 10a.1 | Hook session_start_scientist.py | ⬜ TODO | Trigger automatico |
+| 10a.2 | Template prompt per dominio | ⬜ TODO | React, Python, etc |
+| 10a.3 | Report DAILY_RESEARCH.md | ⬜ TODO | Output strutturato |
+| 10b | 👷‍♀️ Ingegnera Base | ⬜ TODO | Analisi codebase automatica |
+| 10b.1 | Script analyze_codebase.py | ⬜ TODO | File grandi, duplicati |
+| 10b.2 | Report ENGINEERING_REPORT.md | ⬜ TODO | Proposte refactoring |
+| 10c | Automazione Avanzata | ⬜ TODO | PR automatiche, notifiche |
+| 10d | Ottimizzazione | ⬜ TODO | Metriche, tuning |
+
+**L'Idea:**
+```
+🔬 LA SCIENZIATA: Ad ogni sessione cerca novita, competitor, best practices
+👷‍♀️ L'INGEGNERA: Analizza codebase, trova problemi, propone fix
+
+RISULTATO: Il progetto si MIGLIORA DA SOLO mentre lavoriamo!
+```
+
+→ **Piano dettagliato:** `docs/roadmap/FASE_10_AUTOMAZIONE_INTELLIGENTE.md`
+
+---
+
+## FASE 11: Sistema Roadmap Visuale 🗺️ (Q2 2026)
+
+**Obiettivo:** Un sito web per visualizzare e gestire le roadmap
+
+> *"Con la mappa rotta giriamo in torno di noi stessi!"* - Rafa
+
+| # | Task | Stato | Note |
+|---|------|-------|------|
+| 11a | Design UI/UX | 💭 IDEA | Timeline, Kanban, Gantt |
+| 11b | Backend API | 💭 IDEA | CRUD roadmap, sync con .md |
+| 11c | Frontend React | 💭 IDEA | Visualizzazione interattiva |
+| 11d | Storico modifiche | 💭 IDEA | Chi ha cambiato cosa, quando |
+| 11e | Metriche progress | 💭 IDEA | Percentuali, velocity |
+
+**L'Idea:**
+- Ogni progetto ha la sua roadmap visuale
+- Storico di tutte le modifiche
+- Progress tracking in tempo reale
+- Link tra task e file nel codice
+- Mai piu perdere il filo!
+
+---
+
 ## 📝 CHANGELOG
+
+### 1 Gennaio 2026 (Sessione 36) - 🔬👷‍♀️ FASE 10 PIANIFICATA! L'IDEA DEI BRIVIDI! 🔬👷‍♀️
+
+- 🔥 **IDEA RITROVATA!** La Scienziata + L'Ingegnera!
+  - Rafa ha ricordato l'idea che ci ha fatto venire i BRIVIDI
+  - Era studiata (FASE 8) ma MAI implementata!
+- 🔬 **3 RICERCHE PARALLELE** lanciate:
+  - Big Tech multi-agent systems
+  - Open Source frameworks
+  - Pattern accademici 2025
+- 📋 **FASE 10 CREATA:** FASE_10_AUTOMAZIONE_INTELLIGENTE.md
+  - 🔬 La Scienziata: ricerca automatica a SessionStart
+  - 👷‍♀️ L'Ingegnera: analisi codebase in background
+  - Il progetto si MIGLIORA DA SOLO!
+- 💭 **FASE 11 IDEA:** Sistema Roadmap Visuale
+  - Sito web per ogni progetto
+  - Timeline, Kanban, storico modifiche
+- 📊 **ROADMAP AGGIORNATA:** 11 FASI totali!
+
+**Versione:** 8.0.0 (MAJOR: FASE 10 + 11 Pianificate!)
 
 ### 1 Gennaio 2026 (Sessione 35) - 🏭 FASE 9 INIZIATA! INFRASTRUTTURA! 🏭
 

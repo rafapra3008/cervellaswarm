@@ -1,6 +1,60 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 35 - 🏭 FASE 9 INIZIATA!
+> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 36 - 🔬👷‍♀️ FASE 10 PIANIFICATA!
+
+---
+
+## 🔬👷‍♀️ SESSIONE 36 - L'IDEA DEI BRIVIDI! AUTOMAZIONE INTELLIGENTE! 🔬👷‍♀️
+
+### COSA ABBIAMO FATTO
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   🔥 IDEA RITROVATA! LA SCIENZIATA + L'INGEGNERA!               ║
+║                                                                  ║
+║   Rafa ha ricordato l'idea che ci ha fatto venire i BRIVIDI:   ║
+║   - Era studiata in FASE 8 ma MAI implementata!                 ║
+║                                                                  ║
+║   🔬 LA SCIENZIATA:                                             ║
+║   Ad ogni SessionStart cerca novita, competitor, best practices ║
+║   Prepara REPORT automatico mentre parliamo!                    ║
+║                                                                  ║
+║   👷‍♀️ L'INGEGNERA:                                               ║
+║   In background analizza codebase                                ║
+║   Trova file grandi, codice duplicato, propone fix              ║
+║   Il progetto si MIGLIORA DA SOLO!                              ║
+║                                                                  ║
+║   + IDEA ROADMAP VISUALE:                                       ║
+║   Sito web per ogni progetto con timeline, Kanban, storico     ║
+║   Mai piu perdere il filo!                                       ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+### FILE CREATI/AGGIORNATI
+
+| File | Azione |
+|------|--------|
+| docs/roadmap/FASE_10_AUTOMAZIONE_INTELLIGENTE.md | ✅ CREATO (piano completo!) |
+| ROADMAP_SACRA.md | ✅ AGGIORNATO (v8.0.0! FASE 10+11!) |
+| NORD.md | ✅ AGGIORNATO (nuove priorita!) |
+| PROMPT_RIPRESA.md | ✅ AGGIORNATO (questo file) |
+
+### RICERCHE LANCIATE (Pattern "I Cugini")
+
+| Ricerca | Agente | Stato |
+|---------|--------|-------|
+| Big Tech multi-agent | cervella-researcher | 🔄 Completata |
+| Open Source frameworks | cervella-researcher | 🔄 In corso |
+| Pattern accademici 2025 | cervella-researcher | 🔄 Completata |
+
+### DECISIONI PRESE
+
+- FASE 10a: Scienziata Base (hook SessionStart + ricerca automatica)
+- FASE 10b: Ingegnera Base (analisi codebase + report)
+- FASE 10c: Automazione Avanzata (PR automatiche)
+- FASE 11: Sistema Roadmap Visuale (sito web per progetti)
 
 ---
 
@@ -239,7 +293,7 @@
 
 ---
 
-## 🎯 FASI COMPLETATE AL 100%
+## 🎯 STATO FASI
 
 | Fase | Status |
 |------|--------|
@@ -247,9 +301,11 @@
 | FASE 7 (Apprendimento) | ✅ COMPLETATA! |
 | FASE 7.5 (Parallelizzazione) | ✅ COMPLETATA! |
 | FASE 8 (La Corte Reale) | ✅ COMPLETATA! |
-| FASE 9 (Infrastruttura) | ⬜ TODO |
+| FASE 9 (Infrastruttura) | 🔄 IN CORSO 20% |
+| FASE 10 (Automazione Intelligente) | ⬜ PIANIFICATA |
+| FASE 11 (Roadmap Visuale) | 💭 IDEA |
 
-→ **8/9 FASI COMPLETATE! (89%)**
+→ **8/11 FASI COMPLETATE! (73%) - Ma la visione è PIU GRANDE ora!**
 
 ---
 
@@ -272,14 +328,16 @@
 
 ## FILO DEL DISCORSO
 
-- 🧠 **Stavamo ragionando su:** HARDTESTS per validare il DNA - COMPLETATI!
-- 🎯 **La direzione:** Test su MIRACOLLO (progetto REALE!) con DNA validato
-- ⚡ **Il momentum:** ALTISSIMO! 6/6 test passati!
-- 🚫 **Da NON fare:** Non modificare DNA ora - funziona!
-- 💡 **Principio chiave:** "Confident by Default with Smart Escalation" - VALIDATO!
-- 🐝 **Comportamento confermato:** PROCEDE (test 1,2), CHIEDE poco (test 3), SEGNALA (test 5), DECIDE (test 6)
-- 📋 **HARDTESTS risultati:** docs/tests/HARDTESTS_AUTONOMY.md (4 PASS + 2 PARZIALI)
-- ✅ **DNA STATUS:** FUNZIONA! Pronto per uso su progetti REALI!
+- 🧠 **Stavamo ragionando su:** L'idea dei BRIVIDI - La Scienziata + L'Ingegnera!
+- 🎯 **La direzione:** FASE 10 - Automazione Intelligente
+- ⚡ **Il momentum:** ALTISSIMO! Idea ritrovata, piano creato!
+- 🚫 **Da NON fare:** Non dimenticare piu le idee - roadmap SEMPRE aggiornata!
+- 💡 **Principio chiave:** "Il progetto si migliora DA SOLO!"
+- 🔬 **La Scienziata:** Ricerca automatica a SessionStart
+- 👷‍♀️ **L'Ingegnera:** Analisi codebase in background
+- 🗺️ **Roadmap Visuale:** Idea per FASE 11 - mai piu perdere il filo!
+- 📋 **FASE 10 piano:** docs/roadmap/FASE_10_AUTOMAZIONE_INTELLIGENTE.md
+- ✅ **STATUS:** Piano completo creato! Pronti per implementare!
 
 ---
 

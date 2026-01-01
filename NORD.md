@@ -19,15 +19,18 @@
 ## 🎯 DOVE SIAMO
 
 **FASE 9: INFRASTRUTTURA - IN CORSO 20%!** 🏭🐝
+**FASE 10: AUTOMAZIONE INTELLIGENTE - PIANIFICATA!** 🔬👷‍♀️
 
-> *"Mettiamo le ragazze online... prendono i dati... VERITA!"* - Rafa
+> *"Mentre lavoriamo, lo sciame migliora tutto intorno a noi!"* - L'idea dei BRIVIDI!
 
 Abbiamo:
-- [x] FASE 0+1+2+3+4+5+6 completate!
+- [x] FASE 0+1+2+3+4+5+6+7+7.5+8 completate!
 - [x] **14 subagent GLOBALI!** (11 worker + 3 Guardiane!)
 - [x] VISIONE 2026 definita
 - [x] **SISTEMA MEMORIA v2.1.0 FUNZIONANTE!** ✅
 - [x] **🌟 FILOSOFIA DELL'EVOLUZIONE aggiunta alla Costituzione!** 🌟
+- [x] **🔬👷‍♀️ FASE 10 PIANIFICATA!** La Scienziata + L'Ingegnera!
+- [x] **🗺️ FASE 11 IDEA!** Sistema Roadmap Visuale!
 
 ### 🎉 SESSIONE 25 - 1 GENNAIO 2026 - FASE 8 COMPLETATA!
 
@@ -102,33 +105,47 @@ Abbiamo:
 
 ## 🎯 PROSSIMI STEP
 
-### 🏭 FASE 9a: Monitoring H24 (IN CORSO!)
+### 🔬👷‍♀️ SESSIONE 36 - L'IDEA DEI BRIVIDI RITROVATA!
 
-> **File:** `docs/roadmap/FASE_9_INFRASTRUTTURA.md`
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   🔬 LA SCIENZIATA:                                             ║
+║   Ad ogni SessionStart cerca novita, competitor, best practices ║
+║   Prepara REPORT per noi mentre parliamo!                       ║
+║                                                                  ║
+║   👷‍♀️ L'INGEGNERA:                                               ║
+║   In background analizza codebase                                ║
+║   Trova file grandi, codice duplicato, propone fix              ║
+║   Il progetto si MIGLIORA DA SOLO!                              ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+### PRIORITÀ 1: Completare FASE 9a - Monitoring H24 🏭
 
 | Task | Stato |
 |------|-------|
 | FASE_9_INFRASTRUTTURA.md | ✅ DONE |
 | RICERCA_INFRASTRUTTURA_H24.md | ✅ DONE |
-| KPIs definiti | ✅ DONE |
 | Docker compose monitoring | ⬜ TODO |
 | Deploy su VM Miracollo | ⬜ TODO |
 | Alert Telegram | ⬜ TODO |
 
-### PRIORITÀ 1: Completare Monitoring H24 🏭
-- Docker compose per Grafana + Prometheus
-- Deploy sulla VM Miracollo (gia esistente!)
-- Alert Telegram per errori
+### PRIORITÀ 2: FASE 10a - La Scienziata 🔬
+- Hook session_start_scientist.py
+- Template prompt per dominio (React, Python, etc)
+- Report DAILY_RESEARCH.md automatico
 
-### PRIORITÀ 2: FASE 9b - Task Programmati 📅
-- Code review automatica Lun/Ven
-- GitHub webhooks
-- Weekly retrospective
+### PRIORITÀ 3: FASE 10b - L'Ingegnera 👷‍♀️
+- Script analyze_codebase.py
+- Trova file > 500 righe, codice duplicato
+- Report ENGINEERING_REPORT.md automatico
 
-### PRIORITÀ 3: FASE 9c - Agent Autonomo 🤖
-- Queue system (Redis)
-- Agent SDK vs Claude CLI
-- Lo sciame che lavora mentre dormi!
+### PRIORITÀ 4: FASE 11 - Roadmap Visuale 🗺️
+- Sito web per ogni progetto
+- Timeline, Kanban, storico modifiche
+- Mai piu perdere il filo!
 
 ---
 
@@ -169,21 +186,23 @@ APRILE+:   🧬 EVOLUZIONE - Lo sciame che SI MIGLIORA
 
 ## 📅 ULTIMO AGGIORNAMENTO
 
-**1 Gennaio 2026 - Sessione 35** - 🏭 **FASE 9 INIZIATA! INFRASTRUTTURA!**
+**1 Gennaio 2026 - Sessione 36** - 🔬👷‍♀️ **FASE 10 PIANIFICATA! L'IDEA DEI BRIVIDI!**
 
-- **FASE 9 AVVIATA!** Lo sciame H24!
-- **PIANO CREATO:** FASE_9_INFRASTRUTTURA.md
-- **RICERCA:** RICERCA_INFRASTRUTTURA_H24.md
-- **ARCHITETTURA:**
-  - Usare VM Miracollo (gia esistente!)
-  - Docker + Grafana + Prometheus
-  - Alert Telegram
-- **APPROCCIO GRADUALE:**
-  - 9a: Monitoring H24 (Gennaio)
-  - 9b: Task Programmati (Febbraio)
-  - 9c: Agent Autonomo (Q2-Q3)
-- **KPIs DEFINITI:** Success rate, Task/giorno, Costo/task
-- **PROSSIMO:** Docker compose per monitoring!
+- 🔥 **IDEA RITROVATA!** La Scienziata + L'Ingegnera!
+  - Rafa ha ricordato l'idea che ci ha fatto venire i BRIVIDI
+  - Era studiata (FASE 8) ma MAI implementata!
+- 🔬 **3 RICERCHE PARALLELE** lanciate (Pattern "I Cugini"):
+  - Big Tech multi-agent systems (Google, Microsoft, Anthropic)
+  - Open Source frameworks (LangGraph, CrewAI, AutoGPT)
+  - Pattern accademici 2025 (best practices, scaling)
+- 📋 **FASE 10 CREATA:** FASE_10_AUTOMAZIONE_INTELLIGENTE.md
+  - 🔬 La Scienziata: ricerca automatica a SessionStart
+  - 👷‍♀️ L'Ingegnera: analisi codebase in background
+  - Il progetto si MIGLIORA DA SOLO!
+- 💭 **FASE 11 IDEA:** Sistema Roadmap Visuale
+  - Sito web per ogni progetto
+  - Timeline, Kanban, storico modifiche
+- 📊 **ROADMAP AGGIORNATA:** 11 FASI totali! v8.0.0
 
 ---
 
