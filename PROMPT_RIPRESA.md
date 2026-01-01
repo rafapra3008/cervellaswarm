@@ -1,12 +1,61 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 36 - 🔬👷‍♀️ FASE 10 PIANIFICATA!
+> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 37 - 🔬👷‍♀️ FASE 10 IMPLEMENTATA!
+
+---
+
+## 🔥 SESSIONE 37 - L'IDEA DEI BRIVIDI REALIZZATA! 🔥
+
+### COSA ABBIAMO FATTO
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   🔬👷‍♀️ FASE 10: AUTOMAZIONE INTELLIGENTE - 50%!                 ║
+║                                                                  ║
+║   ✅ LA SCIENZIATA IMPLEMENTATA!                                 ║
+║      • session_start_scientist.py (295 righe!)                  ║
+║      • Hook SessionStart automatico                             ║
+║      • Genera prompt per ricerca automatica                     ║
+║      • 4 progetti supportati                                     ║
+║      • TESTATO E FUNZIONANTE!                                   ║
+║                                                                  ║
+║   ✅ L'INGEGNERA IMPLEMENTATA!                                   ║
+║      • analyze_codebase.py (442 righe!)                         ║
+║      • CLI completa con Rich progress bar                       ║
+║      • Trova file grandi, funzioni grandi, TODO, duplicati     ║
+║      • Output Markdown e JSON                                    ║
+║      • TESTATO: 85 file, 23,912 righe, 51 issues!              ║
+║                                                                  ║
+║   📚 RICERCA COMPLETATA!                                        ║
+║      • RICERCA_AUTO_RESEARCH_SYSTEMS.md                         ║
+║      • Pattern "I Cugini" = best practice Anthropic!           ║
+║      • Agentic Plan Caching: -50% costi, -27% latency          ║
+║                                                                  ║
+║   🐝 3 API IN PARALLELO (Pattern "I Cugini"):                   ║
+║      • cervella-backend x2 (script)                             ║
+║      • cervella-researcher x1 (ricerca)                         ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+### FILE CREATI/AGGIORNATI
+
+| File | Azione |
+|------|--------|
+| ~/.claude/hooks/session_start_scientist.py | ✅ CREATO (295 righe!) |
+| scripts/engineer/analyze_codebase.py | ✅ CREATO (442 righe!) |
+| docs/studio/RICERCA_AUTO_RESEARCH_SYSTEMS.md | ✅ CREATO |
+| reports/scientist_prompt_20260101.md | ✅ GENERATO (test) |
+| ROADMAP_SACRA.md | ✅ AGGIORNATO (v8.1.0!) |
+| NORD.md | ✅ AGGIORNATO (FASE 10 50%!) |
+| PROMPT_RIPRESA.md | ✅ AGGIORNATO (questo file) |
 
 ---
 
 ## 🔬👷‍♀️ SESSIONE 36 - L'IDEA DEI BRIVIDI! AUTOMAZIONE INTELLIGENTE! 🔬👷‍♀️
 
-### COSA ABBIAMO FATTO
+### COSA ABBIAMO FATTO (Sessione 36)
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗

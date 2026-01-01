@@ -19,7 +19,7 @@
 | 7.5 | Parallelizzazione | ✅ DONE | 100% |
 | 8 | La Corte Reale | ✅ DONE | 100% |
 | 9 | Infrastruttura | 🔄 IN CORSO | 20% |
-| 10 | Automazione Intelligente | ⬜ PIANIFICATA | 0% |
+| 10 | Automazione Intelligente | 🔄 IN CORSO | 50% |
 | 11 | Sistema Roadmap Visuale | 💭 IDEA | 0% |
 
 ---
@@ -243,13 +243,13 @@
 
 | # | Task | Stato | Note |
 |---|------|-------|------|
-| 10a | 🔬 Scienziata Base | ⬜ TODO | Ricerca automatica a SessionStart |
-| 10a.1 | Hook session_start_scientist.py | ⬜ TODO | Trigger automatico |
-| 10a.2 | Template prompt per dominio | ⬜ TODO | React, Python, etc |
-| 10a.3 | Report DAILY_RESEARCH.md | ⬜ TODO | Output strutturato |
-| 10b | 👷‍♀️ Ingegnera Base | ⬜ TODO | Analisi codebase automatica |
-| 10b.1 | Script analyze_codebase.py | ⬜ TODO | File grandi, duplicati |
-| 10b.2 | Report ENGINEERING_REPORT.md | ⬜ TODO | Proposte refactoring |
+| 10a | 🔬 Scienziata Base | ✅ DONE | Sessione 37! |
+| 10a.1 | Hook session_start_scientist.py | ✅ DONE | 295 righe! Testato! |
+| 10a.2 | Template prompt per dominio | ✅ DONE | 4 progetti supportati |
+| 10a.3 | Report DAILY_RESEARCH.md | ✅ DONE | Template strutturato |
+| 10b | 👷‍♀️ Ingegnera Base | ✅ DONE | Sessione 37! |
+| 10b.1 | Script analyze_codebase.py | ✅ DONE | 442 righe! Testato! |
+| 10b.2 | Report ENGINEERING_REPORT.md | ✅ DONE | Markdown + JSON |
 | 10c | Automazione Avanzata | ⬜ TODO | PR automatiche, notifiche |
 | 10d | Ottimizzazione | ⬜ TODO | Metriche, tuning |
 
@@ -289,6 +289,33 @@ RISULTATO: Il progetto si MIGLIORA DA SOLO mentre lavoriamo!
 ---
 
 ## 📝 CHANGELOG
+
+### 1 Gennaio 2026 (Sessione 37) - 🔬👷‍♀️ FASE 10 IMPLEMENTATA! L'IDEA DEI BRIVIDI REALIZZATA! 🔬👷‍♀️
+
+- 🔬 **LA SCIENZIATA IMPLEMENTATA!**
+  - `~/.claude/hooks/session_start_scientist.py` (295 righe!)
+  - Hook SessionStart automatico
+  - Rileva progetto/dominio dal cwd
+  - Genera prompt per cervella-researcher
+  - 4 progetti supportati (Miracollo, Contabilità, CervellaSwarm, Libertaio)
+  - Testato e funzionante!
+- 👷‍♀️ **L'INGEGNERA IMPLEMENTATA!**
+  - `scripts/engineer/analyze_codebase.py` (442 righe!)
+  - CLI completa con Rich progress bar
+  - Trova: file grandi, funzioni grandi, TODO/FIXME, file duplicati
+  - Output Markdown e JSON
+  - Testato su CervellaSwarm: 85 file, 23,912 righe, 51 issues!
+- 📚 **RICERCA COMPLETATA:**
+  - `docs/studio/RICERCA_AUTO_RESEARCH_SYSTEMS.md`
+  - Best practices da Anthropic, Microsoft, Google
+  - Pattern "I Cugini" validato come best practice!
+  - Agentic Plan Caching: -50% costi, -27% latency
+- 🐝 **3 API IN PARALLELO** (Pattern "I Cugini"):
+  - cervella-backend x2 (creazione script)
+  - cervella-researcher x1 (ricerca best practices)
+- 📊 **FASE 10 AL 50%!** (era 0%)
+
+**Versione:** 8.1.0 (Minor: FASE 10 Implementazione Iniziale!)
 
 ### 1 Gennaio 2026 (Sessione 36) - 🔬👷‍♀️ FASE 10 PIANIFICATA! L'IDEA DEI BRIVIDI! 🔬👷‍♀️
 

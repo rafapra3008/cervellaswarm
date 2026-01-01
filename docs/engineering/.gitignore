@@ -1,0 +1,6 @@
+# Engineering Reports
+# Solo l'ultimo report viene committato
+audit-*.md
+
+# Eccezione: tieni l'ultimo report
+!audit-$(date +%Y-%m-%d).md
