@@ -1,0 +1,144 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__playwright__*",
+      "mcp__browser__*",
+      "Read",
+      "Edit",
+      "Write",
+      "Bash",
+      "Glob",
+      "Grep",
+      "Task",
+      "WebSearch",
+      "WebFetch"
+    ]
+  },
+  "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "manual",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/rafapra/.claude/hooks/pre_compact_save.py",
+            "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "python3 /Users/rafapra/.claude/hooks/update_prompt_ripresa.py",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "auto",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/rafapra/.claude/hooks/pre_compact_save.py",
+            "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "python3 /Users/rafapra/.claude/hooks/update_prompt_ripresa.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/rafapra/.claude/hooks/session_end_save.py",
+            "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "python3 /Users/rafapra/.claude/hooks/update_prompt_ripresa.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/rafapra/.claude/hooks/git_reminder.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Cervella pronta! Nuova sessione.\" with title \"🧠 Claude Code\" sound name \"Glass\"'"
+          },
+          {
+            "type": "command",
+            "command": "python3 /Users/rafapra/Developer/CervellaSwarm/scripts/memory/load_context.py",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Sessione ripresa!\" with title \"🧠 Claude Code\" sound name \"Glass\"'"
+          },
+          {
+            "type": "command",
+            "command": "python3 /Users/rafapra/Developer/CervellaSwarm/scripts/memory/load_context.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/rafapra/Developer/CervellaSwarm/scripts/memory/debug_hook.py",
+            "timeout": 3
+          },
+          {
+            "type": "command",
+            "command": "python3 /Users/rafapra/Developer/CervellaSwarm/scripts/memory/log_event.py",
+            "timeout": 3
+          }
+        ]
+      }
+    ]
+  },
+  "mcpServers": {
+    "browser": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--browser",
+        "chromium",
+        "--caps",
+        "vision",
+        "--viewport-size",
+        "1280x720",
+        "--user-data-dir",
+        "/Users/rafapra/.claude/browser-profile"
+      ]
+    }
+  }
+}

@@ -632,18 +632,23 @@ FASI COMPLETATE: 8/9 (89%)
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-01 20:13 (test)
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-01 20:24 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: ad36e37 - 🔍 Sessione 38 Chiusura: RIFLESSIONE ONESTA - SU CARTA ≠ REALE
-- **File modificati** (3):
-  - ata/logs/hook_debug.log
+- **Ultimo commit**: 18ad622 - 📋 Sessione 39 Chiusura: TODO per prossima sessione
+- **File modificati** (4):
+  - ROMPT_RIPRESA.md
+  - data/logs/hook_debug.log
   - data/logs/subagent_stop_debug.log
   - data/swarm_memory.db
 
 ### Note
 - Checkpoint automatico generato da hook
-- Trigger: test
+- Trigger: unknown
 
 ---
