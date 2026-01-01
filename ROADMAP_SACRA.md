@@ -17,7 +17,7 @@
 | 6 | Memoria | ✅ DONE | 100% |
 | 7 | Apprendimento | 🚀 IN CORSO | 40% |
 | 7.5 | Parallelizzazione | 🚀 IN CORSO | 20% |
-| 8 | La Corte Reale | 🚀 IMPLEMENTAZIONE! | 60% |
+| 8 | La Corte Reale | 🚀 IMPLEMENTAZIONE! | 70% |
 | 9 | Infrastruttura | ⬜ TODO | 0% |
 
 ---
@@ -223,6 +223,26 @@
 ---
 
 ## 📝 CHANGELOG
+
+### 1 Gennaio 2026 (Sessione 23) - 🛡️ GUARDIANE TESTATE + PROMPT AGGIORNATO! 🎉
+
+- 🛡️ **TUTTE E 3 LE GUARDIANE TESTATE!**
+  - cervella-guardiana-qualita → Opus 4.5 ✅ FUNZIONA!
+  - cervella-guardiana-ops → Opus 4.5 ✅ FUNZIONA!
+  - cervella-guardiana-ricerca → Opus 4.5 ✅ FUNZIONA!
+- 🔧 **FIX FORMATO YAML** - cervella-guardiana-ricerca.md corretto (formato tools)
+- 📋 **PROMPT_SWARM_MODE.md AGGIORNATO!**
+  - 14 membri invece di 11
+  - Guardiane aggiunte alla tabella
+  - Nuova gerarchia 👑🛡️🐝
+  - Workflow aggiornato: ANALIZZA → DECIDI → DELEGA → (GUARDIANA VERIFICA) → CONFERMA
+- ✅ **DOUBLE/TRIPLE CHECK:**
+  - settings.json OK (hooks + permissions)
+  - 14 file agent in ~/.claude/agents/
+  - Tutti i formati YAML corretti
+- 🚀 **PRONTI PER TEST REALE SU MIRACOLLO!**
+
+**Versione:** 4.8.0 (Minor: Guardiane Testate + Prompt Aggiornato!)
 
 ### 1 Gennaio 2026 (Sessione 22) - 🎉 GUARDIANE CREATE + POC CUGINI! 🎉
 

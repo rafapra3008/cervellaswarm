@@ -18,7 +18,7 @@
 
 ## 🎯 DOVE SIAMO
 
-**FASE 8: LA CORTE REALE - IMPLEMENTAZIONE IN CORSO!** 👑🛡️🐝
+**FASE 8: LA CORTE REALE - IMPLEMENTAZIONE 70%!** 👑🛡️🐝
 
 Abbiamo:
 - [x] FASE 0+1+2+3+4+5+6 completate!
@@ -27,29 +27,28 @@ Abbiamo:
 - [x] **SISTEMA MEMORIA v2.1.0 FUNZIONANTE!** ✅
 - [x] **🌟 FILOSOFIA DELL'EVOLUZIONE aggiunta alla Costituzione!** 🌟
 
-### 🎉 SESSIONE 22 - 1 GENNAIO 2026 - GUARDIANE + POC CUGINI!
+### 🎉 SESSIONE 23 - 1 GENNAIO 2026 - GUARDIANE TESTATE!
 
 ```
 ╔════════════════════════════════════════════════════════════════╗
 ║                                                                ║
-║   🎉 FASE 8: IMPLEMENTAZIONE INIZIATA!                        ║
+║   🛡️ TUTTE E 3 LE GUARDIANE TESTATE E FUNZIONANTI!            ║
 ║                                                                ║
-║   ✅ 3 GUARDIANE CREATE (Opus):                               ║
-║      • cervella-guardiana-qualita.md                          ║
-║      • cervella-guardiana-ricerca.md                          ║
-║      • cervella-guardiana-ops.md                              ║
+║   ✅ cervella-guardiana-qualita  → Opus 4.5 ✓                 ║
+║   ✅ cervella-guardiana-ops      → Opus 4.5 ✓                 ║
+║   ✅ cervella-guardiana-ricerca  → Opus 4.5 ✓                 ║
 ║                                                                ║
-║   ✅ POC "I CUGINI" - SUCCESSO TOTALE!                        ║
-║      • 3 api in parallelo (researcher, docs, tester)          ║
-║      • Zero conflitti, tutti completati                        ║
-║      • Pattern VALIDATO!                                       ║
+║   📋 PROMPT_SWARM_MODE.md AGGIORNATO!                         ║
+║      • 14 membri (non più 11!)                                 ║
+║      • Guardiane nella tabella                                 ║
+║      • Nuova gerarchia 👑🛡️🐝                                  ║
 ║                                                                ║
-║   📊 FAMIGLIA: 14 membri totali!                               ║
+║   🚀 PRONTI PER TEST REALE SU MIRACOLLO!                      ║
 ║                                                                ║
 ╚════════════════════════════════════════════════════════════════╝
 ```
 
-### 🚀 FASE 8 - La Corte Reale (STUDI 100% ✅ - IMPLEMENTAZIONE 30%)
+### 🚀 FASE 8 - La Corte Reale (STUDI 100% ✅ - IMPLEMENTAZIONE 70%)
 - [x] **FASE_8_CORTE_REALE.md** creata! ✅
 - [x] **Studio 1: Gerarchia Guardiane** ✅ COMPLETATO!
 - [x] **Studio 2: Pool Flessibile ("I Cugini")** ✅ COMPLETATO!
@@ -58,9 +57,11 @@ Abbiamo:
 - [x] **Studio 5: VERIFICA ATTIVA POST-AGENT** ✅ COMPLETATO!
 - [x] **3 GUARDIANE CREATE!** ✅ (qualita, ricerca, ops)
 - [x] **POC "I Cugini" VALIDATO!** ✅ (3 api parallele)
-- ⬜ **Test Guardiane su task reale** (prossimo step!)
+- [x] **3 GUARDIANE TESTATE!** ✅ (tutte funzionano!)
+- [x] **PROMPT AGGIORNATO!** ✅ (14 membri!)
+- ⬜ **Test Guardiane su MIRACOLLO** (prossimo step!)
 
-### 🚀 FASE 7 + 7.5 - (Continuano dopo FASE 8 study)
+### 🚀 FASE 7 + 7.5 - (Continuano dopo FASE 8)
 - [x] 7a/7b/7c: COMPLETATI! ✅
 - [x] 7.5a: COMPLETATO! ✅
 - ⬜ 7d/7e + 7.5b/c/d/e: In attesa
@@ -69,20 +70,20 @@ Abbiamo:
 
 ## 🎯 PROSSIMI STEP
 
-### PRIORITÀ 1: Test Guardiane su Task Reale 🛡️
-- Le 3 Guardiane sono CREATE (richiede reload per usarle)
-- Test su task reale in prossima sessione
-- Verificare integrazione con workflow Regina
+### PRIORITÀ 1: Test Guardiane su MIRACOLLO! 🛡️
+- Le Guardiane funzionano (testate in questa sessione!)
+- Prossimo: test su task REALE in Miracollo
+- Workflow completo: Regina → Guardiana → Api
 
 ### PRIORITÀ 2: Implementare Background Agents
 - Pattern run_in_background studiato
 - Primo use case: ricerca in background
 
-### FASE 7: Prossimo Sprint (dopo FASE 8 impl)
+### FASE 7: Prossimo Sprint (dopo FASE 8)
 - 7d: Distribution System (far arrivare lezioni agli agenti)
 - 7e: Automation (cron + weekly)
 
-### FASE 7.5: Prossimo Sprint (dopo FASE 8 impl)
+### FASE 7.5: Prossimo Sprint (dopo FASE 8)
 - 7.5b: Dispatcher (esegue strategia)
 - 7.5c: Conflict Detection
 
@@ -125,17 +126,14 @@ APRILE+:   🧬 EVOLUZIONE - Lo sciame che SI MIGLIORA
 
 ## 📅 ULTIMO AGGIORNAMENTO
 
-**1 Gennaio 2026 - Sessione 22** - 🎉 **GUARDIANE CREATE + POC CUGINI!** 🎉
+**1 Gennaio 2026 - Sessione 23** - 🛡️ **GUARDIANE TESTATE + PROMPT AGGIORNATO!** 🎉
 
-- **FASE 8: IMPLEMENTAZIONE INIZIATA!** (30%)
-  - ✅ 3 Guardiane CREATE (opus): qualita, ricerca, ops
-  - ✅ POC "I Cugini" VALIDATO (3 api parallele, zero conflitti!)
-  - ✅ Famiglia cresciuta a 14 membri!
-- **FILE CREATI:**
-  - ~/.claude/agents/cervella-guardiana-qualita.md
-  - ~/.claude/agents/cervella-guardiana-ricerca.md
-  - ~/.claude/agents/cervella-guardiana-ops.md
-- **PROSSIMO:** Test Guardiane su task reale!
+- **FASE 8: IMPLEMENTAZIONE 70%!**
+  - ✅ Tutte e 3 le Guardiane TESTATE e FUNZIONANTI!
+  - ✅ Fix formato YAML (cervella-guardiana-ricerca.md)
+  - ✅ PROMPT_SWARM_MODE.md aggiornato (14 membri!)
+  - ✅ Double/triple check completato
+- **PROSSIMO:** Test Guardiane su MIRACOLLO!
 
 ---
 
