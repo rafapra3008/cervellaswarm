@@ -50,6 +50,13 @@
 - 🚫 **Mai piu:** Costruire infrastruttura senza bisogno reale
 - ✅ **Prossimo:** Miracollo o Contabilita con lo sciame
 
+### TODO PROSSIMA SESSIONE
+
+- [ ] **Aggiungere lettura Costituzione al DNA delle 🐝**
+  - Per scritto, NON con hook (Rafa non si fida degli hook)
+  - Ogni agent legge ~/.claude/COSTITUZIONE.md PRIMA di lavorare
+  - 14 file da aggiornare in ~/.claude/agents/
+
 ---
 
 ## 📝 SESSIONE 38 - LA RIFLESSIONE
