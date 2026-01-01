@@ -8,7 +8,7 @@ Crea il database SQLite con schema ottimizzato per tracciare:
 - Performance e pattern di lavoro
 """
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 __version_date__ = "2026-01-01"
 
 import sqlite3
@@ -49,6 +49,13 @@ def upgrade_schema(conn: sqlite3.Connection) -> bool:
             ("status", "TEXT DEFAULT 'ACTIVE'"),
             ("related_pattern_id", "INTEGER"),
             ("project", "TEXT"),
+            # v1.2.0 - Continuous Learning
+            ("trigger", "TEXT"),
+            ("example", "TEXT"),
+            ("tags", "TEXT"),
+            ("related_patterns", "TEXT"),
+            ("auto_generated", "INTEGER DEFAULT 0"),
+            ("last_applied", "TEXT"),
         ]
 
         for col_name, col_type in new_columns:
@@ -89,6 +96,16 @@ def upgrade_schema(conn: sqlite3.Connection) -> bool:
         cursor.execute("""
             CREATE INDEX IF NOT EXISTS idx_patterns_status
             ON error_patterns(status)
+        """)
+
+        # ===== INDICI PER CONTINUOUS LEARNING (v1.2.0) =====
+        cursor.execute("""
+            CREATE INDEX IF NOT EXISTS idx_lessons_tags
+            ON lessons_learned(tags)
+        """)
+        cursor.execute("""
+            CREATE INDEX IF NOT EXISTS idx_lessons_trigger
+            ON lessons_learned(trigger)
         """)
 
         print(f"  ✅ Tabella error_patterns creata/verificata", file=sys.stderr)
@@ -195,7 +212,7 @@ def init_database() -> bool:
         conn.commit()
 
         # ===== UPGRADE SCHEMA =====
-        print("\n🔄 Upgrade schema a v1.1.0...", file=sys.stderr)
+        print("\n🔄 Upgrade schema a v1.2.0...", file=sys.stderr)
         if not upgrade_schema(conn):
             print("⚠️  Upgrade schema fallito (ma database base funziona)", file=sys.stderr)
 
@@ -203,7 +220,7 @@ def init_database() -> bool:
 
         print(f"\n✅ Database inizializzato: {db_path}", file=sys.stderr)
         print(f"✅ Tabelle create: swarm_events, lessons_learned, error_patterns", file=sys.stderr)
-        print(f"✅ Indici creati: 9 totali", file=sys.stderr)
+        print(f"✅ Indici creati: 11 totali", file=sys.stderr)
         print(f"✅ WAL mode: attivo", file=sys.stderr)
 
         # Output JSON per script automation
@@ -252,10 +269,13 @@ def verify_schema() -> bool:
         """)
         indices = cursor.fetchall()
 
-        # Verifica colonne lessons_learned (v1.1.0)
+        # Verifica colonne lessons_learned (v1.2.0)
         cursor.execute("PRAGMA table_info(lessons_learned)")
         columns = [row[1] for row in cursor.fetchall()]
-        required_cols = ["category", "severity", "root_cause", "prevention", "status"]
+        required_cols = [
+            "category", "severity", "root_cause", "prevention", "status",
+            "trigger", "example", "tags", "related_patterns", "auto_generated", "last_applied"
+        ]
         missing_cols = [col for col in required_cols if col not in columns]
 
         if missing_cols:
