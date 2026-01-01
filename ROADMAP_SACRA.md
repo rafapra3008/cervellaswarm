@@ -244,6 +244,21 @@
 
 **Versione:** 4.8.0 (Minor: Guardiane Testate + Prompt Aggiornato!)
 
+### 1 Gennaio 2026 (Sessione 23 - PARTE 2) - 🔧 FIX MEMORIA + VERIFICHE!
+
+- 🔧 **FIX CRITICO log_event.py v1.1.0:**
+  - Bug: cercava agent in `tool.name` (era sempre "Task")
+  - Fix: ora cerca in `tool.input.subagent_type` (corretto!)
+  - Aggiunto mapping COMPLETO 14 agent (11 worker + 3 guardiane)
+- ✅ **VERIFICHE SISTEMA MEMORIA:**
+  - PostToolUse hook → FUNZIONA!
+  - SessionStart hook → FUNZIONA!
+  - analytics.py → FUNZIONA!
+  - Database: 82KB, 3 tabelle, 5 eventi
+- 🚀 **PRONTO PER MIRACOLLO!** Tutto automatico, zero config!
+
+**Versione:** 4.8.1 (Patch: Fix Memoria!)
+
 ### 1 Gennaio 2026 (Sessione 22) - 🎉 GUARDIANE CREATE + POC CUGINI! 🎉
 
 - 🛡️ **3 GUARDIANE CREATE!** (tutti Opus):

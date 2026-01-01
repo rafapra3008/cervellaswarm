@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 23 - 🛡️ GUARDIANE TESTATE + PROMPT AGGIORNATO! 🎉
+> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 23 - 🛡️ GUARDIANE + FIX MEMORIA! 🎉
 
 ---
 
@@ -67,11 +67,19 @@
 
 ## FILO DEL DISCORSO
 
-- 🧠 **Stavamo ragionando su:** Testare le Guardiane create sessione precedente
+- 🧠 **Stavamo ragionando su:** Verifiche sistema memoria + fix log_event.py
 - 🎯 **La direzione:** Testare Guardiane su MIRACOLLO (ambiente reale!)
-- ⚡ **Il momentum:** ALTISSIMO! Tutte le Guardiane funzionano!
-- 🚫 **Da NON fare:** Niente - tutto funziona!
+- ⚡ **Il momentum:** ALTISSIMO! Tutto funziona!
+- 🚫 **Da NON fare:** Niente - tutto pronto!
 - 💡 **Principio chiave:** "Double/Triple check prima di andare avanti!"
+
+### 🔧 FIX IMPORTANTE (Sessione 23 Parte 2)
+
+```
+BUG TROVATO: log_event.py cercava agent in tool.name
+FIX: ora cerca in tool.input.subagent_type
+RISULTATO: Tutti i Task vengono loggati correttamente!
+```
 
 ### ✅ COSA FUNZIONA
 
