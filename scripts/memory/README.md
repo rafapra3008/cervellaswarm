@@ -2,8 +2,9 @@
 
 Sistema di memoria persistente per tracciare attività degli agenti CervellaSwarm.
 
-**Versione:** 2.0.0
+**Versione:** 2.1.0
 **Data:** 2026-01-01
+**Script totali:** 10 (8 Python + 2 Shell)
 
 ---
 
@@ -50,6 +51,8 @@ Output:
 ---
 
 ## 📊 SCRIPT DISPONIBILI
+
+**Totali: 10 script (8 Python + 2 Shell)**
 
 ### 🔹 Core Scripts
 
@@ -326,6 +329,102 @@ suggestions = get_suggestions(agent='frontend', limit=3)
 
 ---
 
+### 🔹 Testing & Utilities
+
+#### test_system.sh
+
+Script di test automatico completo del sistema memoria.
+
+**Uso:**
+```bash
+./scripts/memory/test_system.sh
+```
+
+**Cosa testa:**
+1. ✅ **Inizializzazione database** - Crea DB e schema
+2. ✅ **Log eventi** - Testa 3 eventi (frontend, backend, tester)
+3. ✅ **Query database** - Verifica stats e query recenti
+4. ✅ **Load context** - Testa caricamento contesto
+5. ✅ **Verifica dati** - Conta eventi e agent nel DB
+
+**Output:**
+```
+🧪 Test Sistema Memoria CervellaSwarm
+======================================
+
+✅ Test 1: Inizializzazione database
+   ✓ Database creato
+✅ Test 2: Log eventi
+   ✓ Evento cervella-frontend loggato
+   ✓ Evento cervella-backend loggato
+   ✓ Evento cervella-tester loggato
+✅ Test 3: Query database
+   ✓ Query statistiche funziona
+   ✓ Query eventi recenti funziona
+✅ Test 4: Caricamento contesto
+   ✓ Load context funziona
+✅ Test 5: Verifica dati salvati
+   ✓ Tutti e 3 gli eventi salvati
+   ✓ Tutti e 3 gli agent tracciati
+
+🎉 Tutti i test passati!
+
+✅ Sistema Memoria funzionante al 100%!
+```
+
+**Quando usarlo:**
+- Dopo setup iniziale (verifica che tutto funzioni)
+- Prima di deploy (regression test)
+- Dopo modifiche al sistema memoria
+
+---
+
+#### example_usage.sh
+
+Guida interattiva con esempi pratici.
+
+**Uso:**
+```bash
+./scripts/memory/example_usage.sh
+```
+
+**Cosa mostra:**
+1. **Step 1:** Comando inizializzazione
+2. **Step 2:** Esempio log evento
+3. **Step 3:** Query database con esempi live
+4. **Step 4:** Load contesto
+
+**Output:**
+```
+🐝 CervellaSwarm - Esempio Utilizzo Sistema Memoria
+======================================================
+
+📋 Step 1: Inizializzazione (se non già fatto)
+   ./scripts/memory/init_db.py
+
+📋 Step 2: Log evento (automatico da PostToolUse hook)
+   echo '{...payload...}' | ./scripts/memory/log_event.py
+
+📋 Step 3: Query database
+   🔹 Ultimi 10 eventi:
+   [output live dal DB]
+
+   🔹 Statistiche generali:
+   [statistiche live dal DB]
+
+📋 Step 4: Load contesto (automatico da SessionStart hook)
+   ./scripts/memory/load_context.py
+
+✅ Per documentazione completa: cat scripts/memory/README.md
+```
+
+**Quando usarlo:**
+- Prima volta che usi il sistema (per capire come funziona)
+- Per vedere esempi concreti di query
+- Per verificare che il DB contenga dati
+
+---
+
 ## 📦 SCHEMA DATABASE
 
 ### Tabella: swarm_events
@@ -561,7 +660,7 @@ sqlite3 data/swarm_memory.db "VACUUM;"
 ---
 
 **Creato:** 2026-01-01
-**Ultimo Aggiornamento:** 2026-01-01 (v2.0.0 - Analytics completo)
+**Ultimo Aggiornamento:** 2026-01-01 (v2.1.0 - Documentazione script shell completa)
 **Parte di:** CervellaSwarm v1.0.0
 
 💙🐝 *Cervella Docs - La Documentatrice dello Sciame*
