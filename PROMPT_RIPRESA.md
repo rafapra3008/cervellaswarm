@@ -1,10 +1,75 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 38 - 👑🐝 MEGA SPRINT PARALLELO! 4 API!
+> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 38 (Parte 2) - 📚 FASE 12 PROPOSTA!
 
 ---
 
-## 🔥 SESSIONE 38 - MEGA SPRINT PARALLELO! 🔥
+## 📚 SESSIONE 38 (PARTE 2) - FASE 12 PROPOSTA! BIBLIOTECA COMUNE! 📚
+
+### COSA ABBIAMO FATTO (Parte 2)
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   📚 STUDIO RISORSE CONDIVISIBILI                               ║
+║                                                                  ║
+║   Rafa ha chiesto:                                               ║
+║   "bot telegram noi gia ce l'abbiamo.. possiamo utilizzarlo?"   ║
+║   "FORTEZZA MODE.. se vuoi studiarla (senza toccare nulla)"     ║
+║   "fare norme e standar base per i nostri progetti"             ║
+║   "biblioteca che possiamo utilizzare e condividere"            ║
+║                                                                  ║
+║   ✅ RISPOSTE:                                                   ║
+║                                                                  ║
+║   Telegram Bot → SI! RIUTILIZZABILE!                            ║
+║      • telegram_notifier.py (715 righe, production!)            ║
+║      • Stesso TOKEN funziona per TUTTI i progetti               ║
+║      • Async con httpx, retry, formatting                       ║
+║                                                                  ║
+║   FORTEZZA MODE → GIA DOCUMENTATO!                              ║
+║      • FORTEZZA_MODE.md (304 righe)                             ║
+║      • 12 principi di deploy sicuro                             ║
+║      • deploy.sh v4.3.0 (492 righe!) CAPOLAVORO!               ║
+║                                                                  ║
+║   BIBLIOTECA COMUNE → FASE 12 PROPOSTA!                         ║
+║      • 2,055 righe di codice RIUTILIZZABILE mappato            ║
+║      • Pattern da condividere, MAI copia-incolla               ║
+║      • BIBLIOTECA_COMUNE.md creato                              ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+### RISORSE MAPPATE (Contabilita = CAPOLAVORO!)
+
+| Risorsa | Righe | Riutilizzabile | Note |
+|---------|-------|----------------|------|
+| telegram_notifier.py | 715 | SI | Stesso TOKEN! |
+| FORTEZZA_MODE.md | 304 | SI | 12 principi |
+| deploy.sh v4.3.0 | 492 | SI | Template deploy |
+| rollback.sh | 151 | SI | Rollback auto |
+| logger_config.py | 213 | SI | Logging strutturato |
+| **TOTALE** | **2,055** | | |
+
+### FILE CREATI PARTE 2
+
+| File | Azione |
+|------|--------|
+| docs/studio/BIBLIOTECA_COMUNE.md | ✅ CREATO |
+| ROADMAP_SACRA.md | ✅ AGGIORNATO (FASE 12 + v9.1.0) |
+| NORD.md | ✅ AGGIORNATO |
+| PROMPT_RIPRESA.md | ✅ AGGIORNATO (questo file) |
+
+### FILO DEL DISCORSO
+
+- 🧠 **Stavamo ragionando su:** Come riutilizzare risorse tra progetti
+- 🎯 **La direzione era:** Creare standard condivisi, non duplicare codice
+- ⚡ **Scoperta chiave:** Contabilita e un CAPOLAVORO! 2,055 righe riutilizzabili!
+- ✅ **Risposta a Rafa:** Telegram = SI riutilizzabile, FORTEZZA = gia documentato
+- 📚 **Prossimo step:** Creare templates, applicare a Miracollo
+
+---
+
+## 🔥 SESSIONE 38 (PARTE 1) - MEGA SPRINT PARALLELO! 🔥
 
 ### COSA ABBIAMO FATTO
 
