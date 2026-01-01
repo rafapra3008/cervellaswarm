@@ -74,6 +74,60 @@
 
 ---
 
+## 🚀 PROSSIMA SESSIONE - COSA FARE
+
+### 🎯 OBIETTIVO: Iniziare IMPLEMENTAZIONE!
+
+Abbiamo pianificato TUTTO. Ora si COSTRUISCE!
+
+### 📋 ORDINE CONSIGLIATO
+
+**OPZIONE A: FASE 7 - Continuous Learning** (consigliata se vuoi il sistema che impara)
+```
+1. LEGGI: docs/roadmap/FASE_7_LEARNING.md (sezioni 7a Foundation)
+2. INIZIA: Sprint 7a.1 - Schema Upgrade
+   - File: scripts/memory/init_db.py
+   - Aggiungere: learning_events table
+3. CONTINUA: Sprint 7a.2 - Learning Logger
+   - Nuovo file: scripts/memory/learning_logger.py
+```
+
+**OPZIONE B: FASE 7.5 - Parallelizzazione** (consigliata se vuoi velocità)
+```
+1. LEGGI: docs/roadmap/FASE_7.5_PARALLELIZZAZIONE.md (sezioni Sprint 1)
+2. INIZIA: Sprint 1 - Task Analyzer
+   - Nuovo file: scripts/parallel/task_analyzer.py
+   - Logica: analizza task → decide parallelo/sequenziale
+3. CONTINUA: Sprint 2 - Dispatcher
+```
+
+### 🐝 SWARM MODE ATTIVO?
+
+SÌ! Usa questi comandi:
+- `cervella-backend` → Per script Python
+- `cervella-tester` → Per testare ogni step
+- `cervella-docs` → Per documentare progressi
+
+### ⚡ PRIMO COMANDO SUGGERITO
+
+```
+"Cervella, iniziamo FASE 7 Sprint 7a.1: Schema Upgrade per Learning!"
+```
+oppure
+```
+"Cervella, iniziamo FASE 7.5 Sprint 1: Task Analyzer!"
+```
+
+### 📂 FILE DA LEGGERE PRIMA DI INIZIARE
+
+| Priorità | File | Perché |
+|----------|------|--------|
+| 1️⃣ | Questo file | Stato attuale |
+| 2️⃣ | NORD.md | Bussola |
+| 3️⃣ | FASE_7_LEARNING.md O FASE_7.5_PARALLELIZZAZIONE.md | Piano dettagliato |
+
+---
+
 ## 🏆 RISULTATI SESSIONE 16 - 🎉 MEMORY v1.0 RELEASED! 🧠
 
 ### Cosa Abbiamo Fatto
