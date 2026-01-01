@@ -14,7 +14,7 @@
 | 3 | Git Worktrees | ✅ DONE | 100% |
 | 4 | Orchestrazione | ✅ DONE | 100% |
 | 5 | Produzione | ✅ DONE | 100% |
-| 6 | Memoria | 🚀 IN CORSO | 70% |
+| 6 | Memoria | 🚀 IN CORSO | 85% |
 
 ---
 
@@ -145,6 +145,27 @@
 ---
 
 ## 📝 CHANGELOG
+
+### 1 Gennaio 2026 (Sessione 15) - FASE 6.3 COMPLETATA! 💡🐝
+
+- ✅ **suggestions.py v1.0.0** - NUOVO! Suggerimenti automatici:
+  - CLI con filtri progetto/agente/limite
+  - Output formattato + JSON
+  - Integrazione con lezioni apprese e pattern errori
+  - Priorità per severity (CRITICAL > HIGH > MEDIUM > LOW)
+- ✅ **load_context.py v1.1.0** - Upgrade con suggerimenti:
+  - Sezione "💡 SUGGERIMENTI ATTIVI" nel contesto
+  - Mostra suggerimenti automaticamente a SessionStart
+  - Backward compatible
+- ✅ **Integrazione GLOBALE**:
+  - Hook già configurati per tutti i progetti
+  - log_event.py rileva progetto da CWD
+  - Miracollo, Contabilità, CervellaSwarm tutti integrati!
+- ✅ **Test completo**: Tutti passati!
+
+**Lo sciame che SUGGERISCE e PREVIENE errori!** 🐝💡
+
+**Versione:** 3.3.0 (Minor: FASE 6.3 Completata!)
 
 ### 1 Gennaio 2026 (Sessione 14) - FASE 6.2 COMPLETATA! 🎉📊
 

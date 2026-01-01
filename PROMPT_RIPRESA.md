@@ -1,14 +1,60 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 14
+> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 15
 
 ---
 
 ## STATO ATTUALE
 
-**FASE 6: Memoria** - 🧠 Settimana 2 COMPLETATA! (70%)
+**FASE 6: Memoria** - 🧠 Settimana 3 COMPLETATA! (85%)
 
-**Sessione 14:** FASE 6.2 Completata! Dashboard + Pattern Detection + Weekly Retro! 🎉
+**Sessione 15:** FASE 6.3 Completata! Suggerimenti Automatici + Integrazione Globale! 💡🐝
+
+---
+
+## 🏆 RISULTATI SESSIONE 15 - FASE 6.3 COMPLETATA! 💡🐝👑
+
+### Cosa Abbiamo Fatto
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   💡 FASE 6.3 COMPLETATA!                                       ║
+║                                                                  ║
+║   ✅ suggestions.py v1.0.0 - SUGGERIMENTI AUTOMATICI!           ║
+║      - CLI con filtri progetto/agente/limite                    ║
+║      - Output formattato + JSON                                 ║
+║      - Priorità per severity (CRITICAL > HIGH > MEDIUM)         ║
+║   ✅ load_context.py v1.1.0 - Upgrade con suggerimenti!         ║
+║      - Sezione "💡 SUGGERIMENTI ATTIVI" nel contesto            ║
+║      - Mostra suggerimenti automaticamente a SessionStart       ║
+║   ✅ Integrazione GLOBALE con tutti i progetti!                  ║
+║      - Hook già configurati per Miracollo/Contabilità           ║
+║      - log_event.py rileva progetto da CWD                      ║
+║   ✅ Test completo: Tutti passati!                               ║
+║   ✅ Backward compatibility OK!                                  ║
+║                                                                  ║
+║   "Lo sciame che SUGGERISCE e PREVIENE errori!" 🐝💡            ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+### File Creati/Modificati
+
+| File | Azione |
+|------|--------|
+| scripts/memory/suggestions.py | ✅ CREATO v1.0.0 (NUOVO!) |
+| scripts/memory/load_context.py | ✅ UPGRADE v1.1.0 (+suggerimenti!) |
+| NORD.md | ✅ Aggiornato (85%) |
+| ROADMAP_SACRA.md | ✅ CHANGELOG + v3.3.0 |
+| docs/roadmap/FASE_6_MEMORIA.md | ✅ Aggiornato |
+
+### FILO DEL DISCORSO
+
+- 🧠 **Abbiamo completato:** FASE 6.3 - Suggerimenti Automatici + Integrazione Globale
+- 🎯 **La direzione:** Lo sciame che SUGGERISCE e PREVIENE errori
+- ⚡ **Il momentum:** ALTISSIMO! Sistema integrato con tutti i progetti!
+- 🚫 **Da NON fare:** Aggiungere troppe feature - consolidare prima
 
 ---
 
@@ -39,7 +85,7 @@
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
-### File Creati/Modificati
+### File Creati/Modificati (Sessione 14)
 
 | File | Azione |
 |------|--------|
@@ -50,7 +96,7 @@
 | NORD.md | ✅ Aggiornato (70%) |
 | ROADMAP_SACRA.md | ✅ CHANGELOG + v3.2.0 |
 
-### FILO DEL DISCORSO
+### FILO DEL DISCORSO (Sessione 14)
 
 - 🧠 **Abbiamo completato:** FASE 6.2 - Dashboard + Pattern Detection + Weekly Retro
 - 🎯 **La direzione:** Lo sciame che ANALIZZA e FA RETROSPETTIVE

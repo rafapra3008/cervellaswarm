@@ -6,7 +6,7 @@ Carica contesto rilevante per SessionStart hook.
 Include eventi recenti e lezioni apprese attive.
 """
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __version_date__ = "2026-01-01"
 
 import json
@@ -14,6 +14,13 @@ import sqlite3
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+# Import suggestions (fallback graceful)
+try:
+    from suggestions import get_suggestions, get_context_aware_suggestions
+except ImportError:
+    get_suggestions = None
+    get_context_aware_suggestions = None
 
 
 def get_db_path() -> Path:
@@ -142,7 +149,26 @@ def get_lessons_learned(conn: sqlite3.Connection, min_confidence: float = 0.7) -
     return lessons
 
 
-def format_context(events: list, stats: dict, lessons: list) -> str:
+def get_active_suggestions(project: str = None) -> list:
+    """
+    Recupera suggerimenti attivi.
+
+    Args:
+        project: Progetto corrente (opzionale)
+
+    Returns:
+        Lista di suggerimenti
+    """
+    if not get_suggestions:
+        return []
+
+    try:
+        return get_suggestions(project=project, limit=5)
+    except Exception:
+        return []
+
+
+def format_context(events: list, stats: dict, lessons: list, suggestions: list = None) -> str:
     """
     Formatta contesto in markdown per hook.
 
@@ -150,6 +176,7 @@ def format_context(events: list, stats: dict, lessons: list) -> str:
         events: Lista eventi recenti
         stats: Statistiche agent
         lessons: Lezioni apprese
+        suggestions: Suggerimenti attivi (opzionale)
 
     Returns:
         Markdown formattato
@@ -169,6 +196,19 @@ def format_context(events: list, stats: dict, lessons: list) -> str:
                 f"- {status} **{evt['agent']}** ({evt['project']}): {evt['task']}\n"
             )
         output.append("")
+
+    # Suggerimenti attivi
+    if suggestions:
+        output.append("## 💡 SUGGERIMENTI ATTIVI\n")
+        output.append("*Basati su lezioni apprese e pattern di errori*\n\n")
+        for sug in suggestions:
+            severity = sug.get('severity', 'MEDIUM')
+            emoji = {'CRITICAL': '🔴', 'HIGH': '🟠', 'MEDIUM': '🟡', 'LOW': '🟢'}.get(severity, '⚪')
+            pattern = sug.get('pattern', 'Unknown')
+            prevention = sug.get('prevention') or sug.get('mitigation') or 'N/A'
+            output.append(f"- {emoji} **[{severity}] {pattern}**\n")
+            output.append(f"  → {prevention[:100]}\n")
+        output.append("\n")
 
     # Statistiche
     if stats:
@@ -226,8 +266,11 @@ def load_context() -> dict:
 
         conn.close()
 
+        # Carica suggerimenti attivi
+        suggestions = get_active_suggestions()
+
         # Formatta contesto
-        context_md = format_context(events, stats, lessons)
+        context_md = format_context(events, stats, lessons, suggestions)
 
         return {
             "hookSpecificOutput": {
