@@ -18,45 +18,47 @@
 
 ## 🎯 DOVE SIAMO
 
-**FASE 8: LA CORTE REALE - STUDI COMPLETATI!** 👑🛡️🐝
+**FASE 8: LA CORTE REALE - IMPLEMENTAZIONE IN CORSO!** 👑🛡️🐝
 
 Abbiamo:
 - [x] FASE 0+1+2+3+4+5+6 completate!
-- [x] 11 subagent GLOBALI (famiglia completa!)
+- [x] **14 subagent GLOBALI!** (11 worker + 3 Guardiane!)
 - [x] VISIONE 2026 definita
 - [x] **SISTEMA MEMORIA v2.1.0 FUNZIONANTE!** ✅
 - [x] **🌟 FILOSOFIA DELL'EVOLUZIONE aggiunta alla Costituzione!** 🌟
 
-### 🎉 SESSIONE 21 - 1 GENNAIO 2026 - TUTTI GLI STUDI COMPLETATI!
+### 🎉 SESSIONE 22 - 1 GENNAIO 2026 - GUARDIANE + POC CUGINI!
 
 ```
 ╔════════════════════════════════════════════════════════════════╗
 ║                                                                ║
-║   🎉 FASE 8: TUTTI I 5 STUDI COMPLETATI!                      ║
+║   🎉 FASE 8: IMPLEMENTAZIONE INIZIATA!                        ║
 ║                                                                ║
-║   ✅ Studio 1: Gerarchia Guardiane (3 Guardiane Opus)         ║
-║   ✅ Studio 2: Pool Flessibile ("I Cugini") - max 3-5         ║
-║   ✅ Studio 3: Background Research Agent                       ║
-║   ✅ Studio 4: Background Technical Agent                      ║
-║   ✅ Studio 5: VERIFICA ATTIVA POST-AGENT (→ SWARM_RULES)     ║
+║   ✅ 3 GUARDIANE CREATE (Opus):                               ║
+║      • cervella-guardiana-qualita.md                          ║
+║      • cervella-guardiana-ricerca.md                          ║
+║      • cervella-guardiana-ops.md                              ║
 ║                                                                ║
-║   📂 NUOVI DOCUMENTI:                                          ║
-║   • docs/studio/STUDIO_POOL_FLESSIBILE.md                     ║
-║   • docs/studio/STUDIO_BACKGROUND_AGENTS.md                   ║
+║   ✅ POC "I CUGINI" - SUCCESSO TOTALE!                        ║
+║      • 3 api in parallelo (researcher, docs, tester)          ║
+║      • Zero conflitti, tutti completati                        ║
+║      • Pattern VALIDATO!                                       ║
 ║                                                                ║
-║   🚀 PRONTI PER IMPLEMENTAZIONE!                               ║
+║   📊 FAMIGLIA: 14 membri totali!                               ║
 ║                                                                ║
 ╚════════════════════════════════════════════════════════════════╝
 ```
 
-### 🚀 FASE 8 - La Corte Reale (STUDI 100% ✅ - IMPLEMENTAZIONE 0%)
+### 🚀 FASE 8 - La Corte Reale (STUDI 100% ✅ - IMPLEMENTAZIONE 30%)
 - [x] **FASE_8_CORTE_REALE.md** creata! ✅
 - [x] **Studio 1: Gerarchia Guardiane** ✅ COMPLETATO!
 - [x] **Studio 2: Pool Flessibile ("I Cugini")** ✅ COMPLETATO!
 - [x] **Studio 3: Background Research Agent** ✅ COMPLETATO!
 - [x] **Studio 4: Background Technical Agent** ✅ COMPLETATO!
 - [x] **Studio 5: VERIFICA ATTIVA POST-AGENT** ✅ COMPLETATO!
-- ⬜ **IMPLEMENTAZIONE: Prima Guardiana** (prossimo step!)
+- [x] **3 GUARDIANE CREATE!** ✅ (qualita, ricerca, ops)
+- [x] **POC "I Cugini" VALIDATO!** ✅ (3 api parallele)
+- ⬜ **Test Guardiane su task reale** (prossimo step!)
 
 ### 🚀 FASE 7 + 7.5 - (Continuano dopo FASE 8 study)
 - [x] 7a/7b/7c: COMPLETATI! ✅
@@ -67,14 +69,14 @@ Abbiamo:
 
 ## 🎯 PROSSIMI STEP
 
-### PRIORITÀ 1: Implementare Prima Guardiana 🛡️
-- Scegliere quale (Qualità consigliata - più impatto immediato)
-- Creare agent `cervella-guardiana-qualita.md`
-- Test su task reale
+### PRIORITÀ 1: Test Guardiane su Task Reale 🛡️
+- Le 3 Guardiane sono CREATE (richiede reload per usarle)
+- Test su task reale in prossima sessione
+- Verificare integrazione con workflow Regina
 
-### PRIORITÀ 2: Test Pool Flessibile ("I Cugini")
-- PoC con task pilota (refactor 12 file mock)
-- Verificare speedup e qualità
+### PRIORITÀ 2: Implementare Background Agents
+- Pattern run_in_background studiato
+- Primo use case: ricerca in background
 
 ### FASE 7: Prossimo Sprint (dopo FASE 8 impl)
 - 7d: Distribution System (far arrivare lezioni agli agenti)
@@ -123,18 +125,17 @@ APRILE+:   🧬 EVOLUZIONE - Lo sciame che SI MIGLIORA
 
 ## 📅 ULTIMO AGGIORNAMENTO
 
-**1 Gennaio 2026 - Sessione 21** - 🎉 **TUTTI GLI STUDI COMPLETATI!** 🎉
+**1 Gennaio 2026 - Sessione 22** - 🎉 **GUARDIANE CREATE + POC CUGINI!** 🎉
 
-- **FASE 8: STUDI 100% COMPLETATI!**
-  - ✅ Studio 1: Gerarchia Guardiane (3 Guardiane Opus)
-  - ✅ Studio 2: Pool Flessibile ("I Cugini") - max 3-5 paralleli
-  - ✅ Studio 3: Background Research Agent
-  - ✅ Studio 4: Background Technical Agent
-  - ✅ Studio 5: VERIFICA ATTIVA POST-AGENT (→ SWARM_RULES)
+- **FASE 8: IMPLEMENTAZIONE INIZIATA!** (30%)
+  - ✅ 3 Guardiane CREATE (opus): qualita, ricerca, ops
+  - ✅ POC "I Cugini" VALIDATO (3 api parallele, zero conflitti!)
+  - ✅ Famiglia cresciuta a 14 membri!
 - **FILE CREATI:**
-  - docs/studio/STUDIO_POOL_FLESSIBILE.md
-  - docs/studio/STUDIO_BACKGROUND_AGENTS.md
-- **PROSSIMO:** Implementare Prima Guardiana! 🛡️
+  - ~/.claude/agents/cervella-guardiana-qualita.md
+  - ~/.claude/agents/cervella-guardiana-ricerca.md
+  - ~/.claude/agents/cervella-guardiana-ops.md
+- **PROSSIMO:** Test Guardiane su task reale!
 
 ---
 

@@ -1,85 +1,89 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 21 - 🎉 TUTTI GLI STUDI COMPLETATI! 🎉
+> **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 22 - 🎉 GUARDIANE CREATE + POC CUGINI! 🎉
 
 ---
 
-## 🎉 SESSIONE 21 - TUTTI GLI STUDI COMPLETATI!
+## 🎉 SESSIONE 22 - GUARDIANE CREATE + POC CUGINI!
 
 ### COSA ABBIAMO FATTO
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
 ║                                                                  ║
-║   🎉 FASE 8: TUTTI I 5 STUDI COMPLETATI!                        ║
+║   🎉 FASE 8: IMPLEMENTAZIONE INIZIATA!                          ║
 ║                                                                  ║
-║   ✅ Studio 1: Gerarchia Guardiane (3 Guardiane Opus)           ║
-║   ✅ Studio 2: Pool Flessibile ("I Cugini") - max 3-5           ║
-║   ✅ Studio 3: Background Research Agent                         ║
-║   ✅ Studio 4: Background Technical Agent                        ║
-║   ✅ Studio 5: VERIFICA ATTIVA POST-AGENT (→ SWARM_RULES)       ║
+║   ✅ 3 GUARDIANE CREATE (Opus):                                 ║
+║      • cervella-guardiana-qualita.md                            ║
+║      • cervella-guardiana-ricerca.md                            ║
+║      • cervella-guardiana-ops.md                                ║
 ║                                                                  ║
-║   🔬 2 RICERCHE PARALLELE (cervella-researcher x2)              ║
-║   📝 2 DOCUMENTI CREATI (cervella-docs)                         ║
+║   ✅ POC "I CUGINI" - SUCCESSO TOTALE!                          ║
+║      • 3 api in parallelo (researcher, docs, tester)            ║
+║      • Zero conflitti, tutti completati                          ║
+║      • Pattern VALIDATO!                                         ║
 ║                                                                  ║
-║   🚀 PRONTI PER IMPLEMENTAZIONE!                                 ║
+║   📊 FAMIGLIA: 14 membri totali!                                 ║
+║      (11 worker + 3 guardiane)                                   ║
 ║                                                                  ║
-║   "Lo sciame ha studiato. Ora COSTRUISCE!" 🐝👑                  ║
+║   "Lo sciame COSTRUISCE!" 🐝👑                                   ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
 ---
 
-## 🎯 FASE 8: LA CORTE REALE - STUDI 100% ✅
+## 🎯 FASE 8: LA CORTE REALE - IMPLEMENTAZIONE 30%
 
-| Studio | Argomento | Status |
-|--------|-----------|--------|
-| 1 | Gerarchia Guardiane (Api di Corte) | ✅ COMPLETATO! |
-| 2 | Pool Flessibile ("I Cugini") | ✅ COMPLETATO! |
-| 3 | Background Research Agent | ✅ COMPLETATO! |
-| 4 | Background Technical Agent | ✅ COMPLETATO! |
-| 5 | Regola VERIFICA ATTIVA POST-AGENT | ✅ COMPLETATO! |
+| Task | Status |
+|------|--------|
+| Studi (5/5) | ✅ COMPLETATI! |
+| Guardiana Qualità | ✅ CREATA! |
+| Guardiana Ricerca | ✅ CREATA! |
+| Guardiana Ops | ✅ CREATA! |
+| POC "I Cugini" | ✅ VALIDATO! |
+| Test Guardiane task reale | ⬜ Prossima sessione |
 
 → File: `docs/roadmap/FASE_8_CORTE_REALE.md`
-→ Studi: `docs/studio/STUDIO_*.md`
+→ Guardiane: `~/.claude/agents/cervella-guardiana-*.md`
 
 ---
 
-## 📋 FILE CREATI/MODIFICATI SESSIONE 21
+## 📋 FILE CREATI/MODIFICATI SESSIONE 22
 
 | File | Azione |
 |------|--------|
-| docs/studio/STUDIO_POOL_FLESSIBILE.md | ✅ CREATO! |
-| docs/studio/STUDIO_BACKGROUND_AGENTS.md | ✅ CREATO! |
-| docs/roadmap/FASE_8_CORTE_REALE.md | ✅ Aggiornato (tutti studi ✅) |
+| ~/.claude/agents/cervella-guardiana-qualita.md | ✅ CREATO! |
+| ~/.claude/agents/cervella-guardiana-ricerca.md | ✅ CREATO! |
+| ~/.claude/agents/cervella-guardiana-ops.md | ✅ CREATO! |
 | NORD.md | ✅ Aggiornato |
-| ROADMAP_SACRA.md | ✅ v4.6.0 + CHANGELOG |
+| ROADMAP_SACRA.md | ✅ v4.7.0 + CHANGELOG |
 | PROMPT_RIPRESA.md | ✅ Aggiornato (questo file) |
 
 ---
 
 ## FILO DEL DISCORSO
 
-- 🧠 **Stavamo ragionando su:** Completamento studi FASE 8
-- 🎯 **La direzione:** ORA → Implementare prima Guardiana!
-- ⚡ **Il momentum:** ALTISSIMO! Tutti gli studi completati!
-- 🚫 **Da NON fare:** Saltare direttamente a implementazione senza leggere studi
-- 💡 **Principio chiave:** "Studiato = Pronto a costruire DEL MODO MIGLIORE!" 💎
+- 🧠 **Stavamo ragionando su:** Implementazione FASE 8 - Guardiane + Cugini
+- 🎯 **La direzione:** Testare Guardiane su task REALE
+- ⚡ **Il momentum:** ALTISSIMO! 3 Guardiane create, POC validato!
+- 🚫 **Da NON fare:** Le Guardiane richiedono reload per essere usate
+- 💡 **Principio chiave:** "Pattern parallelo FUNZIONA! Zero conflitti!" 🐝🐝🐝
 
 ---
 
 ## 🚀 PROSSIMA SESSIONE
 
-**PRIORITÀ 1:** Implementare Prima Guardiana 🛡️
-- Scegliere quale (Qualità consigliata)
-- Creare `cervella-guardiana-qualita.md`
-- Test su task reale
+**PRIORITÀ 1:** Test Guardiane su Task Reale 🛡️
+- Guardiane create ma richiedono reload agent list
+- Testare workflow completo: Regina → Guardiana → Api
+- Verificare escalation pattern
 
-**PRIORITÀ 2:** Test Pool Flessibile ("I Cugini")
-- PoC con task pilota (refactor 12 file mock)
+**PRIORITÀ 2:** Implementare Background Agents
+- Pattern run_in_background studiato
+- Primo use case: ricerca in background
 
-**OPZIONE C:** Continuare FASE 7d/7.5b (dopo FASE 8 impl)
+**PRIORITÀ 3:** Continuare FASE 7d/7.5b
 
 ---
 

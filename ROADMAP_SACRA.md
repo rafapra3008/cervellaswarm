@@ -17,7 +17,7 @@
 | 6 | Memoria | ✅ DONE | 100% |
 | 7 | Apprendimento | 🚀 IN CORSO | 40% |
 | 7.5 | Parallelizzazione | 🚀 IN CORSO | 20% |
-| 8 | La Corte Reale | 🚀 STUDI COMPLETATI! | 50% |
+| 8 | La Corte Reale | 🚀 IMPLEMENTAZIONE! | 60% |
 | 9 | Infrastruttura | ⬜ TODO | 0% |
 
 ---
@@ -223,6 +223,24 @@
 ---
 
 ## 📝 CHANGELOG
+
+### 1 Gennaio 2026 (Sessione 22) - 🎉 GUARDIANE CREATE + POC CUGINI! 🎉
+
+- 🛡️ **3 GUARDIANE CREATE!** (tutti Opus):
+  - cervella-guardiana-qualita.md (verifica frontend/backend/tester)
+  - cervella-guardiana-ricerca.md (verifica researcher/docs)
+  - cervella-guardiana-ops.md (verifica devops/security/data)
+- 🐝 **POC "I CUGINI" VALIDATO!**
+  - 3 api in parallelo (researcher, docs, tester)
+  - Zero conflitti, tutti completati
+  - Pattern parallelizzazione FUNZIONA!
+- 📊 **FAMIGLIA CRESCIUTA:** 14 membri totali (11 worker + 3 guardiane)
+- 📂 **FILE CREATI:**
+  - ~/.claude/agents/cervella-guardiana-qualita.md
+  - ~/.claude/agents/cervella-guardiana-ricerca.md
+  - ~/.claude/agents/cervella-guardiana-ops.md
+
+**Versione:** 4.7.0 (Minor: Guardiane + POC Cugini!)
 
 ### 1 Gennaio 2026 (Sessione 21) - 🎉 TUTTI GLI STUDI COMPLETATI! 🎉
 

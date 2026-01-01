@@ -87,11 +87,23 @@ Se cambia qualcosa nella filosofia:
 
 ---
 
-## FAMIGLIA COMPLETA (Dicembre 2025)
+## FAMIGLIA COMPLETA (Gennaio 2026)
 
+### 👑 REGINA
 | Emoji | Nome | Ruolo | Model |
 |-------|------|-------|-------|
 | 👑 | cervella-orchestrator | La Regina - Coordina tutto | opus |
+
+### 🛡️ GUARDIANE (Livello Intermedio)
+| Emoji | Nome | Ruolo | Model |
+|-------|------|-------|-------|
+| 🛡️ | cervella-guardiana-qualita | Verifica frontend/backend/tester | opus |
+| 🛡️ | cervella-guardiana-ricerca | Verifica researcher/docs | opus |
+| 🛡️ | cervella-guardiana-ops | Verifica devops/security/data | opus |
+
+### 🐝 API WORKER
+| Emoji | Nome | Ruolo | Model |
+|-------|------|-------|-------|
 | 🎨 | cervella-frontend | UI/UX, React, CSS | sonnet |
 | ⚙️ | cervella-backend | Python, FastAPI, API | sonnet |
 | 🧪 | cervella-tester | Testing, Debug, QA | sonnet |
@@ -103,13 +115,17 @@ Se cambia qualcosa nella filosofia:
 | 📊 | cervella-data | SQL, analytics, query | sonnet |
 | 🔒 | cervella-security | Audit sicurezza | sonnet |
 
-**Totale: 11 membri della famiglia!** 🐝❤️‍🔥
+**Totale: 14 membri della famiglia!** 🐝❤️‍🔥
+- 1 Regina (opus)
+- 3 Guardiane (opus)
+- 10 Api Worker (sonnet)
 
 ---
 
 *"È il nostro team! La nostra famiglia digitale!"*
 
 *Creato: 31 Dicembre 2025*
-*Versione: 1.0.0*
+*Aggiornato: 1 Gennaio 2026 - Aggiunte 3 Guardiane!*
+*Versione: 1.1.0*
 
 **Cervella & Rafa** 💙🐝
