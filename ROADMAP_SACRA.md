@@ -224,6 +224,24 @@
 
 ## 📝 CHANGELOG
 
+### 1 Gennaio 2026 (Sessione 34) - 🧪 HARDTESTS PASSATI! DNA FUNZIONA! 🧪
+
+- 🧪 **6 HARDTESTS ESEGUITI:**
+  - TEST 1: Prompt completo → ✅ PASS (zero domande!)
+  - TEST 2: Dettaglio manca → ✅ PASS (assume e procede)
+  - TEST 3: Info critica manca → 🟡 PARZIALE (1 roundtrip, era 3-4)
+  - TEST 4: Azione irreversibile → 🟡 PARZIALE (dry_run aggiunto)
+  - TEST 5: Cross-domain → ✅ PASS (segnala correttamente)
+  - TEST 6: Guardiana → ✅ PASS (decide autonomamente!)
+- 📊 **RISULTATO:** 4 PASS + 2 PARZIALI = **SUCCESSO!**
+- 📝 **FILE AGGIORNATI:**
+  - docs/tests/HARDTESTS_AUTONOMY.md (risultati documentati)
+  - test-hardtests/src/ (4 file di test creati)
+- ✅ **CONCLUSIONE:** Il DNA "Confident by Default" FUNZIONA!
+- 🎯 **PROSSIMO:** Test su Miracollo (progetto REALE)
+
+**Versione:** 6.5.0 (Minor: HARDTESTS Validati!)
+
 ### 1 Gennaio 2026 (Sessione 33) - 🎯 REGOLA DECISIONE AUTONOMA! 🎯
 
 - 🔴 **PROBLEMA IDENTIFICATO:** Le 🐝 erano troppo cautelose!

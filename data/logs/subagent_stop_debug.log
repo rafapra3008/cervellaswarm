@@ -606,3 +606,19 @@ TIMESTAMP: 2026-01-01T17:43:57.799725
 }
 ============================================================
 
+
+============================================================
+TIMESTAMP: 2026-01-01T17:46:41.449153
+============================================================
+{
+  "session_id": "497f8e31-5305-4e06-8e36-d2936eac3bf4",
+  "transcript_path": "/Users/rafapra/.claude/projects/-Users-rafapra-Developer-CervellaSwarm/497f8e31-5305-4e06-8e36-d2936eac3bf4.jsonl",
+  "cwd": "/Users/rafapra/Developer/CervellaSwarm",
+  "permission_mode": "default",
+  "hook_event_name": "SubagentStop",
+  "stop_hook_active": false,
+  "agent_id": "aca188b",
+  "agent_transcript_path": "/Users/rafapra/.claude/projects/-Users-rafapra-Developer-CervellaSwarm/agent-aca188b.jsonl"
+}
+============================================================
+
