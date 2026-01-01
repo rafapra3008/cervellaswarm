@@ -38,7 +38,8 @@ CervellaSwarm/
 │   │
 │   ├── 🗺️ roadmap/ - FASI DETTAGLIATE
 │   │   ├── FASE_6_MEMORIA.md ........ Sistema memoria (✅ DONE)
-│   │   └── FASE_7.5_PARALLELIZZAZIONE.md . Lo sciame che DIVIDE (🆕)
+│   │   ├── FASE_7_LEARNING.md ....... Continuous Learning (🆕 800+ righe!)
+│   │   └── FASE_7.5_PARALLELIZZAZIONE.md . Lo sciame che DIVIDE (✅ testato!)
 │   │
 │   ├── 📖 studio/ - STUDI APPROFONDITI
 │   │   ├── STUDIO_SUBAGENTS.md ..... Come funzionano i subagent
