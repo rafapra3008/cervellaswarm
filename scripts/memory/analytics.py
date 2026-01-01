@@ -6,21 +6,42 @@ Analizza il database swarm_memory.db e mostra metriche/statistiche
 sugli eventi dello sciame, lezioni apprese e pattern di errori.
 
 Usage:
-    python analytics.py summary   → Overview generale
-    python analytics.py lessons   → Lista lezioni attive
-    python analytics.py events    → Ultimi eventi
-    python analytics.py agents    → Stats per agente
-    python analytics.py patterns  → Pattern di errori
+    python analytics.py summary      → Overview generale
+    python analytics.py lessons      → Lista lezioni attive
+    python analytics.py events       → Ultimi eventi
+    python analytics.py agents       → Stats per agente
+    python analytics.py patterns     → Pattern di errori
+    python analytics.py dashboard    → Dashboard live (Rich)
+    python analytics.py auto-detect  → Auto-rileva pattern errori
+    python analytics.py retro        → Weekly retrospective
 """
 
-__version__ = "1.0.0"
+__version__ = "2.0.0"
 __version_date__ = "2026-01-01"
 
 import argparse
 import sqlite3
 import sys
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import List, Dict, Any, Optional
+
+# Rich imports
+from rich.console import Console
+from rich.table import Table
+from rich.panel import Panel
+from rich.layout import Layout
+from rich import box
+from rich.text import Text
+
+# Pattern detector import
+try:
+    from pattern_detector import detect_error_patterns, fetch_recent_errors, save_patterns_to_db
+except ImportError:
+    # Fallback se non trovato
+    detect_error_patterns = None
+    fetch_recent_errors = None
+    save_patterns_to_db = None
 
 # === COLORI ANSI ===
 RED = "\033[91m"
@@ -32,6 +53,9 @@ MAGENTA = "\033[95m"
 RESET = "\033[0m"
 BOLD = "\033[1m"
 DIM = "\033[2m"
+
+# Rich console globale
+console = Console()
 
 
 def get_severity_color(severity: str) -> str:
@@ -372,6 +396,370 @@ def cmd_patterns():
     conn.close()
 
 
+# === COMMAND: DASHBOARD (Rich) ===
+
+def cmd_dashboard():
+    """Dashboard live con Rich - Panoramica visuale del sistema."""
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    # Fetch metriche settimana corrente
+    week_ago = (datetime.now() - timedelta(days=7)).isoformat()
+
+    cursor.execute(f"""
+        SELECT COUNT(*) as total
+        FROM swarm_events
+        WHERE datetime(timestamp) >= datetime('{week_ago}')
+    """)
+    events_week = cursor.fetchone()['total']
+
+    cursor.execute(f"""
+        SELECT COUNT(*) as success
+        FROM swarm_events
+        WHERE success = 1 AND datetime(timestamp) >= datetime('{week_ago}')
+    """)
+    success_week = cursor.fetchone()['success']
+
+    success_rate = (success_week / events_week * 100) if events_week > 0 else 0
+
+    cursor.execute(f"""
+        SELECT COUNT(*) as errors
+        FROM swarm_events
+        WHERE success = 0 AND datetime(timestamp) >= datetime('{week_ago}')
+    """)
+    errors_week = cursor.fetchone()['errors']
+
+    # Pattern attivi
+    cursor.execute("""
+        SELECT COUNT(*) as active
+        FROM error_patterns
+        WHERE status = 'ACTIVE'
+    """)
+    active_patterns = cursor.fetchone()['active']
+
+    # Lezioni attive
+    cursor.execute("""
+        SELECT COUNT(*) as active
+        FROM lessons_learned
+        WHERE status = 'ACTIVE'
+    """)
+    active_lessons = cursor.fetchone()['active']
+
+    # Top agente della settimana
+    cursor.execute(f"""
+        SELECT agent_name, COUNT(*) as tasks
+        FROM swarm_events
+        WHERE datetime(timestamp) >= datetime('{week_ago}')
+          AND agent_name IS NOT NULL
+        GROUP BY agent_name
+        ORDER BY tasks DESC
+        LIMIT 1
+    """)
+    top_agent_row = cursor.fetchone()
+    top_agent = top_agent_row['agent_name'] if top_agent_row else "N/A"
+    top_agent_tasks = top_agent_row['tasks'] if top_agent_row else 0
+
+    conn.close()
+
+    # === RICH OUTPUT ===
+
+    # Tabella metriche
+    metrics_table = Table(
+        title="📊 METRICHE SETTIMANA",
+        box=box.ROUNDED,
+        show_header=True,
+        header_style="bold cyan"
+    )
+    metrics_table.add_column("Metrica", style="white")
+    metrics_table.add_column("Valore", justify="right", style="bold green")
+    metrics_table.add_column("Trend", justify="center")
+
+    metrics_table.add_row("Eventi Totali", str(events_week), "📈")
+    metrics_table.add_row(
+        "Success Rate",
+        f"{success_rate:.1f}%",
+        "✅" if success_rate > 80 else "⚠️"
+    )
+    metrics_table.add_row("Errori", str(errors_week), "❌" if errors_week > 5 else "✅")
+    metrics_table.add_row("Pattern Attivi", str(active_patterns), "🔍")
+    metrics_table.add_row("Lessons Attive", str(active_lessons), "📚")
+
+    # Panel agente top
+    top_agent_panel = Panel(
+        f"[bold yellow]{top_agent}[/bold yellow]\n[dim]{top_agent_tasks} task completati[/dim]",
+        title="🏆 TOP AGENTE SETTIMANA",
+        border_style="yellow"
+    )
+
+    # Layout
+    console.print("\n")
+    console.print(Panel(
+        "[bold cyan]🐝 CERVELLASWARM DASHBOARD[/bold cyan]",
+        style="cyan",
+        box=box.DOUBLE
+    ))
+    console.print("\n")
+    console.print(metrics_table)
+    console.print("\n")
+    console.print(top_agent_panel)
+    console.print("\n")
+
+
+# === COMMAND: AUTO-DETECT ===
+
+def cmd_auto_detect(days: int = 7):
+    """Auto-rileva pattern di errori ricorrenti."""
+    if not detect_error_patterns or not fetch_recent_errors or not save_patterns_to_db:
+        console.print("[red]❌ pattern_detector.py non disponibile![/red]")
+        console.print("[yellow]Suggerimento: Verifica che pattern_detector.py sia nella stessa directory[/yellow]")
+        return
+
+    console.print(f"\n[cyan]🔍 Auto-detection pattern errori (ultimi {days} giorni)...[/cyan]\n")
+
+    # Fetch errori
+    errors = fetch_recent_errors(days=days)
+
+    if not errors:
+        console.print("[green]✅ Nessun errore trovato! Sistema stabile.[/green]\n")
+        return
+
+    console.print(f"   Trovati [yellow]{len(errors)}[/yellow] errori")
+
+    # Rileva pattern
+    console.print("\n[cyan]🔎 Rilevamento pattern in corso...[/cyan]")
+    patterns = detect_error_patterns(
+        errors=errors,
+        similarity_threshold=0.7,
+        min_occurrences=3
+    )
+
+    if not patterns:
+        console.print("[green]✅ Nessun pattern ricorrente rilevato (soglia: 3+ occorrenze)[/green]\n")
+        return
+
+    console.print(f"   Rilevati [bold yellow]{len(patterns)}[/bold yellow] pattern\n")
+
+    # Salva nel database
+    console.print("[cyan]💾 Salvataggio pattern nel database...[/cyan]")
+    new, updated = save_patterns_to_db(patterns)
+    console.print(f"   [green]✅ Nuovi: {new} | Aggiornati: {updated}[/green]\n")
+
+    # Tabella pattern rilevati
+    patterns_table = Table(
+        title="📋 PATTERN RILEVATI",
+        box=box.ROUNDED,
+        show_header=True,
+        header_style="bold cyan"
+    )
+    patterns_table.add_column("#", justify="right", style="dim")
+    patterns_table.add_column("Severity", justify="center")
+    patterns_table.add_column("Pattern Name", style="white")
+    patterns_table.add_column("Occorrenze", justify="right", style="yellow")
+
+    for i, pattern in enumerate(patterns, 1):
+        severity_emoji = {
+            'CRITICAL': '🔴',
+            'HIGH': '🟠',
+            'MEDIUM': '🟡',
+            'LOW': '🟢'
+        }.get(pattern['severity_level'], '⚪')
+
+        severity_color = {
+            'CRITICAL': 'red',
+            'HIGH': 'yellow',
+            'MEDIUM': 'cyan',
+            'LOW': 'green'
+        }.get(pattern['severity_level'], 'white')
+
+        patterns_table.add_row(
+            str(i),
+            f"[{severity_color}]{severity_emoji} {pattern['severity_level']}[/{severity_color}]",
+            pattern['pattern_name'][:60],
+            str(pattern['occurrence_count'])
+        )
+
+    console.print(patterns_table)
+    console.print("\n[green]✅ Pattern detection completato![/green]\n")
+
+
+# === COMMAND: RETRO (Weekly Retrospective) ===
+
+def cmd_retro():
+    """Genera weekly retrospective report."""
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    # Periodo: ultimi 7 giorni
+    week_ago = (datetime.now() - timedelta(days=7)).isoformat()
+
+    console.print("\n")
+    console.print(Panel(
+        "[bold magenta]📅 WEEKLY RETROSPECTIVE[/bold magenta]",
+        style="magenta",
+        box=box.DOUBLE
+    ))
+    console.print("\n")
+
+    # === 1. METRICHE CHIAVE ===
+
+    cursor.execute(f"""
+        SELECT
+            COUNT(*) as total,
+            SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as successes,
+            SUM(CASE WHEN success = 0 THEN 1 ELSE 0 END) as failures
+        FROM swarm_events
+        WHERE datetime(timestamp) >= datetime('{week_ago}')
+    """)
+    metrics = cursor.fetchone()
+
+    total = metrics['total']
+    successes = metrics['successes']
+    failures = metrics['failures']
+    success_rate = (successes / total * 100) if total > 0 else 0
+
+    metrics_table = Table(title="📊 METRICHE CHIAVE", box=box.SIMPLE, show_header=False)
+    metrics_table.add_column("Metrica", style="cyan")
+    metrics_table.add_column("Valore", justify="right", style="bold white")
+
+    metrics_table.add_row("Eventi Totali", str(total))
+    metrics_table.add_row("Successi", f"[green]{successes}[/green]")
+    metrics_table.add_row("Errori", f"[red]{failures}[/red]")
+    metrics_table.add_row("Success Rate", f"[bold]{success_rate:.1f}%[/bold]")
+
+    console.print(metrics_table)
+    console.print("\n")
+
+    # === 2. TOP 3 PATTERN ERRORI ===
+
+    cursor.execute("""
+        SELECT pattern_name, severity_level, occurrence_count
+        FROM error_patterns
+        WHERE status = 'ACTIVE'
+        ORDER BY
+            CASE severity_level
+                WHEN 'CRITICAL' THEN 1
+                WHEN 'HIGH' THEN 2
+                WHEN 'MEDIUM' THEN 3
+                WHEN 'LOW' THEN 4
+            END,
+            occurrence_count DESC
+        LIMIT 3
+    """)
+    top_patterns = cursor.fetchall()
+
+    if top_patterns:
+        patterns_table = Table(title="🔍 TOP 3 PATTERN ERRORI", box=box.SIMPLE)
+        patterns_table.add_column("Severity", justify="center")
+        patterns_table.add_column("Pattern", style="white")
+        patterns_table.add_column("Count", justify="right", style="yellow")
+
+        for pattern in top_patterns:
+            severity_emoji = {
+                'CRITICAL': '🔴',
+                'HIGH': '🟠',
+                'MEDIUM': '🟡',
+                'LOW': '🟢'
+            }.get(pattern['severity_level'], '⚪')
+
+            patterns_table.add_row(
+                f"{severity_emoji} {pattern['severity_level']}",
+                pattern['pattern_name'][:50],
+                str(pattern['occurrence_count'])
+            )
+
+        console.print(patterns_table)
+        console.print("\n")
+
+    # === 3. LEZIONI APPRESE ===
+
+    cursor.execute(f"""
+        SELECT pattern, severity
+        FROM lessons_learned
+        WHERE datetime(created_at) >= datetime('{week_ago}')
+        ORDER BY
+            CASE severity
+                WHEN 'CRITICAL' THEN 1
+                WHEN 'HIGH' THEN 2
+                WHEN 'MEDIUM' THEN 3
+                WHEN 'LOW' THEN 4
+            END
+        LIMIT 5
+    """)
+    new_lessons = cursor.fetchall()
+
+    if new_lessons:
+        lessons_panel = Panel(
+            "\n".join([f"• [{l['severity']}] {l['pattern']}" for l in new_lessons]),
+            title="📚 LEZIONI APPRESE QUESTA SETTIMANA",
+            border_style="green"
+        )
+        console.print(lessons_panel)
+        console.print("\n")
+
+    # === 4. BREAKDOWN PER AGENTE ===
+
+    cursor.execute(f"""
+        SELECT
+            agent_name,
+            COUNT(*) as total,
+            SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as successes,
+            SUM(CASE WHEN success = 0 THEN 1 ELSE 0 END) as failures
+        FROM swarm_events
+        WHERE datetime(timestamp) >= datetime('{week_ago}')
+          AND agent_name IS NOT NULL
+        GROUP BY agent_name
+        ORDER BY total DESC
+        LIMIT 5
+    """)
+    agents = cursor.fetchall()
+
+    if agents:
+        agents_table = Table(title="👥 BREAKDOWN PER AGENTE (Top 5)", box=box.SIMPLE)
+        agents_table.add_column("Agente", style="cyan")
+        agents_table.add_column("Total", justify="right")
+        agents_table.add_column("Success", justify="right", style="green")
+        agents_table.add_column("Failures", justify="right", style="red")
+
+        for agent in agents:
+            agents_table.add_row(
+                agent['agent_name'],
+                str(agent['total']),
+                str(agent['successes']),
+                str(agent['failures'])
+            )
+
+        console.print(agents_table)
+        console.print("\n")
+
+    # === 5. RACCOMANDAZIONI ===
+
+    recommendations = []
+
+    if success_rate < 80:
+        recommendations.append("⚠️ Success rate < 80% - Investigare cause degli errori")
+
+    if failures > 10:
+        recommendations.append("🔍 Alto numero di errori - Eseguire auto-detect per pattern")
+
+    cursor.execute("SELECT COUNT(*) as active FROM lessons_learned WHERE status = 'ACTIVE'")
+    active_lessons_count = cursor.fetchone()['active']
+    if active_lessons_count > 5:
+        recommendations.append(f"📚 {active_lessons_count} lezioni ACTIVE - Pianificare fix")
+
+    if not recommendations:
+        recommendations.append("✅ Sistema stabile - Continuare così!")
+
+    recommendations_panel = Panel(
+        "\n".join(recommendations),
+        title="💡 RACCOMANDAZIONI",
+        border_style="yellow"
+    )
+    console.print(recommendations_panel)
+    console.print("\n")
+
+    conn.close()
+
+
 # === MAIN ===
 
 def main():
@@ -380,22 +768,26 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Comandi disponibili:
-  summary   - Overview generale del sistema
-  lessons   - Lista tutte le lezioni apprese
-  events    - Mostra ultimi eventi (default: 10)
-  agents    - Statistiche per agente
-  patterns  - Pattern di errori attivi
+  summary      - Overview generale del sistema
+  lessons      - Lista tutte le lezioni apprese
+  events       - Mostra ultimi eventi (default: 10)
+  agents       - Statistiche per agente
+  patterns     - Pattern di errori attivi
+  dashboard    - Dashboard live con Rich (NUOVO!)
+  auto-detect  - Auto-rileva pattern errori (NUOVO!)
+  retro        - Weekly retrospective (NUOVO!)
 
 Esempi:
   python analytics.py summary
-  python analytics.py events
-  python analytics.py lessons
+  python analytics.py dashboard
+  python analytics.py auto-detect
+  python analytics.py retro
         """
     )
 
     parser.add_argument(
         'command',
-        choices=['summary', 'lessons', 'events', 'agents', 'patterns'],
+        choices=['summary', 'lessons', 'events', 'agents', 'patterns', 'dashboard', 'auto-detect', 'retro'],
         help='Comando da eseguire'
     )
 
@@ -404,6 +796,13 @@ Esempi:
         type=int,
         default=10,
         help='Numero di eventi da mostrare (solo per "events")'
+    )
+
+    parser.add_argument(
+        '-d', '--days',
+        type=int,
+        default=7,
+        help='Numero di giorni da analizzare (solo per "auto-detect")'
     )
 
     parser.add_argument(
@@ -425,6 +824,12 @@ Esempi:
         cmd_agents()
     elif args.command == 'patterns':
         cmd_patterns()
+    elif args.command == 'dashboard':
+        cmd_dashboard()
+    elif args.command == 'auto-detect':
+        cmd_auto_detect(args.days)
+    elif args.command == 'retro':
+        cmd_retro()
 
 
 if __name__ == '__main__':

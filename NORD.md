@@ -15,29 +15,31 @@
 
 ## 🎯 DOVE SIAMO
 
-**FASE 6: Memoria** - 🧠 SETTIMANA 2 INIZIATA! (40%)
+**FASE 6: Memoria** - 🧠 SETTIMANA 2 COMPLETATA! (70%)
 
 Abbiamo:
 - [x] FASE 0+1+2+3+4+5 completate!
 - [x] 11 subagent GLOBALI (famiglia completa!)
 - [x] VISIONE 2026 definita
-- [x] **SISTEMA MEMORIA v1.1.0 FUNZIONANTE!** ✅
+- [x] **SISTEMA MEMORIA v2.0.0 FUNZIONANTE!** ✅
   - Schema SQLite (3 tabelle + 9 indici)
-  - 5 script Python (init, log, load, query, **analytics**)
+  - **8 script Python** (init, log, load, query, analytics, pattern_detector, weekly_retro, test)
   - Hook configurati (SessionStart + PostToolUse)
   - **5 LEZIONI STORICHE** dalla Costituzione!
-  - **analytics.py** con CLI completa!
+  - **analytics.py v2.0.0** con Rich + 8 comandi!
+  - **pattern_detector.py** per auto-detection errori!
+  - **weekly_retro.py** per report settimanali!
 
 ---
 
 ## 🎯 PROSSIMO OBIETTIVO
 
-**FASE 6.2: UI Logs + Pattern Discovery** 📊 - Settimana 2
+**FASE 6.3: Consolidamento + Suggerimenti Automatici** 📊 - Settimana 3
 
 **Prossimi passi:**
-1. ⬜ UI per visualizzare logs (dashboard CLI avanzata)
-2. ⬜ Auto-detection pattern (≥3 errori simili)
-3. ⬜ Weekly retro automatica
+1. ⬜ Pattern discovery automatico (query schedulate)
+2. ⬜ Suggerimenti automatici basati su pattern
+3. ⬜ Integrazione con altri progetti (Miracollo/Contabilità)
 
 ---
 
@@ -78,7 +80,7 @@ APRILE+:   🧬 EVOLUZIONE - Lo sciame che SI MIGLIORA
 
 ## 📅 ULTIMO AGGIORNAMENTO
 
-**1 Gennaio 2026 - Sessione 13** - FASE 6.2 INIZIATA! Schema v1.1.0 + analytics.py + 5 lezioni storiche! 🧠📊
+**1 Gennaio 2026 - Sessione 14** - FASE 6.2 COMPLETATA! 🎉 analytics.py v2.0.0 + pattern_detector.py + weekly_retro.py + Rich dashboard! 16/16 test passati! 🧠📊🐝
 
 ---
 

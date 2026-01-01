@@ -27,15 +27,20 @@ Trasformare CervellaSwarm da tool senza memoria a **PARTNER che ricorda**.
 
 **Settimana 1 Progresso:** 100% ✅
 
-### Settimana 2 (8-14 Gennaio 2026) - INIZIATA OGGI! 🚀
+### Settimana 2 (8-14 Gennaio 2026) - COMPLETATA! 🎉
 
 | # | Task | Stato | Data | Note |
 |---|------|-------|------|------|
 | 6.2.0 | Schema upgrade v1.1.0 | ✅ DONE | 1 Gen | +error_patterns +9 colonne |
-| 6.2.1 | analytics.py | ✅ DONE | 1 Gen | CLI con 5 comandi! |
+| 6.2.1 | analytics.py v1.0.0 | ✅ DONE | 1 Gen | CLI con 5 comandi |
 | 6.2.2 | 5 Lezioni storiche | ✅ DONE | 1 Gen | Dalla Costituzione! |
-| 6.2.3 | UI view logs | ⬜ TODO | - | Prossimo step |
-| 6.2.4 | Pattern discovery | ⬜ TODO | - | Auto-detection |
+| 6.2.3 | analytics.py v2.0.0 | ✅ DONE | 1 Gen | Rich + 8 comandi! |
+| 6.2.4 | pattern_detector.py | ✅ DONE | 1 Gen | difflib similarity! |
+| 6.2.5 | weekly_retro.py | ✅ DONE | 1 Gen | Report settimanale! |
+| 6.2.6 | Dashboard CLI | ✅ DONE | 1 Gen | Rich formatting! |
+| 6.2.7 | Test 16/16 passati | ✅ DONE | 1 Gen | Tester verificato! |
+
+**Settimana 2 Progresso:** 100% ✅
 
 ### Settimana 3 (15-21 Gennaio 2026)
 
@@ -58,17 +63,19 @@ Trasformare CervellaSwarm da tool senza memoria a **PARTNER che ricorda**.
 
 ```
 scripts/memory/
-├── init_db.py       ✅ v1.1.0 (+error_patterns, upgrade schema)
-├── log_event.py     ✅ v1.0.0
-├── load_context.py  ✅ v1.0.0
-├── query_events.py  ✅ v1.0.0
-├── analytics.py     ✅ v1.0.0 (NEW! CLI analytics)
-├── test_system.sh   ✅ v1.0.0
-├── example_usage.sh ✅ v1.0.0
-└── README.md        ✅ v1.0.0
+├── init_db.py          ✅ v1.1.0 (+error_patterns, upgrade schema)
+├── log_event.py        ✅ v1.0.0
+├── load_context.py     ✅ v1.0.0
+├── query_events.py     ✅ v1.0.0
+├── analytics.py        ✅ v2.0.0 (Rich + 8 comandi!)
+├── pattern_detector.py ✅ v1.0.0 (NEW! Detection algorithm)
+├── weekly_retro.py     ✅ v1.0.0 (NEW! Weekly report)
+├── test_system.sh      ✅ v1.0.0
+├── example_usage.sh    ✅ v1.0.0
+└── README.md           ✅ v1.0.0
 
 data/
-└── swarm_memory.db  ✅ 53KB (3 tabelle!)
+└── swarm_memory.db  ✅ 68KB (3 tabelle!)
 ```
 
 ---
@@ -83,5 +90,29 @@ data/
 
 ---
 
-*Ultimo aggiornamento: 1 Gennaio 2026 - Sessione 13*
-*"Lo sciame che RICORDA e ANALIZZA!" 🧠📊🐝*
+## COMANDI DISPONIBILI
+
+```bash
+# Dashboard live con Rich
+python3 analytics.py dashboard
+
+# Auto-rilevamento pattern errori
+python3 analytics.py auto-detect
+python3 analytics.py auto-detect -d 30  # ultimi 30 giorni
+
+# Weekly retrospective
+python3 analytics.py retro
+python3 weekly_retro.py -d 14  # standalone
+
+# Comandi originali
+python3 analytics.py summary
+python3 analytics.py lessons
+python3 analytics.py events
+python3 analytics.py agents
+python3 analytics.py patterns
+```
+
+---
+
+*Ultimo aggiornamento: 1 Gennaio 2026 - Sessione 14*
+*"Lo sciame che RICORDA, ANALIZZA e FA RETROSPETTIVE!" 🧠📊🐝*
