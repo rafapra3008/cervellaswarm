@@ -224,6 +224,26 @@
 
 ## 📝 CHANGELOG
 
+### 1 Gennaio 2026 (Sessione 30) - 🎉 BUG SCOPERTO + FIX APPLICATO! 🎉
+
+- 🔴 **BUG SCOPERTO:** PostToolUse hooks NON FUNZIONANO!
+  - GitHub Issue #6305 confermato
+  - Bug noto in Claude Code - MAI chiamato
+  - cervella-researcher ha trovato il problema!
+- ✅ **SOLUZIONE TROVATA:** Usare SubagentStop invece!
+  - SubagentStop è l'hook DEDICATO per subagent
+  - FUNZIONA correttamente (confermato da ricerca)
+- ✅ **FIX APPLICATO:**
+  - settings.json: PostToolUse → SubagentStop
+  - Serve riavvio per applicare
+- 📋 **FILE AGGIORNATI:**
+  - SUB_ROADMAP_LOGGING_SYSTEM.md (FASE A quasi completata!)
+  - PROMPT_RIPRESA.md
+  - NORD.md
+  - ULTIMO_LAVORO_CERVELLASWARM.md
+
+**Versione:** 6.1.0 (Minor: Bug Fix Hooks!)
+
 ### 1 Gennaio 2026 (Sessione 28) - 🚀 PRONTI PER TEST REALE! 🚀
 
 - 🎯 **VERIFICA PRE-TEST COMPLETATA:**
