@@ -5,8 +5,9 @@ Hook SubagentStop - Logga quando un subagent completa.
 Riceve dati da stdin in formato JSON.
 Salva nel database swarm_memory.db e in file di debug.
 
-Versione: 1.0.0
+Versione: 1.1.0
 Data: 2026-01-01
+Upgrade: Path ASSOLUTO a DB centrale CervellaSwarm (funziona da qualsiasi progetto!)
 """
 
 import sys
@@ -14,8 +15,10 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-# Path al progetto CervellaSwarm
-SWARM_DIR = Path(__file__).parent.parent.parent
+# Path ASSOLUTO al database centrale CervellaSwarm
+# Questo garantisce che lo script funzioni anche quando eseguito da altri progetti
+# (es. Miracollo, Contabilità) - tutti scrivono nello STESSO DB centrale!
+SWARM_DIR = Path.home() / "Developer" / "CervellaSwarm"
 DATA_DIR = SWARM_DIR / "data"
 LOGS_DIR = DATA_DIR / "logs"
 DB_PATH = DATA_DIR / "swarm_memory.db"
@@ -64,19 +67,19 @@ def main():
 
             cursor.execute("""
                 INSERT INTO swarm_events (
-                    id, session_id, agent_name, event_type, project,
-                    task_description, status, created_at, raw_payload
+                    id, timestamp, session_id, agent_name, event_type, project,
+                    task_description, task_status, notes
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 str(uuid.uuid4()),
+                ts,
                 session_id,
                 "subagent",  # Non sappiamo quale agent specifico
                 "subagent_stop",
                 project,
                 "Subagent completed (from SubagentStop hook)",
                 "completed",
-                ts,
-                json.dumps(input_data)
+                json.dumps(input_data)  # Raw payload va in notes
             ))
 
             conn.commit()

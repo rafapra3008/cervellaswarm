@@ -1,0 +1,3 @@
+2026-01-01T16:08:55.403705: DB Error: table swarm_events has no column named status
+2026-01-01T16:09:00.288786: DB Error: table swarm_events has no column named status
+2026-01-01T16:15:34.202303: DB Error: table swarm_events has no column named status

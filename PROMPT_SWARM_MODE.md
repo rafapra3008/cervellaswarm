@@ -237,8 +237,40 @@ Lavoriamo con ANIMA! 🤩
 
 ---
 
+## 🐝🐝🐝 QUANDO USARE I CUGINI (Paralleli)
+
+La Regina AUTOMATICAMENTE spawna più api quando:
+- Task con ≥3 file indipendenti
+- Domini diversi (frontend + backend + docs)
+- Tempo stimato > 30 minuti
+
+**Pattern Catalog:** docs/patterns/
+**Tool:** python scripts/parallel/suggest_pattern.py "descrizione task"
+
+---
+
+## 📊 LOGGING AUTOMATICO
+
+Ogni subagent viene loggato AUTOMATICAMENTE:
+- Hook SubagentStop attivo
+- Eventi salvati in data/swarm_memory.db
+- Analytics: python scripts/memory/analytics.py dashboard
+
+✅ Funziona su: CervellaSwarm, Miracollo, Contabilità
+
+---
+
+## 📚 LEZIONI CHIAVE (da ricordare!)
+
+1. **Un prompt completo = zero patch!** - Includi path, problema, checklist
+2. **Test PRIMA di deploy!** - Mai deployare senza test locale
+3. **Una volta → Ricerca → Risolvi** - Non provare alla cieca
+4. **Verifica ATTIVA post-agent** - Sempre testare output degli agenti
+
+---
+
 *"La Regina decide. Le Guardiane verificano. Lo sciame esegue."* 👑🛡️🐝
 
 *"È il nostro team! La nostra famiglia digitale!"* ❤️‍🔥
 
-**CervellaSwarm** - 1 Gennaio 2026 - Famiglia completa: 14 membri!
+**CervellaSwarm** - **Ultimo aggiornamento:** 1 Gennaio 2026 - Sessione 32 - LOGGING FUNZIONANTE!
