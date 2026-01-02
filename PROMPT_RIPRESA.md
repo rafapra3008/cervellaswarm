@@ -51,10 +51,21 @@
 
 ### TODO PROSSIMA SESSIONE
 
-- [ ] **Setup ANTHROPIC_API_KEY** nei secrets di GitHub (2 min)
-- [ ] **Test GitHub Actions** con PR finta (5 min)
-- [ ] **Deploy workflows** su Miracollo e Contabilita
-- [ ] **Usare sciame** su task REALI di Miracollo
+**PRIORITA 1: Attivare GitHub Actions! (5 min)**
+```
+1. Vai su: github.com/rafapra3008/CervellaSwarm/settings/secrets/actions
+2. Clicca "New repository secret"
+3. Nome: ANTHROPIC_API_KEY
+4. Valore: [la tua API key da console.anthropic.com]
+5. Salva!
+6. Apri una PR di test per vedere la magia!
+```
+**Costo:** ~$2-5/mese per review H24 automatiche!
+
+**PRIORITA 2: Usare sciame su progetti REALI**
+- [ ] Deploy workflows su Miracollo
+- [ ] Deploy workflows su Contabilita
+- [ ] Usare sciame su task Miracollo
 
 ### PROTEZIONE COMPACT
 
