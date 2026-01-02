@@ -673,17 +673,20 @@ FASI COMPLETATE: 8/9 (89%)
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-01 21:35 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-02 03:01 (auto)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 32f863a - 📍 Sessione 40 Chiusura: CHECKPOINT FINALE!
-- **File modificati** (2):
-  - ata/logs/subagent_stop_debug.log
+- **Ultimo commit**: 6686e2f - 📍 Sessione 41: CHECKPOINT COMPLETO!
+- **File modificati** (3):
+  - ata/logs/hook_debug.log
+  - data/logs/subagent_stop_debug.log
   - data/swarm_memory.db
 
 ### Note
 - Checkpoint automatico generato da hook
-- Trigger: unknown
+- Trigger: auto
 
 ---
