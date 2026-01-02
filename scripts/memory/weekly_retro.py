@@ -29,12 +29,17 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import List, Tuple, Optional
 
-from rich.console import Console
-from rich.table import Table
-from rich.panel import Panel
-from rich import box
-
-console = Console()
+# Optional rich import
+try:
+    from rich.console import Console
+    from rich.table import Table
+    from rich.panel import Panel
+    from rich import box
+    HAS_RICH = True
+    console = Console()
+except ImportError:
+    HAS_RICH = False
+    console = None
 
 # Import centralizzato path management
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -46,7 +51,10 @@ def connect_db() -> sqlite3.Connection:
     db_path = get_db_path()
 
     if not db_path.exists():
-        console.print(f"[red]❌ Database non trovato: {db_path}[/red]")
+        if HAS_RICH:
+            console.print(f"[red]❌ Database non trovato: {db_path}[/red]")
+        else:
+            print(f"❌ Database non trovato: {db_path}")
         sys.exit(1)
 
     try:
@@ -54,7 +62,10 @@ def connect_db() -> sqlite3.Connection:
         conn.row_factory = sqlite3.Row
         return conn
     except sqlite3.Error as e:
-        console.print(f"[red]❌ Errore connessione database: {e}[/red]")
+        if HAS_RICH:
+            console.print(f"[red]❌ Errore connessione database: {e}[/red]")
+        else:
+            print(f"❌ Errore connessione database: {e}")
         sys.exit(1)
 
 
@@ -173,14 +184,20 @@ def generate_retro(days: int = 7, save_to_file: bool = False, quiet: bool = Fals
     plain_text = []
 
     if not quiet:
-        console.print("\n")
-        console.print(Panel(
-            f"[bold magenta]📅 WEEKLY RETROSPECTIVE[/bold magenta]\n"
-            f"[dim]Periodo: {period_start[:10]} → {period_end[:10]}[/dim]",
-            style="magenta",
-            box=box.DOUBLE
-        ))
-        console.print("\n")
+        if HAS_RICH:
+            console.print("\n")
+            console.print(Panel(
+                f"[bold magenta]📅 WEEKLY RETROSPECTIVE[/bold magenta]\n"
+                f"[dim]Periodo: {period_start[:10]} → {period_end[:10]}[/dim]",
+                style="magenta",
+                box=box.DOUBLE
+            ))
+            console.print("\n")
+        else:
+            print("\n" + "="*60)
+            print("📅 WEEKLY RETROSPECTIVE")
+            print(f"Periodo: {period_start[:10]} → {period_end[:10]}")
+            print("="*60 + "\n")
 
     if save_to_file:
         plain_text.append("# WEEKLY RETROSPECTIVE\n")
@@ -205,17 +222,26 @@ def generate_retro(days: int = 7, save_to_file: bool = False, quiet: bool = Fals
     success_rate = (successes / total * 100) if total > 0 else 0
 
     if not quiet:
-        metrics_table = Table(title="📊 METRICHE CHIAVE", box=box.SIMPLE, show_header=False)
-        metrics_table.add_column("Metrica", style="cyan", width=20)
-        metrics_table.add_column("Valore", justify="right", style="bold white")
+        if HAS_RICH:
+            metrics_table = Table(title="📊 METRICHE CHIAVE", box=box.SIMPLE, show_header=False)
+            metrics_table.add_column("Metrica", style="cyan", width=20)
+            metrics_table.add_column("Valore", justify="right", style="bold white")
 
-        metrics_table.add_row("Eventi Totali", str(total))
-        metrics_table.add_row("Successi", f"[green]{successes}[/green]")
-        metrics_table.add_row("Errori", f"[red]{failures}[/red]")
-        metrics_table.add_row("Success Rate", f"[bold]{success_rate:.1f}%[/bold]")
+            metrics_table.add_row("Eventi Totali", str(total))
+            metrics_table.add_row("Successi", f"[green]{successes}[/green]")
+            metrics_table.add_row("Errori", f"[red]{failures}[/red]")
+            metrics_table.add_row("Success Rate", f"[bold]{success_rate:.1f}%[/bold]")
 
-        console.print(metrics_table)
-        console.print("\n")
+            console.print(metrics_table)
+            console.print("\n")
+        else:
+            print("📊 METRICHE CHIAVE")
+            print("-" * 40)
+            print(f"Eventi Totali:    {total}")
+            print(f"Successi:         {successes}")
+            print(f"Errori:           {failures}")
+            print(f"Success Rate:     {success_rate:.1f}%")
+            print()
 
     if save_to_file:
         plain_text.append("## 📊 METRICHE CHIAVE\n\n")
@@ -244,27 +270,41 @@ def generate_retro(days: int = 7, save_to_file: bool = False, quiet: bool = Fals
 
     if top_patterns:
         if not quiet:
-            patterns_table = Table(title="🔍 TOP 3 PATTERN ERRORI", box=box.SIMPLE)
-            patterns_table.add_column("Severity", justify="center", width=15)
-            patterns_table.add_column("Pattern", style="white")
-            patterns_table.add_column("Count", justify="right", style="yellow", width=8)
+            if HAS_RICH:
+                patterns_table = Table(title="🔍 TOP 3 PATTERN ERRORI", box=box.SIMPLE)
+                patterns_table.add_column("Severity", justify="center", width=15)
+                patterns_table.add_column("Pattern", style="white")
+                patterns_table.add_column("Count", justify="right", style="yellow", width=8)
 
-            for pattern in top_patterns:
-                severity_emoji = {
-                    'CRITICAL': '🔴',
-                    'HIGH': '🟠',
-                    'MEDIUM': '🟡',
-                    'LOW': '🟢'
-                }.get(pattern['severity_level'], '⚪')
+                for pattern in top_patterns:
+                    severity_emoji = {
+                        'CRITICAL': '🔴',
+                        'HIGH': '🟠',
+                        'MEDIUM': '🟡',
+                        'LOW': '🟢'
+                    }.get(pattern['severity_level'], '⚪')
 
-                patterns_table.add_row(
-                    f"{severity_emoji} {pattern['severity_level']}",
-                    pattern['pattern_name'][:60],
-                    str(pattern['occurrence_count'])
-                )
+                    patterns_table.add_row(
+                        f"{severity_emoji} {pattern['severity_level']}",
+                        pattern['pattern_name'][:60],
+                        str(pattern['occurrence_count'])
+                    )
 
-            console.print(patterns_table)
-            console.print("\n")
+                console.print(patterns_table)
+                console.print("\n")
+            else:
+                print("🔍 TOP 3 PATTERN ERRORI")
+                print("-" * 40)
+                for pattern in top_patterns:
+                    severity_emoji = {
+                        'CRITICAL': '🔴',
+                        'HIGH': '🟠',
+                        'MEDIUM': '🟡',
+                        'LOW': '🟢'
+                    }.get(pattern['severity_level'], '⚪')
+                    print(f"{severity_emoji} [{pattern['severity_level']}] {pattern['pattern_name'][:60]}")
+                    print(f"   Count: {pattern['occurrence_count']}")
+                print()
 
         if save_to_file:
             plain_text.append("## 🔍 TOP 3 PATTERN ERRORI\n\n")
@@ -273,7 +313,10 @@ def generate_retro(days: int = 7, save_to_file: bool = False, quiet: bool = Fals
             plain_text.append("\n")
     else:
         if not quiet:
-            console.print("[dim]   Nessun pattern errore attivo[/dim]\n")
+            if HAS_RICH:
+                console.print("[dim]   Nessun pattern errore attivo[/dim]\n")
+            else:
+                print("   Nessun pattern errore attivo\n")
         if save_to_file:
             plain_text.append("## 🔍 TOP 3 PATTERN ERRORI\n\nNessun pattern attivo.\n\n")
 
@@ -296,17 +339,24 @@ def generate_retro(days: int = 7, save_to_file: bool = False, quiet: bool = Fals
 
     if new_lessons:
         if not quiet:
-            lessons_text = "\n".join([
-                f"• [{l['severity']}] {l['pattern']}"
-                for l in new_lessons
-            ])
-            lessons_panel = Panel(
-                lessons_text,
-                title=f"📚 LEZIONI APPRESE ({len(new_lessons)})",
-                border_style="green"
-            )
-            console.print(lessons_panel)
-            console.print("\n")
+            if HAS_RICH:
+                lessons_text = "\n".join([
+                    f"• [{l['severity']}] {l['pattern']}"
+                    for l in new_lessons
+                ])
+                lessons_panel = Panel(
+                    lessons_text,
+                    title=f"📚 LEZIONI APPRESE ({len(new_lessons)})",
+                    border_style="green"
+                )
+                console.print(lessons_panel)
+                console.print("\n")
+            else:
+                print(f"📚 LEZIONI APPRESE ({len(new_lessons)})")
+                print("-" * 40)
+                for l in new_lessons:
+                    print(f"• [{l['severity']}] {l['pattern']}")
+                print()
 
         if save_to_file:
             plain_text.append(f"## 📚 LEZIONI APPRESE ({len(new_lessons)})\n\n")
@@ -315,7 +365,10 @@ def generate_retro(days: int = 7, save_to_file: bool = False, quiet: bool = Fals
             plain_text.append("\n")
     else:
         if not quiet:
-            console.print("[dim]   Nessuna nuova lezione questo periodo[/dim]\n")
+            if HAS_RICH:
+                console.print("[dim]   Nessuna nuova lezione questo periodo[/dim]\n")
+            else:
+                print("   Nessuna nuova lezione questo periodo\n")
         if save_to_file:
             plain_text.append("## 📚 LEZIONI APPRESE\n\nNessuna nuova lezione.\n\n")
 
@@ -339,25 +392,35 @@ def generate_retro(days: int = 7, save_to_file: bool = False, quiet: bool = Fals
 
     if agents:
         if not quiet:
-            agents_table = Table(title="👥 BREAKDOWN PER AGENTE (Top 5)", box=box.SIMPLE)
-            agents_table.add_column("Agente", style="cyan", width=20)
-            agents_table.add_column("Total", justify="right", width=8)
-            agents_table.add_column("Success", justify="right", style="green", width=8)
-            agents_table.add_column("Failures", justify="right", style="red", width=8)
-            agents_table.add_column("Avg Duration", justify="right", style="dim", width=12)
+            if HAS_RICH:
+                agents_table = Table(title="👥 BREAKDOWN PER AGENTE (Top 5)", box=box.SIMPLE)
+                agents_table.add_column("Agente", style="cyan", width=20)
+                agents_table.add_column("Total", justify="right", width=8)
+                agents_table.add_column("Success", justify="right", style="green", width=8)
+                agents_table.add_column("Failures", justify="right", style="red", width=8)
+                agents_table.add_column("Avg Duration", justify="right", style="dim", width=12)
 
-            for agent in agents:
-                avg_dur = f"{int(agent['avg_duration'])}ms" if agent['avg_duration'] else "N/A"
-                agents_table.add_row(
-                    agent['agent_name'][:20],
-                    str(agent['total']),
-                    str(agent['successes']),
-                    str(agent['failures']),
-                    avg_dur
-                )
+                for agent in agents:
+                    avg_dur = f"{int(agent['avg_duration'])}ms" if agent['avg_duration'] else "N/A"
+                    agents_table.add_row(
+                        agent['agent_name'][:20],
+                        str(agent['total']),
+                        str(agent['successes']),
+                        str(agent['failures']),
+                        avg_dur
+                    )
 
-            console.print(agents_table)
-            console.print("\n")
+                console.print(agents_table)
+                console.print("\n")
+            else:
+                print("👥 BREAKDOWN PER AGENTE (Top 5)")
+                print("-" * 70)
+                print(f"{'Agente':<20} {'Total':>8} {'Success':>8} {'Failures':>8} {'Avg Duration':>12}")
+                print("-" * 70)
+                for agent in agents:
+                    avg_dur = f"{int(agent['avg_duration'])}ms" if agent['avg_duration'] else "N/A"
+                    print(f"{agent['agent_name'][:20]:<20} {agent['total']:>8} {agent['successes']:>8} {agent['failures']:>8} {avg_dur:>12}")
+                print()
 
         if save_to_file:
             plain_text.append("## 👥 BREAKDOWN PER AGENTE (Top 5)\n\n")
@@ -369,7 +432,10 @@ def generate_retro(days: int = 7, save_to_file: bool = False, quiet: bool = Fals
             plain_text.append("\n")
     else:
         if not quiet:
-            console.print("[dim]   Nessun dato agente disponibile[/dim]\n")
+            if HAS_RICH:
+                console.print("[dim]   Nessun dato agente disponibile[/dim]\n")
+            else:
+                print("   Nessun dato agente disponibile\n")
         if save_to_file:
             plain_text.append("## 👥 BREAKDOWN PER AGENTE\n\nNessun dato disponibile.\n\n")
 
@@ -399,13 +465,20 @@ def generate_retro(days: int = 7, save_to_file: bool = False, quiet: bool = Fals
         recommendations.append("✅ Sistema stabile - Continuare così!")
 
     if not quiet:
-        recommendations_panel = Panel(
-            "\n".join(recommendations),
-            title="💡 RACCOMANDAZIONI",
-            border_style="yellow"
-        )
-        console.print(recommendations_panel)
-        console.print("\n")
+        if HAS_RICH:
+            recommendations_panel = Panel(
+                "\n".join(recommendations),
+                title="💡 RACCOMANDAZIONI",
+                border_style="yellow"
+            )
+            console.print(recommendations_panel)
+            console.print("\n")
+        else:
+            print("💡 RACCOMANDAZIONI")
+            print("-" * 40)
+            for rec in recommendations:
+                print(rec)
+            print()
 
     if save_to_file:
         plain_text.append("## 💡 RACCOMANDAZIONI\n\n")
@@ -424,26 +497,42 @@ def generate_retro(days: int = 7, save_to_file: bool = False, quiet: bool = Fals
         agent_suggestions = [s for s in suggestions if s[0] == 'agent']
 
         if not quiet:
-            suggestions_text = []
+            if HAS_RICH:
+                suggestions_text = []
 
-            if pattern_suggestions:
-                suggestions_text.append("[bold yellow]Pattern ripetuti senza lezione documentata:[/bold yellow]")
-                for _, count, desc in pattern_suggestions:
-                    suggestions_text.append(f"  • {desc}")
-                suggestions_text.append("")
+                if pattern_suggestions:
+                    suggestions_text.append("[bold yellow]Pattern ripetuti senza lezione documentata:[/bold yellow]")
+                    for _, count, desc in pattern_suggestions:
+                        suggestions_text.append(f"  • {desc}")
+                    suggestions_text.append("")
 
-            if agent_suggestions:
-                suggestions_text.append("[bold orange]Agenti con basso success rate:[/bold orange]")
-                for _, rate, desc in agent_suggestions:
-                    suggestions_text.append(f"  • {desc}")
+                if agent_suggestions:
+                    suggestions_text.append("[bold orange]Agenti con basso success rate:[/bold orange]")
+                    for _, rate, desc in agent_suggestions:
+                        suggestions_text.append(f"  • {desc}")
 
-            suggestions_panel = Panel(
-                "\n".join(suggestions_text),
-                title="🎯 LEZIONI SUGGERITE (Nuovo in v2.0.0)",
-                border_style="magenta"
-            )
-            console.print(suggestions_panel)
-            console.print("\n")
+                suggestions_panel = Panel(
+                    "\n".join(suggestions_text),
+                    title="🎯 LEZIONI SUGGERITE (Nuovo in v2.0.0)",
+                    border_style="magenta"
+                )
+                console.print(suggestions_panel)
+                console.print("\n")
+            else:
+                print("🎯 LEZIONI SUGGERITE")
+                print("-" * 40)
+
+                if pattern_suggestions:
+                    print("Pattern ripetuti senza lezione documentata:")
+                    for _, count, desc in pattern_suggestions:
+                        print(f"  • {desc}")
+                    print()
+
+                if agent_suggestions:
+                    print("Agenti con basso success rate:")
+                    for _, rate, desc in agent_suggestions:
+                        print(f"  • {desc}")
+                print()
 
         if save_to_file:
             plain_text.append("## 🎯 LEZIONI SUGGERITE\n\n")
@@ -461,7 +550,10 @@ def generate_retro(days: int = 7, save_to_file: bool = False, quiet: bool = Fals
                 plain_text.append("\n")
     else:
         if not quiet:
-            console.print("[dim]   Nessuna lezione suggerita - Sistema OK[/dim]\n")
+            if HAS_RICH:
+                console.print("[dim]   Nessuna lezione suggerita - Sistema OK[/dim]\n")
+            else:
+                print("   Nessuna lezione suggerita - Sistema OK\n")
         if save_to_file:
             plain_text.append("## 🎯 LEZIONI SUGGERITE\n\nNessuna lezione suggerita.\n\n")
 
@@ -482,13 +574,20 @@ def generate_retro(days: int = 7, save_to_file: bool = False, quiet: bool = Fals
         next_steps.append("✅ Nessuna azione richiesta - Sistema OK!")
 
     if not quiet:
-        steps_panel = Panel(
-            "\n".join(next_steps),
-            title="📝 PROSSIMI PASSI",
-            border_style="cyan"
-        )
-        console.print(steps_panel)
-        console.print("\n")
+        if HAS_RICH:
+            steps_panel = Panel(
+                "\n".join(next_steps),
+                title="📝 PROSSIMI PASSI",
+                border_style="cyan"
+            )
+            console.print(steps_panel)
+            console.print("\n")
+        else:
+            print("📝 PROSSIMI PASSI")
+            print("-" * 40)
+            for step in next_steps:
+                print(step)
+            print()
 
     if save_to_file:
         plain_text.append("## 📝 PROSSIMI PASSI\n\n")
@@ -506,7 +605,10 @@ def generate_retro(days: int = 7, save_to_file: bool = False, quiet: bool = Fals
             # In quiet mode, solo il path
             print(f"Report salvato: {saved_path}")
         else:
-            console.print(f"[green]✅ Report salvato:[/green] {saved_path}\n")
+            if HAS_RICH:
+                console.print(f"[green]✅ Report salvato:[/green] {saved_path}\n")
+            else:
+                print(f"✅ Report salvato: {saved_path}\n")
 
     conn.close()
 
@@ -567,11 +669,17 @@ Novità v2.0.0:
 
     # Validazione
     if args.days < 1:
-        console.print("[red]❌ Errore: --days deve essere >= 1[/red]")
+        if HAS_RICH:
+            console.print("[red]❌ Errore: --days deve essere >= 1[/red]")
+        else:
+            print("❌ Errore: --days deve essere >= 1")
         sys.exit(1)
 
     if args.days > 365 and not args.quiet:
-        console.print("[yellow]⚠️  Attenzione: Analisi > 1 anno potrebbe essere lenta[/yellow]")
+        if HAS_RICH:
+            console.print("[yellow]⚠️  Attenzione: Analisi > 1 anno potrebbe essere lenta[/yellow]")
+        else:
+            print("⚠️  Attenzione: Analisi > 1 anno potrebbe essere lenta")
 
     # Genera retrospettiva
     generate_retro(

@@ -1,0 +1,17 @@
+# CervellaSwarm Development Dependencies (Optional)
+#
+# Queste dipendenze sono OPZIONALI.
+# Gli script funzionano anche senza rich/pytest, con fallback su plain text.
+
+# Rich - Terminal output formattato (tabelle, panel, progress bar)
+# Usato da: analytics.py, weekly_retro.py, analyze_codebase.py, wizard.py
+rich>=13.0.0
+
+# Pytest - Testing framework
+# Usato per: test suite completa
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Ruff - Fast Python linter
+# Usato per: code quality checks
+ruff>=0.1.0

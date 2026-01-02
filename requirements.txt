@@ -1,0 +1,9 @@
+# CervellaSwarm Core Dependencies
+#
+# Questo progetto è progettato per funzionare con ZERO dipendenze esterne!
+# Utilizza solo la Python Standard Library.
+#
+# Per features opzionali (output formattato, testing), vedi requirements-dev.txt
+
+# Core: nessuna dipendenza richiesta!
+# Gli script usano solo: sqlite3, pathlib, json, argparse, datetime, etc.
