@@ -233,3 +233,18 @@ Risultato: 3x velocita, zero conflitti!
 *"Noi qui CREIAMO quando serve!"*
 
 *"Ultrapassar os proprios limites!"*
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-02 20:51 (auto)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: fbc2c88 - feat: ROADMAP PULITA + NOI MODE! (v20.0.0)
+- **File modificati**: Nessuno (git pulito)
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: auto
+
+---
