@@ -61,12 +61,33 @@
 3. **Convertire 16 agents in .agent.md** - formato standard VS Code
 4. **KILLER FEATURE: Multi-Project Orchestration** - ZERO competitor!
 
+### SCOPERTA BONUS: Pattern Chunking per Auto-Save
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   🔍 Auto-save DURANTE generazione NON esiste in Claude Code   ║
+║                                                                  ║
+║   SOLUZIONE: PATTERN CHUNKING                                   ║
+║   → Invece di 1 file da 2600 righe (rischio perdita)           ║
+║   → Fare 5 file da 500 righe (ogni file = checkpoint)          ║
+║                                                                  ║
+║   ✅ Hook PreCompact GIA' ATTIVO (protegge conversazioni)       ║
+║   ⬜ TODO: Aggiornare DNA researcher/scienziata con regola      ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
 ### TODO PROSSIMA SESSIONE
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║   📋 PROSSIMI TASK (NUOVA STRATEGIA):                           ║
+║                                                                  ║
+║   ⬜ Aggiornare DNA researcher/scienziata                       ║
+║      → Regola "max 500 righe per file"                         ║
+║      → Pattern chunking per ricerche lunghe                    ║
 ║                                                                  ║
 ║   ⬜ Convertire 16 agents in .agent.md format                   ║
 ║      → Per usare con Agent HQ                                   ║
@@ -77,9 +98,7 @@
 ║      → Meno sviluppo webview custom                             ║
 ║                                                                  ║
 ║   ⬜ Test reale su progetti nostri                              ║
-║      → CervellaSwarm                                            ║
-║      → Miracollo                                                 ║
-║      → Contabilita                                               ║
+║      → CervellaSwarm, Miracollo, Contabilita                   ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
