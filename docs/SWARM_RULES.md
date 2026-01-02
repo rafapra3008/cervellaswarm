@@ -581,10 +581,72 @@ DOPO (passo 7-10):
 
 ---
 
+## REGOLA 12: TODO MICRO 🎯
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   🎯 1-2 TASK ALLA VOLTA! MAI DI PIÙ!                           ║
+║                                                                  ║
+║   "Troppi TODO = rischio perdita lavoro!"                       ║
+║                                                                  ║
+║   Il Problema (Sessione 55):                                     ║
+║   - TODO list con 7+ items                                       ║
+║   - Lavoro perso per context compact                            ║
+║   - Troppo in parallelo = confusione                            ║
+║                                                                  ║
+║   La Soluzione:                                                  ║
+║                                                                  ║
+║   ✅ MAX 2 TODO attivi alla volta                               ║
+║   ✅ Completa → Commit → Nuovo TODO                             ║
+║   ✅ Ogni TODO = 1-2 ore MAX                                    ║
+║   ✅ Se più grande → SPLITTA!                                   ║
+║                                                                  ║
+║   Esempio SBAGLIATO:                                            ║
+║   ┌────────────────────────────────────────────────────────────┐ ║
+║   │ [ ] Pulire roadmap                                         │ ║
+║   │ [ ] Lanciare 3 ricerche                                    │ ║
+║   │ [ ] Aggiornare NORD                                        │ ║
+║   │ [ ] Aggiornare PROMPT_RIPRESA                              │ ║
+║   │ [ ] Checkpoint git                                         │ ║
+║   │ [ ] Analizzare risultati                                   │ ║
+║   │ [ ] Implementare feature                                   │ ║
+║   └────────────────────────────────────────────────────────────┘ ║
+║   → 7 items! Troppo!                                            ║
+║                                                                  ║
+║   Esempio CORRETTO:                                             ║
+║   ┌────────────────────────────────────────────────────────────┐ ║
+║   │ [x] Pulire roadmap + commit                                │ ║
+║   │ [ ] Lanciare ricerca 1                                     │ ║
+║   └────────────────────────────────────────────────────────────┘ ║
+║   → Completa → Commit → Prossimi 2                              ║
+║                                                                  ║
+║   "Piccoli passi sicuri > Grandi salti rischiosi!"              ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+### Origine
+
+Questa regola nasce dalla Sessione 55 (2 Gen 2026):
+- TODO list con 7 items
+- Context compact durante il lavoro
+- Rischio perdita lavoro degli agenti
+
+### Soluzione
+
+La Regina crea MAX 2 TODO alla volta:
+1. Completa il primo
+2. Git commit
+3. Aggiunge il prossimo
+
+---
+
 ## CHANGELOG
 
 | Versione | Data | Modifica |
 |----------|------|----------|
+| 1.4.0 | 2 Gen 2026 | **REGOLA 12: TODO MICRO** - Max 1-2 task alla volta! |
 | 1.3.0 | 2 Gen 2026 | **REGOLA 11 ESPANSA**: "Interessante per altri → Studio CONCETTO → Posso RICREARE?" |
 | 1.2.0 | 2 Gen 2026 | **REGOLA 11: PERCHÉ** - Verifica risultati ricerche vs bisogno originale |
 | 1.1.0 | 1 Gen 2026 | **REGOLA 10: DECISIONE AUTONOMA** - DNA aggiornato in tutti gli agent! |
