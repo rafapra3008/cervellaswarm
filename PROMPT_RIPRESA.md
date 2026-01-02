@@ -13,6 +13,8 @@
 ║                                                                  ║
 ║   🚀 INIZIATO MVP DEVELOPMENT!                                  ║
 ║                                                                  ║
+║   ✅ PUBLISHER RISERVATO: CervellaSwarm (cervellaswarm)         ║
+║                                                                  ║
 ║   ✅ Task 1.1: Path Parametrization (COMPLETATO!)               ║
 ║   ├── scripts/common/paths.py creato                            ║
 ║   ├── 10 script Python aggiornati                               ║
@@ -64,9 +66,7 @@
 ║   ⬜ Task 2.1: Extension Boilerplate (4 ore)                    ║
 ║      → yo code + setup TypeScript                                ║
 ║                                                                  ║
-║   🎯 SETUP ACCOUNT (Rafa):                                      ║
-║   → Reserve "cervellaswarm" su VS Code Marketplace              ║
-║   → https://marketplace.visualstudio.com/manage                  ║
+║   ✅ SETUP ACCOUNT: Publisher CervellaSwarm riservato!          ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```

@@ -6,7 +6,7 @@
 
 ## 📊 OVERVIEW
 
-> **Aggiornato:** 2 Gennaio 2026 - Sessione 46 - STUDIO COMMERCIALIZZAZIONE! (v13.0.0)
+> **Aggiornato:** 2 Gennaio 2026 - Sessione 48 - INIZIATO MVP! (v14.0.0)
 
 | Fase | Nome | Stato | Progresso |
 |------|------|-------|-----------|
@@ -23,12 +23,36 @@
 | 9 | ~~Infrastruttura H24~~ | ❌ ELIMINATA | - |
 | 10 | Automazione Intelligente | ✅ REALE | 75% |
 | 10b | GitHub Actions | ✅ FUNZIONA! | 100% |
-| 10c | Prompt Caching | 🆕 NUOVO | 0% |
-| 10d | 🔬 Scienziata Agent | 🆕 NUOVO | 0% |
-| 10e | 👷‍♀️ Ingegnera Agent | 🆕 NUOVO | 0% |
-| 10f | Context Protection | 🆕 NUOVO | 0% |
-| 11 | Roadmap Visuale | 💭 BASSA PRIORITÀ | 0% |
-| 12 | Biblioteca Comune | 💭 QUANDO SERVE | 25% |
+| **MVP** | **VS Code Extension** | 🚀 IN CORSO | **15%** |
+| 11 | Roadmap Visuale | 💭 DOPO MVP | 0% |
+| 12 | Biblioteca Comune | 💭 DOPO MVP | 25% |
+
+### 🚀 MVP VS CODE EXTENSION - COMMERCIALIZZAZIONE!
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   🎯 OBIETTIVO: VS Code Extension su Marketplace                ║
+║                                                                  ║
+║   ✅ Publisher riservato: CervellaSwarm (cervellaswarm)         ║
+║   ✅ Task 1.1: Path Parametrization - COMPLETATO                ║
+║   ✅ Task 1.2: Version Headers - COMPLETATO                     ║
+║   ⬜ Task 1.3: Database Migration System                        ║
+║   ⬜ Task 1.4: Dependency Isolation                             ║
+║   ⬜ Task 2.1-2.3: Extension Boilerplate                        ║
+║   ⬜ Task 3.1-3.3: Agent Installer                              ║
+║   ⬜ ... (45 task totali)                                       ║
+║                                                                  ║
+║   📅 Timeline: ~3 settimane MVP                                 ║
+║   💰 Target: $10K MRR in 6 mesi                                 ║
+║                                                                  ║
+║   📚 Piani dettagliati:                                         ║
+║   • docs/studio/PIANO_TECNICO_DETTAGLIATO.md                    ║
+║   • docs/studio/PIANO_GOMARKET_DETTAGLIATO.md                   ║
+║   • ROADMAP_COMMERCIALIZZAZIONE.md                               ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
 
 ### 🔬 RICERCA SESSIONE 40 - COSA ABBIAMO IMPARATO
 
