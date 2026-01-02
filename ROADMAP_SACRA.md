@@ -6,7 +6,7 @@
 
 ## 📊 OVERVIEW
 
-> **Aggiornato:** 2 Gennaio 2026 - Sessione 41 - Quick Wins Roadmap! (v10.4.0)
+> **Aggiornato:** 2 Gennaio 2026 - Sessione 42 - Ricerche + Nuovi Membri! (v10.5.0)
 
 | Fase | Nome | Stato | Progresso |
 |------|------|-------|-----------|
@@ -24,6 +24,9 @@
 | 10 | Automazione Intelligente | ✅ REALE | 75% |
 | 10b | GitHub Actions | 🆕 NUOVO | 0% |
 | 10c | Prompt Caching | 🆕 NUOVO | 0% |
+| 10d | 🔬 Scienziata Agent | 🆕 NUOVO | 0% |
+| 10e | 👷‍♀️ Ingegnera Agent | 🆕 NUOVO | 0% |
+| 10f | Context Protection | 🆕 NUOVO | 0% |
 | 11 | Roadmap Visuale | 💭 BASSA PRIORITÀ | 0% |
 | 12 | Biblioteca Comune | 💭 QUANDO SERVE | 25% |
 
@@ -417,6 +420,26 @@ Condividiamo PATTERN e STANDARD, non file.
 ---
 
 ## 📝 CHANGELOG
+
+### 2 Gennaio 2026 (Sessione 42) - 🔬 RICERCHE + NUOVI MEMBRI!
+
+**RICERCHE RECUPERATE (da agent transcripts!):**
+- 📄 RICERCA_PROMPT_CACHING_DETTAGLIATA.md (implementazione 90% risparmio)
+- 📄 RICERCA_CLAUDE_CODE_QUICKWINS.md (15 quick wins trovati!)
+- 📄 RICERCA_AI_DEVELOPMENT_BESTPRACTICES.md (40+ fonti!)
+- 📄 RICERCA_PROTEZIONE_COMPACT.md (4 soluzioni: /compact custom, c0ntextKeeper!)
+
+**ROADMAP AGGIORNATA (v1.1.0):**
+- 🆕 QW-3: Scienziata Agent (ricerca strategica on-demand)
+- 🆕 QW-4: Ingegnera Agent (analisi codebase on-demand)
+- 🆕 QW-5: Context Protection (/compact custom)
+
+**SCOPERTA:**
+- c0ntextKeeper (github.com/Capnjbrown/c0ntextKeeper) per protezione totale da compact
+
+**Versione:** 10.5.0 (Minor: Ricerche salvate + Nuovi membri famiglia)
+
+---
 
 ### 2 Gennaio 2026 (Sessione 41) - 📋 QUICK WINS ROADMAP!
 

@@ -1,54 +1,64 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2 Gennaio 2026 - Sessione 41 - ✅ QUICK WINS ROADMAP!
+> **Ultimo aggiornamento:** 2 Gennaio 2026 - Sessione 42 - 🔬 RICERCHE + NUOVI MEMBRI!
 
 ---
 
-## ✅ SESSIONE 41 - ORGANIZZAZIONE + QUICK WINS! ✅
+## 🔬 SESSIONE 42 - RICERCHE RECUPERATE + FAMIGLIA CRESCE! 🔬
 
 ### COSA ABBIAMO FATTO
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
 ║                                                                  ║
-║   ✅ DOUBLE CHECK COSTITUZIONE (10000% PRECISA!)                ║
-║   ├── 4 file globali verificati (948 righe totali)              ║
-║   │   • COSTITUZIONE.md (234 righe)                             ║
-║   │   • CHECKLIST_AZIONE.md (165 righe)                         ║
-║   │   • CLAUDE.md (221 righe)                                   ║
-║   │   • REGOLE_SVILUPPO.md (328 righe)                          ║
-║   ├── 14 Agent DNA verificati (tutti leggono Costituzione)      ║
-║   └── REALITY CHECK presente dove serve                          ║
+║   ✅ RICERCHE RECUPERATE (da agent transcripts!)                ║
+║   ├── RICERCA_PROMPT_CACHING_DETTAGLIATA.md                     ║
+║   │   → cache_control: {"type": "ephemeral"} = 90% risparmio!  ║
+║   ├── RICERCA_CLAUDE_CODE_QUICKWINS.md                          ║
+║   │   → 15 quick wins! Skills auto-activation, MCP GitHub...   ║
+║   ├── RICERCA_AI_DEVELOPMENT_BESTPRACTICES.md                   ║
+║   │   → 40+ fonti! GitHub Actions, pre-commit, changelog...    ║
+║   └── RICERCA_PROTEZIONE_COMPACT.md                             ║
+║       → 4 soluzioni! /compact custom, c0ntextKeeper...          ║
 ║                                                                  ║
-║   ✅ ANALISI LOG SWARM                                           ║
-║   ├── cervellaswarm: 144 eventi                                  ║
-║   ├── miracollo: 32 eventi (Sprint 4.7 Meta WhatsApp)           ║
-║   └── contabilita: 1 evento                                      ║
+║   ✅ SUB_ROADMAP_QUICKWINS.md AGGIORNATA (v1.1.0)               ║
+║   ├── QW-1: Prompt Caching (-90% costi!)                        ║
+║   ├── QW-2: GitHub Actions (review H24)                         ║
+║   ├── QW-3: 🔬 Scienziata Agent (NUOVO!)                        ║
+║   ├── QW-4: 👷‍♀️ Ingegnera Agent (NUOVO!)                         ║
+║   └── QW-5: Context Protection (NUOVO!)                         ║
 ║                                                                  ║
-║   🅿️ PARCHEGGIATO                                                ║
-║   └── Scienziata + Ingegnera (on-demand quando serve)           ║
-║       (Gli script esistono ma non sono accesi - DECISIONE!)     ║
-║                                                                  ║
-║   ✅ SUB_ROADMAP_QUICKWINS.md CREATA!                           ║
-║   ├── QW-1: Prompt Caching (-90% costi!) ~1.5h                  ║
-║   └── QW-2: GitHub Actions (review H24) ~1.5h                   ║
+║   🔍 SCOPERTA: c0ntextKeeper per protezione totale da compact!  ║
+║   github.com/Capnjbrown/c0ntextKeeper                           ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
 ### FILO DEL DISCORSO
 
-- 🧠 **Oggi:** Verifica costituzione + Quick Wins roadmap!
-- 🎯 **La direzione:** Implementare quick wins per risparmio e automazione
-- ⚡ **Momentum:** ALTO! Tutto organizzato e pronto!
-- 🚫 **Mai piu:** Attivare cose senza prima verificare che servono
-- ✅ **Prossimo:** Implementare Quick Wins!
+- 🧠 **Oggi:** Recupero ricerche + pianificazione nuovi membri famiglia!
+- 🎯 **La direzione:** Famiglia da 14 a 16 (Scienziata + Ingegnera come AGENT)
+- ⚡ **Momentum:** ALTO! Ricerche salvate, roadmap chiara!
+- 🚫 **Mai piu:** Perdere ricerche col compact (usa /compact custom!)
+- ✅ **Prossimo:** Creare DNA Scienziata + Ingegnera!
 
 ### TODO PROSSIMA SESSIONE
 
-- [ ] **QW-1: Prompt Caching** (-90% costi token!) ~1.5h
-- [ ] **QW-2: GitHub Actions** (code review H24!) ~1.5h
+- [ ] **QW-3: Creare cervella-scienziata.md** (ricerca strategica) ~30min
+- [ ] **QW-4: Creare cervella-ingegnera.md** (analisi codebase) ~30min
+- [ ] **QW-5: Template /compact custom** (protezione contesto) ~15min
 - [ ] **Testare su Miracollo** (qualcosa di REALE!)
+
+### PROTEZIONE COMPACT (NUOVO!)
+
+Prima di fare /compact, usa:
+```
+/compact In addition to default summary, include:
+1) NEXT ACTION - [cosa fare dopo]
+2) DECISIONS - [decisioni prese]
+3) DEAD ENDS - [cosa non ha funzionato]
+4) WORKING CODE - [cosa funziona]
+```
 
 ---
 
