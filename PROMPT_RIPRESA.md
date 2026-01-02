@@ -1,34 +1,38 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2 Gennaio 2026 - Sessione 49 - MVP Foundation! Task 1.3 + 1.4 completati!
+> **Ultimo aggiornamento:** 2 Gennaio 2026 - Sessione 50 - Extension + Scoperta Agent HQ!
 
 ---
 
-## SESSIONE 49 - MVP FOUNDATION! 🚀 (2 Gennaio 2026)
+## SESSIONE 50 - EXTENSION + SCOPERTA STRATEGICA! 🔥 (2 Gennaio 2026)
 
 ### COSA ABBIAMO FATTO
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
 ║                                                                  ║
-║   🚀 MVP FOUNDATION COMPLETATA!                                 ║
+║   🚀 MEGA SPRINT + SCOPERTA STRATEGICA!                         ║
 ║                                                                  ║
-║   ✅ Task 1.3: Database Migration System (COMPLETATO!)          ║
-║   ├── scripts/memory/migrate.py (479 righe!)                    ║
-║   ├── migrations/ con 3 file SQL                                ║
-║   ├── CLI: --status, --dry-run, --upgrade, --rollback           ║
-║   └── Schema versioning automatico                              ║
+║   ✅ Task 2.1: Extension Project (yo code) COMPLETATO!          ║
+║   ├── cervellaswarm-extension/ creata                           ║
+║   ├── TypeScript + esbuild                                       ║
+║   └── Compila senza errori!                                      ║
 ║                                                                  ║
-║   ✅ Task 1.4: Dependency Isolation (COMPLETATO!)               ║
-║   ├── requirements.txt (core - stdlib only)                     ║
-║   ├── requirements-dev.txt (rich, pytest)                       ║
-║   ├── analytics.py con Rich fallback                            ║
-║   └── weekly_retro.py con Rich fallback                         ║
+║   ✅ Task 2.2: Package.json Configuration COMPLETATO!           ║
+║   ├── 6 comandi (initialize, install, status, dashboard, etc)  ║
+║   ├── 4 settings (tier, agentsPath, enabledAgents, autoUpdate) ║
+║   └── Metadata Marketplace completi                             ║
 ║                                                                  ║
-║   🐝 2 API IN PARALLELO (Pattern "I Cugini")                   ║
-║   └── cervella-backend x2 - Zero conflitti!                     ║
+║   ✅ Task 2.3: Extension Activation COMPLETATO!                 ║
+║   └── src/extension.ts (155 righe, 6 comandi funzionanti)      ║
 ║                                                                  ║
-║   📊 PROGRESSO MVP: 25% (4/45 task)                             ║
+║   🔥 SCOPERTA AGENT HQ (VS Code Novembre 2025):                 ║
+║   ├── Dashboard UI GRATIS (zero webview!)                      ║
+║   ├── .agent.md = standard (VS Code rileva auto!)              ║
+║   ├── Git worktrees nativi per background agents               ║
+║   └── CervellaSwarm = "Smart Layer on Top"                     ║
+║                                                                  ║
+║   📊 PROGRESSO MVP: ~35% (7/45 task)                           ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
@@ -37,42 +41,45 @@
 
 | File | Azione |
 |------|--------|
-| scripts/memory/migrate.py | CREATO - Sistema migration (479 righe) |
-| scripts/memory/migrations/001_initial.sql | CREATO - Schema base |
-| scripts/memory/migrations/002_lessons_learned.sql | CREATO - Extended |
-| scripts/memory/migrations/003_error_patterns.sql | CREATO - Patterns |
-| scripts/memory/migrations/README.md | CREATO - Documentazione |
-| requirements.txt | CREATO - Core dependencies |
-| requirements-dev.txt | CREATO - Optional (rich, pytest) |
-| scripts/memory/analytics.py | MODIFICATO - Rich fallback |
-| scripts/memory/weekly_retro.py | MODIFICATO - Rich fallback |
+| cervellaswarm-extension/ | CREATO - Extension VS Code completa |
+| cervellaswarm-extension/package.json | CREATO - 6 comandi, 4 settings |
+| cervellaswarm-extension/src/extension.ts | CREATO - 155 righe, 6 comandi |
+| docs/studio/STUDIO_AGENT_HQ_INTEGRAZIONE.md | DA CREARE - Report strategico |
 
 ### FILO DEL DISCORSO
 
-- **Oggi:** MVP Foundation completata! Task 1.3 + 1.4 fatti in parallelo!
-- **La direzione:** Iniziare SETTIMANA 2 con Extension Boilerplate (Task 2.1)
-- **Momentum:** OTTIMO! Pattern "I Cugini" funziona alla grande!
+- **Oggi:** Extension creata + SCOPERTA STRATEGICA Agent HQ!
+- **La direzione:** Implementare PER NOI PRIMA, poi commercializzare
+- **Strategia:** CervellaSwarm = "Smart Layer on Top of Agent HQ"
+- **Momentum:** ESPLOSIVO! Scoperta cambia le carte in tavola!
 - **Filosofia:** "Ultrapassar os próprios limites!" - Rafa
+
+### DECISIONI IMPORTANTI
+
+1. **INTEGRAZIONE COMPLEMENTARE** con Agent HQ (non alternativa!)
+2. **IMPLEMENTARE PER NOI PRIMA** - testare su nostri progetti
+3. **Convertire 16 agents in .agent.md** - formato standard VS Code
+4. **KILLER FEATURE: Multi-Project Orchestration** - ZERO competitor!
 
 ### TODO PROSSIMA SESSIONE
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
 ║                                                                  ║
-║   📋 PROSSIMI TASK (SETTIMANA 2 - Extension Boilerplate):       ║
+║   📋 PROSSIMI TASK (NUOVA STRATEGIA):                           ║
 ║                                                                  ║
-║   ⬜ Task 2.1: Setup Extension Project (4 ore)                  ║
-║      → npm install -g yo generator-code                         ║
-║      → yo code (TypeScript)                                      ║
-║      → Nuovo repo: cervellaswarm-vscode                         ║
+║   ⬜ Convertire 16 agents in .agent.md format                   ║
+║      → Per usare con Agent HQ                                   ║
+║      → Testare su nostri progetti PRIMA                         ║
 ║                                                                  ║
-║   ⬜ Task 2.2: Package.json Configuration (2 ore)               ║
-║      → Metadata, commands, settings                              ║
+║   ⬜ Aggiornare roadmap con nuova strategia                     ║
+║      → Focus su "Smart Layer on Top"                            ║
+║      → Meno sviluppo webview custom                             ║
 ║                                                                  ║
-║   ⬜ Task 2.3: Basic Extension Activation (6 ore)               ║
-║      → extension.ts con Initialize command                       ║
-║                                                                  ║
-║   ✅ GIORNO 1 COMPLETATO! (Task 1.1-1.4)                        ║
+║   ⬜ Test reale su progetti nostri                              ║
+║      → CervellaSwarm                                            ║
+║      → Miracollo                                                 ║
+║      → Contabilita                                               ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
@@ -965,13 +972,18 @@ FASI COMPLETATE: 8/9 (89%)
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-02 16:07 (unknown)
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-02 17:32 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: ca111ca - docs: update roadmap - publisher reserved + task 1.1/1.2 done
-- **File modificati** (3):
-  - ata/logs/hook_debug.log
+- **Ultimo commit**: dcd2863 - docs: update roadmap - Task 1.3 + 1.4 completed (v15.0.0)
+- **File modificati** (4):
+  - ROMPT_RIPRESA.md
+  - data/logs/hook_debug.log
   - data/logs/subagent_stop_debug.log
   - data/swarm_memory.db
 

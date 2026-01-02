@@ -6,7 +6,7 @@
 
 ## 📊 OVERVIEW
 
-> **Aggiornato:** 2 Gennaio 2026 - Sessione 49 - MVP Foundation! (v15.0.0)
+> **Aggiornato:** 2 Gennaio 2026 - Sessione 50 - Extension + Agent HQ! (v16.0.0)
 
 | Fase | Nome | Stato | Progresso |
 |------|------|-------|-----------|
@@ -23,7 +23,7 @@
 | 9 | ~~Infrastruttura H24~~ | ❌ ELIMINATA | - |
 | 10 | Automazione Intelligente | ✅ REALE | 75% |
 | 10b | GitHub Actions | ✅ FUNZIONA! | 100% |
-| **MVP** | **VS Code Extension** | 🚀 IN CORSO | **25%** |
+| **MVP** | **VS Code Extension** | 🚀 IN CORSO | **35%** |
 | 11 | Roadmap Visuale | 💭 DOPO MVP | 0% |
 | 12 | Biblioteca Comune | 💭 DOPO MVP | 25% |
 
@@ -39,7 +39,11 @@
 ║   ✅ Task 1.2: Version Headers - COMPLETATO                     ║
 ║   ✅ Task 1.3: Database Migration System - COMPLETATO           ║
 ║   ✅ Task 1.4: Dependency Isolation - COMPLETATO                ║
-║   ⬜ Task 2.1-2.3: Extension Boilerplate                        ║
+║   ✅ Task 2.1: Extension Project (yo code) - COMPLETATO         ║
+║   ✅ Task 2.2: Package.json Configuration - COMPLETATO          ║
+║   ✅ Task 2.3: Extension Activation - COMPLETATO                ║
+║   🔥 SCOPERTA: Agent HQ = Smart Layer Strategy!                ║
+║   ⬜ PROSSIMO: Convertire agents in .agent.md (per NOI!)       ║
 ║   ⬜ Task 3.1-3.3: Agent Installer                              ║
 ║   ⬜ ... (45 task totali)                                       ║
 ║                                                                  ║
