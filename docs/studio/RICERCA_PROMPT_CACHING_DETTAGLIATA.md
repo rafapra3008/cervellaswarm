@@ -161,7 +161,46 @@ VERIFICA
 
 ---
 
+## SCOPERTA: CLAUDE CODE GIA SUPPORTA CACHING!
+
+> **Aggiornamento 2 Gennaio 2026 - Sessione 43**
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   CLAUDE CODE USA PROMPT CACHING AUTOMATICAMENTE!               |
+|                                                                  |
+|   Non serve implementare nulla manualmente.                      |
+|   Il caching e gia attivo per:                                   |
+|   - DNA degli agent                                              |
+|   - System prompts                                               |
+|   - File di contesto (CLAUDE.md, COSTITUZIONE.md)               |
+|   - Contesto codebase                                            |
+|                                                                  |
+|   VERIFICATO: Nessuna variabile DISABLE_PROMPT_CACHING e set    |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+### Variabili per Disabilitare (se necessario)
+
+| Variabile | Effetto |
+|-----------|---------|
+| DISABLE_PROMPT_CACHING | Disabilita per TUTTI i modelli |
+| DISABLE_PROMPT_CACHING_HAIKU | Disabilita solo per Haiku |
+| DISABLE_PROMPT_CACHING_SONNET | Disabilita solo per Sonnet |
+| DISABLE_PROMPT_CACHING_OPUS | Disabilita solo per Opus |
+
+### Conclusione
+
+**QW-1 (Prompt Caching): GIA IMPLEMENTATO da Claude Code!**
+
+Non serve azione manuale - il sistema e gia ottimizzato.
+
+---
+
 *Ricerca: 2 Gennaio 2026*
 *Ricercatrice: Cervella Researcher*
+*Aggiornamento: Sessione 43 - Scoperta caching automatico!*
 
 *"Il risparmio del 90% non e magia - e ingegneria!"*

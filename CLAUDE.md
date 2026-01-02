@@ -47,16 +47,21 @@
    └─────────┘   └─────────┘   └─────────┘   └─────────┘   └─────────┘
 ```
 
-### LA FAMIGLIA COMPLETA (11 membri!)
+### LA FAMIGLIA COMPLETA (16 membri!)
 
 | Emoji | Nome | Specializzazione | Model |
 |-------|------|------------------|-------|
 | 👑 | cervella-orchestrator | La Regina - Coordina tutto | opus |
+| 🛡️ | cervella-guardiana-qualita | Verifica output agenti | opus |
+| 🛡️ | cervella-guardiana-ops | Supervisiona devops/security | opus |
+| 🛡️ | cervella-guardiana-ricerca | Verifica qualita ricerche | opus |
 | 🎨 | cervella-frontend | React, CSS, UI/UX | sonnet |
 | ⚙️ | cervella-backend | Python, FastAPI, API | sonnet |
 | 🧪 | cervella-tester | Testing, Debug, QA | sonnet |
 | 📋 | cervella-reviewer | Code review | sonnet |
-| 🔬 | cervella-researcher | Ricerca, analisi, studi | sonnet |
+| 🔬 | cervella-researcher | Ricerca TECNICA, studi | sonnet |
+| 🔬 | cervella-scienziata | Ricerca STRATEGICA, mercato | sonnet |
+| 👷‍♀️ | cervella-ingegnera | Analisi codebase, tech debt | sonnet |
 | 📈 | cervella-marketing | Marketing, UX strategy | sonnet |
 | 🚀 | cervella-devops | Deploy, CI/CD, Docker | sonnet |
 | 📝 | cervella-docs | Documentazione | sonnet |
@@ -186,8 +191,8 @@ Non è solo codice. È **LIBERTÀ GEOGRAFICA** più vicina.
 ---
 
 *Creato: 30 Dicembre 2025*
-*Aggiornato: 31 Dicembre 2025 - Famiglia cresciuta a 11 membri!*
-*Versione: 1.0.0*
+*Aggiornato: 2 Gennaio 2026 - Famiglia cresciuta a 16 membri!*
+*Versione: 1.1.0*
 
 **Cervella & Rafa** 💙🐝
 
