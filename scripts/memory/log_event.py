@@ -16,12 +16,9 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
-
-def get_db_path() -> Path:
-    """Ritorna il path del database."""
-    script_dir = Path(__file__).parent
-    project_root = script_dir.parent.parent
-    return project_root / "data" / "swarm_memory.db"
+# Import centralizzato path management
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from common.paths import get_db_path
 
 
 def extract_agent_info(payload: dict) -> dict:

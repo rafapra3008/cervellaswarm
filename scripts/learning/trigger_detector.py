@@ -14,6 +14,10 @@ from pathlib import Path
 from datetime import datetime, timezone, timedelta
 from typing import Optional, Dict, List, Any
 
+# Import path centralizzato
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from common.paths import get_db_path
+
 # Costanti
 TRIGGER_FIX_AFTER_AGENT = "FIX_AFTER_AGENT"
 TRIGGER_PATTERN_THRESHOLD = "PATTERN_THRESHOLD"
@@ -23,12 +27,6 @@ TRIGGER_CRITICAL_ERROR = "CRITICAL_ERROR"
 # Configurazione
 FIX_WINDOW_MINUTES = 30  # Finestra per rilevare fix dopo agent
 PATTERN_THRESHOLD = 3     # Minimo occorrenze per trigger pattern
-
-def get_db_path() -> Path:
-    """Ritorna il path del database."""
-    script_dir = Path(__file__).parent
-    project_root = script_dir.parent.parent
-    return project_root / "data" / "swarm_memory.db"
 
 def get_db_connection() -> sqlite3.Connection:
     """Ottiene connessione al database."""

@@ -21,19 +21,16 @@ import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+# Import centralizzato path management
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from common.paths import get_db_path
+
 # Import suggestions (fallback graceful)
 try:
     from suggestions import get_suggestions, get_context_aware_suggestions
 except ImportError:
     get_suggestions = None
     get_context_aware_suggestions = None
-
-
-def get_db_path() -> Path:
-    """Ritorna il path del database."""
-    script_dir = Path(__file__).parent
-    project_root = script_dir.parent.parent
-    return project_root / "data" / "swarm_memory.db"
 
 
 def get_recent_events(conn: sqlite3.Connection, limit: int = 20) -> list:

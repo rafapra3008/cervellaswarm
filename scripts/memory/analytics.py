@@ -69,12 +69,9 @@ def get_severity_color(severity: str) -> str:
     return colors.get(severity.upper(), RESET)
 
 
-def get_db_path() -> Path:
-    """Ritorna il path al database swarm_memory.db."""
-    # Assume che lo script sia in scripts/memory/
-    script_dir = Path(__file__).parent
-    db_path = script_dir / "../../data/swarm_memory.db"
-    return db_path.resolve()
+# Import centralizzato path management (dopo altri import)
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from common.paths import get_db_path
 
 
 def connect_db() -> sqlite3.Connection:

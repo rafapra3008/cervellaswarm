@@ -1,6 +1,75 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2 Gennaio 2026 - Sessione 47 - DECISIONE GO + LA MEGLIO ROADMAP!
+> **Ultimo aggiornamento:** 2 Gennaio 2026 - Sessione 48 - INIZIAMO MVP! Task 1.1 + 1.2 completati!
+
+---
+
+## SESSIONE 48 - INIZIAMO MVP! 🚀 (2 Gennaio 2026)
+
+### COSA ABBIAMO FATTO
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   🚀 INIZIATO MVP DEVELOPMENT!                                  ║
+║                                                                  ║
+║   ✅ Task 1.1: Path Parametrization (COMPLETATO!)               ║
+║   ├── scripts/common/paths.py creato                            ║
+║   ├── 10 script Python aggiornati                               ║
+║   └── Supporto env vars per override                            ║
+║                                                                  ║
+║   ✅ Task 1.2: Version Headers (COMPLETATO!)                    ║
+║   ├── scripts/tools/add_version_headers.py creato               ║
+║   └── 16 agent files aggiornati con version 1.0.0               ║
+║                                                                  ║
+║   🐝 2 API IN PARALLELO (cervella-backend x2)                   ║
+║   └── Aggiornamento script memory + learning                    ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+### FILE CREATI/MODIFICATI
+
+| File | Azione |
+|------|--------|
+| scripts/common/paths.py | CREATO - Sistema path centralizzato |
+| scripts/common/__init__.py | CREATO - Init modulo |
+| scripts/tools/add_version_headers.py | CREATO - Tool versioning |
+| scripts/memory/*.py (8 files) | AGGIORNATI - Usano paths.py |
+| scripts/learning/*.py (2 files) | AGGIORNATI - Usano paths.py |
+| ~/.claude/agents/*.md (16 files) | AGGIORNATI - Version 1.0.0 |
+
+### FILO DEL DISCORSO
+
+- **Oggi:** Iniziato MVP! Task 1.1 + 1.2 completati!
+- **La direzione:** Continuare con Task 1.3 (DB Migration) o Task 2.1 (Extension Boilerplate)
+- **Momentum:** OTTIMO! Lavoriamo senza fretta, godiamo ogni step!
+- **Filosofia:** "La mappa c'e, godiamo ogni step!" - Rafa
+
+### TODO PROSSIMA SESSIONE
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   📋 PROSSIMI TASK (dal Piano Tecnico):                         ║
+║                                                                  ║
+║   ⬜ Task 1.3: Database Migration System (3 ore)                ║
+║      → scripts/memory/migrate.py                                 ║
+║      → Versioning schema DB                                      ║
+║                                                                  ║
+║   ⬜ Task 1.4: Dependency Isolation (2 ore)                     ║
+║      → requirements.txt                                          ║
+║      → Rich fallback                                             ║
+║                                                                  ║
+║   ⬜ Task 2.1: Extension Boilerplate (4 ore)                    ║
+║      → yo code + setup TypeScript                                ║
+║                                                                  ║
+║   🎯 SETUP ACCOUNT (Rafa):                                      ║
+║   → Reserve "cervellaswarm" su VS Code Marketplace              ║
+║   → https://marketplace.visualstudio.com/manage                  ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
 
 ---
 
@@ -872,13 +941,16 @@ FASI COMPLETATE: 8/9 (89%)
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-02 15:06 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-02 15:39 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: b8b8cff - 📝 PROMPT_RIPRESA: LA MEGLIO ROADMAP MAI FATTA! 🗺️🚀
-- **File modificati** (2):
-  - ata/logs/subagent_stop_debug.log
+- **Ultimo commit**: fba97e4 - 📝 PROMPT_RIPRESA: Note sessione 47 + errori API
+- **File modificati** (3):
+  - ata/logs/hook_debug.log
+  - data/logs/subagent_stop_debug.log
   - data/swarm_memory.db
 
 ### Note

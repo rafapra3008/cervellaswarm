@@ -14,6 +14,10 @@ from pathlib import Path
 from datetime import datetime, timezone
 from typing import Optional, Dict, List
 
+# Import path centralizzato
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from common.paths import get_db_path
+
 # Try Rich, fallback to standard print
 try:
     from rich.console import Console
@@ -28,12 +32,6 @@ except ImportError:
     console = None
 
 import sqlite3
-
-# Path database
-def get_db_path() -> Path:
-    script_dir = Path(__file__).parent
-    project_root = script_dir.parent.parent
-    return project_root / "data" / "swarm_memory.db"
 
 # Template lezioni
 TEMPLATES = {

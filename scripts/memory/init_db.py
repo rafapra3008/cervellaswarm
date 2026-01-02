@@ -16,14 +16,9 @@ import sys
 from pathlib import Path
 from datetime import datetime, timezone
 
-
-def get_db_path() -> Path:
-    """Ritorna il path del database."""
-    script_dir = Path(__file__).parent
-    project_root = script_dir.parent.parent
-    data_dir = project_root / "data"
-    data_dir.mkdir(exist_ok=True)
-    return data_dir / "swarm_memory.db"
+# Import centralizzato path management
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from common.paths import get_db_path, ensure_data_dir
 
 
 def upgrade_schema(conn: sqlite3.Connection) -> bool:

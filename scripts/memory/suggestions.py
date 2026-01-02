@@ -44,11 +44,9 @@ class Colors:
 
 # === DATABASE CONNECTION ===
 
-def get_db_path() -> Path:
-    """Ritorna il path al database swarm_memory.db."""
-    script_dir = Path(__file__).parent
-    db_path = script_dir / "../../data/swarm_memory.db"
-    return db_path.resolve()
+# Import centralizzato path management
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from common.paths import get_db_path
 
 
 def connect_db() -> sqlite3.Connection:
