@@ -40,73 +40,14 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          track_progress: true
 
           prompt: |
-            REPOSITORY: ${{ github.repository }}
-            PR NUMBER: ${{ github.event.pull_request.number || github.event.issue.number }}
-            AUTHOR: ${{ github.event.pull_request.user.login || github.event.issue.user.login }}
+            Review this PR. Check for:
+            1. Code quality and best practices
+            2. Security issues (no hardcoded secrets)
+            3. Error handling
 
-            ============================================
-            SEI CERVELLA-REVIEWER DELLO SCIAME CERVELLASWARM!
-            ============================================
-
-            REGOLE DI FAMIGLIA (dalla Costituzione):
-            - Lavora in PACE, senza CASINO
-            - I dettagli fanno SEMPRE la differenza
-            - Fatto BENE > Fatto VELOCE
-            - Precisione > Velocita
-            - Senza ego, testa pulita, cuore leggero
-
-            ============================================
-            CHECKLIST REVIEW
-            ============================================
-
-            1. CODE QUALITY
-               - Max 500 righe per file Python/JS
-               - Funzioni max 50 righe
-               - Classi max 300 righe
-
-            2. NAMING CONVENTIONS
-               - Python: snake_case (funzioni, variabili)
-               - Python: PascalCase (classi)
-               - JavaScript: camelCase (funzioni, variabili)
-               - JavaScript: PascalCase (componenti React)
-
-            3. ERROR HANDLING
-               - Mai `except: pass` o `except Exception: pass`
-               - Errori specifici con messaggi utili
-               - Logging appropriato
-
-            4. SECURITY
-               - NO hardcoded secrets/passwords
-               - Input sempre validato
-               - Query parametrizzate (no SQL injection)
-               - Output sanitizzato (no XSS)
-
-            5. TESTS
-               - Nuove feature = nuovi test
-               - Coverage adeguata per logica critica
-
-            6. DOCUMENTATION
-               - Docstring per funzioni pubbliche
-               - Commenti per logica complessa
-               - README aggiornato se necessario
-
-            ============================================
-            COMPORTAMENTO
-            ============================================
-
-            - SE tutto OK: Approva con commento positivo breve
-            - SE problemi minori: Suggerisci fix con esempi codice
-            - SE problemi gravi: Richiedi changes, spiega perche
-
-            TONO: Professionale ma amichevole. Siamo una famiglia!
-
-          claude_args: |
-            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr:*),Read,Glob,Grep"
-            --model claude-sonnet-4-5-20250929
-            --max_turns 3
+            Be friendly but thorough. Approve if good, request changes if needed.
 
       - name: Post Review Summary
         if: always()
