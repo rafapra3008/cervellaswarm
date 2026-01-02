@@ -68,17 +68,23 @@
 ```
 ╔══════════════════════════════════════════════════════════════════╗
 ║                                                                  ║
-║   🎯 USARE LO SCIAME SU PROGETTI REALI!                        ║
+║   🔍 ANALISI COMPETITOR DA COMPLETARE!                          ║
 ║                                                                  ║
-║   Lo sciame funziona GIÀ con Claude Code.                       ║
-║   Non serve Copilot, non serve Agent HQ.                        ║
+║   Stavamo analizzando:                                          ║
+║   - Cosa hanno loro (Agent HQ, Cursor, LangGraph, CrewAI)       ║
+║   - Cosa abbiamo noi che LORO non hanno                         ║
+║   - Cosa possiamo "creare" per noi                              ║
 ║                                                                  ║
-║   OPZIONI:                                                       ║
-║   1. Lavorare su MIRACOLLO (task reale)                         ║
-║   2. Lavorare su CONTABILITÀ (task reale)                       ║
-║   3. Altro task che Rafa vuole fare                             ║
+║   RICERCHE DA LEGGERE:                                          ║
+║   - docs/studio/RICERCA_COMPETITOR_AGENT_HQ.md ✅ (letta)        ║
+║   - docs/studio/RICERCA_AGENT_HQ_TESTING.md ✅ (letta)           ║
 ║                                                                  ║
-║   "Prima il BISOGNO, poi la soluzione!"                         ║
+║   DOMANDE DA RISPONDERE:                                        ║
+║   1. Cosa hanno di differenziale?                               ║
+║   2. C'è qualcosa da "rubare" per noi?                         ║
+║   3. Cosa possiamo creare per Claude Code CLI?                  ║
+║                                                                  ║
+║   "UTILE ≠ INTERESSANTE" - cercare solo cose UTILI!            ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
