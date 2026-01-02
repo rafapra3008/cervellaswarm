@@ -89,6 +89,50 @@
 - [ ] DB migration script (3 ore)
 - [ ] VS Code Extension boilerplate (4 ore)
 
+### NOTA TECNICA - ERRORI API (da investigare?)
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   ⚠️ 2 API HANNO AVUTO ERRORI DURANTE RESUME:                   ║
+║                                                                  ║
+║   🔬 Researcher: API Error 400 - Resume fallito                 ║
+║   🔬 Scienziata: API Error 400 - Resume fallito                 ║
+║                                                                  ║
+║   CAUSA: "unexpected tool_use_id found in tool_result blocks"   ║
+║   Sembra un bug di Claude Code quando si fa resume di agent     ║
+║   che non avevano completato con successo.                      ║
+║                                                                  ║
+║   IMPATTO: BASSO - Avevamo gia' i 2 piani principali:           ║
+║   ├── Ingegnera: PIANO_TECNICO (2,600 righe) ✅                 ║
+║   └── Marketing: PIANO_GOMARKET (completo) ✅                   ║
+║                                                                  ║
+║   DECISIONE PROSSIMA SESSIONE:                                  ║
+║   [ ] Ignorare (abbiamo tutto il necessario)                    ║
+║   [ ] Rilanciare researcher/scienziata se serve altro           ║
+║                                                                  ║
+║   RACCOMANDAZIONE: IGNORARE - La roadmap e' completa!           ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+### RIEPILOGO SESSIONE 47
+
+**DECISIONE STORICA:** GO per commercializzazione CervellaSwarm!
+
+**FILE CREATI:**
+- `ROADMAP_COMMERCIALIZZAZIONE.md` - LA MEGLIO ROADMAP MAI FATTA!
+- `docs/studio/PIANO_GOMARKET_DETTAGLIATO.md` - Go-to-market 6 mesi
+- `docs/studio/PIANO_TECNICO_DETTAGLIATO.md` - Gia' esistente (dall'ingegnera)
+
+**COMMIT:** 725abe7 - Pushato su main!
+
+**LO SCIAME HA LAVORATO:**
+- Ingegnera: Piano tecnico 45 task, 96 ore ✅
+- Marketing: Go-to-market $10K MRR ✅
+- Researcher: Errore API (non critico)
+- Scienziata: Errore API (non critico)
+
 ### PROTEZIONE COMPACT
 
 Prima di fare /compact, usa:
