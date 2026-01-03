@@ -103,8 +103,10 @@
 | 7 | Apprendimento | DONE | 1 Gen 2026 |
 | 7.5 | Parallelizzazione | DONE | 1 Gen 2026 |
 | 8 | La Corte Reale | DONE | 1 Gen 2026 |
+| 8.5 | spawn-workers.sh | DONE | 3 Gen 2026 |
+| **9** | **Apple Style** | **IN CORSO** | 3 Gen 2026 |
 
-**8 FASI COMPLETATE AL 100%!**
+**8.5 FASI COMPLETATE! FASE 9 IN CORSO!**
 
 ---
 
@@ -187,6 +189,61 @@
 |                                                                  |
 +------------------------------------------------------------------+
 ```
+
+---
+
+## FASE 9: APPLE STYLE (IN CORSO!)
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   🍎 FASE DESIGN & FINITURE - APPLE STYLE! 🍎                   |
+|                                                                  |
+|   "COMUNICAZIONE E' IL SEGRETO!" - Rafa                         |
+|   "Questo e' un cambiamento di vita!" - Rafa                    |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+### Obiettivo
+
+Rendere CervellaSwarm **PERFETTO** - non solo funzionante, ma:
+- **Liscio** (smooth, niente frizioni)
+- **Fiducia** (sai che funziona, puoi fidarti)
+- **Comunicazione** (gli agenti parlano BENE tra loro)
+- **Verifica** (double/triple check automatico)
+- **Chiusura** (finisce pulito, stato chiaro)
+
+### Il Processo Ideale
+
+```
+APRI -> ASPETTA -> COMUNICA -> TESTA -> VERIFICA -> CHIUDI
+
+1. APRI: spawn-workers.sh apre finestre
+2. ASPETTA: Worker pronto, conferma stato
+3. COMUNICA: Passa info chiare via .swarm/
+4. TESTA: Verifica il lavoro fatto
+5. VERIFICA: Double/triple check automatico
+6. CHIUDI: Stato finale pulito, report
+```
+
+### Ricerca da Fare
+
+| # | Domanda | Perche |
+|---|---------|--------|
+| 1 | Come devono comunicare gli agenti? | Evitare fraintendimenti |
+| 2 | Quali sono i processi giusti? | Best practices |
+| 3 | Come fare double/triple check? | Fiducia nel sistema |
+| 4 | Come dare feedback (all'utente)? | Sapere cosa succede |
+| 5 | Come chiudere pulito? | Stato finale chiaro |
+| 6 | Come gestire errori? | Graceful degradation |
+| 7 | Come monitorare in tempo reale? | Visibilita |
+
+### Dopo la Ricerca
+
+1. Implementare i miglioramenti trovati
+2. Creare HARDTESTS per validare
+3. SOLO POI: Miracollo!
 
 ---
 

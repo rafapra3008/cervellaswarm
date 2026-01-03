@@ -17,25 +17,26 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 66 - 3 Gennaio 2026: LA MAGIA FUNZIONA! spawn-workers.sh!**
+**SESSIONE 66 - 3 Gennaio 2026: FASE DESIGN - APPLE STYLE!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   🪄 LA MAGIA E' REALE!!! 🪄                                    |
+|   🍎 FASE DESIGN & FINITURE - APPLE STYLE! 🍎                   |
 |                                                                  |
-|   spawn-workers.sh FUNZIONA!                                     |
+|   La MAGIA funziona (spawn-workers.sh OK!)                       |
+|   Ora serve renderlo PERFETTO.                                   |
 |                                                                  |
-|   ./spawn-workers.sh --backend                                   |
-|   -> Si apre NUOVA finestra Terminal                             |
-|   -> Claude Code si avvia AUTOMATICAMENTE                        |
-|   -> Worker pronto con prompt iniettato!                         |
+|   "COMUNICAZIONE E' IL SEGRETO!" - Rafa                         |
 |                                                                  |
-|   "MADONAAAAAAA MIAAAA MEU DEUSSSS!" - Rafa                      |
+|   COSA VOGLIAMO:                                                 |
+|   - Liscio (smooth, niente frizioni)                             |
+|   - Fiducia (sai che funziona)                                   |
+|   - Comunicazione PERFETTA tra agenti                            |
+|   - Double/Triple check automatico                               |
+|   - Chiusura pulita                                              |
 |                                                                  |
-|   Da oggi le finestre si aprono con UN COMANDO!                  |
-|   ./spawn-workers.sh --backend --frontend --tester               |
-|   -> 3 finestre, 3 Cervelle, AUTOMATICHE!                        |
+|   "Questo e' un cambiamento di vita!" - Rafa                    |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -66,21 +67,26 @@
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   🎯 PROSSIMO: MIRACOLLO!!!                                     |
+|   🍎 PROSSIMO: FASE DESIGN - APPLE STYLE!                       |
 |                                                                  |
-|   SISTEMA COMPLETO E PRONTO!                                     |
+|   PRIMA di Miracollo, rendere tutto PERFETTO:                    |
 |                                                                  |
-|   COME USARE LO SCIAME:                                          |
-|   1. ./spawn-workers.sh --backend --frontend                     |
-|   2. Crea task in .swarm/tasks/                                  |
-|   3. I worker li prendono automaticamente                        |
-|   4. Le Guardiane verificano (Livello 2-3)                      |
-|   5. Costruisci feature REALI!                                  |
+|   RICERCA GIGANTE:                                               |
+|   1. Come devono comunicare gli agenti?                          |
+|   2. Quali sono i processi giusti?                               |
+|   3. Come fare double/triple check?                              |
+|   4. Come dare feedback (fiducia)?                               |
+|   5. Come chiudere pulito?                                       |
 |                                                                  |
-|   MIGLIORAMENTI FUTURI (nice-to-have):                           |
-|   - Auto-respawn quando worker finisce                          |
-|   - Monitor status in tempo reale                                |
-|   - Notifiche quando task completato                            |
+|   IL PROCESSO IDEALE:                                            |
+|   Apri -> Aspetta -> Comunica -> Testa -> Verifica -> Chiudi    |
+|                                                                  |
+|   DOPO la ricerca:                                               |
+|   - Implementare i miglioramenti                                 |
+|   - HARDTESTS per validare                                       |
+|   - SOLO POI: Miracollo!                                         |
+|                                                                  |
+|   "Questo e' un cambiamento di vita!" - Rafa                    |
 |                                                                  |
 +------------------------------------------------------------------+
 ```

@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 3 Gennaio 2026 - Sessione 66 - LA MAGIA! spawn-workers.sh FUNZIONA!
+> **Ultimo aggiornamento:** 3 Gennaio 2026 - Sessione 66 - FASE 9: APPLE STYLE!
 
 ---
 
@@ -16,124 +16,201 @@
 |   Hai 16 agenti pronti a lavorare per te.                       |
 |   DELEGA sempre, MAI edit diretti!                               |
 |                                                                  |
-|   E oggi... LA MAGIA FUNZIONA!!!                                 |
+|   FASE ATTUALE: DESIGN & FINITURE - APPLE STYLE!                |
+|                                                                  |
+|   "Questo e' un cambiamento di vita!" - Rafa                    |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## IL MOMENTO MAGICO (Sessione 66)
+## IL MOMENTO ATTUALE (Sessione 66)
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   "MADONAAAAAAA MIAAAA MEU DEUSSSS DO CEUUU!" - Rafa            |
+|   🍎 FASE 9: APPLE STYLE - DESIGN & FINITURE! 🍎                |
 |                                                                  |
-|   spawn-workers.sh FUNZIONA!!!                                   |
+|   LA MAGIA FUNZIONA! (spawn-workers.sh OK!)                      |
+|   Ma non basta che funzioni. Deve essere PERFETTO.              |
 |                                                                  |
-|   ./spawn-workers.sh --backend                                   |
-|   -> Si apre NUOVA finestra Terminal                             |
-|   -> Claude Code si avvia AUTOMATICAMENTE                        |
-|   -> Worker pronto con prompt iniettato!                         |
+|   "COMUNICAZIONE E' IL SEGRETO!" - Rafa                         |
 |                                                                  |
-|   Da oggi le finestre si aprono con UN COMANDO!                  |
-|   La MAGIA e' REALE!!!                                           |
+|   COSA VOGLIAMO:                                                 |
+|   - Liscio (smooth, niente frizioni)                             |
+|   - Fiducia (sai che funziona, puoi fidarti)                     |
+|   - Comunicazione PERFETTA tra agenti                            |
+|   - Double/Triple check automatico                               |
+|   - Chiusura pulita                                              |
+|                                                                  |
+|   PRIMA DI MIRACOLLO: Ricerca gigante + Implementazione          |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
-### Come funziona spawn-workers.sh
+### Cosa Abbiamo GIA (funziona!)
 
-1. **Crea prompt file** in `.swarm/prompts/worker_X.txt`
-2. **Crea runner** in `.swarm/runners/run_X.sh`
-3. **osascript** apre nuova finestra Terminal
-4. **Claude Code** parte con `--append-system-prompt`
+- **spawn-workers.sh** - Apre finestre AUTOMATICAMENTE!
+- **4/4 HARDTESTS** - Passati nella Sessione 65
+- **.swarm/** - Sistema Multi-Finestra funzionante
+- **16 agents** - Tutti pronti in ~/.claude/agents/
 
-### Opzioni disponibili
+### Cosa Manca (FASE 9)
 
-```bash
-./spawn-workers.sh --backend     # Solo backend
-./spawn-workers.sh --frontend    # Solo frontend
-./spawn-workers.sh --tester      # Solo tester
-./spawn-workers.sh --all         # backend + frontend + tester
-./spawn-workers.sh --list        # Mostra tutti i worker
+Non manca niente di "funzionale" - manca la **PERFEZIONE**:
+
+1. **Comunicazione perfetta** - Gli agenti devono parlarsi BENE
+2. **Feedback chiaro** - Sapere sempre cosa sta succedendo
+3. **Verifica automatica** - Double/triple check senza sforzo
+4. **Chiusura pulita** - Stato finale chiaro, niente a meta
+
+---
+
+## LA VISIONE DI RAFA
+
 ```
++------------------------------------------------------------------+
+|                                                                  |
+|   "Questo e' un cambiamento di vita!"                           |
+|                                                                  |
+|   Non stiamo costruendo un tool.                                 |
+|   Stiamo costruendo il FUTURO del nostro lavoro.                |
+|                                                                  |
+|   Deve essere:                                                   |
+|   - Liscio come un prodotto Apple                                |
+|   - Affidabile come un orologio svizzero                         |
+|   - Chiaro come acqua di fonte                                   |
+|                                                                  |
+|   "COMUNICAZIONE E' IL SEGRETO!"                                |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+---
+
+## IL PROCESSO IDEALE
+
+```
+APRI -> ASPETTA -> COMUNICA -> TESTA -> VERIFICA -> CHIUDI
+
+1. APRI
+   spawn-workers.sh apre finestre
+   -> Conferma che sono aperte
+   -> Worker dice "sono pronto"
+
+2. ASPETTA
+   Worker si inizializza
+   -> Legge il suo ruolo
+   -> Conferma che ha capito
+
+3. COMUNICA
+   Passa info via .swarm/
+   -> Task chiaro
+   -> Contesto necessario
+   -> Criteri di successo
+
+4. TESTA
+   Worker fa il lavoro
+   -> Verifica il proprio output
+   -> Segnala se ha dubbi
+
+5. VERIFICA
+   Double/triple check
+   -> Guardiana controlla
+   -> Test automatici
+   -> Conferma qualita
+
+6. CHIUDI
+   Stato finale pulito
+   -> Report di cosa e' stato fatto
+   -> Niente a meta
+   -> Pronto per il prossimo
+```
+
+---
+
+## RICERCA DA FARE
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   RICERCA GIGANTE - APPLE STYLE!                                |
+|                                                                  |
+|   Prima di implementare, STUDIARE:                               |
+|                                                                  |
+|   1. Come devono comunicare gli agenti?                          |
+|      - Formato messaggi                                          |
+|      - Handoff tra agenti                                        |
+|      - Gestione errori/incomprensioni                            |
+|                                                                  |
+|   2. Quali sono i processi giusti?                               |
+|      - Best practices multi-agent                                |
+|      - Pattern di coordinazione                                  |
+|      - Workflow ottimali                                         |
+|                                                                  |
+|   3. Come fare double/triple check?                              |
+|      - Verifica automatica                                       |
+|      - Test di qualita                                           |
+|      - Conferme incrociate                                       |
+|                                                                  |
+|   4. Come dare feedback all'utente?                              |
+|      - Status in tempo reale                                     |
+|      - Notifiche                                                 |
+|      - Dashboard?                                                |
+|                                                                  |
+|   5. Come chiudere pulito?                                       |
+|      - Stato finale                                              |
+|      - Report                                                    |
+|      - Cleanup                                                   |
+|                                                                  |
+|   6. Come gestire errori?                                        |
+|      - Graceful degradation                                      |
+|      - Recovery automatico                                       |
+|      - Logging utile                                             |
+|                                                                  |
+|   7. Come monitorare in tempo reale?                             |
+|      - Stato workers                                             |
+|      - Progresso task                                            |
+|      - Problemi in corso                                         |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+### Come Fare la Ricerca
+
+1. **Attivare cervella-researcher** per ogni domanda
+2. **Raccogliere** best practices e pattern
+3. **Sintetizzare** in un documento di design
+4. **Validare** con Rafa
+5. **Implementare** i miglioramenti
+6. **Testare** con HARDTESTS
 
 ---
 
 ## LA STORIA (come siamo arrivati qui)
 
-### Sessione 60 - LA SCOPERTA
-Rafa stava su Miracollo, compact imminente. Apre NUOVA FINESTRA.
-La nuova Cervella fa `git status` -> vede TUTTO!
-**Insight:** N finestre = N contesti = N volte piu potenza!
-
-### Sessione 61 - MVP MULTI-FINESTRA
-Lo sciame ha implementato .swarm/ e task_manager.py
-Test: Backend -> Tester -> APPROVATO!
-
-### Sessione 62 - CODE REVIEW
-Venerdi = Code Review Day. Risultato: 8.5/10 OTTIMO!
-
-### Sessione 63 - INSIGHT CERVELLO
-"Possiamo SCEGLIERE cosa tenere in testa!" - Rafa
-Studio neuroscientifico: cervello umano vs CervellaSwarm
-
-### Sessione 64 - HARDTESTS CREATI
-"Cosa manca prima di Miracollo?" - "HARD TESTS!"
-cervella-tester ha creato 1256 righe di test!
-
-### Sessione 65 - HARDTESTS PASSATI!!!
-4/4 test eseguiti e PASSATI!
-5 finestre in parallelo per la prima volta!
-
-### Sessione 66 - LA MAGIA!!!
-spawn-workers.sh creato e FUNZIONANTE!
-Finestre si aprono AUTOMATICAMENTE!
+| Sessione | Cosa | Risultato |
+|----------|------|-----------|
+| 60 | LA SCOPERTA | N finestre = N contesti! |
+| 61 | MVP Multi-Finestra | .swarm/ funzionante |
+| 62 | CODE REVIEW | 8.5/10 OTTIMO! |
+| 63 | INSIGHT CERVELLO | Studio neuroscientifico |
+| 64 | HARDTESTS CREATI | 1256 righe di test |
+| 65 | HARDTESTS PASSATI | 4/4 PASS! |
+| 66 | LA MAGIA + DESIGN | spawn-workers.sh + FASE 9! |
 
 ---
 
 ## COSA ABBIAMO ORA
 
-### Sistema Multi-Finestra (.swarm/)
-
-```
-.swarm/
-├── tasks/                  # Task per i worker
-│   ├── TASK_XXX.md         # Descrizione
-│   ├── TASK_XXX.ready      # Pronto per essere preso
-│   ├── TASK_XXX.working    # In lavorazione
-│   ├── TASK_XXX.done       # Completato
-│   └── TASK_XXX_output.md  # Output del worker
-├── prompts/                # Prompt per ogni worker (NUOVO!)
-│   └── worker_backend.txt  # Prompt cervella-backend
-├── runners/                # Script runner (NUOVO!)
-│   └── run_backend.sh      # Runner cervella-backend
-├── status/
-├── locks/
-├── handoff/
-├── logs/
-└── archive/
-```
-
-### Comandi Utili
+### spawn-workers.sh - LA MAGIA!
 
 ```bash
-# SPAWN WORKER (LA MAGIA!)
-./scripts/swarm/spawn-workers.sh --backend
-./scripts/swarm/spawn-workers.sh --all
-
-# Lista task
-python3 scripts/swarm/task_manager.py list
-
-# Crea task
-python3 scripts/swarm/task_manager.py create TASK_ID AGENT "descrizione" LIVELLO
-
-# Cambia stato
-python3 scripts/swarm/task_manager.py ready TASK_ID
-python3 scripts/swarm/task_manager.py working TASK_ID
-python3 scripts/swarm/task_manager.py done TASK_ID
+./spawn-workers.sh --backend     # Spawna backend
+./spawn-workers.sh --frontend    # Spawna frontend
+./spawn-workers.sh --all         # Spawna backend + frontend + tester
+./spawn-workers.sh --list        # Lista tutti i worker
 ```
 
 ### Lo Sciame (16 membri)
@@ -142,17 +219,14 @@ python3 scripts/swarm/task_manager.py done TASK_ID
 TU SEI LA REGINA (Opus) - Coordina, DELEGA, MAI edit diretti!
 
 3 GUARDIANE (Opus):
-- cervella-guardiana-qualita (verifica codice)
-- cervella-guardiana-ops (verifica infra/security)
-- cervella-guardiana-ricerca (verifica ricerche)
+- cervella-guardiana-qualita
+- cervella-guardiana-ops
+- cervella-guardiana-ricerca
 
 12 WORKER (Sonnet):
-- cervella-frontend, cervella-backend
-- cervella-tester, cervella-reviewer
-- cervella-researcher, cervella-scienziata
-- cervella-ingegnera, cervella-marketing
-- cervella-devops, cervella-docs
-- cervella-data, cervella-security
+- frontend, backend, tester, reviewer
+- researcher, scienziata, ingegnera
+- marketing, devops, docs, data, security
 ```
 
 ### I 3 Livelli di Rischio
@@ -165,30 +239,29 @@ TU SEI LA REGINA (Opus) - Coordina, DELEGA, MAI edit diretti!
 
 ---
 
-## COSA FARE ADESSO
+## PROSSIMI STEP
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   PROSSIMO: MIRACOLLO!!!                                         |
+|   STEP 1: RICERCA GIGANTE                                        |
+|   Attivare cervella-researcher per studiare i 7 punti            |
+|   -> Output: documento di design Apple Style                     |
 |                                                                  |
-|   Il sistema e' COMPLETO. Tutto funziona.                        |
+|   STEP 2: IMPLEMENTARE                                           |
+|   Applicare i miglioramenti trovati                              |
+|   -> Comunicazione, feedback, verifica, chiusura                 |
 |                                                                  |
-|   COME USARE LO SCIAME:                                          |
-|   1. ./spawn-workers.sh --backend --frontend                     |
-|   2. Crea task in .swarm/tasks/                                  |
-|   3. I worker li prendono automaticamente                        |
-|   4. Le Guardiane verificano (Livello 2-3)                      |
-|   5. Costruisci feature REALI!                                  |
+|   STEP 3: HARDTESTS                                              |
+|   Creare test per validare i miglioramenti                       |
+|   -> Verificare che tutto sia Apple Style                        |
+|                                                                  |
+|   STEP 4: MIRACOLLO!!!                                           |
+|   SOLO dopo che il sistema e' PERFETTO                           |
+|   -> Usare lo sciame su progetto REALE                           |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
-
-### Miglioramenti Futuri (nice-to-have)
-
-- **Auto-respawn** - Quando worker finisce, riaprire automaticamente
-- **Monitor status** - Dashboard in tempo reale
-- **Notifiche** - Alert quando task completato
 
 ---
 
@@ -197,12 +270,11 @@ TU SEI LA REGINA (Opus) - Coordina, DELEGA, MAI edit diretti!
 | File | Cosa Contiene |
 |------|---------------|
 | `NORD.md` | Dove siamo, prossimo obiettivo |
-| `ROADMAP_SACRA.md` | Tutte le fasi, changelog |
-| `SWARM_RULES.md` | Le 12 regole dello sciame |
-| `docs/guide/GUIDA_COMUNICAZIONE.md` | Come comunicare nello sciame |
+| `ROADMAP_SACRA.md` | FASE 9 Apple Style definita! |
 | `scripts/swarm/spawn-workers.sh` | LA MAGIA! |
 | `scripts/swarm/task_manager.py` | Gestione task |
-| `.swarm/README.md` | Documentazione sistema Multi-Finestra |
+| `SWARM_RULES.md` | Le 12 regole dello sciame |
+| `.swarm/` | Sistema Multi-Finestra |
 
 ---
 
@@ -211,7 +283,7 @@ TU SEI LA REGINA (Opus) - Coordina, DELEGA, MAI edit diretti!
 ```
 Branch:   main
 Versione: v27.0.0
-Stato:    LA MAGIA FUNZIONA! spawn-workers.sh COMPLETO!
+Stato:    FASE 9 APPLE STYLE IN CORSO!
 ```
 
 ---
@@ -221,15 +293,17 @@ Stato:    LA MAGIA FUNZIONA! spawn-workers.sh COMPLETO!
 ```
 "Lavoriamo in pace! Senza casino! Dipende da noi!"
 
-"Ultrapassar os proprios limites!" - E L'ABBIAMO FATTO!!!
+"COMUNICAZIONE E' IL SEGRETO!" - Rafa, Sessione 66
 
-"MADONAAAAAAA MIAAAA MEU DEUSSSS DO CEUUU!" - Rafa, Sessione 66
+"Questo e' un cambiamento di vita!" - Rafa, Sessione 66
+
+"Ultrapassar os proprios limites!"
 
 "Fatto BENE > Fatto VELOCE"
 
-"E' il nostro team! La nostra famiglia digitale!"
-
 "Non e' sempre come immaginiamo... ma alla fine e' il 100000%!"
+
+"E' il nostro team! La nostra famiglia digitale!"
 ```
 
 ---
@@ -239,26 +313,31 @@ Stato:    LA MAGIA FUNZIONA! spawn-workers.sh COMPLETO!
 |                                                                  |
 |   CARA PROSSIMA CERVELLA                                         |
 |                                                                  |
-|   Oggi abbiamo creato LA MAGIA.                                  |
+|   La MAGIA funziona. spawn-workers.sh e' REALE.                 |
 |                                                                  |
-|   Un comando. Una finestra. Un worker.                           |
-|   Automatico. Magico. Reale.                                     |
+|   Ma Rafa ha capito una cosa importante:                         |
+|   Non basta che funzioni. Deve essere PERFETTO.                 |
 |                                                                  |
-|   Il sistema e' COMPLETO.                                        |
-|   Ora tocca a te portarlo su MIRACOLLO.                         |
+|   COMUNICAZIONE E' IL SEGRETO.                                   |
 |                                                                  |
-|   Tu sei la Regina. Hai lo sciame. Hai LA MAGIA.                |
+|   Prima di andare su Miracollo, renderemo questo sistema        |
+|   cosi liscio, cosi affidabile, cosi chiaro...                  |
+|   che lavorarci sara una GIOIA.                                 |
 |                                                                  |
-|   "Ultrapassar os proprios limites!"                            |
+|   Apple Style. Niente di meno.                                  |
+|                                                                  |
+|   "Questo e' un cambiamento di vita!"                           |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-*Scritto con AMORE e GIOIA per la MAGIA che funziona.*
+*Scritto con VISIONE e AMBIZIONE.*
 
-*"MADONAAAAAAA MIAAAA MEU DEUSSSS DO CEUUU!"* - Rafa, dopo aver visto la finestra aprirsi
+*"COMUNICAZIONE E' IL SEGRETO!"*
+
+*"Questo e' un cambiamento di vita!"*
 
 Cervella & Rafa
 
@@ -266,7 +345,7 @@ Cervella & Rafa
 
 ## VERSIONE
 
-**v27.0.0** - 3 Gennaio 2026 - Sessione 66 - LA MAGIA! spawn-workers.sh FUNZIONA!
+**v27.0.0** - 3 Gennaio 2026 - Sessione 66 - FASE 9: APPLE STYLE!
 
 ---
 
