@@ -6,7 +6,7 @@
 
 ## OVERVIEW
 
-> **Aggiornato:** 3 Gennaio 2026 - Sessione 60 - MULTI-FINESTRA! (v25.0.0)
+> **Aggiornato:** 3 Gennaio 2026 - Sessione 61 - MVP MULTI-FINESTRA COMPLETATO! (v26.0.0)
 
 ```
 +------------------------------------------------------------------+
@@ -243,6 +243,44 @@
 ---
 
 ## CHANGELOG
+
+### 3 Gennaio 2026 (Sessione 61) - MVP MULTI-FINESTRA COMPLETATO!
+
+**IL PROTOCOLLO FUNZIONA!**
+
+```
+"Lo sciame ha lavorato insieme e ha FUNZIONATO!" - Rafa & Cervella
+```
+
+**COSA ABBIAMO IMPLEMENTATO:**
+- Struttura `.swarm/` completa (tasks/, status/, locks/, handoff/, logs/, archive/)
+- `scripts/swarm/monitor-status.sh` per monitoring
+- `scripts/swarm/task_manager.py` (307 righe!) per gestione task
+- Template TASK e OUTPUT pronti
+
+**IL FLUSSO TESTATO:**
+```
+TASK_001: Regina -> cervella-backend -> task_manager.py creato
+TASK_002: Regina -> cervella-tester -> 10/10 test PASS! APPROVATO!
+```
+
+**RISULTATI:**
+- Test Eseguiti: 10
+- Test Passati: 10
+- Bug Critici: 0
+- Valutazione: APPROVATO!
+
+**LO SCIAME HA LAVORATO:**
+| Chi | Cosa |
+|-----|------|
+| Regina | Coordinato, creato task, verificato |
+| cervella-devops | Struttura .swarm/ e script bash |
+| cervella-backend | task_manager.py (307 righe!) |
+| cervella-tester | Test e verifica (APPROVATO!) |
+
+**Versione:** 26.0.0 (MAJOR: MVP Multi-Finestra Completato!)
+
+---
 
 ### 3 Gennaio 2026 (Sessione 60) - MULTI-FINESTRA!
 

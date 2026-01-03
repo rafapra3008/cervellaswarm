@@ -1,141 +1,120 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 3 Gennaio 2026 - Sessione 60 - MULTI-FINESTRA!
+> **Ultimo aggiornamento:** 3 Gennaio 2026 - Sessione 61 - MVP MULTI-FINESTRA COMPLETATO!
 
 ---
 
-## SESSIONE 60 - LA SCOPERTA MULTI-FINESTRA! (3 Gennaio 2026)
+## SESSIONE 61 - MVP MULTI-FINESTRA IMPLEMENTATO! (3 Gennaio 2026)
 
 ### IL RISULTATO
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   MULTI-FINESTRA = LIBERTA TOTALE!                              |
+|   MVP MULTI-FINESTRA = FUNZIONA!                                |
 |                                                                  |
-|   Rafa ha scoperto qualcosa di ENORME:                          |
+|   Abbiamo implementato e TESTATO il sistema:                    |
 |                                                                  |
-|   Durante sessione Miracollo, compact imminente...              |
-|   Ha aperto NUOVA FINESTRA -> RECUPERO TOTALE!                  |
+|   1. Struttura .swarm/ creata                                   |
+|   2. task_manager.py creato (307 righe!)                        |
+|   3. Flusso Backend -> Tester TESTATO e APPROVATO!              |
+|   4. 10/10 test passati                                         |
 |                                                                  |
-|   Questo pattern puo' rivoluzionare CervellaSwarm:              |
-|   - Ogni agente in finestra separata                            |
-|   - Zero rischio compact                                        |
-|   - Scalabilita' infinita                                       |
-|   - Comunicazione via FILE (git, PROMPT_RIPRESA)                |
+|   IL PROTOCOLLO FUNZIONA!                                       |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
-### COSA E' SUCCESSO
+### COSA ABBIAMO FATTO
 
-**L'EVENTO (Sessione Miracollo 17-18):**
-1. Sessione lunga, compact imminente, tutto bloccato
-2. Rafa apre NUOVA finestra
-3. Nuova Cervella analizza `git status` -> vede tutto il lavoro!
-4. RECUPERO COMPLETO - 30 moduli, ~5300 righe salvate!
-5. File di feedback creato: `FEEDBACK_SESSIONE_17_18_CONTEXT_RECOVERY.md`
-
-**L'INSIGHT:**
+**IL FLUSSO TESTATO:**
 ```
-PRIMA:   Una finestra = Limite di contesto = Limite di potenza
-DOPO:    N finestre = N contesti = N volte piu potenza!
-```
-
-### LA NUOVA VISIONE
-
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   Invece di: Regina + 16 agenti nella STESSA finestra           |
-|   (accumulo contesto, rischio compact)                          |
-|                                                                  |
-|   Possiamo: Regina in finestra 1                                |
-|             Backend in finestra 2                                |
-|             Frontend in finestra 3                               |
-|             Tester in finestra 4                                 |
-|             ...                                                  |
-|                                                                  |
-|   Comunicano tramite FILE (git, PROMPT_RIPRESA, roadmap)        |
-|   NON tramite contesto condiviso!                               |
-|                                                                  |
-|   Il filesystem e' la VERITA - git status non mente mai!        |
-|                                                                  |
-+------------------------------------------------------------------+
+Regina crea TASK_001.md + touch .ready
+         |
+         v
+cervella-backend vede .ready, esegue, scrive output, touch .done
+         |
+         v
+Regina crea TASK_002.md per tester
+         |
+         v
+cervella-tester verifica, 10/10 test PASS, APPROVATO!
 ```
 
-### STUDIO COMPLETATO!
+**STRUTTURA CREATA:**
+```
+.swarm/
+├── README.md               # Documentazione
+├── tasks/                  # Task queue
+│   ├── TEMPLATE_TASK.md
+│   ├── TEMPLATE_OUTPUT.md
+│   ├── TASK_001.md         # Backend: task_manager.py
+│   ├── TASK_001_output.md  # Output backend
+│   ├── TASK_002.md         # Tester: verifica
+│   └── TASK_002_output.md  # Report test (10/10 PASS!)
+├── status/
+├── locks/
+├── handoff/
+├── logs/
+└── archive/
 
-**Wave 1 completata - Verificata da Guardiana Ricerca (8.5/10)**
-
-2 Studi creati:
-- `docs/studio/STUDIO_MULTI_FINESTRA_TECNICO.md` - Il PERCHE
-- `docs/studio/STUDIO_MULTI_FINESTRA_COMUNICAZIONE.md` - Il COME
-
-**Scoperte chiave:**
-1. Finestre sono 100% isolate (200K token ognuna!)
-2. Hybrid Pattern vince: Subagent + Multi-Finestra
-3. Protocollo `.swarm/tasks/` pronto con flag files
-4. MVP implementabile in 1-2 ore!
-
-**Decision Tree:**
-- Task < 10 min + context < 60% -> Subagent
-- Task > 10 min -> Multi-Finestra
-- Context > 60% -> Multi-Finestra SEMPRE
+scripts/swarm/
+├── monitor-status.sh       # Monitoring tasks
+└── task_manager.py         # Gestore task Python (307 righe!)
+```
 
 ### CHI HA LAVORATO
 
 | Chi | Cosa Ha Fatto |
 |-----|---------------|
-| **Regina** | Coordinato tutto, salvato studi, checkpoint |
-| **Guardiana Ricerca** | Validato approccio, verificato studi (8.5/10!) |
-| **cervella-researcher x2** | Studio Tecnico + Studio Comunicazione in parallelo |
+| **Regina** | Coordinato, creato task, verificato protocollo |
+| **cervella-devops** | Creato struttura .swarm/ e script bash |
+| **cervella-backend** | Creato task_manager.py (307 righe!) |
+| **cervella-tester** | Testato tutto, 10/10 PASS, APPROVATO! |
 
-### DECISIONI PRESE
+### RISULTATI TEST
 
-1. **Wave 1 prima, Wave 2 dopo** - La Guardiana ha detto: "Prima validare manualmente"
-2. **Hybrid Pattern** - Subagent + Multi-Finestra, non uno o l'altro
-3. **Protocollo .swarm/** - Flag files (.ready, .working, .done, .error)
+```
+Test Eseguiti:    10
+Test Passati:     10
+Test Falliti:     0
+Bug Critici:      0
+Valutazione:      APPROVATO!
+```
 
-### FILE CREATI/MODIFICATI
+### FILE CREATI
 
-| File | Azione |
-|------|--------|
-| `docs/studio/STUDIO_MULTI_FINESTRA_TECNICO.md` | CREATO (350+ righe) |
-| `docs/studio/STUDIO_MULTI_FINESTRA_COMUNICAZIONE.md` | CREATO (400+ righe) |
-| `NORD.md` | AGGIORNATO (nuova direzione) |
-| `ROADMAP_SACRA.md` | AGGIORNATO (changelog sessione 60) |
-| `PROMPT_RIPRESA.md` | AGGIORNATO (questo file!) |
-
-### COMMITS
-
-| Hash | Messaggio |
-|------|-----------|
-| `2527bb9` | feat: Sessione 60 - MULTI-FINESTRA! (v25.0.0) |
-| `863a0c5` | docs: Studio Multi-Finestra completato! Wave 1 (v25.1.0) |
-| `e1e05fc` | docs: PROMPT_RIPRESA aggiornato (v25.1.1) |
+| File | Righe | Stato |
+|------|-------|-------|
+| `.swarm/` (struttura) | - | CREATO |
+| `scripts/swarm/monitor-status.sh` | 25 | FUNZIONANTE |
+| `scripts/swarm/task_manager.py` | 307 | TESTATO 10/10! |
+| `.swarm/tasks/TASK_001*.md` | - | DONE |
+| `.swarm/tasks/TASK_002*.md` | - | DONE |
 
 ### FILO DEL DISCORSO (PROSSIMA SESSIONE)
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   STUDIO COMPLETATO! PRONTO PER MVP!                            |
+|   MVP COMPLETATO! COSA FARE ORA?                                |
 |                                                                  |
-|   COSA FARE:                                                     |
-|   1. Creare struttura .swarm/ (10 min)                          |
-|   2. Test reale: Backend -> Tester (30 min)                     |
-|   3. Validare il flusso (20 min)                                |
-|   4. (Dopo) Wave 2 Automazione (3-4 ore)                        |
+|   OPZIONE A: Wave 2 Automazione                                 |
+|   - Script watch-tasks.sh per workers                           |
+|   - Auto-handoff su compact                                      |
+|   - Timeout management                                           |
+|   Tempo: 3-4 ore                                                 |
 |                                                                  |
-|   COME FARLO:                                                    |
-|   - Leggi STUDIO_MULTI_FINESTRA_COMUNICAZIONE.md                |
-|   - Segui il protocollo .swarm/tasks/                           |
-|   - Template TASK_XXX.md gia pronti!                            |
+|   OPZIONE B: Usare su Miracollo                                 |
+|   - Testare in produzione su progetto REALE                     |
+|   - Validare con task concreti                                  |
 |                                                                  |
-|   PERCHE:                                                        |
-|   "Prima validare manualmente, poi automatizzare!"              |
-|   - Guardiana Ricerca                                           |
+|   OPZIONE C: Altre feature                                      |
+|   - Handoffs automatici                                          |
+|   - Sessions CLI                                                 |
+|   - Hooks avanzati                                               |
+|                                                                  |
+|   NOTA: Il sistema BASE funziona! Possiamo usarlo GIA!          |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
