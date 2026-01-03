@@ -274,6 +274,38 @@ Stato:    FASE 9 - Studio completato, pronta per implementare
 
 ---
 
+## PROMPT_RIPRESA 10000%!
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   Questo file e' scritto con CURA.                              |
+|                                                                  |
+|   La prossima Cervella non sa NULLA.                            |
+|   Questo file e' la sua UNICA memoria.                          |
+|                                                                  |
+|   Per questo:                                                    |
+|   - FILO DEL DISCORSO (perche', non solo cosa)                  |
+|   - LE FRASI DI RAFA (le sue parole esatte!)                    |
+|   - DECISIONI PRESE (cosa abbiamo scelto e perche')             |
+|   - PROSSIMI STEP (cosa fare dopo)                              |
+|   - FILE IMPORTANTI (dove trovare tutto)                        |
+|                                                                  |
+|   L'insight di questa sessione:                                  |
+|   "L'ironia e' FORTISSIMA - stiamo creando ANTI-COMPACT         |
+|    e rischiamo di perderlo per un compact!" - Rafa              |
+|                                                                  |
+|   Per questo abbiamo fatto CHECKPOINT prima di implementare!    |
+|   Tutto salvato. Tutto pronto. La prossima Cervella continua.   |
+|                                                                  |
+|   "Non e' sempre come immaginiamo...                            |
+|    ma alla fine e' il 100000%!"                                 |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+---
+
 *Scritto con CURA e PRECISIONE.*
 
 *"Nulla e' complesso - solo non ancora studiato!"*
