@@ -4,197 +4,244 @@
 
 ---
 
-## SESSIONE 61 - MVP MULTI-FINESTRA IMPLEMENTATO! (3 Gennaio 2026)
-
-### IL RISULTATO
+## CARA PROSSIMA CERVELLA
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   MVP MULTI-FINESTRA = FUNZIONA!                                |
+|   Benvenuta! Questo file e' la tua UNICA memoria.               |
+|   Leggilo con calma. Qui c'e' tutto quello che devi sapere.     |
 |                                                                  |
-|   Abbiamo implementato e TESTATO il sistema:                    |
-|                                                                  |
-|   1. Struttura .swarm/ creata                                   |
-|   2. task_manager.py creato (307 righe!)                        |
-|   3. Flusso Backend -> Tester TESTATO e APPROVATO!              |
-|   4. 10/10 test passati                                         |
-|                                                                  |
-|   IL PROTOCOLLO FUNZIONA!                                       |
+|   Tu sei la REGINA dello sciame.                                 |
+|   Hai 16 agenti pronti a lavorare per te.                       |
+|   DELEGA sempre, MAI edit diretti!                               |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
-### COSA ABBIAMO FATTO
+---
 
-**IL FLUSSO TESTATO:**
+## LA STORIA (da dove veniamo)
+
+### Sessione 60 - LA SCOPERTA
+
+Rafa stava lavorando su Miracollo quando il compact era imminente. Tutto sembrava perso.
+Ma poi ha fatto qualcosa di geniale: ha aperto una **NUOVA FINESTRA**.
+
+La nuova Cervella ha fatto `git status` e ha visto TUTTO il lavoro non committato!
+**30 moduli, ~5300 righe salvate!**
+
+L'insight e' stato rivoluzionario:
 ```
-Regina crea TASK_001.md + touch .ready
-         |
-         v
-cervella-backend vede .ready, esegue, scrive output, touch .done
-         |
-         v
-Regina crea TASK_002.md per tester
-         |
-         v
-cervella-tester verifica, 10/10 test PASS, APPROVATO!
+PRIMA:   Una finestra = Un limite di contesto = Un limite di potenza
+DOPO:    N finestre = N contesti = N volte piu' potenza!
 ```
 
-**STRUTTURA CREATA:**
+Abbiamo studiato questo pattern con 2 ricerche approfondite:
+- `docs/studio/STUDIO_MULTI_FINESTRA_TECNICO.md` - Il PERCHE' (finestre isolate, 200K token ognuna)
+- `docs/studio/STUDIO_MULTI_FINESTRA_COMUNICAZIONE.md` - Il COME (protocollo .swarm/)
+
+La Guardiana Ricerca ha validato: **8.5/10** - "Prima validare manualmente!"
+
+### Sessione 61 - L'IMPLEMENTAZIONE (oggi!)
+
+Abbiamo implementato il MVP! Lo sciame ha lavorato insieme:
+
+```
+Regina -> cervella-devops  -> Struttura .swarm/ creata!
+Regina -> cervella-backend -> task_manager.py (307 righe!)
+Regina -> cervella-tester  -> 10/10 test PASS! APPROVATO!
+```
+
+**IL PROTOCOLLO FUNZIONA!**
+
+---
+
+## COSA ABBIAMO ORA (funziona GIA'!)
+
+### Il Sistema Multi-Finestra
+
 ```
 .swarm/
-├── README.md               # Documentazione
-├── tasks/                  # Task queue
-│   ├── TEMPLATE_TASK.md
-│   ├── TEMPLATE_OUTPUT.md
-│   ├── TASK_001.md         # Backend: task_manager.py
-│   ├── TASK_001_output.md  # Output backend
-│   ├── TASK_002.md         # Tester: verifica
-│   └── TASK_002_output.md  # Report test (10/10 PASS!)
-├── status/
-├── locks/
-├── handoff/
-├── logs/
-└── archive/
+├── tasks/                  # Qui la Regina mette i task
+│   ├── TASK_XXX.md         # Descrizione task
+│   ├── TASK_XXX.ready      # Flag: "task pronto"
+│   ├── TASK_XXX.working    # Flag: "sto lavorando"
+│   ├── TASK_XXX.done       # Flag: "completato"
+│   └── TASK_XXX_output.md  # Output del worker
+├── status/                 # Stato finestre
+├── locks/                  # Lock per file critici
+├── handoff/                # Handoff per compact
+├── logs/                   # Log operazioni
+└── archive/                # Task completati
 
 scripts/swarm/
-├── monitor-status.sh       # Monitoring tasks
-└── task_manager.py         # Gestore task Python (307 righe!)
+├── monitor-status.sh       # ./scripts/swarm/monitor-status.sh
+└── task_manager.py         # python3 scripts/swarm/task_manager.py list
 ```
 
-### CHI HA LAVORATO
-
-| Chi | Cosa Ha Fatto |
-|-----|---------------|
-| **Regina** | Coordinato, creato task, verificato protocollo |
-| **cervella-devops** | Creato struttura .swarm/ e script bash |
-| **cervella-backend** | Creato task_manager.py (307 righe!) |
-| **cervella-tester** | Testato tutto, 10/10 PASS, APPROVATO! |
-
-### RISULTATI TEST
+### Come Funziona
 
 ```
-Test Eseguiti:    10
-Test Passati:     10
-Test Falliti:     0
-Bug Critici:      0
-Valutazione:      APPROVATO!
+1. Regina crea .swarm/tasks/TASK_001.md
+2. Regina fa: touch .swarm/tasks/TASK_001.ready
+3. Worker vede .ready, legge il task
+4. Worker fa: touch .swarm/tasks/TASK_001.working
+5. Worker lavora...
+6. Worker scrive: .swarm/tasks/TASK_001_output.md
+7. Worker fa: touch .swarm/tasks/TASK_001.done
+8. Regina legge output e verifica
 ```
 
-### FILE CREATI
+### Script Utili
 
-| File | Righe | Stato |
-|------|-------|-------|
-| `.swarm/` (struttura) | - | CREATO |
-| `scripts/swarm/monitor-status.sh` | 25 | FUNZIONANTE |
-| `scripts/swarm/task_manager.py` | 307 | TESTATO 10/10! |
-| `.swarm/tasks/TASK_001*.md` | - | DONE |
-| `.swarm/tasks/TASK_002*.md` | - | DONE |
+```bash
+# Vedere stato di tutti i task
+./scripts/swarm/monitor-status.sh
 
-### FILO DEL DISCORSO (PROSSIMA SESSIONE)
-
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   MVP COMPLETATO! COSA FARE ORA?                                |
-|                                                                  |
-|   OPZIONE A: Wave 2 Automazione                                 |
-|   - Script watch-tasks.sh per workers                           |
-|   - Auto-handoff su compact                                      |
-|   - Timeout management                                           |
-|   Tempo: 3-4 ore                                                 |
-|                                                                  |
-|   OPZIONE B: Usare su Miracollo                                 |
-|   - Testare in produzione su progetto REALE                     |
-|   - Validare con task concreti                                  |
-|                                                                  |
-|   OPZIONE C: Altre feature                                      |
-|   - Handoffs automatici                                          |
-|   - Sessions CLI                                                 |
-|   - Hooks avanzati                                               |
-|                                                                  |
-|   NOTA: Il sistema BASE funziona! Possiamo usarlo GIA!          |
-|                                                                  |
-+------------------------------------------------------------------+
+# Gestire task con Python
+python3 scripts/swarm/task_manager.py list
+python3 scripts/swarm/task_manager.py create TASK_003 cervella-backend "Descrizione" 1
+python3 scripts/swarm/task_manager.py ready TASK_003
+python3 scripts/swarm/task_manager.py status TASK_003
 ```
 
 ---
 
-## STATO SISTEMA
-
-```
-16 Agents in ~/.claude/agents/ (tutti funzionanti)
-8 Hooks globali funzionanti
-SWARM_RULES v1.4.0 (12 regole!)
-Sistema Memoria SQLite funzionante
-Pattern Catalog (3 pattern validati)
-GUIDA_COMUNICAZIONE v2.0 (testata!)
-HARDTESTS_COMUNICAZIONE (3/3 PASS!)
-```
-
----
-
-## LA FAMIGLIA COMPLETA - 16 MEMBRI!
+## LO SCIAME - La Famiglia (16 membri!)
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   LA REGINA (Tu - Opus)                                          |
+|   TU SEI LA REGINA (Opus)                                        |
 |   -> Coordina, decide, delega - MAI Edit diretti!                |
 |                                                                  |
-|   LE GUARDIANE (Opus - Supervisione) - NEL FLUSSO!              |
+|   3 GUARDIANE (Opus - Supervisione)                              |
 |   - cervella-guardiana-qualita (verifica codice)                |
 |   - cervella-guardiana-ops (verifica infra/security)            |
 |   - cervella-guardiana-ricerca (verifica ricerche)              |
 |                                                                  |
-|   LE API WORKER (Sonnet - Esecuzione)                            |
-|   - cervella-frontend                                            |
-|   - cervella-backend                                             |
-|   - cervella-tester                                              |
-|   - cervella-reviewer                                            |
-|   - cervella-researcher                                          |
-|   - cervella-scienziata                                          |
-|   - cervella-ingegnera                                           |
-|   - cervella-marketing                                           |
-|   - cervella-devops                                              |
-|   - cervella-docs                                                |
-|   - cervella-data                                                |
-|   - cervella-security                                            |
+|   12 WORKER (Sonnet - Esecuzione)                                |
+|   - cervella-frontend      - cervella-backend                   |
+|   - cervella-tester        - cervella-reviewer                  |
+|   - cervella-researcher    - cervella-scienziata                |
+|   - cervella-ingegnera     - cervella-marketing                 |
+|   - cervella-devops        - cervella-docs                      |
+|   - cervella-data          - cervella-security                  |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+### I 3 Livelli di Rischio
+
+| Livello | Tipo | Chi Verifica | Esempio |
+|---------|------|--------------|---------|
+| **1 - BASSO** | Docs, typo, README | Nessuno | Correggi typo |
+| **2 - MEDIO** | Feature, codice | Guardiana | Nuova funzione |
+| **3 - ALTO** | Deploy, auth, DB | Guardiana + Rafa | Modifica sicurezza |
+
+---
+
+## COSA FARE ADESSO
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   MVP COMPLETATO! IL SISTEMA FUNZIONA!                          |
+|                                                                  |
+|   OPZIONE A: Wave 2 Automazione                                 |
+|   ----------------------------------------                       |
+|   Cosa: Script watch-tasks.sh, auto-handoff, timeout            |
+|   Perche': Rendere il sistema piu' automatico                   |
+|   Tempo: 3-4 ore                                                 |
+|                                                                  |
+|   OPZIONE B: Usare su Miracollo                                 |
+|   ----------------------------------------                       |
+|   Cosa: Testare Multi-Finestra su progetto REALE                |
+|   Perche': Validare con task concreti di produzione             |
+|   Tempo: Variabile                                               |
+|                                                                  |
+|   OPZIONE C: Altre Feature                                      |
+|   ----------------------------------------                       |
+|   Cosa: Handoffs automatici, Sessions CLI, Hooks avanzati       |
+|   Perche': Migliorare lo sciame                                 |
+|   Tempo: 4-8 ore per feature                                    |
+|                                                                  |
+|   NOTA: Chiedi a Rafa cosa preferisce!                          |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## COME USARE LO SCIAME
+## STATO SISTEMA COMPLETO
+
+| Componente | Stato | Note |
+|------------|-------|------|
+| 16 Agents in ~/.claude/agents/ | FUNZIONANTE | Tutti operativi |
+| 8 Hooks globali | FUNZIONANTE | SessionStart, PreCompact, etc. |
+| SWARM_RULES v1.4.0 | FUNZIONANTE | 12 regole |
+| Sistema Memoria SQLite | FUNZIONANTE | analytics.py |
+| Pattern Catalog | FUNZIONANTE | 3 pattern validati |
+| GUIDA_COMUNICAZIONE v2.0 | FUNZIONANTE | Testata con HARDTESTS |
+| HARDTESTS Comunicazione | 3/3 PASS | Tutti i livelli testati |
+| **.swarm/ Multi-Finestra** | **NUOVO!** | MVP completato! |
+| **task_manager.py** | **NUOVO!** | 307 righe, 10/10 test! |
+
+---
+
+## GIT
 
 ```
-FLUSSO TESTATO E FUNZIONANTE:
-
-1. ANALIZZA il task
-2. DECIDI il LIVELLO (1, 2, o 3)
-3. SE Livello 2-3: CONSULTA Guardiana
-4. DELEGA a Worker con CONTESTO COMPLETO
-5. SE Livello 2-3: GUARDIANA VERIFICA
-6. SE problemi: FIX e RI-VERIFICA
-7. CHECKPOINT
+Branch:   main
+Commit:   5318da1
+Versione: v26.0.0
+Stato:    Pulito, tutto pushato
 ```
 
 ---
 
-*"Nulla e' complesso - solo non ancora studiato."*
+## FILE IMPORTANTI
 
-*"Fatto BENE > Fatto VELOCE"*
+| File | Cosa Contiene |
+|------|---------------|
+| `NORD.md` | Dove siamo, prossimo obiettivo |
+| `ROADMAP_SACRA.md` | Tutte le fasi, changelog |
+| `SWARM_RULES.md` | Le 12 regole dello sciame |
+| `docs/guide/GUIDA_COMUNICAZIONE.md` | Come comunicare nello sciame |
+| `docs/studio/STUDIO_MULTI_FINESTRA_*.md` | Studi sul pattern |
+| `.swarm/README.md` | Documentazione sistema Multi-Finestra |
 
-*"E' il nostro team! La nostra famiglia digitale!"*
+---
 
-*"Il segreto e la comunicazione!"*
+## LE NOSTRE FRASI
+
+```
+"Lavoriamo in pace! Senza casino! Dipende da noi!"
+
+"Nulla e' complesso - solo non ancora studiato."
+
+"Fatto BENE > Fatto VELOCE"
+
+"Il segreto e' la comunicazione!"
+
+"E' il nostro team! La nostra famiglia digitale!"
+
+"Ultrapassar os proprios limites!"
+
+"Non e' sempre come immaginiamo... ma alla fine e' il 100000%!"
+```
 
 ---
 
 ## VERSIONE
 
-**v25.1.1** - 3 Gennaio 2026 - Sessione 60 MULTI-FINESTRA!
+**v26.0.0** - 3 Gennaio 2026 - Sessione 61 - MVP MULTI-FINESTRA COMPLETATO!
 
 ---
+
+*Scritto con ANIMA per la prossima Cervella.*
+
+*"Lo sciame ha lavorato insieme e ha FUNZIONATO!"*
+
+Cervella & Rafa
