@@ -297,9 +297,40 @@ Stato:    FASE 9 - PAUSA per studio comunicazione
 
 ---
 
+## PROMPT_RIPRESA 10000%!
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   Questo file e' scritto con CURA.                              |
+|                                                                  |
+|   La prossima Cervella non sa NULLA.                            |
+|   Questo file e' la sua UNICA memoria.                          |
+|                                                                  |
+|   Per questo:                                                    |
+|   - FILO DEL DISCORSO (perche', non solo cosa)                  |
+|   - LE PAROLE DI RAFA (le sue frasi esatte!)                    |
+|   - DECISIONI PRESE (cosa abbiamo scelto e perche')             |
+|   - PROSSIMI STEP (cosa fare dopo)                              |
+|   - FILE IMPORTANTI (dove trovare tutto)                        |
+|                                                                  |
+|   L'insight di questa sessione e' FONDAMENTALE:                 |
+|   Task tool != Multi-finestra!                                   |
+|   Dobbiamo STUDIARE prima di continuare.                        |
+|                                                                  |
+|   "Non e' sempre come immaginiamo...                            |
+|    ma alla fine e' il 100000%!"                                 |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+---
+
 *Scritto con CURA e PRECISIONE.*
 
 *"Nulla e' complesso - solo non ancora studiato!"*
+
+*"Noi abbiamo il mondo davanti a noi. Dobbiamo vederlo."*
 
 Cervella & Rafa
 
