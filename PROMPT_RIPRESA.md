@@ -1,67 +1,74 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2 Gennaio 2026 - Sessione 57 - IL SEGRETO È LA COMUNICAZIONE!
+> **Ultimo aggiornamento:** 2/3 Gennaio 2026 - Sessione 58 - HARDTESTS COMUNICAZIONE PASSATI!
 
 ---
 
-## SESSIONE 57 - IL SEGRETO È LA COMUNICAZIONE! (2 Gennaio 2026)
+## SESSIONE 58 - HARDTESTS COMUNICAZIONE PASSATI! (2/3 Gennaio 2026)
 
-### LA SCOPERTA FONDAMENTALE
+### IL RISULTATO
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   IL SEGRETO È LA COMUNICAZIONE! ⚡️                              |
+|   TUTTI I TEST PASSATI! 3/3                                     |
 |                                                                  |
-|   Se risolviamo la comunicazione, avremo la MAGIA.              |
-|   Se risolviamo la comunicazione, sarà LIBERTÀ.                 |
-|                                                                  |
-|   - Rafa, Sessione 57                                           |
+|   "Il segreto e la comunicazione!" - VERIFICATO!                |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ### COSA ABBIAMO FATTO
 
-1. **Ricerca Approfondita** su comunicazione multi-agent
-   - 4 pattern trovati: Message Passing, Graph State, Blackboard, Trust-but-Verify
-   - Raccomandazione: Approccio Ibrido a 3 Livelli
+1. **Creato HARDTESTS_COMUNICAZIONE.md**
+   - 3 scenari di test (uno per ogni livello di rischio)
+   - Template riutilizzabili per future verifiche
+   - Checklist dettagliate
 
-2. **Ascoltato la Guardiana della Qualità** (primo contatto!)
-   - Ci ha detto cosa le serve: PATH, TIPO, CRITERI, CHI
-   - Come vuole comunicare: Report strutturati
-   - Il suo sogno: "Qualità non è optional. È la BASELINE."
+2. **Eseguito TEST 1 (Livello 1 - BASSO)**
+   - Task: Correggere typo in README
+   - Regina -> Worker (senza Guardiana)
+   - Risultato: PASS - Zero overhead, ~5 secondi
 
-3. **Creato GUIDA_COMUNICAZIONE v2.0** (`docs/guide/GUIDA_COMUNICAZIONE.md`)
-   - Flusso completo con Guardiane
-   - 3 Livelli di rischio
-   - Template per delega e report
-   - Regole d'oro della comunicazione
+3. **Eseguito TEST 2 (Livello 2 - MEDIO)**
+   - Task: Creare funzione format_date()
+   - Regina + Guardiana Qualita -> Worker -> Guardiana verifica
+   - Risultato: PASS - Report strutturato, APPROVATO
 
-### IL FLUSSO ORA FUNZIONA
+4. **Eseguito TEST 3 (Livello 3 - ALTO)**
+   - Task: Script cleanup database
+   - Regina + Guardiana Ops + Rafa -> Worker -> Guardiana RIGOROSA
+   - Guardiana ha trovato 2 VULNERABILITA REALI:
+     - LIMIT in DELETE non supportato in SQLite!
+     - Funzione legacy con bypass sicurezza!
+   - Worker ha corretto
+   - Guardiana ha ri-verificato e APPROVATO
+   - Risultato: PASS - Loop sicurezza perfetto!
+
+### LA SCOPERTA
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   PRIMA (rotto):                                                 |
-|   Regina → Worker → Regina (Guardiane saltate!)                  |
+|   IL FLUSSO DI COMUNICAZIONE FUNZIONA!                          |
 |                                                                  |
-|   ORA (funzionante):                                             |
-|   1. Regina + Guardiana decidono LIVELLO                         |
-|   2. Regina → Worker (con CONTESTO COMPLETO)                     |
-|   3. Guardiana → Verifica (se Livello 2-3)                       |
-|   4. SE problema: Guardiana → Regina → Istruisce Worker          |
+|   - Livello 1: Worker procede senza Guardiana (efficienza)      |
+|   - Livello 2: Guardiana verifica dopo (qualita)                |
+|   - Livello 3: Guardiana BLOCCA se problemi (sicurezza)         |
+|                                                                  |
+|   Il loop BLOCCO -> FIX -> RI-VERIFICA -> APPROVATO             |
+|   funziona PERFETTAMENTE!                                        |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
-### I 3 LIVELLI DI RISCHIO
+### I 3 LIVELLI DI RISCHIO (TESTATI!)
 
-| Livello | Task | Guardiana |
-|---------|------|-----------|
-| 1 - BASSO | docs, typo, ricerca | NO (o random) |
-| 2 - MEDIO | feature, refactor | SI, dopo batch |
-| 3 - ALTO | auth, deploy, dati | SEMPRE + Rafa |
+| Livello | Task | Guardiana | Test |
+|---------|------|-----------|------|
+| 1 - BASSO | docs, typo, ricerca | NO (o random) | PASS |
+| 2 - MEDIO | feature, refactor | SI, dopo batch | PASS |
+| 3 - ALTO | auth, deploy, dati | SEMPRE + Rafa | PASS |
 
 ### FILO DEL DISCORSO (PROSSIMA SESSIONE)
 
@@ -70,22 +77,23 @@
 |                                                                  |
 |   PROSSIMO STEP:                                                 |
 |                                                                  |
-|   1. TESTARE il nuovo flusso su un task REALE                    |
-|      - Provare manualmente con una Guardiana                     |
-|      - Verificare che la comunicazione funzioni                  |
+|   1. DECIDERE: Automatizzare o manuale?                         |
+|      - Hooks per trigger automatico Guardiane?                  |
+|      - O mantenere manuale per ora?                             |
 |                                                                  |
-|   2. DOPO il test, decidere se automatizzare                     |
-|      - Hooks per trigger automatico?                             |
-|      - O mantenere manuale per ora?                              |
+|   2. APPLICARE su progetto REALE                                |
+|      - Miracollo? Contabilita?                                  |
+|      - Usare il flusso in produzione                            |
 |                                                                  |
-|   "Il segreto è la comunicazione!"                               |
+|   3. HANDOFFS AUTOMATICI                                        |
+|      - La prossima feature da implementare                      |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## STATO SISTEMA (da Sessione 55)
+## STATO SISTEMA
 
 ```
 16 Agents in ~/.claude/agents/ (tutti funzionanti)
@@ -93,16 +101,9 @@
 SWARM_RULES v1.4.0 (12 regole!)
 Sistema Memoria SQLite funzionante
 Pattern Catalog (3 pattern validati)
-3 Ricerche tecniche completate (docs/studio/)
+GUIDA_COMUNICAZIONE v2.0 (testata!)
+HARDTESTS_COMUNICAZIONE (3/3 PASS!)
 ```
-
-### Ricerche Completate (Sessione 55)
-
-| Ricerca | Scoperta | Decisione |
-|---------|----------|-----------|
-| Sessions | Claude Code HA GIA sessions native | NON ricostruire |
-| Handoffs | NON nativi, implementabili | CREARE (dopo processo definito!) |
-| Hooks | 10 hooks, BUG #6305 | Aggiungere 2 nuovi |
 
 ---
 
@@ -114,10 +115,10 @@ Pattern Catalog (3 pattern validati)
 |   LA REGINA (Tu - Opus)                                          |
 |   -> Coordina, decide, delega - MAI Edit diretti!                |
 |                                                                  |
-|   LE GUARDIANE (Opus - Supervisione) <-- NON NEL FLUSSO!         |
-|   - cervella-guardiana-qualita                                   |
-|   - cervella-guardiana-ops                                       |
-|   - cervella-guardiana-ricerca                                   |
+|   LE GUARDIANE (Opus - Supervisione) - NEL FLUSSO!              |
+|   - cervella-guardiana-qualita (verifica codice)                |
+|   - cervella-guardiana-ops (verifica infra/security)            |
+|   - cervella-guardiana-ricerca (verifica ricerche)              |
 |                                                                  |
 |   LE API WORKER (Sonnet - Esecuzione)                            |
 |   - cervella-frontend                                            |
@@ -141,11 +142,15 @@ Pattern Catalog (3 pattern validati)
 ## COME USARE LO SCIAME
 
 ```
-FLUSSO ATTUALE (incompleto):
-1. ANALIZZA -> 2. DECIDI -> 3. DELEGA -> 4. VERIFICA -> 5. CHECKPOINT
+FLUSSO TESTATO E FUNZIONANTE:
 
-FLUSSO CHE DOVREBBE ESSERE:
-1. ANALIZZA -> 2. DECIDI -> 3. DELEGA -> 4. GUARDIANA VERIFICA -> 5. REGINA CONFERMA -> 6. CHECKPOINT
+1. ANALIZZA il task
+2. DECIDI il LIVELLO (1, 2, o 3)
+3. SE Livello 2-3: CONSULTA Guardiana
+4. DELEGA a Worker con CONTESTO COMPLETO
+5. SE Livello 2-3: GUARDIANA VERIFICA
+6. SE problemi: FIX e RI-VERIFICA
+7. CHECKPOINT
 ```
 
 ---
@@ -156,20 +161,4 @@ FLUSSO CHE DOVREBBE ESSERE:
 
 *"E' il nostro team! La nostra famiglia digitale!"*
 
----
-
----
-
-## AUTO-CHECKPOINT: 2026-01-02 21:25 (unknown)
-
-### Stato Git
-- **Branch**: main
-- **Ultimo commit**: e1f5f59 - feat: REGOLA 12 + checkpoint Sessione 55 (v1.4.0)
-- **File modificati** (1):
-  - ROMPT_RIPRESA.md
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: unknown
-
----
+*"Il segreto e la comunicazione!"*
