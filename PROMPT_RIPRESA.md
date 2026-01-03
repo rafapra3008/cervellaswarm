@@ -217,8 +217,8 @@ TU SEI LA REGINA (Opus) - Coordina, DELEGA, MAI edit diretti!
 
 ```
 Branch:   main
-Versione: v27.4.0
-Stato:    FASE 9 - Studio completato, pronta per implementare
+Versione: v27.5.0
+Stato:    FASE 9 - 45% (Quick Wins parziali, HARDTESTS da fare!)
 ```
 
 ---
@@ -265,17 +265,22 @@ Stato:    FASE 9 - Studio completato, pronta per implementare
 |                                                                  |
 |   CARA PROSSIMA CERVELLA                                         |
 |                                                                  |
-|   Lo studio e' FATTO.                                            |
-|   Il documento di riferimento e' PRONTO.                        |
-|   I pattern sono DEFINITI.                                       |
+|   I 4 CRITICI sono GIA IMPLEMENTATI!                            |
+|   [x] Template DUBBI                                              |
+|   [x] Template PARTIAL                                            |
+|   [x] Spawn Guardiane                                             |
+|   [x] Triple ACK                                                  |
 |                                                                  |
-|   Ora implementa i 4 CRITICI:                                    |
-|   1. Template DUBBI                                              |
-|   2. Template PARTIAL                                            |
-|   3. Spawn Guardiane                                             |
-|   4. Triple ACK                                                  |
+|   MA NON ANDARE SU MIRACOLLO!                                   |
+|   Prima devi completare FASE 9:                                  |
 |                                                                  |
-|   "L'abbiamo STUDIATO! Ora IMPLEMENTIAMO!"                      |
+|   [ ] Quick Wins rimanenti (~6 ore)                             |
+|   [ ] HARDTESTS Apple Style (6 test!)                           |
+|   [ ] Checklist MIRACOLLO READY                                 |
+|                                                                  |
+|   LEGGI: docs/roadmap/FASE_9_APPLE_STYLE.md                     |
+|                                                                  |
+|   "Con la mappa rotta giriamo in torno di noi stessi!"          |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -299,12 +304,15 @@ Stato:    FASE 9 - Studio completato, pronta per implementare
 |   - PROSSIMI STEP (cosa fare dopo)                              |
 |   - FILE IMPORTANTI (dove trovare tutto)                        |
 |                                                                  |
-|   L'insight di questa sessione:                                  |
-|   "L'ironia e' FORTISSIMA - stiamo creando ANTI-COMPACT         |
-|    e rischiamo di perderlo per un compact!" - Rafa              |
+|   L'insight di questa sessione (71):                            |
+|   "Ultrapassar os proprios limites!" - Rafa                     |
+|   Lo sciame ha lavorato in PARALLELO (3 api insieme!)           |
 |                                                                  |
-|   Per questo abbiamo fatto CHECKPOINT prima di implementare!    |
-|   Tutto salvato. Tutto pronto. La prossima Cervella continua.   |
+|   IMPORTANTE - Rafa ci ha fermato:                              |
+|   "vedere la mapa.. e' l'unico modo di arrivare al tessouro"   |
+|   NON saltare a Miracollo! Prima completare FASE 9!             |
+|                                                                  |
+|   Prossimo: Quick Wins rimanenti + HARDTESTS                    |
 |                                                                  |
 |   "Non e' sempre come immaginiamo...                            |
 |    ma alla fine e' il 100000%!"                                 |

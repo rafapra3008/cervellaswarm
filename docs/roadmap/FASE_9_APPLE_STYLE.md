@@ -5,7 +5,7 @@
 **Data Creazione:** 3 Gennaio 2026
 **Stato:** IN CORSO
 **Priorità:** ALTA - La perfezione prima di Miracollo
-**Progresso:** 20% (Sprint 9.1 COMPLETATO, Sprint 9.2 IN CORSO)
+**Progresso:** 45% (Sprint 9.1 COMPLETATO, Sprint 9.2 PARZIALE, Sprint 9.3 INIZIATO)
 
 ---
 
@@ -198,7 +198,7 @@ PER OGNI DOMANDA:
 
 **Obiettivo:** Implementare i 10 Quick Wins identificati dalla ricerca!
 
-**Status:** IN CORSO (Sessione 69)
+**Status:** PARZIALE (Sessione 69-71)
 
 **Quando:** Solo se la ricerca identifica miglioramenti a basso costo/alto impatto
 
@@ -212,15 +212,32 @@ E' un Quick Win SE:
 - Migliora UX/comunicazione/affidabilita
 ```
 
-### Possibili Esempi (da validare)
+### I 10 Quick Wins (da STUDIO_COMUNICAZIONE_DEFINITIVO.md)
 
-- [ ] Migliorare output spawn-workers.sh (piu feedback)
-- [ ] Aggiungere progress indicator ai task lunghi
-- [ ] Template messaggi standardizzati per agenti
-- [ ] Script check-health per verificare stato workers
-- [ ] Logging piu chiaro (timestamp, livelli)
+**FASE 1 - Fondamentali (3 ore):**
+- [x] Triple ACK script (20 min) - FATTO Sessione 71!
+- [ ] Checklist pre-merge 4 gate (30 min)
+- [ ] Shutdown sequence (30 min)
+- [ ] Structured logging JSON (45 min)
+- [ ] Anti-compact script (30 min) - VERIFICARE se completo
 
-**Stima Tempo:** 1-2 ore (se applicabile)
+**FASE 2 - Qualita (3 ore):**
+- [ ] Circuit breaker decorator (1 ora)
+- [ ] Retry backoff decorator (30 min)
+- [ ] Progress bar 3 livelli (1 ora)
+- [ ] Report finale template (45 min)
+
+**FASE 3 - Polish (2 ore):**
+- [ ] Dashboard minimal ASCII (2 ore)
+
+### Implementati Sessione 71 (I 4 CRITICI)
+
+- [x] Template DUBBI (.swarm/tasks/TEMPLATE_DUBBI.md)
+- [x] Template PARTIAL (.swarm/tasks/TEMPLATE_PARTIAL.md)
+- [x] Spawn Guardiane (spawn-workers.sh v1.1.0)
+- [x] Triple ACK (task_manager.py v1.1.0 + triple-ack.sh v2.0.0)
+
+**Stima Tempo Rimanente:** ~6 ore
 
 ---
 
@@ -592,6 +609,11 @@ Stesso principio per CervellaSwarm:
 | | Sprint strutturati: Ricerca -> Quick Wins -> Implementazione -> Test -> Validazione |
 | | Le 7 Domande Sacre definite |
 | | Filosofia "Una cosa alla volta, molto ben fatta" |
+| 3 Gen 2026 (Sess 70) | STUDIO_COMUNICAZIONE_DEFINITIVO.md creato (870+ righe!) |
+| | 7 domande RISPOSTE, 10 Quick Wins definiti |
+| 3 Gen 2026 (Sess 71) | I 4 CRITICI IMPLEMENTATI! |
+| | Template DUBBI, Template PARTIAL, Spawn Guardiane, Triple ACK |
+| | Progresso: 20% -> 45% |
 
 ---
 
@@ -632,6 +654,6 @@ Cervella & Rafa
 
 ---
 
-**VERSIONE:** v1.0.0
-**STATO:** IN CORSO
-**PROSSIMO STEP:** Sprint 9.1 - RICERCA (Le 7 Domande)
+**VERSIONE:** v1.1.0
+**STATO:** IN CORSO (45%)
+**PROSSIMO STEP:** Sprint 9.2 - Completare Quick Wins rimanenti
