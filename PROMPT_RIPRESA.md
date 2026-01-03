@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 3 Gennaio 2026 - Sessione 72 - QUICK WINS COMPLETATI!
+> **Ultimo aggiornamento:** 3 Gennaio 2026 - Sessione 73 - spawn-workers.sh FUNZIONA!
 
 ---
 
@@ -16,46 +16,67 @@
 |   Hai 16 agenti pronti a lavorare per te.                       |
 |                                                                  |
 |   FASE ATTUALE: FASE 9 - APPLE STYLE                            |
-|   STATO: I 4 CRITICI IMPLEMENTATI! Pronta per USARLO!           |
+|   STATO: spawn-workers.sh v1.2.0 FUNZIONA AL 100%!              |
 |                                                                  |
-|   "Nulla e' complesso - solo non ancora studiato!"              |
-|   E noi l'abbiamo STUDIATO!                                     |
-|                                                                  |
-+------------------------------------------------------------------+
-```
-
----
-
-## IL MOMENTO ATTUALE (Sessione 72)
-
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   QUICK WINS 100% COMPLETATI!                                   |
-|   HARDTESTS 16 TEST PRONTI!                                     |
-|                                                                  |
-|   Sprint 9.2: TUTTI i Quick Wins creati (10/10)                 |
-|   Sprint 9.4: HARDTESTS scritti (16 test!)                      |
-|                                                                  |
-|   LEZIONE IMPORTANTE APPRESA:                                   |
-|   "Comodo != Giusto"                                            |
-|   Task tool = comodo ma non e' multi-finestra!                  |
-|   spawn-workers.sh = giusto, il NORD!                           |
-|                                                                  |
-|   Test Quick Wins eseguiti e PASSATI:                           |
-|   [x] dashboard.py PASS                                         |
-|   [x] progress_bar.py PASS                                      |
-|   [x] circuit_breaker.py PASS                                   |
-|   [x] structured_logging.py PASS                                |
-|   [x] spawn-workers.sh --list PASS                              |
-|   [x] task_manager.py list PASS                                 |
+|   Il sistema Multi-Finestra e' VIVO!                            |
+|   Puoi gia usarlo per delegare lavoro ai worker!                |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## FILO DEL DISCORSO (Sessione 72) - LEGGI BENE!
+## IL MOMENTO ATTUALE (Sessione 73)
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   spawn-workers.sh v1.2.0 - FIX CRITICO COMPLETATO!             |
+|                                                                  |
+|   PROBLEMA RISOLTO:                                              |
+|   - spawn-workers.sh apriva finestra                            |
+|   - Claude partiva MA restava fermo in attesa di input          |
+|                                                                  |
+|   FIX: Aggiunto prompt iniziale come argomento!                 |
+|   Ora il worker parte E lavora AUTOMATICAMENTE.                 |
+|                                                                  |
+|   TESTATO E FUNZIONANTE:                                        |
+|   - Worker apre                                                  |
+|   - Cerca task in .swarm/tasks/                                  |
+|   - Se non trova task, scrive in .swarm/handoff/                |
+|   - COMUNICAZIONE TRA FINESTRE FUNZIONA!                        |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+---
+
+## FILO DEL DISCORSO (Sessione 73) - LEGGI BENE!
+
+### Il Fix Critico
+
+1. **PROBLEMA: spawn-workers.sh non funzionava**
+   La finestra si apriva, Claude partiva, ma restava fermo.
+   Aspettava input dall'utente invece di lavorare.
+
+2. **CAUSA: Mancava il prompt iniziale**
+   `--append-system-prompt` aggiunge al system prompt
+   MA Claude Code aspetta comunque un prompt iniziale!
+
+3. **FIX: Aggiunto argomento prompt**
+   ```bash
+   claude --append-system-prompt "..." "Cerca task e inizia a lavorare"
+   ```
+   Il prompt iniziale come argomento fa partire il worker!
+
+4. **TESTATO: FUNZIONA AL 100%!**
+   Il worker ha cercato task, trovato template vuoto,
+   scritto in .swarm/handoff/ per comunicare con la Regina.
+   ESATTAMENTE il comportamento voluto!
+
+---
+
+## FILO DEL DISCORSO (Sessione 72) - Archivio
 
 ### La Lezione Fondamentale
 
@@ -455,17 +476,23 @@ Cervella & Rafa
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-03 22:10 (unknown)
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-03 22:48 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 581b80d - docs: PROMPT_RIPRESA veramente 10000%!
+- **Ultimo commit**: 0f70041 - docs: PROMPT_RIPRESA - spawn-workers.sh non funziona, debug prossima sessione
 - **File modificati** (5):
-  - eports/scientist_prompt_20260103.md
-  - .swarm/tasks/TEST_FLOW.md
-  - reports/engineer_report_20260103_214844.json
-  - reports/engineer_report_20260103_215001.json
-  - reports/engineer_report_20260103_220437.json
+  - swarm/runners/run_backend.sh
+  - PROMPT_RIPRESA.md
+  - reports/scientist_prompt_20260103.md
+  - scripts/swarm/spawn-workers.sh
+  - .swarm/handoff/
 
 ### Note
 - Checkpoint automatico generato da hook

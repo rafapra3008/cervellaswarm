@@ -17,27 +17,26 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 71 - 3 Gennaio 2026: I 4 CRITICI IMPLEMENTATI!**
+**SESSIONE 73 - 3 Gennaio 2026: spawn-workers.sh FUNZIONA AL 100%!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 71: IMPLEMENTAZIONE COMPLETATA!                      |
+|   SESSIONE 73: FIX CRITICO COMPLETATO!                          |
 |                                                                  |
-|   Lo SCIAME ha lavorato in parallelo:                           |
-|   - cervella-docs: Template DUBBI e PARTIAL                     |
-|   - cervella-devops: Spawn Guardiane                            |
-|   - cervella-backend: Triple ACK                                |
+|   PROBLEMA: spawn-workers.sh apriva finestra ma Claude          |
+|   restava fermo in attesa di input.                             |
 |                                                                  |
-|   RISULTATO:                                                     |
-|   [x] Template DUBBI - .swarm/tasks/TEMPLATE_DUBBI.md           |
-|   [x] Template PARTIAL - .swarm/tasks/TEMPLATE_PARTIAL.md       |
-|   [x] Spawn Guardiane - spawn-workers.sh v1.1.0                 |
-|   [x] Triple ACK - task_manager.py v1.1.0 + triple-ack.sh       |
+|   FIX: Aggiunto prompt iniziale come argomento!                 |
+|   Ora il worker parte E lavora automaticamente.                 |
 |                                                                  |
-|   TUTTO TESTATO E FUNZIONANTE!                                  |
+|   spawn-workers.sh v1.2.0 - LA MAGIA FUNZIONA!                  |
 |                                                                  |
-|   "L'abbiamo STUDIATO! E ora l'abbiamo IMPLEMENTATO!"           |
+|   TESTATO:                                                       |
+|   - Worker apre                                                  |
+|   - Cerca task in .swarm/tasks/                                  |
+|   - Se non trova task, scrive in .swarm/handoff/                |
+|   - COMUNICAZIONE FUNZIONANTE!                                  |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -59,7 +58,7 @@
 | HARDTESTS Swarm V3 (4/4) | PASSATI! |
 | Studio Cervello vs Swarm | FUNZIONANTE |
 | .swarm/ sistema Multi-Finestra | FUNZIONANTE |
-| spawn-workers.sh v1.1.0 | FUNZIONANTE + GUARDIANE! |
+| spawn-workers.sh v1.2.0 | FUNZIONANTE + GUARDIANE + AUTO-START! |
 | Template DUBBI | FUNZIONANTE! |
 | Template PARTIAL | FUNZIONANTE! |
 | Triple ACK system | FUNZIONANTE! |

@@ -12,8 +12,9 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 1.1.0
+# Versione: 1.2.0
 # Data: 2026-01-03
+# Fix: Aggiunto prompt iniziale per avviare worker automaticamente
 # Cervella & Rafa
 # Aggiunto: Supporto Guardiane (Opus)
 
@@ -272,7 +273,9 @@ spawn_worker() {
 #!/bin/bash
 RUNNEREOF
     echo "cd ${PROJECT_ROOT}" >> "$runner_script"
-    echo "/Users/rafapra/.nvm/versions/node/v24.11.0/bin/claude --append-system-prompt \"\$(cat ${prompt_file})\"" >> "$runner_script"
+    # Prompt iniziale che fa partire il worker automaticamente
+    local initial_prompt="Controlla .swarm/tasks/ per task assegnati a te e inizia a lavorare. Se non ci sono task, aspetta istruzioni."
+    echo "/Users/rafapra/.nvm/versions/node/v24.11.0/bin/claude --append-system-prompt \"\$(cat ${prompt_file})\" \"${initial_prompt}\"" >> "$runner_script"
     chmod +x "$runner_script"
 
     # Apre nuova finestra Terminal eseguendo lo script runner
