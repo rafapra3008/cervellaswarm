@@ -6,7 +6,7 @@
 
 ## OVERVIEW
 
-> **Aggiornato:** 2/3 Gennaio 2026 - Sessione 58 - HARDTESTS COMUNICAZIONE PASSATI! (v22.0.0)
+> **Aggiornato:** 3 Gennaio 2026 - Sessione 59 - PROMPT CORTI! (v23.0.0)
 
 ```
 +------------------------------------------------------------------+
@@ -243,6 +243,33 @@
 ---
 
 ## CHANGELOG
+
+### 3 Gennaio 2026 (Sessione 59) - PROMPT CORTI!
+
+**OTTIMIZZAZIONE PROMPT COMPLETATA!**
+
+```
+"Il prompt e un RITUALE, non documentazione!" - Le Ragazze
+```
+
+**COMPLETATO:**
+- Recap script terminale (alias swarm/miracollo/contabilita) - OK!
+- Recap hooks (8 attivi) e triggers (5 attivi) - OK!
+- Consultato 3 api in parallelo: Researcher + Docs + Marketing
+- Riscritto PROMPT_SWARM_MODE.md completamente
+- Da 307 righe a 145 righe (file)
+- Da 50 righe a 12 righe (prompt)
+- Da ~1000 token a ~150 token (85% risparmio!)
+- Eliminata 95% ridondanza
+
+**SCOPERTA:**
+- Il prompt NON e documentazione, e un RITUALE
+- Sandwich emotivo: apertura + operativo + chiusura
+- Solo 3 LIVELLI RISCHIO sono info essenziali
+
+**Versione:** 23.0.0 (MAJOR: Prompt ottimizzati!)
+
+---
 
 ### 2/3 Gennaio 2026 (Sessione 58) - HARDTESTS COMUNICAZIONE PASSATI!
 

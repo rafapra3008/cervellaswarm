@@ -1,74 +1,79 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2/3 Gennaio 2026 - Sessione 58 - HARDTESTS COMUNICAZIONE PASSATI!
+> **Ultimo aggiornamento:** 3 Gennaio 2026 - Sessione 59 - PROMPT CORTI!
 
 ---
 
-## SESSIONE 58 - HARDTESTS COMUNICAZIONE PASSATI! (2/3 Gennaio 2026)
+## SESSIONE 59 - PROMPT CORTI! (3 Gennaio 2026)
 
 ### IL RISULTATO
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   TUTTI I TEST PASSATI! 3/3                                     |
+|   PROMPT OTTIMIZZATI!                                           |
 |                                                                  |
-|   "Il segreto e la comunicazione!" - VERIFICATO!                |
+|   Da 50 righe a 12 righe                                        |
+|   Da ~1000 token a ~150 token                                   |
+|   85% risparmio, 0% ridondanza                                  |
+|                                                                  |
+|   "Il prompt e un RITUALE, non documentazione!"                 |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ### COSA ABBIAMO FATTO
 
-1. **Creato HARDTESTS_COMUNICAZIONE.md**
-   - 3 scenari di test (uno per ogni livello di rischio)
-   - Template riutilizzabili per future verifiche
-   - Checklist dettagliate
+1. **Recap sistema completo**
+   - Script terminale (swarm, miracollo, contabilita) - OK!
+   - 8 Hooks globali - OK!
+   - 5 Triggers in CLAUDE.md - OK!
 
-2. **Eseguito TEST 1 (Livello 1 - BASSO)**
-   - Task: Correggere typo in README
-   - Regina -> Worker (senza Guardiana)
-   - Risultato: PASS - Zero overhead, ~5 secondi
+2. **Consultato 3 api in parallelo**
+   - Researcher: Analisi best practices, 95% ridondanza trovata
+   - Docs: Audit file, solo 3 LIVELLI sono essenziali
+   - Marketing: UX ottimale, "sandwich emotivo"
 
-3. **Eseguito TEST 2 (Livello 2 - MEDIO)**
-   - Task: Creare funzione format_date()
-   - Regina + Guardiana Qualita -> Worker -> Guardiana verifica
-   - Risultato: PASS - Report strutturato, APPROVATO
-
-4. **Eseguito TEST 3 (Livello 3 - ALTO)**
-   - Task: Script cleanup database
-   - Regina + Guardiana Ops + Rafa -> Worker -> Guardiana RIGOROSA
-   - Guardiana ha trovato 2 VULNERABILITA REALI:
-     - LIMIT in DELETE non supportato in SQLite!
-     - Funzione legacy con bypass sicurezza!
-   - Worker ha corretto
-   - Guardiana ha ri-verificato e APPROVATO
-   - Risultato: PASS - Loop sicurezza perfetto!
+3. **Riscritto PROMPT_SWARM_MODE.md**
+   - Da 307 righe a 145 righe (file)
+   - Da 50 righe a 12 righe (prompt)
+   - Mantenuto: emotivita, 3 livelli, reference veloce
+   - Eliminato: liste ridondanti, tabelle gia in altri file
 
 ### LA SCOPERTA
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   IL FLUSSO DI COMUNICAZIONE FUNZIONA!                          |
+|   "Il prompt NON e documentazione. E un RITUALE."               |
 |                                                                  |
-|   - Livello 1: Worker procede senza Guardiana (efficienza)      |
-|   - Livello 2: Guardiana verifica dopo (qualita)                |
-|   - Livello 3: Guardiana BLOCCA se problemi (sicurezza)         |
-|                                                                  |
-|   Il loop BLOCCO -> FIX -> RI-VERIFICA -> APPROVATO             |
-|   funziona PERFETTAMENTE!                                        |
+|   - Le info sono in CLAUDE.md, COSTITUZIONE, SWARM_RULES        |
+|   - Il prompt attiva solo il MINDSET giusto                     |
+|   - Sandwich emotivo: apertura + operativo + chiusura           |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
-### I 3 LIVELLI DI RISCHIO (TESTATI!)
+### IL NUOVO PROMPT (12 righe!)
 
-| Livello | Task | Guardiana | Test |
-|---------|------|-----------|------|
-| 1 - BASSO | docs, typo, ricerca | NO (o random) | PASS |
-| 2 - MEDIO | feature, refactor | SI, dopo batch | PASS |
-| 3 - ALTO | auth, deploy, dati | SEMPRE + Rafa | PASS |
+```
+Ciao Cervella! Sei tu?
+
+INIZIA SESSIONE -> [PROGETTO]
+
+---
+
+SWARM MODE! Tu sei la Regina.
+
+3 LIVELLI:
+1-BASSO (docs) -> vai
+2-MEDIO (feature) -> Guardiana verifica
+3-ALTO (deploy/auth) -> Guardiana + Rafa
+
+---
+
+Lavoriamo con ANIMA!
+```
 
 ### FILO DEL DISCORSO (PROSSIMA SESSIONE)
 
@@ -77,13 +82,13 @@
 |                                                                  |
 |   PROSSIMO STEP:                                                 |
 |                                                                  |
-|   1. DECIDERE: Automatizzare o manuale?                         |
-|      - Hooks per trigger automatico Guardiane?                  |
-|      - O mantenere manuale per ora?                             |
+|   1. TESTARE prompt corti                                        |
+|      - Usarli per 3-5 sessioni                                  |
+|      - Verificare se manca qualcosa                             |
 |                                                                  |
 |   2. APPLICARE su progetto REALE                                |
-|      - Miracollo? Contabilita?                                  |
-|      - Usare il flusso in produzione                            |
+|      - Miracollo!                                               |
+|      - Primo sprint con lo sciame                               |
 |                                                                  |
 |   3. HANDOFFS AUTOMATICI                                        |
 |      - La prossima feature da implementare                      |
@@ -162,3 +167,21 @@ FLUSSO TESTATO E FUNZIONANTE:
 *"E' il nostro team! La nostra famiglia digitale!"*
 
 *"Il segreto e la comunicazione!"*
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-03 01:39 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 9a44bec - feat: HARDTESTS COMUNICAZIONE PASSATI! 3/3 (v22.0.0) - Sessione 58
+- **File modificati** (1):
+  - ROMPT_RIPRESA.md
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---

@@ -17,20 +17,21 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 58 - 2/3 Gennaio 2026: HARDTESTS COMUNICAZIONE PASSATI!**
+**SESSIONE 59 - 3 Gennaio 2026: PROMPT CORTI!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   COMUNICAZIONE TESTATA E FUNZIONANTE!                          |
+|   PROMPT OTTIMIZZATI!                                           |
 |                                                                  |
-|   - HARDTESTS_COMUNICAZIONE.md creato                           |
-|   - 3 TEST eseguiti (Livello 1, 2, 3)                           |
-|   - TUTTI PASSATI! 3/3                                          |
-|   - Guardiana Ops ha trovato vulnerabilita REALI!               |
-|   - Loop BLOCCO -> FIX -> APPROVATO funziona!                   |
+|   - Da 50 righe a 12 righe                                      |
+|   - Da ~1000 token a ~150 token                                 |
+|   - "Il prompt e un RITUALE, non documentazione!"               |
 |                                                                  |
-|   "Il segreto e la comunicazione!" - VERIFICATO!                |
+|   Le Ragazze hanno deciso insieme:                              |
+|   - Researcher: 95% ridondanza eliminata                        |
+|   - Docs: Solo 3 LIVELLI sono essenziali                        |
+|   - Marketing: Sandwich emotivo perfetto                        |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -112,18 +113,18 @@
 
 ## ULTIMO AGGIORNAMENTO
 
-**2/3 Gennaio 2026 - Sessione 58** - HARDTESTS COMUNICAZIONE PASSATI!
+**3 Gennaio 2026 - Sessione 59** - PROMPT CORTI!
 
 ### Cosa abbiamo fatto:
-- Creato HARDTESTS_COMUNICAZIONE.md (3 scenari)
-- TEST 1 (Livello 1): PASS - Zero overhead
-- TEST 2 (Livello 2): PASS - Guardiana verifica e approva
-- TEST 3 (Livello 3): PASS - Guardiana BLOCCA, Worker FIX, Guardiana APPROVA
-- Scoperte 2 vulnerabilita REALI (LIMIT SQLite, bypass legacy)
+- Recap script terminale (swarm, miracollo, contabilita) - OK!
+- Recap hooks e triggers - OK!
+- Consultato 3 api in parallelo (Researcher, Docs, Marketing)
+- Riscritto PROMPT_SWARM_MODE.md: da 307 righe a 145, prompt da 50 a 12
+- Scoperta: "Il prompt e un RITUALE, non documentazione!"
 
 ### Prossimo:
-- Decidere se automatizzare (hooks) o manuale
-- Applicare su progetto reale (Miracollo?)
+- Applicare su progetto REALE (Miracollo!)
+- Testare i nuovi prompt corti
 - Handoffs automatici
 
 ---
