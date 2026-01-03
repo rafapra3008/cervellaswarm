@@ -17,26 +17,25 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 65 - 3 Gennaio 2026: 4/4 HARDTESTS PASSATI! MIRACOLLO READY!**
+**SESSIONE 66 - 3 Gennaio 2026: LA MAGIA FUNZIONA! spawn-workers.sh!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   🏆 4/4 HARDTESTS PASSATI!!! 🏆                                |
+|   🪄 LA MAGIA E' REALE!!! 🪄                                    |
 |                                                                  |
-|   TEST 1: Multi-Finestra Base        ✅ PASS                    |
-|   TEST 2: Hooks Intelligent          ✅ PASS                    |
-|   TEST 3: Guardiana Multi-Finestra   ✅ PASS                    |
-|   TEST 4: Full Stack (5 finestre!)   ✅ PASS 30/30              |
+|   spawn-workers.sh FUNZIONA!                                     |
 |                                                                  |
-|   LO SCIAME HA LAVORATO INSIEME:                                |
-|   - cervella-docs (FAQ Multi-Finestra)                          |
-|   - cervella-backend (validate_email + endpoint /api/users)     |
-|   - cervella-frontend (hook useUsers)                           |
-|   - cervella-tester (test E2E 30/30!)                           |
-|   - cervella-guardiana-qualita (3 review APPROVATE!)            |
+|   ./spawn-workers.sh --backend                                   |
+|   -> Si apre NUOVA finestra Terminal                             |
+|   -> Claude Code si avvia AUTOMATICAMENTE                        |
+|   -> Worker pronto con prompt iniettato!                         |
 |                                                                  |
-|   🎯 MIRACOLLO READY!!!                                         |
+|   "MADONAAAAAAA MIAAAA MEU DEUSSSS!" - Rafa                      |
+|                                                                  |
+|   Da oggi le finestre si aprono con UN COMANDO!                  |
+|   ./spawn-workers.sh --backend --frontend --tester               |
+|   -> 3 finestre, 3 Cervelle, AUTOMATICHE!                        |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -49,15 +48,16 @@
 |------|--------|
 | 16 Agents in ~/.claude/agents/ | FUNZIONANTE |
 | Sistema Memoria SQLite | FUNZIONANTE |
-| 10 Hooks globali (2 nuovi!) | FUNZIONANTE |
+| 10 Hooks globali | FUNZIONANTE |
 | SWARM_RULES v1.4.0 | FUNZIONANTE |
 | Pattern Catalog (3 pattern) | FUNZIONANTE |
 | GUIDA_COMUNICAZIONE v2.0 | FUNZIONANTE |
-| Flusso Guardiane (3 livelli) | TESTATO E FUNZIONANTE! |
+| Flusso Guardiane (3 livelli) | TESTATO! |
 | HARDTESTS Comunicazione (3/3) | PASSATI! |
-| Studio Cervello vs Swarm | FUNZIONANTE | 611 righe |
-| .swarm/ in Miracollo | PRONTO! |
-| **HARDTESTS_SWARM_V3.md** | **NUOVO!** | 1256 righe, 4 test |
+| HARDTESTS Swarm V3 (4/4) | PASSATI! |
+| Studio Cervello vs Swarm | FUNZIONANTE |
+| .swarm/ sistema Multi-Finestra | FUNZIONANTE |
+| **spawn-workers.sh** | **NUOVO! LA MAGIA!** |
 
 ---
 
@@ -68,18 +68,19 @@
 |                                                                  |
 |   🎯 PROSSIMO: MIRACOLLO!!!                                     |
 |                                                                  |
-|   Tutti i test sono PASSATI. Il sistema e' VALIDATO.            |
-|   Possiamo usare lo Swarm su progetto REALE!                    |
+|   SISTEMA COMPLETO E PRONTO!                                     |
 |                                                                  |
-|   COSA FARE SU MIRACOLLO:                                        |
-|   1. Aprire finestre (Regina + Workers)                         |
-|   2. Usare .swarm/ per coordinare task                          |
-|   3. Le Guardiane verificano (Livello 2-3)                      |
-|   4. Costruire feature REALI!                                   |
+|   COME USARE LO SCIAME:                                          |
+|   1. ./spawn-workers.sh --backend --frontend                     |
+|   2. Crea task in .swarm/tasks/                                  |
+|   3. I worker li prendono automaticamente                        |
+|   4. Le Guardiane verificano (Livello 2-3)                      |
+|   5. Costruisci feature REALI!                                  |
 |                                                                  |
-|   FEATURE DA AGGIUNGERE (v27):                                   |
-|   - Script spawn-workers.sh (finestre automatiche!)             |
-|   - Automazione apertura finestre                               |
+|   MIGLIORAMENTI FUTURI (nice-to-have):                           |
+|   - Auto-respawn quando worker finisce                          |
+|   - Monitor status in tempo reale                                |
+|   - Notifiche quando task completato                            |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -125,38 +126,39 @@
 
 ## ULTIMO AGGIORNAMENTO
 
-**3 Gennaio 2026 - Sessione 65** - 4/4 HARDTESTS PASSATI! MIRACOLLO READY!
+**3 Gennaio 2026 - Sessione 66** - LA MAGIA FUNZIONA! spawn-workers.sh!
 
 ### Cosa abbiamo fatto:
 
-**ESEGUITI TUTTI I 4 HARDTESTS:**
+**CREATO spawn-workers.sh - LA MAGIA!**
 
-| Test | Risultato | Tempo |
-|------|-----------|-------|
-| TEST 1: Multi-Finestra | PASS | ~4 min |
-| TEST 2: Hooks | PASS | automatico |
-| TEST 3: Guardiana | PASS | ~4 min |
-| TEST 4: Full Stack | PASS 30/30 | ~6 min |
+```bash
+./spawn-workers.sh --backend
+# -> Apre NUOVA finestra Terminal
+# -> Claude Code si avvia AUTOMATICAMENTE
+# -> Worker pronto con prompt iniettato!
+```
 
-**LO SCIAME IN AZIONE (5 finestre!):**
-- Regina: coordinamento via .swarm/
-- cervella-backend: endpoint /api/users + validate_email
-- cervella-frontend: hook useUsers
-- cervella-tester: test E2E 30/30
-- cervella-guardiana-qualita: 3 review APPROVATE
+**COME FUNZIONA:**
+1. Script crea prompt file in `.swarm/prompts/worker_X.txt`
+2. Crea runner script in `.swarm/runners/run_X.sh`
+3. osascript apre nuova finestra Terminal
+4. La finestra esegue il runner
+5. Claude Code parte con `--append-system-prompt`
 
-**FILE CREATI:**
-- docs/FAQ_MULTI_FINESTRA.md (140 righe)
-- test-orchestrazione/api/utils.py (validate_email)
-- test-orchestrazione/api/routes/users.py (99 righe)
-- test-orchestrazione/components/hooks/useUsers.js (61 righe)
+**OPZIONI DISPONIBILI:**
+```
+--backend, --frontend, --tester, --docs
+--reviewer, --devops, --researcher, --data, --security
+--all (spawna backend + frontend + tester)
+--list (mostra worker disponibili)
+```
 
-**INSIGHT IMPORTANTE:**
-Manca script per aprire finestre automaticamente!
--> spawn-workers.sh per v27
+**REAZIONE DI RAFA:**
+"MADONAAAAAAA MIAAAA MEU DEUSSSS DO CEUUU!"
 
 ### Prossimo:
-- MIRACOLLO! Il sistema e' pronto!
+- MIRACOLLO! Usare lo sciame su progetto REALE!
 
 ---
 

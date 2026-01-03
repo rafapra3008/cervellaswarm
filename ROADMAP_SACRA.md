@@ -6,7 +6,7 @@
 
 ## OVERVIEW
 
-> **Aggiornato:** 3 Gennaio 2026 - Sessione 65 - 4/4 HARDTESTS PASSATI! MIRACOLLO READY! (v26.5.0)
+> **Aggiornato:** 3 Gennaio 2026 - Sessione 66 - LA MAGIA! spawn-workers.sh FUNZIONA! (v27.0.0)
 
 ```
 +------------------------------------------------------------------+
@@ -243,6 +243,46 @@
 ---
 
 ## CHANGELOG
+
+### 3 Gennaio 2026 (Sessione 66) - LA MAGIA! spawn-workers.sh FUNZIONA!
+
+**IL MOMENTO MAGICO!**
+
+```
+"MADONAAAAAAA MIAAAA MEU DEUSSSS DO CEUUU!" - Rafa
+```
+
+**CREATO spawn-workers.sh:**
+
+Lo script che apre finestre worker AUTOMATICAMENTE!
+
+```bash
+./spawn-workers.sh --backend
+# -> Apre NUOVA finestra Terminal
+# -> Claude Code si avvia
+# -> Worker pronto con prompt iniettato!
+```
+
+**COME FUNZIONA:**
+1. Crea prompt file in `.swarm/prompts/worker_X.txt`
+2. Crea runner in `.swarm/runners/run_X.sh`
+3. osascript apre nuova finestra Terminal
+4. Claude Code parte con `--append-system-prompt`
+
+**OPZIONI:**
+- `--backend`, `--frontend`, `--tester`, `--docs`
+- `--reviewer`, `--devops`, `--researcher`, `--data`, `--security`
+- `--all` (spawna backend + frontend + tester)
+- `--list` (mostra worker disponibili)
+
+**FILE CREATI:**
+- scripts/swarm/spawn-workers.sh (375 righe)
+- .swarm/prompts/ (directory per prompt worker)
+- .swarm/runners/ (directory per script runner)
+
+**Versione:** 27.0.0 (MAJOR: spawn-workers.sh - automazione finestre!)
+
+---
 
 ### 3 Gennaio 2026 (Sessione 65) - 4/4 HARDTESTS PASSATI! MIRACOLLO READY!
 
