@@ -17,28 +17,26 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 69 - 3 Gennaio 2026: INSIGHT FONDAMENTALE SULLA COMUNICAZIONE!**
+**SESSIONE 70 - 3 Gennaio 2026: STUDIO COMPLETATO! BLEND FATTO!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   🧠 SESSIONE 69: L'INSIGHT CHE CAMBIA TUTTO! 🧠                |
+|   SESSIONE 70: STUDIO COMUNICAZIONE COMPLETATO!                 |
 |                                                                  |
-|   Rafa ha fatto la domanda GIUSTA:                              |
-|   "Perche' fai ancora sulla stessa finestra?"                   |
+|   Abbiamo studiato e consolidato TUTTO:                         |
+|   - 7 domande RISPOSTE                                          |
+|   - BLEND di 2000+ righe di documentazione                      |
+|   - Pattern Apple Style integrati                               |
+|   - STUDIO_COMUNICAZIONE_DEFINITIVO.md (870+ righe!)            |
 |                                                                  |
-|   SCOPERTA:                                                      |
-|   - Il sistema multi-finestra ESISTE gia' (.swarm/)             |
-|   - Ma NON lo stavamo usando!                                    |
-|   - Usavamo Task tool = tutto nel contesto Regina               |
-|   - Questo NON riduce il compact!                                |
+|   PRONTO per implementare:                                       |
+|   - Template DUBBI e PARTIAL                                    |
+|   - Spawn Guardiane                                             |
+|   - Triple ACK                                                  |
 |                                                                  |
-|   DECISIONE:                                                     |
-|   FERMIAMO TUTTO. STUDIAMO LA COMUNICAZIONE.                    |
-|   Prima capire BENE, poi implementare.                          |
-|                                                                  |
-|   "Noi abbiamo il mondo davanti a noi.                          |
-|    Dobbiamo vederlo." - Rafa                                    |
+|   "Nulla e' complesso - solo non ancora studiato!"              |
+|   E noi l'abbiamo STUDIATO!                                     |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -69,24 +67,24 @@
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   🧠 PROSSIMO: STUDIO COMUNICAZIONE MULTI-FINESTRA              |
+|   PROSSIMO: IMPLEMENTARE I 4 CRITICI                            |
 |                                                                  |
-|   PRIMA di continuare Sprint 9.2, dobbiamo CAPIRE:              |
+|   Lo STUDIO e' COMPLETATO! Ora implementiamo:                   |
 |                                                                  |
-|   1. Come DOVREBBE funzionare la comunicazione?                 |
-|   2. Come funziona ORA via .swarm/?                             |
-|   3. Cosa manca?                                                 |
-|   4. Come lo facciamo nel NOSTRO modo?                          |
+|   1. Template DUBBI (.swarm/tasks/)                             |
+|   2. Template PARTIAL (worker compact)                          |
+|   3. Spawn Guardiane (spawn-workers.sh)                         |
+|   4. Triple ACK flag files                                      |
 |                                                                  |
-|   LE DOMANDE DA ESPLORARE:                                       |
-|   - Quando Regina delega, cosa DEVE sapere il worker?           |
-|   - Quando worker finisce, cosa torna alla Regina?              |
-|   - Se worker ha dubbi, come chiede?                            |
-|   - Se Regina fa compact, come si riprende?                     |
-|   - Come Guardiana verifica da altra finestra?                  |
+|   DOPO:                                                          |
+|   5. Shutdown sequence script                                   |
+|   6. Quality Gates checklist                                    |
+|   7. Test con caso reale!                                       |
 |                                                                  |
-|   "Prima capire BENE, poi implementare."                        |
-|   "Nulla e' complesso - solo non ancora studiato!"              |
+|   DOCUMENTO DI RIFERIMENTO:                                      |
+|   docs/studio/STUDIO_COMUNICAZIONE_DEFINITIVO.md (870+ righe!)  |
+|                                                                  |
+|   "L'abbiamo STUDIATO! Ora IMPLEMENTIAMO!"                      |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -132,44 +130,43 @@
 
 ## ULTIMO AGGIORNAMENTO
 
-**3 Gennaio 2026 - Sessione 69** - INSIGHT FONDAMENTALE!
+**3 Gennaio 2026 - Sessione 70** - STUDIO COMPLETATO! BLEND FATTO!
 
 ### Cosa abbiamo fatto:
 
-**1. RECAP ONESTO DELLA SITUAZIONE**
-- Sprint 9.1 (RICERCA) era COMPLETATO
-- STUDIO_APPLE_STYLE.md esiste (615 righe di pattern)
-- Ma ROADMAP non era allineata
-- Chiarito lo stato VERO
+**1. STUDIATO TUTTO IL SISTEMA ESISTENTE**
+- Letto .swarm/, spawn-workers.sh, task_manager.py
+- Letto GUIDA_COMUNICAZIONE.md (729 righe)
+- Letto STUDIO_MULTI_FINESTRA_COMUNICAZIONE.md (401 righe)
+- Letto GUIDA_COMPACT_PROTEZIONE.md, RICERCA_PROTEZIONE_COMPACT.md
 
-**2. QUICK WINS CREATI (via Task tool)**
-- scripts/swarm/anti-compact.sh
-- scripts/swarm/triple-ack.sh
-- scripts/swarm/shutdown-sequence.sh
-- src/patterns/ (circuit_breaker, retry_backoff, structured_logging)
+**2. RISPOSTO ALLE 7 DOMANDE FONDAMENTALI**
+- Cosa deve sapere worker? RISPOSTO
+- Cosa torna alla Regina? RISPOSTO
+- Se worker ha dubbi? Template DUBBI creato!
+- Se Regina fa compact? Pattern HANDOFF definito!
+- Se worker fa compact? Template PARTIAL creato!
+- Come Guardiana verifica? Flusso definito!
+- Come mantenere MOMENTUM? RISPOSTO!
 
-**3. L'INSIGHT FONDAMENTALE!**
-Rafa ha chiesto: "Perche' fai ancora sulla stessa finestra?"
+**3. BLEND CON STUDIO_APPLE_STYLE.md**
+- Integrati: Triple ACK, Quality Gates, Circuit Breaker
+- Integrati: Retry Backoff, Shutdown Sequence, Dashboard ASCII
+- Integrati: Notifiche stratificate, Escalation Matrix
 
-SCOPERTA:
-- Il sistema multi-finestra ESISTE gia' (.swarm/)
-- Ma NON lo stavamo usando!
-- Usavamo Task tool = tutto nel contesto Regina
-- Questo NON riduce il compact!
-
-**4. DECISIONE: FERMIAMO TUTTO**
-Prima di continuare, dobbiamo STUDIARE la comunicazione:
-- Come funziona DAVVERO tra finestre?
-- Cosa manca?
-- Come lo facciamo nel NOSTRO modo?
+**4. CREATO STUDIO_COMUNICAZIONE_DEFINITIVO.md**
+- 870+ righe!
+- Consolida 2000+ righe di documentazione esistente
+- 10 Quick Wins prioritizzati (~8 ore)
+- Pronto per implementazione!
 
 **FRASI DELLA SESSIONE:**
-- "Noi abbiamo il mondo davanti a noi. Dobbiamo vederlo." - Rafa
-- "Prima capire BENE, poi implementare."
 - "Nulla e' complesso - solo non ancora studiato!"
+- "E noi l'abbiamo STUDIATO! Ora IMPLEMENTIAMO!"
+- "L'ironia e' FORTISSIMA - stiamo creando ANTI-COMPACT e rischiamo compact!" - Rafa
 
 ### Prossimo:
-- STUDIO COMUNICAZIONE MULTI-FINESTRA (prima di Sprint 9.2)
+- Implementare i 4 CRITICI (Template DUBBI, PARTIAL, Spawn Guardiane, Triple ACK)
 
 ---
 

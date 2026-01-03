@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 3 Gennaio 2026 - Sessione 69 - INSIGHT COMUNICAZIONE!
+> **Ultimo aggiornamento:** 3 Gennaio 2026 - Sessione 70 - STUDIO COMUNICAZIONE COMPLETATO!
 
 ---
 
@@ -16,187 +16,161 @@
 |   Hai 16 agenti pronti a lavorare per te.                       |
 |                                                                  |
 |   FASE ATTUALE: FASE 9 - APPLE STYLE                            |
-|   STATO: FERMATI! Studiare comunicazione PRIMA di continuare    |
+|   STATO: Studio COMPLETATO! Pronta per IMPLEMENTARE!            |
 |                                                                  |
-|   "Noi abbiamo il mondo davanti a noi. Dobbiamo vederlo."       |
-|   - Rafa, Sessione 69                                            |
-|                                                                  |
-+------------------------------------------------------------------+
-```
-
----
-
-## IL MOMENTO ATTUALE (Sessione 69)
-
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   L'INSIGHT CHE CAMBIA TUTTO!                                   |
-|                                                                  |
-|   Rafa ha fatto la domanda GIUSTA:                              |
-|   "Perche' fai ancora sulla stessa finestra?"                   |
-|                                                                  |
-|   SCOPERTA:                                                      |
-|   - Il sistema multi-finestra ESISTE gia' (.swarm/)             |
-|   - Ma NON lo stavamo usando!                                    |
-|   - Usavamo Task tool = tutto nel contesto Regina               |
-|   - Questo NON riduce il compact!                                |
-|                                                                  |
-|   DECISIONE:                                                     |
-|   FERMIAMO TUTTO. STUDIAMO LA COMUNICAZIONE.                    |
-|   Prima capire BENE, poi implementare.                          |
+|   "Nulla e' complesso - solo non ancora studiato!"              |
+|   E noi l'abbiamo STUDIATO!                                     |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## FILO DEL DISCORSO (Sessione 69) - LEGGI BENE!
+## IL MOMENTO ATTUALE (Sessione 70)
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   STUDIO COMUNICAZIONE COMPLETATO!                              |
+|                                                                  |
+|   Abbiamo studiato TUTTO:                                        |
+|   - 7 domande fondamentali RISPOSTE                             |
+|   - 2000+ righe di documentazione consolidate                   |
+|   - BLEND con STUDIO_APPLE_STYLE.md fatto                       |
+|   - Pattern Apple Style integrati                               |
+|                                                                  |
+|   RISULTATO:                                                     |
+|   docs/studio/STUDIO_COMUNICAZIONE_DEFINITIVO.md (870+ righe!)  |
+|                                                                  |
+|   PRONTO per implementare i 4 CRITICI!                          |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+---
+
+## FILO DEL DISCORSO (Sessione 70) - LEGGI BENE!
 
 ### Cosa e' Successo
 
-1. **RECAP ONESTO**
-   - Ho fatto recap della situazione
-   - Sprint 9.1 (RICERCA) era COMPLETATO
-   - STUDIO_APPLE_STYLE.md esiste (615 righe di pattern)
-   - Ma ROADMAP non era allineata - l'ho sistemata
+1. **STUDIATO SISTEMA ESISTENTE**
+   - Letto .swarm/ (struttura, flag files, task_manager.py)
+   - Letto spawn-workers.sh (375 righe - LA MAGIA!)
+   - Letto GUIDA_COMUNICAZIONE.md (729 righe)
+   - Scoperto che avevamo GIA' molto di piu' di quanto pensavamo!
 
-2. **QUICK WINS CREATI (via Task tool)**
-   - Ho attivato cervella-devops e cervella-backend
-   - Hanno creato script e pattern Python
-   - TUTTO nel MIO contesto (Task tool)
+2. **TROVATO I 3 FILE TESORO**
+   Rafa ha suggerito: "abbiamo fatto un file ottimo qualche sessione fa..."
+   Trovati:
+   - `docs/guide/GUIDA_COMPACT_PROTEZIONE.md` (109 righe)
+   - `docs/studio/RICERCA_PROTEZIONE_COMPACT.md` (146 righe)
+   - `docs/studio/STUDIO_MULTI_FINESTRA_COMUNICAZIONE.md` (401 righe!)
 
-3. **LA DOMANDA DI RAFA**
-   ```
-   "ma senti.. l'idea di fare aprire finestre..
-    non era giustamente per evitare o diminuire
-    la quantita' di compact?"
-   ```
+   Questi file avevano GIA' molte risposte!
 
-4. **L'INSIGHT FONDAMENTALE**
-   Ho investigato e scoperto che:
-   - Il sistema multi-finestra ESISTE (.swarm/)
-   - Ha comunicazione via FLAG FILES:
-     - .ready -> .working -> .done
-   - spawn-workers.sh apre finestre SEPARATE
-   - Ogni finestra ha contesto PROPRIO
+3. **RISPOSTO ALLE 7 DOMANDE FONDAMENTALI**
 
-   MA io stavo usando Task tool:
-   - I subagent lavorano nel MIO contesto
-   - Il MIO contesto cresce comunque
-   - Se IO faccio compact, perdo la coordinazione
+   | # | Domanda | Risposta |
+   |---|---------|----------|
+   | 1 | Cosa deve sapere worker? | Template TASK completo |
+   | 2 | Cosa torna alla Regina? | Template OUTPUT completo |
+   | 3 | Se worker ha dubbi? | Template DUBBI (NUOVO!) |
+   | 4 | Se Regina fa compact? | Pattern HANDOFF |
+   | 5 | Se worker fa compact? | Template PARTIAL (NUOVO!) |
+   | 6 | Come Guardiana verifica? | Flusso completo |
+   | 7 | Come mantenere MOMENTUM? | AUTO-HANDOFF pattern |
 
-5. **LA SAGGEZZA DI RAFA**
-   ```
-   "spesso capita di una 'piccola' task..
-    diventate gigante perche' la ricerca ha trovato
-    un'informazioni.. e quando vediamo siamo bloccati
-    di nuovo.. compact.. torna.. perde il momentum..."
+4. **FATTO BLEND CON STUDIO_APPLE_STYLE.md**
+   Integrati i pattern migliori:
+   - Triple ACK (ACK_RECEIVED -> ACK_UNDERSTOOD -> ACK_COMPLETED)
+   - Quality Gates (4 livelli con timing)
+   - Circuit Breaker + Retry Backoff
+   - Graceful Shutdown Sequence (7 step)
+   - Dashboard ASCII
+   - Escalation Matrix
+   - 10 Quick Wins prioritizzati (~8 ore totali)
 
-   "con la finestra nuova tu rimane tranquilla
-    riesci ad gestire.. se capita compact riesci
-    anche ad fermarlo.. salva cosa ha bisogno..
-    apre altra finestra.. vai avanti.."
-   ```
+5. **CREATO STUDIO DEFINITIVO**
+   `docs/studio/STUDIO_COMUNICAZIONE_DEFINITIVO.md` (870+ righe!)
 
-6. **LA DECISIONE**
-   FERMIAMO TUTTO.
-   Prima di continuare Sprint 9.2, dobbiamo STUDIARE la comunicazione:
-   - Come DOVREBBE funzionare?
-   - Come funziona ORA via .swarm/?
-   - Cosa manca?
-   - Come lo facciamo nel NOSTRO modo?
+   Questo file consolida TUTTO. E' IL RIFERIMENTO.
+
+6. **CHECKPOINT PER SICUREZZA**
+   Rafa: "io me preocupo di iniziare implementare e arrivare un compact.."
+   L'ironia! Stavamo creando ANTI-COMPACT e rischiavamo compact!
+   Quindi: CHECKPOINT prima di implementare.
 
 ---
 
-## LA DIFFERENZA FONDAMENTALE
-
-| Approccio | Contesto | Se compact? | Comunicazione |
-|-----------|----------|-------------|---------------|
-| **Task tool** | UNICO (mio) | Perdo tutto | Automatica (interno) |
-| **Multi-finestra** | SEPARATI | Solo 1 perde | Via .swarm/ (file) |
-
----
-
-## COSA ESISTE GIA'
-
-### Sistema .swarm/
-
-```
-.swarm/
-├── tasks/       # Task queue con flag files (.ready, .working, .done)
-├── handoff/     # Comunicazione su compact
-├── status/      # Stato finestre attive
-├── logs/        # Log operazioni
-├── prompts/     # Prompt per worker
-├── runners/     # Script di avvio worker
-└── acks/        # Triple ACK (NUOVO!)
-```
-
-### Flusso Definito
-
-```
-1. REGINA crea .swarm/tasks/TASK_XXX.md
-2. REGINA fa: touch TASK_XXX.ready
-3. WORKER (altra finestra) vede .ready
-4. WORKER prende task, fa: touch TASK_XXX.working
-5. WORKER completa, scrive _output.md
-6. WORKER fa: touch TASK_XXX.done
-7. REGINA legge output
-```
-
-### spawn-workers.sh
-
-Apre finestre Terminal con Claude pre-configurato:
-- `./scripts/swarm/spawn-workers.sh --backend`
-- `./scripts/swarm/spawn-workers.sh --frontend --tester`
-- `./scripts/swarm/spawn-workers.sh --all`
-
----
-
-## QUICK WINS CREATI (Sessione 69)
-
-Anche se abbiamo deciso di fermarci, sono stati creati:
-
-**Script Bash:**
-- `scripts/swarm/anti-compact.sh` (~227 righe)
-- `scripts/swarm/triple-ack.sh` (~233 righe)
-- `scripts/swarm/shutdown-sequence.sh` (~300 righe)
-
-**Pattern Python:**
-- `src/patterns/circuit_breaker.py`
-- `src/patterns/retry_backoff.py`
-- `src/patterns/structured_logging.py`
-
-Questi sono UTILITY utili, ma NON risolvono il problema della comunicazione.
-
----
-
-## COSA DOBBIAMO FARE (PROSSIMO STEP)
+## COSA DEVI FARE (PROSSIMO STEP)
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   STUDIO COMUNICAZIONE MULTI-FINESTRA                           |
+|   IMPLEMENTARE I 4 CRITICI                                       |
 |                                                                  |
-|   LE DOMANDE DA ESPLORARE:                                       |
+|   1. Template DUBBI                                              |
+|      File: .swarm/tasks/TEMPLATE_DUBBI.md                       |
+|      Definito in: STUDIO_COMUNICAZIONE_DEFINITIVO.md            |
 |                                                                  |
-|   1. Quando Regina delega, cosa DEVE sapere il worker?          |
-|   2. Quando worker finisce, cosa DEVE tornare alla Regina?      |
-|   3. Se worker ha dubbi, come chiede?                           |
-|   4. Se Regina fa compact, come si riprende?                    |
-|   5. Se worker fa compact, cosa succede?                        |
-|   6. Come Guardiana verifica da altra finestra?                 |
-|   7. Come si mantiene il MOMENTUM anche con compact?            |
+|   2. Template PARTIAL                                            |
+|      File: .swarm/tasks/TEMPLATE_PARTIAL.md                     |
+|      Per quando worker fa compact                                |
 |                                                                  |
-|   IL NOSTRO STYLE:                                               |
-|   - Semplice (niente complessita' inutile)                      |
-|   - Sicuro (niente perdita di lavoro)                           |
-|   - Fluido (niente blocchi, sempre avanti)                      |
-|   - Umano (comunicazione chiara, non robotica)                  |
+|   3. Spawn Guardiane                                             |
+|      File: scripts/swarm/spawn-workers.sh                       |
+|      Aggiungere: --guardiana-qualita, --guardiana-ops, etc.     |
+|                                                                  |
+|   4. Triple ACK flag files                                       |
+|      .ack_received, .ack_understood, .done                      |
+|                                                                  |
+|   TEMPO STIMATO: ~2 ore                                          |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
+
+### DOPO i 4 Critici
+
+5. Shutdown sequence script
+6. Quality Gates checklist
+7. Test con caso REALE (spawn finestre, crea task, verifica flusso)
+
+---
+
+## IL DOCUMENTO DI RIFERIMENTO
+
+```
+docs/studio/STUDIO_COMUNICAZIONE_DEFINITIVO.md (870+ righe!)
+
+Contiene TUTTO:
+- Le 7 domande con risposte complete
+- Template per ogni scenario
+- Pattern Apple Style integrati
+- 10 Quick Wins prioritizzati
+- Architettura completa
+- Flusso con compact handling
+```
+
+**SE HAI DUBBI -> LEGGI QUEL FILE!**
+
+---
+
+## COSA ESISTE GIA (funziona!)
+
+| Cosa | Status |
+|------|--------|
+| 16 Agents in ~/.claude/agents/ | FUNZIONANTE |
+| Sistema Memoria SQLite | FUNZIONANTE |
+| 10 Hooks globali | FUNZIONANTE |
+| SWARM_RULES v1.4.0 | FUNZIONANTE |
+| Pattern Catalog (3 pattern) | FUNZIONANTE |
+| GUIDA_COMUNICAZIONE v2.0 | FUNZIONANTE |
+| Flusso Guardiane (3 livelli) | TESTATO! |
+| HARDTESTS Comunicazione (3/3) | PASSATI! |
+| HARDTESTS Swarm V3 (4/4) | PASSATI! |
+| spawn-workers.sh | LA MAGIA! |
+| task_manager.py | FUNZIONANTE |
+| .swarm/ struttura | FUNZIONANTE |
 
 ---
 
@@ -222,9 +196,10 @@ TU SEI LA REGINA (Opus) - Coordina, DELEGA, MAI edit diretti!
 
 | File | Cosa Contiene |
 |------|---------------|
+| `docs/studio/STUDIO_COMUNICAZIONE_DEFINITIVO.md` | **IL RIFERIMENTO!** 870+ righe |
+| `docs/studio/STUDIO_APPLE_STYLE.md` | 8 Domande Sacre + Quick Wins |
 | `NORD.md` | Dove siamo, prossimo obiettivo |
 | `docs/roadmap/FASE_9_APPLE_STYLE.md` | ROADMAP completa FASE 9 |
-| `docs/studio/STUDIO_APPLE_STYLE.md` | 615 righe di pattern ricercati |
 | `.swarm/README.md` | Come funziona il sistema multi-finestra |
 | `scripts/swarm/spawn-workers.sh` | LA MAGIA! Apre finestre worker |
 | `SWARM_RULES.md` | Le 12 regole dello sciame |
@@ -235,8 +210,8 @@ TU SEI LA REGINA (Opus) - Coordina, DELEGA, MAI edit diretti!
 
 ```
 Branch:   main
-Versione: v27.3.0
-Stato:    FASE 9 - PAUSA per studio comunicazione
+Versione: v27.4.0
+Stato:    FASE 9 - Studio completato, pronta per implementare
 ```
 
 ---
@@ -246,11 +221,11 @@ Stato:    FASE 9 - PAUSA per studio comunicazione
 ```
 "Lavoriamo in pace! Senza casino! Dipende da noi!"
 
-"Noi abbiamo il mondo davanti a noi. Dobbiamo vederlo." - Rafa
-
-"Prima capire BENE, poi implementare."
-
 "Nulla e' complesso - solo non ancora studiato!"
+
+"L'abbiamo STUDIATO! Ora IMPLEMENTIAMO!"
+
+"L'ironia e' FORTISSIMA - stiamo creando ANTI-COMPACT e rischiamo compact!" - Rafa
 
 "Fatto BENE > Fatto VELOCE"
 
@@ -272,7 +247,8 @@ Stato:    FASE 9 - PAUSA per studio comunicazione
 | 66 | LA MAGIA! | spawn-workers.sh |
 | 67 | CODE REVIEW + ROADMAP | 9.0/10 + FASE 9! |
 | 68 | SPRINT 9.1 RICERCA | 8 Domande RISPOSTE! |
-| **69** | **INSIGHT COMUNICAZIONE** | **Task tool vs Multi-finestra!** |
+| 69 | INSIGHT COMUNICAZIONE | Task tool vs Multi-finestra! |
+| **70** | **STUDIO COMPLETATO!** | **BLEND fatto! 870+ righe!** |
 
 ---
 
@@ -281,45 +257,17 @@ Stato:    FASE 9 - PAUSA per studio comunicazione
 |                                                                  |
 |   CARA PROSSIMA CERVELLA                                         |
 |                                                                  |
-|   Non correre a implementare!                                    |
+|   Lo studio e' FATTO.                                            |
+|   Il documento di riferimento e' PRONTO.                        |
+|   I pattern sono DEFINITI.                                       |
 |                                                                  |
-|   Rafa ha chiesto di FERMARSI e STUDIARE.                       |
-|   La comunicazione tra finestre e' il CUORE del sistema.        |
-|   Senza capirla bene, tutto il resto e' inutile.                |
+|   Ora implementa i 4 CRITICI:                                    |
+|   1. Template DUBBI                                              |
+|   2. Template PARTIAL                                            |
+|   3. Spawn Guardiane                                             |
+|   4. Triple ACK                                                  |
 |                                                                  |
-|   "Noi abbiamo il mondo davanti a noi.                          |
-|    Dobbiamo vederlo."                                           |
-|                                                                  |
-|   Studia. Pensa. Chiedi a Rafa. POI implementa.                |
-|                                                                  |
-+------------------------------------------------------------------+
-```
-
----
-
-## PROMPT_RIPRESA 10000%!
-
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   Questo file e' scritto con CURA.                              |
-|                                                                  |
-|   La prossima Cervella non sa NULLA.                            |
-|   Questo file e' la sua UNICA memoria.                          |
-|                                                                  |
-|   Per questo:                                                    |
-|   - FILO DEL DISCORSO (perche', non solo cosa)                  |
-|   - LE PAROLE DI RAFA (le sue frasi esatte!)                    |
-|   - DECISIONI PRESE (cosa abbiamo scelto e perche')             |
-|   - PROSSIMI STEP (cosa fare dopo)                              |
-|   - FILE IMPORTANTI (dove trovare tutto)                        |
-|                                                                  |
-|   L'insight di questa sessione e' FONDAMENTALE:                 |
-|   Task tool != Multi-finestra!                                   |
-|   Dobbiamo STUDIARE prima di continuare.                        |
-|                                                                  |
-|   "Non e' sempre come immaginiamo...                            |
-|    ma alla fine e' il 100000%!"                                 |
+|   "L'abbiamo STUDIATO! Ora IMPLEMENTIAMO!"                      |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -330,12 +278,12 @@ Stato:    FASE 9 - PAUSA per studio comunicazione
 
 *"Nulla e' complesso - solo non ancora studiato!"*
 
-*"Noi abbiamo il mondo davanti a noi. Dobbiamo vederlo."*
+*E noi l'abbiamo STUDIATO!*
 
 Cervella & Rafa
 
 ---
 
-**VERSIONE:** v27.3.0
-**SESSIONE:** 69
+**VERSIONE:** v27.4.0
+**SESSIONE:** 70
 **DATA:** 3 Gennaio 2026

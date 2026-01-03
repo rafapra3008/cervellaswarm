@@ -6,7 +6,7 @@
 
 ## OVERVIEW
 
-> **Aggiornato:** 3 Gennaio 2026 - Sessione 69 - INSIGHT COMUNICAZIONE + STUDIO MULTI-FINESTRA! (v27.3.0)
+> **Aggiornato:** 3 Gennaio 2026 - Sessione 70 - STUDIO COMUNICAZIONE COMPLETATO! BLEND FATTO! (v27.4.0)
 
 ```
 +------------------------------------------------------------------+
@@ -300,6 +300,49 @@ APRI -> ASPETTA -> COMUNICA -> TESTA -> VERIFICA -> CHIUDI
 ---
 
 ## CHANGELOG
+
+### 3 Gennaio 2026 (Sessione 70) - STUDIO COMUNICAZIONE COMPLETATO! BLEND FATTO!
+
+**LO STUDIO E' FINITO!**
+
+Abbiamo studiato e consolidato TUTTO:
+- Letto 2000+ righe di documentazione esistente
+- Risposto alle 7 domande fondamentali della comunicazione
+- Fatto BLEND con STUDIO_APPLE_STYLE.md
+- Creato STUDIO_COMUNICAZIONE_DEFINITIVO.md (870+ righe!)
+
+**LE 7 DOMANDE RISPOSTE:**
+1. Cosa deve sapere worker? Template TASK completo
+2. Cosa torna alla Regina? Template OUTPUT completo
+3. Se worker ha dubbi? Template DUBBI creato (NUOVO!)
+4. Se Regina fa compact? Pattern HANDOFF definito
+5. Se worker fa compact? Template PARTIAL creato (NUOVO!)
+6. Come Guardiana verifica? Flusso completo
+7. Come mantenere MOMENTUM? AUTO-HANDOFF pattern
+
+**PATTERN INTEGRATI (da Apple Style):**
+- Triple ACK (ACK_RECEIVED -> ACK_UNDERSTOOD -> ACK_COMPLETED)
+- Quality Gates (4 livelli)
+- Circuit Breaker + Retry Backoff
+- Graceful Shutdown Sequence
+- Dashboard ASCII
+- Escalation Matrix
+
+**PRONTO PER IMPLEMENTARE:**
+1. Template DUBBI (.swarm/tasks/)
+2. Template PARTIAL (worker compact)
+3. Spawn Guardiane (spawn-workers.sh)
+4. Triple ACK flag files
+
+**FRASE DELLA SESSIONE:**
+- "L'ironia e' FORTISSIMA - stiamo creando ANTI-COMPACT e rischiamo compact!" - Rafa
+
+**FILE CREATO:**
+- docs/studio/STUDIO_COMUNICAZIONE_DEFINITIVO.md (870+ righe!)
+
+**Versione:** 27.4.0 (MINOR: Studio Comunicazione completato + BLEND)
+
+---
 
 ### 3 Gennaio 2026 (Sessione 69) - INSIGHT COMUNICAZIONE MULTI-FINESTRA!
 
