@@ -6,7 +6,7 @@
 
 ## OVERVIEW
 
-> **Aggiornato:** 3 Gennaio 2026 - Sessione 59 - PROMPT CORTI! (v23.0.0)
+> **Aggiornato:** 3 Gennaio 2026 - Sessione 59 - SMART MODE! (v24.0.0)
 
 ```
 +------------------------------------------------------------------+
@@ -244,30 +244,39 @@
 
 ## CHANGELOG
 
-### 3 Gennaio 2026 (Sessione 59) - PROMPT CORTI!
+### 3 Gennaio 2026 (Sessione 59) - SMART MODE!
 
-**OTTIMIZZAZIONE PROMPT COMPLETATA!**
+**LAVORARE SMART, NON HARD!**
 
 ```
-"Il prompt e un RITUALE, non documentazione!" - Le Ragazze
+"Scrivi swarm e il contesto si carica da solo!" - La Magia
 ```
 
-**COMPLETATO:**
-- Recap script terminale (alias swarm/miracollo/contabilita) - OK!
-- Recap hooks (8 attivi) e triggers (5 attivi) - OK!
+**PARTE 1 - PROMPT CORTI:**
 - Consultato 3 api in parallelo: Researcher + Docs + Marketing
-- Riscritto PROMPT_SWARM_MODE.md completamente
-- Da 307 righe a 145 righe (file)
-- Da 50 righe a 12 righe (prompt)
-- Da ~1000 token a ~150 token (85% risparmio!)
-- Eliminata 95% ridondanza
+- Riscritto PROMPT_SWARM_MODE.md: da 50 righe a 12
+- 85% risparmio token!
+- Scoperta: "Il prompt e un RITUALE, non documentazione!"
 
-**SCOPERTA:**
-- Il prompt NON e documentazione, e un RITUALE
-- Sandwich emotivo: apertura + operativo + chiusura
-- Solo 3 LIVELLI RISCHIO sono info essenziali
+**PARTE 2 - HOOKS SMART:**
+- Analizzato cosa ha fatto Miracollo (COSTITUZIONE, hooks locali)
+- Creato session_start_swarm.py per CervellaSwarm
+- Creato session_start_contabilita.py per Contabilita
+- Tutti i progetti ora caricano contesto automaticamente!
 
-**Versione:** 23.0.0 (MAJOR: Prompt ottimizzati!)
+**HOOKS CREATI:**
+| Progetto | Hook | Focus |
+|----------|------|-------|
+| CervellaSwarm | session_start_swarm.py | Regina + 3 Livelli |
+| Miracollo | session_start_miracollo.py | COSTITUZIONE + FORTEZZA |
+| Contabilita | session_start_contabilita.py | FORTEZZA MODE |
+
+**SCOPERTE:**
+- Il prompt e un RITUALE, non documentazione
+- Lavorare SMART significa: meno lavoro manuale, piu automazione
+- Tutti i progetti devono essere allineati
+
+**Versione:** 24.0.0 (MAJOR: Smart Mode - Hooks per tutti!)
 
 ---
 

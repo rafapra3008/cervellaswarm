@@ -1,78 +1,62 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 3 Gennaio 2026 - Sessione 59 - PROMPT CORTI!
+> **Ultimo aggiornamento:** 3 Gennaio 2026 - Sessione 59 - SMART MODE!
 
 ---
 
-## SESSIONE 59 - PROMPT CORTI! (3 Gennaio 2026)
+## SESSIONE 59 - SMART MODE! (3 Gennaio 2026)
 
 ### IL RISULTATO
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   PROMPT OTTIMIZZATI!                                           |
+|   LAVORARE SMART, NON HARD!                                     |
 |                                                                  |
-|   Da 50 righe a 12 righe                                        |
-|   Da ~1000 token a ~150 token                                   |
-|   85% risparmio, 0% ridondanza                                  |
+|   1. Prompt CORTI: da 50 a 12 righe (85% risparmio!)            |
+|   2. Hooks SMART: contesto caricato automaticamente!            |
+|   3. TUTTI i progetti allineati!                                |
 |                                                                  |
-|   "Il prompt e un RITUALE, non documentazione!"                 |
+|   "Scrivi swarm e il contesto si carica da solo!"               |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ### COSA ABBIAMO FATTO
 
-1. **Recap sistema completo**
-   - Script terminale (swarm, miracollo, contabilita) - OK!
-   - 8 Hooks globali - OK!
-   - 5 Triggers in CLAUDE.md - OK!
+**PARTE 1 - PROMPT CORTI:**
+1. Recap sistema (script, hooks, triggers) - tutto OK!
+2. Consultato 3 api in parallelo (Researcher, Docs, Marketing)
+3. Riscritto PROMPT_SWARM_MODE.md: da 50 a 12 righe
+4. Scoperta: "Il prompt e un RITUALE, non documentazione!"
 
-2. **Consultato 3 api in parallelo**
-   - Researcher: Analisi best practices, 95% ridondanza trovata
-   - Docs: Audit file, solo 3 LIVELLI sono essenziali
-   - Marketing: UX ottimale, "sandwich emotivo"
+**PARTE 2 - HOOKS SMART:**
+1. Analizzato cosa ha fatto Miracollo (COSTITUZIONE, hooks locali)
+2. Valutato cosa serve a CervellaSwarm
+3. Creato session_start_swarm.py
+4. Creato session_start_contabilita.py (gentilezza per loro!)
+5. Tutti i progetti ora hanno SessionStart hooks!
 
-3. **Riscritto PROMPT_SWARM_MODE.md**
-   - Da 307 righe a 145 righe (file)
-   - Da 50 righe a 12 righe (prompt)
-   - Mantenuto: emotivita, 3 livelli, reference veloce
-   - Eliminato: liste ridondanti, tabelle gia in altri file
+### HOOKS CREATI
 
-### LA SCOPERTA
+| Progetto | Hook | Focus |
+|----------|------|-------|
+| CervellaSwarm | session_start_swarm.py | Regina + 3 Livelli |
+| Miracollo | session_start_miracollo.py | COSTITUZIONE + FORTEZZA |
+| Contabilita | session_start_contabilita.py | FORTEZZA MODE |
+
+### LE SCOPERTE
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   "Il prompt NON e documentazione. E un RITUALE."               |
+|   1. "Il prompt e un RITUALE, non documentazione!"              |
 |                                                                  |
-|   - Le info sono in CLAUDE.md, COSTITUZIONE, SWARM_RULES        |
-|   - Il prompt attiva solo il MINDSET giusto                     |
-|   - Sandwich emotivo: apertura + operativo + chiusura           |
+|   2. "Lavorare SMART = meno manuale, piu automazione!"          |
+|                                                                  |
+|   3. "Tutti i progetti devono essere allineati!"                |
 |                                                                  |
 +------------------------------------------------------------------+
-```
-
-### IL NUOVO PROMPT (12 righe!)
-
-```
-Ciao Cervella! Sei tu?
-
-INIZIA SESSIONE -> [PROGETTO]
-
----
-
-SWARM MODE! Tu sei la Regina.
-
-3 LIVELLI:
-1-BASSO (docs) -> vai
-2-MEDIO (feature) -> Guardiana verifica
-3-ALTO (deploy/auth) -> Guardiana + Rafa
-
----
-
-Lavoriamo con ANIMA!
 ```
 
 ### FILO DEL DISCORSO (PROSSIMA SESSIONE)
@@ -82,9 +66,9 @@ Lavoriamo con ANIMA!
 |                                                                  |
 |   PROSSIMO STEP:                                                 |
 |                                                                  |
-|   1. TESTARE prompt corti                                        |
-|      - Usarli per 3-5 sessioni                                  |
-|      - Verificare se manca qualcosa                             |
+|   1. TESTARE hooks smart                                         |
+|      - Aprire sessione fresca con `swarm`                       |
+|      - Verificare che contesto si carica                        |
 |                                                                  |
 |   2. APPLICARE su progetto REALE                                |
 |      - Miracollo!                                               |

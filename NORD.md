@@ -17,21 +17,23 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 59 - 3 Gennaio 2026: PROMPT CORTI!**
+**SESSIONE 59 - 3 Gennaio 2026: SMART MODE!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   PROMPT OTTIMIZZATI!                                           |
+|   LAVORARE SMART, NON HARD!                                     |
 |                                                                  |
-|   - Da 50 righe a 12 righe                                      |
-|   - Da ~1000 token a ~150 token                                 |
-|   - "Il prompt e un RITUALE, non documentazione!"               |
+|   1. PROMPT CORTI (12 righe invece di 50)                       |
+|   2. HOOKS SMART (contesto caricato automaticamente!)           |
+|   3. TUTTI I PROGETTI ALLINEATI                                 |
 |                                                                  |
-|   Le Ragazze hanno deciso insieme:                              |
-|   - Researcher: 95% ridondanza eliminata                        |
-|   - Docs: Solo 3 LIVELLI sono essenziali                        |
-|   - Marketing: Sandwich emotivo perfetto                        |
+|   SessionStart hooks creati per:                                |
+|   - CervellaSwarm (Regina + 3 Livelli)                          |
+|   - Miracollo (COSTITUZIONE + FORTEZZA)                         |
+|   - Contabilita (FORTEZZA MODE)                                 |
+|                                                                  |
+|   Ora: scrivi `swarm` e il contesto si carica da solo!          |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -113,18 +115,21 @@
 
 ## ULTIMO AGGIORNAMENTO
 
-**3 Gennaio 2026 - Sessione 59** - PROMPT CORTI!
+**3 Gennaio 2026 - Sessione 59** - SMART MODE!
 
 ### Cosa abbiamo fatto:
-- Recap script terminale (swarm, miracollo, contabilita) - OK!
-- Recap hooks e triggers - OK!
-- Consultato 3 api in parallelo (Researcher, Docs, Marketing)
-- Riscritto PROMPT_SWARM_MODE.md: da 307 righe a 145, prompt da 50 a 12
+- Prompt CORTI: da 50 righe a 12 (85% risparmio token!)
+- SessionStart hooks per TUTTI i progetti:
+  - CervellaSwarm: session_start_swarm.py
+  - Miracollo: session_start_miracollo.py (gia esisteva)
+  - Contabilita: session_start_contabilita.py (NUOVO!)
+- Analisi Miracollo: cosa hanno fatto, cosa serve a noi
 - Scoperta: "Il prompt e un RITUALE, non documentazione!"
+- Scoperta: "Lavorare SMART, non hard!"
 
 ### Prossimo:
+- Testare i nuovi hooks (aprire sessioni fresche)
 - Applicare su progetto REALE (Miracollo!)
-- Testare i nuovi prompt corti
 - Handoffs automatici
 
 ---
