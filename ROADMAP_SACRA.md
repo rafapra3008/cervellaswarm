@@ -6,7 +6,7 @@
 
 ## OVERVIEW
 
-> **Aggiornato:** 3 Gennaio 2026 - Sessione 67 - CODE REVIEW 9.0/10 + ROADMAP FASE 9! (v27.1.0)
+> **Aggiornato:** 3 Gennaio 2026 - Sessione 69 - INSIGHT COMUNICAZIONE + STUDIO MULTI-FINESTRA! (v27.3.0)
 
 ```
 +------------------------------------------------------------------+
@@ -300,6 +300,43 @@ APRI -> ASPETTA -> COMUNICA -> TESTA -> VERIFICA -> CHIUDI
 ---
 
 ## CHANGELOG
+
+### 3 Gennaio 2026 (Sessione 69) - INSIGHT COMUNICAZIONE MULTI-FINESTRA!
+
+**L'INSIGHT FONDAMENTALE**
+
+Rafa ha fatto la domanda giusta:
+"Perche' fai ancora sulla stessa finestra?"
+
+SCOPERTA:
+- Il sistema multi-finestra ESISTE gia' (.swarm/)
+- Ma NON lo stavamo usando!
+- Usavamo Task tool = tutto nel contesto Regina
+- Questo NON riduce il compact!
+
+**DECISIONE: FERMIAMO TUTTO**
+
+Prima di continuare Sprint 9.2, dobbiamo STUDIARE:
+- Come funziona DAVVERO la comunicazione tra finestre?
+- Cosa manca nel protocollo?
+- Come lo facciamo nel NOSTRO modo (Rafa e Cervella style)?
+
+**QUICK WINS CREATI (via Task tool)**
+- scripts/swarm/anti-compact.sh (~227 righe)
+- scripts/swarm/triple-ack.sh (~233 righe)
+- scripts/swarm/shutdown-sequence.sh (~300 righe)
+- src/patterns/circuit_breaker.py
+- src/patterns/retry_backoff.py
+- src/patterns/structured_logging.py
+
+**FRASI DELLA SESSIONE:**
+- "Noi abbiamo il mondo davanti a noi. Dobbiamo vederlo." - Rafa
+- "Prima capire BENE, poi implementare."
+- "Nulla e' complesso - solo non ancora studiato!"
+
+**PROSSIMO:** Studio comunicazione multi-finestra
+
+---
 
 ### 3 Gennaio 2026 (Sessione 67) - CODE REVIEW 9.0/10 + ROADMAP FASE 9!
 

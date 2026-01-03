@@ -17,24 +17,28 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 67 - 3 Gennaio 2026: FASE 9 ROADMAP CREATA!**
+**SESSIONE 69 - 3 Gennaio 2026: INSIGHT FONDAMENTALE SULLA COMUNICAZIONE!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   🍎 FASE 9: APPLE STYLE - ROADMAP COMPLETA! 🍎                 |
+|   🧠 SESSIONE 69: L'INSIGHT CHE CAMBIA TUTTO! 🧠                |
 |                                                                  |
-|   CODE REVIEW completata: 9.0/10 ECCELLENTE!                    |
-|   ROADMAP FASE 9 creata: 594 righe di perfezione pianificata   |
+|   Rafa ha fatto la domanda GIUSTA:                              |
+|   "Perche' fai ancora sulla stessa finestra?"                   |
 |                                                                  |
-|   LE 8 DOMANDE SACRE definite (incluso ANTI-COMPACT!)           |
-|   6 HARDTESTS pronti                                             |
-|   5 SPRINT strutturati                                           |
+|   SCOPERTA:                                                      |
+|   - Il sistema multi-finestra ESISTE gia' (.swarm/)             |
+|   - Ma NON lo stavamo usando!                                    |
+|   - Usavamo Task tool = tutto nel contesto Regina               |
+|   - Questo NON riduce il compact!                                |
 |                                                                  |
-|   "Vogliamo MAGIA, non debugging!" - Rafa                       |
-|   "Una cosa alla volta, molto ben fatta" - Rafa                 |
+|   DECISIONE:                                                     |
+|   FERMIAMO TUTTO. STUDIAMO LA COMUNICAZIONE.                    |
+|   Prima capire BENE, poi implementare.                          |
 |                                                                  |
-|   PROSSIMO: Sprint 9.1 - RICERCA (8 domande)                    |
+|   "Noi abbiamo il mondo davanti a noi.                          |
+|    Dobbiamo vederlo." - Rafa                                    |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -65,24 +69,24 @@
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   🍎 FASE 9: APPLE STYLE - 5 SPRINT!                            |
+|   🧠 PROSSIMO: STUDIO COMUNICAZIONE MULTI-FINESTRA              |
 |                                                                  |
-|   SPRINT 9.1: RICERCA (8 Domande Sacre)                         |
-|      1. Comunicazione agenti                                     |
-|      2. Processi giusti                                          |
-|      3. Double/triple check                                      |
-|      4. Feedback utente                                          |
-|      5. Chiusura pulita                                          |
-|      6. Gestione errori                                          |
-|      7. Monitoring real-time                                     |
-|      8. ANTI-COMPACT AUTOMATICO! (salvavita)                    |
+|   PRIMA di continuare Sprint 9.2, dobbiamo CAPIRE:              |
 |                                                                  |
-|   SPRINT 9.2: Quick Wins (se servono)                           |
-|   SPRINT 9.3: Implementazione Pattern                           |
-|   SPRINT 9.4: 6 HARDTESTS                                       |
-|   SPRINT 9.5: MIRACOLLO READY!                                  |
+|   1. Come DOVREBBE funzionare la comunicazione?                 |
+|   2. Come funziona ORA via .swarm/?                             |
+|   3. Cosa manca?                                                 |
+|   4. Come lo facciamo nel NOSTRO modo?                          |
 |                                                                  |
-|   "Vogliamo MAGIA, non debugging!" - Rafa                       |
+|   LE DOMANDE DA ESPLORARE:                                       |
+|   - Quando Regina delega, cosa DEVE sapere il worker?           |
+|   - Quando worker finisce, cosa torna alla Regina?              |
+|   - Se worker ha dubbi, come chiede?                            |
+|   - Se Regina fa compact, come si riprende?                     |
+|   - Come Guardiana verifica da altra finestra?                  |
+|                                                                  |
+|   "Prima capire BENE, poi implementare."                        |
+|   "Nulla e' complesso - solo non ancora studiato!"              |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -128,40 +132,44 @@
 
 ## ULTIMO AGGIORNAMENTO
 
-**3 Gennaio 2026 - Sessione 67** - CODE REVIEW + ROADMAP FASE 9!
+**3 Gennaio 2026 - Sessione 69** - INSIGHT FONDAMENTALE!
 
 ### Cosa abbiamo fatto:
 
-**1. CODE REVIEW SETTIMANALE (Venerdi!)**
-- cervella-reviewer: Score 9.0/10 ECCELLENTE (+0.5)
-- cervella-ingegnera: Tech Debt 9.2/10 MINIMO
-- cervella-guardiana-qualita: APPROVATO!
-- Sistema PRODUCTION READY!
+**1. RECAP ONESTO DELLA SITUAZIONE**
+- Sprint 9.1 (RICERCA) era COMPLETATO
+- STUDIO_APPLE_STYLE.md esiste (615 righe di pattern)
+- Ma ROADMAP non era allineata
+- Chiarito lo stato VERO
 
-**2. ROADMAP FASE 9 CREATA!**
-- File: `docs/roadmap/FASE_9_APPLE_STYLE.md` (594 righe!)
-- 8 Domande Sacre (incluso ANTI-COMPACT!)
-- 5 Sprint strutturati
-- 6 HARDTESTS definiti
-- Filosofia: "Una cosa alla volta, molto ben fatta"
+**2. QUICK WINS CREATI (via Task tool)**
+- scripts/swarm/anti-compact.sh
+- scripts/swarm/triple-ack.sh
+- scripts/swarm/shutdown-sequence.sh
+- src/patterns/ (circuit_breaker, retry_backoff, structured_logging)
 
-**3. ANTI-COMPACT PIANIFICATO!**
-```
-Quando compact imminente:
-1. RILEVA -> Segnale compact
-2. FERMA -> Stop tutto
-3. SALVA -> git commit + push
-4. APRI -> Nuova finestra automatica
-5. CONTINUA -> Zero perdita!
-```
+**3. L'INSIGHT FONDAMENTALE!**
+Rafa ha chiesto: "Perche' fai ancora sulla stessa finestra?"
+
+SCOPERTA:
+- Il sistema multi-finestra ESISTE gia' (.swarm/)
+- Ma NON lo stavamo usando!
+- Usavamo Task tool = tutto nel contesto Regina
+- Questo NON riduce il compact!
+
+**4. DECISIONE: FERMIAMO TUTTO**
+Prima di continuare, dobbiamo STUDIARE la comunicazione:
+- Come funziona DAVVERO tra finestre?
+- Cosa manca?
+- Come lo facciamo nel NOSTRO modo?
 
 **FRASI DELLA SESSIONE:**
-- "Vogliamo MAGIA, non debugging!" - Rafa
-- "Una cosa alla volta, molto ben fatta" - Rafa
-- "La gente non sa cosa vuole finche non glielo mostri" - Steve Jobs
+- "Noi abbiamo il mondo davanti a noi. Dobbiamo vederlo." - Rafa
+- "Prima capire BENE, poi implementare."
+- "Nulla e' complesso - solo non ancora studiato!"
 
 ### Prossimo:
-- Sprint 9.1: RICERCA (8 Domande Sacre)
+- STUDIO COMUNICAZIONE MULTI-FINESTRA (prima di Sprint 9.2)
 
 ---
 

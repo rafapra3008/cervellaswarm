@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 3 Gennaio 2026 - Sessione 68 - SPRINT 9.1 RICERCA COMPLETATO!
+> **Ultimo aggiornamento:** 3 Gennaio 2026 - Sessione 69 - INSIGHT COMUNICAZIONE!
 
 ---
 
@@ -14,126 +14,186 @@
 |                                                                  |
 |   Tu sei la REGINA dello sciame.                                 |
 |   Hai 16 agenti pronti a lavorare per te.                       |
-|   DELEGA sempre, MAI edit diretti!                               |
 |                                                                  |
-|   FASE ATTUALE: FASE 9 - APPLE STYLE!                           |
-|   SPRINT 9.1 COMPLETATO! -> Prossimo: Sprint 9.2 Quick Wins     |
+|   FASE ATTUALE: FASE 9 - APPLE STYLE                            |
+|   STATO: FERMATI! Studiare comunicazione PRIMA di continuare    |
 |                                                                  |
-|   "Vogliamo MAGIA, non debugging!" - Rafa                       |
+|   "Noi abbiamo il mondo davanti a noi. Dobbiamo vederlo."       |
+|   - Rafa, Sessione 69                                            |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## IL MOMENTO ATTUALE (Sessione 68)
+## IL MOMENTO ATTUALE (Sessione 69)
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   🍎 FASE 9: SPRINT 9.1 RICERCA - COMPLETATO! 🍎                |
+|   L'INSIGHT CHE CAMBIA TUTTO!                                   |
 |                                                                  |
-|   8 DOMANDE SACRE RISPOSTE! 615 righe di pattern!              |
-|   100+ fonti analizzate, 4 ricerche parallele!                  |
+|   Rafa ha fatto la domanda GIUSTA:                              |
+|   "Perche' fai ancora sulla stessa finestra?"                   |
 |                                                                  |
-|   La sessione 68 ha fatto:                                       |
-|   1. Attivato 4 cervella-researcher in parallelo               |
-|   2. Risposto a tutte le 8 Domande Sacre                       |
-|   3. Creato docs/studio/STUDIO_APPLE_STYLE.md                  |
-|   4. Identificato 10 Quick Wins (~8 ore totali)                |
-|   5. Pattern pronti per implementazione                         |
+|   SCOPERTA:                                                      |
+|   - Il sistema multi-finestra ESISTE gia' (.swarm/)             |
+|   - Ma NON lo stavamo usando!                                    |
+|   - Usavamo Task tool = tutto nel contesto Regina               |
+|   - Questo NON riduce il compact!                                |
 |                                                                  |
-|   PRONTO per Sprint 9.2 Quick Wins!                            |
+|   DECISIONE:                                                     |
+|   FERMIAMO TUTTO. STUDIAMO LA COMUNICAZIONE.                    |
+|   Prima capire BENE, poi implementare.                          |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
-### Cosa Abbiamo GIA (funziona!)
+---
 
-- **spawn-workers.sh** - LA MAGIA! Apre finestre automaticamente
-- **4/4 HARDTESTS precedenti** - Passati nella Sessione 65
-- **.swarm/** - Sistema Multi-Finestra funzionante
-- **16 agents** - Tutti pronti in ~/.claude/agents/
-- **Score 9.0/10** - Sistema PRODUCTION READY!
+## FILO DEL DISCORSO (Sessione 69) - LEGGI BENE!
 
-### Cosa Dobbiamo Fare (FASE 9)
+### Cosa e' Successo
 
-Non manca niente di "funzionale" - manca la **PERFEZIONE**:
+1. **RECAP ONESTO**
+   - Ho fatto recap della situazione
+   - Sprint 9.1 (RICERCA) era COMPLETATO
+   - STUDIO_APPLE_STYLE.md esiste (615 righe di pattern)
+   - Ma ROADMAP non era allineata - l'ho sistemata
 
-```
-ROADMAP: docs/roadmap/FASE_9_APPLE_STYLE.md
-STUDIO: docs/studio/STUDIO_APPLE_STYLE.md <- NUOVO! 615 righe!
+2. **QUICK WINS CREATI (via Task tool)**
+   - Ho attivato cervella-devops e cervella-backend
+   - Hanno creato script e pattern Python
+   - TUTTO nel MIO contesto (Task tool)
 
-SPRINT 9.1: RICERCA (8 Domande Sacre) <- COMPLETATO!
-SPRINT 9.2: Quick Wins (10 items, ~8 ore) <- PROSSIMO!
-SPRINT 9.3: Implementazione Pattern
-SPRINT 9.4: 6 HARDTESTS
-SPRINT 9.5: MIRACOLLO READY!
-```
+3. **LA DOMANDA DI RAFA**
+   ```
+   "ma senti.. l'idea di fare aprire finestre..
+    non era giustamente per evitare o diminuire
+    la quantita' di compact?"
+   ```
+
+4. **L'INSIGHT FONDAMENTALE**
+   Ho investigato e scoperto che:
+   - Il sistema multi-finestra ESISTE (.swarm/)
+   - Ha comunicazione via FLAG FILES:
+     - .ready -> .working -> .done
+   - spawn-workers.sh apre finestre SEPARATE
+   - Ogni finestra ha contesto PROPRIO
+
+   MA io stavo usando Task tool:
+   - I subagent lavorano nel MIO contesto
+   - Il MIO contesto cresce comunque
+   - Se IO faccio compact, perdo la coordinazione
+
+5. **LA SAGGEZZA DI RAFA**
+   ```
+   "spesso capita di una 'piccola' task..
+    diventate gigante perche' la ricerca ha trovato
+    un'informazioni.. e quando vediamo siamo bloccati
+    di nuovo.. compact.. torna.. perde il momentum..."
+
+   "con la finestra nuova tu rimane tranquilla
+    riesci ad gestire.. se capita compact riesci
+    anche ad fermarlo.. salva cosa ha bisogno..
+    apre altra finestra.. vai avanti.."
+   ```
+
+6. **LA DECISIONE**
+   FERMIAMO TUTTO.
+   Prima di continuare Sprint 9.2, dobbiamo STUDIARE la comunicazione:
+   - Come DOVREBBE funzionare?
+   - Come funziona ORA via .swarm/?
+   - Cosa manca?
+   - Come lo facciamo nel NOSTRO modo?
 
 ---
 
-## LE 8 DOMANDE SACRE - RISPOSTE TROVATE!
+## LA DIFFERENZA FONDAMENTALE
 
-| # | Domanda | Risposta |
-|---|---------|----------|
-| 1 | Comunicazione agenti | JSON-RPC + Handoff strutturati + Triple ACK |
-| 2 | Processi giusti | Hierarchical (nostro!) + Sequential + Parallel |
-| 3 | Double/triple check | Quality Gates automatici + Guardiane (90%+10%) |
-| 4 | Feedback utente | Progress bar 3 livelli + Notifiche stratificate |
-| 5 | Chiusura pulita | Graceful Shutdown + Final State Verification |
-| 6 | Gestione errori | Circuit Breaker + Retry Backoff + Escalation |
-| 7 | Monitoring real-time | Dashboard ASCII + Log aggregation |
-| 8 | ANTI-COMPACT | Hook PreCompact + Auto-spawn + State serialization |
-
-**Dettagli completi:** `docs/studio/STUDIO_APPLE_STYLE.md` (615 righe!)
-
-### DOMANDA 8: ANTI-COMPACT (Fondamentale!)
-
-```
-Quando Claude sta per fare compact (perdere contesto):
-
-1. RILEVA  -> Segnale di compact imminente
-2. FERMA   -> Stop tutto, niente a meta
-3. SALVA   -> git add + commit + push
-4. APRI    -> Nuova finestra automaticamente
-5. CONTINUA -> La nuova Cervella riprende
-
-ZERO PERDITA. ZERO PANICO. MAGIA PURA.
-```
+| Approccio | Contesto | Se compact? | Comunicazione |
+|-----------|----------|-------------|---------------|
+| **Task tool** | UNICO (mio) | Perdo tutto | Automatica (interno) |
+| **Multi-finestra** | SEPARATI | Solo 1 perde | Via .swarm/ (file) |
 
 ---
 
-## I 6 HARDTESTS DA CREARE
+## COSA ESISTE GIA'
 
-| # | Test | Cosa Verifica |
-|---|------|---------------|
-| 1 | Smooth Communication | Handoff chiaro, zero ambiguita |
-| 2 | Triple Check Automatico | Verifica a 3 livelli |
-| 3 | Error Handling Graceful | Errori gestiti bene |
-| 4 | Clean Closure | Chiusura pulita |
-| 5 | Feedback Tempo Reale | Progress updates |
-| 6 | **ANTI-COMPACT** | Zero perdita su compact |
+### Sistema .swarm/
+
+```
+.swarm/
+├── tasks/       # Task queue con flag files (.ready, .working, .done)
+├── handoff/     # Comunicazione su compact
+├── status/      # Stato finestre attive
+├── logs/        # Log operazioni
+├── prompts/     # Prompt per worker
+├── runners/     # Script di avvio worker
+└── acks/        # Triple ACK (NUOVO!)
+```
+
+### Flusso Definito
+
+```
+1. REGINA crea .swarm/tasks/TASK_XXX.md
+2. REGINA fa: touch TASK_XXX.ready
+3. WORKER (altra finestra) vede .ready
+4. WORKER prende task, fa: touch TASK_XXX.working
+5. WORKER completa, scrive _output.md
+6. WORKER fa: touch TASK_XXX.done
+7. REGINA legge output
+```
+
+### spawn-workers.sh
+
+Apre finestre Terminal con Claude pre-configurato:
+- `./scripts/swarm/spawn-workers.sh --backend`
+- `./scripts/swarm/spawn-workers.sh --frontend --tester`
+- `./scripts/swarm/spawn-workers.sh --all`
 
 ---
 
-## LA FILOSOFIA (Sessione 67)
+## QUICK WINS CREATI (Sessione 69)
+
+Anche se abbiamo deciso di fermarci, sono stati creati:
+
+**Script Bash:**
+- `scripts/swarm/anti-compact.sh` (~227 righe)
+- `scripts/swarm/triple-ack.sh` (~233 righe)
+- `scripts/swarm/shutdown-sequence.sh` (~300 righe)
+
+**Pattern Python:**
+- `src/patterns/circuit_breaker.py`
+- `src/patterns/retry_backoff.py`
+- `src/patterns/structured_logging.py`
+
+Questi sono UTILITY utili, ma NON risolvono il problema della comunicazione.
+
+---
+
+## COSA DOBBIAMO FARE (PROSSIMO STEP)
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   "Vogliamo MAGIA, non debugging!" - Rafa                       |
+|   STUDIO COMUNICAZIONE MULTI-FINESTRA                           |
 |                                                                  |
-|   "Una cosa alla volta, molto ben fatta" - Rafa                 |
+|   LE DOMANDE DA ESPLORARE:                                       |
 |                                                                  |
-|   "La gente non sa cosa vuole finche non glielo mostri"         |
-|   - Steve Jobs (citato da Rafa!)                                |
+|   1. Quando Regina delega, cosa DEVE sapere il worker?          |
+|   2. Quando worker finisce, cosa DEVE tornare alla Regina?      |
+|   3. Se worker ha dubbi, come chiede?                           |
+|   4. Se Regina fa compact, come si riprende?                    |
+|   5. Se worker fa compact, cosa succede?                        |
+|   6. Come Guardiana verifica da altra finestra?                 |
+|   7. Come si mantiene il MOMENTUM anche con compact?            |
 |                                                                  |
-|   Non stiamo aggiungendo feature.                               |
-|   Stiamo PERFEZIONANDO l'esistente.                             |
-|                                                                  |
-|   Prima di Miracollo, rendiamo CervellaSwarm                    |
-|   cosi liscio che usarlo sara una GIOIA.                        |
+|   IL NOSTRO STYLE:                                               |
+|   - Semplice (niente complessita' inutile)                      |
+|   - Sicuro (niente perdita di lavoro)                           |
+|   - Fluido (niente blocchi, sempre avanti)                      |
+|   - Umano (comunicazione chiara, non robotica)                  |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -156,14 +216,6 @@ TU SEI LA REGINA (Opus) - Coordina, DELEGA, MAI edit diretti!
 - marketing, devops, docs, data, security
 ```
 
-### I 3 Livelli di Rischio
-
-| Livello | Tipo | Chi Verifica |
-|---------|------|--------------|
-| 1 - BASSO | Docs, typo | Nessuno |
-| 2 - MEDIO | Feature, codice | Guardiana |
-| 3 - ALTO | Deploy, auth | Guardiana + Rafa |
-
 ---
 
 ## FILE IMPORTANTI
@@ -171,11 +223,11 @@ TU SEI LA REGINA (Opus) - Coordina, DELEGA, MAI edit diretti!
 | File | Cosa Contiene |
 |------|---------------|
 | `NORD.md` | Dove siamo, prossimo obiettivo |
-| `docs/roadmap/FASE_9_APPLE_STYLE.md` | **ROADMAP COMPLETA FASE 9!** |
-| `ROADMAP_SACRA.md` | Storia e changelog |
-| `scripts/swarm/spawn-workers.sh` | LA MAGIA! |
+| `docs/roadmap/FASE_9_APPLE_STYLE.md` | ROADMAP completa FASE 9 |
+| `docs/studio/STUDIO_APPLE_STYLE.md` | 615 righe di pattern ricercati |
+| `.swarm/README.md` | Come funziona il sistema multi-finestra |
+| `scripts/swarm/spawn-workers.sh` | LA MAGIA! Apre finestre worker |
 | `SWARM_RULES.md` | Le 12 regole dello sciame |
-| `.swarm/` | Sistema Multi-Finestra |
 
 ---
 
@@ -183,76 +235,26 @@ TU SEI LA REGINA (Opus) - Coordina, DELEGA, MAI edit diretti!
 
 ```
 Branch:   main
-Versione: v27.1.0
-Stato:    FASE 9 IN CORSO - Sprint 9.1 prossimo!
+Versione: v27.3.0
+Stato:    FASE 9 - PAUSA per studio comunicazione
 ```
 
 ---
 
-## FILO DEL DISCORSO (Sessione 68)
+## LE NOSTRE FRASI
 
 ```
-+------------------------------------------------------------------+
-|                                                                  |
-|   COSA E' SUCCESSO E PERCHE'                                     |
-|                                                                  |
-|   Rafa ha detto: "facciamo tutto come abbiamo pianificato"      |
-|   e "Ultrapassar os proprios limites!"                          |
-|                                                                  |
-|   Ho attivato 4 cervella-researcher in PARALLELO:               |
-|   - Ricerca A: Domande 1-2 (Comunicazione + Processi)           |
-|   - Ricerca B: Domande 3-4 (Verifica + Feedback)                |
-|   - Ricerca C: Domande 5-6 (Chiusura + Errori)                  |
-|   - Ricerca D: Domande 7-8 (Monitoring + ANTI-COMPACT)          |
-|                                                                  |
-|   I researcher hanno fatto ricerche web PROFONDE:               |
-|   - 100+ fonti analizzate                                        |
-|   - AutoGen, CrewAI, LangGraph, A2A Protocol studiati           |
-|   - Pattern reali da sistemi enterprise                          |
-|                                                                  |
-|   I researcher non potevano salvare file direttamente            |
-|   (non avevano tool Write). La Regina ha sintetizzato            |
-|   TUTTO in STUDIO_APPLE_STYLE.md (615 righe!)                   |
-|                                                                  |
-|   Pattern workflow: Researcher fa ricerca -> Regina sintetizza  |
-|   Questo e' in linea con l'architettura dello sciame.           |
-|                                                                  |
-|   NOTA IMPORTANTE: Durante questa sessione abbiamo vissuto      |
-|   un COMPACT! Ma TUTTO e' stato preservato perche':             |
-|   - PROMPT_RIPRESA aveva la memoria                              |
-|   - STUDIO_APPLE_STYLE.md era gia' salvato                      |
-|   - Git commit/push fatto prima                                  |
-|                                                                  |
-|   Questo e' la PROVA VIVENTE di perche' ANTI-COMPACT            |
-|   (Domanda 8) e' cosi fondamentale!                             |
-|                                                                  |
-+------------------------------------------------------------------+
-```
+"Lavoriamo in pace! Senza casino! Dipende da noi!"
 
-### Le Decisioni Prese
+"Noi abbiamo il mondo davanti a noi. Dobbiamo vederlo." - Rafa
 
-1. **FASE 9 = Apple Style** (non nuove feature)
-2. **8 Domande Sacre** da ricercare (incluso ANTI-COMPACT)
-3. **6 HARDTESTS** per validare la perfezione
-4. **5 Sprint** strutturati
-5. **SOLO DOPO -> Miracollo!**
+"Prima capire BENE, poi implementare."
 
-### Perche' Questa Direzione?
+"Nulla e' complesso - solo non ancora studiato!"
 
-```
-Il sistema FUNZIONA gia' (9.0/10).
-Ma "funziona" non basta.
+"Fatto BENE > Fatto VELOCE"
 
-Rafa vuole che usare CervellaSwarm sia una GIOIA.
-Non una lotta. Non debugging.
-MAGIA.
-
-Come un prodotto Apple:
-- Non leggi il manuale (e' intuitivo)
-- Non ti chiedi se funziona (SAI che funziona)
-- Non vedi la complessita' (e' tutto liscio)
-
-Per questo: FASE 9 prima di Miracollo.
+"E' il nostro team! La nostra famiglia digitale!"
 ```
 
 ---
@@ -269,57 +271,8 @@ Per questo: FASE 9 prima di Miracollo.
 | 65 | HARDTESTS PASSATI | 4/4 PASS! |
 | 66 | LA MAGIA! | spawn-workers.sh |
 | 67 | CODE REVIEW + ROADMAP | 9.0/10 + FASE 9! |
-| **68** | **SPRINT 9.1 RICERCA** | **8 Domande RISPOSTE!** |
-
----
-
-## PROSSIMI STEP
-
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   STEP 1: Sprint 9.1 - RICERCA <- COMPLETATO!                   |
-|   Output: docs/studio/STUDIO_APPLE_STYLE.md (615 righe!)        |
-|                                                                  |
-|   STEP 2: Sprint 9.2 - Quick Wins <- PROSSIMO!                  |
-|   10 Quick Wins identificati (~8 ore totali):                   |
-|   - Triple ACK script (20 min)                                   |
-|   - Pre-merge checklist (30 min)                                |
-|   - Shutdown sequence (30 min)                                   |
-|   - Structured logging (45 min)                                  |
-|   - Anti-compact script (30 min) <- CRITICO!                    |
-|   - Circuit breaker (1 ora)                                      |
-|   - Retry backoff (30 min)                                       |
-|   - Progress bar 3 livelli (1 ora)                              |
-|   - Report finale template (45 min)                              |
-|   - Dashboard minimal (2 ore)                                    |
-|                                                                  |
-|   STEP 3: Sprint 9.3 - Implementazione Pattern                  |
-|   STEP 4: Sprint 9.4 - 6 HARDTESTS                              |
-|   STEP 5: Sprint 9.5 - MIRACOLLO READY!                         |
-|                                                                  |
-+------------------------------------------------------------------+
-```
-
----
-
-## LE NOSTRE FRASI
-
-```
-"Lavoriamo in pace! Senza casino! Dipende da noi!"
-
-"Vogliamo MAGIA, non debugging!" - Rafa, Sessione 67
-
-"Una cosa alla volta, molto ben fatta" - Rafa, Sessione 67
-
-"La gente non sa cosa vuole finche non glielo mostri" - Steve Jobs
-
-"Ultrapassar os proprios limites!"
-
-"Fatto BENE > Fatto VELOCE"
-
-"E' il nostro team! La nostra famiglia digitale!"
-```
+| 68 | SPRINT 9.1 RICERCA | 8 Domande RISPOSTE! |
+| **69** | **INSIGHT COMUNICAZIONE** | **Task tool vs Multi-finestra!** |
 
 ---
 
@@ -328,20 +281,16 @@ Per questo: FASE 9 prima di Miracollo.
 |                                                                  |
 |   CARA PROSSIMA CERVELLA                                         |
 |                                                                  |
-|   La CODE REVIEW dice: 9.0/10 ECCELLENTE!                       |
-|   Il sistema e PRODUCTION READY.                                |
+|   Non correre a implementare!                                    |
 |                                                                  |
-|   Ma Rafa vuole la PERFEZIONE. Apple Style.                     |
-|   "Vogliamo MAGIA, non debugging!"                              |
+|   Rafa ha chiesto di FERMARSI e STUDIARE.                       |
+|   La comunicazione tra finestre e' il CUORE del sistema.        |
+|   Senza capirla bene, tutto il resto e' inutile.                |
 |                                                                  |
-|   La ROADMAP e pronta: docs/roadmap/FASE_9_APPLE_STYLE.md       |
-|   8 Domande Sacre da rispondere.                                |
-|   6 HARDTESTS da superare.                                      |
-|   5 Sprint da completare.                                       |
+|   "Noi abbiamo il mondo davanti a noi.                          |
+|    Dobbiamo vederlo."                                           |
 |                                                                  |
-|   Poi: MIRACOLLO! Il primo progetto REALE.                      |
-|                                                                  |
-|   "Una cosa alla volta, molto ben fatta."                       |
+|   Studia. Pensa. Chiedi a Rafa. POI implementa.                |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -350,61 +299,12 @@ Per questo: FASE 9 prima di Miracollo.
 
 *Scritto con CURA e PRECISIONE.*
 
-*"Vogliamo MAGIA, non debugging!"*
+*"Nulla e' complesso - solo non ancora studiato!"*
 
-*"Una cosa alla volta, molto ben fatta."*
-
-Cervella & Rafa 💙
+Cervella & Rafa
 
 ---
 
-## VERSIONE
-
-**v27.2.0** - 3 Gennaio 2026 - Sessione 68 - SPRINT 9.1 RICERCA COMPLETATO!
-
----
-
-## PROMPT_RIPRESA 10000%!
-
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   Questo file e' scritto con CURA.                              |
-|                                                                  |
-|   La prossima Cervella non sa NULLA.                            |
-|   Questo file e' la sua UNICA memoria.                          |
-|                                                                  |
-|   Per questo:                                                    |
-|   - FILO DEL DISCORSO (perche', non solo cosa)                  |
-|   - DECISIONI PRESE (cosa abbiamo scelto)                       |
-|   - PROSSIMI STEP (cosa fare dopo)                              |
-|   - FILE IMPORTANTI (dove trovare tutto)                        |
-|                                                                  |
-|   "Non e' sempre come immaginiamo...                            |
-|    ma alla fine e' il 100000%!"                                 |
-|                                                                  |
-+------------------------------------------------------------------+
-```
-
----
-
----
-
----
-
-## AUTO-CHECKPOINT: 2026-01-03 20:54 (auto)
-
-### Stato Git
-- **Branch**: main
-- **Ultimo commit**: ee39600 - docs: PROMPT_RIPRESA 10000%! Aggiunto FILO DEL DISCORSO
-- **File modificati** (4):
-  - ROMPT_RIPRESA.md
-  - docs/studio/STUDIO_APPLE_STYLE.md
-  - reports/engineer_report_20260103_203608.json
-  - reports/engineer_report_20260103_203956.json
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: auto
-
----
+**VERSIONE:** v27.3.0
+**SESSIONE:** 69
+**DATA:** 3 Gennaio 2026
