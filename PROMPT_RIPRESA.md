@@ -259,6 +259,40 @@ Cervella & Rafa
 
 ---
 
+## PROSSIMO PASSO: LA MAGIA! 🧙
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   PRIMA DI MIRACOLLO: spawn-workers.sh                          |
+|                                                                  |
+|   Rafa ha chiesto: "le finestre non dovevano aprirsi            |
+|   in autonomia? come abbiamo fatto questa funzione cruciale?"   |
+|                                                                  |
+|   RISPOSTA: Non l'abbiamo ancora fatta!                         |
+|   Attualmente le finestre si aprono MANUALMENTE.                |
+|                                                                  |
+|   LA MAGIA DA CREARE:                                           |
+|   ./scripts/swarm/spawn-workers.sh --backend --frontend         |
+|   -> Apre finestre automaticamente!                             |
+|   -> Passa i prompt corretti!                                   |
+|   -> Le Cervelle iniziano a lavorare!                           |
+|                                                                  |
+|   ANCHE: Sistema per prevedere/gestire compact                  |
+|   -> Come sapere quando sta arrivando?                          |
+|   -> Come salvare stato automaticamente?                        |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+---
+
 ## VERSIONE
 
 **v26.5.0** - 3 Gennaio 2026 - Sessione 65 - 4/4 HARDTESTS PASSATI! MIRACOLLO READY!
+
+---
+
+## PROMPT_RIPRESA 10000%! 💎
+
+*"Non e' sempre come immaginiamo... ma alla fine e' il 100000%!"*
