@@ -17,26 +17,25 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 75 - 4 Gennaio 2026: FASE 9 APPLE STYLE COMPLETATA AL 90%!**
+**SESSIONE 78 - 4 Gennaio 2026: FASE 9 APPLE STYLE 98% + PULIZIA!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 75: MEGA SUCCESSO!                                   |
+|   SESSIONE 77-78: CONSOLIDAMENTO!                               |
 |                                                                  |
-|   spawn-workers.sh v1.3.0 - FINITURE APPLE:                     |
-|   - Auto-close (exit automatico quando finiscono)               |
-|   - Notifiche macOS (Glass sound)                               |
-|   - DNA Guardiane con SPAWN DINAMICO                            |
+|   SESSIONE 77:                                                   |
+|   - REGOLA 13: Multi-finestra > Task tool (SWARM_RULES v1.5.0)  |
+|   - anti-compact.sh: nuova finestra OBBLIGATORIA                |
+|   - spawn-workers.sh v1.4.0: notifica PRIMA di exit             |
+|   - FIX COSTITUZIONE.md: file reale (no symlink iCloud)         |
 |                                                                  |
-|   TEST RESULTS:                                                  |
-|   - Quick Wins: 10/10 PASS                                      |
-|   - HARDTESTS: 6/6 PASS                                         |
-|   - MEGA TEST GOLD: 5 worker paralleli - PASS!                  |
+|   SESSIONE 78:                                                   |
+|   - PROMPT_RIPRESA pulito: 873 -> 232 righe!                    |
+|   - NORD.md aggiornato                                          |
+|   - Pronte per 3 HARDTEST finali                                |
 |                                                                  |
-|   Guardiana ha fatto review e APPROVATO!                        |
-|                                                                  |
-|   CERVELLASWARM APPLE STYLE!                                    |
+|   POI: MIRACOLLO!                                                |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -50,7 +49,7 @@
 | 16 Agents in ~/.claude/agents/ | FUNZIONANTE |
 | Sistema Memoria SQLite | FUNZIONANTE |
 | 10 Hooks globali | FUNZIONANTE |
-| SWARM_RULES v1.4.0 | FUNZIONANTE |
+| SWARM_RULES v1.5.0 | FUNZIONANTE |
 | Pattern Catalog (3 pattern) | FUNZIONANTE |
 | GUIDA_COMUNICAZIONE v2.0 | FUNZIONANTE |
 | Flusso Guardiane (3 livelli) | TESTATO! |
@@ -58,7 +57,7 @@
 | HARDTESTS Swarm V3 (4/4) | PASSATI! |
 | Studio Cervello vs Swarm | FUNZIONANTE |
 | .swarm/ sistema Multi-Finestra | FUNZIONANTE |
-| spawn-workers.sh v1.3.0 | APPLE STYLE! Auto-close + Notifiche + Spawn Dinamico |
+| spawn-workers.sh v1.4.0 | APPLE STYLE! Auto-close + Notifiche + Spawn Dinamico |
 | Template DUBBI | FUNZIONANTE! |
 | Template PARTIAL | FUNZIONANTE! |
 | Triple ACK system | FUNZIONANTE! |
@@ -133,38 +132,34 @@
 
 ## ULTIMO AGGIORNAMENTO
 
-**4 Gennaio 2026 - Sessione 75** - APPLE STYLE COMPLETO!
+**4 Gennaio 2026 - Sessione 78** - CONSOLIDAMENTO + PULIZIA!
 
-### Cosa abbiamo fatto (Sessione 75):
+### Cosa abbiamo fatto (Sessione 77-78):
 
-**MEGA SUCCESSO - SISTEMA TESTATO AL 100%!**
+**CONSOLIDAMENTO E PULIZIA!**
 
-1. **spawn-workers.sh v1.3.0 - FINITURE APPLE:**
-   - Auto-close (exit automatico quando finiscono i task)
-   - Notifiche macOS (Glass sound)
-   - DNA Guardiane con SPAWN DINAMICO
+1. **REGOLA 13: Multi-finestra > Task tool**
+   - "Comodo != Giusto!" - spawn-workers.sh per parallelo REALE
+   - Aggiunta in SWARM_RULES.md v1.5.0
 
-2. **TEST RESULTS - TUTTO PASSA!**
-   - Quick Wins: 10/10 PASS
-   - HARDTESTS Apple Style: 6/6 PASS
-   - MEGA TEST GOLD: 5 worker paralleli - PASS!
+2. **spawn-workers.sh v1.4.0:**
+   - FIX: notifica PRIMA di exit
+   - Prima: exit senza notifica. Ora: notifica && exit
 
-3. **MEGA TEST GOLD - 5 WORKER IN PARALLELO:**
-   - cervella-backend -> calculator.py
-   - cervella-frontend -> Button.tsx
-   - cervella-tester -> test_hello.py
-   - cervella-devops -> health-check.sh
-   - cervella-docs -> API_REFERENCE.md (363 righe!)
+3. **anti-compact.sh migliorato:**
+   - Nuova finestra e' OBBLIGATORIA
+   - Integrato con spawn-workers.sh per prompt automatico
 
-4. **GUARDIANA HA FATTO REVIEW:**
-   - TASK_AS1: APPROVATO (qualita eccellente)
-   - TASK_AS3: APPROVATO (qualita eccellente)
+4. **FIX COSTITUZIONE.md:**
+   - Da symlink iCloud a file reale
+   - Zero problemi di permessi
 
-**FRASI DELLA SESSIONE:**
-- "Il 100000% viene dall'USO, non dalla teoria!"
+5. **PROMPT_RIPRESA pulito:**
+   - Da 873 righe a 232 righe!
+   - Solo l'essenziale
 
 ### Prossimo:
-- Sprint 9.5: Rafa dice "E' LISCIO!"
+- 3 HARDTEST finali (comunicazione, Guardiana, spawn dinamico)
 - MIRACOLLO!
 
 ---
