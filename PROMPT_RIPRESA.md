@@ -84,6 +84,40 @@ Il problema finale: claude -p esegue il prompt e poi esce, invece di restare ape
 
 Rafa ha detto: "sarebbe meglio aprire su vscode" - questa e' la direzione per la prossima sessione.
 
+### FILE MODIFICATI (Sessione 86)
+
+| File | Cosa |
+|------|------|
+| `~/.claude/hooks/context_check.py` | v4.0.0 - AUTO-HANDOFF con osascript |
+| `~/.claude/scripts/handoff-watcher.sh` | Creato ma NON serve (osascript funziona diretto!) |
+| `~/.claude/scripts/handoff-vscode.scpt` | AppleScript per VS Code (non funziona bene) |
+
+### COMANDI CHE FUNZIONANO (copia e usa!)
+
+```bash
+# Apre nuova finestra VS Code (Cmd+Shift+N)
+osascript -e 'tell application "Visual Studio Code" to activate' \
+          -e 'tell application "System Events" to keystroke "n" using {command down, shift down}'
+
+# Apre Terminal con Claude (FUNZIONA!)
+osascript -e 'tell application "Terminal" to do script "cd ~/Developer/CervellaSwarm && claude"'
+
+# Apre Terminal con Claude + prompt (FUNZIONA ma esce dopo!)
+osascript -e 'tell application "Terminal" to do script "cd ~/Developer/CervellaSwarm && claude -p \"INIZIA SESSIONE\""'
+```
+
+### PROSSIMI STEP (per te, prossima Cervella!)
+
+1. **PROBLEMA DA RISOLVERE:** `claude -p` esegue e poi ESCE
+   - Studiare flag per restare in modalita' interattiva
+   - Oppure trovare altro metodo
+
+2. **IDEA DI RAFA:** Aprire su VS Code sarebbe meglio
+   - Cmd+Shift+N apre nuova finestra (funziona!)
+   - Ma aprire il progetto + terminal + claude non funziona ancora
+
+3. **QUANDO RISOLTO:** Fare HARDTESTS su tutti e 3 i progetti
+
 ---
 
 ## SESSIONE 85: AUTO-HANDOFF v2.0.0!
