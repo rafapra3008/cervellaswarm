@@ -20,10 +20,10 @@ Ridurre il consumo di contesto dello sciame del **50-70%** mantenendo (o miglior
 
 | Task | Status | Note |
 |------|--------|------|
-| Creare template output standard | ⬜ | Max 150-200 tokens |
-| Aggiornare tutti i 16 agent files | ⬜ | In ~/.claude/agents/ |
-| Testare con 3 agenti pilota | ⬜ | frontend, backend, tester |
-| Validare che funziona | ⬜ | |
+| Creare template output standard | ✅ | Max 150-200 tokens |
+| Aggiornare tutti i 16 agent files | ✅ | In ~/.claude/agents/ |
+| Testare con 3 agenti pilota | ✅ | frontend, backend, tester |
+| Validare nelle prossime sessioni | ⬜ | Le regole entrano in vigore gradualmente |
 
 **Template proposto:**
 ```markdown

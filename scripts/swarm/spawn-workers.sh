@@ -12,10 +12,11 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 1.4.0
+# Versione: 1.5.0
 # Data: 2026-01-04
 # Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
 # v1.4.0: Fix notifica + exit (notifica PRIMA di exit!)
+# v1.5.0: FIX VERO! Auto-close finestra Terminal tramite TTY!
 # Cervella & Rafa
 # Aggiunto: Supporto Guardiane (Opus)
 
@@ -304,11 +305,45 @@ spawn_worker() {
 
     cat > "$runner_script" << 'RUNNEREOF'
 #!/bin/bash
+# CervellaSwarm Worker Runner
+# v1.5.0: Auto-close finestra Terminal quando Claude termina!
+
+# Salva il TTY di questa finestra per identificarla dopo
+MY_TTY=$(tty)
 RUNNEREOF
     echo "cd ${PROJECT_ROOT}" >> "$runner_script"
     # Prompt iniziale che fa partire il worker automaticamente
     local initial_prompt="Controlla .swarm/tasks/ per task assegnati a te e inizia a lavorare. Se non ci sono task, aspetta istruzioni."
     echo "/Users/rafapra/.nvm/versions/node/v24.11.0/bin/claude --append-system-prompt \"\$(cat ${prompt_file})\" \"${initial_prompt}\"" >> "$runner_script"
+
+    # Aggiungi chiusura automatica finestra Terminal
+    cat >> "$runner_script" << 'CLOSEWINDOWEOF'
+
+# ============================================================================
+# AUTO-CLOSE: Claude terminato - chiudi questa finestra Terminal
+# ============================================================================
+echo ""
+echo "[CervellaSwarm] Claude terminato. Chiudo finestra..."
+
+# Notifica prima di chiudere
+osascript -e 'display notification "Worker terminato, chiudo finestra!" with title "CervellaSwarm" sound name "Glass"' 2>/dev/null
+
+# Chiudi la finestra Terminal che ha questo TTY
+osascript << EOF
+tell application "Terminal"
+    repeat with w in windows
+        repeat with t in tabs of w
+            try
+                if tty of t is "$MY_TTY" then
+                    close w
+                    return
+                end if
+            end try
+        end repeat
+    end repeat
+end tell
+EOF
+CLOSEWINDOWEOF
     chmod +x "$runner_script"
 
     # Apre nuova finestra Terminal eseguendo lo script runner
