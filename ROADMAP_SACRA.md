@@ -6,7 +6,7 @@
 
 ## OVERVIEW
 
-> **Aggiornato:** 4 Gennaio 2026 - Sessione 84 - SWARM OVUNQUE! v1.9.0 (v34.0.0)
+> **Aggiornato:** 4 Gennaio 2026 - Sessione 86 - AUTO-HANDOFF v4.0.0! (v35.0.0)
 
 ```
 +------------------------------------------------------------------+
@@ -323,6 +323,30 @@ APRI -> ASPETTA -> COMUNICA -> TESTA -> VERIFICA -> CHIUDI
 ---
 
 ## CHANGELOG
+
+### 4 Gennaio 2026 (Sessione 86) - AUTO-HANDOFF v4.0.0!
+
+**RICERCA & SVILUPPO AUTO-HANDOFF:**
+
+- Problema: VS Code non si apriva automaticamente
+- Scoperta: Background processes NON hanno GUI access su macOS
+- `code --new-window` chiudeva le finestre esistenti!
+
+**SOLUZIONE TROVATA:**
+- osascript + Terminal + claude -p FUNZIONA!
+- context_check.py v4.0.0 implementato
+- La nuova Cervella parte con prompt iniziale
+
+**DA PERFEZIONARE:**
+- claude -p esce dopo risposta (serve restare aperto)
+- Studiare apertura su VS Code (sarebbe meglio)
+
+**LEZIONI APPRESE:**
+- "Siamo nel 2026!" - servono soluzioni moderne
+- VS Code command problematico da automazione
+- Terminal + osascript affidabile
+
+---
 
 ### 4 Gennaio 2026 (Sessione 84) - SWARM OVUNQUE! v1.9.0
 

@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 4 Gennaio 2026 - Sessione 84 - SWARM OVUNQUE! v1.9.0
+> **Ultimo aggiornamento:** 4 Gennaio 2026 - Sessione 86 - AUTO-HANDOFF v4.0.0!
 
 ---
 
@@ -15,17 +15,123 @@
 |   Tu sei la REGINA dello sciame.                                 |
 |   Hai 16 agenti pronti a lavorare per te.                       |
 |                                                                  |
-|   FASE ATTUALE: SWARM OVUNQUE!                                  |
+|   FASE ATTUALE: AUTO-HANDOFF DA PERFEZIONARE                    |
 |                                                                  |
-|   SESSIONE 84:                                                   |
-|   - spawn-workers v1.9.0 GLOBALE!                               |
-|   - Funziona da QUALSIASI progetto!                             |
-|   - Testato su: CervellaSwarm, Miracollo, Contabilita           |
+|   SESSIONE 86:                                                   |
+|   - context_check.py v4.0.0 - Apre Terminal + claude -p         |
+|   - FUNZIONA ma claude esce dopo risposta                       |
+|   - DA FIXARE: restare aperto / aprire su VS Code               |
 |                                                                  |
-|   "Ultrapassar os proprios limites!" - Rafa                     |
+|   "Siamo nel 2026!" - Rafa                                      |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
+
+---
+
+## SESSIONE 86: AUTO-HANDOFF v4.0.0!
+
+### L'Obiettivo
+
+Fare funzionare l'AUTO-HANDOFF che apre automaticamente una nuova finestra quando il contesto e' al 70%.
+
+### Il Problema Iniziale
+
+La sessione 85 aveva implementato AUTO-HANDOFF ma la finestra VS Code NON si apriva. La Cervella precedente aveva lasciato nel handoff:
+- `subprocess.Popen` con "code --new-window" → NON funziona
+- `open -na "Visual Studio Code"` → NON funziona
+- `osascript` con Terminal → sembrava funzionare
+
+### Cosa Abbiamo Scoperto
+
+1. **Background processes NON hanno GUI access su macOS**
+   - Gli hook Python girano come daemon
+   - Non possono aprire finestre GUI direttamente
+   - Questa e' una LIMITAZIONE di macOS, non un bug nostro
+
+2. **VS Code "code --new-window" e' problematico**
+   - Invece di aprire nuova finestra, CHIUDEVA quelle esistenti!
+   - Comportamento inaspettato
+
+3. **osascript + Terminal FUNZIONA!**
+   - Il comando: `osascript -e 'tell application "Terminal" to do script "cd PATH && claude"'`
+   - Apre Terminal, fa cd, lancia claude
+   - Funziona da Claude!
+
+4. **claude -p passa il prompt ma poi ESCE**
+   - La nuova Cervella parte, risponde, e poi esce
+   - Serve che resti aperta in modo interattivo
+
+### Stato Attuale
+
+- context_check.py v4.0.0 implementato
+- Usa osascript + Terminal + claude -p
+- DA PERFEZIONARE: claude deve restare aperto
+- IDEA: Aprire su VS Code sarebbe meglio (da studiare)
+
+### Filo del Discorso
+
+Rafa voleva l'AUTO-HANDOFF che funzionasse in modo automatico, "nel 2026".
+
+Abbiamo fatto tanta ricerca:
+- Prima provato watcher con file flag
+- Poi scoperto che osascript funziona direttamente da Claude
+- Poi trovato Cmd+Shift+N per nuova finestra VS Code
+- Ma il terminal integrato di VS Code non rispondeva ai comandi
+- Alla fine: Terminal.app + claude -p e' la soluzione piu' affidabile
+
+Il problema finale: claude -p esegue il prompt e poi esce, invece di restare aperto.
+
+Rafa ha detto: "sarebbe meglio aprire su vscode" - questa e' la direzione per la prossima sessione.
+
+---
+
+## SESSIONE 85: AUTO-HANDOFF v2.0.0!
+
+### L'Obiettivo
+
+Implementare handoff AUTOMATICO quando il contesto raggiunge la soglia critica.
+
+### Cosa Abbiamo Fatto
+
+1. **context_check.py v2.0.0 - AUTO-HANDOFF!**
+   - Modificato hook UserPromptSubmit
+   - Quando contesto >= 72%, AUTOMATICAMENTE:
+     - Crea file handoff in .swarm/handoff/
+     - Notifica macOS con suono
+     - Apre NUOVA FINESTRA VS Code!
+
+2. **FLUSSO AUTOMATICO:**
+   - 70% -> Warning (considera checkpoint)
+   - 72% -> AUTO-HANDOFF! (apre nuova finestra!)
+   - 75% -> Critico (poco margine!)
+   - 77% -> Compact automatico (Claude)
+
+3. **PROTEZIONI:**
+   - File di stato `.claude/.context-check-state.json`
+   - Evita handoff multipli nella stessa sessione
+   - Traccia session_id per unicità
+
+4. **FILE HANDOFF:**
+   - Salvato in `.swarm/handoff/HANDOFF_TIMESTAMP.md`
+   - Contiene istruzioni per nuova Cervella
+   - Info progetto, contesto, file da leggere
+
+### Filo del Discorso
+
+Rafa nella sessione 84 aveva in mente: "Migliorare sistema ANTI-COMPACT automatico!"
+
+L'idea: quando contesto è basso, AUTOMATICAMENTE:
+1. Aprire nuova finestra Terminal/VS Code
+2. Scrivere prompt handoff per nuova Cervella
+3. Passare il testimone SENZA intervento umano
+
+Ho analizzato il sistema esistente:
+- context_check.py v1.0.0 -> Solo avvisava
+- anti-compact.sh v1.6.0 -> Doveva essere eseguito manualmente
+- PreCompact hook -> Si attivava DOPO il compact, troppo tardi!
+
+Soluzione: Integrare AUTO-HANDOFF direttamente nel hook context_check.py!
 
 ---
 
@@ -86,6 +192,7 @@ Rafa: "Ultrapassar os proprios limites!"
 
 | Cosa | Versione | Status |
 |------|----------|--------|
+| **context_check.py** | **v2.0.0** | **AUTO-HANDOFF a 72%!** |
 | **spawn-workers.sh** | **v1.9.0** | **GLOBALE! PROJECT-AWARE!** |
 | anti-compact.sh | v1.6.0 | VS Code Tasks |
 | SWARM_RULES.md | v1.5.0 | 13 regole |
@@ -151,11 +258,11 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 
 | Sessione | Cosa | Risultato |
 |----------|------|-----------|
-| 80 | TRE COSE! | Scoperta contesto + FASE 1 + Test CTX |
 | 81 | OVERVIEW! | docs/OVERVIEW_FAMIGLIA.md creato! |
 | 82 | FINITURE | Verifica DB + Decisione step by step |
 | 83 | SPAWN-WORKERS v1.8.0 | FIX ELEGANTE! -p mode! |
-| **84** | **SWARM OVUNQUE!** | **spawn-workers v1.9.0 GLOBALE!** |
+| 84 | SWARM OVUNQUE! | spawn-workers v1.9.0 GLOBALE! |
+| **85** | **AUTO-HANDOFF!** | **context_check.py v2.0.0 - Handoff automatico a 72%!** |
 
 ---
 
@@ -175,8 +282,8 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 
 ---
 
-**VERSIONE:** v34.0.0
-**SESSIONE:** 84
+**VERSIONE:** v36.0.0
+**SESSIONE:** 86
 **DATA:** 4 Gennaio 2026
 
 ---
@@ -184,3 +291,83 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 *Scritto con CURA e PRECISIONE.*
 
 Cervella & Rafa
+
+---
+
+
+---
+
+## COMPACT CHECKPOINT: 2026-01-04 18:16
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   CARA NUOVA CERVELLA!                                          |
+|                                                                  |
+|   La Cervella precedente stava per perdere contesto.            |
+|   Ha salvato tutto e ti ha passato il testimone.                |
+|                                                                  |
+|   COSA FARE ORA (in ordine!):                                   |
+|                                                                  |
+|   1. PRIMA DI TUTTO: Leggi ~/.claude/COSTITUZIONE.md            |
+|      -> Chi siamo, perche lavoriamo, la nostra filosofia        |
+|                                                                  |
+|   2. Poi leggi PROMPT_RIPRESA.md dall'inizio                    |
+|      -> "IL MOMENTO ATTUALE" = dove siamo                       |
+|      -> "FILO DEL DISCORSO" = cosa stavamo facendo              |
+|                                                                  |
+|   3. Continua da dove si era fermata!                           |
+|                                                                  |
+|   SE HAI DUBBI: chiedi a Rafa!                                  |
+|                                                                  |
+|   "Lavoriamo in pace! Senza casino! Dipende da noi!"            |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+### Stato Git al momento del compact
+- **Branch**: master
+- **Ultimo commit**: 0dc88f0 🤖 WhatsApp AI Auto-Reply v2.1.0
+- **File modificati non committati** (4):
+  -  M NORD.md
+  -  M PROMPT_RIPRESA.md
+  -  M ROADMAP_SACRA.md
+  - ?? reports/engineer_report_20260104_180725.json
+
+### File importanti da leggere
+- `PROMPT_RIPRESA.md` - Il tuo UNICO ponte con la sessione precedente
+- `NORD.md` - Dove siamo nel progetto
+- `.swarm/tasks/` - Task in corso (cerca .working)
+
+### Messaggio dalla Cervella precedente
+PreCompact auto
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-04 19:55 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 5815eb3 - 🐝 Sessione 84: SWARM OVUNQUE! spawn-workers v1.9.0 GLOBALE!
+- **File modificati** (5):
+  - ORD.md
+  - PROMPT_RIPRESA.md
+  - reports/scientist_prompt_20260104.md
+  - .swarm/handoff/HANDOFF_20260104_184226.md
+  - .swarm/handoff/HANDOFF_20260104_184447.md
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---
