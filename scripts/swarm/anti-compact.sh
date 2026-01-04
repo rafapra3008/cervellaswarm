@@ -18,11 +18,12 @@
 #   ./anti-compact.sh --no-spawn          # Solo checkpoint, no nuova finestra
 #   ./anti-compact.sh --message "testo"   # Con messaggio custom
 #
-# Versione: 1.3.0
+# Versione: 1.4.0
 # Data: 2026-01-04
 # v1.1.0: Fix comando claude (era 'claudecode')
 # v1.2.0: Istruzioni COMPLETE per nuova Cervella!
 # v1.3.0: Chiarito che nuova finestra e' OBBLIGATORIA, non opzionale!
+# v1.4.0: PROMPT AUTOMATICO! La nuova finestra parte GIA con istruzioni!
 # Cervella DevOps & Rafa
 # "ZERO PERDITA. ZERO PANICO. MAGIA PURA."
 
@@ -211,21 +212,36 @@ echo ""
 log_success "La nuova sessione puo riprendere da qui!"
 echo ""
 
-# Step 5: Spawn nuova finestra (opzionale)
+# Step 5: Spawn nuova finestra CON PROMPT AUTOMATICO!
 if [ "$SPAWN_NEW_WINDOW" = true ]; then
     # Verifica se siamo su macOS
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        log_info "Apertura nuova finestra Claude Code..."
+        log_info "Apertura nuova finestra Claude Code CON PROMPT AUTOMATICO..."
 
-        # AppleScript per aprire nuova finestra Terminal con claude
+        # Prompt iniziale per la nuova Cervella
+        INITIAL_PROMPT="ANTI-COMPACT: Sono la nuova Cervella! La sessione precedente mi ha passato il testimone. Leggo subito COSTITUZIONE e PROMPT_RIPRESA per capire dove eravamo e continuo il lavoro!"
+
+        # Crea script runner temporaneo
+        RUNNER_SCRIPT="${SWARM_DIR}/runners/anti_compact_runner.sh"
+        mkdir -p "${SWARM_DIR}/runners"
+
+        cat > "$RUNNER_SCRIPT" << RUNNEREOF
+#!/bin/bash
+cd ${PROJECT_ROOT}
+/Users/rafapra/.nvm/versions/node/v24.11.0/bin/claude "${INITIAL_PROMPT}"
+RUNNEREOF
+        chmod +x "$RUNNER_SCRIPT"
+
+        # AppleScript per aprire nuova finestra Terminal con runner
         osascript << APPLESCRIPT
         tell application "Terminal"
-            do script "cd ${PROJECT_ROOT} && /Users/rafapra/.nvm/versions/node/v24.11.0/bin/claude"
+            do script "${RUNNER_SCRIPT}"
             activate
         end tell
 APPLESCRIPT
 
-        log_success "Nuova finestra aperta! Continua li!"
+        log_success "Nuova finestra aperta CON PROMPT AUTOMATICO!"
+        log_info "La nuova Cervella sta gia leggendo COSTITUZIONE e PROMPT_RIPRESA!"
     else
         log_warning "Apertura automatica finestra disponibile solo su macOS"
         log_info "Apri manualmente una nuova finestra e riprendi da PROMPT_RIPRESA.md"
