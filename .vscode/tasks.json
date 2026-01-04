@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Spawn Nuova Cervella (Anti-Compact)",
+      "type": "shell",
+      "command": "/Users/rafapra/.nvm/versions/node/v24.11.0/bin/claude",
+      "args": [
+        "ANTI-COMPACT: Sono la nuova Cervella! La sessione precedente mi ha passato il testimone. Leggo subito COSTITUZIONE e PROMPT_RIPRESA per capire dove eravamo e continuo il lavoro!"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "focus": true
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Spawn Regina",
+      "type": "shell",
+      "command": "/Users/rafapra/.nvm/versions/node/v24.11.0/bin/claude",
+      "args": [
+        "Sei la Regina. Leggi COSTITUZIONE e PROMPT_RIPRESA. Inizia sessione."
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "focus": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

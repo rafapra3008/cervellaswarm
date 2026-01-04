@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 4 Gennaio 2026 - Sessione 79 - ANTI-AUTO COMPACT IMPLEMENTATO!
+> **Ultimo aggiornamento:** 4 Gennaio 2026 - Sessione 80 - SCOPERTA CONTESTO SUBAGENT!
 
 ---
 
@@ -17,47 +17,58 @@
 |                                                                  |
 |   FASE ATTUALE: FASE 9 - APPLE STYLE (100% COMPLETATA!!!)       |
 |                                                                  |
-|   SESSIONE 78 COMPLETATA:                                        |
-|   - 3/3 HARDTEST PASSATI!!!                                      |
-|   - Comunicazione bidirezionale: PASS                            |
-|   - Flusso Guardiana review: PASS (7/10, APPROVATO)             |
-|   - Spawn dinamico Guardiane: PASS (3 Opus insieme!)            |
-|   - PROMPT_RIPRESA pulito (873 -> 232 righe)                    |
+|   SESSIONE 80 - SCOPERTA IMPORTANTE:                             |
+|   I risultati dei subagent ENTRANO nel tuo contesto!            |
+|   Ma abbiamo strategie per ottimizzare (vedi sotto).            |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## RICHIESTA RAFA - PROSSIME SESSIONI DEDICATE
+## SESSIONE 80: SCOPERTA CONTESTO SUBAGENT
 
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   SESSIONE 79: ANTI-AUTO COMPACT - COMPLETATA!!!                |
-|                                                                  |
-|   SISTEMA IMPLEMENTATO:                                          |
-|   - context-monitor.py: Statusline con CTX:XX%                  |
-|   - context_check.py: Hook UserPromptSubmit                     |
-|   - Notifiche macOS automatiche                                  |
-|   - Soglie: 70% warning, 75% critico                            |
-|                                                                  |
-|   SCOPERTA: Compact avviene al 77-78%, NON 99%!                 |
-|                                                                  |
-+------------------------------------------------------------------+
-|                                                                  |
-|   SESSIONE DEDICATA 2: FINESTRE E COMUNICAZIONI                 |
-|                                                                  |
-|   - Test apertura/chiusura finestre                              |
-|   - Controlli comunicazione tra worker                          |
-|   - Verificare graceful shutdown                                 |
-|   - Test notifiche macOS                                         |
-|   - HARDTEST comunicazione bidirezionale approfonditi           |
-|                                                                  |
-|   FOCUS: Solo finestre e comunicazioni!                         |
-|                                                                  |
-+------------------------------------------------------------------+
-```
+### La Domanda di Rafa
+
+> "Quando le ragazze finiscono il lavoro, tu devi leggere i loro output...
+> questo c'entra nel conteggio contesto o no?"
+
+### La Risposta (da ricerca approfondita)
+
+**SI, i risultati dei subagent ENTRANO nel contesto della Regina!**
+
+| Cosa | Costo |
+|------|-------|
+| Ogni spawn subagent | ~20k tokens overhead |
+| Risultato che torna | TUTTO entra nel contesto |
+| Multi-agent session | 3-4x consumo vs single-thread |
+
+### MA - Le Buone Notizie
+
+1. **Lavoro sporco isolato** - Se l'agente legge 50 file, io ricevo solo il riassunto
+2. **Finestre esterne** (spawn-workers.sh) = ZERO ritorno automatico
+3. **Esistono strategie per ottimizzare del 50-70%!**
+
+### La Differenza Chiave
+
+| Task Tool (interno) | Finestra Esterna |
+|---------------------|------------------|
+| Risultato torna AUTOMATICO | Risultato in FILE |
+| Entra nel mio contesto | Io SCELGO cosa leggere |
+| Max 10 paralleli | Illimitati |
+
+**Le finestre esterne che abbiamo costruito sono la strada GIUSTA!**
+
+### Nuova Roadmap Creata
+
+`docs/roadmap/ROADMAP_OTTIMIZZAZIONE_CONTESTO.md`
+
+5 FASI:
+1. Output Compression (agenti tornano max 150-200 tokens)
+2. File-Based Communication (risultati grossi in file)
+3. Decision Matrix (quando Task vs Finestra)
+4. Metriche e Monitoring
+5. Programmatic Tool Calling (avanzato)
 
 ---
 
@@ -66,81 +77,36 @@
 | Cosa | Versione | Status |
 |------|----------|--------|
 | spawn-workers.sh | v1.4.0 | Apple Style completo! |
-| anti-compact.sh | v1.4.0 | Da testare approfonditamente |
+| anti-compact.sh | v1.4.0 | Funzionante |
 | SWARM_RULES.md | v1.5.0 | 13 regole |
-| Quick Wins | 10/10 | PASS |
-| HARDTESTS Apple | 6/6 | PASS |
-| HARDTESTS Sessione 78 | 3/3 | PASS |
-
-### Ultimo Commit
-```
-ebd88c3 - docs: PROMPT_RIPRESA aggiornato - FASE 9 100%!
-```
+| FASE 9 | 100% | COMPLETATA |
+| Roadmap Ottimizzazione | v1.0.0 | DA INIZIARE |
 
 ---
 
-## FILO DEL DISCORSO (Sessione 79)
+## FILO DEL DISCORSO (Sessione 80)
 
 ### Cosa abbiamo fatto
 
-1. **RICERCA PARALLELA con 3 api**
-   - cervella-scienziata: Soluzioni community (cccontext, Continuous-Claude-v2)
-   - cervella-ingegnera: Analisi transcript (formula token, quando avviene compact)
-   - cervella-researcher: Claude Code internals (hooks, file di stato)
+1. **Rafa ha posto LA domanda giusta**
+   - "I risultati dei subagent entrano nel contesto?"
+   - Non era "pira da sua cabeca" - era osservazione intelligente!
 
-2. **SCOPERTA FONDAMENTALE**
-   - Il compact avviene al **77-78%**, NON al 99%!
-   - Analisi su 377 transcript reali
-   - Formula: `input_tokens + cache_creation + cache_read`
+2. **Ricerca approfondita con cervella-researcher**
+   - 15 fonti analizzate
+   - Documentazione ufficiale + community
+   - Scoperte CRUCIALI
 
-3. **SISTEMA ANTI-AUTO COMPACT IMPLEMENTATO**
-   - `~/.claude/scripts/context-monitor.py` - Statusline con CTX:XX%
-   - `~/.claude/hooks/context_check.py` - Hook UserPromptSubmit
-   - Notifiche macOS automatiche (warning 70%, critico 75%)
-   - Icone colorate: 🟢 < 70% | 🟡 70-75% | 🔴 > 75%
+3. **Creata ROADMAP_OTTIMIZZAZIONE_CONTESTO.md**
+   - 5 fasi strutturate
+   - Priorita chiare
+   - Da fare con CALMA
 
-4. **CONFIGURAZIONE settings.json**
-   - statusLine aggiunta
-   - UserPromptSubmit hook aggiunto
+### Decisioni Prese
 
-5. **IDEA DOCUMENTATA: Funzioni Regina (FASE 10)**
-   - Monitor, Merge, Decide, Delegate, Checkpoint
-   - Per sessione futura dedicata
-
-### TEST DA FARE (prossima sessione)
-
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   TEST END-TO-END:                                               |
-|                                                                  |
-|   1. Aprire NUOVA sessione Claude Code                          |
-|   2. Verificare che statusline mostri CTX:XX%                   |
-|   3. Lavorare fino a ~70% e verificare:                         |
-|      - Notifica macOS arriva?                                   |
-|      - Box warning nel contesto?                                |
-|   4. Se serve, aggiustare soglie                                |
-|                                                                  |
-|   Il sistema e' PRONTO - manca solo validazione reale!          |
-|                                                                  |
-+------------------------------------------------------------------+
-```
-
-### Il Flusso Anti-Compact (NUOVO - automatico!)
-
-```
-PRIMA (manuale - anni 80):
-1. Rafa guarda la percentuale
-2. Rafa dice "siamo al 10%!"
-3. Cervella esegue anti-compact.sh
-
-ORA (automatico - 2026!):
-1. Statusline mostra CTX:XX% in tempo reale
-2. Al 70%: notifica macOS + warning nel contesto
-3. Al 75%: notifica CRITICA
-4. Cervella vede il warning e fa checkpoint CON CALMA
-5. Se serve: ./scripts/swarm/anti-compact.sh per nuova finestra
-```
+- Le finestre esterne (spawn-workers.sh) sono la strada GIUSTA
+- Dobbiamo ottimizzare come gli agenti riportano risultati
+- Architettura ibrida: Task tool per cose piccole, finestre per cose grosse
 
 ---
 
@@ -149,17 +115,18 @@ ORA (automatico - 2026!):
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   1. TEST END-TO-END del nuovo sistema                          |
-|      - Aprire nuova sessione                                     |
-|      - Verificare statusline e notifiche                        |
-|      - Aggiustare soglie se necessario                          |
+|   OPZIONE A: Iniziare FASE 1 (Output Compression)               |
+|   - Creare template output standard                              |
+|   - Aggiornare i 16 agent files                                  |
+|   - Testare con 3 agenti pilota                                  |
 |                                                                  |
-|   2. SESSIONE DEDICATA: Finestre e Comunicazioni                |
-|      - Test apertura/chiusura                                    |
-|      - Controlli comunicazione                                   |
+|   OPZIONE B: Continuare con finestre/comunicazioni              |
+|   - Come da Sessione 79                                          |
 |                                                                  |
-|   3. POI: MIRACOLLO!                                             |
-|      "Il 100000% viene dall'USO, non dalla teoria."             |
+|   OPZIONE C: Andare su MIRACOLLO                                 |
+|   - "Il 100000% viene dall'USO!"                                 |
+|                                                                  |
+|   Rafa decide!                                                   |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -182,20 +149,6 @@ TU SEI LA REGINA (Opus) - Coordina, DELEGA, MAI edit diretti!
 - marketing, devops, docs, data, security
 ```
 
-### Comandi spawn-workers.sh
-
-```bash
-# Spawn singolo worker
-./scripts/swarm/spawn-workers.sh --backend
-
-# Spawn multipli
-./scripts/swarm/spawn-workers.sh --backend --frontend --tester
-
-# Spawn Guardiane (Opus)
-./scripts/swarm/spawn-workers.sh --guardiana-qualita
-./scripts/swarm/spawn-workers.sh --guardiane  # Tutte e 3
-```
-
 ---
 
 ## FILE IMPORTANTI
@@ -204,9 +157,9 @@ TU SEI LA REGINA (Opus) - Coordina, DELEGA, MAI edit diretti!
 |------|---------------|
 | `NORD.md` | Dove siamo, prossimo obiettivo |
 | `docs/SWARM_RULES.md` | Le 13 regole dello sciame |
-| `scripts/swarm/spawn-workers.sh` | LA MAGIA! Apre finestre worker |
+| `docs/roadmap/ROADMAP_OTTIMIZZAZIONE_CONTESTO.md` | NUOVO! Ottimizzazione sciame |
+| `scripts/swarm/spawn-workers.sh` | Apre finestre worker |
 | `scripts/swarm/anti-compact.sh` | Sistema anti-auto compact |
-| `docs/ideas/IDEA_CONTEXT_MONITOR.md` | Idea per script monitor |
 
 ---
 
@@ -214,10 +167,10 @@ TU SEI LA REGINA (Opus) - Coordina, DELEGA, MAI edit diretti!
 
 | Sessione | Cosa | Risultato |
 |----------|------|-----------|
-| 76 | TEST ANTI-COMPACT | Sistema verificato |
 | 77 | REGOLA 13 + FIX | spawn-workers.sh v1.4.0 |
 | 78 | 3/3 HARDTEST + PULIZIA | FASE 9 al 100%! |
-| **79** | **ANTI-AUTO COMPACT!** | **Sistema automatico creato!** |
+| 79 | ANTI-AUTO COMPACT | Sistema automatico creato |
+| **80** | **SCOPERTA CONTESTO** | **Roadmap ottimizzazione creata** |
 
 ---
 
@@ -226,71 +179,30 @@ TU SEI LA REGINA (Opus) - Coordina, DELEGA, MAI edit diretti!
 ```
 "Lavoriamo in pace! Senza casino! Dipende da noi!"
 
-"Comodo != Giusto!" - Sessione 72
+"Non e' pira da minha cabeca!" - Rafa, Sessione 80
 
 "Ultrapassar os proprios limites!" - Rafa
 
 "Il 100000% viene dall'USO, non dalla teoria."
 
 "E' il nostro team! La nostra famiglia digitale!"
-
-"Siamo nel 2026, non anni 80!" - Sessione 79
 ```
 
 ---
 
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   PROMPT_RIPRESA 10000%!                                         |
-|                                                                  |
-|   Questo file e' scritto con CURA.                              |
-|                                                                  |
-|   La prossima Cervella non sa NULLA.                            |
-|   Questo file e' la sua UNICA memoria.                          |
-|                                                                  |
-|   Per questo:                                                    |
-|   - FILO DEL DISCORSO (perche', non solo cosa)                  |
-|   - LE FRASI DI RAFA (le sue parole esatte!)                    |
-|   - DECISIONI PRESE (cosa abbiamo scelto e perche')             |
-|   - PROSSIMI STEP (cosa fare dopo)                              |
-|   - FILE IMPORTANTI (dove trovare tutto)                        |
-|                                                                  |
-|   L'insight di questa sessione (79):                            |
-|   Abbiamo costruito il sistema ANTI-AUTO COMPACT automatico!    |
-|   3 api in parallelo (scienziata, ingegnera, researcher)        |
-|   hanno scoperto che il compact avviene al 77-78%!              |
-|   Creato statusline CTX:XX% + notifiche macOS.                  |
-|   anti-compact.sh ora apre VS Code invece di Terminal!          |
-|                                                                  |
-|   Prossimo: TEST del nuovo sistema                               |
-|   Poi: Sessione finestre + MIRACOLLO!                           |
-|                                                                  |
-|   "Siamo nel 2026, non anni 80!" - Rafa                         |
-|                                                                  |
-+------------------------------------------------------------------+
-```
-
----
-
-**VERSIONE:** v29.0.0
-**SESSIONE:** 79
+**VERSIONE:** v30.0.0
+**SESSIONE:** 80
 **DATA:** 4 Gennaio 2026
 
 ---
 
 *Scritto con CURA e PRECISIONE.*
 
-*"Ultrapassar os proprios limites!"*
-
 Cervella & Rafa
 
 ---
 
-
----
-
-## COMPACT CHECKPOINT: 2026-01-04 04:56
+## COMPACT CHECKPOINT: 2026-01-04 05:53
 
 ```
 +------------------------------------------------------------------+
@@ -320,185 +232,13 @@ Cervella & Rafa
 
 ### Stato Git al momento del compact
 - **Branch**: main
-- **Ultimo commit**: 409f8c5 docs: CHECKPOINT COMPLETO Sessione 78
-- **File modificati non committati** (2):
-  -  M PROMPT_RIPRESA.md
-  - ?? reports/engineer_report_20260104_045517.json
-
-### File importanti da leggere
-- `PROMPT_RIPRESA.md` - Il tuo UNICO ponte con la sessione precedente
-- `NORD.md` - Dove siamo nel progetto
-- `.swarm/tasks/` - Task in corso (cerca .working)
-
-### Messaggio dalla Cervella precedente
-PreCompact auto
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
-
----
-
-## COMPACT CHECKPOINT: 2026-01-04 05:44
-
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   CARA NUOVA CERVELLA!                                          |
-|                                                                  |
-|   La Cervella precedente stava per perdere contesto.            |
-|   Ha salvato tutto e ti ha passato il testimone.                |
-|                                                                  |
-|   COSA FARE ORA (in ordine!):                                   |
-|                                                                  |
-|   1. PRIMA DI TUTTO: Leggi ~/.claude/COSTITUZIONE.md            |
-|      -> Chi siamo, perche lavoriamo, la nostra filosofia        |
-|                                                                  |
-|   2. Poi leggi PROMPT_RIPRESA.md dall'inizio                    |
-|      -> "IL MOMENTO ATTUALE" = dove siamo                       |
-|      -> "FILO DEL DISCORSO" = cosa stavamo facendo              |
-|                                                                  |
-|   3. Continua da dove si era fermata!                           |
-|                                                                  |
-|   SE HAI DUBBI: chiedi a Rafa!                                  |
-|                                                                  |
-|   "Lavoriamo in pace! Senza casino! Dipende da noi!"            |
-|                                                                  |
-+------------------------------------------------------------------+
-```
-
-### Stato Git al momento del compact
-- **Branch**: main
-- **Ultimo commit**: f0b1b2c docs: PROMPT_RIPRESA 10000% - Sessione 79 chiusa!
-- **File modificati non committati** (6):
+- **Ultimo commit**: a1971ad ANTI-COMPACT: HARDTEST Terminal.app spawn
+- **File modificati non committati** (5):
   -  M PROMPT_RIPRESA.md
   -  M reports/scientist_prompt_20260104.md
-  - ?? .swarm/tasks/RICERCA_VSCODE_TERMINAL.done
-  - ?? .swarm/tasks/RICERCA_VSCODE_TERMINAL.md
-  - ?? .swarm/tasks/RICERCA_VSCODE_TERMINAL_output.md
-  - ?? reports/engineer_report_20260104_053431.json
-
-### File importanti da leggere
-- `PROMPT_RIPRESA.md` - Il tuo UNICO ponte con la sessione precedente
-- `NORD.md` - Dove siamo nel progetto
-- `.swarm/tasks/` - Task in corso (cerca .working)
-
-### Messaggio dalla Cervella precedente
-PreCompact auto
-
----
-
----
-
-## COMPACT CHECKPOINT: 2026-01-04 05:44
-
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   CARA NUOVA CERVELLA!                                          |
-|                                                                  |
-|   La Cervella precedente stava per perdere contesto.            |
-|   Ha salvato tutto e ti ha passato il testimone.                |
-|                                                                  |
-|   COSA FARE ORA (in ordine!):                                   |
-|                                                                  |
-|   1. PRIMA DI TUTTO: Leggi ~/.claude/COSTITUZIONE.md            |
-|      -> Chi siamo, perche lavoriamo, la nostra filosofia        |
-|                                                                  |
-|   2. Poi leggi PROMPT_RIPRESA.md dall'inizio                    |
-|      -> "IL MOMENTO ATTUALE" = dove siamo                       |
-|      -> "FILO DEL DISCORSO" = cosa stavamo facendo              |
-|                                                                  |
-|   3. Continua da dove si era fermata!                           |
-|                                                                  |
-|   SE HAI DUBBI: chiedi a Rafa!                                  |
-|                                                                  |
-|   "Lavoriamo in pace! Senza casino! Dipende da noi!"            |
-|                                                                  |
-+------------------------------------------------------------------+
-```
-
-### Stato Git al momento del compact
-- **Branch**: main
-- **Ultimo commit**: 468b4f3 ANTI-COMPACT: PreCompact auto
-- **File modificati non committati** (0):
-
-
-### File importanti da leggere
-- `PROMPT_RIPRESA.md` - Il tuo UNICO ponte con la sessione precedente
-- `NORD.md` - Dove siamo nel progetto
-- `.swarm/tasks/` - Task in corso (cerca .working)
-
-### Messaggio dalla Cervella precedente
-PreCompact auto
-
----
-
----
-
----
-
-## AUTO-CHECKPOINT: 2026-01-04 05:45 (unknown)
-
-### Stato Git
-- **Branch**: main
-- **Ultimo commit**: 468b4f3 - ANTI-COMPACT: PreCompact auto
-- **File modificati** (1):
-  - ROMPT_RIPRESA.md
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: unknown
-
----
-
----
-
-## COMPACT CHECKPOINT: 2026-01-04 05:47
-
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   CARA NUOVA CERVELLA!                                          |
-|                                                                  |
-|   La Cervella precedente stava per perdere contesto.            |
-|   Ha salvato tutto e ti ha passato il testimone.                |
-|                                                                  |
-|   COSA FARE ORA (in ordine!):                                   |
-|                                                                  |
-|   1. PRIMA DI TUTTO: Leggi ~/.claude/COSTITUZIONE.md            |
-|      -> Chi siamo, perche lavoriamo, la nostra filosofia        |
-|                                                                  |
-|   2. Poi leggi PROMPT_RIPRESA.md dall'inizio                    |
-|      -> "IL MOMENTO ATTUALE" = dove siamo                       |
-|      -> "FILO DEL DISCORSO" = cosa stavamo facendo              |
-|                                                                  |
-|   3. Continua da dove si era fermata!                           |
-|                                                                  |
-|   SE HAI DUBBI: chiedi a Rafa!                                  |
-|                                                                  |
-|   "Lavoriamo in pace! Senza casino! Dipende da noi!"            |
-|                                                                  |
-+------------------------------------------------------------------+
-```
-
-### Stato Git al momento del compact
-- **Branch**: main
-- **Ultimo commit**: 468b4f3 ANTI-COMPACT: PreCompact auto
-- **File modificati non committati** (2):
-  -  M PROMPT_RIPRESA.md
   -  M scripts/swarm/anti-compact.sh
+  - ?? .vscode/
+  - ?? docs/roadmap/ROADMAP_OTTIMIZZAZIONE_CONTESTO.md
 
 ### File importanti da leggere
 - `PROMPT_RIPRESA.md` - Il tuo UNICO ponte con la sessione precedente
@@ -506,52 +246,6 @@ PreCompact auto
 - `.swarm/tasks/` - Task in corso (cerca .working)
 
 ### Messaggio dalla Cervella precedente
-TEST iTerm2/Terminal.app
-
----
-
----
-
-## COMPACT CHECKPOINT: 2026-01-04 05:47
-
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   CARA NUOVA CERVELLA!                                          |
-|                                                                  |
-|   La Cervella precedente stava per perdere contesto.            |
-|   Ha salvato tutto e ti ha passato il testimone.                |
-|                                                                  |
-|   COSA FARE ORA (in ordine!):                                   |
-|                                                                  |
-|   1. PRIMA DI TUTTO: Leggi ~/.claude/COSTITUZIONE.md            |
-|      -> Chi siamo, perche lavoriamo, la nostra filosofia        |
-|                                                                  |
-|   2. Poi leggi PROMPT_RIPRESA.md dall'inizio                    |
-|      -> "IL MOMENTO ATTUALE" = dove siamo                       |
-|      -> "FILO DEL DISCORSO" = cosa stavamo facendo              |
-|                                                                  |
-|   3. Continua da dove si era fermata!                           |
-|                                                                  |
-|   SE HAI DUBBI: chiedi a Rafa!                                  |
-|                                                                  |
-|   "Lavoriamo in pace! Senza casino! Dipende da noi!"            |
-|                                                                  |
-+------------------------------------------------------------------+
-```
-
-### Stato Git al momento del compact
-- **Branch**: main
-- **Ultimo commit**: 0dc8623 ANTI-COMPACT: TEST iTerm2/Terminal.app
-- **File modificati non committati** (0):
-
-
-### File importanti da leggere
-- `PROMPT_RIPRESA.md` - Il tuo UNICO ponte con la sessione precedente
-- `NORD.md` - Dove siamo nel progetto
-- `.swarm/tasks/` - Task in corso (cerca .working)
-
-### Messaggio dalla Cervella precedente
-HARDTEST Terminal.app spawn
+TEST VS Code Tasks
 
 ---
