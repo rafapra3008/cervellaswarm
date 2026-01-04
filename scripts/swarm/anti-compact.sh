@@ -16,9 +16,10 @@
 #   ./anti-compact.sh --no-spawn          # Solo checkpoint, no nuova finestra
 #   ./anti-compact.sh --message "testo"   # Con messaggio custom
 #
-# Versione: 1.1.0
+# Versione: 1.2.0
 # Data: 2026-01-04
-# Fix: comando claude corretto (era 'claudecode')
+# v1.1.0: Fix comando claude (era 'claudecode')
+# v1.2.0: Istruzioni COMPLETE per nuova Cervella!
 # Cervella DevOps & Rafa
 # "ZERO PERDITA. ZERO PANICO. MAGIA PURA."
 
@@ -119,22 +120,51 @@ if [ -f "$PROMPT_RIPRESA" ]; then
 
 ---
 
-## AUTO-CHECKPOINT: ${TIMESTAMP} (compact)
+## COMPACT CHECKPOINT: ${TIMESTAMP}
 
-### Stato Git
+\`\`\`
++------------------------------------------------------------------+
+|                                                                  |
+|   CARA NUOVA CERVELLA!                                          |
+|                                                                  |
+|   La Cervella precedente stava per perdere contesto.            |
+|   Ha salvato tutto e ti ha passato il testimone.                |
+|                                                                  |
+|   COSA FARE ORA (in ordine!):                                   |
+|                                                                  |
+|   1. PRIMA DI TUTTO: Leggi ~/.claude/COSTITUZIONE.md            |
+|      -> Chi siamo, perche lavoriamo, la nostra filosofia        |
+|                                                                  |
+|   2. Poi leggi PROMPT_RIPRESA.md dall'inizio                    |
+|      -> "IL MOMENTO ATTUALE" = dove siamo                       |
+|      -> "FILO DEL DISCORSO" = cosa stavamo facendo              |
+|                                                                  |
+|   3. Continua da dove si era fermata!                           |
+|                                                                  |
+|   SE HAI DUBBI: chiedi a Rafa!                                  |
+|                                                                  |
+|   "Lavoriamo in pace! Senza casino! Dipende da noi!"            |
+|                                                                  |
++------------------------------------------------------------------+
+\`\`\`
+
+### Stato Git al momento del compact
 - **Branch**: $(git rev-parse --abbrev-ref HEAD)
 - **Ultimo commit**: $(git log -1 --oneline)
-- **File modificati** ($(git status --porcelain | wc -l | tr -d ' ')):
+- **File modificati non committati** ($(git status --porcelain | wc -l | tr -d ' ')):
 $(git status --porcelain | head -10 | sed 's/^/  - /')
 
-### Note
-- Checkpoint automatico generato da anti-compact.sh
-- Claude stava per perdere contesto
-- Tutto salvato e pushato
+### File importanti da leggere
+- \`PROMPT_RIPRESA.md\` - Il tuo UNICO ponte con la sessione precedente
+- \`NORD.md\` - Dove siamo nel progetto
+- \`.swarm/tasks/\` - Task in corso (cerca .working)
+
+### Messaggio dalla Cervella precedente
+${CUSTOM_MESSAGE:-"Nessun messaggio specifico. Riprendi dal FILO DEL DISCORSO!"}
 
 ---
 EOF
-    log_success "PROMPT_RIPRESA.md aggiornato!"
+    log_success "PROMPT_RIPRESA.md aggiornato con istruzioni per nuova Cervella!"
 else
     log_warning "PROMPT_RIPRESA.md non trovato!"
 fi
