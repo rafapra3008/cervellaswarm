@@ -217,3 +217,37 @@ VERIFICATO SESSIONE 81:
 *Scritto con CURA e PRECISIONE.*
 
 Cervella & Rafa
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-04 11:46 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 4244262 - feat: Sessioni 80-81 - OVERVIEW FAMIGLIA + MEGA SESSIONI!
+- **File modificati** (5):
+  - swarm/prompts/worker_tester.txt
+  - .swarm/runners/run_tester.sh
+  - .vscode/tasks.json
+  - PROMPT_RIPRESA.md
+  - reports/scientist_prompt_20260104.md
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---

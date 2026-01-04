@@ -12,11 +12,13 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 1.5.0
+# Versione: 1.7.0
 # Data: 2026-01-04
 # Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
 # v1.4.0: Fix notifica + exit (notifica PRIMA di exit!)
 # v1.5.0: FIX VERO! Auto-close finestra Terminal tramite TTY!
+# v1.6.0: FIX DIALOGO! Background close = no conferma macOS!
+# v1.7.0: FIX VIRGOLETTE + AUTO-EXIT se no task!
 # Cervella & Rafa
 # Aggiunto: Supporto Guardiane (Opus)
 
@@ -75,16 +77,30 @@ COMANDI UTILI:
 APPLE STYLE - FINITURE:
 
 DOPO OGNI TASK COMPLETATO:
-1. Invia notifica macOS con questo comando Bash:
-   osascript -e 'display notification "Task completato!" with title "CervellaSwarm" sound name "Glass"'
+1. Invia notifica macOS con virgolette DRITTE ("):
+   osascript -e 'display notification "Task completato" with title "CervellaSwarm" sound name "Glass"'
 
 QUANDO NON CI SONO PIU TASK PER TE:
-1. Controlla ancora una volta .swarm/tasks/ per task .ready
-2. Se non ci sono task per te, esegui questo comando (notifica + exit insieme):
-   osascript -e 'display notification "Nessun task, chiudo!" with title "CervellaSwarm" sound name "Glass"' && exit
+1. Controlla .swarm/tasks/ per task .ready assegnati a te
+2. Se non ci sono task, FAI /exit SUBITO!
+   La finestra si chiudera automaticamente.
 
-IMPORTANTE: La notifica DEVE venire PRIMA di exit!
-Se fai exit prima, non puoi piu notificare!
+IMPORTANTE - VIRGOLETTE:
+Quando scrivi comandi osascript, usa SEMPRE virgolette DRITTE: "
+MAI virgolette curve: " o "
+Esempio CORRETTO: osascript -e 'display notification "testo" with title "titolo"'
+Esempio SBAGLIATO: osascript -e 'display notification "testo" with title "titolo"'
+
+IMPORTANTE - NESSUN TASK:
+Se non ci sono task per te:
+1. NON aspettare
+2. NON scrivere "Faccio /exit" - ESEGUILO!
+3. Scrivi esattamente questo nel terminale: /exit
+4. Premi invio
+La finestra si chiudera automaticamente.
+
+CRITICO: Quando dico "fai /exit", intendo che devi DIGITARE /exit come comando.
+Non basta DIRE che lo farai - devi FARLO!
 BASEEOF
 }
 
@@ -313,7 +329,7 @@ MY_TTY=$(tty)
 RUNNEREOF
     echo "cd ${PROJECT_ROOT}" >> "$runner_script"
     # Prompt iniziale che fa partire il worker automaticamente
-    local initial_prompt="Controlla .swarm/tasks/ per task assegnati a te e inizia a lavorare. Se non ci sono task, aspetta istruzioni."
+    local initial_prompt="Controlla .swarm/tasks/ per task .ready assegnati a te e inizia a lavorare. Se non ci sono task per te, fai /exit SUBITO!"
     echo "/Users/rafapra/.nvm/versions/node/v24.11.0/bin/claude --append-system-prompt \"\$(cat ${prompt_file})\" \"${initial_prompt}\"" >> "$runner_script"
 
     # Aggiungi chiusura automatica finestra Terminal
@@ -328,8 +344,11 @@ echo "[CervellaSwarm] Claude terminato. Chiudo finestra..."
 # Notifica prima di chiudere
 osascript -e 'display notification "Worker terminato, chiudo finestra!" with title "CervellaSwarm" sound name "Glass"' 2>/dev/null
 
-# Chiudi la finestra Terminal che ha questo TTY
-osascript << EOF
+# TRUCCO: Lancia chiusura in background, poi termina lo script
+# Cosi quando osascript chiude la finestra, bash e' gia terminato = NO dialogo!
+(
+    sleep 1
+    osascript << EOF
 tell application "Terminal"
     repeat with w in windows
         repeat with t in tabs of w
@@ -343,6 +362,10 @@ tell application "Terminal"
     end repeat
 end tell
 EOF
+) &
+
+# Exit subito - la chiusura avverra in background dopo 1 secondo
+exit 0
 CLOSEWINDOWEOF
     chmod +x "$runner_script"
 

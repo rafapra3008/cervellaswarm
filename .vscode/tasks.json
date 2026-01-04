@@ -31,6 +31,23 @@
         "focus": true
       },
       "problemMatcher": []
+    },
+    {
+      "label": "TEST: Spawn Tester Worker",
+      "type": "shell",
+      "command": "/Users/rafapra/.nvm/versions/node/v24.11.0/bin/claude",
+      "args": [
+        "--append-system-prompt",
+        "Sei CERVELLA-TESTER. Specializzazione: Testing, Debug, QA. Controlla .swarm/tasks/ per task .ready assegnati a te. Se non ci sono task, fai /exit SUBITO!",
+        "Controlla .swarm/tasks/ per task .ready per cervella-tester. Se non ce ne sono, fai /exit!"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "focus": false,
+        "close": false
+      },
+      "problemMatcher": []
     }
   ]
 }
