@@ -203,3 +203,138 @@
 {"timestamp": "2026-01-03T22:32:25.899524", "level": "WARNING", "agent": "resilient-worker", "message": "Timeout detected", "task_id": "demo-003", "extra": {"failure_type": "timeout"}}
 {"timestamp": "2026-01-03T22:32:26.882725", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-7"}}
 {"timestamp": "2026-01-03T22:32:26.883203", "level": "WARNING", "agent": "resilient-worker", "message": "Timeout detected", "task_id": "demo-003", "extra": {"failure_type": "timeout"}}
+{"timestamp": "2026-01-03T23:42:44.788671", "level": "INFO", "agent": "example-worker", "message": "Attempting operation", "task_id": "demo-001"}
+{"timestamp": "2026-01-03T23:42:44.788955", "level": "WARNING", "agent": "example-worker", "message": "Operation failed, will retry", "task_id": "demo-001"}
+{"timestamp": "2026-01-03T23:42:44.833385", "level": "INFO", "agent": "example-worker", "message": "Attempting operation", "task_id": "demo-001"}
+{"timestamp": "2026-01-03T23:42:44.833488", "level": "INFO", "agent": "example-worker", "message": "Operation succeeded", "task_id": "demo-001"}
+{"timestamp": "2026-01-03T23:42:44.833539", "level": "INFO", "agent": "example-worker", "message": "Task completed", "task_id": "demo-001", "extra": {"result": "Success!"}}
+{"timestamp": "2026-01-03T23:42:44.833645", "level": "INFO", "agent": "api-client", "message": "Calling external API", "task_id": "demo-002"}
+{"timestamp": "2026-01-03T23:42:44.833693", "level": "INFO", "agent": "api-client", "message": "API call succeeded", "task_id": "demo-002"}
+{"timestamp": "2026-01-03T23:42:44.833731", "level": "INFO", "agent": "api-client", "message": "Call 1 succeeded", "task_id": "demo-002", "extra": {"result": {"status": "ok"}}}
+{"timestamp": "2026-01-03T23:42:45.338849", "level": "INFO", "agent": "api-client", "message": "Calling external API", "task_id": "demo-002"}
+{"timestamp": "2026-01-03T23:42:45.339109", "level": "WARNING", "agent": "api-client", "message": "API call failed", "task_id": "demo-002"}
+{"timestamp": "2026-01-03T23:42:45.339196", "level": "ERROR", "agent": "api-client", "message": "Call 2 failed", "task_id": "demo-002", "extra": {"error": "API Error"}}
+{"timestamp": "2026-01-03T23:42:45.842677", "level": "INFO", "agent": "api-client", "message": "Calling external API", "task_id": "demo-002"}
+{"timestamp": "2026-01-03T23:42:45.843500", "level": "INFO", "agent": "api-client", "message": "API call succeeded", "task_id": "demo-002"}
+{"timestamp": "2026-01-03T23:42:45.843669", "level": "INFO", "agent": "api-client", "message": "Call 3 succeeded", "task_id": "demo-002", "extra": {"result": {"status": "ok"}}}
+{"timestamp": "2026-01-03T23:42:46.348866", "level": "INFO", "agent": "api-client", "message": "Calling external API", "task_id": "demo-002"}
+{"timestamp": "2026-01-03T23:42:46.349127", "level": "INFO", "agent": "api-client", "message": "API call succeeded", "task_id": "demo-002"}
+{"timestamp": "2026-01-03T23:42:46.349190", "level": "INFO", "agent": "api-client", "message": "Call 4 succeeded", "task_id": "demo-002", "extra": {"result": {"status": "ok"}}}
+{"timestamp": "2026-01-03T23:42:46.850906", "level": "INFO", "agent": "api-client", "message": "Calling external API", "task_id": "demo-002"}
+{"timestamp": "2026-01-03T23:42:46.851272", "level": "WARNING", "agent": "api-client", "message": "API call failed", "task_id": "demo-002"}
+{"timestamp": "2026-01-03T23:42:46.851529", "level": "ERROR", "agent": "api-client", "message": "Call 5 failed", "task_id": "demo-002", "extra": {"error": "API Error"}}
+{"timestamp": "2026-01-03T23:42:47.356723", "level": "INFO", "agent": "api-client", "message": "Calling external API", "task_id": "demo-002"}
+{"timestamp": "2026-01-03T23:42:47.357669", "level": "WARNING", "agent": "api-client", "message": "API call failed", "task_id": "demo-002"}
+{"timestamp": "2026-01-03T23:42:47.357993", "level": "ERROR", "agent": "api-client", "message": "Call 6 failed", "task_id": "demo-002", "extra": {"error": "API Error"}}
+{"timestamp": "2026-01-03T23:42:47.861527", "level": "INFO", "agent": "api-client", "message": "Calling external API", "task_id": "demo-002"}
+{"timestamp": "2026-01-03T23:42:47.861818", "level": "WARNING", "agent": "api-client", "message": "API call failed", "task_id": "demo-002"}
+{"timestamp": "2026-01-03T23:42:47.862031", "level": "ERROR", "agent": "api-client", "message": "Call 7 failed", "task_id": "demo-002", "extra": {"error": "API Error"}}
+{"timestamp": "2026-01-03T23:42:48.367223", "level": "WARNING", "agent": "api-client", "message": "Call 8 blocked by circuit breaker", "task_id": "demo-002", "extra": {"error": "Circuit breaker is OPEN. Retry after 10s from last failure."}}
+{"timestamp": "2026-01-03T23:42:48.872838", "level": "WARNING", "agent": "api-client", "message": "Call 9 blocked by circuit breaker", "task_id": "demo-002", "extra": {"error": "Circuit breaker is OPEN. Retry after 10s from last failure."}}
+{"timestamp": "2026-01-03T23:42:49.378457", "level": "WARNING", "agent": "api-client", "message": "Call 10 blocked by circuit breaker", "task_id": "demo-002", "extra": {"error": "Circuit breaker is OPEN. Retry after 10s from last failure."}}
+{"timestamp": "2026-01-03T23:42:49.884541", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-0"}}
+{"timestamp": "2026-01-03T23:42:49.884991", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-0"}}
+{"timestamp": "2026-01-03T23:42:49.885284", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-0", "total_processed": 1}}
+{"timestamp": "2026-01-03T23:42:49.885415", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-1"}}
+{"timestamp": "2026-01-03T23:42:49.885600", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-1"}}
+{"timestamp": "2026-01-03T23:42:49.885698", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-1", "total_processed": 2}}
+{"timestamp": "2026-01-03T23:42:49.885806", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-2"}}
+{"timestamp": "2026-01-03T23:42:49.885898", "level": "WARNING", "agent": "resilient-worker", "message": "Immediate failure", "task_id": "demo-003", "extra": {"failure_type": "network"}}
+{"timestamp": "2026-01-03T23:42:50.409675", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-2"}}
+{"timestamp": "2026-01-03T23:42:50.410529", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-2"}}
+{"timestamp": "2026-01-03T23:42:50.410842", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-2", "total_processed": 3}}
+{"timestamp": "2026-01-03T23:42:50.411159", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-3"}}
+{"timestamp": "2026-01-03T23:42:50.411390", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-3"}}
+{"timestamp": "2026-01-03T23:42:50.411600", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-3", "total_processed": 4}}
+{"timestamp": "2026-01-03T23:42:50.411821", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-4"}}
+{"timestamp": "2026-01-03T23:42:50.412034", "level": "WARNING", "agent": "resilient-worker", "message": "Immediate failure", "task_id": "demo-003", "extra": {"failure_type": "network"}}
+{"timestamp": "2026-01-03T23:42:50.633068", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-4"}}
+{"timestamp": "2026-01-03T23:42:50.633541", "level": "WARNING", "agent": "resilient-worker", "message": "Immediate failure", "task_id": "demo-003", "extra": {"failure_type": "network"}}
+{"timestamp": "2026-01-03T23:42:51.572862", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-4"}}
+{"timestamp": "2026-01-03T23:42:51.573547", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-4"}}
+{"timestamp": "2026-01-03T23:42:51.573747", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-4", "total_processed": 5}}
+{"timestamp": "2026-01-03T23:42:51.573877", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-5"}}
+{"timestamp": "2026-01-03T23:42:51.573981", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-5"}}
+{"timestamp": "2026-01-03T23:42:51.574080", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-5", "total_processed": 6}}
+{"timestamp": "2026-01-03T23:42:51.574182", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-6"}}
+{"timestamp": "2026-01-03T23:42:51.574286", "level": "WARNING", "agent": "resilient-worker", "message": "Timeout detected", "task_id": "demo-003", "extra": {"failure_type": "timeout"}}
+{"timestamp": "2026-01-03T23:42:52.336762", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-6"}}
+{"timestamp": "2026-01-03T23:42:52.337656", "level": "WARNING", "agent": "resilient-worker", "message": "Immediate failure", "task_id": "demo-003", "extra": {"failure_type": "network"}}
+{"timestamp": "2026-01-03T23:42:52.666258", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-6"}}
+{"timestamp": "2026-01-03T23:42:52.666614", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-6"}}
+{"timestamp": "2026-01-03T23:42:52.666737", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-6", "total_processed": 7}}
+{"timestamp": "2026-01-03T23:42:52.666834", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-7"}}
+{"timestamp": "2026-01-03T23:42:52.666920", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-7"}}
+{"timestamp": "2026-01-03T23:42:52.666999", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-7", "total_processed": 8}}
+{"timestamp": "2026-01-03T23:42:52.667076", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-8"}}
+{"timestamp": "2026-01-03T23:42:52.667150", "level": "WARNING", "agent": "resilient-worker", "message": "Timeout detected", "task_id": "demo-003", "extra": {"failure_type": "timeout"}}
+{"timestamp": "2026-01-03T23:42:52.945968", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-8"}}
+{"timestamp": "2026-01-03T23:42:52.946468", "level": "WARNING", "agent": "resilient-worker", "message": "Immediate failure", "task_id": "demo-003", "extra": {"failure_type": "network"}}
+{"timestamp": "2026-01-03T23:42:54.355851", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-8"}}
+{"timestamp": "2026-01-03T23:42:54.356587", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-8"}}
+{"timestamp": "2026-01-03T23:42:54.356884", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-8", "total_processed": 9}}
+{"timestamp": "2026-01-03T23:42:54.357104", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-9"}}
+{"timestamp": "2026-01-03T23:42:54.357344", "level": "WARNING", "agent": "resilient-worker", "message": "Immediate failure", "task_id": "demo-003", "extra": {"failure_type": "network"}}
+{"timestamp": "2026-01-03T23:42:54.946915", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-9"}}
+{"timestamp": "2026-01-03T23:42:54.947469", "level": "WARNING", "agent": "resilient-worker", "message": "Immediate failure", "task_id": "demo-003", "extra": {"failure_type": "network"}}
+{"timestamp": "2026-01-03T23:42:56.686009", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-9"}}
+{"timestamp": "2026-01-03T23:42:56.686393", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-9"}}
+{"timestamp": "2026-01-03T23:42:56.686509", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-9", "total_processed": 10}}
+{"timestamp": "2026-01-03T23:42:56.686604", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-10"}}
+{"timestamp": "2026-01-03T23:42:56.686742", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-10"}}
+{"timestamp": "2026-01-03T23:42:56.686805", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-10", "total_processed": 11}}
+{"timestamp": "2026-01-03T23:42:56.686862", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-11"}}
+{"timestamp": "2026-01-03T23:42:56.686916", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-11"}}
+{"timestamp": "2026-01-03T23:42:56.686969", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-11", "total_processed": 12}}
+{"timestamp": "2026-01-03T23:42:56.687023", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-12"}}
+{"timestamp": "2026-01-03T23:42:56.687076", "level": "WARNING", "agent": "resilient-worker", "message": "Immediate failure", "task_id": "demo-003", "extra": {"failure_type": "network"}}
+{"timestamp": "2026-01-03T23:42:57.375733", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-12"}}
+{"timestamp": "2026-01-03T23:42:57.376538", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-12"}}
+{"timestamp": "2026-01-03T23:42:57.376808", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-12", "total_processed": 13}}
+{"timestamp": "2026-01-03T23:42:57.376956", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-13"}}
+{"timestamp": "2026-01-03T23:42:57.377046", "level": "WARNING", "agent": "resilient-worker", "message": "Immediate failure", "task_id": "demo-003", "extra": {"failure_type": "network"}}
+{"timestamp": "2026-01-03T23:42:58.371334", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-13"}}
+{"timestamp": "2026-01-03T23:42:58.371987", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-13"}}
+{"timestamp": "2026-01-03T23:42:58.372240", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-13", "total_processed": 14}}
+{"timestamp": "2026-01-03T23:42:58.372446", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-14"}}
+{"timestamp": "2026-01-03T23:42:58.372629", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-14"}}
+{"timestamp": "2026-01-03T23:42:58.372733", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-14", "total_processed": 15}}
+{"timestamp": "2026-01-03T23:42:58.372823", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-15"}}
+{"timestamp": "2026-01-03T23:42:58.372910", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-15"}}
+{"timestamp": "2026-01-03T23:42:58.373000", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-15", "total_processed": 16}}
+{"timestamp": "2026-01-03T23:42:58.373085", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-16"}}
+{"timestamp": "2026-01-03T23:42:58.373318", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-16"}}
+{"timestamp": "2026-01-03T23:42:58.373426", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-16", "total_processed": 17}}
+{"timestamp": "2026-01-03T23:42:58.373528", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-17"}}
+{"timestamp": "2026-01-03T23:42:58.373627", "level": "WARNING", "agent": "resilient-worker", "message": "Timeout detected", "task_id": "demo-003", "extra": {"failure_type": "timeout"}}
+{"timestamp": "2026-01-03T23:42:58.970070", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-17"}}
+{"timestamp": "2026-01-03T23:42:58.970703", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-17"}}
+{"timestamp": "2026-01-03T23:42:58.970852", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-17", "total_processed": 18}}
+{"timestamp": "2026-01-03T23:42:58.970980", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-18"}}
+{"timestamp": "2026-01-03T23:42:58.971098", "level": "WARNING", "agent": "resilient-worker", "message": "Timeout detected", "task_id": "demo-003", "extra": {"failure_type": "timeout"}}
+{"timestamp": "2026-01-03T23:42:59.716383", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-18"}}
+{"timestamp": "2026-01-03T23:42:59.716565", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-18"}}
+{"timestamp": "2026-01-03T23:42:59.716637", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-18", "total_processed": 19}}
+{"timestamp": "2026-01-03T23:42:59.716693", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-19"}}
+{"timestamp": "2026-01-03T23:42:59.716738", "level": "WARNING", "agent": "resilient-worker", "message": "Immediate failure", "task_id": "demo-003", "extra": {"failure_type": "network"}}
+{"timestamp": "2026-01-03T23:43:00.384947", "level": "INFO", "agent": "resilient-worker", "message": "Processing data", "task_id": "demo-003", "extra": {"data": "item-19"}}
+{"timestamp": "2026-01-03T23:43:00.385462", "level": "INFO", "agent": "resilient-worker", "message": "Data processed successfully", "task_id": "demo-003", "extra": {"data": "item-19"}}
+{"timestamp": "2026-01-03T23:43:00.385634", "level": "INFO", "agent": "resilient-worker", "message": "Item processed", "task_id": "demo-003", "extra": {"item": "item-19", "total_processed": 20}}
+{"timestamp": "2026-01-03T23:43:00.385744", "level": "INFO", "agent": "resilient-worker", "message": "Batch processing completed", "task_id": "demo-003", "extra": {"total_items": 20, "successful": 20, "failed": 0}}
+{"timestamp": "2026-01-03T23:43:00.385991", "level": "INFO", "agent": "task-worker", "message": "Task started", "task_id": "task-001", "extra": {"priority": "high"}}
+{"timestamp": "2026-01-03T23:43:00.386102", "level": "DEBUG", "agent": "task-worker", "message": "Executing step", "task_id": "task-001", "extra": {"step": "validate"}}
+{"timestamp": "2026-01-03T23:43:00.487231", "level": "DEBUG", "agent": "task-worker", "message": "Executing step", "task_id": "task-001", "extra": {"step": "process"}}
+{"timestamp": "2026-01-03T23:43:00.592558", "level": "DEBUG", "agent": "task-worker", "message": "Executing step", "task_id": "task-001", "extra": {"step": "save"}}
+{"timestamp": "2026-01-03T23:43:00.694022", "level": "INFO", "agent": "task-worker", "message": "Task completed", "task_id": "task-001", "extra": {"steps_count": 3}}
+{"timestamp": "2026-01-03T23:43:00.694386", "level": "INFO", "agent": "task-worker", "message": "Task started", "task_id": "task-002", "extra": {"priority": "high"}}
+{"timestamp": "2026-01-03T23:43:00.694481", "level": "DEBUG", "agent": "task-worker", "message": "Executing step", "task_id": "task-002", "extra": {"step": "validate"}}
+{"timestamp": "2026-01-03T23:43:00.799601", "level": "DEBUG", "agent": "task-worker", "message": "Executing step", "task_id": "task-002", "extra": {"step": "process"}}
+{"timestamp": "2026-01-03T23:43:00.900177", "level": "DEBUG", "agent": "task-worker", "message": "Executing step", "task_id": "task-002", "extra": {"step": "save"}}
+{"timestamp": "2026-01-03T23:43:01.004610", "level": "INFO", "agent": "task-worker", "message": "Task completed", "task_id": "task-002", "extra": {"steps_count": 3}}
+{"timestamp": "2026-01-03T23:43:01.005335", "level": "INFO", "agent": "task-worker", "message": "Task started", "task_id": "task-003", "extra": {"priority": "high"}}
+{"timestamp": "2026-01-03T23:43:01.005566", "level": "DEBUG", "agent": "task-worker", "message": "Executing step", "task_id": "task-003", "extra": {"step": "validate"}}
+{"timestamp": "2026-01-03T23:43:01.106899", "level": "DEBUG", "agent": "task-worker", "message": "Executing step", "task_id": "task-003", "extra": {"step": "process"}}
+{"timestamp": "2026-01-03T23:43:01.209264", "level": "DEBUG", "agent": "task-worker", "message": "Executing step", "task_id": "task-003", "extra": {"step": "save"}}
+{"timestamp": "2026-01-03T23:43:01.311050", "level": "INFO", "agent": "task-worker", "message": "Task completed", "task_id": "task-003", "extra": {"steps_count": 3}}
+{"timestamp": "2026-01-03T23:43:01.311941", "level": "INFO", "agent": "task-worker", "message": "All tasks completed", "task_id": "task-003", "extra": {"total_tasks": 3}}
+{"timestamp": "2026-01-03T23:43:08.853790", "level": "INFO", "agent": "test", "message": "Test message"}

@@ -12,9 +12,9 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 1.2.0
-# Data: 2026-01-03
-# Fix: Aggiunto prompt iniziale per avviare worker automaticamente
+# Versione: 1.3.0
+# Data: 2026-01-04
+# Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
 # Cervella & Rafa
 # Aggiunto: Supporto Guardiane (Opus)
 
@@ -69,6 +69,19 @@ COMANDI UTILI:
 - python3 scripts/swarm/task_manager.py list
 - python3 scripts/swarm/task_manager.py working TASK_ID
 - python3 scripts/swarm/task_manager.py done TASK_ID
+
+APPLE STYLE - FINITURE:
+
+DOPO OGNI TASK COMPLETATO:
+1. Invia notifica macOS con questo comando Bash:
+   osascript -e 'display notification "Task completato!" with title "CervellaSwarm" sound name "Glass"'
+
+QUANDO NON CI SONO PIU TASK PER TE:
+1. Controlla ancora una volta .swarm/tasks/ per task .ready
+2. Se non ci sono task per te, scrivi nel terminale: exit
+3. Questo chiude la finestra in modo pulito (Graceful Shutdown)
+
+NOTA: "exit" chiude la sessione senza popup fastidiosi!
 BASEEOF
 }
 

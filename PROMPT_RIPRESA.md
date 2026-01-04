@@ -574,3 +574,29 @@ Ho scelto: MIRACOLLO!
 - Tutto salvato e pushato
 
 ---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-04 02:55 (compact)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 80efa69 ANTI-COMPACT: Test QW1 - Polish 100%
+- **File modificati** (55):
+  -  M .swarm/runners/run_guardiana-qualita.sh
+  -  M logs/swarm_2026-01-03.jsonl
+  -  M reports/scientist_prompt_20260103.md
+  -  M scripts/swarm/spawn-workers.sh
+  - ?? .swarm/archive/
+  - ?? .swarm/prompts/worker_devops.txt
+  - ?? .swarm/prompts/worker_docs.txt
+  - ?? .swarm/prompts/worker_frontend.txt
+  - ?? .swarm/prompts/worker_tester.txt
+  - ?? .swarm/runners/run_devops.sh
+
+### Note
+- Checkpoint automatico generato da anti-compact.sh
+- Claude stava per perdere contesto
+- Tutto salvato e pushato
+
+---
