@@ -12,9 +12,10 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 1.3.0
+# Versione: 1.4.0
 # Data: 2026-01-04
 # Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
+# v1.4.0: Fix notifica + exit (notifica PRIMA di exit!)
 # Cervella & Rafa
 # Aggiunto: Supporto Guardiane (Opus)
 
@@ -78,10 +79,11 @@ DOPO OGNI TASK COMPLETATO:
 
 QUANDO NON CI SONO PIU TASK PER TE:
 1. Controlla ancora una volta .swarm/tasks/ per task .ready
-2. Se non ci sono task per te, scrivi nel terminale: exit
-3. Questo chiude la finestra in modo pulito (Graceful Shutdown)
+2. Se non ci sono task per te, esegui questo comando (notifica + exit insieme):
+   osascript -e 'display notification "Nessun task, chiudo!" with title "CervellaSwarm" sound name "Glass"' && exit
 
-NOTA: "exit" chiude la sessione senza popup fastidiosi!
+IMPORTANTE: La notifica DEVE venire PRIMA di exit!
+Se fai exit prima, non puoi piu notificare!
 BASEEOF
 }
 
