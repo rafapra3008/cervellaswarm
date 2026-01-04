@@ -16,8 +16,9 @@
 #   ./anti-compact.sh --no-spawn          # Solo checkpoint, no nuova finestra
 #   ./anti-compact.sh --message "testo"   # Con messaggio custom
 #
-# Versione: 1.0.0
-# Data: 2026-01-03
+# Versione: 1.1.0
+# Data: 2026-01-04
+# Fix: comando claude corretto (era 'claudecode')
 # Cervella DevOps & Rafa
 # "ZERO PERDITA. ZERO PANICO. MAGIA PURA."
 
@@ -183,10 +184,10 @@ if [ "$SPAWN_NEW_WINDOW" = true ]; then
     if [[ "$OSTYPE" == "darwin"* ]]; then
         log_info "Apertura nuova finestra Claude Code..."
 
-        # AppleScript per aprire nuova finestra Terminal con claudecode
-        osascript << 'APPLESCRIPT'
+        # AppleScript per aprire nuova finestra Terminal con claude
+        osascript << APPLESCRIPT
         tell application "Terminal"
-            do script "cd " & quoted form of (do shell script "pwd") & " && claudecode"
+            do script "cd ${PROJECT_ROOT} && /Users/rafapra/.nvm/versions/node/v24.11.0/bin/claude"
             activate
         end tell
 APPLESCRIPT
