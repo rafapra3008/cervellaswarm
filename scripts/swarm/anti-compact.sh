@@ -212,36 +212,43 @@ echo ""
 log_success "La nuova sessione puo riprendere da qui!"
 echo ""
 
-# Step 5: Spawn nuova finestra CON PROMPT AUTOMATICO!
+# Step 5: Spawn nuova finestra VS Code CON PROMPT AUTOMATICO!
 if [ "$SPAWN_NEW_WINDOW" = true ]; then
     # Verifica se siamo su macOS
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        log_info "Apertura nuova finestra Claude Code CON PROMPT AUTOMATICO..."
+        log_info "Apertura nuova finestra VS Code CON PROMPT AUTOMATICO..."
 
         # Prompt iniziale per la nuova Cervella
         INITIAL_PROMPT="ANTI-COMPACT: Sono la nuova Cervella! La sessione precedente mi ha passato il testimone. Leggo subito COSTITUZIONE e PROMPT_RIPRESA per capire dove eravamo e continuo il lavoro!"
 
-        # Crea script runner temporaneo
-        RUNNER_SCRIPT="${SWARM_DIR}/runners/anti_compact_runner.sh"
-        mkdir -p "${SWARM_DIR}/runners"
+        # Comando claude da eseguire
+        CLAUDE_CMD="cd ${PROJECT_ROOT} && /Users/rafapra/.nvm/versions/node/v24.11.0/bin/claude '${INITIAL_PROMPT}'"
 
-        cat > "$RUNNER_SCRIPT" << RUNNEREOF
-#!/bin/bash
-cd ${PROJECT_ROOT}
-/Users/rafapra/.nvm/versions/node/v24.11.0/bin/claude "${INITIAL_PROMPT}"
-RUNNEREOF
-        chmod +x "$RUNNER_SCRIPT"
-
-        # AppleScript per aprire nuova finestra Terminal con runner
+        # AppleScript per aprire VS Code con nuovo terminale
         osascript << APPLESCRIPT
-        tell application "Terminal"
-            do script "${RUNNER_SCRIPT}"
+        -- Attiva VS Code
+        tell application "Visual Studio Code"
             activate
+        end tell
+
+        delay 0.5
+
+        -- Apre nuovo terminale integrato (Ctrl+Shift+\`)
+        tell application "System Events"
+            keystroke "\`" using {control down, shift down}
+        end tell
+
+        delay 0.8
+
+        -- Esegue il comando claude
+        tell application "System Events"
+            keystroke "${CLAUDE_CMD}"
+            keystroke return
         end tell
 APPLESCRIPT
 
-        log_success "Nuova finestra aperta CON PROMPT AUTOMATICO!"
-        log_info "La nuova Cervella sta gia leggendo COSTITUZIONE e PROMPT_RIPRESA!"
+        log_success "Nuova finestra VS Code aperta CON PROMPT AUTOMATICO!"
+        log_info "La nuova Cervella sta partendo nel terminale integrato!"
     else
         log_warning "Apertura automatica finestra disponibile solo su macOS"
         log_info "Apri manualmente una nuova finestra e riprendi da PROMPT_RIPRESA.md"
