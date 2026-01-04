@@ -584,16 +584,52 @@ Ho scelto: MIRACOLLO!
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-04 02:56 (unknown)
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-04 03:10 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 60b5490 - ANTI-COMPACT: Sessione 75: Finiture Apple Style + Spawn Dinamico Guardiane
-- **File modificati** (1):
-  - eports/scientist_prompt_20260104.md
+- **Ultimo commit**: 380eafa - docs: PROMPT_RIPRESA aggiornato - Sessione 75 completa!
+- **File modificati** (3):
+  - ROMPT_RIPRESA.md
+  - reports/scientist_prompt_20260104.md
+  - reports/engineer_report_20260104_030448.json
 
 ### Note
 - Checkpoint automatico generato da hook
 - Trigger: unknown
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-04 03:12 (compact)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: cd9147c fix: anti-compact.sh v1.1.0 - comando claude corretto
+- **File modificati** (4):
+  -  M PROMPT_RIPRESA.md
+  -  M reports/scientist_prompt_20260104.md
+  - ?? reports/engineer_report_20260104_030448.json
+  - ?? reports/engineer_report_20260104_031227.json
+
+### Note
+- Checkpoint automatico generato da anti-compact.sh
+- Claude stava per perdere contesto
+- Tutto salvato e pushato
 
 ---
