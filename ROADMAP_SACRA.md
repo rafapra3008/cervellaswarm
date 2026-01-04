@@ -6,7 +6,7 @@
 
 ## OVERVIEW
 
-> **Aggiornato:** 3 Gennaio 2026 - Sessione 71 - I 4 CRITICI IMPLEMENTATI! (v27.5.0)
+> **Aggiornato:** 4 Gennaio 2026 - Sessione 82 - FINITURE & VERIFICA (v32.1.0)
 
 ```
 +------------------------------------------------------------------+
@@ -323,6 +323,23 @@ APRI -> ASPETTA -> COMUNICA -> TESTA -> VERIFICA -> CHIUDI
 ---
 
 ## CHANGELOG
+
+### 4 Gennaio 2026 (Sessione 82) - FINITURE & VERIFICA
+
+**VERIFICA SISTEMI PRIMA DI LIVE**
+
+- Controllato swarm_memory.db: FUNZIONA correttamente
+- Hook SubagentStop: Logga nel database
+- Puliti log errori vecchi (dal 1 Gennaio)
+
+**DECISIONE:**
+- Mancano finiture generali prima di andare live
+- Serve double/triple check di tutti i sistemi
+- "Una cosa alla volta, con calma" - Rafa
+
+**Versione:** 32.1.0 (PATCH: Verifica e pulizia sistemi)
+
+---
 
 ### 3 Gennaio 2026 (Sessione 71) - I 4 CRITICI IMPLEMENTATI!
 

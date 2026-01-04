@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 4 Gennaio 2026 - Sessioni 80-81 - TRE-QUATTRO SESSIONI IN UNA!
+> **Ultimo aggiornamento:** 4 Gennaio 2026 - Sessione 82 - FINITURE & VERIFICA
 
 ---
 
@@ -15,97 +15,38 @@
 |   Tu sei la REGINA dello sciame.                                 |
 |   Hai 16 agenti pronti a lavorare per te.                       |
 |                                                                  |
-|   FASE ATTUALE: FASE 9 - APPLE STYLE (100% COMPLETATA!!!)       |
+|   FASE ATTUALE: FINITURE PRIMA DI ANDARE LIVE                   |
 |                                                                  |
-|   SESSIONI 80-81: MEGA SESSIONI! 3-4 in una!                    |
-|   - Scoperta contesto subagent                                   |
-|   - FASE 1 Ottimizzazione COMPLETATA                            |
-|   - Sistema CTX:XX% TESTATO e FUNZIONA                          |
-|   - OVERVIEW FAMIGLIA creato!                                    |
+|   SESSIONE 82:                                                   |
+|   - Verificato DB swarm_memory.db: FUNZIONA                     |
+|   - Puliti log errori vecchi                                     |
+|   - MANCANO finiture e double/triple check                       |
 |                                                                  |
-+------------------------------------------------------------------+
-```
-
----
-
-## SESSIONI 80-81: TRE-QUATTRO SESSIONI IN UNA!
-
-### PARTE 1: Scoperta Contesto Subagent (Sess. 80)
-
-**La Domanda di Rafa:**
-> "Quando le ragazze finiscono il lavoro, tu devi leggere i loro output...
-> questo c'entra nel conteggio contesto o no?"
-
-**La Risposta (da ricerca con 15 fonti):**
-
-| Cosa | Costo |
-|------|-------|
-| Ogni spawn subagent | ~20k tokens overhead |
-| Risultato che torna | TUTTO entra nel contesto |
-| Multi-agent session | 3-4x consumo vs single-thread |
-
-**La Buona Notizia:**
-- Finestre esterne (spawn-workers.sh) = ZERO ritorno automatico
-- Esistono strategie per ottimizzare del 50-70%!
-
-**Creata Roadmap:** `docs/roadmap/ROADMAP_OTTIMIZZAZIONE_CONTESTO.md`
-
----
-
-### PARTE 2: FASE 1 Ottimizzazione COMPLETATA! (Sess. 80)
-
-**Cosa abbiamo fatto:**
-- Creato template output compatto (max 150-200 tokens)
-- **Aggiornati TUTTI i 16 agent files** in `~/.claude/agents/`
-- Testato con 3 pilota (backend, frontend, tester)
-
-**Il template aggiunto a ogni agente:**
-```
-## [Nome Task]
-**Status**: OK | FAIL | BLOCKED
-**Fatto**: [1 frase max]
-**File**: [lista, max 5]
-**Next**: [SE serve]
-```
-
-**Regola chiave:** "I tuoi risultati entrano nel contesto della Regina. MAX 150 tokens!"
-
----
-
-### PARTE 3: Sistema CTX:XX% TESTATO! (Sess. 80)
-
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   SISTEMA FUNZIONANTE! TESTATO SESSIONE 80!                     |
-|                                                                  |
-|   Rafa vede: CTX:61% verde                                       |
-|                                                                  |
-|   - context-monitor.py: Statusline CTX:XX%                       |
-|   - context_check.py: Hook per notifiche                        |
-|   - Soglie: 70% warning (giallo), 75% critico (rosso)           |
+|   "Una cosa alla volta, con calma" - Rafa                       |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-### PARTE 4: OVERVIEW FAMIGLIA! (Sess. 81)
+## SESSIONE 82: FINITURE & VERIFICA
 
-**Cosa abbiamo fatto:**
-- Letto TUTTI i 16 agent files
-- Letto TUTTI gli scripts in scripts/swarm/
-- Verificato coerenza e allineamento
-- Creato `docs/OVERVIEW_FAMIGLIA.md` - recap visuale completo!
+### Cosa abbiamo fatto
 
-**Il file contiene:**
-- Gerarchia visuale (Regina -> Guardiane -> Worker)
-- Tabella 16 ragazze (chi fa cosa, model, quando usarla)
-- Struttura comune agenti
-- Tutti gli scripts con comandi
-- Flusso di lavoro
-- 3 livelli rischio
-- Struttura .swarm/
+1. **Verifica Sistema Log/Database:**
+   - Controllato `swarm_memory.db`: FUNZIONA correttamente
+   - Hook `SubagentStop`: Logga nel database (record recenti confermano)
+   - Errori nel log erano vecchi (1 Gennaio) - problema gia' risolto
+   - Pulito file `subagent_stop_errors.log`
+
+2. **Decisione con Rafa:**
+   - MANCANO finiture generali prima di andare live
+   - Serve double/triple check di tutti i sistemi
+   - "Step by step, con tranquillita'"
+
+### Filo del Discorso
+
+Rafa ha chiesto di fare le cose con calma. Prima di andare su Miracollo (o in produzione), vogliamo verificare che TUTTO funzioni perfettamente. Non vogliamo sorprese.
 
 ---
 
@@ -119,22 +60,26 @@
 | FASE 9 | 100% | COMPLETATA |
 | FASE 1 Ottimizzazione | v1.0.0 | COMPLETATA! |
 | Sistema CTX:XX% | v1.0.0 | FUNZIONA! Testato! |
-| **OVERVIEW_FAMIGLIA.md** | **v1.0.0** | **CREATO!** |
+| OVERVIEW_FAMIGLIA.md | v1.0.0 | CREATO! |
+| **swarm_memory.db** | v1.0.0 | **VERIFICATO Sess. 82** |
 
 ---
 
-## PROSSIMI STEP
+## COSA MANCA (FINITURE)
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   PRIORITA 1: FASE 2 (File-Based Communication)                 |
-|   - .swarm/results/ per output grossi                           |
-|   - progress.md condiviso                                        |
+|   PRIMA DI ANDARE LIVE:                                          |
 |                                                                  |
-|   PRIORITA 2: MIRACOLLO!                                         |
-|   - "Il 100000% viene dall'USO!"                                 |
-|   - Usare lo sciame su progetto REALE                           |
+|   [ ] Finiture generali (pulizia, allineamento)                  |
+|   [ ] Double/Triple check di tutti i sistemi                     |
+|   [ ] Verifica hooks funzionano correttamente                    |
+|   [ ] Test completo spawn-workers.sh                             |
+|   [ ] Verifica tutti i 16 agent files                            |
+|                                                                  |
+|   DOPO LE FINITURE:                                              |
+|   [ ] MIRACOLLO! ("Il 100000% viene dall'USO!")                  |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -170,7 +115,7 @@ VERIFICATO SESSIONE 81:
 | File | Cosa Contiene |
 |------|---------------|
 | `NORD.md` | Dove siamo, prossimo obiettivo |
-| `docs/OVERVIEW_FAMIGLIA.md` | **NUOVO! Recap visuale completo** |
+| `docs/OVERVIEW_FAMIGLIA.md` | Recap visuale completo |
 | `docs/SWARM_RULES.md` | Le 13 regole dello sciame |
 | `docs/roadmap/ROADMAP_OTTIMIZZAZIONE_CONTESTO.md` | 5 fasi ottimizzazione |
 | `~/.claude/agents/*.md` | 16 agent files (VERIFICATI!) |
@@ -185,8 +130,9 @@ VERIFICATO SESSIONE 81:
 |----------|------|-----------|
 | 78 | 3/3 HARDTEST + PULIZIA | FASE 9 al 100%! |
 | 79 | ANTI-AUTO COMPACT | Sistema CTX:XX% creato |
-| **80** | **TRE COSE!** | Scoperta contesto + FASE 1 + Test CTX |
-| **81** | **OVERVIEW!** | docs/OVERVIEW_FAMIGLIA.md creato! |
+| 80 | TRE COSE! | Scoperta contesto + FASE 1 + Test CTX |
+| 81 | OVERVIEW! | docs/OVERVIEW_FAMIGLIA.md creato! |
+| **82** | **FINITURE** | Verifica DB + Decisione step by step |
 
 ---
 
@@ -195,9 +141,9 @@ VERIFICATO SESSIONE 81:
 ```
 "Lavoriamo in pace! Senza casino! Dipende da noi!"
 
-"Non e' pira da minha cabeca!" - Rafa, Sessione 80
+"Una cosa alla volta, con calma" - Rafa, Sessione 82
 
-"Abbiamo fatto 3-4 sessioni allo stesso tempo!" - Sessioni 80-81
+"Step by step, con tranquillita" - Rafa
 
 "Ultrapassar os proprios limites!" - Rafa
 
@@ -208,8 +154,8 @@ VERIFICATO SESSIONE 81:
 
 ---
 
-**VERSIONE:** v32.0.0
-**SESSIONE:** 81
+**VERSIONE:** v32.1.0
+**SESSIONE:** 82
 **DATA:** 4 Gennaio 2026
 
 ---
@@ -217,37 +163,3 @@ VERIFICATO SESSIONE 81:
 *Scritto con CURA e PRECISIONE.*
 
 Cervella & Rafa
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
-## AUTO-CHECKPOINT: 2026-01-04 11:46 (unknown)
-
-### Stato Git
-- **Branch**: main
-- **Ultimo commit**: 4244262 - feat: Sessioni 80-81 - OVERVIEW FAMIGLIA + MEGA SESSIONI!
-- **File modificati** (5):
-  - swarm/prompts/worker_tester.txt
-  - .swarm/runners/run_tester.sh
-  - .vscode/tasks.json
-  - PROMPT_RIPRESA.md
-  - reports/scientist_prompt_20260104.md
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: unknown
-
----
