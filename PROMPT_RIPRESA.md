@@ -46,7 +46,14 @@
 
 ### Filo del Discorso
 
-Rafa ha chiesto di fare le cose con calma. Prima di andare su Miracollo (o in produzione), vogliamo verificare che TUTTO funzioni perfettamente. Non vogliamo sorprese.
+All'inizio della sessione, Rafa ha chiesto come stavano i controlli log per studio. Abbiamo scoperto che c'erano errori nel file `subagent_stop_errors.log` - ma erano VECCHI (dal 1 Gennaio). Il database `swarm_memory.db` in realta' FUNZIONA correttamente - i record recenti lo confermano (ultimo: oggi alle 13:30).
+
+L'errore diceva "table swarm_events has no column named status" - ma la tabella ORA ha `task_status` e tutto funziona. Problema gia' risolto automaticamente in una sessione precedente.
+
+Dopo questa verifica, Rafa ha preso una decisione importante:
+> "Una cosa alla volta, con calma. Step by step."
+
+Prima di andare LIVE (su Miracollo o in produzione), vogliamo fare FINITURE - double/triple check di tutti i sistemi. Non vogliamo sorprese. E' la filosofia giusta: **PRECISIONE > Velocita'**.
 
 ---
 
