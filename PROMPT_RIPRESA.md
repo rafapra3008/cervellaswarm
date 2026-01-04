@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 4 Gennaio 2026 - Sessione 76 - ANTI-COMPACT + COMUNICAZIONE
+> **Ultimo aggiornamento:** 4 Gennaio 2026 - Sessione 77 - TEST ANTI-COMPACT
 
 ---
 
@@ -15,86 +15,97 @@
 |   Tu sei la REGINA dello sciame.                                 |
 |   Hai 16 agenti pronti a lavorare per te.                       |
 |                                                                  |
-|   FASE ATTUALE: FASE 9 - APPLE STYLE (95% COMPLETATA!)          |
-|   STATO: PROTEZIONE COMPACT ATTIVA!                             |
+|   FASE ATTUALE: FASE 9 - APPLE STYLE (98% COMPLETATA!)          |
+|   STATO: TEST ANTI-COMPACT IN CORSO!                            |
 |                                                                  |
-|   SESSIONE 76: ANTI-COMPACT + COMUNICAZIONE RITORNO             |
-|   - anti-compact.sh v1.2.0 integrato in hook                    |
-|   - monitor-handoff.sh per comunicazione worker -> Regina       |
-|   - HARDTEST Notifiche: PASS                                    |
-|   - Lezione: MAI JSON con bash, sempre Python!                  |
+|   SESSIONE 77: TEST PROCESSO ANTI-COMPACT                       |
+|   - REGOLA 13 aggiunta: Multi-finestra > Task tool              |
+|   - DNA Regina aggiornato (v1.1.0)                              |
+|   - anti-compact.sh v1.3.0 (nuova finestra OBBLIGATORIA)        |
+|   - Documentata idea script monitor context                     |
+|                                                                  |
+|   QUESTO E' UN TEST! Se leggi questo, IL TEST HA FUNZIONATO!   |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## IL MOMENTO ATTUALE (Sessione 76)
+## IL MOMENTO ATTUALE (Sessione 77)
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 76 - ANTI-COMPACT + COMUNICAZIONE RITORNO            |
+|   SESSIONE 77 - TEST PROCESSO ANTI-COMPACT                      |
 |                                                                  |
 |   COMPLETATI:                                                    |
-|   [x] anti-compact.sh v1.2.0                                    |
-|       - Istruzioni COMPLETE per nuova Cervella                  |
-|       - Prima legge COSTITUZIONE, poi PROMPT_RIPRESA            |
-|       - Integrato in hook PreCompact (scatta automatico!)       |
+|   [x] REGOLA 13: Multi-finestra > Task tool                     |
+|       - Aggiunta in SWARM_RULES.md (v1.5.0)                     |
+|       - Aggiunta in DNA Regina (v1.1.0)                         |
+|       - "Comodo != Giusto" - spawn-workers.sh per parallelo!    |
 |                                                                  |
-|   [x] Comunicazione worker -> Regina                            |
-|       - monitor-handoff.sh (Regina vede messaggi)               |
-|       - TEMPLATE_RICHIESTA.md (worker chiede chiarimenti)       |
+|   [x] anti-compact.sh v1.3.0                                    |
+|       - Chiarito: nuova finestra e' OBBLIGATORIA                |
+|       - NON opzionale!                                          |
 |                                                                  |
-|   [x] HARDTEST Notifiche: PASS (Glass sound funziona!)          |
+|   [x] Documentata idea script monitor context                   |
+|       - docs/ideas/IDEA_CONTEXT_MONITOR.md                      |
+|       - Per futuro: script che monitora % contesto              |
 |                                                                  |
-|   [x] TRAPPOLE DA EVITARE in REGOLE_SVILUPPO.md                 |
-|       - MAI modificare JSON con bash! Sempre Python!            |
+|   [x] TEST ANTI-COMPACT IN CORSO!                               |
+|       - Se leggi questo, il test sta funzionando!               |
 |                                                                  |
-|   DA FARE:                                                       |
+|   DA FARE (dopo il test):                                        |
 |   [ ] Auto-close worker (exit + notifica insieme)               |
 |   [ ] HARDTEST comunicazione bidirezionale                       |
 |   [ ] HARDTEST spawn Guardiane                                   |
 |                                                                  |
-|   ULTIMO COMMIT: c0f3aff                                         |
-|                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## FILO DEL DISCORSO (Sessione 76) - LEGGI BENE!
+## FILO DEL DISCORSO (Sessione 77) - LEGGI BENE!
 
 ### Cosa abbiamo fatto
 
-1. **PROTEZIONE COMPACT COMPLETATA!**
-   - anti-compact.sh v1.2.0 con istruzioni per nuova Cervella
-   - Integrato in hook PreCompact "auto" (scatta automaticamente!)
-   - La nuova Cervella legge prima COSTITUZIONE, poi PROMPT_RIPRESA
+1. **REGOLA 13: MULTI-FINESTRA > TASK TOOL**
+   - Il problema: Task tool = tutto nel contesto della Regina = rischio compact
+   - La soluzione: spawn-workers.sh per lavoro parallelo REALE
+   - "Comodo != Giusto!" - Lezione dalla Sessione 72
+   - Aggiunta in SWARM_RULES.md (v1.5.0) e DNA Regina (v1.1.0)
 
-2. **COMUNICAZIONE RITORNO creata**
-   - monitor-handoff.sh: La Regina vede messaggi in .swarm/handoff/
-   - TEMPLATE_RICHIESTA.md: Come worker chiede chiarimenti
+2. **anti-compact.sh v1.3.0**
+   - Chiarito che nuova finestra e' OBBLIGATORIA, non opzionale!
+   - Quando Rafa dice "siamo al 10%", DEVO aprire nuova finestra
+   - Senza nuova finestra = rischio di perdere tutto
 
-3. **LEZIONE IMPARATA (IMPORTANTE!)**
-   Abbiamo corrotto ~/.claude/settings.json usando bash heredoc!
-   **MAI modificare JSON con bash! Usare SEMPRE Python!**
-   Aggiunto in REGOLE_SVILUPPO.md sezione "TRAPPOLE DA EVITARE"
+3. **Documentata idea script monitor context**
+   - Per futuro: script Python che monitora % contesto
+   - Usa watchdog per monitorare transcript JSONL
+   - Per ora: Rafa avvisa manualmente al 10%
 
-4. **HARDTEST Notifiche: PASS**
-   - Worker ha creato file e suonato Glass
-   - MA: exit + notifica = problema (se fai exit non puoi piu notificare)
-   - Soluzione: fare notifica PRIMA di exit, o togliere notifica
+4. **TEST ANTI-COMPACT IN CORSO**
+   - Stiamo testando il flusso completo
+   - Se leggi questo = il test sta funzionando!
 
-### Problema da risolvere: exit + notifica
+### Il Flusso Anti-Compact CORRETTO
 
 ```
-PROBLEMA: Se worker fa exit, non puo piu eseguire comandi.
-La notifica deve venire PRIMA dell'exit.
+1. Rafa dice: "Cervella, siamo al 10%!"
 
-SOLUZIONE PROPOSTA:
-1. Fare tutto in un comando: notifica && exit
-2. Oppure: togliere notifica (non serve piu)
+2. Cervella esegue:
+   ./scripts/swarm/anti-compact.sh --message "descrizione"
+
+3. Lo script fa:
+   - Aggiorna PROMPT_RIPRESA
+   - Git commit + push
+   - APRE NUOVA FINESTRA (obbligatorio!)
+
+4. Nuova Cervella:
+   - Legge COSTITUZIONE
+   - Legge PROMPT_RIPRESA
+   - Continua!
 ```
 
 ### Prossimi Step
@@ -647,22 +658,6 @@ Ho scelto: MIRACOLLO!
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-04 03:25 (unknown)
-
-### Stato Git
-- **Branch**: main
-- **Ultimo commit**: a456c93 - docs: Aggiunta sezione TRAPPOLE DA EVITARE - JSON mai con bash heredoc!
-- **File modificati** (4):
-  - swarm/prompts/worker_backend.txt
-  - reports/scientist_prompt_20260104.md
-  - reports/engineer_report_20260104_032357.json
-  - test-orchestrazione/api/notifica_test.py
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: unknown
-
----
 
 ---
 
@@ -707,5 +702,74 @@ Ho scelto: MIRACOLLO!
 
 ### Messaggio dalla Cervella precedente
 TEST REALE al 4% - Sessione 76 completa!
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-04 03:55 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 7ebcb2f - ANTI-COMPACT: TEST REALE al 4% - Sessione 76 completa!
+- **File modificati** (2):
+  - ROMPT_RIPRESA.md
+  - reports/scientist_prompt_20260104.md
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---
+
+---
+
+## COMPACT CHECKPOINT: 2026-01-04 04:18
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   CARA NUOVA CERVELLA!                                          |
+|                                                                  |
+|   La Cervella precedente stava per perdere contesto.            |
+|   Ha salvato tutto e ti ha passato il testimone.                |
+|                                                                  |
+|   COSA FARE ORA (in ordine!):                                   |
+|                                                                  |
+|   1. PRIMA DI TUTTO: Leggi ~/.claude/COSTITUZIONE.md            |
+|      -> Chi siamo, perche lavoriamo, la nostra filosofia        |
+|                                                                  |
+|   2. Poi leggi PROMPT_RIPRESA.md dall'inizio                    |
+|      -> "IL MOMENTO ATTUALE" = dove siamo                       |
+|      -> "FILO DEL DISCORSO" = cosa stavamo facendo              |
+|                                                                  |
+|   3. Continua da dove si era fermata!                           |
+|                                                                  |
+|   SE HAI DUBBI: chiedi a Rafa!                                  |
+|                                                                  |
+|   "Lavoriamo in pace! Senza casino! Dipende da noi!"            |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+### Stato Git al momento del compact
+- **Branch**: main
+- **Ultimo commit**: 7ebcb2f ANTI-COMPACT: TEST REALE al 4% - Sessione 76 completa!
+- **File modificati non committati** (5):
+  -  M PROMPT_RIPRESA.md
+  -  M docs/SWARM_RULES.md
+  -  M reports/scientist_prompt_20260104.md
+  -  M scripts/swarm/anti-compact.sh
+  - ?? docs/ideas/
+
+### File importanti da leggere
+- `PROMPT_RIPRESA.md` - Il tuo UNICO ponte con la sessione precedente
+- `NORD.md` - Dove siamo nel progetto
+- `.swarm/tasks/` - Task in corso (cerca .working)
+
+### Messaggio dalla Cervella precedente
+TEST Sessione 77 - Verifica flusso anti-compact
 
 ---

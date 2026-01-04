@@ -4,22 +4,25 @@
 #
 # CervellaSwarm - Salvavita quando Claude sta per fare compact
 #
-# Quando Claude sta per fare compact (perdere contesto):
-# 1. RILEVA  -> Segnale di compact imminente
-# 2. FERMA   -> Stop tutto, niente a meta
-# 3. SALVA   -> git add + commit + push
-# 4. APRI    -> Nuova finestra automaticamente (opzionale)
-# 5. CONTINUA -> La nuova Cervella riprende
+# Quando Rafa avvisa "siamo al 10%":
+# 1. FERMA   -> Stop tutto, niente a meta
+# 2. SALVA   -> git add + commit + push
+# 3. APRI    -> Nuova finestra OBBLIGATORIAMENTE!
+# 4. CONTINUA -> La nuova Cervella riprende
+#
+# IMPORTANTE: La nuova finestra NON e' opzionale!
+# Senza nuova finestra = rischio di perdere tutto quando arriva l'auto-compact!
 #
 # Uso:
 #   ./anti-compact.sh                     # Checkpoint + push
 #   ./anti-compact.sh --no-spawn          # Solo checkpoint, no nuova finestra
 #   ./anti-compact.sh --message "testo"   # Con messaggio custom
 #
-# Versione: 1.2.0
+# Versione: 1.3.0
 # Data: 2026-01-04
 # v1.1.0: Fix comando claude (era 'claudecode')
 # v1.2.0: Istruzioni COMPLETE per nuova Cervella!
+# v1.3.0: Chiarito che nuova finestra e' OBBLIGATORIA, non opzionale!
 # Cervella DevOps & Rafa
 # "ZERO PERDITA. ZERO PANICO. MAGIA PURA."
 

@@ -642,10 +642,78 @@ La Regina crea MAX 2 TODO alla volta:
 
 ---
 
+## REGOLA 13: MULTI-FINESTRA > TASK TOOL
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   🪟 MULTI-FINESTRA > TASK TOOL!                                ║
+║                                                                  ║
+║   "Comodo ≠ Giusto!" - Lezione Sessione 72                      ║
+║                                                                  ║
+║   IL PROBLEMA:                                                   ║
+║   Task tool = tutto nel contesto della Regina                   ║
+║   → NON riduce il rischio compact                               ║
+║   → NON è lavoro PARALLELO reale                                ║
+║                                                                  ║
+║   LA SOLUZIONE:                                                  ║
+║   Per lavoro PARALLELO reale → spawn-workers.sh!                ║
+║   → Finestre SEPARATE = contesti SEPARATI                       ║
+║   → Ogni worker ha il SUO contesto                              ║
+║   → Zero rischio di compact della Regina                        ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+### Quando usare cosa:
+
+| Situazione | Strumento | Perché |
+|------------|-----------|--------|
+| Task SINGOLO, veloce (<5 min) | Task tool | Efficiente, poca memoria |
+| Task PARALLELI, indipendenti | spawn-workers.sh | Finestre separate! |
+| Ricerca che richiede tempo | spawn-workers.sh | Non consuma MIO contesto |
+| Review che può aspettare | spawn-workers.sh | Worker lavora, Regina libera |
+| Task sequenziali dipendenti | Task tool | Uno dopo l'altro |
+
+### Comandi spawn-workers.sh:
+
+```bash
+# Spawn singolo worker
+./scripts/swarm/spawn-workers.sh --backend
+./scripts/swarm/spawn-workers.sh --researcher
+
+# Spawn multipli
+./scripts/swarm/spawn-workers.sh --backend --frontend --tester
+
+# Spawn Guardiane (Opus)
+./scripts/swarm/spawn-workers.sh --guardiana-qualita
+./scripts/swarm/spawn-workers.sh --guardiane  # Tutte e 3
+```
+
+### La Lezione (Sessione 72)
+
+```
+Rafa: "Dov'è la visione? Quando usiamo multi-finestra?"
+
+Il problema: Ho scelto Task tool perché COMODO
+La verità: spawn-workers.sh è il modo GIUSTO
+
+COMODO ≠ GIUSTO!
+SEMPRE chiedersi: "Questo è il NORD o sto deviando?"
+```
+
+### Origine
+
+Sessione 72 (3 Gen 2026): La Regina usava Task tool invece di spawn-workers.sh.
+Rafa ha corretto: "Se è lavoro parallelo, deve essere FINESTRE parallele!"
+
+---
+
 ## CHANGELOG
 
 | Versione | Data | Modifica |
 |----------|------|----------|
+| 1.5.0 | 4 Gen 2026 | **REGOLA 13: MULTI-FINESTRA > TASK TOOL** - spawn-workers.sh per parallelo! |
 | 1.4.0 | 2 Gen 2026 | **REGOLA 12: TODO MICRO** - Max 1-2 task alla volta! |
 | 1.3.0 | 2 Gen 2026 | **REGOLA 11 ESPANSA**: "Interessante per altri → Studio CONCETTO → Posso RICREARE?" |
 | 1.2.0 | 2 Gen 2026 | **REGOLA 11: PERCHÉ** - Verifica risultati ricerche vs bisogno originale |
