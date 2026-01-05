@@ -94,23 +94,29 @@
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   FOCUS: USARE LO SWARM IN PRODUZIONE!                          |
+|   I 3 PEZZI MANCANTI PER IL 100000%!                            |
 |                                                                  |
-|   Il sistema e' PROTETTO! La regola non puo' piu' essere        |
-|   ignorata. E' il momento di USARLO!                             |
+|   "SU CARTA != REALE" - Costituzione                            |
 |                                                                  |
-|   PROTEZIONE ATTIVA:                                             |
-|   - Hook blocca Task tool per cervella-*                        |
-|   - DNA aggiornato con VIETATO                                  |
-|   - SWARM_RULES con conseguenze catastrofiche                   |
+|   PRIORITA' 1: ANTI AUTO-COMPACT                                |
+|   → Renderlo SEAMLESS (testato, funzionante)                    |
+|   → Zero perdita di contesto                                    |
+|   → Status: SU CARTA - DA RENDERE REALE!                        |
 |                                                                  |
-|   PROSSIMI:                                                       |
-|   - [x] Protezione Task tool implementata                       |
-|   - [x] Template inizio sessione creato                         |
-|   - [ ] MIRACOLLO! Usare swarm con protezione attiva            |
-|   - [ ] Vedere hook in azione (test reale!)                     |
+|   PRIORITA' 2: SISTEMA FEEDBACK CERVELLE                        |
+|   → Raccolta automatica a fine sessione                         |
+|   → Analisi periodica pattern                                   |
+|   → Il sistema IMPARA dai propri errori                         |
+|   → Status: IDEA GENIALE - DA IMPLEMENTARE!                     |
 |                                                                  |
-|   "Il vero test e' l'uso!" - Rafa                               |
+|   PRIORITA' 3: ROADMAPS VISUALE                                 |
+|   → Multi-progetto automatico                                   |
+|   → Un comando, tutti i progetti                                |
+|   → Status: IDEA - DA RICERCARE!                                |
+|                                                                  |
+|   ROADMAP DEDICATA: docs/roadmap/ROADMAP_3_PEZZI_MANCANTI.md   |
+|                                                                  |
+|   PROSSIMA SESSIONE: Iniziare da ANTI AUTO-COMPACT!            |
 |                                                                  |
 +------------------------------------------------------------------+
 ```

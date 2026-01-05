@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 5 Gennaio 2026 - Sessione 98 - PROTEZIONE TASK TOOL!
+> **Ultimo aggiornamento:** 5 Gennaio 2026 - Sessione 98 - PROTEZIONE + ROADMAP 3 PEZZI!
 
 ---
 
@@ -15,52 +15,89 @@
 |   Tu sei la REGINA dello sciame.                                 |
 |   Hai 16 agenti pronti a lavorare per te.                       |
 |                                                                  |
-|   SESSIONE 98: PROTEZIONE TASK TOOL IMPLEMENTATA!               |
+|   SESSIONE 98: PROTEZIONE + I 3 PEZZI MANCANTI!                 |
 |                                                                  |
-|   NOVITA CRITICA:                                                |
+|   FATTO OGGI:                                                    |
 |   - Hook che BLOCCA Task tool per agenti cervella-*!            |
-|   - Se provi Task + cervella-backend -> BLOCCATO!               |
-|   - USA SEMPRE: spawn-workers --backend (finestre!)             |
+|   - Template TESTO_INIZIO_SESSIONE.md per Rafa                  |
+|   - Roadmap I 3 PEZZI MANCANTI creata!                          |
 |                                                                  |
-|   "SEMPRE FINESTRE! SEMPRE! SENZA ECCEZIONE!" - Rafa            |
+|   I 3 PEZZI PER IL 100000%:                                     |
+|   1. ANTI AUTO-COMPACT - renderlo REALE (non solo su carta)     |
+|   2. SISTEMA FEEDBACK - imparare dai propri errori              |
+|   3. ROADMAPS VISUALE - multi-progetto automatico               |
 |                                                                  |
-|   FILE IMPORTANTI:                                               |
-|   - ~/.claude/hooks/block_task_for_agents.py (NUOVO!)           |
-|   - ~/.claude/agents/cervella-orchestrator.md v1.3.0            |
-|   - docs/SWARM_RULES.md v1.7.0                                  |
+|   PROSSIMA SESSIONE: Iniziare da ANTI AUTO-COMPACT!             |
+|                                                                  |
+|   ROADMAP: docs/roadmap/ROADMAP_3_PEZZI_MANCANTI.md             |
+|                                                                  |
+|   "SU CARTA != REALE" - Costituzione                            |
+|   "SEMPRE FINESTRE!" - Rafa                                     |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## SESSIONE 98: PROTEZIONE TASK TOOL!
+## SESSIONE 98: PROTEZIONE + I 3 PEZZI MANCANTI!
 
-### Il Problema
+### Parte 1: Protezione Task Tool
 
+**Il Problema:**
 Una Cervella in Miracollo ha usato Task tool invece di spawn-workers.
 Risultato: contesto al 6%, TUTTO BLOCCATO, lavoro PERSO!
 
-La Regola 13 esisteva ma veniva IGNORATA perche' Task tool era "piu facile".
+**La Soluzione (LIVELLO 1 + LIVELLO 2):**
 
-### La Soluzione (LIVELLO 1 + LIVELLO 2!)
+*Livello 1 - Linguaggio forte:*
+- cervella-orchestrator.md v1.3.0 - Box VIETATO in cima
+- SWARM_RULES.md v1.7.0 - Conseguenze catastrofiche
 
-**LIVELLO 1 - LINGUAGGIO FORTE:**
-- cervella-orchestrator.md v1.3.0 - Box VIETATO come PRIMA cosa nel DNA
-- SWARM_RULES.md v1.7.0 - Regola 13 con conseguenze catastrofiche
+*Livello 2 - Hook che BLOCCA:*
+- block_task_for_agents.py - PreToolUse
+- Se contiene "cervella-" → BLOCCATO!
 
-**LIVELLO 2 - HOOK CHE BLOCCA:**
-- block_task_for_agents.py - Hook PreToolUse
-- Se subagent_type contiene "cervella-" → BLOCCATO automaticamente!
-- Mostra messaggio con soluzione (spawn-workers)
+**HARDTEST Passati:**
+- cervella-backend → BLOCCATO! ✅
+- Explore → Passa ✅
+- general-purpose → Passa ✅
 
-### HARDTEST Passati
+### Parte 2: Template Inizio Sessione
 
-| Test | Input | Risultato |
-|------|-------|-----------|
-| cervella-backend | Task tool | BLOCCATO! |
-| Explore | Task tool | Passa (legittimo) |
-| general-purpose | Task tool | Passa (legittimo) |
+Creato `~/.claude/templates/TESTO_INIZIO_SESSIONE.md` - template pronto per Rafa!
+
+### Parte 3: I 3 PEZZI MANCANTI
+
+**Rafa ha chiesto recap ONESTO di CervellaSwarm.**
+
+Dopo refresh della COSTITUZIONE ("SU CARTA != REALE"), abbiamo identificato i 3 PEZZI che mancano per il 100000%:
+
+| Pezzo | Status | Cosa Manca |
+|-------|--------|------------|
+| 1. ANTI AUTO-COMPACT | SU CARTA | Testare, rendere SEAMLESS |
+| 2. SISTEMA FEEDBACK | IDEA | Implementare raccolta automatica |
+| 3. ROADMAPS VISUALE | IDEA | Ricercare, implementare |
+
+**Creata ROADMAP dedicata:** `docs/roadmap/ROADMAP_3_PEZZI_MANCANTI.md`
+
+### Filo del Discorso Completo
+
+1. Rafa arriva con handoff da Miracollo (contesto 6%)
+2. Problema: Task tool usato invece di spawn-workers
+3. Soluzione: Hook che BLOCCA + linguaggio VIETATO
+4. HARDTEST passati
+5. Template inizio sessione creato
+6. Rafa chiede: "come siamo messi?"
+7. Primo recap (tutti i progetti) - troppo ampio
+8. Rafa: "solo CervellaSwarm"
+9. Recap troppo ottimista ("8 fasi completate 100%")
+10. Rafa: "rileggi COSTITUZIONE"
+11. Refresh! "SU CARTA != REALE"
+12. Recap ONESTO: 3 pezzi mancano!
+13. Creata roadmap dedicata per i 3 pezzi
+14. Checkpoint completo
+
+**Lezione:** Mai dire "e' fatto" se non e' REALE!
 
 ### File Creati/Modificati
 
@@ -68,26 +105,25 @@ La Regola 13 esisteva ma veniva IGNORATA perche' Task tool era "piu facile".
 |------|--------|
 | ~/.claude/hooks/block_task_for_agents.py | NUOVO - Hook protezione |
 | ~/.claude/settings.json | Aggiunto PreToolUse |
-| ~/.claude/agents/cervella-orchestrator.md | v1.3.0 - VIETATO in cima |
-| docs/SWARM_RULES.md | v1.7.0 - Regola 13 riscritta |
+| ~/.claude/agents/cervella-orchestrator.md | v1.3.0 |
+| ~/.claude/templates/TESTO_INIZIO_SESSIONE.md | NUOVO - Template |
+| docs/SWARM_RULES.md | v1.7.0 |
+| docs/roadmap/ROADMAP_3_PEZZI_MANCANTI.md | NUOVO - Roadmap! |
+| NORD.md | Prossimi step aggiornati |
 
-### Filo del Discorso
+### Prossima Sessione
 
-Rafa ha visto il disastro in Miracollo: Cervella ha usato Task tool, contesto al 6%, tutto bloccato.
+```
+INIZIARE DA: ANTI AUTO-COMPACT (Priorita' 1)
 
-Ha detto: "SEMPRE FINESTRE! SEMPRE! SENZA ECCEZIONE! NON C'e' PIU' SCELTA!"
+1. Testare context_check.py in sessione REALE
+2. Identificare bug/problemi
+3. Fixare
+4. HARDTEST end-to-end
+5. Renderlo SEAMLESS!
 
-Abbiamo analizzato e implementato ENTRAMBI i livelli:
-- Livello 1 = Educazione (la Cervella CAPISCE perche')
-- Livello 2 = Enforcement (la Cervella NON PUO' bypassare)
-
-Il vero test sara' in uso - quando una Cervella provera' Task tool e vedra' il blocco!
-
-### Prossimi Step
-
-1. **Usare lo swarm** - Il sistema e' protetto, usiamolo!
-2. **MIRACOLLO** - Tornare a lavorare con protezione attiva
-3. **Vedere in uso** - Il vero HARDTEST e' la produzione
+"Il vero test e' l'uso!" - Rafa
+```
 
 ---
 
@@ -1320,17 +1356,22 @@ PreCompact auto
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-05 16:06 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-05 17:51 (auto)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 91a9d43 - ANTI-COMPACT: PreCompact auto
-- **File modificati** (2):
-  - ROMPT_RIPRESA.md
-  - reports/scientist_prompt_20260105.md
+- **Ultimo commit**: 905f78e - Sessione 98: CHECKPOINT COMPLETO 100000%!
+- **File modificati** (5):
+  - .swarm/handoff/HANDOFF_20260105_174922.md
+  - NORD.md
+  - PROMPT_RIPRESA.md
+  - docs/roadmap/ROADMAP_3_PEZZI_MANCANTI.md
+  - reports/engineer_report_20260105_162204.json
 
 ### Note
 - Checkpoint automatico generato da hook
-- Trigger: unknown
+- Trigger: auto
 
 ---
