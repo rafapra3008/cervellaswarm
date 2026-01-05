@@ -2,8 +2,8 @@
 
 > **"Cervella Beehive"** - Il sistema che fa nascere nuove Cervelle!
 
-**Versione:** 1.1.0
-**Data:** 5 Gennaio 2026 (Sessione 88)
+**Versione:** 1.2.0
+**Data:** 5 Gennaio 2026 (Sessione 88 - CODE REVIEW + FIX)
 **Link:** ROADMAP_SACRA.md (progetto principale)
 
 ---
@@ -333,7 +333,18 @@ Cervella & Rafa
 
 **CHANGELOG:**
 
-### 5 Gennaio 2026 - v1.1.0 (Sessione 88)
+### 5 Gennaio 2026 - v1.2.0 (Sessione 88 - CODE REVIEW + FIX)
+- ✅ CODE REVIEW: Rating 8/10 -> 9/10!
+- ✅ FIX A1+A2: Path hardcodati -> ~/.swarm/config
+- ✅ FIX B1: Codice duplicato -> swarm-common.sh
+- ✅ FIX B3: Template migliorati
+- ✅ NUOVO: swarm-health (health check sistema)
+- ✅ NUOVO: ~/.swarm/config (configurazione centralizzata)
+- ✅ NUOVO: ~/.local/lib/swarm-common.sh (funzioni comuni)
+- API al lavoro: cervella-backend(2) + cervella-docs(1) + cervella-reviewer(1)
+- Decisione: Guardiane per task CRITICI, verifica manuale per semplici
+
+### 5 Gennaio 2026 - v1.1.0 (Sessione 88 - Mattina)
 - ✅ Fase 3 COMPLETATA! swarm-review v1.0.0
 - Organizzata casa: 102 file archiviati in CervellaSwarm
 - Organizzata casa: 14 file archiviati in Miracollo

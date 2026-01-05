@@ -12,9 +12,10 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 1.9.0
-# Data: 2026-01-04
+# Versione: 2.0.0
+# Data: 2026-01-05
 # Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
+# v2.0.0: Config centralizzata ~/.swarm/config
 #
 # CHANGELOG:
 # v1.4.0: Fix notifica + exit
@@ -31,7 +32,30 @@
 set -e
 
 # ============================================================================
-# CONFIGURAZIONE - PROJECT-AWARE (v1.9.0)
+# CONFIGURAZIONE CENTRALIZZATA (v2.0.0)
+# ============================================================================
+
+# Carica configurazione globale se esiste
+SWARM_CONFIG="${SWARM_CONFIG:-$HOME/.swarm/config}"
+if [[ -f "$SWARM_CONFIG" ]]; then
+    source "$SWARM_CONFIG"
+fi
+
+# Trova Claude CLI (usa config o auto-detect)
+get_claude_bin() {
+    if [[ -n "$CLAUDE_BIN" && -x "$CLAUDE_BIN" ]]; then
+        echo "$CLAUDE_BIN"
+    elif command -v claude &>/dev/null; then
+        which claude
+    elif [[ -x "$HOME/.nvm/versions/node/v24.11.0/bin/claude" ]]; then
+        echo "$HOME/.nvm/versions/node/v24.11.0/bin/claude"
+    else
+        echo ""
+    fi
+}
+
+# ============================================================================
+# PROJECT-AWARE (v1.9.0)
 # ============================================================================
 
 # Trova la root del progetto cercando .swarm/
@@ -362,10 +386,16 @@ RUNNEREOF
     echo "echo ''" >> "$runner_script"
     # Prompt iniziale
     local initial_prompt="Controlla .swarm/tasks/ per task .ready assegnati a te e inizia a lavorare. Se non ci sono task, termina dicendo 'Nessun task per me'."
-    # v1.8.0: -p mode = uscita automatica dopo completamento task!
+    # v2.0.0: Usa get_claude_bin() per trovare claude dinamicamente
+    local claude_path
+    claude_path=$(get_claude_bin)
+    if [[ -z "$claude_path" ]]; then
+        print_error "Claude CLI non trovato! Configura CLAUDE_BIN in ~/.swarm/config"
+        return 1
+    fi
     echo "mkdir -p ${SWARM_DIR}/logs" >> "$runner_script"
     echo "LOG_FILE=\"${SWARM_DIR}/logs/worker_\$(date +%Y%m%d_%H%M%S).log\"" >> "$runner_script"
-    echo "/Users/rafapra/.nvm/versions/node/v24.11.0/bin/claude -p --append-system-prompt \"\$(cat ${prompt_file})\" \"${initial_prompt}\" 2>&1 | tee \"\$LOG_FILE\"" >> "$runner_script"
+    echo "${claude_path} -p --append-system-prompt \"\$(cat ${prompt_file})\" \"${initial_prompt}\" 2>&1 | tee \"\$LOG_FILE\"" >> "$runner_script"
 
     # Aggiungi chiusura automatica finestra Terminal
     cat >> "$runner_script" << 'CLOSEWINDOWEOF'

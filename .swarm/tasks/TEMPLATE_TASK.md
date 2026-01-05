@@ -1,26 +1,52 @@
-# TASK: [Descrizione breve]
+# Task: [NOME_TASK]
 
-## METADATA
-- ID: TASK_XXX
-- Assegnato a: cervella-[agent]
-- Livello rischio: [1/2/3]
-- Timeout: [tempo]
-- Creato: [timestamp]
+**Assegnato a:** [cervella-backend|frontend|tester|docs|devops|data|security|researcher|reviewer]
+**Stato:** ready
+**Priorita:** [ALTA|MEDIA|BASSA]
+**Dipende da:** [opzionale - nome altro task]
+**Stima:** [opzionale - es. "30 min", "2h"]
+**Livello rischio:** [1-BASSO|2-MEDIO|3-ALTO]
 
-## PERCHE
-[Motivazione del task]
+---
 
-## CRITERI DI SUCCESSO
-- [ ] Criterio 1
-- [ ] Criterio 2
-- [ ] Criterio 3
+## Obiettivo
 
-## FILE DA MODIFICARE
-- path/to/file1.py
-- path/to/file2.py
+[Descrizione chiara e concisa di cosa deve essere fatto]
 
-## CHI VERIFICHERA
-cervella-guardiana-[quale] (Livello X)
+## Contesto
 
-## DETTAGLI
-[Descrizione completa del task...]
+[Perche questo task e necessario - background, motivazione]
+
+## Specifiche
+
+### Input
+[Cosa riceve il worker - file da leggere, dati, riferimenti]
+
+### Output Richiesto
+[Cosa deve produrre - file da creare/modificare, formato atteso]
+
+### Vincoli
+[Limitazioni, cose da NON fare, compatibilita da mantenere]
+
+## File da Modificare
+
+- `path/to/file1.py`
+- `path/to/file2.js`
+
+## Criteri di Successo
+
+- [ ] [Criterio 1 - verificabile oggettivamente]
+- [ ] [Criterio 2 - verificabile oggettivamente]
+- [ ] [Criterio 3 - verificabile oggettivamente]
+
+## Chi Verifichera
+
+**Guardiana:** cervella-guardiana-[qualita|ops|ricerca]
+**Livello verifica:** [Intermedio|Approfondito]
+
+## Note
+
+[Informazioni aggiuntive, link utili, riferimenti a documentazione]
+
+---
+*Template v2.0 - CervellaSwarm*

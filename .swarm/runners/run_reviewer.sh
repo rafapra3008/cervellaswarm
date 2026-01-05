@@ -10,7 +10,7 @@ echo '🐝 [CervellaSwarm] Worker avviato'
 echo ''
 mkdir -p /Users/rafapra/Developer/CervellaSwarm/.swarm/logs
 LOG_FILE="/Users/rafapra/Developer/CervellaSwarm/.swarm/logs/worker_$(date +%Y%m%d_%H%M%S).log"
-/Users/rafapra/.nvm/versions/node/v24.11.0/bin/claude -p --append-system-prompt "$(cat /Users/rafapra/Developer/CervellaSwarm/.swarm/prompts/worker_docs.txt)" "Controlla .swarm/tasks/ per task .ready assegnati a te e inizia a lavorare. Se non ci sono task, termina dicendo 'Nessun task per me'." 2>&1 | tee "$LOG_FILE"
+/Users/rafapra/.nvm/versions/node/v24.11.0/bin/claude -p --append-system-prompt "$(cat /Users/rafapra/Developer/CervellaSwarm/.swarm/prompts/worker_reviewer.txt)" "Controlla .swarm/tasks/ per task .ready assegnati a te e inizia a lavorare. Se non ci sono task, termina dicendo 'Nessun task per me'." 2>&1 | tee "$LOG_FILE"
 
 # ============================================================================
 # AUTO-CLOSE: Claude terminato - chiudi questa finestra Terminal

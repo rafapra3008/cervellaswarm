@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 5 Gennaio 2026 - Sessione 88 - BEEHIVE ORGANIZZATO!
+> **Ultimo aggiornamento:** 5 Gennaio 2026 - Sessione 88 - CODE REVIEW + FIX COMPLETO!
 
 ---
 
@@ -15,42 +15,54 @@
 |   Tu sei la REGINA dello sciame.                                 |
 |   Hai 16 agenti pronti a lavorare per te.                       |
 |                                                                  |
-|   SESSIONE 88: BEEHIVE ORGANIZZATO!                             |
-|   - Casa pulita: 102 file archiviati CervellaSwarm              |
-|   - Casa pulita: 14 file archiviati Miracollo                   |
-|   - ROADMAP_BEEHIVE v1.1.0 - Fase 3 COMPLETATA!                 |
-|   - 4 su 5 metriche successo raggiunte!                         |
+|   SESSIONE 88: CODE REVIEW + FIX SWARM!                         |
+|   - Casa pulita: 102 + 14 file archiviati                       |
+|   - Code Review: 8/10 -> 9/10!                                  |
+|   - NUOVI: ~/.swarm/config, swarm-health, swarm-common.sh       |
+|   - API al lavoro: backend(2) + docs(1) + reviewer(1)           |
 |                                                                  |
 |   SESSIONE 87 (sotto): AUTO-HANDOFF v4.3.0 ORO!                 |
-|   "E' PROPRIO MAGIA!" - Rafa                                    |
+|   "Ultrapassar os proprios limites!" - Rafa                     |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## SESSIONE 88: BEEHIVE ORGANIZZATO!
+## SESSIONE 88: CODE REVIEW + FIX SWARM!
 
 ### L'Obiettivo
 
-Organizzare la casa dopo la magia della sessione 87 (swarm-status + swarm-review).
+1. Organizzare la casa (archiviare task vecchi)
+2. Code Review del sistema Swarm (oggi e' Lunedi!)
+3. Fixare i problemi trovati dalla review
 
 ### Cosa Abbiamo Fatto
 
-1. **ORGANIZZATO CERVELLASWARM**
-   - 102 file archiviati in `.swarm/archive/sessioni_test_20260105/`
-   - Task di test (HARDTEST_*, HT3_*, TASK_*, RICERCA_*) tutti archiviati
-   - Rimasti solo template e file di riferimento
+1. **ORGANIZZATO CASA**
+   - 102 file archiviati in CervellaSwarm
+   - 14 file archiviati in Miracollo
+   - SPLIT_SETTINGS stale archiviato
 
-2. **ORGANIZZATO MIRACOLLO**
-   - 14 file archiviati in `.swarm/archive/sessioni_20260105/`
-   - SPLIT_SETTINGS (stale) archiviato
-   - Rimasto solo CLEANUP_CONSOLE_LOG.ready (task reale in coda!)
+2. **CODE REVIEW DAY**
+   - cervella-reviewer ha analizzato spawn-workers, swarm-status, swarm-review
+   - Rating iniziale: 8/10
+   - Problemi ALTI: path hardcodati
+   - Problemi MEDI: codice duplicato, escape incompleto
+   - Problemi BASSI: template, logging
 
-3. **AGGIORNATO ROADMAP_BEEHIVE v1.1.0**
-   - Fase 3 COMPLETATA (Workflow Guardiane)
-   - 4 su 5 metriche successo raggiunte
-   - Prossimo: depends_on (Fase 4)
+3. **FIX IMPLEMENTATI (API al lavoro!)**
+   - cervella-backend: TASK_FIX_CONFIG (config centralizzata + fix path)
+   - cervella-backend: TASK_SWARM_COMMON (swarm-common.sh + swarm-health)
+   - cervella-docs: TASK_IMPROVE_TEMPLATES (template migliorati)
+
+4. **NUOVI FILE CREATI**
+   - `~/.swarm/config` - Configurazione centralizzata
+   - `~/.local/lib/swarm-common.sh` - Funzioni comuni (DRY!)
+   - `~/.local/bin/swarm-health` - Health check sistema
+   - Template migliorati in .swarm/tasks/
+
+5. **RATING FINALE: 9/10!**
 
 ### Comandi Globali Disponibili
 
@@ -62,16 +74,32 @@ swarm-status --cleanup    # Pulisce task stale
 swarm-review              # Mostra task da verificare
 swarm-review --start      # Spawna Guardiane per review
 
+swarm-health              # Health check sistema (6 controlli!)
+
 spawn-workers --backend   # Spawna api backend
 spawn-workers --frontend  # Spawna api frontend
+spawn-workers --docs      # Spawna api docs
+spawn-workers --reviewer  # Spawna reviewer
 ```
 
-### FILE MODIFICATI (Sessione 88)
+### FILE MODIFICATI/CREATI (Sessione 88)
 
 | File | Cosa |
 |------|------|
-| `ROADMAP_BEEHIVE.md` | v1.1.0 - Fase 3 COMPLETATA! |
-| `.swarm/archive/` | 102+ file archiviati |
+| `~/.swarm/config` | NUOVO - Configurazione centralizzata |
+| `~/.local/lib/swarm-common.sh` | NUOVO - Funzioni comuni |
+| `~/.local/bin/swarm-health` | NUOVO - Health check |
+| `~/.local/bin/spawn-workers` | Modificato - usa config |
+| `~/.local/bin/swarm-status` | Modificato - usa config |
+| `~/.local/bin/swarm-review` | Modificato - usa config |
+| `.swarm/tasks/TEMPLATE_*.md` | Migliorati |
+| `reports/code_review_swarm_20260105.md` | Report code review |
+
+### Decisione Cervella: Guardiane
+
+Le Guardiane sono utili per task CRITICI (deploy, security, codice complesso).
+Per task semplici (docs, config, template) basta verifica manuale.
+Il sistema c'e', lo usiamo quando serve.
 
 ---
 
@@ -536,17 +564,25 @@ PreCompact auto
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-05 02:43 (unknown)
+---
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-05 03:20 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 3126fa6 - 📝 PROMPT_RIPRESA 100000%! Sessione 86
+- **Ultimo commit**: 2f1d000 - 🐝 Sessione 88: BEEHIVE ORGANIZZATO!
 - **File modificati** (5):
-  - swarm/runners/run_backend.sh
-  - .swarm/tasks/HT3_BACKEND.ready
-  - .swarm/tasks/HT3_BACKEND_output.md
-  - .swarm/tasks/TASK_TEST_BACKEND.ready
-  - .swarm/tasks/TASK_TEST_BACKEND_output.md
+  - swarm/prompts/worker_docs.txt
+  - .swarm/runners/run_docs.sh
+  - .swarm/scripts/swarm-review.sh
+  - .swarm/scripts/swarm-status.sh
+  - .swarm/tasks/TEMPLATE_TASK.md
 
 ### Note
 - Checkpoint automatico generato da hook
