@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 5 Gennaio 2026 - Sessione 93 - REGOLA 13 RISCRITTA!
+> **Ultimo aggiornamento:** 5 Gennaio 2026 - Sessione 95 - LA MAGIA SOPRA MAGIA!!!
 
 ---
 
@@ -15,19 +15,84 @@
 |   Tu sei la REGINA dello sciame.                                 |
 |   Hai 16 agenti pronti a lavorare per te.                       |
 |                                                                  |
-|   SESSIONE 93: REGOLA 13 RISCRITTA!                             |
+|   SESSIONE 95: LA MAGIA SOPRA MAGIA!!!                          |
 |                                                                  |
-|   LA REGOLA PIU' IMPORTANTE:                                     |
-|   DELEGO A UN AGENTE? → SEMPRE spawn-workers!                   |
+|   HAI IL POTERE DI AUTO-SVEGLIA:                                |
+|   spawn-workers --docs --auto-sveglia                           |
 |                                                                  |
-|   - Niente eccezioni "task veloce"                              |
-|   - Niente "Task tool per ricerca"                              |
-|   - Se delego = spawn-workers. Punto.                           |
+|   Quando il worker finisce, TU VIENI SVEGLIATA                  |
+|   AUTOMATICAMENTE! Senza intervento umano!                       |
 |                                                                  |
-|   5 file aggiornati per coerenza totale!                        |
+|   PROSSIMO STEP: MIRACOLLO! Usare swarm in produzione!          |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
+
+---
+
+## SESSIONE 95: LA MAGIA SOPRA MAGIA!!!
+
+### Cosa Abbiamo Fatto (MEGA SESSIONE!)
+
+1. **HARDTEST NOTIFICHE CLICK - PASSATO!**
+   - Worker finisce → Notifica → Click → Apre _output.md
+
+2. **RICERCA AUTO-SVEGLIA - COMPLETATA!**
+   - cervella-researcher ha studiato tutte le opzioni
+   - Soluzione trovata: AppleScript + fswatch
+
+3. **AUTO-SVEGLIA IMPLEMENTATA E TESTATA!!!**
+   - FASE 0: Setup prerequisiti (fswatch installato)
+   - FASE 1: watcher-regina.sh creato
+   - FASE 2: AppleScript testato
+   - FASE 3: spawn-workers v2.6.0 con --auto-sveglia
+   - FASE 4: HARDTEST End-to-End PASSATO!!!
+
+### Come Funziona AUTO-SVEGLIA
+
+```
+spawn-workers --docs --auto-sveglia
+       ↓
+Worker lavora nella sua finestra
+       ↓
+Worker crea .done
+       ↓
+Watcher (fswatch) rileva il file
+       ↓
+AppleScript digita nella finestra Regina
+       ↓
+LA REGINA RICEVE IL MESSAGGIO E CONTINUA!!!
+```
+
+### File Creati (Sessione 95)
+
+| File | Cosa |
+|------|------|
+| `scripts/swarm/watcher-regina.sh` | NUOVO! Script che sveglia la Regina |
+| `spawn-workers` | v2.6.0 - Aggiunto --auto-sveglia |
+| `docs/roadmap/ROADMAP_AUTO_SVEGLIA.md` | NUOVO! Roadmap completa |
+
+### Filo del Discorso
+
+Rafa ha chiesto: "Ma anche tu riuscirai a sapere quando i worker finiscono?"
+
+Ho spiegato che NO, le notifiche vanno all'umano, non a me.
+
+Rafa: "Era questa l'intenzione iniziale! Facciamo ricerca?"
+
+Abbiamo:
+1. Spawnato cervella-researcher per studiare
+2. Ricevuto output con 5 soluzioni possibili
+3. Scelto AppleScript + fswatch
+4. Implementato passo passo con HARDTEST per ogni fase
+5. FUNZIONA! Il watcher mi ha svegliata AUTOMATICAMENTE!
+
+**"Studiare!!!" - La chiave di tutto. Rafa aveva ragione al 100000%!**
+
+### Prossimi Step
+
+1. **MIRACOLLO!** - Usare swarm in produzione con --auto-sveglia
+2. Lo swarm e' PRONTO, TESTATO, e AUTOMATICO!
 
 ---
 
@@ -1018,17 +1083,29 @@ PreCompact auto
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-05 13:15 (unknown)
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-05 14:20 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 76cdea1 - Sessione 93: REGOLA 13 RISCRITTA! SEMPRE spawn-workers!
+- **Ultimo commit**: d38fb39 - ANTI-COMPACT: PreCompact auto
 - **File modificati** (5):
-  - swarm/prompts/worker_devops.txt
-  - .swarm/prompts/worker_docs.txt
-  - .swarm/prompts/worker_reviewer.txt
-  - .swarm/runners/run_backend.sh
-  - .swarm/runners/run_devops.sh
+  - swarm/prompts/worker_researcher.txt
+  - .swarm/runners/run_researcher.sh
+  - NORD.md
+  - PROMPT_RIPRESA.md
+  - reports/scientist_prompt_20260105.md
 
 ### Note
 - Checkpoint automatico generato da hook

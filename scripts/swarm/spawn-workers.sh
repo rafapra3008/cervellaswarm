@@ -12,12 +12,13 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 2.5.0
+# Versione: 2.6.0
 # Data: 2026-01-05
 # Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
 # v2.0.0: Config centralizzata ~/.swarm/config
 #
 # CHANGELOG:
+# v2.6.0: AUTO-SVEGLIA! Flag --auto-sveglia avvia watcher che sveglia la Regina quando worker finiscono!
 # v2.5.0: FIX NOTIFICA CLICK! Apre _output.md del task invece di .log. Legge task name da file stato.
 # v2.4.0: NOTIFICA DETTAGLIATA! Nome task, tempo esecuzione, esito. Click per aprire log (se terminal-notifier)
 # v2.3.0: Validazione ownership config prima di source (security fix)
@@ -35,6 +36,11 @@
 # Aggiunto: Supporto Guardiane (Opus)
 
 set -e
+
+# ============================================================================
+# AUTO-SVEGLIA (v2.6.0) - Flag per svegliare la Regina!
+# ============================================================================
+AUTO_SVEGLIA=false
 
 # ============================================================================
 # CONFIGURAZIONE CENTRALIZZATA (v2.0.0)
@@ -620,12 +626,14 @@ show_usage() {
     echo "  --all                  Spawna worker comuni (backend, frontend, tester)"
     echo "  --guardiane            Spawna tutte le guardiane"
     echo "  --list                 Lista worker disponibili"
+    echo "  --auto-sveglia         Avvia watcher che sveglia la Regina!"
     echo "  --help                 Mostra questo help"
     echo ""
     echo "Esempi:"
     echo "  $0 --backend --frontend    # Spawna backend e frontend"
     echo "  $0 --all                   # Spawna tutti i worker comuni"
     echo "  $0 --guardiane             # Spawna tutte le guardiane (Opus)"
+    echo "  $0 --docs --auto-sveglia   # Docs + sveglia Regina quando finisce!"
     echo ""
 }
 
@@ -712,6 +720,9 @@ main() {
                 show_usage
                 exit 0
                 ;;
+            --auto-sveglia)
+                AUTO_SVEGLIA=true
+                ;;
             *)
                 print_error "Opzione sconosciuta: $1"
                 show_usage
@@ -761,6 +772,32 @@ main() {
     print_info "Le finestre Terminal sono aperte!"
     print_info "I worker stanno cercando task in .swarm/tasks/"
     echo ""
+
+    # ============================================================================
+    # AUTO-SVEGLIA (v2.6.0) - Avvia watcher se richiesto
+    # ============================================================================
+    if [ "$AUTO_SVEGLIA" = true ]; then
+        WATCHER_SCRIPT="${PROJECT_ROOT}/scripts/swarm/watcher-regina.sh"
+
+        if [ -x "$WATCHER_SCRIPT" ]; then
+            echo ""
+            print_info "Avvio AUTO-SVEGLIA watcher..."
+
+            # Avvia watcher in background
+            "$WATCHER_SCRIPT" "${SWARM_DIR}/tasks" "Code" &
+            WATCHER_PID=$!
+
+            # Salva PID per cleanup futuro
+            echo $WATCHER_PID > "${SWARM_DIR}/status/watcher.pid"
+
+            print_success "Watcher AUTO-SVEGLIA avviato! (PID: $WATCHER_PID)"
+            print_info "La Regina verra' svegliata quando i worker finiscono!"
+            echo ""
+        else
+            print_warning "Watcher script non trovato: $WATCHER_SCRIPT"
+            print_warning "AUTO-SVEGLIA non attivato."
+        fi
+    fi
 }
 
 # Esegui

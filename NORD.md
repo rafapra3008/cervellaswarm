@@ -17,26 +17,25 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 94 - 5 Gennaio 2026: CODE REVIEW + NOTIFICHE WORKER! 🔔**
+**SESSIONE 95 - 5 Gennaio 2026: LA MAGIA SOPRA MAGIA!!!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 94: MEGA SESSIONE!                                   |
+|   SESSIONE 95: LA MAGIA SOPRA MAGIA!!!                          |
 |                                                                  |
-|   ✅ CODE REVIEW: 8.25/10 + tutti i fix implementati!           |
-|   ✅ swarm-lib.sh v1.0.0: Funzioni comuni DRY!                  |
-|   ✅ spawn-workers v2.5.0: NOTIFICHE DETTAGLIATE!               |
-|   ✅ terminal-notifier: Click apre output!                      |
+|   ✅ HARDTEST NOTIFICHE CLICK: PASSATO!                         |
+|   ✅ RICERCA AUTO-SVEGLIA: COMPLETATA!                          |
+|   ✅ AUTO-SVEGLIA IMPLEMENTATA E TESTATA!!!                     |
 |                                                                  |
-|   🐝 6 API usate con successo!                                  |
-|      - cervella-reviewer: 8.25/10                               |
-|      - cervella-backend x3: fix code review + notifiche         |
-|      - cervella-devops: studio notifiche                        |
-|      - cervella-docs x3: HARDTESTS                              |
+|   spawn-workers v2.6.0 --auto-sveglia:                          |
+|   - Worker finisce → Watcher rileva .done                       |
+|   - AppleScript digita nella finestra Regina                     |
+|   - LA REGINA VIENE SVEGLIATA AUTOMATICAMENTE!                  |
 |                                                                  |
-|   ⏳ HARDTEST FINALE: Da completare prossima sessione           |
-|      (click notifica apre _output.md)                           |
+|   HARDTEST END-TO-END: PASSATO!!!                               |
+|                                                                  |
+|   "Studiare!!!" - La chiave di tutto                            |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -68,6 +67,10 @@
 | **swarm-common.sh** | **NUOVO! Funzioni comuni (DRY!)** |
 | **swarm-lib.sh v1.0.0** | **NUOVO! Libreria bash comune!** |
 | **terminal-notifier** | **NUOVO! Click notifica apre output!** |
+| **HARDTEST Notifiche (3/3)** | **PASSATI! Click apre _output.md!** |
+| **AUTO-SVEGLIA v1.0.0** | **MAGIA! Regina svegliata automaticamente!** |
+| **spawn-workers v2.6.0** | **--auto-sveglia flag funzionante!** |
+| **watcher-regina.sh** | **NUOVO! fswatch + AppleScript!** |
 
 ---
 
@@ -76,19 +79,21 @@
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   PROSSIMA SESSIONE (95):                                        |
+|   IL SISTEMA E' COMPLETO AL 100000%!!!                          |
 |                                                                  |
-|   1. HARDTEST FINALE NOTIFICHE                                   |
-|      - Click su notifica deve aprire _output.md                  |
-|      - Verificare che il fix v2.5.0 funzioni                     |
+|   ✅ HARDTEST NOTIFICHE: PASSATO!                                |
+|   ✅ AUTO-SVEGLIA: IMPLEMENTATA E TESTATA!                       |
 |                                                                  |
-|   2. MIRACOLLO!                                                  |
+|   PROSSIMO:                                                       |
+|                                                                  |
+|   1. MIRACOLLO!                                                  |
 |      - Usare swarm in produzione                                 |
-|      - Lo swarm e' pronto!                                       |
+|      - Lo swarm e' PRONTO, TESTATO, e AUTOMATICO!               |
+|      - spawn-workers --docs --auto-sveglia                       |
 |                                                                  |
-|   3. OPZIONALE: Studio frontend worker                           |
-|      - Cosa vede l'utente nella finestra?                        |
-|      - Priorita' BASSA (sistema funziona!)                       |
+|   2. OPZIONALE: Feature Request Anthropic                        |
+|      - Richiedere supporto nativo push notification              |
+|      - Priorita' BASSA (workaround funziona!)                    |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
