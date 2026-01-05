@@ -1097,14 +1097,21 @@ PreCompact auto
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-05 14:25 (unknown)
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-05 15:00 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: c87d0cf - Sessione 95: LA MAGIA SOPRA MAGIA! AUTO-SVEGLIA!
-- **File modificati** (2):
-  - .swarm/handoff/HANDOFF_20260105_142531.md
-  - reports/engineer_report_20260105_142435.json
+- **Ultimo commit**: 2e8a524 - Sessione 96: AUTO-SVEGLIA SEMPRE! spawn-workers v2.7.0
+- **File modificati** (5):
+  - swarm/tasks/TASK_HARDTEST_AUTO_SVEGLIA_output.md
+  - PROMPT_RIPRESA.md
+  - reports/scientist_prompt_20260105.md
+  - .swarm/tasks/TASK_HARDTEST_AUTO_SVEGLIA.done
+  - .swarm/tasks/TASK_HARDTEST_AUTO_SVEGLIA.md
 
 ### Note
 - Checkpoint automatico generato da hook

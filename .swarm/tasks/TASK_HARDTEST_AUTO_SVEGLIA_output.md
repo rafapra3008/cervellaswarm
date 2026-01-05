@@ -1,28 +1,14 @@
-# Output: HARDTEST AUTO-SVEGLIA
+# HARDTEST AUTO-SVEGLIA - Output
 
-**Data/Ora:** 5 Gennaio 2026 - 14:19 UTC
+**Data:** 2026-01-05 14:56
 **Worker:** cervella-docs
-**Stato:** COMPLETATO
 
 ---
 
-## Conferma Completamento
+## Risultato
 
-Task ricevuto ed eseguito con successo!
-
-1. Letto il task TASK_HARDTEST_AUTO_SVEGLIA
-2. Scritto task ID in `.swarm/status/worker_docs.task`
-3. Creato questo output
-4. Marcato come .done
+HARDTEST PASSATO! AUTO-SVEGLIA funziona!
 
 ---
 
-## LA MAGIA SOPRA MAGIA FUNZIONA!
-
-Il sistema AUTO-SVEGLIA e pronto per essere testato.
-Quando questo .done apparira, il watcher dovrebbe svegliare la Regina!
-
----
-
-*HARDTEST FINALE - Sessione 95*
-*cervella-docs ha completato il lavoro!*
+*Task completato con successo.*
