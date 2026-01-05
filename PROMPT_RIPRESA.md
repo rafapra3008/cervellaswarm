@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 5 Gennaio 2026 - Sessione 88 - CODE REVIEW + FIX COMPLETO!
+> **Ultimo aggiornamento:** 5 Gennaio 2026 - Sessione 89 - GLOBALIZZAZIONE MEMORIA + REVIEW HOOKS!
 
 ---
 
@@ -15,17 +15,83 @@
 |   Tu sei la REGINA dello sciame.                                 |
 |   Hai 16 agenti pronti a lavorare per te.                       |
 |                                                                  |
-|   SESSIONE 88: CODE REVIEW + FIX SWARM!                         |
-|   - Casa pulita: 102 + 14 file archiviati                       |
-|   - Code Review: 8/10 -> 9/10!                                  |
-|   - NUOVI: ~/.swarm/config, swarm-health, swarm-common.sh       |
-|   - API al lavoro: backend(2) + docs(1) + reviewer(1)           |
+|   SESSIONE 89: MEMORIA GLOBALIZZATA + REVIEW HOOKS!             |
+|   - DNA Orchestrator: Regola 13 RISCRITTA!                      |
+|   - Database ora in ~/.swarm/data/ (GLOBALE!)                   |
+|   - paths.py v2.0.0 (path globali!)                             |
+|   - Review hooks/scripts: 8.5/10                                |
 |                                                                  |
-|   SESSIONE 87 (sotto): AUTO-HANDOFF v4.3.0 ORO!                 |
+|   SESSIONE 88 (sotto): Code Review 9/10!                        |
 |   "Ultrapassar os proprios limites!" - Rafa                     |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
+
+---
+
+## SESSIONE 89: GLOBALIZZAZIONE MEMORIA + REVIEW HOOKS!
+
+### L'Obiettivo
+
+1. Fixare DNA Orchestrator (Regola 13 confusa)
+2. Globalizzare sistema memoria (database + scripts)
+3. Review completa hooks/scripts
+
+### Cosa Abbiamo Fatto
+
+1. **FIX DNA ORCHESTRATOR - Regola 13**
+   - PRIMA: confusa su quando usare Task tool vs spawn-workers
+   - DOPO: "SE MODIFICA FILE -> spawn-workers (finestra separata!)"
+   - DOPO: "SE SOLO LEGGE -> Task tool (interno)"
+   - Path aggiornati in 4 DNA guardiane
+
+2. **SISTEMA MEMORIA GLOBALIZZATO**
+   - Database: `~/.swarm/data/swarm_memory.db` (1.7MB)
+   - Scripts: `~/.claude/scripts/memory/` (4 file Python)
+   - `paths.py` v2.0.0 - usa path GLOBALI, non di progetto
+   - `settings.json`: 5 path aggiornati per memoria
+
+3. **REVIEW HOOKS/SCRIPTS - Rating 8.5/10**
+   - cervella-reviewer ha analizzato tutto
+   - Report in: `reports/review_hooks_scripts_20260105.md`
+
+### Problemi Trovati dalla Review
+
+**ALTI (sicurezza!):**
+1. Path NVM hardcodato (v24.11.0) - usa glob!
+2. Escape AppleScript incompleto - aggiungi \, ', newline
+3. Command injection potenziale in osascript
+
+**MEDI:**
+4. Error handling silenzioso (except: pass)
+5. Codice duplicato tra hooks -> creare common.py
+6. Timeout mancanti subprocess
+7. Error messages criptici
+8. Race condition spawning
+
+**PUNTI FORZA:**
+- Architettura modulare
+- Graceful degradation
+- Apple integration elegante
+- Anti-compact system sofisticato
+
+### File Modificati (Sessione 89)
+
+| File | Cosa |
+|------|------|
+| `~/.claude/agents/cervella-orchestrator.md` | Regola 13 riscritta |
+| `~/.claude/agents/cervella-guardiana-*.md` | Path aggiornati (3 file) |
+| `~/.claude/settings.json` | 5 path memoria aggiornati |
+| `~/.claude/scripts/common/paths.py` | v2.0.0 - GLOBALE! |
+| `~/.claude/scripts/memory/*.py` | NUOVI - 4 script |
+| `~/.swarm/data/swarm_memory.db` | COPIATO da CervellaSwarm |
+| `reports/review_hooks_scripts_20260105.md` | Report review |
+
+### Prossimi Step
+
+1. **Fix problemi ALTI** - Sicurezza prima!
+2. **Creare ~/.claude/hooks/common.py** - DRY tra hooks
+3. **MIRACOLLO!** - Usare Swarm in produzione
 
 ---
 
@@ -478,9 +544,9 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 
 ---
 
-**VERSIONE:** v36.0.0
-**SESSIONE:** 86
-**DATA:** 4 Gennaio 2026
+**VERSIONE:** v37.0.0
+**SESSIONE:** 89
+**DATA:** 5 Gennaio 2026
 
 ---
 
@@ -572,17 +638,23 @@ PreCompact auto
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-05 03:20 (unknown)
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-05 04:04 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 2f1d000 - 🐝 Sessione 88: BEEHIVE ORGANIZZATO!
+- **Ultimo commit**: 0285d75 - 🐝 Sessione 88 COMPLETA: Code Review + Fix Swarm!
 - **File modificati** (5):
-  - swarm/prompts/worker_docs.txt
-  - .swarm/runners/run_docs.sh
-  - .swarm/scripts/swarm-review.sh
-  - .swarm/scripts/swarm-status.sh
-  - .swarm/tasks/TEMPLATE_TASK.md
+  - ROMPT_RIPRESA.md
+  - reports/scientist_prompt_20260105.md
+  - .swarm/tasks/TASK_REVIEW_HOOKS_SCRIPTS.done
+  - .swarm/tasks/TASK_REVIEW_HOOKS_SCRIPTS.md
+  - .swarm/tasks/TASK_REVIEW_HOOKS_SCRIPTS_output.md
 
 ### Note
 - Checkpoint automatico generato da hook

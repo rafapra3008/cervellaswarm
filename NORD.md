@@ -17,24 +17,26 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 88 - 5 Gennaio 2026: CODE REVIEW + FIX COMPLETO!**
+**SESSIONE 89 - 5 Gennaio 2026: GLOBALIZZAZIONE MEMORIA + REVIEW HOOKS!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 88: CODE REVIEW + FIX SWARM COMPLETO!                |
+|   SESSIONE 89: SISTEMA MEMORIA GLOBALIZZATO!                    |
 |                                                                  |
-|   1. Casa pulita (102 + 14 file archiviati)                     |
-|   2. Code Review: 8/10 -> 9/10!                                 |
-|   3. Fix ALTI completati (path hardcodati)                      |
-|   4. Nuovi comandi: swarm-health, ~/.swarm/config               |
-|   5. swarm-common.sh creato (DRY!)                              |
-|   6. Template migliorati                                         |
+|   1. DNA Orchestrator: Regola 13 RISCRITTA!                     |
+|      "SE MODIFICA FILE -> spawn-workers"                        |
+|      "SE SOLO LEGGE -> Task tool"                               |
 |                                                                  |
-|   COMANDI GLOBALI:                                               |
-|   $ swarm-status --all      (vedi tutto!)                       |
-|   $ swarm-health            (verifica sistema!)                 |
-|   $ spawn-workers --backend (spawna api!)                       |
+|   2. Sistema Memoria GLOBALIZZATO:                               |
+|      - Database: ~/.swarm/data/swarm_memory.db                  |
+|      - Scripts: ~/.claude/scripts/memory/                        |
+|      - paths.py v2.0.0 (path globali!)                          |
+|                                                                  |
+|   3. Review Hooks/Scripts: 8.5/10!                              |
+|      - 3 problemi ALTI (sicurezza, escape)                      |
+|      - 8 problemi MEDI (DRY, timeout, error handling)           |
+|      - 4 problemi BASSI (nice to have)                          |
 |                                                                  |
 |   "Ultrapassar os proprios limites!" - Rafa                     |
 |                                                                  |
@@ -129,37 +131,33 @@
 
 ## ULTIMO AGGIORNAMENTO
 
-**5 Gennaio 2026 - Sessione 88** - CODE REVIEW + FIX COMPLETO!
+**5 Gennaio 2026 - Sessione 89** - GLOBALIZZAZIONE MEMORIA + REVIEW HOOKS!
 
-### Cosa abbiamo fatto (Sessione 88):
+### Cosa abbiamo fatto (Sessione 89):
 
-1. **ORGANIZZATO CASA**
-   - 102 file archiviati in CervellaSwarm
-   - 14 file archiviati in Miracollo
+1. **FIX DNA ORCHESTRATOR**
+   - Regola 13 RISCRITTA per chiarezza
+   - "SE MODIFICA FILE -> spawn-workers (finestra separata)"
+   - "SE SOLO LEGGE -> Task tool (interno)"
+   - Path aggiornati in 4 DNA guardiane
 
-2. **CODE REVIEW DAY (Lunedi!)**
-   - cervella-reviewer ha analizzato tutto il sistema
-   - Rating: 8/10 -> 9/10 dopo fix!
+2. **SISTEMA MEMORIA GLOBALIZZATO**
+   - Database: `~/.swarm/data/swarm_memory.db` (1.7MB)
+   - Scripts: `~/.claude/scripts/memory/` (4 file)
+   - `paths.py` v2.0.0 (usa path globali!)
+   - `settings.json`: 5 path aggiornati
 
-3. **FIX DALLA CODE REVIEW**
-   - A1+A2: Path hardcodati -> ~/.swarm/config
-   - B1: Codice duplicato -> swarm-common.sh
-   - B3: Template -> migliorati con cervella-docs
-
-4. **NUOVI COMANDI CREATI**
-   - `swarm-health` - Health check sistema (6 controlli!)
-   - `~/.swarm/config` - Configurazione centralizzata
-   - `~/.local/lib/swarm-common.sh` - Funzioni comuni
-
-5. **API AL LAVORO!**
-   - cervella-backend: 2 task completati
-   - cervella-docs: 1 task completato
-   - cervella-reviewer: 1 task completato
+3. **REVIEW HOOKS/SCRIPTS COMPLETATA**
+   - cervella-reviewer ha analizzato hooks + scripts
+   - **Rating: 8.5/10**
+   - 3 problemi ALTI: path NVM hardcodato, escape AppleScript, command injection
+   - 8 problemi MEDI: DRY, timeout, error handling
+   - Punti di forza: architettura modulare, graceful degradation
 
 ### Prossimo:
-1. **MIRACOLLO!** - Usare Swarm in produzione
-2. **depends_on** - Fase 4 ROADMAP_BEEHIVE
-3. **Fix futuri** - Escape robusto, versioning, log rotation
+1. **Fix problemi ALTI dalla review** (sicurezza!)
+2. **Creare ~/.claude/hooks/common.py** (DRY)
+3. **MIRACOLLO!** - Usare Swarm in produzione
 
 ---
 
