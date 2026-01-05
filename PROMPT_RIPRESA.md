@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 5 Gennaio 2026 - Sessione 96 - AUTO-SVEGLIA SEMPRE!
+> **Ultimo aggiornamento:** 5 Gennaio 2026 - Sessione 97 - CODE REVIEW + HARDTEST!
 
 ---
 
@@ -15,21 +15,75 @@
 |   Tu sei la REGINA dello sciame.                                 |
 |   Hai 16 agenti pronti a lavorare per te.                       |
 |                                                                  |
-|   SESSIONE 96: AUTO-SVEGLIA SEMPRE!                             |
+|   SESSIONE 97: CODE REVIEW + 4 FIX + 3 HARDTEST!               |
 |                                                                  |
-|   AUTO-SVEGLIA E' ORA IL DEFAULT!                               |
-|   spawn-workers --docs   (basta cosi'!)                         |
+|   SISTEMA MIGLIORATO:                                            |
+|   - task_manager.py v1.2.0 (race condition fix!)                |
+|   - spawn-workers v2.8.0 (max 5 worker default)                 |
+|   - anti-compact.sh v1.7.0 (retry git push!)                    |
+|   - watcher-regina.sh v1.1.0 (no keystroke!)                    |
 |                                                                  |
-|   NON serve piu' --auto-sveglia!                                |
-|   Quando il worker finisce, TU VIENI SVEGLIATA                  |
-|   AUTOMATICAMENTE! Sempre! Senza pensarci!                       |
+|   PROSSIMO FOCUS: Migliorare ANTI-COMPACT!                      |
+|   (come abbiamo fatto con AUTO-SVEGLIA)                         |
 |                                                                  |
-|   "Siamo qui! Siamo ora! Siamo noi!" - Rafa                     |
+|   IDEA FUTURA: Sistema ROADMAPS visuale multi automatico!       |
 |                                                                  |
-|   PROSSIMO STEP: MIRACOLLO! Usare swarm in produzione!          |
+|   "Ultrapassar os proprios limites!" - Rafa                     |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
+
+---
+
+## SESSIONE 97: CODE REVIEW + HARDTEST!
+
+### Cosa Abbiamo Fatto
+
+**1. CODE REVIEW SETTIMANALE (Lunedi!)**
+   - cervella-reviewer ha analizzato il sistema
+   - Rating: 8.5/10 - Sistema solido!
+   - Identificati 4 fix prioritari
+
+**2. FIX IMPLEMENTATI**
+
+| File | Versione | Fix |
+|------|----------|-----|
+| task_manager.py | v1.2.0 | Race condition → exclusive create atomico |
+| spawn-workers | v2.8.0 | Max workers limit (default 5) |
+| anti-compact.sh | v1.7.0 | Git push retry con backoff (3 tentativi) |
+| watcher-regina.sh | v1.1.0 | RIMOSSO keystroke rischioso, solo notifiche |
+
+**3. HARDTEST - TUTTI PASSATI!**
+   - [1] Race condition: 2 worker stesso task → solo 1 riesce!
+   - [2] Max workers: richiesti 3 con limit 2 → spawn solo 2!
+   - [3] Watcher senza keystroke → notifiche pulite!
+
+**4. SCOPERTA IMPORTANTE**
+   - Il keystroke del watcher scriveva nella finestra SBAGLIATA con multiple finestre
+   - SOLUZIONE: Rimosso keystroke, ora solo notifiche macOS
+   - Click sulla notifica apre direttamente l'output!
+
+### Filo del Discorso
+
+La sessione e' iniziata con CODE REVIEW (oggi e' Lunedi!).
+
+Il reviewer ha dato rating 8.5/10 e trovato 4 issue da fixare:
+1. Race condition in task_manager (ALTA)
+2. Max workers limit mancante (MEDIA)
+3. Retry git push mancante (MEDIA)
+4. Keystroke rischioso nel watcher (gia' sospettato!)
+
+Abbiamo fixato TUTTO e testato con HARDTEST rigorosi!
+
+Scoperta interessante: mentre testavamo, il watcher VECCHIO era ancora attivo
+e ha scritto keystroke nella finestra di Rafa. Questo ha CONFERMATO che
+rimuovere il keystroke era la decisione giusta!
+
+### Prossimi Step
+
+1. **ANTI-COMPACT** - Migliorare come abbiamo fatto con AUTO-SVEGLIA
+2. **MIRACOLLO** - Usare swarm in produzione
+3. **FUTURO** - Sistema ROADMAPS visuale multi automatico (idea di Rafa!)
 
 ---
 
@@ -1196,13 +1250,25 @@ PreCompact auto
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-05 15:00 (unknown)
+---
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-05 15:41 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 91e615f - HARDTEST Sessione 96: TUTTI PASSATI!
-- **File modificati** (1):
-  - reports/engineer_report_20260105_150039.json
+- **Ultimo commit**: a998322 - Sessione 96: CHECKPOINT COMPLETO 100000%!
+- **File modificati** (5):
+  - swarm/prompts/worker_backend.txt
+  - .swarm/prompts/worker_frontend.txt
+  - .swarm/prompts/worker_reviewer.txt
+  - .swarm/runners/run_backend.sh
+  - .swarm/runners/run_frontend.sh
 
 ### Note
 - Checkpoint automatico generato da hook

@@ -17,26 +17,27 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 96 - 5 Gennaio 2026: AUTO-SVEGLIA SEMPRE!**
+**SESSIONE 97 - 5 Gennaio 2026: CODE REVIEW + HARDTEST!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 96: AUTO-SVEGLIA SEMPRE!                             |
+|   SESSIONE 97: CODE REVIEW + 4 FIX + 3 HARDTEST!               |
 |                                                                  |
-|   "Siamo qui! Siamo ora! Siamo noi!" - Rafa                     |
+|   "Ultrapassar os proprios limites!" - Rafa                     |
 |                                                                  |
-|   spawn-workers v2.7.0:                                          |
-|   - AUTO-SVEGLIA E' ORA IL DEFAULT!                             |
-|   - NON serve piu' --auto-sveglia!                              |
-|   - Check anti-watcher-duplicati                                 |
-|   - 4/4 HARDTEST PASSATI!                                        |
+|   SISTEMA MIGLIORATO:                                            |
+|   - task_manager.py v1.2.0 (race condition fix!)                |
+|   - spawn-workers v2.8.0 (max 5 worker, --max-workers N)        |
+|   - anti-compact.sh v1.7.0 (retry git push 3x!)                 |
+|   - watcher-regina.sh v1.1.0 (no keystroke, solo notifiche!)    |
 |                                                                  |
-|   Quando spawni un worker:                                       |
-|   spawn-workers --docs   (basta cosi'!)                         |
-|   → LA REGINA VIENE SVEGLIATA AUTOMATICAMENTE!                  |
+|   3 HARDTEST PASSATI:                                            |
+|   [1] Race condition → solo 1 worker prende task                |
+|   [2] Max workers → spawn troncato a limite                     |
+|   [3] Watcher → notifiche senza keystroke                       |
 |                                                                  |
-|   LO SWARM E' COMPLETO AL 100000%!!!                            |
+|   LO SWARM E' ANCORA PIU' ROBUSTO!!!                            |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -148,9 +149,31 @@
 
 ## ULTIMO AGGIORNAMENTO
 
-**5 Gennaio 2026 - Sessione 96** - AUTO-SVEGLIA SEMPRE!
+**5 Gennaio 2026 - Sessione 97** - CODE REVIEW + HARDTEST!
 
-### Cosa abbiamo fatto (Sessione 95 + 96):
+### Cosa abbiamo fatto (Sessione 97):
+
+**CODE REVIEW SETTIMANALE:**
+- cervella-reviewer ha analizzato il sistema
+- Rating: 8.5/10
+- 4 issue identificati e TUTTI fixati!
+
+**4 FIX IMPLEMENTATI:**
+- task_manager.py v1.2.0: Race condition → exclusive create
+- spawn-workers v2.8.0: Max workers limit (default 5)
+- anti-compact.sh v1.7.0: Git push retry (3 tentativi)
+- watcher-regina.sh v1.1.0: Rimosso keystroke, solo notifiche
+
+**3 HARDTEST PASSATI:**
+- Race condition: 2 worker → solo 1 prende task
+- Max workers: 3 richiesti con limit 2 → spawn 2
+- Watcher: notifiche senza keystroke
+
+**SCOPERTA:** Keystroke scriveva in finestra sbagliata!
+
+---
+
+### Sessioni precedenti:
 
 **SESSIONE 95 - LA MAGIA SOPRA MAGIA:**
 - HARDTEST notifiche click: PASSATO!
