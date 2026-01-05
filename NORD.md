@@ -17,31 +17,23 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 99 - 5 Gennaio 2026: Organizzazione Casa!**
+**SESSIONE 100 - 5 Gennaio 2026: Code Review + Parcheggio**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 99: ORGANIZZAZIONE DELLA CASA!                       |
+|   SESSIONE 100: CODE REVIEW + DECISIONI!                        |
 |                                                                  |
-|   "SEMPRE FINESTRE! SEMPRE! SENZA ECCEZIONE!" - Rafa            |
+|   FATTO:                                                         |
+|   - Handoff da sessione 99 (ANTI-COMPACT ha funzionato!)        |
+|   - Code Review settimanale: Rating 8.5/10                      |
+|   - Nessun problema critico trovato                             |
 |                                                                  |
-|   FATTO IN SESSIONE 99:                                          |
-|   - Ricostruito filo discorso dalla sessione 98                 |
-|   - Aggiornato tutti i file per consistenza                     |
-|   - Documentato PEZZO 4 + VISIONE nella roadmap                 |
-|   - Documentato trucco accesso transcript!                      |
+|   PARCHEGGIATE (per il futuro):                                 |
+|   - ANTI-COMPACT v5.1.0 → 70%, funziona ma non perfetto         |
+|   - AUTO-SVEGLIA → da sistemare piu' avanti                     |
 |                                                                  |
-|   ANTI-COMPACT v5.1.0: IMPLEMENTATO (DA TESTARE!)               |
-|   - IBRIDO SEMPLIFICATO                                          |
-|   - VS Code apre file handoff                                    |
-|   - Terminal con Claude pulito                                   |
-|                                                                  |
-|   LA GRANDE VISIONE:                                             |
-|   "Piu' fighe che Cursor 2.0!" - Rafa                           |
-|   → docs/visione/VISIONE_CERVELLASWARM_IDE.md                   |
-|                                                                  |
-|   "SU CARTA != REALE" - Testare ANTI-COMPACT!                   |
+|   "Abbiamo altre cose da fare" - Rafa                           |
 |                                                                  |
 +------------------------------------------------------------------+
 ```

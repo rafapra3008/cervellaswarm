@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 5 Gennaio 2026 - Sessione 99 (Organizzazione Casa!)
+> **Ultimo aggiornamento:** 5 Gennaio 2026 - Sessione 100 (Code Review + Parcheggio)
 
 ---
 
@@ -15,25 +15,22 @@
 |   Tu sei la REGINA dello sciame.                                 |
 |   Hai 16 agenti pronti a lavorare per te.                       |
 |                                                                  |
-|   SESSIONE 99: ORGANIZZAZIONE DELLA CASA!                       |
+|   SESSIONE 100: CODE REVIEW + PARCHEGGIO!                       |
 |                                                                  |
 |   Cosa abbiamo fatto:                                            |
-|   - Ricostruito il filo del discorso dalla sessione 98          |
-|   - Aggiornato tutti i file per consistenza                     |
-|   - Documentato TUTTO (PEZZO 4 + VISIONE)                       |
+|   - Handoff da sessione 99 (ANTI-COMPACT funziona al 70%!)      |
+|   - Code Review settimanale: Rating 8.5/10 (nessun problema)    |
+|   - Decisione: PARCHEGGIARE alcune cose per il futuro           |
 |                                                                  |
-|   ANTI-COMPACT v5.1.0: IMPLEMENTATO ma DA TESTARE!              |
-|   - Git auto-commit prima di handoff                            |
-|   - File handoff RICCO con git status                           |
-|   - Terminal + VS Code (IBRIDO SEMPLIFICATO)                    |
-|   - VS Code apre il file handoff, Terminal con Claude           |
+|   PARCHEGGIATE (per il futuro):                                 |
+|   - ANTI-COMPACT v5.1.0 → 70%, funziona ma non perfetto         |
+|   - AUTO-SVEGLIA → da sistemare piu' avanti                     |
 |                                                                  |
 |   LA GRANDE VISIONE:                                             |
 |   "Piu' fighe che Cursor 2.0!" - Rafa                           |
 |   → docs/visione/VISIONE_CERVELLASWARM_IDE.md                   |
 |                                                                  |
-|   "SU CARTA != REALE" - Testare ANTI-COMPACT!                   |
-|   "SEMPRE FINESTRE!" - Rafa                                     |
+|   "Abbiamo altre cose da fare" - Rafa                           |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -126,20 +123,30 @@ Rafa: "noi siamo piu' fighe che il Cursor 2.0!"
 
 **Lezione:** Mai dire "e' fatto" se non e' REALE!
 
+### Sessione 100: Code Review + Parcheggio
+
+- Handoff da sessione 99 (ANTI-COMPACT ha funzionato!)
+- Code Review settimanale con cervella-reviewer: **Rating 8.5/10**
+- Nessun problema critico trovato
+- **DECISIONE:** Parcheggiare ANTI-COMPACT e AUTO-SVEGLIA per il futuro
+  - ANTI-COMPACT v5.1.0 → 70%, funziona ma non perfetto
+  - AUTO-SVEGLIA → non mi ha notificato, da sistemare
+
+**Rafa:** "Abbiamo altre cose da fare"
+
 ---
 
 ## PROSSIMA SESSIONE
 
 ```
-INIZIARE DA: ANTI AUTO-COMPACT (Priorita' 1)
+ANTI-COMPACT e AUTO-SVEGLIA sono PARCHEGGIATE!
+→ Funzionano al 70%, miglioreremmo piu' avanti
 
-1. Testare context_check.py in sessione REALE
-2. Vedere se handoff e' SEAMLESS
-3. Identificare bug/problemi
-4. Fixare
-5. HARDTEST end-to-end (10 volte di fila)
+COSA FARE:
+→ Chiedere a Rafa quali sono le "altre cose da fare"
+→ Probabilmente altri progetti (Miracollo? Contabilita?)
 
-"Il vero test e' l'uso!" - Rafa
+"Abbiamo altre cose da fare" - Rafa
 ```
 
 ---
@@ -235,8 +242,8 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 
 ---
 
-**VERSIONE:** v39.0.0
-**SESSIONE:** 99 - Organizzazione Casa
+**VERSIONE:** v40.0.0
+**SESSIONE:** 100 - Code Review + Parcheggio
 **DATA:** 5 Gennaio 2026
 
 ---
@@ -249,14 +256,19 @@ Cervella & Rafa
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-05 19:54 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-05 20:20 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 36f9497 - ANTI-COMPACT: PreCompact auto
-- **File modificati** (2):
-  - ROMPT_RIPRESA.md
-  - reports/scientist_prompt_20260105.md
+- **Ultimo commit**: d2377e2 - ANTI-COMPACT: PreCompact auto
+- **File modificati** (5):
+  - eports/scientist_prompt_20260105.md
+  - .swarm/handoff/HANDOFF_20260105_201411.md
+  - .swarm/tasks/TASK_CODE_REVIEW_WEEKLY.done
+  - .swarm/tasks/TASK_CODE_REVIEW_WEEKLY.md
+  - .swarm/tasks/TASK_CODE_REVIEW_WEEKLY_output.md
 
 ### Note
 - Checkpoint automatico generato da hook
