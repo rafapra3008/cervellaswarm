@@ -17,27 +17,26 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 93 - 5 Gennaio 2026: REGOLA 13 RISCRITTA!**
+**SESSIONE 94 - 5 Gennaio 2026: CODE REVIEW + NOTIFICHE WORKER! 🔔**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 93: CHIAREZZA NELLE REGOLE!                          |
+|   SESSIONE 94: MEGA SESSIONE!                                   |
 |                                                                  |
-|   REGOLA 13 COMPLETAMENTE RISCRITTA:                            |
+|   ✅ CODE REVIEW: 8.25/10 + tutti i fix implementati!           |
+|   ✅ swarm-lib.sh v1.0.0: Funzioni comuni DRY!                  |
+|   ✅ spawn-workers v2.5.0: NOTIFICHE DETTAGLIATE!               |
+|   ✅ terminal-notifier: Click apre output!                      |
 |                                                                  |
-|   DELEGO A UN AGENTE? → SEMPRE spawn-workers!                   |
+|   🐝 6 API usate con successo!                                  |
+|      - cervella-reviewer: 8.25/10                               |
+|      - cervella-backend x3: fix code review + notifiche         |
+|      - cervella-devops: studio notifiche                        |
+|      - cervella-docs x3: HARDTESTS                              |
 |                                                                  |
-|   - Niente eccezioni "task veloce"                              |
-|   - Niente confusione "ricerca vs modifiche"                    |
-|   - SEMPLICE: Se delego = spawn-workers. Punto.                 |
-|                                                                  |
-|   5 FILE AGGIORNATI per coerenza totale:                        |
-|   - cervella-orchestrator.md v1.2.0                             |
-|   - CLAUDE.md, SWARM_RULES.md v1.6.0                            |
-|   - MANUALE_DIAMANTE.md, CHECKLIST_AZIONE.md                    |
-|                                                                  |
-|   "Comodo ≠ Giusto!" → "SEMPRE spawn-workers!"                  |
+|   ⏳ HARDTEST FINALE: Da completare prossima sessione           |
+|      (click notifica apre _output.md)                           |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -59,7 +58,7 @@
 | HARDTESTS Swarm V3 (4/4) | PASSATI! |
 | Studio Cervello vs Swarm | FUNZIONANTE |
 | .swarm/ sistema Multi-Finestra | FUNZIONANTE |
-| spawn-workers.sh v1.9.0 | GLOBALE! PROJECT-AWARE! Funziona ovunque! |
+| spawn-workers.sh v2.5.0 | NOTIFICHE DETTAGLIATE + Click apre output! |
 | context_check.py v4.3.0 | VS CODE NATIVO! TESTATO E FUNZIONA! |
 | Template DUBBI | FUNZIONANTE! |
 | Template PARTIAL | FUNZIONANTE! |
@@ -67,6 +66,8 @@
 | **~/.swarm/config** | **NUOVO! Configurazione centralizzata!** |
 | **swarm-health** | **NUOVO! Health check sistema!** |
 | **swarm-common.sh** | **NUOVO! Funzioni comuni (DRY!)** |
+| **swarm-lib.sh v1.0.0** | **NUOVO! Libreria bash comune!** |
+| **terminal-notifier** | **NUOVO! Click notifica apre output!** |
 
 ---
 
@@ -75,19 +76,19 @@
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   PROSSIMA SESSIONE:                                             |
+|   PROSSIMA SESSIONE (95):                                        |
 |                                                                  |
-|   1. CODE REVIEW SETTIMANALE                                     |
-|      - Oggi e' lunedi!                                           |
-|      - cervella-reviewer per audit                               |
+|   1. HARDTEST FINALE NOTIFICHE                                   |
+|      - Click su notifica deve aprire _output.md                  |
+|      - Verificare che il fix v2.5.0 funzioni                     |
 |                                                                  |
-|   2. FASE 2.5: STUDIO FRONTEND WORKER (futuro)                  |
-|      - Cosa vede l'utente nella finestra?                        |
-|      - Come migliorare UX?                                       |
-|      - Priorita' BASSA (sistema funziona!)                       |
-|                                                                  |
-|   3. MIRACOLLO!                                                  |
+|   2. MIRACOLLO!                                                  |
 |      - Usare swarm in produzione                                 |
+|      - Lo swarm e' pronto!                                       |
+|                                                                  |
+|   3. OPZIONALE: Studio frontend worker                           |
+|      - Cosa vede l'utente nella finestra?                        |
+|      - Priorita' BASSA (sistema funziona!)                       |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -133,32 +134,52 @@
 
 ## ULTIMO AGGIORNAMENTO
 
-**5 Gennaio 2026 - Sessione 92** - VISIBILITA' WORKER COMPLETATA!
+**5 Gennaio 2026 - Sessione 94** - CODE REVIEW DAY + PULIZIA CASA!
 
-### Cosa abbiamo fatto (Sessione 91):
+### Cosa abbiamo fatto (Sessione 94):
 
-1. **TEMPLATE PROMPT INIZIO SESSIONE**
-   - `~/.claude/templates/PROMPT_INIZIO_SESSIONE.md`
-   - Include quick-task, whitelist, Regola 14
-   - Versione pulita post-Sessione 90
+**CODE REVIEW + FIX (8.25/10!):**
+- cervella-reviewer: audit completo
+- swarm-lib.sh v1.0.0: funzioni comuni
+- spawn-workers v2.3.0: validazione config
+- swarm-review v1.2.0: prompt su file
 
-2. **WORKER HEALTH TRACKING**
-   - spawn-workers v2.1.0 con PID tracking
-   - swarm-cleanup v1.0.0 per task orfani
-   - Trap EXIT per cleanup automatico
+**NOTIFICHE WORKER (MAGIA!):**
+- Idea di Rafa: "quando worker finisce, arriva notifica!"
+- cervella-devops: studio + implementazione
+- spawn-workers v2.5.0: notifiche dettagliate
+- terminal-notifier installato: click apre output!
+- HARDTEST 1 e 2 passati! Notifiche funzionano!
 
-3. **STUDIO VISIBILITA' IDENTIFICATO**
-   - Problema: "Lavoriamo al buio!"
-   - Non sappiamo cosa fa worker MENTRE lavora
-   - STUDIO PRIORITA' ALTA per prossime sessioni
+**DA COMPLETARE (Sessione 95):**
+- HARDTEST finale: click apre _output.md (fix v2.5.0)
 
-### Prossimo:
-1. **STUDIO VISIBILITA' WORKER** (priorita' alta!)
-   - Come vedere log real-time?
-   - Come heartbeat con stato?
-   - Come dashboard live?
-2. **Code Review settimanale**
-3. **MIRACOLLO!** - Usare Swarm in produzione
+### 🐝 FEEDBACK SWARM (Sessione 94):
+
+```
+cervella-reviewer:
+- Task: CODE_REVIEW_WEEKLY
+- Risultato: 8.25/10
+- Tempo: ~5 minuti
+- Stato: ✅ COMPLETATO
+
+cervella-backend (x3):
+- Task 1: Fix code review (swarm-lib.sh, validazione, prompt file)
+- Task 2: Fix notifica click (_output.md invece di .log)
+- Tempo: ~5-10 min ciascuno
+- Stato: ✅ COMPLETATI
+
+cervella-devops:
+- Task: Studio notifica automatica worker
+- Risultato: spawn-workers v2.4.0 + docs studio
+- Tempo: ~10 minuti
+- Stato: ✅ COMPLETATO
+
+cervella-docs (x3):
+- Task: HARDTESTS notifiche
+- Risultato: 2/3 passati, 1 da rifare
+- Stato: ⏳ PARZIALE
+```
 
 ---
 

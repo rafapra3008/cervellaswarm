@@ -12,12 +12,15 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 2.2.0
+# Versione: 2.5.0
 # Data: 2026-01-05
 # Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
 # v2.0.0: Config centralizzata ~/.swarm/config
 #
 # CHANGELOG:
+# v2.5.0: FIX NOTIFICA CLICK! Apre _output.md del task invece di .log. Legge task name da file stato.
+# v2.4.0: NOTIFICA DETTAGLIATA! Nome task, tempo esecuzione, esito. Click per aprire log (se terminal-notifier)
+# v2.3.0: Validazione ownership config prima di source (security fix)
 # v2.2.0: HEARTBEAT + Notifiche INIZIO task! Worker scrivono stato ogni 60s
 # v2.1.0: Worker Health Tracking - PID/timestamp per sapere se worker e' vivo!
 # v1.4.0: Fix notifica + exit
@@ -39,8 +42,42 @@ set -e
 
 # Carica configurazione globale se esiste
 SWARM_CONFIG="${SWARM_CONFIG:-$HOME/.swarm/config}"
+
+# Valida che il file config sia sicuro da caricare (ownership check)
+validate_config_ownership() {
+    local file="$1"
+    [[ -f "$file" ]] || return 1
+
+    local file_owner current_uid
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        file_owner=$(stat -f %u "$file")
+    else
+        file_owner=$(stat -c %u "$file")
+    fi
+    current_uid=$(id -u)
+
+    # Deve essere di proprieta dell'utente corrente
+    [[ "$file_owner" == "$current_uid" ]] || return 1
+
+    # Verifica che non sia world-writable
+    local perms
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        perms=$(stat -f %Lp "$file")
+    else
+        perms=$(stat -c %a "$file")
+    fi
+    # Rifiuta se world-writable (ultimo digit 2, 3, 6, 7)
+    [[ ! "${perms: -1}" =~ [2367] ]] || return 1
+
+    return 0
+}
+
 if [[ -f "$SWARM_CONFIG" ]]; then
-    source "$SWARM_CONFIG"
+    if validate_config_ownership "$SWARM_CONFIG"; then
+        source "$SWARM_CONFIG"
+    else
+        echo "[!] Config $SWARM_CONFIG non caricato: ownership/permessi non validi" >&2
+    fi
 fi
 
 # Trova Claude CLI (usa config o auto-detect)
@@ -123,7 +160,9 @@ NON sei la Regina - sei un agente specializzato.
 REGOLE WORKER:
 1. Controlla .swarm/tasks/ per task assegnati a te
 2. Prendi SOLO task con stato .ready
-3. Quando prendi un task, crea file .working
+3. Quando prendi un task:
+   - Crea file .working
+   - Scrivi il TASK_ID in .swarm/status/worker_TUONOME.task (es: echo "TASK_123" > .swarm/status/worker_backend.task)
 4. Quando finisci, crea file .done e scrivi output in _output.md
 5. NON modificare file fuori dal tuo scope
 6. Se hai dubbi, scrivi in .swarm/handoff/ per la Regina
@@ -429,19 +468,91 @@ RUNNEREOF
     fi
     echo "mkdir -p ${SWARM_DIR}/logs" >> "$runner_script"
     echo "LOG_FILE=\"${SWARM_DIR}/logs/worker_\$(date +%Y%m%d_%H%M%S).log\"" >> "$runner_script"
+    # v2.4.0: Salva SWARM_DIR come variabile nel runner per usarla nella notifica finale
+    echo "SWARM_DIR=\"${SWARM_DIR}\"" >> "$runner_script"
     echo "${claude_path} -p --append-system-prompt \"\$(cat ${prompt_file})\" \"${initial_prompt}\" 2>&1 | tee \"\$LOG_FILE\"" >> "$runner_script"
 
-    # Aggiungi chiusura automatica finestra Terminal
+    # Aggiungi chiusura automatica finestra Terminal con notifica dettagliata (v2.4.0)
     cat >> "$runner_script" << 'CLOSEWINDOWEOF'
 
 # ============================================================================
 # AUTO-CLOSE: Claude terminato - chiudi questa finestra Terminal
+# v2.5.0: Click notifica apre _output.md del task (non piu .log!)
 # ============================================================================
-echo ""
-echo "[CervellaSwarm] Claude terminato. Chiudo finestra..."
 
-# Notifica prima di chiudere
-osascript -e 'display notification "Worker terminato, chiudo finestra!" with title "CervellaSwarm" sound name "Glass"' 2>/dev/null
+# Salva exit code di Claude
+CLAUDE_EXIT=$?
+
+echo ""
+echo "[CervellaSwarm] Claude terminato. Preparo notifica..."
+
+# Calcola durata (v2.4.0)
+START_FILE="${SWARM_DIR}/status/worker_${WORKER_NAME}.start"
+if [ -f "$START_FILE" ]; then
+    START_TIME=$(cat "$START_FILE")
+    END_TIME=$(date +%s)
+    DURATION=$((END_TIME - START_TIME))
+    MINUTES=$((DURATION / 60))
+    SECONDS_REMAIN=$((DURATION % 60))
+    DURATION_STR="${MINUTES}m ${SECONDS_REMAIN}s"
+else
+    DURATION_STR="N/A"
+fi
+
+# Determina esito
+if [ "$CLAUDE_EXIT" -eq 0 ]; then
+    ESITO="Completato"
+    SOUND="Glass"
+else
+    ESITO="Errore (exit $CLAUDE_EXIT)"
+    SOUND="Basso"
+fi
+
+# v2.5.0: Trova l'ultimo task completato (.done piu recente) per questo worker
+# Cerca file _output.md corrispondente al task
+TASK_OUTPUT_FILE=""
+TASK_FILE="${SWARM_DIR}/status/worker_${WORKER_NAME}.task"
+if [ -f "$TASK_FILE" ]; then
+    # Se il worker ha scritto quale task stava processando, usa quello
+    TASK_NAME=$(cat "$TASK_FILE")
+    POTENTIAL_OUTPUT="${SWARM_DIR}/tasks/${TASK_NAME}_output.md"
+    if [ -f "$POTENTIAL_OUTPUT" ]; then
+        TASK_OUTPUT_FILE="$POTENTIAL_OUTPUT"
+    fi
+fi
+
+# Fallback: cerca il .done piu recente e deriva l'output
+if [ -z "$TASK_OUTPUT_FILE" ]; then
+    LATEST_DONE=$(ls -t "${SWARM_DIR}/tasks/"*.done 2>/dev/null | head -1)
+    if [ -n "$LATEST_DONE" ]; then
+        # Estrai nome task dal file .done (rimuovi .done)
+        TASK_BASE=$(basename "$LATEST_DONE" .done)
+        POTENTIAL_OUTPUT="${SWARM_DIR}/tasks/${TASK_BASE}_output.md"
+        if [ -f "$POTENTIAL_OUTPUT" ]; then
+            TASK_OUTPUT_FILE="$POTENTIAL_OUTPUT"
+        fi
+    fi
+fi
+
+# Fallback finale: usa il log
+if [ -z "$TASK_OUTPUT_FILE" ]; then
+    TASK_OUTPUT_FILE="$LOG_FILE"
+fi
+
+# Notifica dettagliata prima di chiudere (v2.5.0)
+# Prova terminal-notifier (se installato) per click action, altrimenti osascript
+if command -v terminal-notifier &>/dev/null; then
+    terminal-notifier \
+        -title "CervellaSwarm" \
+        -subtitle "Worker terminato" \
+        -message "cervella-${WORKER_NAME}: ${ESITO} (${DURATION_STR})" \
+        -sound "$SOUND" \
+        -open "file://${TASK_OUTPUT_FILE}" 2>/dev/null
+else
+    osascript -e "display notification \"cervella-${WORKER_NAME}: ${ESITO} (${DURATION_STR})\" with title \"CervellaSwarm\" sound name \"${SOUND}\"" 2>/dev/null
+fi
+
+echo "[CervellaSwarm] Chiudo finestra..."
 
 # TRUCCO: Lancia chiusura in background, poi termina lo script
 # Cosi quando osascript chiude la finestra, bash e' gia terminato = NO dialogo!

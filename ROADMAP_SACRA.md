@@ -6,7 +6,7 @@
 
 ## OVERVIEW
 
-> **Aggiornato:** 4 Gennaio 2026 - Sessione 86 - AUTO-HANDOFF v4.0.0! (v35.0.0)
+> **Aggiornato:** 5 Gennaio 2026 - Sessione 94 - CODE REVIEW DAY! (v39.0.0)
 
 ```
 +------------------------------------------------------------------+
@@ -323,6 +323,71 @@ APRI -> ASPETTA -> COMUNICA -> TESTA -> VERIFICA -> CHIUDI
 ---
 
 ## CHANGELOG
+
+### 5 Gennaio 2026 (Sessione 94) - CODE REVIEW DAY + PULIZIA CASA!
+
+**SISTEMARE LA CASA:**
+- Oggi e' Lunedi = Code Review settimanale!
+- cervella-reviewer spawnata per audit completo
+- Aggiornamento ROADMAP_SACRA (era outdated!)
+- Aggiornamento NORD.md alla sessione corrente
+
+**RECAP STATO:**
+- 8.5 FASI COMPLETATE
+- FASE 9 "Apple Style" quasi completa
+- Sistema Swarm stabile e funzionante
+- Pronto per MIRACOLLO!
+
+**Versione:** 39.0.0 (MINOR: Code Review + Pulizia)
+
+---
+
+### 5 Gennaio 2026 (Sessione 93) - REGOLA 13 RISCRITTA!
+
+**IL PROBLEMA (visto in Miracollo):**
+- Una Cervella spiegava: "Task tool per ricerche, spawn-workers per modifiche"
+- Ma questo era SBAGLIATO! Anche le ricerche consumano contesto!
+
+**LA SOLUZIONE:**
+```
+DELEGO A UN AGENTE? → SEMPRE spawn-workers!
+- Niente eccezioni "task veloce"
+- Niente confusione "ricerca vs modifiche"
+- Se delego = spawn-workers. Punto.
+```
+
+**FILE AGGIORNATI (5):**
+- `~/.claude/agents/cervella-orchestrator.md` v1.2.0
+- `~/.claude/CLAUDE.md` - Sezione SWARM MODE
+- `docs/SWARM_RULES.md` v1.6.0
+- `~/.claude/MANUALE_DIAMANTE.md` - Regola 0 Swarm
+- `~/.claude/CHECKLIST_AZIONE.md` - Checklist SWARM
+
+**Versione:** 38.1.0 (MINOR: Regola 13 riscritta per chiarezza)
+
+---
+
+### 5 Gennaio 2026 (Sessione 92) - VISIBILITA' WORKER COMPLETATA!
+
+**IMPLEMENTATO:**
+1. spawn-workers v2.2.0: Heartbeat ogni 60s + Notifiche inizio
+2. swarm-heartbeat v1.0.0: Comando per vedere stato live
+3. dashboard.py v1.1.0: Sezione LIVE HEARTBEAT
+
+**HARDTEST PASSATO:**
+- Worker ha scritto 3 heartbeat correttamente
+- Formato: `timestamp|task|azione`
+- swarm-heartbeat mostra ACTIVE/STALE con colori
+
+**COMANDI NUOVI:**
+```bash
+swarm-heartbeat          # Stato live
+swarm-heartbeat --watch  # Refresh ogni 2s
+```
+
+**Versione:** 38.0.0 (MINOR: Visibilita' Worker implementata)
+
+---
 
 ### 5 Gennaio 2026 (Sessione 91) - STABILIZZAZIONE SWARM + STUDIO VISIBILITA'!
 

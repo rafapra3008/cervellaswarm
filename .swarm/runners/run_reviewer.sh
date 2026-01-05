@@ -1,9 +1,23 @@
 #!/bin/bash
 # CervellaSwarm Worker Runner
 # v1.5.0: Auto-close finestra Terminal quando Claude termina!
+# v1.6.0: PID/timestamp tracking per health check!
 
 # Salva il TTY di questa finestra per identificarla dopo
 MY_TTY=$(tty)
+# Health tracking - salva PID e timestamp
+mkdir -p /Users/rafapra/Developer/CervellaSwarm/.swarm/status
+WORKER_PID=$$
+WORKER_NAME="reviewer"
+echo $WORKER_PID > "/Users/rafapra/Developer/CervellaSwarm/.swarm/status/worker_${WORKER_NAME}.pid"
+date +%s > "/Users/rafapra/Developer/CervellaSwarm/.swarm/status/worker_${WORKER_NAME}.start"
+
+cleanup_health_files() {
+    rm -f "/Users/rafapra/Developer/CervellaSwarm/.swarm/status/worker_${WORKER_NAME}.pid"
+    rm -f "/Users/rafapra/Developer/CervellaSwarm/.swarm/status/worker_${WORKER_NAME}.start"
+}
+trap cleanup_health_files EXIT
+
 cd /Users/rafapra/Developer/CervellaSwarm
 echo ''
 echo '🐝 [CervellaSwarm] Worker avviato'

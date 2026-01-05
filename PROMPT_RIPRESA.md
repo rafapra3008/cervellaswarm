@@ -1002,17 +1002,33 @@ PreCompact auto
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-05 07:06 (unknown)
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-05 13:15 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: b47fd6b - PROMPT_RIPRESA: Sessione 92 completa 100000%! 💙
+- **Ultimo commit**: 76cdea1 - Sessione 93: REGOLA 13 RISCRITTA! SEMPRE spawn-workers!
 - **File modificati** (5):
-  - .swarm/handoff/HANDOFF_20260105_062934.md
-  - .swarm/handoff/HANDOFF_20260105_063026.md
-  - .swarm/handoff/HANDOFF_20260105_063141.md
-  - reports/engineer_report_20260105_062902.json
-  - reports/engineer_report_20260105_063110.json
+  - swarm/prompts/worker_devops.txt
+  - .swarm/prompts/worker_docs.txt
+  - .swarm/prompts/worker_reviewer.txt
+  - .swarm/runners/run_backend.sh
+  - .swarm/runners/run_devops.sh
 
 ### Note
 - Checkpoint automatico generato da hook

@@ -10,9 +10,10 @@
 #   swarm-review --task NOME  # Review task specifico
 #   swarm-review --help       # Mostra help
 #
-# Versione: 1.1.0
+# Versione: 1.2.0
 # Data: 2026-01-05
 # Cervella & Rafa
+# v1.2.0: Prompt salvato su file invece di escape inline (security fix)
 
 set -e
 
@@ -375,16 +376,17 @@ spawn_guardian() {
     local prompt="$2"
     local project_path="$3"
 
-    # Escape per AppleScript
-    local escaped_prompt="${prompt//\\/\\\\}"
-    escaped_prompt="${escaped_prompt//\"/\\\"}"
-    escaped_prompt="${escaped_prompt//$'\n'/\\n}"
+    # Salva prompt su file temporaneo invece di escape inline (sicurezza migliorata)
+    local prompt_file="${project_path}/.swarm/tmp/guardian_prompt_$$.txt"
+    mkdir -p "${project_path}/.swarm/tmp"
+    echo "$prompt" > "$prompt_file"
 
-    # Usa osascript per aprire Terminal e lanciare claude
+    # Usa osascript per aprire Terminal e lanciare claude con prompt da file
+    # Il file viene eliminato dopo che claude lo legge
     osascript << EOF
 tell application "Terminal"
     activate
-    do script "cd '${project_path}' && claude --agent ${guardian} -p \"${escaped_prompt}\""
+    do script "cd '${project_path}' && PROMPT_FILE='${prompt_file}' && claude --agent ${guardian} -p \"\$(cat \"\$PROMPT_FILE\")\" && rm -f \"\$PROMPT_FILE\""
 end tell
 EOF
 
