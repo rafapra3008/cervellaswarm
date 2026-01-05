@@ -17,27 +17,26 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 89 - 5 Gennaio 2026: GLOBALIZZAZIONE MEMORIA + REVIEW HOOKS!**
+**SESSIONE 90 - 5 Gennaio 2026: QUICK-TASK + FILOSOFIA DI VITA!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 89: SISTEMA MEMORIA GLOBALIZZATO!                    |
+|   SESSIONE 90: LA PIU' EPICA!                                   |
 |                                                                  |
-|   1. DNA Orchestrator: Regola 13 RISCRITTA!                     |
-|      "SE MODIFICA FILE -> spawn-workers"                        |
-|      "SE SOLO LEGGE -> Task tool"                               |
+|   1. QUICK-TASK COMMAND - Da 6 step a 1!                        |
+|      quick-task "descrizione" --backend                         |
+|      "Rendi facile fare la cosa giusta!"                        |
 |                                                                  |
-|   2. Sistema Memoria GLOBALIZZATO:                               |
-|      - Database: ~/.swarm/data/swarm_memory.db                  |
-|      - Scripts: ~/.claude/scripts/memory/                        |
-|      - paths.py v2.0.0 (path globali!)                          |
+|   2. FILOSOFIA DI VITA:                                          |
+|      "Non combattere la natura umana (via piu facile).          |
+|       PROGETTA intorno ad essa!"                                 |
 |                                                                  |
-|   3. Review Hooks/Scripts: 8.5/10!                              |
-|      - 3 problemi ALTI (sicurezza, escape)                      |
-|      - 8 problemi MEDI (DRY, timeout, error handling)           |
-|      - 4 problemi BASSI (nice to have)                          |
+|   3. FIX SICUREZZA ALTI (3 fix completati!)                     |
 |                                                                  |
+|   4. REGOLE DNA: 14 (Via Giusta) + 15 (Whitelist)               |
+|                                                                  |
+|   31 file, 2732 inserzioni!                                      |
 |   "Ultrapassar os proprios limites!" - Rafa                     |
 |                                                                  |
 +------------------------------------------------------------------+
