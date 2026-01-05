@@ -6,7 +6,7 @@
 
 ## OVERVIEW
 
-> **Aggiornato:** 5 Gennaio 2026 - Sessione 96 - AUTO-SVEGLIA SEMPRE! (v41.0.0)
+> **Aggiornato:** 5 Gennaio 2026 - Sessione 98 - PROTEZIONE TASK TOOL! (v42.0.0)
 
 ```
 +------------------------------------------------------------------+
@@ -323,6 +323,60 @@ APRI -> ASPETTA -> COMUNICA -> TESTA -> VERIFICA -> CHIUDI
 ---
 
 ## CHANGELOG
+
+### 5 Gennaio 2026 (Sessione 98) - PROTEZIONE TASK TOOL!
+
+**IL PROBLEMA:**
+- Cervella in Miracollo usava Task tool invece di spawn-workers
+- Risultato: contesto al 6%, TUTTO BLOCCATO, lavoro PERSO!
+- La Regola 13 esisteva ma veniva IGNORATA
+
+**LA SOLUZIONE (LIVELLO 1 + LIVELLO 2):**
+
+*Livello 1 - Linguaggio forte:*
+- cervella-orchestrator.md v1.3.0: Box VIETATO come prima cosa nel DNA
+- SWARM_RULES.md v1.7.0: Regola 13 con conseguenze catastrofiche
+
+*Livello 2 - Hook che BLOCCA:*
+- block_task_for_agents.py: Hook PreToolUse NUOVO
+- settings.json: Aggiunto PreToolUse per Task
+- Se subagent_type contiene "cervella-" → BLOCCATO automaticamente!
+
+**HARDTEST:**
+- cervella-backend → BLOCCATO! ✅
+- Explore → Passa (legittimo) ✅
+- general-purpose → Passa (legittimo) ✅
+
+**BONUS:**
+- TESTO_INIZIO_SESSIONE.md: Template pronto per Rafa!
+
+**Versione:** 42.0.0 (MAJOR: Hook che BLOCCA Task tool per cervella-*!)
+
+---
+
+### 5 Gennaio 2026 (Sessione 97) - CODE REVIEW + HARDTEST!
+
+**CODE REVIEW SETTIMANALE:**
+- cervella-reviewer ha analizzato il sistema
+- Rating: 8.5/10
+- 4 issue identificati e TUTTI fixati!
+
+**4 FIX IMPLEMENTATI:**
+- task_manager.py v1.2.0: Race condition → exclusive create
+- spawn-workers v2.8.0: Max workers limit (default 5)
+- anti-compact.sh v1.7.0: Git push retry (3 tentativi)
+- watcher-regina.sh v1.1.0: Rimosso keystroke, solo notifiche
+
+**3 HARDTEST PASSATI:**
+- Race condition: 2 worker → solo 1 prende task
+- Max workers: 3 richiesti con limit 2 → spawn 2
+- Watcher: notifiche senza keystroke
+
+**SCOPERTA:** Keystroke scriveva in finestra sbagliata!
+
+**Versione:** 41.5.0
+
+---
 
 ### 5 Gennaio 2026 (Sessione 96) - AUTO-SVEGLIA SEMPRE!
 

@@ -17,27 +17,37 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 97 - 5 Gennaio 2026: CODE REVIEW + HARDTEST!**
+**SESSIONE 98 - 5 Gennaio 2026: PROTEZIONE TASK TOOL!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 97: CODE REVIEW + 4 FIX + 3 HARDTEST!               |
+|   SESSIONE 98: PROTEZIONE TASK TOOL IMPLEMENTATA!               |
 |                                                                  |
-|   "Ultrapassar os proprios limites!" - Rafa                     |
+|   "SEMPRE FINESTRE! SEMPRE! SENZA ECCEZIONE!" - Rafa            |
 |                                                                  |
-|   SISTEMA MIGLIORATO:                                            |
-|   - task_manager.py v1.2.0 (race condition fix!)                |
-|   - spawn-workers v2.8.0 (max 5 worker, --max-workers N)        |
-|   - anti-compact.sh v1.7.0 (retry git push 3x!)                 |
-|   - watcher-regina.sh v1.1.0 (no keystroke, solo notifiche!)    |
+|   PROBLEMA RISOLTO:                                              |
+|   - Cervella in Miracollo usava Task tool invece di spawn       |
+|   - Risultato: contesto al 6%, TUTTO BLOCCATO!                  |
+|   - La regola esisteva ma veniva IGNORATA                       |
 |                                                                  |
-|   3 HARDTEST PASSATI:                                            |
-|   [1] Race condition → solo 1 worker prende task                |
-|   [2] Max workers → spawn troncato a limite                     |
-|   [3] Watcher → notifiche senza keystroke                       |
+|   SOLUZIONE (LIVELLO 1 + LIVELLO 2):                            |
 |                                                                  |
-|   LO SWARM E' ANCORA PIU' ROBUSTO!!!                            |
+|   LIVELLO 1 - Linguaggio forte:                                  |
+|   - cervella-orchestrator.md v1.3.0 (VIETATO in cima!)          |
+|   - SWARM_RULES.md v1.7.0 (conseguenze catastrofiche!)          |
+|                                                                  |
+|   LIVELLO 2 - Hook che BLOCCA:                                   |
+|   - block_task_for_agents.py (NUOVO!)                           |
+|   - PreToolUse blocca Task + cervella-*                         |
+|   - Se provi -> BLOCCATO automaticamente!                       |
+|                                                                  |
+|   HARDTEST PASSATI:                                              |
+|   [1] cervella-backend -> BLOCCATO!                             |
+|   [2] Explore -> Passa (legittimo)                              |
+|   [3] general-purpose -> Passa (legittimo)                      |
+|                                                                  |
+|   ORA E' IMPOSSIBILE IGNORARE LA REGOLA!                        |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -50,8 +60,11 @@
 |------|--------|
 | 16 Agents in ~/.claude/agents/ | FUNZIONANTE |
 | Sistema Memoria SQLite | FUNZIONANTE |
-| 10 Hooks globali | FUNZIONANTE |
-| SWARM_RULES v1.5.0 | FUNZIONANTE |
+| **11 Hooks globali** | **+1 block_task_for_agents.py!** |
+| **SWARM_RULES v1.7.0** | **VIETATO Task tool per cervella-*!** |
+| **block_task_for_agents.py** | **NUOVO! Hook che BLOCCA!** |
+| **cervella-orchestrator v1.3.0** | **VIETATO in cima al DNA!** |
+| **TESTO_INIZIO_SESSIONE.md** | **NUOVO! Template per Rafa!** |
 | Pattern Catalog (3 pattern) | FUNZIONANTE |
 | GUIDA_COMUNICAZIONE v2.0 | FUNZIONANTE |
 | Flusso Guardiane (3 livelli) | TESTATO! |
@@ -81,29 +94,23 @@
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   FOCUS: MIGLIORARE ANTI-COMPACT!!!                             |
+|   FOCUS: USARE LO SWARM IN PRODUZIONE!                          |
 |                                                                  |
-|   Come abbiamo fatto con AUTO-SVEGLIA...                        |
-|   ora miglioriamo il sistema ANTI-COMPACT!                       |
+|   Il sistema e' PROTETTO! La regola non puo' piu' essere        |
+|   ignorata. E' il momento di USARLO!                             |
 |                                                                  |
-|   OBIETTIVO:                                                      |
-|   - Rendere l'handoff ancora piu' magico e automatico           |
-|   - Passaggio testimone SEAMLESS                                 |
-|   - Nessuna perdita di contesto MAI                              |
+|   PROTEZIONE ATTIVA:                                             |
+|   - Hook blocca Task tool per cervella-*                        |
+|   - DNA aggiornato con VIETATO                                  |
+|   - SWARM_RULES con conseguenze catastrofiche                   |
 |                                                                  |
-|   STATO ATTUALE:                                                  |
-|   - context_check.py v4.3.1 - AUTO-HANDOFF a 70%                |
-|   - Apre VS Code + Terminal + Claude                             |
-|   - Crea file handoff in .swarm/handoff/                         |
+|   PROSSIMI:                                                       |
+|   - [x] Protezione Task tool implementata                       |
+|   - [x] Template inizio sessione creato                         |
+|   - [ ] MIRACOLLO! Usare swarm con protezione attiva            |
+|   - [ ] Vedere hook in azione (test reale!)                     |
 |                                                                  |
-|   DA ESPLORARE:                                                   |
-|   - [ ] Rendere handoff PIU' fluido?                            |
-|   - [ ] Prompt piu' ricco per nuova Cervella?                   |
-|   - [ ] Passaggio stato piu' automatico?                        |
-|   - [ ] HARDTEST come AUTO-SVEGLIA?                              |
-|                                                                  |
-|   ANCHE:                                                          |
-|   - MIRACOLLO! Usare swarm in produzione                         |
+|   "Il vero test e' l'uso!" - Rafa                               |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -149,29 +156,43 @@
 
 ## ULTIMO AGGIORNAMENTO
 
-**5 Gennaio 2026 - Sessione 97** - CODE REVIEW + HARDTEST!
+**5 Gennaio 2026 - Sessione 98** - PROTEZIONE TASK TOOL!
 
-### Cosa abbiamo fatto (Sessione 97):
+### Cosa abbiamo fatto (Sessione 98):
 
-**CODE REVIEW SETTIMANALE:**
-- cervella-reviewer ha analizzato il sistema
-- Rating: 8.5/10
-- 4 issue identificati e TUTTI fixati!
+**IL PROBLEMA:**
+- Cervella in Miracollo usava Task tool invece di spawn-workers
+- Risultato: contesto al 6%, TUTTO BLOCCATO, lavoro PERSO!
+- La Regola 13 esisteva ma veniva IGNORATA
 
-**4 FIX IMPLEMENTATI:**
-- task_manager.py v1.2.0: Race condition → exclusive create
-- spawn-workers v2.8.0: Max workers limit (default 5)
-- anti-compact.sh v1.7.0: Git push retry (3 tentativi)
-- watcher-regina.sh v1.1.0: Rimosso keystroke, solo notifiche
+**LA SOLUZIONE (LIVELLO 1 + LIVELLO 2):**
 
-**3 HARDTEST PASSATI:**
-- Race condition: 2 worker → solo 1 prende task
-- Max workers: 3 richiesti con limit 2 → spawn 2
-- Watcher: notifiche senza keystroke
+*Livello 1 - Linguaggio forte:*
+- cervella-orchestrator.md v1.3.0: Box VIETATO come prima cosa nel DNA
+- SWARM_RULES.md v1.7.0: Regola 13 con conseguenze catastrofiche
 
-**SCOPERTA:** Keystroke scriveva in finestra sbagliata!
+*Livello 2 - Hook che BLOCCA:*
+- block_task_for_agents.py: Hook PreToolUse NUOVO
+- settings.json: Aggiunto PreToolUse per Task
+- Se subagent_type contiene "cervella-" → BLOCCATO automaticamente!
+
+**HARDTEST PASSATI:**
+- cervella-backend → BLOCCATO! ✅
+- Explore → Passa (legittimo) ✅
+- general-purpose → Passa (legittimo) ✅
+
+**BONUS:**
+- TESTO_INIZIO_SESSIONE.md: Template pronto per Rafa!
+
+**"SEMPRE FINESTRE! SEMPRE! SENZA ECCEZIONE!" - Rafa**
 
 ---
+
+### Sessione 97: CODE REVIEW + HARDTEST!
+
+- cervella-reviewer: Rating 8.5/10
+- 4 fix: task_manager, spawn-workers, anti-compact, watcher
+- 3 HARDTEST passati
 
 ### Sessioni precedenti:
 
