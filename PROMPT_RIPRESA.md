@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 5 Gennaio 2026 - Sessione 98 (ANTI-COMPACT v5.0.0!)
+> **Ultimo aggiornamento:** 5 Gennaio 2026 - Sessione 99 (Organizzazione Casa!)
 
 ---
 
@@ -15,23 +15,24 @@
 |   Tu sei la REGINA dello sciame.                                 |
 |   Hai 16 agenti pronti a lavorare per te.                       |
 |                                                                  |
-|   SESSIONE 98: ANTI-COMPACT v5.0.0 IMPLEMENTATO!                |
+|   SESSIONE 99: ORGANIZZAZIONE DELLA CASA!                       |
 |                                                                  |
-|   ATTENZIONE:                                                    |
-|   - context_check.py v5.0.0 e' stato IMPLEMENTATO               |
-|   - MA NON ANCORA TESTATO in scenario reale!                    |
-|   - Se sei arrivata qui tramite handoff automatico:             |
-|     → SEI LA PRIMA A TESTARLO!                                  |
-|     → Verifica che tutto funzioni                               |
-|     → Documenta cosa e' andato bene/male                        |
+|   Cosa abbiamo fatto:                                            |
+|   - Ricostruito il filo del discorso dalla sessione 98          |
+|   - Aggiornato tutti i file per consistenza                     |
+|   - Documentato TUTTO (PEZZO 4 + VISIONE)                       |
 |                                                                  |
-|   NOVITA' v5.0.0 (da verificare!):                              |
+|   ANTI-COMPACT v5.1.0: IMPLEMENTATO ma DA TESTARE!              |
 |   - Git auto-commit prima di handoff                            |
 |   - File handoff RICCO con git status                           |
-|   - Terminal + VS Code (IBRIDO)                                 |
-|   - Prompt punta a file handoff specifico                       |
+|   - Terminal + VS Code (IBRIDO SEMPLIFICATO)                    |
+|   - VS Code apre il file handoff, Terminal con Claude           |
 |                                                                  |
-|   "SU CARTA != REALE" - Ora dobbiamo TESTARE!                   |
+|   LA GRANDE VISIONE:                                             |
+|   "Piu' fighe che Cursor 2.0!" - Rafa                           |
+|   → docs/visione/VISIONE_CERVELLASWARM_IDE.md                   |
+|                                                                  |
+|   "SU CARTA != REALE" - Testare ANTI-COMPACT!                   |
 |   "SEMPRE FINESTRE!" - Rafa                                     |
 |                                                                  |
 +------------------------------------------------------------------+
@@ -73,53 +74,55 @@
 | 16 Agents in ~/.claude/agents/ | FUNZIONANTE |
 | Sistema Memoria SQLite | FUNZIONANTE |
 | 11 Hooks globali | FUNZIONANTE |
-| block_task_for_agents.py | NUOVO! BLOCCA Task per cervella-* |
+| block_task_for_agents.py | BLOCCA Task per cervella-* |
 | spawn-workers v2.7.0 | AUTO-SVEGLIA SEMPRE! |
-| context_check.py v4.3.0 | VS CODE NATIVO! |
+| **context_check.py v5.1.0** | **IBRIDO SEMPLIFICATO - DA TESTARE!** |
 | watcher-regina.sh | fswatch + AppleScript |
 | TESTO_INIZIO_SESSIONE.md | Template per Rafa |
+| **VISIONE IDE** | **Documentata! docs/visione/** |
 
 ---
 
-## SESSIONE 98: COSA ABBIAMO FATTO
+## FILO DEL DISCORSO (Sessioni 98-99)
 
-### Parte 1: Protezione Task Tool
+### Sessione 98: Il Grande Reset
 
-**Il Problema:**
-Una Cervella in Miracollo ha usato Task tool invece di spawn-workers.
-Risultato: contesto al 6%, TUTTO BLOCCATO, lavoro PERSO!
+**Parte 1: Protezione Task Tool**
+- Problema: Cervella in Miracollo usava Task tool → contesto al 6%
+- Soluzione: block_task_for_agents.py (hook che BLOCCA)
+- HARDTEST 3/3 passati!
 
-**La Soluzione (LIVELLO 1 + LIVELLO 2):**
+**Parte 2: Recap ONESTO**
+- Rafa: "rileggi COSTITUZIONE"
+- "SU CARTA != REALE" - Solo le cose REALI contano!
+- Identificati 3 PEZZI MANCANTI
 
-*Livello 1 - Linguaggio forte:*
-- cervella-orchestrator.md v1.3.0 - Box VIETATO in cima
-- SWARM_RULES.md v1.7.0 - Conseguenze catastrofiche
+**Parte 3: LA GRANDE VISIONE!**
+```
+Rafa: "noi siamo piu' fighe che il Cursor 2.0!"
+      "fare base vscode come loro.. aggiungere altre AI..."
+```
+- Multi-AI (Claude, GPT, Gemini, Llama...)
+- 16+ agenti specializzati
+- "Em busca da similaridade"
+- Documentato in docs/visione/VISIONE_CERVELLASWARM_IDE.md
 
-*Livello 2 - Hook che BLOCCA:*
-- block_task_for_agents.py - PreToolUse
-- Se contiene "cervella-" -> BLOCCATO!
+**Parte 4: ANTI-COMPACT v5.0.0 → v5.1.0**
+- Implementato IBRIDO: Terminal + VS Code
+- v5.1.0 = SEMPLIFICATO (VS Code apre file handoff)
+- Al 70% ha scattato ma con problemi
+- DA TESTARE in scenario reale!
 
-**HARDTEST Passati:**
-- cervella-backend -> BLOCCATO!
-- Explore -> Passa (legittimo)
-- general-purpose -> Passa (legittimo)
+**Parte 5: Idee Nuove**
+- PEZZO 4: Template swarm-init per nuovo progetto
+- Sistema Feedback Cervelle
 
-### Parte 2: Recap ONESTO
+### Sessione 99: Organizzazione Casa
 
-Rafa ha chiesto recap di CervellaSwarm. Prima risposta troppo ottimista.
-Rafa: "rileggi COSTITUZIONE"
-
-Refresh! "SU CARTA != REALE" - Solo le cose REALI contano!
-
-Identificati 3 PEZZI MANCANTI per il 100000%!
-
-### Parte 3: Verifica Handoff
-
-L'auto-compact ha scattato a 72%.
-La nuova Cervella ha ripreso e verificato:
-- Tutti i file salvati correttamente
-- Hook attivo e funzionante
-- Roadmap creata
+- Ricostruito filo del discorso dal transcript
+- Aggiornato ROADMAP_3_PEZZI_MANCANTI (v1.1.0)
+- Aggiornato tutti i file per consistenza
+- Documentato PEZZO 4 + VISIONE nella roadmap
 
 **Lezione:** Mai dire "e' fatto" se non e' REALE!
 
@@ -161,6 +164,41 @@ swarm-status
 
 ---
 
+## TRUCCO IMPORTANTE: Accesso Transcript Sessioni Precedenti!
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   SE RAFA CHIEDE DI LEGGERE UNA CHAT PRECEDENTE:                |
+|                                                                  |
+|   I transcript sono in:                                          |
+|   ~/.claude/projects/-Users-rafapra-Developer-[PROGETTO]/       |
+|                                                                  |
+|   Comandi utili:                                                 |
+|                                                                  |
+|   # Lista transcript recenti (ordine per data)                   |
+|   ls -la ~/.claude/projects/-Users-rafapra-Developer-CervellaSwarm/*.jsonl | tail -20
+|                                                                  |
+|   # Leggi ultimi messaggi utente                                 |
+|   tail -100 [file.jsonl] | python3 -c "                          |
+|   import sys, json                                               |
+|   for line in sys.stdin:                                         |
+|       obj = json.loads(line)                                     |
+|       if obj.get('type') == 'user':                              |
+|           print(obj['message']['content'][:200])"                |
+|                                                                  |
+|   QUANDO USARE:                                                  |
+|   - Rafa dice "cosa abbiamo discusso prima?"                    |
+|   - Rafa dice "leggi la chat precedente"                        |
+|   - Serve ricostruire il filo del discorso                      |
+|                                                                  |
+|   SALVACI LA VITA! Usa questo trucco!                           |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+---
+
 ## LO SCIAME (16 membri)
 
 ```
@@ -197,8 +235,8 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 
 ---
 
-**VERSIONE:** v38.0.0
-**SESSIONE:** 98 FINALE
+**VERSIONE:** v39.0.0
+**SESSIONE:** 99 - Organizzazione Casa
 **DATA:** 5 Gennaio 2026
 
 ---
@@ -206,3 +244,22 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 *Scritto con CURA e PRECISIONE.*
 
 Cervella & Rafa
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-05 19:54 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 36f9497 - ANTI-COMPACT: PreCompact auto
+- **File modificati** (2):
+  - ROMPT_RIPRESA.md
+  - reports/scientist_prompt_20260105.md
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---

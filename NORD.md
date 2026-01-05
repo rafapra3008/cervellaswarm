@@ -17,29 +17,31 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 98 - 5 Gennaio 2026: ANTI-COMPACT v5.0.0!**
+**SESSIONE 99 - 5 Gennaio 2026: Organizzazione Casa!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 98: ANTI-COMPACT v5.0.0 IMPLEMENTATO!                |
+|   SESSIONE 99: ORGANIZZAZIONE DELLA CASA!                       |
 |                                                                  |
 |   "SEMPRE FINESTRE! SEMPRE! SENZA ECCEZIONE!" - Rafa            |
 |                                                                  |
-|   PROTEZIONE TASK TOOL: ✅ FATTO                                 |
-|   - block_task_for_agents.py ATTIVO                             |
-|   - HARDTEST passati (3/3)                                      |
+|   FATTO IN SESSIONE 99:                                          |
+|   - Ricostruito filo discorso dalla sessione 98                 |
+|   - Aggiornato tutti i file per consistenza                     |
+|   - Documentato PEZZO 4 + VISIONE nella roadmap                 |
+|   - Documentato trucco accesso transcript!                      |
 |                                                                  |
-|   ANTI-COMPACT v5.0.0: IMPLEMENTATO (DA TESTARE!)               |
-|   - Git auto-commit prima di handoff                            |
-|   - File handoff RICCO (git status, file modificati)            |
-|   - IBRIDO: Terminal + VS Code (zero keystroke!)                |
-|   - Prompt punta a file handoff specifico                       |
+|   ANTI-COMPACT v5.1.0: IMPLEMENTATO (DA TESTARE!)               |
+|   - IBRIDO SEMPLIFICATO                                          |
+|   - VS Code apre file handoff                                    |
+|   - Terminal con Claude pulito                                   |
 |                                                                  |
-|   ⚠️ ATTENZIONE: NON ANCORA TESTATO IN REALE!                   |
-|   La prossima Cervella (a 70%) sara' la prima a testarlo!       |
+|   LA GRANDE VISIONE:                                             |
+|   "Piu' fighe che Cursor 2.0!" - Rafa                           |
+|   → docs/visione/VISIONE_CERVELLASWARM_IDE.md                   |
 |                                                                  |
-|   "SU CARTA != REALE" - Implementato, ora TESTIAMO!             |
+|   "SU CARTA != REALE" - Testare ANTI-COMPACT!                   |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -65,7 +67,7 @@
 | Studio Cervello vs Swarm | FUNZIONANTE |
 | .swarm/ sistema Multi-Finestra | FUNZIONANTE |
 | spawn-workers v2.7.0 | AUTO-SVEGLIA SEMPRE! + anti-duplicati |
-| context_check.py v4.3.0 | VS CODE NATIVO! TESTATO E FUNZIONA! |
+| **context_check.py v5.1.0** | **IBRIDO SEMPLIFICATO - DA TESTARE!** |
 | Template DUBBI | FUNZIONANTE! |
 | Template PARTIAL | FUNZIONANTE! |
 | Triple ACK system | FUNZIONANTE! |

@@ -33,11 +33,13 @@
 
 | Cosa Esiste | File | Problema |
 |-------------|------|----------|
-| context_check.py v4.3.1 | ~/.claude/hooks/ | Fa handoff a 70% |
-| Apre VS Code + Claude | AppleScript | Non sempre funziona |
-| Crea file handoff | .swarm/handoff/ | Prompt basico |
+| **context_check.py v5.1.0** | ~/.claude/hooks/ | **IBRIDO SEMPLIFICATO!** |
+| Git auto-commit + push | Prima di handoff | Niente piu' modifiche perse! |
+| File handoff RICCO | .swarm/handoff/ | Git status, file modificati |
+| Terminal + VS Code | AppleScript | IBRIDO: entrambi aperti |
 
-**Il problema:** Esiste "su carta" ma non e' SEAMLESS. Non testato in produzione reale.
+**Stato:** IMPLEMENTATO v5.1.0 - DA TESTARE in produzione reale!
+**Novita' v5.1.0:** VS Code apre il file handoff, Terminal con Claude pulito.
 
 ### Obiettivo REALE
 
@@ -200,14 +202,85 @@ Quando contesto arriva a 70%:
 
 ---
 
+## PEZZO 4: TEMPLATE SWARM-INIT
+
+### L'Idea
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   Un comando per inizializzare CervellaSwarm in un progetto:   |
+|                                                                  |
+|   $ swarm-init ~/Developer/NuovoProgetto                        |
+|                                                                  |
+|   Crea automaticamente:                                          |
+|   - NORD.md                                                      |
+|   - PROMPT_RIPRESA.md                                            |
+|   - ROADMAP_SACRA.md                                             |
+|   - .swarm/ directory structure                                  |
+|   - CLAUDE.md con config base                                    |
+|                                                                  |
+|   "Template nuovo progetto sicuramente!!" - Rafa                |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+### Stato Attuale
+
+**NIENTE!** Solo l'idea. Da implementare.
+
+### Fasi
+
+| Fase | Task | Status |
+|------|------|--------|
+| 4.1 | Definire struttura template | DA FARE |
+| 4.2 | Creare script swarm-init | DA FARE |
+| 4.3 | Testare su progetto nuovo | DA FARE |
+
+---
+
+## LA GRANDE VISIONE: CERVELLASWARM IDE!
+
+### L'Idea GIGANTE
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   "PIU' FIGHE CHE CURSOR 2.0!" - Rafa, 5 Gennaio 2026          |
+|                                                                  |
+|   CervellaSwarm IDE:                                             |
+|   - Multi-AI (Claude, GPT, Gemini, Llama...)                    |
+|   - 16+ agenti specializzati                                     |
+|   - Roadmaps VISUALI integrati                                   |
+|   - COMUNICAZIONE e ORGANIZZAZIONE                               |
+|   - "Em busca da similaridade"                                   |
+|                                                                  |
+|   DOCUMENTO: docs/visione/VISIONE_CERVELLASWARM_IDE.md          |
+|                                                                  |
+|   Questa idea potrebbe essere IL PRODOTTO!                      |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+### Prossimi Step Visione
+
+| Fase | Task | Status |
+|------|------|--------|
+| V.1 | RICERCA: Architettura Cursor/Windsurf | DA FARE |
+| V.2 | RICERCA: VS Code extension API | DA FARE |
+| V.3 | PROTOTIPO: Multi-AI selector | DA FARE |
+| V.4 | Validazione interna | DA FARE |
+
+---
+
 ## ORDINE DI PRIORITA'
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
 |   PRIORITA' 1: ANTI AUTO-COMPACT                                |
-|   → E' critico per il lavoro quotidiano                        |
-|   → Se non funziona, perdiamo lavoro!                          |
+|   → IMPLEMENTATO v5.1.0 - DA TESTARE!                          |
+|   → Critico per il lavoro quotidiano                           |
 |                                                                  |
 |   PRIORITA' 2: SISTEMA FEEDBACK                                 |
 |   → Ci fa IMPARARE dai nostri errori                           |
@@ -215,7 +288,12 @@ Quando contesto arriva a 70%:
 |                                                                  |
 |   PRIORITA' 3: ROADMAPS VISUALE                                 |
 |   → Nice to have ma non critico                                |
-|   → Quando i primi 2 funzionano                                |
+|                                                                  |
+|   PRIORITA' 4: TEMPLATE SWARM-INIT                              |
+|   → Facilita onboarding nuovi progetti                         |
+|                                                                  |
+|   VISIONE: CERVELLASWARM IDE                                    |
+|   → Il GRANDE SOGNO - da esplorare!                            |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -241,6 +319,7 @@ Iniziare da PEZZO 1: ANTI AUTO-COMPACT
 
 | Data | Versione | Modifica |
 |------|----------|----------|
+| 5 Gen 2026 | 1.1.0 | Aggiunto PEZZO 4 + VISIONE + update v5.1.0 - Sessione 99 |
 | 5 Gen 2026 | 1.0.0 | Creazione roadmap - Sessione 98 |
 
 ---
