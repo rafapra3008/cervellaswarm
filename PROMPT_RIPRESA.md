@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 5 Gennaio 2026 - Sessione 90 - QUICK-TASK + FILOSOFIA DI VITA!
+> **Ultimo aggiornamento:** 5 Gennaio 2026 - Sessione 91 - STABILIZZAZIONE + STUDIO VISIBILITA'!
 
 ---
 
@@ -15,17 +15,119 @@
 |   Tu sei la REGINA dello sciame.                                 |
 |   Hai 16 agenti pronti a lavorare per te.                       |
 |                                                                  |
-|   SESSIONE 90: QUICK-TASK + FILOSOFIA DI VITA!                  |
-|   - quick-task command: da 6 step a 1!                          |
-|   - Whitelist file Regina definita                               |
-|   - Fix sicurezza ALTI completati                                |
-|   - "Rendi facile fare la cosa giusta!"                         |
+|   SESSIONE 91: STABILIZZAZIONE + STUDIO VISIBILITA'!            |
+|   - Template prompt inizio sessione creato                       |
+|   - Worker Health Tracking implementato                          |
+|   - PROBLEMA CRITICO identificato: "Lavoriamo al buio!"         |
+|   - 2 ricercatori spawnati per studiare visibilita'             |
 |                                                                  |
-|   SESSIONE 89 (sotto): Memoria Globalizzata!                    |
-|   "Ultrapassar os proprios limites!" - Rafa                     |
+|   "Lavorare al buio e' difficile!" - Rafa                       |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
+
+---
+
+## SESSIONE 91: STABILIZZAZIONE + STUDIO VISIBILITA'!
+
+### L'Obiettivo
+
+1. Completare task in coda dalla sessione 90
+2. Stabilizzare il sistema swarm (task appesi, worker morti)
+3. Studiare problema visibilita' worker
+
+### IL PROBLEMA CRITICO IDENTIFICATO
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   "LAVORIAMO AL BUIO!"                                          |
+|                                                                  |
+|   OGGI SAPPIAMO:                                                 |
+|   - Quando worker INIZIA (spawn)                                 |
+|   - Quando worker FINISCE (cleanup)                              |
+|                                                                  |
+|   NON SAPPIAMO:                                                  |
+|   - Cosa fa MENTRE lavora                                        |
+|   - Se e' bloccato o sta pensando                                |
+|   - Quanto manca al completamento                                |
+|   - Se ha problemi                                               |
+|                                                                  |
+|   Vediamo finestre con cursore che lampeggia...                  |
+|   ...e non sappiamo NULLA!                                       |
+|                                                                  |
+|   QUESTO E' IL PROBLEMA DA RISOLVERE!                           |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+### Cosa Abbiamo Fatto
+
+1. **TEMPLATE PROMPT INIZIO SESSIONE**
+   - File: `~/.claude/templates/PROMPT_INIZIO_SESSIONE.md`
+   - Include: quick-task, whitelist, Regola 14
+   - Versione pulita e aggiornata post-Sessione 90
+
+2. **WORKER HEALTH TRACKING**
+   - spawn-workers v2.1.0 con PID tracking
+   - swarm-cleanup v1.0.0 per task orfani
+   - Trap EXIT per cleanup automatico
+   - Risolve: task .working appesi
+
+3. **TASK STALE PULITI**
+   - 2 task dalla sessione 90 marcati .stale
+   - TASK_CODE_REVIEW_SWARM
+   - TASK_REGOLA_VIA_GIUSTA
+
+4. **STUDIO VISIBILITA' LANCIATO**
+   - 2 ricercatori spawnati in parallelo:
+     - cervella-researcher (studio tecnico)
+     - cervella-guardiana-ricerca (comparativo)
+   - Task in .swarm/tasks/ con prefisso TASK_20260105_051500_
+
+### Worker IN ESECUZIONE (al momento del checkpoint)
+
+```
+DUE WORKER ATTIVI:
+- cervella-researcher -> studio visibilita' tecnico
+- cervella-guardiana-ricerca -> studio + comparativo
+
+STATO:
+- Processi attivi (CPU 1.2% ciascuno)
+- Log vuoti (bufferizzati - PARTE DEL PROBLEMA!)
+- Task ancora .ready (non hanno creato .working)
+
+SE CONTINUANO A LAVORARE:
+- Output in: .swarm/tasks/TASK_*_visibilita_*_output.md
+- Controllare: ls .swarm/tasks/*visibilita*.done
+```
+
+### File Creati/Modificati (Sessione 91)
+
+| File | Cosa |
+|------|------|
+| `~/.claude/templates/PROMPT_INIZIO_SESSIONE.md` | NUOVO! Template prompt |
+| `~/.local/bin/spawn-workers` | v2.1.0 - PID tracking |
+| `~/.local/bin/swarm-cleanup` | NUOVO! Cleanup task orfani |
+| `NORD.md` | Aggiornato con sessione 91 |
+| `ROADMAP_SACRA.md` | Aggiunto CHANGELOG sessione 91 |
+
+### Prossimi Step
+
+1. **Controllare output ricercatori** - quando finiscono
+2. **Implementare soluzione visibilita'** - basata sugli studi
+3. **Code Review settimanale** - oggi e' lunedi'
+4. **MIRACOLLO!** - usare swarm in produzione
+
+### Filo del Discorso
+
+Rafa ha identificato un problema CRITICO: "Lavoriamo al buio!"
+
+Abbiamo spawnato due worker e li abbiamo VISTI lavorare... ma non sapevamo cosa facevano! Solo "Worker avviato" e cursore che lampeggia. I processi erano attivi (CPU 1.2%) ma i log vuoti.
+
+Questo e' ESATTAMENTE il problema che devono risolvere. L'ironia e' fortissima!
+
+La soluzione verra' dagli studi dei due ricercatori - uno tecnico (researcher) e uno con comparativo (guardiana).
 
 ---
 
@@ -751,17 +853,19 @@ PreCompact auto
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-05 04:37 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-05 05:02 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 1d4c1e4 - Sessione 89 COMPLETA: Globalizzazione Memoria + Review Hooks!
+- **Ultimo commit**: ec30d45 - NORD.md: Sessione 90 EPICA!
 - **File modificati** (5):
-  - swarm/prompts/worker_researcher.txt
-  - .swarm/runners/run_researcher.sh
-  - PROMPT_RIPRESA.md
+  - swarm/tasks/TASK_20260105_042820_migliorare_testo_inizio_sessione.ready
   - reports/scientist_prompt_20260105.md
   - scripts/swarm/spawn-workers.sh
+  - .swarm/handoff/HANDOFF_20260105_044257.md
+  - .swarm/tasks/TASK_20260105_042820_migliorare_testo_inizio_sessione.done
 
 ### Note
 - Checkpoint automatico generato da hook

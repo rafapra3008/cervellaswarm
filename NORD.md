@@ -75,16 +75,22 @@
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   AUTO-HANDOFF v4.3.0 - COMPLETATO!                             |
+|   SESSIONE 91: STABILIZZAZIONE + STUDIO VISIBILITA'!            |
 |                                                                  |
-|   IL SISTEMA FUNZIONA! VS CODE NATIVO!                          |
+|   COMPLETATO:                                                    |
+|   - Template prompt inizio sessione                              |
+|   - Worker Health Tracking (PID + cleanup)                       |
+|   - spawn-workers v2.1.0 + swarm-cleanup v1.0.0                 |
 |                                                                  |
-|   PROSSIMI STEP:                                                 |
-|   1. MIRACOLLO! ("Il 100000% viene dall'USO!")                  |
-|   2. Testare AUTO-HANDOFF reale (aspettare 70% contesto)        |
-|   3. Hardtests su tutti e 3 i progetti                          |
+|   STUDIO DA FARE (PRIORITA' ALTA!):                             |
+|   "IL MISTERO DEL WORKER"                                        |
+|   Come vedere cosa fa il worker MENTRE lavora?                   |
+|   Soluzioni da studiare:                                         |
+|   - tail -f streaming log                                        |
+|   - Heartbeat con stato                                          |
+|   - swarm-watch dashboard live                                   |
 |                                                                  |
-|   "E' ORO!" - Rafa                                              |
+|   "Lavorare al buio e' difficile!" - Rafa                       |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -130,32 +136,31 @@
 
 ## ULTIMO AGGIORNAMENTO
 
-**5 Gennaio 2026 - Sessione 89** - GLOBALIZZAZIONE MEMORIA + REVIEW HOOKS!
+**5 Gennaio 2026 - Sessione 91** - STABILIZZAZIONE SWARM + STUDIO VISIBILITA'!
 
-### Cosa abbiamo fatto (Sessione 89):
+### Cosa abbiamo fatto (Sessione 91):
 
-1. **FIX DNA ORCHESTRATOR**
-   - Regola 13 RISCRITTA per chiarezza
-   - "SE MODIFICA FILE -> spawn-workers (finestra separata)"
-   - "SE SOLO LEGGE -> Task tool (interno)"
-   - Path aggiornati in 4 DNA guardiane
+1. **TEMPLATE PROMPT INIZIO SESSIONE**
+   - `~/.claude/templates/PROMPT_INIZIO_SESSIONE.md`
+   - Include quick-task, whitelist, Regola 14
+   - Versione pulita post-Sessione 90
 
-2. **SISTEMA MEMORIA GLOBALIZZATO**
-   - Database: `~/.swarm/data/swarm_memory.db` (1.7MB)
-   - Scripts: `~/.claude/scripts/memory/` (4 file)
-   - `paths.py` v2.0.0 (usa path globali!)
-   - `settings.json`: 5 path aggiornati
+2. **WORKER HEALTH TRACKING**
+   - spawn-workers v2.1.0 con PID tracking
+   - swarm-cleanup v1.0.0 per task orfani
+   - Trap EXIT per cleanup automatico
 
-3. **REVIEW HOOKS/SCRIPTS COMPLETATA**
-   - cervella-reviewer ha analizzato hooks + scripts
-   - **Rating: 8.5/10**
-   - 3 problemi ALTI: path NVM hardcodato, escape AppleScript, command injection
-   - 8 problemi MEDI: DRY, timeout, error handling
-   - Punti di forza: architettura modulare, graceful degradation
+3. **STUDIO VISIBILITA' IDENTIFICATO**
+   - Problema: "Lavoriamo al buio!"
+   - Non sappiamo cosa fa worker MENTRE lavora
+   - STUDIO PRIORITA' ALTA per prossime sessioni
 
 ### Prossimo:
-1. **Fix problemi ALTI dalla review** (sicurezza!)
-2. **Creare ~/.claude/hooks/common.py** (DRY)
+1. **STUDIO VISIBILITA' WORKER** (priorita' alta!)
+   - Come vedere log real-time?
+   - Come heartbeat con stato?
+   - Come dashboard live?
+2. **Code Review settimanale**
 3. **MIRACOLLO!** - Usare Swarm in produzione
 
 ---

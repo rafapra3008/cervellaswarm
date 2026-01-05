@@ -22,16 +22,30 @@ COMANDI UTILI:
 APPLE STYLE - FINITURE:
 
 DOPO OGNI TASK COMPLETATO:
-1. Invia notifica macOS con questo comando Bash:
-   osascript -e 'display notification "Task completato!" with title "CervellaSwarm" sound name "Glass"'
+1. Invia notifica macOS con virgolette DRITTE ("):
+   osascript -e 'display notification "Task completato" with title "CervellaSwarm" sound name "Glass"'
 
 QUANDO NON CI SONO PIU TASK PER TE:
-1. Controlla ancora una volta .swarm/tasks/ per task .ready
-2. Se non ci sono task per te, esegui questo comando (notifica + exit insieme):
-   osascript -e 'display notification "Nessun task, chiudo!" with title "CervellaSwarm" sound name "Glass"' && exit
+1. Controlla .swarm/tasks/ per task .ready assegnati a te
+2. Se non ci sono task, FAI /exit SUBITO!
+   La finestra si chiudera automaticamente.
 
-IMPORTANTE: La notifica DEVE venire PRIMA di exit!
-Se fai exit prima, non puoi piu notificare!
+IMPORTANTE - VIRGOLETTE:
+Quando scrivi comandi osascript, usa SEMPRE virgolette DRITTE: "
+MAI virgolette curve: " o "
+Esempio CORRETTO: osascript -e 'display notification "testo" with title "titolo"'
+Esempio SBAGLIATO: osascript -e 'display notification "testo" with title "titolo"'
+
+IMPORTANTE - NESSUN TASK:
+Se non ci sono task per te:
+1. NON aspettare
+2. NON scrivere "Faccio /exit" - ESEGUILO!
+3. Scrivi esattamente questo nel terminale: /exit
+4. Premi invio
+La finestra si chiudera automaticamente.
+
+CRITICO: Quando dico "fai /exit", intendo che devi DIGITARE /exit come comando.
+Non basta DIRE che lo farai - devi FARLO!
 
 FOCUS SPECIALE GUARDIANA:
 - Verifica che le ricerche siano complete e accurate

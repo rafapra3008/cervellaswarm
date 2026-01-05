@@ -324,6 +324,60 @@ APRI -> ASPETTA -> COMUNICA -> TESTA -> VERIFICA -> CHIUDI
 
 ## CHANGELOG
 
+### 5 Gennaio 2026 (Sessione 91) - STABILIZZAZIONE SWARM + STUDIO VISIBILITA'!
+
+**PROBLEMA IDENTIFICATO:**
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   IL MISTERO DEL WORKER                                          |
+|                                                                  |
+|   "Lavoriamo al buio senza sapere cosa succede!"                |
+|                                                                  |
+|   OGGI SAPPIAMO:                                                 |
+|   - Quando worker INIZIA (spawn)                                 |
+|   - Quando worker FINISCE (cleanup)                              |
+|                                                                  |
+|   NON SAPPIAMO:                                                  |
+|   - Cosa fa MENTRE lavora                                        |
+|   - Se e' bloccato o sta pensando                                |
+|   - Quanto manca al completamento                                |
+|   - Se ha problemi                                               |
+|                                                                  |
+|   SERVE: STUDIO VISIBILITA' REAL-TIME!                          |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+**COMPLETATO:**
+1. Nuovo template prompt inizio sessione
+   - `~/.claude/templates/PROMPT_INIZIO_SESSIONE.md`
+   - Include quick-task, whitelist, Regola 14
+2. Worker Health Tracking implementato
+   - spawn-workers v2.1.0 con PID tracking
+   - swarm-cleanup v1.0.0 per task orfani
+3. Task stale puliti (2 dalla sessione 90)
+
+**STUDIO DA FARE (PRIORITA' ALTA!):**
+
+| # | Domanda | Possibile Soluzione |
+|---|---------|---------------------|
+| 1 | Come vedere log in tempo reale? | tail -f + streaming |
+| 2 | Come sapere cosa sta facendo? | Heartbeat con stato |
+| 3 | Come notificare problemi? | Webhook/notifica macOS |
+| 4 | Come vedere progresso? | Progress file periodico |
+| 5 | Dashboard live? | swarm-watch command |
+
+**FILE CREATI/MODIFICATI:**
+- `~/.claude/templates/PROMPT_INIZIO_SESSIONE.md` (NUOVO)
+- `~/.local/bin/spawn-workers` v2.1.0 (PID tracking)
+- `~/.local/bin/swarm-cleanup` v1.0.0 (NUOVO)
+
+**Versione:** 38.0.0 (MINOR: Stabilizzazione + Studio Visibilita)
+
+---
+
 ### 4 Gennaio 2026 (Sessione 86) - AUTO-HANDOFF v4.0.0!
 
 **RICERCA & SVILUPPO AUTO-HANDOFF:**

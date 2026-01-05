@@ -12,12 +12,13 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 2.0.1
+# Versione: 2.1.0
 # Data: 2026-01-05
 # Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
 # v2.0.0: Config centralizzata ~/.swarm/config
 #
 # CHANGELOG:
+# v2.1.0: Worker Health Tracking - PID/timestamp per sapere se worker e' vivo!
 # v1.4.0: Fix notifica + exit
 # v1.5.0: Auto-close finestra Terminal tramite TTY
 # v1.6.0: Background close = no conferma macOS
@@ -380,10 +381,27 @@ spawn_worker() {
 #!/bin/bash
 # CervellaSwarm Worker Runner
 # v1.5.0: Auto-close finestra Terminal quando Claude termina!
+# v1.6.0: PID/timestamp tracking per health check!
 
 # Salva il TTY di questa finestra per identificarla dopo
 MY_TTY=$(tty)
 RUNNEREOF
+
+    # Aggiungi tracking PID/timestamp (v1.6.0)
+    echo "# Health tracking - salva PID e timestamp" >> "$runner_script"
+    echo "mkdir -p ${SWARM_DIR}/status" >> "$runner_script"
+    echo "WORKER_PID=\$\$" >> "$runner_script"
+    echo "WORKER_NAME=\"${worker_name}\"" >> "$runner_script"
+    echo "echo \$WORKER_PID > \"${SWARM_DIR}/status/worker_\${WORKER_NAME}.pid\"" >> "$runner_script"
+    echo "date +%s > \"${SWARM_DIR}/status/worker_\${WORKER_NAME}.start\"" >> "$runner_script"
+    echo "" >> "$runner_script"
+    # Cleanup function per rimuovere i file quando il worker termina
+    echo "cleanup_health_files() {" >> "$runner_script"
+    echo "    rm -f \"${SWARM_DIR}/status/worker_\${WORKER_NAME}.pid\"" >> "$runner_script"
+    echo "    rm -f \"${SWARM_DIR}/status/worker_\${WORKER_NAME}.start\"" >> "$runner_script"
+    echo "}" >> "$runner_script"
+    echo "trap cleanup_health_files EXIT" >> "$runner_script"
+    echo "" >> "$runner_script"
     echo "cd ${PROJECT_ROOT}" >> "$runner_script"
     # Output visivo
     echo "echo ''" >> "$runner_script"
