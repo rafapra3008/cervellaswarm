@@ -1,6 +1,8 @@
 #!/bin/bash
 #
 # anti-compact.sh - ANTI-COMPACT AUTOMATICO (CRITICO!)
+# Versione: 1.7.0
+# v1.7.0: Git push RETRY con backoff esponenziale (3 tentativi: 1s, 2s, 4s)
 #
 # CervellaSwarm - Salvavita quando Claude sta per fare compact
 #
@@ -195,10 +197,29 @@ else
 fi
 
 log_info "Git: push..."
-if git push; then
-    log_success "Push completato!"
-else
-    log_warning "Push fallito (verificare connessione)"
+# RETRY con backoff esponenziale (v1.7.0) - Il lavoro e' PREZIOSO!
+MAX_RETRIES=3
+RETRY_DELAY=1
+push_success=false
+
+for attempt in $(seq 1 $MAX_RETRIES); do
+    if git push 2>/dev/null; then
+        log_success "Push completato!"
+        push_success=true
+        break
+    else
+        if [ $attempt -lt $MAX_RETRIES ]; then
+            log_warning "Push fallito (tentativo ${attempt}/${MAX_RETRIES}). Retry in ${RETRY_DELAY}s..."
+            sleep $RETRY_DELAY
+            RETRY_DELAY=$((RETRY_DELAY * 2))  # Backoff esponenziale
+        fi
+    fi
+done
+
+if [ "$push_success" = false ]; then
+    log_error "Push FALLITO dopo ${MAX_RETRIES} tentativi!"
+    log_warning "Il commit e' salvato LOCALMENTE - fai push manuale quando possibile!"
+    log_warning "Comando: git push"
 fi
 
 # Step 4: Mostra riepilogo

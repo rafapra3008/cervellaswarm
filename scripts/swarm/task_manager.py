@@ -6,8 +6,9 @@ Gestisce la creazione, monitoraggio e stato dei task per il sistema Multi-Finest
 Usa file marker (.ready, .working, .done) per sincronizzazione tra agenti.
 """
 
-__version__ = "1.1.0"
-__version_date__ = "2026-01-03"
+__version__ = "1.2.0"
+__version_date__ = "2026-01-05"
+# v1.2.0: Fix race condition in mark_working() - ora ATOMICO con exclusive create!
 
 from pathlib import Path
 from typing import Optional
@@ -198,11 +199,15 @@ def mark_working(task_id: str) -> bool:
     """
     Segna un task come working (in lavorazione).
 
+    ATOMICO: Usa exclusive create per prevenire race condition.
+    Se due worker provano a prendere lo stesso task, solo uno ci riesce!
+
     Args:
         task_id: ID del task
 
     Returns:
-        True se successo, False altrimenti
+        True se successo (task assegnato a questo worker)
+        False se fallito (task già preso da altro worker o errore)
     """
     if not validate_task_id(task_id):
         print(f"Errore: Task ID non valido: {task_id}")
@@ -216,8 +221,17 @@ def mark_working(task_id: str) -> bool:
         return False
 
     working_file = Path(TASKS_DIR) / f"{task_id}.working"
-    working_file.touch()
-    return True
+
+    # ATOMICO: 'x' mode = exclusive create, fallisce se file esiste già
+    # Questo previene race condition tra worker!
+    try:
+        with open(working_file, 'x') as f:
+            # Scrivi timestamp per debug/monitoring
+            f.write(f"started: {datetime.now().isoformat()}\n")
+        return True
+    except FileExistsError:
+        print(f"Task {task_id} già in lavorazione da altro worker!")
+        return False
 
 
 def ack_received(task_id: str) -> bool:

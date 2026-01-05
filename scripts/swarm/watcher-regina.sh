@@ -8,15 +8,20 @@
 #   ./watcher-regina.sh                    # Default: .swarm/tasks, VS Code
 #   ./watcher-regina.sh .swarm/tasks Code  # Esplicito
 #
-# Versione: 1.0.0
+# Versione: 1.1.0
 # Data: 5 Gennaio 2026
 # Cervella & Rafa
+#
+# v1.1.0: RIMOSSO keystroke! Solo notifiche.
+#         Sicuro con multiple finestre aperte.
+#         Click notifica apre output direttamente.
 
 set -e
 
 # Configurazione
 WATCH_DIR="${1:-.swarm/tasks}"
-REGINA_WINDOW="${2:-Code}"  # "Code" per VS Code
+# NOTA: Non usiamo piu' keystroke nella finestra
+# Solo notifiche - sicuro con multiple finestre!
 
 # Colori
 GREEN='\033[0;32m'
@@ -44,7 +49,7 @@ if [[ ! -d "$WATCH_DIR" ]]; then
 fi
 
 echo -e "${GREEN}[OK]${NC} Monitoring: $WATCH_DIR"
-echo -e "${GREEN}[OK]${NC} Regina window: $REGINA_WINDOW"
+echo -e "${GREEN}[OK]${NC} Solo notifiche - sicuro con multiple finestre!"
 echo ""
 echo "In attesa di file .done..."
 echo "(Ctrl+C per terminare)"
@@ -56,34 +61,29 @@ sveglia_regina() {
 
     echo -e "${GREEN}[!]${NC} Rilevato: $task_name completato!"
 
-    # Notifica macOS (sempre)
+    # Notifica macOS (sempre) - SICURA con multiple finestre!
+    # Click sulla notifica apre l'output del task
     if command -v terminal-notifier &>/dev/null; then
+        # Cerca il file output per aprirlo al click
+        local output_file=""
+        if [[ -f ".swarm/tasks/${task_name}_output.md" ]]; then
+            output_file=".swarm/tasks/${task_name}_output.md"
+        fi
+
         terminal-notifier \
-            -title "CervellaSwarm Watcher" \
-            -subtitle "Worker completato!" \
-            -message "$task_name" \
-            -sound Glass 2>/dev/null
+            -title "Worker Completato!" \
+            -subtitle "$task_name" \
+            -message "Click per vedere output" \
+            -sound Glass \
+            ${output_file:+-open "$output_file"} \
+            2>/dev/null
     else
         osascript -e "display notification \"$task_name completato!\" with title \"CervellaSwarm\" sound name \"Glass\"" 2>/dev/null
     fi
 
-    # Sveglia Regina con keystroke
-    osascript << EOF
-tell application "System Events"
-    if exists process "$REGINA_WINDOW" then
-        tell application "$REGINA_WINDOW" to activate
-        delay 0.5
-        tell process "$REGINA_WINDOW"
-            keystroke "WORKER COMPLETATO: $task_name - Leggi output!"
-            delay 0.2
-            key code 36
-        end tell
-        return "OK"
-    else
-        return "Regina non trovata: $REGINA_WINDOW"
-    end if
-end tell
-EOF
+    # RIMOSSO: keystroke nella finestra
+    # Era rischioso con multiple finestre aperte!
+    # Ora usiamo solo notifiche - piu' sicuro e pulito.
 }
 
 # Monitor con fswatch
