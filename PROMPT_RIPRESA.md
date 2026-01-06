@@ -377,3 +377,19 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 
 Cervella & Rafa
 
+---
+
+## AUTO-CHECKPOINT: 2026-01-06 04:24 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 60bacb3 - ANTI-COMPACT: PreCompact auto
+- **File modificati** (2):
+  - eports/scientist_prompt_20260106.md
+  - .swarm/handoff/HANDOFF_20260106_042413.md
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---

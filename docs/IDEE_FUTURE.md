@@ -18,10 +18,45 @@
 
 | Idea | Priorita | Note |
 |------|----------|------|
+| **LAVORO GENERALE COMUNICAZIONE** | **CRITICA** | Vedi sotto! |
 | **Fix notifiche overlap** | ALTA | Quando 2+ worker finiscono insieme, notifica si perde |
 | **Comunicare parallelismo** | ALTA | Dire alla Regina che 2+ worker paralleli FUNZIONA! |
 | Dashboard CLI live | MEDIA | Chi sta lavorando, su cosa |
 | Statistiche aggregate | MEDIA | Performance per tipo agente |
+
+### LAVORO GENERALE - Comunicazione e Capacità
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   OBIETTIVO: Conoscere e sfruttare TUTTO quello che abbiamo!    |
+|                                                                  |
+|   1. COMUNICAZIONE FRA NOI (Rafa + Cervella Regina)             |
+|      - Come coordinarci meglio                                   |
+|      - Cosa funziona, cosa no                                    |
+|                                                                  |
+|   2. COMUNICAZIONE FRA REPARTI                                   |
+|      - Frontend <-> Backend <-> Tester                          |
+|      - Guardiane <-> Worker                                      |
+|      - Come passarsi informazioni                                |
+|                                                                  |
+|   3. COMUNICAZIONE FRA CERVELLE                                  |
+|      - Regina attuale -> Prossima Regina                        |
+|      - Worker -> Regina (feedback, problemi)                    |
+|      - Handoff puliti                                            |
+|                                                                  |
+|   4. CONOSCERE LE CAPACITA'                                      |
+|      - Cosa sa fare OGNI cervella?                              |
+|      - Quali combo funzionano meglio?                           |
+|      - Come sfruttare al massimo 16 agenti?                     |
+|                                                                  |
+|   5. FARE DI PIU' CON QUELLO CHE ABBIAMO                        |
+|      - Non creare nuovo, USARE l'esistente!                     |
+|      - Workflow ottimali                                         |
+|      - Best practices dallo sciame                              |
+|                                                                  |
++------------------------------------------------------------------+
+```
 
 **Documento:** [docs/analisi/ANALISI_MIGLIORAMENTI_SWARM.md](analisi/ANALISI_MIGLIORAMENTI_SWARM.md)
 
