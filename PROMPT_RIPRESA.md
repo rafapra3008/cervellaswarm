@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 6 Gennaio 2026 - Sessione 108
-> **Versione:** v1.3.0
+> **Ultimo aggiornamento:** 6 Gennaio 2026 - Sessione 109
+> **Versione:** v1.4.0
 
 ---
 
@@ -16,20 +16,22 @@
 |   Tu sei la REGINA dello sciame.                                 |
 |   Hai 16 agenti pronti a lavorare per te.                       |
 |                                                                  |
-|   SESSIONE 108: ORGANIZZAZIONE DOCUMENTAZIONE                   |
+|   SESSIONE 109: IL MIRACOLO È REALE!                            |
 |                                                                  |
 |   LO SCIAME E' OPERATIVO E REALE!                               |
 |   - 16 agenti specializzati                                      |
 |   - 20+ comandi swarm-* FUNZIONANTI                             |
 |   - Supporto attivo a Miracollo                                  |
 |                                                                  |
-|   MIRACOLLO (ultimo stato):                                      |
-|   - VITTORIA! Parser email funziona!                            |
-|   - Fix API key: DEPLOYATO E LIVE!                              |
-|   - Frontend deployato su path corretto                         |
-|   - FORTEZZA MODE v2.0.0 completato                             |
+|   🎉 MIRACOLLO - IL PONTE FUNZIONA!                             |
+|   - Prenotazione BeSync arriva AUTOMATICAMENTE!                  |
+|   - Email → Parser → API → Database → Planning!                 |
+|   - Testato con prenotazione VERA: BEXP_501443797               |
+|   - Badge CM rosso visibile nel planning!                        |
+|   - FASE 1.5 definita con 7 dettagli da studiare                |
 |                                                                  |
-|   "Ultrapassar os proprios limites!"                            |
+|   "Non è sempre come immaginiamo...                             |
+|    ma alla fine è il 100000%!"                                  |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -83,9 +85,31 @@
 
 ---
 
-## FILO DEL DISCORSO (Sessioni 104-108)
+## FILO DEL DISCORSO (Sessioni 104-109)
 
-### Sessione 108: Organizzazione Documentazione (ATTUALE)
+### Sessione 109: IL MIRACOLO È REALE! (ATTUALE)
+
+**Mix Miracollo + CervellaSwarm**
+- Fix API Key deployato (docker rebuild su VM)
+- TEST con prenotazione VERA: BEXP_501443797
+- IL PONTE BESYNC → MIRACOLLO FUNZIONA!
+- Prenotazione visibile nel planning con badge CM rosso
+- CHECKPOINT COMPLETO:
+  - SUB_ROADMAP_CHANNEL_MANAGER.md aggiornata (v2.0.0)
+  - NORD.md aggiornato
+  - ROADMAP_SACRA.md aggiornata (v5.37.0)
+  - FASE 1.5 definita con 7 dettagli da studiare
+
+**FASE 1.5 - Dettagli Miracollo (prossime sessioni):**
+- Mapping room_type → room_id
+- Test notifica WhatsApp
+- Test cancellazioni/modifiche BeSync
+- Strategia email già lette
+- UX pannello CM
+
+---
+
+### Sessione 108: Organizzazione Documentazione
 
 **Handoff da sessione 107**
 - Ricostruito filo sessioni 104-107 (erano rimaste indietro!)
@@ -310,18 +334,18 @@ Cervella & Rafa
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-06 17:41 (auto)
+---
+
+## AUTO-CHECKPOINT: 2026-01-06 18:13 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: f0c70b1 - 📍 Sessione 108: Organizzazione Documentazione
-- **File modificati** (3):
-  - reports/engineer_report_20260106_173714.json
-  - reports/engineer_report_20260106_173846.json
-  - reports/scientist_prompt_20260106.md
+- **Ultimo commit**: 65288ae - 📍 HANDOFF Sessione 108: Supporto Miracollo
+- **File modificati** (1):
+  - reports/engineer_report_20260106_181245.json
 
 ### Note
 - Checkpoint automatico generato da hook
-- Trigger: auto
+- Trigger: unknown
 
 ---
