@@ -314,6 +314,15 @@ ${base_prompt}
 
 FOCUS: Cerca task per 'cervella-scienziata' in .swarm/tasks/"
             ;;
+        marketing)
+            echo "Sei CERVELLA-MARKETING.
+Specializzazione: Marketing, UX strategy, posizionamento, copywriting, user flow.
+Decidi dove mettere bottoni, come guidare l'utente, messaggi che colpiscono.
+
+${base_prompt}
+
+FOCUS: Cerca task per 'cervella-marketing' in .swarm/tasks/"
+            ;;
         ingegnera)
             echo "Sei CERVELLA-INGEGNERA.
 Specializzazione: Analisi codebase, technical debt, refactoring, ottimizzazioni.
@@ -628,6 +637,7 @@ show_usage() {
     echo "  --security             Spawna cervella-security"
     echo "  --scienziata           Spawna cervella-scienziata"
     echo "  --ingegnera            Spawna cervella-ingegnera"
+    echo "  --marketing            Spawna cervella-marketing"
     echo "  --guardiana-qualita    Spawna cervella-guardiana-qualita (Opus)"
     echo "  --guardiana-ops        Spawna cervella-guardiana-ops (Opus)"
     echo "  --guardiana-ricerca    Spawna cervella-guardiana-ricerca (Opus)"
@@ -706,6 +716,9 @@ main() {
                 ;;
             --ingegnera)
                 workers_to_spawn="${workers_to_spawn} ingegnera"
+                ;;
+            --marketing)
+                workers_to_spawn="${workers_to_spawn} marketing"
                 ;;
             --guardiana-qualita)
                 workers_to_spawn="${workers_to_spawn} guardiana-qualita"

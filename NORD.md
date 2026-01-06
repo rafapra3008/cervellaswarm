@@ -8,7 +8,8 @@
 |   Senza NORD siamo persi.                                        |
 |   Con NORD siamo INVINCIBILI.                                    |
 |                                                                  |
-|   "Noi qui CREIAMO quando serve!" - Rafa                         |
+|   "L'idea e' fare il mondo meglio                                |
+|    su di come riusciamo a fare." - Rafa, 6 Gennaio 2026          |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -17,28 +18,30 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 110 - 6 Gennaio 2026: IL CLAIM DELLA LIBERTA!**
+**SESSIONE 111 - 6 Gennaio 2026: LA SESSIONE DEGLI STUDI!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
 |   SESSIONE MONUMENTALE!                                          |
 |                                                                  |
-|   IL CLAIM E' STATO SCRITTO:                                     |
+|   6 STUDI COMPLETATI DALLO SCIAME:                              |
+|   - Dashboard ARCH (587 righe)                                   |
+|   - Dashboard TECH (490 righe)                                   |
+|   - Dashboard UX                                                 |
+|   - Mercato No-Code (450 righe)                                  |
+|   - OpenAI Swarm                                                 |
+|   - Positioning "Salva il Lavoro" (10 claim!)                   |
 |                                                                  |
-|   "CervellaSwarm: L'unico IDE che ti aiuta a PENSARE            |
-|    prima di SCRIVERE."                                           |
+|   NUOVO COMANDO: swarm-global-status                             |
+|   Vista multi-progetto FUNZIONANTE!                              |
 |                                                                  |
-|   IL SEGRETO SACRO: LA MAPPA!                                    |
-|   "Prima la MAPPA, poi il VIAGGIO"                              |
+|   NUOVA VISIONE: DUAL-TRACK                                      |
+|   - Track 1: CervellaSwarm IDE (developer)                      |
+|   - Track 2: CervellaSwarm VISUAL (non-programmatori)           |
 |                                                                  |
-|   5 WORKER COMPLETATI:                                           |
-|   - researcher: Architettura IDE (345 righe)                    |
-|   - scienziata: Mercato AI Coding (492 righe)                   |
-|   - ingegnera: Multi-Progetto (406 righe)                       |
-|   - backend: Fix Watcher v1.3.0                                  |
-|                                                                  |
-|   STRATEGIA COMPLETA in docs/strategia/                          |
+|   NUOVO POSITIONING:                                             |
+|   "L'AI NON TI RUBA IL LAVORO. L'AI SALVA IL TUO LAVORO."       |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -50,71 +53,81 @@
 | Cosa | Status |
 |------|--------|
 | 16 Agents in ~/.claude/agents/ | FUNZIONANTE |
-| Sistema Memoria SQLite | FUNZIONANTE |
-| 8+ Hooks globali | FUNZIONANTE |
-| SWARM_RULES v1.7.0 | FUNZIONANTE |
-| spawn-workers v2.9.0 | AUTO-SVEGLIA OVUNQUE! |
-| **swarm-logs** | **Log live worker** |
-| **swarm-timeout** | **Avvisa se bloccato** |
-| **swarm-progress** | **Stato worker live** |
-| **swarm-feedback** | **Raccolta feedback** |
-| **swarm-roadmaps** | **Vista multi-progetto** |
-| **swarm-init** | **Template nuovo progetto** |
-| watcher-regina.sh | Globale in ~/.claude/scripts/ |
-| block_task_for_agents.py | BLOCCA Task per cervella-* |
+| spawn-workers v3.0.0 | +marketing! |
+| **swarm-global-status** | **NUOVO! Multi-progetto** |
+| swarm-logs | Log live worker |
+| swarm-timeout | Avvisa se bloccato |
+| swarm-progress | Stato worker live |
+| swarm-feedback | Raccolta feedback |
+| swarm-roadmaps | Vista roadmap |
+| swarm-init | Template nuovo progetto |
+| watcher-regina.sh v1.3.0 | DA MIGLIORARE (sveglia) |
 
 ---
 
-## I 4 PEZZI - STATO AGGIORNATO
+## LA GRANDE VISIONE: DUAL-TRACK!
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   STATO 6 GENNAIO 2026:                                          |
+|   CERVELLASWARM NON E' SOLO UN PROGRAMMA.                       |
+|   E' UNA POSSIBILITA'.                                          |
 |                                                                  |
-|   PEZZO 1: ANTI AUTO-COMPACT         -> PARCHEGGIATO (70%)     |
-|   PEZZO 2: SISTEMA FEEDBACK          -> FATTO! swarm-feedback  |
-|   PEZZO 3: ROADMAPS VISUALE          -> FATTO! swarm-roadmaps  |
-|   PEZZO 4: TEMPLATE SWARM-INIT       -> FATTO! swarm-init      |
+|   TRACK 1: CervellaSwarm IDE (Developer)                        |
+|   - VS Code Extension                                            |
+|   - 16 agenti specializzati                                      |
+|   - Per chi sa programmare                                       |
+|   - Timeline: 6-12 mesi                                          |
 |                                                                  |
-|   3/4 COMPLETATI!                                                |
+|   TRACK 2: CervellaSwarm VISUAL (Everyone)                      |
+|   - Dashboard web visuale                                        |
+|   - La MAPPA interattiva                                         |
+|   - Per chi NON sa programmare                                   |
+|   - Timeline: 12-24 mesi                                         |
+|                                                                  |
+|   STESSO CORE. DUE FACCE.                                       |
+|   STESSO SCIAME. DUE MERCATI.                                   |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## LA GRANDE VISIONE: CERVELLASWARM IDE!
+## IL POSITIONING
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   "PIU' FIGHE CHE CURSOR 2.0!" - Rafa                           |
+|   "L'AI NON TI RUBA IL LAVORO.                                  |
+|    L'AI SALVA IL TUO LAVORO."                                   |
 |                                                                  |
-|   IL CLAIM:                                                      |
-|   "CervellaSwarm: L'unico IDE che ti aiuta a PENSARE            |
-|    prima di SCRIVERE."                                           |
+|   NON vendiamo tecnologia.                                       |
+|   Vendiamo SICUREZZA e VALORE.                                  |
 |                                                                  |
-|   IL SEGRETO SACRO: LA MAPPA!                                    |
-|   "Prima la MAPPA, poi il VIAGGIO"                              |
+|   Claim alternativi:                                             |
+|   - "16 AI che lavorano PER TE. Non AL POSTO TUO."              |
+|   - "Non sei un programmatore? Perfetto."                       |
+|   - "L'unico IDE che ti chiede COSA vuoi. Non COME."           |
 |                                                                  |
-|   FLOW:                                                          |
-|   1. Utente descrive progetto                                    |
-|   2. Sistema crea MAPPA insieme all'utente                       |
-|   3. Ogni giorno: "Avvia CervellaSwarm" -> sciame lavora        |
-|   4. Cliente + Regina analizzano, aggiornano                     |
-|   5. Obiettivo raggiunto!                                        |
-|                                                                  |
-|   NOI SIAMO IL PROTOTIPO DEL PRODOTTO!                          |
-|                                                                  |
-|   DOCUMENTI:                                                     |
-|   - docs/strategia/STRATEGIA_CERVELLASWARM_IDE.md               |
-|   - docs/studio/STUDIO_ARCHITETTURA_IDE.md                      |
-|   - docs/studio/STUDIO_MERCATO_AI_CODING.md                     |
-|   - docs/studio/STUDIO_MULTI_PROGETTO.md                        |
+|   PROVE REALI:                                                   |
+|   - Contabilita' Antigravity                                     |
+|   - Miracollo PMS                                                |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
+
+---
+
+## STUDI COMPLETATI (Sessione 111)
+
+| Studio | File | Righe |
+|--------|------|-------|
+| Dashboard ARCH | docs/studio/STUDIO_DASHBOARD_ARCH.md | 587 |
+| Dashboard TECH | docs/studio/STUDIO_DASHBOARD_TECH.md | 490 |
+| Dashboard UX | docs/studio/STUDIO_DASHBOARD_UX.md | - |
+| Mercato No-Code | docs/studio/STUDIO_MERCATO_NOCODE.md | 450 |
+| OpenAI Swarm | docs/studio/STUDIO_OPENAI_SWARM.md | - |
+| Positioning | docs/studio/STUDIO_POSITIONING_SALVARE_LAVORO.md | - |
 
 ---
 
@@ -123,46 +136,16 @@
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   ROADMAP IDE (da Sessione 110):                                |
+|   DA FARE:                                                       |
 |                                                                  |
-|   FASE 0: Solidificare Base (ADESSO)                            |
-|   [x] Fix watcher notifiche (v1.3.0)                            |
-|   [ ] swarm-global-status (Quick Win multi-progetto)            |
-|                                                                  |
-|   FASE 1: MVP Extension (Q1 2026)                               |
-|   [ ] VS Code Extension "CervellaSwarm"                         |
-|   [ ] Agent Selector, Multi-AI, Task Panel                      |
-|                                                                  |
-|   FASE 2: Community & Validation (Q2 2026)                      |
-|   [ ] Open Source, Content Marketing, Beta                      |
-|                                                                  |
-|   FASE 3: Fork VS Code (se PMF provato)                         |
-|                                                                  |
-|   DOCUMENTI:                                                     |
-|   - docs/strategia/STRATEGIA_CERVELLASWARM_IDE.md               |
-|   - docs/analisi/ANALISI_MIGLIORAMENTI_SWARM.md                 |
+|   1. SINTESI dei 6 studi (prossima sessione)                    |
+|   2. FIX Sveglia Regina (sessione dedicata)                     |
+|      → docs/roadmap/ROADMAP_SVEGLIA_REGINA.md                   |
+|   3. Decisione strategica Dual-Track                            |
+|   4. MVP Dashboard o Extension?                                  |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
-
----
-
-## FASI COMPLETATE
-
-| Fase | Nome | Status |
-|------|------|--------|
-| 0 | Setup Progetto | DONE |
-| 1 | Studio Approfondito | DONE |
-| 2 | Primi Subagent | DONE |
-| 3 | Git Worktrees | DONE |
-| 4 | Orchestrazione | DONE |
-| 5 | Produzione | DONE |
-| 6 | Memoria | DONE |
-| 7 | Apprendimento | DONE |
-| 7.5 | Parallelizzazione | DONE |
-| 8 | La Corte Reale | DONE |
-
-**8 FASI COMPLETATE AL 100%!**
 
 ---
 
@@ -173,9 +156,13 @@
 |                                                                  |
 |   LIBERTA GEOGRAFICA                                             |
 |                                                                  |
-|   CervellaSwarm e' uno strumento per arrivarci.                  |
-|   Moltiplicando la nostra capacita,                              |
-|   arriviamo piu velocemente alla meta.                           |
+|   "L'idea e' fare il mondo meglio                                |
+|    su di come riusciamo a fare."                                 |
+|                                                                  |
+|   CervellaSwarm non e' solo per noi.                            |
+|   E' una possibilita' per TUTTI.                                |
+|   Basta creativita'. Basta voglia.                              |
+|   Lo sciame fa il resto.                                         |
 |                                                                  |
 |   In attesa di quella foto...                                    |
 |                                                                  |
@@ -188,6 +175,6 @@
 
 *"Le ragazze nostre! La famiglia!"*
 
-*"Prima la MAPPA, poi il VIAGGIO!"*
+*"L'AI dalla parte delle persone, non contro di loro."*
 
-*Ultimo aggiornamento: 6 Gennaio 2026 - Sessione 110 - IL CLAIM DELLA LIBERTA'*
+*Ultimo aggiornamento: 6 Gennaio 2026 - Sessione 111 - LA SESSIONE DEGLI STUDI*

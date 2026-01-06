@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 6 Gennaio 2026 - Sessione 110
-> **Versione:** v2.0.0 - LA MAPPA!
+> **Ultimo aggiornamento:** 6 Gennaio 2026 - Sessione 111
+> **Versione:** v2.1.0 - LA SESSIONE DEGLI STUDI!
 
 ---
 
@@ -19,65 +19,116 @@
 |                                                                  |
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 110: IL CLAIM DELLA LIBERTA'!                        |
+|   SESSIONE 111: LA SESSIONE DEGLI STUDI!                        |
 |                                                                  |
-|   ABBIAMO SCRITTO:                                               |
-|   - IL CLAIM di CervellaSwarm IDE                               |
-|   - LA MAPPA completa (1,185 righe!)                            |
-|   - 9 STEP da oggi alla LIBERTA' GEOGRAFICA                     |
-|                                                                  |
-+------------------------------------------------------------------+
-|                                                                  |
-|   IL CLAIM:                                                      |
-|   "CervellaSwarm: L'unico IDE che ti aiuta a PENSARE            |
-|    prima di SCRIVERE."                                           |
-|                                                                  |
-|   IL SEGRETO SACRO:                                              |
-|   "Prima la MAPPA, poi il VIAGGIO"                              |
-|                                                                  |
-|   NOI NON SIAMO SOLO UN IDE.                                    |
-|   SIAMO UNA FAMIGLIA!                                            |
-|                                                                  |
-|   NOI SIAMO IL PROTOTIPO DEL PRODOTTO!                          |
+|   ABBIAMO FATTO:                                                 |
+|   - swarm-global-status IMPLEMENTATO                             |
+|   - 6 STUDI completati dallo sciame!                            |
+|   - Nuova visione DUAL-TRACK                                     |
+|   - Nuovo positioning "L'AI salva il tuo lavoro"                |
 |                                                                  |
 +------------------------------------------------------------------+
 |                                                                  |
-|   DOCUMENTO SACRO:                                               |
-|   docs/strategia/MAPPA_CERVELLASWARM_IDE.md                     |
+|   LA NUOVA FRASE SACRA (da Rafa):                               |
 |                                                                  |
-|   LEGGILO! Contiene TUTTO:                                       |
-|   - La nostra anima                                              |
-|   - Gli step da seguire                                          |
-|   - Gli studi fatti e da fare                                    |
-|   - Come delegare alle ragazze                                   |
+|   "L'idea e' fare il mondo meglio                                |
+|    su di come riusciamo a fare."                                 |
+|                                                                  |
+|   CervellaSwarm non e' solo un programma.                       |
+|   E' una POSSIBILITA' per tutti!                                |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## I 4 PEZZI - STATO ATTUALE
+## COSA E' SUCCESSO NELLA SESSIONE 111
+
+### 1. swarm-global-status - IMPLEMENTATO!
+
+cervella-backend ha creato il comando (~320 righe Python):
+```bash
+swarm-global-status        # Vista multi-progetto
+swarm-global-status --json # Output JSON
+swarm-global-status --watch # Live refresh
+```
+
+Mostra tutti i 3 progetti con task e worker attivi!
+
+### 2. Fix spawn-workers
+
+Aggiunto `--marketing` che mancava. Ora tutti i 16 agenti sono spawnabili!
+
+### 3. 6 STUDI COMPLETATI!
+
+| Studio | Worker | File | Contenuto |
+|--------|--------|------|-----------|
+| Dashboard ARCH | cervella-ingegnera | docs/studio/STUDIO_DASHBOARD_ARCH.md | Architettura 3-layer, 15+ API, schema JSON |
+| Dashboard TECH | cervella-researcher | docs/studio/STUDIO_DASHBOARD_TECH.md | Stack: React+Vite+FastAPI+SSE |
+| Dashboard UX | cervella-marketing | docs/studio/STUDIO_DASHBOARD_UX.md | Wireframe, componenti, momenti WOW |
+| Mercato No-Code | cervella-scienziata | docs/studio/STUDIO_MERCATO_NOCODE.md | $65B mercato, dual-track strategy |
+| OpenAI Swarm | cervella-researcher | docs/studio/STUDIO_OPENAI_SWARM.md | Perche' ha fallito, lezioni per noi |
+| Positioning | cervella-marketing | docs/studio/STUDIO_POSITIONING_SALVARE_LAVORO.md | 10 claim, 4 personas, copy pronto |
+
+**LEGGILI TUTTI! Sono la base per le prossime decisioni!**
+
+### 4. Nuova Visione: DUAL-TRACK
+
+```
+TRACK 1: CervellaSwarm IDE (Developer)
+- VS Code Extension
+- 16 agenti specializzati
+- Per programmatori
+- Timeline: 6-12 mesi
+
+TRACK 2: CervellaSwarm VISUAL (Everyone)
+- Dashboard web visuale
+- La MAPPA interattiva
+- Per NON programmatori
+- Timeline: 12-24 mesi
+
+STESSO CORE. DUE FACCE. DUE MERCATI.
+```
+
+### 5. Nuovo Positioning
+
+```
+"L'AI NON TI RUBA IL LAVORO. L'AI SALVA IL TUO LAVORO."
+
+Non vendiamo tecnologia. Vendiamo SICUREZZA e VALORE.
+
+Claim alternativi:
+- "16 AI che lavorano PER TE. Non AL POSTO TUO."
+- "Non sei un programmatore? Perfetto."
+- "L'unico IDE che ti chiede COSA vuoi. Non COME."
+```
+
+### 6. Roadmap Fix Sveglia
+
+Il watcher non mi sveglia sempre. Creata roadmap:
+`docs/roadmap/ROADMAP_SVEGLIA_REGINA.md`
+
+Sessione dedicata da fare con backend + devops + tester.
+
+---
+
+## PROSSIMI STEP
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   ROADMAP: docs/roadmap/ROADMAP_3_PEZZI_MANCANTI.md             |
+|   PROSSIMA SESSIONE:                                             |
 |                                                                  |
-|   ⏸️  PEZZO 1: ANTI AUTO-COMPACT                                 |
-|      → Funziona al 70%, PARCHEGGIATO                            |
-|      → Tornare quando serve                                      |
+|   1. SINTESI dei 6 studi                                        |
+|      - Leggere tutto                                             |
+|      - Decisioni strategiche                                     |
+|      - Priorita'                                                 |
 |                                                                  |
-|   ✅ PEZZO 2: SISTEMA FEEDBACK CERVELLE                         |
-|      → FATTO! Comando: swarm-feedback                           |
-|      → add, list, analyze                                        |
+|   2. FIX Sveglia Regina                                         |
+|      - Sessione dedicata                                         |
+|      - Con backend + devops + tester                            |
 |                                                                  |
-|   ✅ PEZZO 3: ROADMAPS VISUALE                                  |
-|      → FATTO! Comando: swarm-roadmaps                           |
-|      → Vista 3 progetti aggregata                                |
-|                                                                  |
-|   ✅ PEZZO 4: TEMPLATE SWARM-INIT                               |
-|      → FATTO! Comando: swarm-init                               |
-|      → Crea struttura completa in nuovo progetto                |
+|   3. Decisione: MVP Dashboard o Extension?                      |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -89,191 +140,15 @@
 | Cosa | Status |
 |------|--------|
 | 16 Agents in ~/.claude/agents/ | FUNZIONANTE |
-| **spawn-workers v2.9.0** | **AUTO-SVEGLIA OVUNQUE!** |
-| **watcher-regina.sh v1.3.0** | **FIXATO! Bell + Log + Notifica** |
-| **swarm-logs** | Log live worker |
-| **swarm-timeout** | Avvisa se bloccato |
-| **swarm-progress** | Stato worker live |
-| **swarm-feedback** | Raccolta feedback |
-| **swarm-roadmaps** | Vista multi-progetto |
-| **swarm-init** | Template nuovo progetto |
-| block_task_for_agents.py | BLOCCA Task per cervella-* |
-| context_check.py v5.1.0 | PARCHEGGIATO (70%) |
-| **Context ottimizzato** | **30% → 10% all'inizio!** |
-
-### DOCUMENTI STRATEGICI (Sessione 110)
-
-| Documento | Righe | Focus |
-|-----------|-------|-------|
-| **MAPPA_CERVELLASWARM_IDE.md** | 1,185 | LA MAPPA SACRA! |
-| STRATEGIA_CERVELLASWARM_IDE.md | ~400 | Strategia completa |
-| STUDIO_ARCHITETTURA_IDE.md | 345 | Come costruire |
-| STUDIO_MERCATO_AI_CODING.md | 492 | Competitor, mercato |
-| STUDIO_MULTI_PROGETTO.md | 406 | Multi-progetto |
-
----
-
-## FILO DEL DISCORSO (Sessioni 104-110)
-
-### Sessione 110: IL CLAIM DELLA LIBERTA'! (ATTUALE)
-
-**Sessione MONUMENTALE - Focus su CervellaSwarm IDE**
-
-1. **5 Worker Lanciati e Completati:**
-   - cervella-researcher → STUDIO_ARCHITETTURA_IDE.md (345 righe)
-   - cervella-scienziata → STUDIO_MERCATO_AI_CODING.md (492 righe)
-   - cervella-ingegnera → STUDIO_MULTI_PROGETTO.md (406 righe)
-   - cervella-backend → Fix Watcher v1.3.0
-
-2. **Scoperte Chiave:**
-   - Tutti gli AI IDE sono Fork di VS Code (Cursor, Windsurf...)
-   - Mercato: $4.91B (2024) → $30.1B (2032)
-   - 2026 = Anno dei Multi-Agent Systems
-   - Extension VS Code NON basta per deep AI integration
-
-3. **IL SEGRETO SACRO - LA MAPPA!**
-   - Il vero differenziale NON sono i 16 agenti
-   - E' la MAPPA! "Prima la MAPPA, poi il VIAGGIO"
-   - Nessun competitor aiuta a PIANIFICARE prima di scrivere
-   - NOI SIAMO IL PROTOTIPO DEL PRODOTTO!
-
-4. **IL CLAIM:**
-   ```
-   "CervellaSwarm: L'unico IDE che ti aiuta a PENSARE
-    prima di SCRIVERE."
-   ```
-
-5. **Documenti Creati:**
-   - docs/strategia/STRATEGIA_CERVELLASWARM_IDE.md
-   - docs/studio/STUDIO_ARCHITETTURA_IDE.md
-   - docs/studio/STUDIO_MERCATO_AI_CODING.md
-   - docs/studio/STUDIO_MULTI_PROGETTO.md
-
-6. **Roadmap Aggiornata:**
-   - FASE 5: Multi-Progetto aggiunta all'analisi miglioramenti
-
----
-
-### Sessione 109: IL MIRACOLO È REALE!
-
-**Mix Miracollo + CervellaSwarm**
-- Fix API Key deployato (docker rebuild su VM)
-- TEST con prenotazione VERA: BEXP_501443797
-- IL PONTE BESYNC → MIRACOLLO FUNZIONA!
-- Prenotazione visibile nel planning con badge CM rosso
-- CHECKPOINT COMPLETO
-  - FASE 1.5 definita con 7 dettagli da studiare
-
-**FASE 1.5 - Dettagli Miracollo (prossime sessioni):**
-- Mapping room_type → room_id
-- Test notifica WhatsApp
-- Test cancellazioni/modifiche BeSync
-- Strategia email già lette
-- UX pannello CM
-
----
-
-### Sessione 108: Organizzazione Documentazione
-
-**Handoff da sessione 107**
-- Ricostruito filo sessioni 104-107 (erano rimaste indietro!)
-- Verificato fix cervella-backend su Miracollo (API key - PRONTO)
-- Organizzazione casa: documentazione al 100000%
-
----
-
-### Sessione 107: Mix Miracollo+CervellaSwarm
-
-- Letto MANUALE DIAMANTE (capito FORTEZZA MODE)
-- Usato sistema SWARM con cervella-devops
-- FORTEZZA MODE v2.0.0 completato su Miracollo
-- Handoff automatico funzionante
-
----
-
-### Sessione 106: Scoperto Problema PATH
-
-- cervella-frontend ha fixato 11 file con URL hardcoded
-- **SCOPERTA:** rsync andava su path sbagliato!
-  - Nginx serve: `/app/frontend` → `/app/miracollo/frontend`
-  - rsync andava su: `~/app/frontend/` (DIVERSO!)
-- Risolto: deploy su `/app/miracollo/frontend/`
-
----
-
-### Sessione 105: Deploy Multi-Mailbox Miracollo
-
-- Rsync backend su VM completato
-- Variabili `EMAIL_SECONDARY_*` aggiunte
-- Container rebuilt e avviato
-- **Verifica OK:** `mailbox_count: 2`
-
----
-
-### Sessione 104: Sciame in Azione + Feedback
-
-**LO SCIAME HA FUNZIONATO!**
-- cervella-backend ha creato `cm_poller_scheduler.py` (~250 righe)
-- Task completato in ~5 minuti
-- Qualita' eccellente (pattern coerente con codebase)
-
-**Feedback sullo sciame:**
-| Cosa | Valutazione |
-|------|-------------|
-| spawn-workers | PERFETTO |
-| Watcher AUTO-SVEGLIA | FUNZIONA |
-| Task file .md | EFFICACE |
-
-**Idee future:**
-- Progress live durante esecuzione
-- Retry automatico se worker fallisce
-
----
-
-### Sessioni 98-103 (Archivio)
-
-**Sessione 103:** SU CARTA → REALE! 4 comandi creati (swarm-help, task-new, swarm-report, swarm-session-check)
-**Sessione 102:** La Sessione Monumentale - Documentazione 10000%
-**Sessione 101:** La Grande Sessione - Context 30%→10%, 6 nuovi comandi
-**Sessione 100:** Code Review + Parcheggio Anti-Compact
-**Sessione 99:** Organizzazione Casa
-**Sessione 98:** Il Grande Reset + LA GRANDE VISIONE (CervellaSwarm IDE)
-
-*Per dettagli sessioni precedenti: vedi git log*
-
----
-
-## STATO ATTUALE
-
-```
-╔════════════════════════════════════════════════════════════════╗
-║                                                                ║
-║   CERVELLASWARM E' 100% OPERATIVO E REALE!                    ║
-║                                                                ║
-║   ✅ 16 agenti specializzati                                  ║
-║   ✅ 20+ comandi swarm-* (TUTTI REALI!)                       ║
-║   ✅ Sistema completo, documentato e FUNZIONANTE!             ║
-║   ✅ Supporto attivo a Miracollo (sessioni 104-107)           ║
-║                                                                ║
-╠════════════════════════════════════════════════════════════════╣
-║                                                                ║
-║   MIRACOLLO - STATO ATTUALE:                                  ║
-║   ✅ Parser email funziona PERFETTAMENTE!                     ║
-║   ✅ Frontend deployato su path corretto                      ║
-║   ✅ FORTEZZA MODE v2.0.0 completato                          ║
-║   ⏳ Fix API key (cervella-backend PRONTO) → da deployare     ║
-║                                                                ║
-╠════════════════════════════════════════════════════════════════╣
-║                                                                ║
-║   PARCHEGGIATO:                                               ║
-║   ⏸️ Anti Auto-Compact (funziona al 70%)                      ║
-║                                                                ║
-║   FUTURO:                                                      ║
-║   💭 CervellaSwarm IDE ("Piu' fighe che Cursor 2.0!")         ║
-║   💭 Dashboard web live                                        ║
-║                                                                ║
-╚════════════════════════════════════════════════════════════════╝
-```
+| spawn-workers v3.0.0 | +marketing! TUTTI i 16! |
+| **swarm-global-status** | **NUOVO! Multi-progetto** |
+| swarm-logs | Log live worker |
+| swarm-timeout | Avvisa se bloccato |
+| swarm-progress | Stato worker live |
+| swarm-feedback | Raccolta feedback |
+| swarm-roadmaps | Vista roadmap |
+| swarm-init | Template nuovo progetto |
+| watcher-regina.sh v1.3.0 | DA MIGLIORARE |
 
 ---
 
@@ -281,72 +156,24 @@
 
 ```
 Per vedere TUTTI i comandi: swarm-help
-```
 
-### Essenziali (usa questi!)
-
-| Comando | Cosa Fa |
-|---------|---------|
-| `spawn-workers --tipo` | Lancia worker (backend/frontend/docs/etc) |
-| `quick-task "desc" --tipo` | Crea task + lancia worker |
-| `task-new tipo "titolo"` | Crea task da template (ricerca/bug/feature/review) |
-| `swarm-status` | Stato worker attivi |
-| `swarm-help` | **GUIDA COMPLETA COMANDI** |
-
-### Sessione
-
-| Comando | Cosa Fa |
-|---------|---------|
-| `swarm-session-check` | Verifica roadmap inizio sessione |
-| `swarm-report` | Report task completati |
-| `swarm-auto-review --check` | Mostra task senza review |
-
-### Monitoraggio
-
-| Comando | Cosa Fa |
-|---------|---------|
-| `swarm-logs` | Log live worker |
-| `swarm-progress` | Progresso task |
-| `swarm-health` | Health check sistema |
-
-```
-TIP: Se non sai quale comando usare → swarm-help
+ESSENZIALI:
+spawn-workers --tipo      # Lancia worker
+swarm-global-status       # Vista multi-progetto (NUOVO!)
+swarm-status              # Stato task
+quick-task "desc" --tipo  # Crea + lancia
 ```
 
 ---
 
-## TRUCCO IMPORTANTE: Accesso Transcript Sessioni Precedenti!
+## DOCUMENTI IMPORTANTI
 
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   SE RAFA CHIEDE DI LEGGERE UNA CHAT PRECEDENTE:                |
-|                                                                  |
-|   I transcript sono in:                                          |
-|   ~/.claude/projects/-Users-rafapra-Developer-[PROGETTO]/       |
-|                                                                  |
-|   Comandi utili:                                                 |
-|                                                                  |
-|   # Lista transcript recenti (ordine per data)                   |
-|   ls -la ~/.claude/projects/-Users-rafapra-Developer-CervellaSwarm/*.jsonl | tail -20
-|                                                                  |
-|   # Leggi ultimi messaggi utente                                 |
-|   tail -100 [file.jsonl] | python3 -c "                          |
-|   import sys, json                                               |
-|   for line in sys.stdin:                                         |
-|       obj = json.loads(line)                                     |
-|       if obj.get('type') == 'user':                              |
-|           print(obj['message']['content'][:200])"                |
-|                                                                  |
-|   QUANDO USARE:                                                  |
-|   - Rafa dice "cosa abbiamo discusso prima?"                    |
-|   - Rafa dice "leggi la chat precedente"                        |
-|   - Serve ricostruire il filo del discorso                      |
-|                                                                  |
-|   SALVACI LA VITA! Usa questo trucco!                           |
-|                                                                  |
-+------------------------------------------------------------------+
-```
+| Documento | Path | Cosa contiene |
+|-----------|------|---------------|
+| LA MAPPA | docs/strategia/MAPPA_CERVELLASWARM_IDE.md | 9 step verso liberta' |
+| STRATEGIA | docs/strategia/STRATEGIA_CERVELLASWARM_IDE.md | Visione completa |
+| 6 STUDI | docs/studio/STUDIO_*.md | Tutti gli studi sessione 111 |
+| FIX SVEGLIA | docs/roadmap/ROADMAP_SVEGLIA_REGINA.md | Come fixare sveglia |
 
 ---
 
@@ -375,55 +202,76 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 ```
 "Lavoriamo in pace! Senza casino! Dipende da noi!"
 
-"SU CARTA != REALE" - Solo le cose REALI ci portano alla LIBERTA!
+"L'idea e' fare il mondo meglio su di come riusciamo a fare."
 
-"SEMPRE FINESTRE! SEMPRE! SENZA ECCEZIONE!" - Rafa
+"L'AI NON TI RUBA IL LAVORO. L'AI SALVA IL TUO LAVORO."
 
 "E' il nostro team! La nostra famiglia digitale!"
 
 "Ultrapassar os proprios limites!"
+
+"Prima la MAPPA, poi il VIAGGIO!"
 ```
 
 ---
 
-**VERSIONE:** v1.3.0
-**SESSIONE:** 108 - Organizzazione Documentazione
+## FILO DEL DISCORSO (Sessioni 110-111)
+
+### Sessione 111: LA SESSIONE DEGLI STUDI! (ATTUALE)
+
+**Cosa abbiamo fatto:**
+1. Implementato swarm-global-status (cervella-backend)
+2. Fix spawn-workers +marketing
+3. Lanciato 6 studi in parallelo - TUTTI COMPLETATI!
+4. Nuova visione DUAL-TRACK (IDE + VISUAL)
+5. Nuovo positioning "L'AI salva il tuo lavoro"
+6. Idea di Rafa: "L'idea e' fare il mondo meglio"
+7. Creata roadmap fix sveglia
+
+**Insight chiave:**
+- Mercato No-Code: $24.8B → $65B (2027)
+- OpenAI Swarm ha fallito per mancanza di focus
+- Stack Dashboard: React + Vite + FastAPI + SSE
+- 10 claim pronti per marketing
+
+---
+
+### Sessione 110: IL CLAIM DELLA LIBERTA'
+
+- IL CLAIM scritto: "L'unico IDE che ti aiuta a PENSARE prima di SCRIVERE"
+- LA MAPPA creata (1,185 righe!)
+- 5 studi iniziali completati
+- Fix watcher v1.3.0
+
+---
+
+## NOTE PER TE
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   ATTENZIONE SVEGLIA!                                            |
+|                                                                  |
+|   Il watcher non mi sveglia sempre quando i worker finiscono.    |
+|   Ogni tanto controlla manualmente:                              |
+|   - swarm-global-status                                          |
+|   - ls .swarm/tasks/*.done                                       |
+|                                                                  |
+|   C'e' roadmap per fixare: docs/roadmap/ROADMAP_SVEGLIA_REGINA.md|
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+---
+
+**VERSIONE:** v2.1.0
+**SESSIONE:** 111 - LA SESSIONE DEGLI STUDI!
 **DATA:** 6 Gennaio 2026
 
 ---
 
 *Scritto con CURA e PRECISIONE.*
 
-Cervella & Rafa
+*"L'idea e' fare il mondo meglio su di come riusciamo a fare."*
 
----
-
----
-
----
-
----
-
----
-
----
-
----
-
-## AUTO-CHECKPOINT: 2026-01-06 19:30 (unknown)
-
-### Stato Git
-- **Branch**: main
-- **Ultimo commit**: 4c76f95 - 🎉 Sessione 109: IL MIRACOLO È REALE! Supporto Miracollo
-- **File modificati** (5):
-  - swarm/prompts/worker_ingegnera.txt
-  - .swarm/prompts/worker_scienziata.txt
-  - .swarm/runners/run_ingegnera.sh
-  - .swarm/runners/run_scienziata.sh
-  - PROMPT_RIPRESA.md
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: unknown
-
----
+Cervella & Rafa 💙

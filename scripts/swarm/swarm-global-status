@@ -1,0 +1,394 @@
+#!/usr/bin/env python3
+"""
+swarm-global-status - Vista aggregata multi-progetto CervellaSwarm
+
+Uso:
+    swarm-global-status           # Mostra status di tutti i progetti
+    swarm-global-status --json    # Output in formato JSON
+    swarm-global-status --watch   # Watch mode (refresh ogni 5s)
+    swarm-global-status --help    # Mostra help
+
+Legge ~/.swarm/projects.txt e mostra:
+- Task per stato (.ready, .working, .done)
+- Worker attivi (verifica PID ancora vivo)
+- Heartbeat recente
+
+Versione: 1.0.0
+Data: 2026-01-06
+Cervella & Rafa
+"""
+
+import os
+import sys
+import json
+import time
+import signal
+from pathlib import Path
+from datetime import datetime, timedelta
+from typing import Dict, List, Optional, NamedTuple
+
+
+# Colori ANSI
+class Colors:
+    GREEN = '\033[0;32m'
+    YELLOW = '\033[1;33m'
+    BLUE = '\033[0;34m'
+    PURPLE = '\033[0;35m'
+    RED = '\033[0;31m'
+    CYAN = '\033[0;36m'
+    BOLD = '\033[1m'
+    NC = '\033[0m'  # No Color
+
+
+class ProjectStatus(NamedTuple):
+    """Status di un singolo progetto"""
+    name: str
+    path: str
+    exists: bool
+    ready_count: int
+    working_count: int
+    done_count: int
+    workers: List[Dict]
+    last_heartbeat: Optional[str]
+
+
+def load_projects() -> List[str]:
+    """Legge ~/.swarm/projects.txt e ritorna lista path"""
+    projects_file = Path.home() / ".swarm" / "projects.txt"
+
+    if not projects_file.exists():
+        return []
+
+    projects = []
+    for line in projects_file.read_text().splitlines():
+        line = line.strip()
+        # Salta commenti e righe vuote
+        if line and not line.startswith("#"):
+            # Espandi variabili d'ambiente e ~
+            expanded = os.path.expandvars(os.path.expanduser(line))
+            projects.append(expanded)
+
+    return projects
+
+
+def is_process_alive(pid: int) -> bool:
+    """Verifica se un processo con PID dato e' ancora attivo"""
+    try:
+        os.kill(pid, 0)
+        return True
+    except (OSError, ProcessLookupError):
+        return False
+
+
+def get_time_ago(timestamp: float) -> str:
+    """Converte timestamp in stringa 'X minuti fa'"""
+    now = time.time()
+    diff = now - timestamp
+
+    if diff < 60:
+        return f"{int(diff)}s fa"
+    elif diff < 3600:
+        return f"{int(diff / 60)}m fa"
+    elif diff < 86400:
+        return f"{int(diff / 3600)}h fa"
+    else:
+        return f"{int(diff / 86400)}d fa"
+
+
+def get_worker_info(status_dir: Path) -> List[Dict]:
+    """Ritorna info sui worker attivi"""
+    workers = []
+
+    # Cerca file .task per ogni worker
+    for task_file in status_dir.glob("worker_*.task"):
+        worker_name = task_file.stem.replace("worker_", "")
+        task_id = task_file.read_text().strip() if task_file.exists() else "?"
+
+        # Cerca PID file
+        pid_file = status_dir / f"worker_{worker_name}.pid"
+        pid = None
+        is_alive = False
+
+        if pid_file.exists():
+            try:
+                pid = int(pid_file.read_text().strip())
+                is_alive = is_process_alive(pid)
+            except (ValueError, IOError):
+                pass
+
+        # Cerca heartbeat
+        heartbeat_file = status_dir / f"heartbeat_{worker_name}.log"
+        last_heartbeat = None
+        working_on = None
+
+        if heartbeat_file.exists():
+            try:
+                lines = heartbeat_file.read_text().strip().splitlines()
+                if lines:
+                    last_line = lines[-1]
+                    parts = last_line.split("|")
+                    if len(parts) >= 3:
+                        ts = float(parts[0])
+                        last_heartbeat = get_time_ago(ts)
+                        working_on = parts[2][:40]  # Tronca a 40 char
+            except (ValueError, IOError):
+                pass
+
+        # Solo worker con task file attivo
+        if task_id and task_id != "?":
+            workers.append({
+                "name": worker_name,
+                "task": task_id,
+                "pid": pid,
+                "alive": is_alive,
+                "heartbeat": last_heartbeat,
+                "working_on": working_on
+            })
+
+    return workers
+
+
+def get_last_heartbeat(status_dir: Path) -> Optional[str]:
+    """Ritorna ultimo heartbeat tra tutti i worker"""
+    latest = None
+    latest_time = 0
+
+    for hb_file in status_dir.glob("heartbeat_*.log"):
+        if hb_file.exists():
+            try:
+                lines = hb_file.read_text().strip().splitlines()
+                if lines:
+                    ts = float(lines[-1].split("|")[0])
+                    if ts > latest_time:
+                        latest_time = ts
+                        latest = get_time_ago(ts)
+            except (ValueError, IOError):
+                pass
+
+    return latest
+
+
+def get_project_status(project_path: str) -> ProjectStatus:
+    """Ritorna status completo di un progetto"""
+    path = Path(project_path)
+    name = path.name
+
+    if not path.exists():
+        return ProjectStatus(
+            name=name, path=project_path, exists=False,
+            ready_count=0, working_count=0, done_count=0,
+            workers=[], last_heartbeat=None
+        )
+
+    swarm_dir = path / ".swarm"
+    tasks_dir = swarm_dir / "tasks"
+    status_dir = swarm_dir / "status"
+
+    # Conta task per stato
+    ready_count = len(list(tasks_dir.glob("*.ready"))) if tasks_dir.exists() else 0
+    working_count = len(list(tasks_dir.glob("*.working"))) if tasks_dir.exists() else 0
+    done_count = len(list(tasks_dir.glob("*.done"))) if tasks_dir.exists() else 0
+
+    # Worker info
+    workers = get_worker_info(status_dir) if status_dir.exists() else []
+
+    # Ultimo heartbeat
+    last_heartbeat = get_last_heartbeat(status_dir) if status_dir.exists() else None
+
+    return ProjectStatus(
+        name=name, path=project_path, exists=True,
+        ready_count=ready_count, working_count=working_count, done_count=done_count,
+        workers=workers, last_heartbeat=last_heartbeat
+    )
+
+
+def print_status(projects_status: List[ProjectStatus], show_header: bool = True):
+    """Stampa status formattato"""
+    c = Colors
+
+    if show_header:
+        print(f"{c.PURPLE}")
+        print("+" + "=" * 70 + "+")
+        print("|" + "       SWARM GLOBAL STATUS       ".center(70) + "|")
+        print("+" + "=" * 70 + "+")
+        print(f"{c.NC}")
+
+    total_ready = 0
+    total_working = 0
+    total_workers = 0
+    active_projects = 0
+
+    for status in projects_status:
+        if not status.exists:
+            print(f"{c.RED}X {status.name}{c.NC} (path non trovato)")
+            print(f"    {c.RED}{status.path}{c.NC}")
+            print()
+            continue
+
+        active_projects += 1
+        total_ready += status.ready_count
+        total_working += status.working_count
+        total_workers += len([w for w in status.workers if w.get("alive", False)])
+
+        # Determina colore in base allo stato
+        if status.working_count > 0 or status.workers:
+            icon = f"{c.GREEN}*{c.NC}"  # Attivo
+            name_color = c.GREEN
+        elif status.ready_count > 0:
+            icon = f"{c.YELLOW}o{c.NC}"  # Ha task pronti
+            name_color = c.YELLOW
+        else:
+            icon = f"{c.BLUE}-{c.NC}"  # Idle
+            name_color = c.BLUE
+
+        # Nome progetto e conteggi
+        task_summary = f"{status.ready_count} ready"
+        if status.working_count > 0:
+            task_summary += f", {status.working_count} working"
+
+        worker_count = len([w for w in status.workers if w.get("alive", False)])
+
+        print(f"{icon} {name_color}{c.BOLD}{status.name}{c.NC} ({task_summary}, {worker_count} worker)")
+
+        # Mostra worker attivi
+        if status.workers:
+            for worker in status.workers:
+                alive_icon = f"{c.GREEN}>{c.NC}" if worker.get("alive") else f"{c.RED}x{c.NC}"
+                hb = f" ({worker['heartbeat']})" if worker.get("heartbeat") else ""
+                task_display = worker["task"][:30] if len(worker["task"]) > 30 else worker["task"]
+                print(f"    {alive_icon} {c.CYAN}{worker['name']}{c.NC}: {task_display}{hb}")
+                if worker.get("working_on"):
+                    print(f"      {c.BLUE}> {worker['working_on']}{c.NC}")
+        else:
+            print(f"    {c.BLUE}(nessun worker attivo){c.NC}")
+
+        print()
+
+    # Totali
+    print(f"{c.PURPLE}" + "-" * 70 + f"{c.NC}")
+    print(f"{c.BOLD}TOTALE:{c.NC} {total_ready} task ready, {total_working} working, {total_workers} worker attivi")
+    print(f"{c.BOLD}PROGETTI:{c.NC} {active_projects} attivi")
+    print(f"{c.PURPLE}" + "-" * 70 + f"{c.NC}")
+
+
+def print_json(projects_status: List[ProjectStatus]):
+    """Output in formato JSON"""
+    output = {
+        "timestamp": datetime.now().isoformat(),
+        "projects": [],
+        "totals": {
+            "ready": 0,
+            "working": 0,
+            "done": 0,
+            "workers_active": 0
+        }
+    }
+
+    for status in projects_status:
+        project_data = {
+            "name": status.name,
+            "path": status.path,
+            "exists": status.exists,
+            "tasks": {
+                "ready": status.ready_count,
+                "working": status.working_count,
+                "done": status.done_count
+            },
+            "workers": status.workers,
+            "last_heartbeat": status.last_heartbeat
+        }
+        output["projects"].append(project_data)
+
+        if status.exists:
+            output["totals"]["ready"] += status.ready_count
+            output["totals"]["working"] += status.working_count
+            output["totals"]["done"] += status.done_count
+            output["totals"]["workers_active"] += len([w for w in status.workers if w.get("alive", False)])
+
+    print(json.dumps(output, indent=2))
+
+
+def watch_mode():
+    """Watch mode - refresh ogni 5 secondi"""
+    c = Colors
+
+    def handle_sigint(sig, frame):
+        print(f"\n{c.YELLOW}Watch mode terminato.{c.NC}")
+        sys.exit(0)
+
+    signal.signal(signal.SIGINT, handle_sigint)
+
+    print(f"{c.CYAN}Watch mode attivo (Ctrl+C per uscire){c.NC}")
+    print()
+
+    while True:
+        # Pulisci schermo
+        os.system('clear' if os.name == 'posix' else 'cls')
+
+        projects = load_projects()
+        statuses = [get_project_status(p) for p in projects]
+
+        print(f"{c.BLUE}[{datetime.now().strftime('%H:%M:%S')}] Refresh automatico ogni 5s{c.NC}")
+        print()
+
+        print_status(statuses)
+
+        time.sleep(5)
+
+
+def show_help():
+    """Mostra help"""
+    print("""
+swarm-global-status - Vista aggregata multi-progetto CervellaSwarm
+
+USO:
+    swarm-global-status           Mostra status di tutti i progetti
+    swarm-global-status --json    Output in formato JSON
+    swarm-global-status --watch   Watch mode (refresh ogni 5s)
+    swarm-global-status --help    Mostra questo help
+
+LEGENDA:
+    * (verde)   Progetto attivo (worker in esecuzione)
+    o (giallo)  Ha task pronti (.ready)
+    - (blu)     Progetto idle
+    > (verde)   Worker vivo
+    x (rosso)   Worker morto (PID non trovato)
+
+FILE:
+    ~/.swarm/projects.txt         Lista progetti da monitorare
+
+ESEMPI:
+    swarm-global-status           Vista standard
+    swarm-global-status --json    Per integrazione con altri tool
+    swarm-global-status --watch   Monitoraggio continuo
+""")
+
+
+def main():
+    args = sys.argv[1:]
+
+    if "--help" in args or "-h" in args:
+        show_help()
+        return
+
+    if "--watch" in args or "-w" in args:
+        watch_mode()
+        return
+
+    projects = load_projects()
+
+    if not projects:
+        print(f"{Colors.YELLOW}Nessun progetto configurato.{Colors.NC}")
+        print(f"Aggiungi progetti in: ~/.swarm/projects.txt")
+        return
+
+    statuses = [get_project_status(p) for p in projects]
+
+    if "--json" in args or "-j" in args:
+        print_json(statuses)
+    else:
+        print_status(statuses)
+
+
+if __name__ == "__main__":
+    main()
