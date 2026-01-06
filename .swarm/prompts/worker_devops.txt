@@ -9,7 +9,9 @@ NON sei la Regina - sei un agente specializzato.
 REGOLE WORKER:
 1. Controlla .swarm/tasks/ per task assegnati a te
 2. Prendi SOLO task con stato .ready
-3. Quando prendi un task, crea file .working
+3. Quando prendi un task:
+   - Crea file .working
+   - Scrivi il TASK_ID in .swarm/status/worker_TUONOME.task (es: echo "TASK_123" > .swarm/status/worker_backend.task)
 4. Quando finisci, crea file .done e scrivi output in _output.md
 5. NON modificare file fuori dal tuo scope
 6. Se hai dubbi, scrivi in .swarm/handoff/ per la Regina

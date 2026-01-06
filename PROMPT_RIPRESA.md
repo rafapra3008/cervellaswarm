@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 6 Gennaio 2026 - Sessione 101 (LA GRANDE SESSIONE!)
+> **Ultimo aggiornamento:** 6 Gennaio 2026 - Sessione 102 (Docs + Quick Wins + Comunicazione!)
 
 ---
 
@@ -12,26 +12,28 @@
 |   Benvenuta! Questo file e' la tua UNICA memoria.               |
 |   Leggilo con calma. Qui c'e' tutto quello che devi sapere.     |
 |                                                                  |
-|   Tu sei la REGINA dello sciame. 👸                              |
-|   Hai 16 agenti pronti a lavorare per te. 🐝                    |
+|   Tu sei la REGINA dello sciame.                                 |
+|   Hai 16 agenti pronti a lavorare per te.                       |
 |                                                                  |
-|   SESSIONE 101: LA GRANDE SESSIONE!                             |
+|   SESSIONE 102: LA SESSIONE MONUMENTALE!                        |
 |                                                                  |
-|   8 MIGLIORAMENTI IN UNA SESSIONE:                              |
-|   ✅ Context ottimizzato (30% → 10%)                            |
-|   ✅ Fix Auto-Sveglia (v2.9.0)                                  |
-|   ✅ swarm-logs (log live)                                       |
-|   ✅ swarm-timeout (avvisa se bloccato)                         |
-|   ✅ swarm-progress (stato worker)                              |
-|   ✅ swarm-feedback (raccolta feedback)                         |
-|   ✅ swarm-roadmaps (vista multi-progetto)                      |
-|   ✅ swarm-init (template nuovo progetto)                       |
+|   PARTE 1 - Documentazione 10000%:                              |
+|   - Miracollo + CervellaSwarm riorganizzati                     |
+|   - Pattern "30 secondi" per capire dove siamo                  |
 |                                                                  |
-|   3/4 PEZZI MANCANTI COMPLETATI!                                |
+|   PARTE 2 - Quick Wins:                                         |
+|   - task-new (crea task in 5 sec!)                              |
+|   - swarm-auto-review (review automatiche)                      |
+|   - swarm-report (report centralizzato)                         |
 |                                                                  |
-|   LA GRANDE VISIONE:                                             |
-|   "Piu' fighe che Cursor 2.0!" - Rafa                           |
-|   → docs/visione/VISIONE_CERVELLASWARM_IDE.md                   |
+|   PARTE 3 - Comunicazione Futura:                               |
+|   - swarm-help (guida TUTTI i comandi)                          |
+|   - Regola FARE → COMUNICARE                                    |
+|   - Hook startup aggiornato                                     |
+|                                                                  |
+|   LO SCIAME E' 100% OPERATIVO E DOCUMENTATO!                    |
+|                                                                  |
+|   PRIMO COMANDO DA USARE: swarm-help                            |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -175,16 +177,76 @@ Rafa: "noi siamo piu' fighe che il Cursor 2.0!"
 
 ---
 
+## SESSIONE 102 - 6 Gennaio 2026: LA SESSIONE MONUMENTALE!
+
+### PARTE 1: Documentazione 10000%
+
+**MIRACOLLO:**
+- ROADMAP.md (riassunto esecutivo - 30 secondi per capire)
+- CHANGELOG.md separato dalla roadmap
+- IDEE_FUTURE.md riorganizzato
+- docs/refinement/ per dettagli micro
+- 3 SUB_ROADMAP archiviate in docs/archivio/
+
+**CERVELLASWARM:**
+- NORD.md aggiornato
+- ROADMAP.md CREATO (riassunto esecutivo)
+- docs/IDEE_FUTURE.md CREATO
+- docs/analisi/ANALISI_MIGLIORAMENTI_SWARM.md CREATO
+
+### PARTE 2: Quick Wins (3 nuovi strumenti!)
+
+| Strumento | Cosa Fa | Dove |
+|-----------|---------|------|
+| `task-new` | Crea task da template in 5 sec | ~/.claude/scripts/ |
+| `swarm-auto-review` | Review automatiche task | ~/.claude/scripts/ |
+| `swarm-report` | Report centralizzato | ~/.claude/scripts/ |
+
+**Template creati:** ricerca, bug, feature, review
+**Posizione:** ~/.claude/scripts/templates/
+
+### PARTE 3: Comunicazione Futura
+
+**Problema risolto:** "Se fai qualcosa e non lo comunichi, e' come se non esistesse!"
+
+**Soluzioni:**
+- `swarm-help` → Guida COMPLETA tutti i comandi
+- `swarm-session-check` → Verifica roadmap inizio sessione
+- Regola FARE→COMUNICARE in CHECKLIST_AZIONE
+- Hook startup ricorda "swarm-help"
+- Sezione COMANDI in PROMPT_RIPRESA
+
+### Pattern Documentazione Adottato
+
+```
+ROADMAP.md = Vista 30 secondi (dove siamo, prossimo step)
+ROADMAP_SACRA.md = La Bibbia (dettaglio completo)
+IDEE_FUTURE.md = Backlog idee (non urgente)
+CHANGELOG.md = Storia modifiche
+```
+
+---
+
 ## PROSSIMA SESSIONE
 
 ```
-CERVELLASWARM E' QUASI COMPLETO!
+CERVELLASWARM E' 100% OPERATIVO!
 
-FATTO:
-✅ 6 nuovi comandi
-✅ Fix Auto-Sveglia
-✅ Ottimizzazione context
-✅ 3/4 pezzi mancanti completati!
+SESSIONE 102 - COMPLETATO:
+✅ Documentazione 10000% (Miracollo + CervellaSwarm)
+✅ 3 Quick Wins implementati:
+   - task-new (crea task da template in 5 sec!)
+   - swarm-auto-review (review automatiche)
+   - swarm-report (report centralizzato)
+✅ Regola FARE→COMUNICARE aggiunta
+✅ swarm-help creato (guida comandi completa)
+✅ swarm-session-check (verifica roadmap)
+✅ Hook startup aggiornato (ricorda swarm-help)
+
+FATTO TOTALE:
+✅ 16 agenti specializzati
+✅ 15+ comandi swarm-*
+✅ Sistema completo e documentato!
 
 PARCHEGGIATO:
 ⏸️ Anti Auto-Compact (funziona al 70%)
@@ -196,22 +258,40 @@ FUTURO:
 
 ---
 
-## COMANDI UTILI
+## COMANDI DISPONIBILI
 
-```bash
-# Spawn worker (SEMPRE usare questo per delegare!)
-spawn-workers --backend
-spawn-workers --frontend
-spawn-workers --docs
+```
+Per vedere TUTTI i comandi: swarm-help
+```
 
-# Quick task
-quick-task "descrizione" --backend
+### Essenziali (usa questi!)
 
-# Health check
-swarm-health
+| Comando | Cosa Fa |
+|---------|---------|
+| `spawn-workers --tipo` | Lancia worker (backend/frontend/docs/etc) |
+| `quick-task "desc" --tipo` | Crea task + lancia worker |
+| `task-new tipo "titolo"` | Crea task da template (ricerca/bug/feature/review) |
+| `swarm-status` | Stato worker attivi |
+| `swarm-help` | **GUIDA COMPLETA COMANDI** |
 
-# Status
-swarm-status
+### Sessione
+
+| Comando | Cosa Fa |
+|---------|---------|
+| `swarm-session-check` | Verifica roadmap inizio sessione |
+| `swarm-report` | Report task completati |
+| `swarm-auto-review --check` | Mostra task senza review |
+
+### Monitoraggio
+
+| Comando | Cosa Fa |
+|---------|---------|
+| `swarm-logs` | Log live worker |
+| `swarm-progress` | Progresso task |
+| `swarm-health` | Health check sistema |
+
+```
+TIP: Se non sai quale comando usare → swarm-help
 ```
 
 ---
@@ -287,8 +367,8 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 
 ---
 
-**VERSIONE:** v42.0.0
-**SESSIONE:** 101 - LA GRANDE SESSIONE (8 miglioramenti!)
+**VERSIONE:** v45.0.0
+**SESSIONE:** 102 - LA SESSIONE MONUMENTALE! (Docs + Quick Wins + Comunicazione)
 **DATA:** 6 Gennaio 2026
 
 ---
@@ -297,39 +377,3 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 
 Cervella & Rafa
 
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
-## AUTO-CHECKPOINT: 2026-01-06 03:15 (unknown)
-
-### Stato Git
-- **Branch**: main
-- **Ultimo commit**: 968441a - ANTI-COMPACT: PreCompact auto
-- **File modificati** (2):
-  - ROMPT_RIPRESA.md
-  - reports/engineer_report_20260106_031304.json
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: unknown
-
----
