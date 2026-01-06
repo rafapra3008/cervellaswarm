@@ -136,48 +136,57 @@ Rafa: "noi siamo piu' fighe che il Cursor 2.0!"
 
 ---
 
-## SESSIONE 101 - 6 Gennaio 2026
+## SESSIONE 101 - 6 Gennaio 2026: LA GRANDE SESSIONE!
 
-### Ottimizzazione Context (FATTO!)
+### Parte 1: Ottimizzazione Context
 
 **Problema:** Context iniziale al 30% - troppo!
+**Soluzione:** Rimosso `@` da file globali (solo COSTITUZIONE rimane)
+**Risultato:** Context ~30% → ~10-12%
 
-**Causa:** MANUALE_DIAMANTE.md (39KB) caricato sempre con `@`
-
-**Soluzione:** Rimosso `@` da file globali. Ora solo riferimenti.
-- COSTITUZIONE.md → rimane con @ (identità!)
-- CHECKLIST_AZIONE.md → riferimento
-- REGOLE_SVILUPPO.md → riferimento
-- MANUALE_DIAMANTE.md → riferimento
-
-**Risultato:** Context iniziale ~30% → ~10-12%
-
-### FIX AUTO-SVEGLIA (FATTO!)
+### Parte 2: Fix Auto-Sveglia (v2.9.0)
 
 **Problema:** "Watcher script non trovato" in Miracollo
-
-**Causa:** spawn-workers cercava watcher SOLO nel progetto locale
-
-**Soluzione (v2.9.0):**
-1. Copiato watcher-regina.sh in ~/.claude/scripts/
-2. spawn-workers ora cerca in ENTRAMBI i posti:
-   - ${PROJECT}/scripts/swarm/watcher-regina.sh
-   - ~/.claude/scripts/watcher-regina.sh (GLOBALE!)
-
+**Soluzione:** spawn-workers cerca watcher anche in ~/.claude/scripts/
 **Risultato:** AUTO-SVEGLIA funziona in TUTTI i progetti!
+
+### Parte 3: 6 NUOVI COMANDI SWARM!
+
+| Comando | Cosa Fa |
+|---------|---------|
+| `swarm-logs` | Log worker in tempo reale |
+| `swarm-timeout` | Avvisa se worker bloccato >5min |
+| `swarm-progress` | Stato worker live |
+| `swarm-feedback` | Raccolta feedback fine sessione |
+| `swarm-roadmaps` | Vista tutti i progetti |
+| `swarm-init` | Inizializza swarm in nuovo progetto |
+
+### Parte 4: Roadmap Aggiornata
+
+- ✅ PEZZO 2: Sistema Feedback → FATTO
+- ✅ PEZZO 3: Roadmaps Visuale → FATTO
+- ✅ PEZZO 4: swarm-init → FATTO
+- ⏸️ PEZZO 1: Anti-Compact → PARCHEGGIATO (70%)
 
 ---
 
 ## PROSSIMA SESSIONE
 
 ```
-DUE FIX IMPORTANTI COMPLETATI!
-→ Context iniziale ridotto del 50%
-→ AUTO-SVEGLIA funziona ovunque
+CERVELLASWARM E' QUASI COMPLETO!
 
-STATO:
-→ CervellaSwarm in ottima forma
-→ Miracollo puo' usare lo sciame correttamente
+FATTO:
+✅ 6 nuovi comandi
+✅ Fix Auto-Sveglia
+✅ Ottimizzazione context
+✅ 3/4 pezzi mancanti completati!
+
+PARCHEGGIATO:
+⏸️ Anti Auto-Compact (funziona al 70%)
+
+FUTURO:
+💭 CervellaSwarm IDE ("Più fighe che Cursor 2.0!")
+💭 Dashboard web live
 ```
 
 ---
@@ -273,8 +282,8 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 
 ---
 
-**VERSIONE:** v41.0.0
-**SESSIONE:** 101 - Ottimizzazione Context + Fix Auto-Sveglia
+**VERSIONE:** v42.0.0
+**SESSIONE:** 101 - LA GRANDE SESSIONE (8 miglioramenti!)
 **DATA:** 6 Gennaio 2026
 
 ---

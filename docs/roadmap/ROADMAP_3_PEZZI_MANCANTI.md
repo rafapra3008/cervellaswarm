@@ -1,9 +1,9 @@
-# ROADMAP: I 3 Pezzi Mancanti
+# ROADMAP: I 4 Pezzi (+ Miglioramenti)
 
 > **"SU CARTA != REALE - Solo le cose REALI ci portano alla LIBERTA!"**
 
-**Versione:** 1.0.0
-**Data:** 5 Gennaio 2026 - Sessione 98
+**Versione:** 2.0.0
+**Data:** 6 Gennaio 2026 - Sessione 101
 **Obiettivo:** Rendere CervellaSwarm COMPLETO al 100000%!
 
 ---
@@ -13,304 +13,248 @@
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   CervellaSwarm funziona per l'uso quotidiano.                  |
-|   Ma questi 3 pezzi lo renderanno COMPLETO davvero!             |
+|   SESSIONE 101: GRANDE PROGRESSO!                               |
 |                                                                  |
-|   1. ANTI AUTO-COMPACT        → Seamless, testato, REALE        |
-|   2. SISTEMA FEEDBACK         → Imparare dai propri errori      |
-|   3. ROADMAPS VISUALE         → Multi-progetto automatico       |
+|   ✅ PEZZO 2: SISTEMA FEEDBACK      → IMPLEMENTATO!             |
+|   ✅ PEZZO 3: ROADMAPS VISUALE      → IMPLEMENTATO!             |
+|   ✅ PEZZO 4: TEMPLATE SWARM-INIT   → IMPLEMENTATO!             |
+|   ⏸️  PEZZO 1: ANTI AUTO-COMPACT    → PARCHEGGIATO (70%)        |
 |                                                                  |
-|   "L'idea di feedback dalle Cervelle e' GENIALE!" - Rafa        |
+|   + 3 NUOVI COMANDI dal feedback Miracollo!                     |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
+
+---
+
+## STATO ATTUALE
+
+| Pezzo | Status | Comando |
+|-------|--------|---------|
+| 1. Anti Auto-Compact | ⏸️ PARCHEGGIATO (70%) | context_check.py |
+| 2. Sistema Feedback | ✅ FATTO | `swarm-feedback` |
+| 3. Roadmaps Visuale | ✅ FATTO | `swarm-roadmaps` |
+| 4. Template swarm-init | ✅ FATTO | `swarm-init` |
+
+### Bonus - Miglioramenti dal Feedback
+
+| Miglioramento | Status | Comando |
+|---------------|--------|---------|
+| Log live worker | ✅ FATTO | `swarm-logs --follow` |
+| Timeout automatico | ✅ FATTO | `swarm-timeout --watch` |
+| Progress indicator | ✅ FATTO | `swarm-progress --watch` |
 
 ---
 
 ## PEZZO 1: ANTI AUTO-COMPACT
 
-### Stato Attuale
-
-| Cosa Esiste | File | Problema |
-|-------------|------|----------|
-| **context_check.py v5.1.0** | ~/.claude/hooks/ | **IBRIDO SEMPLIFICATO!** |
-| Git auto-commit + push | Prima di handoff | Niente piu' modifiche perse! |
-| File handoff RICCO | .swarm/handoff/ | Git status, file modificati |
-| Terminal + VS Code | AppleScript | IBRIDO: entrambi aperti |
-
-**Stato:** IMPLEMENTATO v5.1.0 - DA TESTARE in produzione reale!
-**Novita' v5.1.0:** VS Code apre il file handoff, Terminal con Claude pulito.
-
-### Obiettivo REALE
+### Stato: ⏸️ PARCHEGGIATO
 
 ```
-Quando contesto arriva a 70%:
-1. Nuova finestra si apre AUTOMATICAMENTE
-2. Nuova Cervella riceve TUTTO il contesto
-3. Passaggio e' SEAMLESS (zero perdita)
-4. Vecchia Cervella puo' chiudere tranquilla
+Funziona al 70% ma non perfetto.
+Decisione sessione 100: "Abbiamo altre cose da fare" - Rafa
+
+Quando tornare:
+- Quando avremo bisogno di sessioni MOLTO lunghe
+- Quando ci darà fastidio il compact manuale
 ```
 
-### Fasi
+### Cosa Esiste
 
-| Fase | Task | Status |
+| Cosa | File | Status |
 |------|------|--------|
-| 1.1 | Testare context_check.py in sessione REALE | DA FARE |
-| 1.2 | Identificare bug/problemi | DA FARE |
-| 1.3 | Fix e miglioramenti | DA FARE |
-| 1.4 | Prompt handoff piu' ricco | DA FARE |
-| 1.5 | HARDTEST end-to-end | DA FARE |
-
-### Criteri di Successo
-
-- [ ] Handoff funziona 10 volte di fila senza problemi
-- [ ] Nuova Cervella riprende ESATTAMENTE da dove era
-- [ ] Zero perdita di contesto
-- [ ] Rafa dice "FUNZIONA!"
+| context_check.py v5.1.0 | ~/.claude/hooks/ | Funziona 70% |
+| Git auto-commit | Prima di handoff | OK |
+| File handoff | .swarm/handoff/ | OK |
 
 ---
 
 ## PEZZO 2: SISTEMA FEEDBACK CERVELLE
 
-### L'Idea Geniale
+### Stato: ✅ IMPLEMENTATO!
 
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   Ogni Cervella a fine sessione lascia FEEDBACK:                |
-|                                                                  |
-|   - Cosa ha funzionato?                                         |
-|   - Cosa non ha funzionato?                                     |
-|   - Cosa ha imparato?                                           |
-|   - Suggerimenti per migliorare?                                |
-|                                                                  |
-|   Il sistema RACCOGLIE e ANALIZZA questi feedback.              |
-|   Impara dai propri errori. Migliora continuamente.             |
-|                                                                  |
-|   "L'idea e' GENIALE!" - Rafa                                   |
-|                                                                  |
-+------------------------------------------------------------------+
+**Comando:** `swarm-feedback`
+
+```bash
+swarm-feedback add       # Feedback interattivo (4 domande)
+swarm-feedback add "x"   # Feedback diretto
+swarm-feedback list      # Lista ultimi feedback
+swarm-feedback analyze   # Analizza pattern
 ```
 
-### Stato Attuale
+### Come Funziona
 
-| Cosa Esiste | File | Problema |
-|-------------|------|----------|
-| analytics.py v2.0.0 | scripts/memory/ | Esiste ma non usato |
-| SQLite database | swarm_memory.db | Ha eventi/lezioni |
-| Pattern detector | pattern_detector.py | Non integrato |
-
-**Il problema:** Gli strumenti esistono ma NON sono usati. Nessun feedback automatico.
-
-### Obiettivo REALE
-
-```
-1. RACCOLTA AUTOMATICA
-   → Hook a fine sessione chiede feedback
-   → Cervella risponde con cosa ha imparato
-   → Salvato in database
-
-2. ANALISI PERIODICA
-   → Ogni settimana (Lunedi?) analisi automatica
-   → Pattern di errori ricorrenti
-   → Suggerimenti di miglioramento
-
-3. DASHBOARD LIVE
-   → Vedere stato swarm in tempo reale
-   → Metriche chiave
-   → Trend nel tempo
-```
-
-### Fasi
-
-| Fase | Task | Status |
-|------|------|--------|
-| 2.1 | RICERCA: Come raccogliere feedback automatico? | DA FARE |
-| 2.2 | Implementare hook SessionEnd per feedback | DA FARE |
-| 2.3 | Salvare feedback in database | DA FARE |
-| 2.4 | Creare comando `swarm-feedback` per analisi | DA FARE |
-| 2.5 | Integrare con CODE REVIEW settimanale | DA FARE |
-| 2.6 | Dashboard live (opzionale) | DA FARE |
+1. A fine sessione, Cervella chiama `swarm-feedback add`
+2. Risponde a 4 domande:
+   - Cosa ha funzionato?
+   - Cosa non ha funzionato?
+   - Cosa hai imparato?
+   - Suggerimenti?
+3. Salvato in `~/.swarm/feedback/feedback.jsonl`
+4. `swarm-feedback analyze` trova pattern
 
 ### Criteri di Successo
 
-- [ ] Ogni sessione lascia feedback automatico
-- [ ] Analisi settimanale mostra pattern
-- [ ] Il sistema IMPARA e migliora
-- [ ] Rafa vede i miglioramenti nel tempo
+- [x] Comando per raccogliere feedback
+- [x] Salvataggio persistente
+- [x] Comando per analizzare pattern
+- [ ] Integrazione automatica a fine sessione (futuro)
 
 ---
 
 ## PEZZO 3: ROADMAPS VISUALE
 
-### L'Idea
+### Stato: ✅ IMPLEMENTATO!
 
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   Sistema ROADMAPS visuale multi-progetto AUTOMATICO            |
-|                                                                  |
-|   - Vedere tutti i progetti in un colpo d'occhio                |
-|   - Stato di ogni roadmap                                       |
-|   - Progressi nel tempo                                         |
-|   - Generato automaticamente dai file                           |
-|                                                                  |
-|   "Sistema ROADMAPS visuale multi automatico!" - Rafa           |
-|                                                                  |
-+------------------------------------------------------------------+
+**Comando:** `swarm-roadmaps`
+
+```bash
+swarm-roadmaps           # Mostra tutti i progetti
+swarm-roadmaps --list    # Lista progetti tracciati
+swarm-roadmaps --add X   # Aggiungi progetto
 ```
 
-### Stato Attuale
+### Come Funziona
 
-**NIENTE!** Solo l'idea. Nessuna ricerca, nessuna implementazione.
+1. Legge lista progetti da `~/.swarm/projects.txt`
+2. Per ogni progetto legge:
+   - NORD.md → ultima sessione
+   - ROADMAP_SACRA.md → conta [x] e [ ] per %
+3. Mostra vista aggregata
 
-### Obiettivo REALE
+### Progetti Tracciati
 
 ```
-1. AGGREGAZIONE
-   → Legge ROADMAP_SACRA.md di ogni progetto
-   → Legge NORD.md di ogni progetto
-   → Aggrega in una vista unica
-
-2. VISUALIZZAZIONE
-   → Tabella/grafico con stato progetti
-   → Percentuali completamento
-   → Prossimi step per ogni progetto
-
-3. AUTOMATICO
-   → Si aggiorna da solo leggendo i file
-   → Niente input manuale
+~/Developer/CervellaSwarm        → N/A
+~/Developer/miracollogeminifocus → 0/5 (0%)
+~/Developer/ContabilitaAntigravity → 42/42 (100%)
 ```
-
-### Fasi
-
-| Fase | Task | Status |
-|------|------|--------|
-| 3.1 | RICERCA: Come visualizzare? (CLI? Web? Rich?) | DA FARE |
-| 3.2 | RICERCA: Formato dati per parsing | DA FARE |
-| 3.3 | Implementare parser ROADMAP/NORD | DA FARE |
-| 3.4 | Implementare visualizzazione | DA FARE |
-| 3.5 | Comando `swarm-roadmaps` | DA FARE |
-| 3.6 | HARDTEST multi-progetto | DA FARE |
 
 ### Criteri di Successo
 
-- [ ] Un comando mostra tutti i progetti
-- [ ] Stato aggiornato automaticamente
-- [ ] Rafa vede tutto in un colpo d'occhio
-- [ ] "BELLO!" - Rafa
+- [x] Un comando mostra tutti i progetti
+- [x] Stato aggiornato automaticamente
+- [x] Progress % calcolato
+- [x] Facile aggiungere/rimuovere progetti
 
 ---
 
 ## PEZZO 4: TEMPLATE SWARM-INIT
 
-### L'Idea
+### Stato: ✅ IMPLEMENTATO!
 
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   Un comando per inizializzare CervellaSwarm in un progetto:   |
-|                                                                  |
-|   $ swarm-init ~/Developer/NuovoProgetto                        |
-|                                                                  |
-|   Crea automaticamente:                                          |
-|   - NORD.md                                                      |
-|   - PROMPT_RIPRESA.md                                            |
-|   - ROADMAP_SACRA.md                                             |
-|   - .swarm/ directory structure                                  |
-|   - CLAUDE.md con config base                                    |
-|                                                                  |
-|   "Template nuovo progetto sicuramente!!" - Rafa                |
-|                                                                  |
-+------------------------------------------------------------------+
+**Comando:** `swarm-init`
+
+```bash
+swarm-init                    # Nel progetto corrente
+swarm-init ~/Developer/Nuovo  # In path specifico
 ```
 
-### Stato Attuale
+### Cosa Crea
 
-**NIENTE!** Solo l'idea. Da implementare.
+```
+NuovoProgetto/
+├── NORD.md              # Bussola
+├── PROMPT_RIPRESA.md    # Memoria
+├── ROADMAP_SACRA.md     # Storia
+├── CLAUDE.md            # Config swarm
+└── .swarm/
+    ├── tasks/
+    ├── status/
+    ├── logs/
+    ├── handoff/
+    └── .gitignore
+```
 
-### Fasi
+### Criteri di Successo
 
-| Fase | Task | Status |
-|------|------|--------|
-| 4.1 | Definire struttura template | DA FARE |
-| 4.2 | Creare script swarm-init | DA FARE |
-| 4.3 | Testare su progetto nuovo | DA FARE |
+- [x] Un comando crea tutto
+- [x] Template pronti all'uso
+- [x] Struttura .swarm/ completa
 
 ---
 
-## LA GRANDE VISIONE: CERVELLASWARM IDE!
+## MIGLIORAMENTI DAL FEEDBACK (Sessione 101)
 
-### L'Idea GIGANTE
+### swarm-logs
+
+```bash
+swarm-logs              # Ultimi log
+swarm-logs --follow     # Live tail
+swarm-logs -w backend   # Solo un worker
+```
+
+### swarm-timeout
+
+```bash
+swarm-timeout           # Check singolo
+swarm-timeout --watch   # Monitora continuo
+swarm-timeout -t 600    # Timeout custom (10 min)
+```
+
+### swarm-progress
+
+```bash
+swarm-progress          # Stato attuale
+swarm-progress --watch  # Aggiorna ogni 5s
+swarm-progress -c       # Vista compatta
+```
+
+---
+
+## LA GRANDE VISIONE: CERVELLASWARM IDE
+
+### Stato: 💭 IDEA
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   "PIU' FIGHE CHE CURSOR 2.0!" - Rafa, 5 Gennaio 2026          |
+|   "PIU' FIGHE CHE CURSOR 2.0!" - Rafa                           |
 |                                                                  |
-|   CervellaSwarm IDE:                                             |
 |   - Multi-AI (Claude, GPT, Gemini, Llama...)                    |
 |   - 16+ agenti specializzati                                     |
 |   - Roadmaps VISUALI integrati                                   |
-|   - COMUNICAZIONE e ORGANIZZAZIONE                               |
-|   - "Em busca da similaridade"                                   |
+|   - VS Code based                                                |
 |                                                                  |
 |   DOCUMENTO: docs/visione/VISIONE_CERVELLASWARM_IDE.md          |
-|                                                                  |
-|   Questa idea potrebbe essere IL PRODOTTO!                      |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
-### Prossimi Step Visione
+### Prossimi Step (quando pronti)
 
 | Fase | Task | Status |
 |------|------|--------|
 | V.1 | RICERCA: Architettura Cursor/Windsurf | DA FARE |
 | V.2 | RICERCA: VS Code extension API | DA FARE |
 | V.3 | PROTOTIPO: Multi-AI selector | DA FARE |
-| V.4 | Validazione interna | DA FARE |
 
 ---
 
-## ORDINE DI PRIORITA'
+## COSA MANCA ANCORA
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   PRIORITA' 1: ANTI AUTO-COMPACT                                |
-|   → IMPLEMENTATO v5.1.0 - DA TESTARE!                          |
-|   → Critico per il lavoro quotidiano                           |
+|   FATTO (Sessione 101):                                         |
+|   ✅ swarm-feedback                                              |
+|   ✅ swarm-roadmaps                                              |
+|   ✅ swarm-init                                                  |
+|   ✅ swarm-logs                                                  |
+|   ✅ swarm-timeout                                               |
+|   ✅ swarm-progress                                              |
+|   ✅ Fix Auto-Sveglia (v2.9.0)                                  |
+|   ✅ Ottimizzazione context (30% → 10%)                         |
 |                                                                  |
-|   PRIORITA' 2: SISTEMA FEEDBACK                                 |
-|   → Ci fa IMPARARE dai nostri errori                           |
-|   → Miglioramento continuo                                      |
+|   PARCHEGGIATO:                                                  |
+|   ⏸️  Anti Auto-Compact (funziona al 70%)                       |
 |                                                                  |
-|   PRIORITA' 3: ROADMAPS VISUALE                                 |
-|   → Nice to have ma non critico                                |
-|                                                                  |
-|   PRIORITA' 4: TEMPLATE SWARM-INIT                              |
-|   → Facilita onboarding nuovi progetti                         |
-|                                                                  |
-|   VISIONE: CERVELLASWARM IDE                                    |
-|   → Il GRANDE SOGNO - da esplorare!                            |
+|   FUTURO:                                                        |
+|   💭 CervellaSwarm IDE                                          |
+|   💭 Integrazione feedback automatica                           |
+|   💭 Dashboard web live                                          |
 |                                                                  |
 +------------------------------------------------------------------+
-```
-
----
-
-## PROSSIMA SESSIONE
-
-```
-Iniziare da PEZZO 1: ANTI AUTO-COMPACT
-
-1. Testare context_check.py in sessione reale
-2. Vedere cosa non funziona
-3. Fixare
-4. HARDTEST
-
-"Il vero test e' l'uso!" - Rafa
 ```
 
 ---
@@ -319,8 +263,9 @@ Iniziare da PEZZO 1: ANTI AUTO-COMPACT
 
 | Data | Versione | Modifica |
 |------|----------|----------|
-| 5 Gen 2026 | 1.1.0 | Aggiunto PEZZO 4 + VISIONE + update v5.1.0 - Sessione 99 |
-| 5 Gen 2026 | 1.0.0 | Creazione roadmap - Sessione 98 |
+| 6 Gen 2026 | 2.0.0 | GRANDE UPDATE! 6 nuovi comandi, 3 pezzi completati! |
+| 5 Gen 2026 | 1.1.0 | Aggiunto PEZZO 4 + VISIONE |
+| 5 Gen 2026 | 1.0.0 | Creazione roadmap |
 
 ---
 
