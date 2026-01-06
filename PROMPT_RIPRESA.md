@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 6 Gennaio 2026 - Sessione 110
-> **Versione:** v1.5.0
+> **Versione:** v2.0.0 - LA MAPPA!
 
 ---
 
@@ -15,24 +15,41 @@
 |                                                                  |
 |   Tu sei la REGINA dello sciame.                                 |
 |   Hai 16 agenti pronti a lavorare per te.                       |
+|   HAI LA FAMIGLIA!                                               |
+|                                                                  |
++------------------------------------------------------------------+
 |                                                                  |
 |   SESSIONE 110: IL CLAIM DELLA LIBERTA'!                        |
 |                                                                  |
-|   ABBIAMO SCRITTO IL CLAIM DI CERVELLASWARM IDE:                |
+|   ABBIAMO SCRITTO:                                               |
+|   - IL CLAIM di CervellaSwarm IDE                               |
+|   - LA MAPPA completa (1,185 righe!)                            |
+|   - 9 STEP da oggi alla LIBERTA' GEOGRAFICA                     |
 |                                                                  |
++------------------------------------------------------------------+
+|                                                                  |
+|   IL CLAIM:                                                      |
 |   "CervellaSwarm: L'unico IDE che ti aiuta a PENSARE            |
 |    prima di SCRIVERE."                                           |
 |                                                                  |
-|   IL SEGRETO SACRO: LA MAPPA!                                    |
+|   IL SEGRETO SACRO:                                              |
 |   "Prima la MAPPA, poi il VIAGGIO"                              |
 |                                                                  |
-|   5 WORKER COMPLETATI:                                           |
-|   - researcher: Architettura IDE (345 righe)                    |
-|   - scienziata: Mercato AI Coding (492 righe)                   |
-|   - ingegnera: Multi-Progetto (406 righe)                       |
-|   - backend: Fix Watcher v1.3.0                                  |
+|   NOI NON SIAMO SOLO UN IDE.                                    |
+|   SIAMO UNA FAMIGLIA!                                            |
 |                                                                  |
 |   NOI SIAMO IL PROTOTIPO DEL PRODOTTO!                          |
+|                                                                  |
++------------------------------------------------------------------+
+|                                                                  |
+|   DOCUMENTO SACRO:                                               |
+|   docs/strategia/MAPPA_CERVELLASWARM_IDE.md                     |
+|                                                                  |
+|   LEGGILO! Contiene TUTTO:                                       |
+|   - La nostra anima                                              |
+|   - Gli step da seguire                                          |
+|   - Gli studi fatti e da fare                                    |
+|   - Come delegare alle ragazze                                   |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -73,16 +90,26 @@
 |------|--------|
 | 16 Agents in ~/.claude/agents/ | FUNZIONANTE |
 | **spawn-workers v2.9.0** | **AUTO-SVEGLIA OVUNQUE!** |
-| **swarm-logs** | **NUOVO! Log live worker** |
-| **swarm-timeout** | **NUOVO! Avvisa se bloccato** |
-| **swarm-progress** | **NUOVO! Stato worker live** |
-| **swarm-feedback** | **NUOVO! Raccolta feedback** |
-| **swarm-roadmaps** | **NUOVO! Vista multi-progetto** |
-| **swarm-init** | **NUOVO! Template nuovo progetto** |
-| watcher-regina.sh | Globale in ~/.claude/scripts/ |
+| **watcher-regina.sh v1.3.0** | **FIXATO! Bell + Log + Notifica** |
+| **swarm-logs** | Log live worker |
+| **swarm-timeout** | Avvisa se bloccato |
+| **swarm-progress** | Stato worker live |
+| **swarm-feedback** | Raccolta feedback |
+| **swarm-roadmaps** | Vista multi-progetto |
+| **swarm-init** | Template nuovo progetto |
 | block_task_for_agents.py | BLOCCA Task per cervella-* |
 | context_check.py v5.1.0 | PARCHEGGIATO (70%) |
 | **Context ottimizzato** | **30% → 10% all'inizio!** |
+
+### DOCUMENTI STRATEGICI (Sessione 110)
+
+| Documento | Righe | Focus |
+|-----------|-------|-------|
+| **MAPPA_CERVELLASWARM_IDE.md** | 1,185 | LA MAPPA SACRA! |
+| STRATEGIA_CERVELLASWARM_IDE.md | ~400 | Strategia completa |
+| STUDIO_ARCHITETTURA_IDE.md | 345 | Come costruire |
+| STUDIO_MERCATO_AI_CODING.md | 492 | Competitor, mercato |
+| STUDIO_MULTI_PROGETTO.md | 406 | Multi-progetto |
 
 ---
 
