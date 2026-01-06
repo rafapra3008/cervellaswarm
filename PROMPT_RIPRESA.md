@@ -25,7 +25,7 @@
 |                                                                  |
 |   MIRACOLLO (ultimo stato):                                      |
 |   - VITTORIA! Parser email funziona!                            |
-|   - Fix API key da cervella-backend: PRONTO per deploy          |
+|   - Fix API key: DEPLOYATO E LIVE!                              |
 |   - Frontend deployato su path corretto                         |
 |   - FORTEZZA MODE v2.0.0 completato                             |
 |                                                                  |
