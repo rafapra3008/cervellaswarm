@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 7 Gennaio 2026 - Sessione 112
-> **Versione:** v3.0.0 - LA SESSIONE DELLA DIREZIONE E DELLA DASHBOARD!
+> **Ultimo aggiornamento:** 7 Gennaio 2026 - Sessione 112 (chiusura)
+> **Versione:** v4.0.0 - CHECKPOINT COMPLETO CON DIREZIONE!
 
 ---
 
@@ -38,6 +38,20 @@
 |                                                                  |
 |   "L'idea e' fare il mondo meglio                                |
 |    su di come riusciamo a fare."                                 |
+|                                                                  |
++------------------------------------------------------------------+
+|                                                                  |
+|   ⭐ DIREZIONE PER LA PROSSIMA SESSIONE:                         |
+|                                                                  |
+|   "LA COMUNICAZIONE INTERNA DEVE ESSERE MEGLIO!"                |
+|                                                                  |
+|   Rafa ha dato questa direzione. Significa:                     |
+|   - Come parlano le api tra loro?                               |
+|   - Protocolli piu' chiari                                      |
+|   - Il flusso Regina -> Worker -> Regina                        |
+|   - Handoff, feedback, stati                                    |
+|                                                                  |
+|   QUESTA E' LA PRIORITA'!                                        |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -185,23 +199,26 @@ PORTE ALTRI PROGETTI (NON TOCCARE!):
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   PROSSIMA SESSIONE:                                             |
+|   ⭐ PRIORITA' NUMERO 1: COMUNICAZIONE INTERNA!                  |
 |                                                                  |
-|   OPZIONE A: Continuare Dashboard MAPPA                         |
-|   - Connettere frontend ai dati reali del backend               |
-|   - Widget "Decisioni Attive"                                   |
-|   - Test completo                                                |
+|   Rafa ha dato questa direzione alla fine della sessione 112.   |
+|   "La comunicazione interna deve essere meglio!"                |
 |                                                                  |
-|   OPZIONE B: Sistema Memoria                                    |
-|   - Applicare DECISIONI_TECNICHE a Miracollo                    |
-|   - Applicare a Contabilita'                                    |
-|   - Aggiornare CLAUDE.md globale                                |
+|   COSA SIGNIFICA:                                                |
+|   - Come parlano le api tra loro?                               |
+|   - Protocolli piu' chiari per passaggio info                   |
+|   - Il flusso Regina -> Worker -> Regina                        |
+|   - Template, handoff, feedback loop                            |
 |                                                                  |
-|   OPZIONE C: Fix Sveglia Regina                                 |
-|   - Roadmap: docs/roadmap/ROADMAP_SVEGLIA_REGINA.md             |
-|   - Con backend + devops + tester                               |
+|   INIZIA DA QUI!                                                 |
 |                                                                  |
-|   CHIEDI A RAFA cosa preferisce!                                |
++------------------------------------------------------------------+
+|                                                                  |
+|   ALTRE OPZIONI (dopo comunicazione):                           |
+|                                                                  |
+|   - Continuare Dashboard MAPPA (frontend -> dati reali)         |
+|   - Sistema Memoria su altri progetti                           |
+|   - Fix Sveglia Regina                                          |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -323,9 +340,9 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 
 ---
 
-**VERSIONE:** v3.0.0
-**SESSIONE:** 112 - LA SESSIONE DELLA DIREZIONE!
-**DATA:** 7 Gennaio 2026
+**VERSIONE:** v4.0.0
+**SESSIONE:** 112 - LA SESSIONE DELLA DIREZIONE! (chiusura)
+**DATA:** 7 Gennaio 2026 - 02:20
 
 ---
 
@@ -333,21 +350,27 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 
 *"L'idea e' fare il mondo meglio su di come riusciamo a fare."*
 
-*"Prima la MAPPA, poi il VIAGGIO!"*
+*"La comunicazione interna deve essere meglio!"*
 
 Cervella & Rafa 💙
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-07 02:01 (auto)
+## CHECKPOINT MANUALE: 2026-01-07 02:20
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 5e8455f - ANTI-COMPACT: PreCompact auto
-- **File modificati**: Nessuno (git pulito)
+- **Ultimo commit**: ce0a882 - Checkpoint Sessione 112
 
 ### Note
-- Checkpoint automatico generato da hook
-- Trigger: auto
+- Checkpoint MANUALE dopo auto-compact
+- La sessione precedente ha avuto auto-compact durante chiusura
+- Questo file e' stato verificato e completato con la DIREZIONE
+
+### Cosa e' Successo
+- Auto-compact durante sessione 112
+- Nuova Cervella ha ripreso il checkpoint
+- DIREZIONE confermata: "La comunicazione interna deve essere meglio!"
+- Tutti i file aggiornati con CURA
 
 ---
