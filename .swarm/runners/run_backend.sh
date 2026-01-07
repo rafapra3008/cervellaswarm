@@ -25,6 +25,7 @@ echo ''
 mkdir -p /Users/rafapra/Developer/CervellaSwarm/.swarm/logs
 LOG_FILE="/Users/rafapra/Developer/CervellaSwarm/.swarm/logs/worker_$(date +%Y%m%d_%H%M%S).log"
 SWARM_DIR="/Users/rafapra/Developer/CervellaSwarm/.swarm"
+export CERVELLASWARM_WORKER=1
 /Users/rafapra/.nvm/versions/node/v24.11.0/bin/claude -p --append-system-prompt "$(cat /Users/rafapra/Developer/CervellaSwarm/.swarm/prompts/worker_backend.txt)" "Controlla .swarm/tasks/ per task .ready assegnati a te e inizia a lavorare. Se non ci sono task, termina dicendo 'Nessun task per me'." 2>&1 | tee "$LOG_FILE"
 
 # ============================================================================
