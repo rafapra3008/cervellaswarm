@@ -59,7 +59,11 @@ function WorkerCard({ worker, compact = false }: { worker: Worker; compact?: boo
   );
 }
 
-export function FamigliaWidget({ famiglia = mockFamiglia }: FamigliaWidgetProps) {
+export function FamigliaWidget({ famiglia = mockFamiglia, loading = false }: FamigliaWidgetProps) {
+  if (loading) {
+    return <div className="glass-card p-8 animate-pulse"><div className="h-48 bg-bg-tertiary rounded-lg"></div></div>;
+  }
+
   return (
     <div className="glass-card p-8">
       <div className="flex items-center justify-between mb-6">

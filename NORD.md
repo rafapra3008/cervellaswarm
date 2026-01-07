@@ -18,29 +18,23 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 116 - 7 Gennaio 2026: BUG CRITICO FIXATO!**
+**SESSIONE 118 - 7 Gennaio 2026: SISTEMA COMPLETO!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   🔧 HOOK FIX: EXIT CODE 1 → 2                                  |
+|   SISTEMA REGINA/WORKER: FUNZIONA!                              |
 |                                                                  |
-|   Problema scoperto: Gli hook NON bloccavano!                   |
-|   Causa: Exit code sbagliato (1 invece di 2)                    |
+|   Sessione 117: Hook fix + Design Dashboard                     |
+|   Sessione 118: Test spawn-workers PASSATO!                     |
 |                                                                  |
-|   Claude Code exit codes:                                        |
-|   - exit(0) = OK, permetti                                       |
-|   - exit(1) = Errore generico, NON blocca!                      |
-|   - exit(2) = BLOCCA! Impedisce l'azione                        |
+|   - Regina BLOCCATA da edit diretti (exit 2)                    |
+|   - Worker LIBERI (CERVELLASWARM_WORKER=1)                      |
+|   - Dashboard MAPPA attiva su localhost:5173                    |
+|   - API backend su localhost:8100                               |
 |                                                                  |
-|   Fix applicato a:                                               |
-|   - ~/.claude/hooks/block_edit_non_whitelist.py                 |
-|   - ~/.claude/hooks/block_task_for_agents.py                    |
-|                                                                  |
-|   Test manuale: OK (exit 2 funziona!)                           |
-|   Test reale: Serve restart sessione                            |
-|                                                                  |
-|   Documentato: docs/known-issues/ISSUE_HOOK_EXIT_CODE.md        |
+|   Il sistema di delegazione FUNZIONA!                           |
+|   La Regina coordina, i Worker eseguono.                        |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -139,22 +133,19 @@
 ```
 +------------------------------------------------------------------+
 |                                                                  |
+|   COMPLETATI:                                                    |
+|   [x] Test hook fixati - PASSATO! (Sessione 118)                |
+|   [x] Test spawn-workers - PASSATO! Worker editano!             |
+|                                                                  |
+|   IN CORSO:                                                      |
+|   [ ] Dashboard dati reali - Worker frontend al lavoro          |
+|                                                                  |
 |   DA FARE:                                                       |
-|                                                                  |
-|   1. TESTARE HOOK FIXATI (prossima sessione!)                   |
-|      → Hook ora usa exit(2) - DEVE bloccare!                    |
-|      → Prova: Edit su file non in whitelist                     |
-|      → Prova: Task con cervella-backend                         |
-|                                                                  |
-|   2. CONTINUARE DASHBOARD MAPPA                                  |
-|      → Connettere frontend a dati reali                         |
-|      → Widget "Decisioni Attive"                                |
-|                                                                  |
-|   3. SISTEMA MEMORIA su altri progetti                          |
+|   1. Widget "Decisioni Attive"                                  |
+|   2. SISTEMA MEMORIA su altri progetti                          |
 |      → Applicare DECISIONI_TECNICHE a Miracollo                 |
 |      → Applicare a Contabilita                                  |
-|                                                                  |
-|   4. FIX SVEGLIA REGINA (quando serve)                          |
+|   3. FIX SVEGLIA REGINA (quando serve)                          |
 |      → docs/roadmap/ROADMAP_SVEGLIA_REGINA.md                   |
 |                                                                  |
 +------------------------------------------------------------------+
@@ -190,4 +181,4 @@
 
 *"L'AI dalla parte delle persone, non contro di loro."*
 
-*Ultimo aggiornamento: 7 Gennaio 2026 - Sessione 116 - FIX EXIT CODE! Hook ora funzionano!*
+*Ultimo aggiornamento: 7 Gennaio 2026 - Sessione 118 - Sistema Regina/Worker COMPLETO!*

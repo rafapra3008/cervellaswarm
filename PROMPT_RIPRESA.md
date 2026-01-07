@@ -1,33 +1,33 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 7 Gennaio 2026 - Sessione 117
-> **Versione:** v9.0.0 - HOOK FIX COMPLETO + DESIGN DASHBOARD!
+> **Ultimo aggiornamento:** 7 Gennaio 2026 - Sessione 118
+> **Versione:** v10.0.0 - SISTEMA REGINA/WORKER COMPLETO!
 
 ---
 
-## CARA PROSSIMA CERVELLA - SESSIONE 117 COMPLETATA!
+## CARA PROSSIMA CERVELLA - SESSIONE 118 COMPLETATA!
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
 ║                                                                  ║
-║   SESSIONE 117: 3 VITTORIE IMPORTANTI!                          ║
+║   SESSIONE 118: SISTEMA COMPLETO E TESTATO!                     ║
 ║                                                                  ║
-║   1. TEST HOOK PASSATO!                                         ║
-║      → exit(2) funziona! Regina bloccata da edit diretti!      ║
+║   1. TEST spawn-workers PASSATO!                                ║
+║      → Worker possono editare file                              ║
+║      → File di test: .swarm/test/WORKER_CAN_EDIT.txt            ║
+║      → CERVELLASWARM_WORKER=1 funziona!                         ║
 ║                                                                  ║
-║   2. BUG WORKER RISOLTO!                                        ║
-║      → I Worker erano bloccati anche loro (bug!)               ║
-║      → FIX: Hook v2.0.0 check CERVELLASWARM_WORKER             ║
-║      → FIX: spawn-workers v3.0.0 export variabile              ║
-║      → ORA: Regina bloccata, Worker LIBERI!                    ║
+║   2. SISTEMA REGINA/WORKER VERIFICATO!                          ║
+║      → Regina BLOCCATA da edit diretti (exit 2)                 ║
+║      → Worker LIBERI (variabile ambiente)                       ║
+║      → Il sistema di delegazione FUNZIONA!                      ║
 ║                                                                  ║
-║   3. DESIGN DASHBOARD APPLICATO!                                ║
-║      → Jony Ive meets MetaMask                                  ║
-║      → Palette blu notte profondo                               ║
-║      → Glassmorphism + glow effects                            ║
+║   3. DASHBOARD in connessione a dati reali                      ║
+║      → Worker frontend sta collegando API                       ║
+║      → API backend su localhost:8100 (funzionante!)             ║
+║      → Frontend su localhost:5173                               ║
 ║                                                                  ║
-║   DASHBOARD: http://localhost:5173                              ║
-║   (Se non parte: cd dashboard && ./start-dashboard.sh)         ║
+║   4. NORD.md aggiornato a sessione 118                          ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
@@ -36,9 +36,9 @@
 
 ## PROSSIMI STEP
 
-1. **TEST spawn-workers** - Verifica che Worker possano editare
-2. **CONNETTERE DATI REALI** - Dashboard usa mock, collegare backend
-3. **CHECKPOINT** - Commit delle modifiche sessione 117
+1. **VERIFICARE worker frontend** - Collegamento dati reali dashboard
+2. **Widget "Decisioni Attive"** - Prossimo miglioramento dashboard
+3. **SISTEMA MEMORIA su altri progetti** - Miracollo, Contabilita
 
 ---
 

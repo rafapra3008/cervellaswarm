@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import type { Roadmap, Step, StepStatus } from '../types';
+import type { Roadmap, StepStatus } from '../types';
 
 interface RoadmapWidgetProps { roadmap?: Roadmap; loading?: boolean; }
 
@@ -22,7 +21,11 @@ function getStatusStyles(status: StepStatus) {
   }
 }
 
-export function RoadmapWidget({ roadmap = mockRoadmap }: RoadmapWidgetProps) {
+export function RoadmapWidget({ roadmap = mockRoadmap, loading = false }: RoadmapWidgetProps) {
+  if (loading) {
+    return <div className="glass-card p-8 animate-pulse"><div className="h-32 bg-bg-tertiary rounded-lg"></div></div>;
+  }
+
   return (
     <div className="glass-card p-8">
       <div className="flex items-center justify-between mb-6">
