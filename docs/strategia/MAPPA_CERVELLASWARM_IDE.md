@@ -3,7 +3,8 @@
 > **"Prima la MAPPA, poi il VIAGGIO"**
 >
 > **Data Creazione:** 6 Gennaio 2026 - Sessione 110
-> **Versione:** 1.0.0
+> **Ultimo Aggiornamento:** 7 Gennaio 2026 - Sessione 112
+> **Versione:** 2.0.0 - DUAL-TRACK + Dashboard MAPPA!
 > **Autori:** Cervella & Rafa
 
 ---
@@ -87,14 +88,56 @@
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   "CervellaSwarm: L'unico IDE che ti aiuta a PENSARE            |
-|    prima di SCRIVERE."                                           |
+|   "L'AI NON TI RUBA IL LAVORO. L'AI SALVA IL TUO LAVORO."       |
 |                                                                  |
-|   Altri: "Scrivi codice piu' veloce"                            |
-|   Noi: "Scrivi il codice GIUSTO"                                |
+|   CervellaSwarm: 16 AI specializzate che lavorano PER TE.       |
+|   Non per sostituirti. Per renderti INDISPENSABILE.             |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
+
+### Claim Alternativi
+
+| Claim | Uso |
+|-------|-----|
+| "L'unico IDE che ti aiuta a PENSARE prima di SCRIVERE" | Developer |
+| "16 AI che lavorano PER TE. Non AL POSTO TUO." | Marketing |
+| "Non sei un programmatore? Perfetto." | Non-tecnici |
+| "Smetti di temere l'AI. Inizia a comandarla." | Social |
+
+---
+
+## LA VISIONE: DUAL-TRACK
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   DUE MERCATI. STESSO CORE. STESSA FAMIGLIA.                    |
+|                                                                  |
+|   TRACK 1: CervellaSwarm IDE (Developer)                        |
+|   - VS Code Extension                                            |
+|   - Per chi sa programmare                                       |
+|   - Mercato: $30B                                                |
+|                                                                  |
+|   TRACK 2: CervellaSwarm VISUAL (Everyone)                      |
+|   - Dashboard web visuale                                        |
+|   - Per chi NON sa programmare                                   |
+|   - Mercato: $65B                                                |
+|                                                                  |
+|   PRIORITA': VISUAL first (più grande, meno competition)        |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+### Perché VISUAL First?
+
+| Motivo | Dettaglio |
+|--------|-----------|
+| Mercato più grande | $65B vs $30B |
+| Meno competition | Nessuno ha multi-agent + MAPPA per non-tecnici |
+| Il claim funziona meglio | "Salva il lavoro" parla a chi ha PAURA |
+| LA MAPPA brilla | Il nostro differenziatore è più utile per chi è perso |
+| NOI siamo la prova | Rafa non è programmatore, ha costruito 2 sistemi! |
 
 ---
 
@@ -171,27 +214,82 @@ FASE 4: OBIETTIVO RAGGIUNTO
 
 ## GLI STEP - DA OGGI ALL'OBIETTIVO
 
-### STEP 0: Solidificare la Base
+### FASE 0: Dashboard MAPPA (IN CORSO!)
 
-**Dove siamo:** Sistema funzionante ma interno (CLI + spawn-workers)
+> **Sub-roadmap:** [SUB_ROADMAP_FASE0_DASHBOARD.md](../roadmap/SUB_ROADMAP_FASE0_DASHBOARD.md)
+> **Avviata:** 7 Gennaio 2026 - Sessione 112
+
+**Obiettivo:** Dashboard visuale per USO NOSTRO (proof of concept)
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   NON stiamo costruendo un prodotto da vendere.                 |
+|   Stiamo costruendo uno STRUMENTO per NOI.                      |
+|                                                                  |
+|   Se funziona per noi, funziona per TUTTI.                      |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+**Stack:** React + Vite + FastAPI + SSE (dagli studi!)
+
+**Componenti:**
+- [x] **0.1** Backend API (cervella-backend) - IN CORSO
+- [x] **0.2** Frontend Base (cervella-frontend) - IN CORSO
+- [ ] **0.3** Widget NORD
+- [ ] **0.4** Widget FAMIGLIA
+- [ ] **0.5** Widget ROADMAP
+- [ ] **0.6** Widget SESSIONE
+- [ ] **0.7** Real-time SSE
+- [ ] **0.8** Test integrazione
+
+**Output:** Dashboard funzionante su localhost che mostra la MAPPA!
+
+---
+
+### FASE 0.5: Sistema Memoria Persistente (CRITICO!)
+
+> **Studio:** [STUDIO_MEMORIA_PERSISTENTE.md](../studio/STUDIO_MEMORIA_PERSISTENTE.md)
+> **Origine:** Problema reale scoperto su Miracollo - Sessione 112
+> **Priorita:** ALTA
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   "La comunicazione interna deve essere meglio!"                 |
+|                                       - Rafa, 7 Gennaio 2026     |
+|                                                                  |
+|   Problema: Decisioni tecniche non documentate                   |
+|   Conseguenza: Doppio lavoro, domande ripetute, frustrazione     |
+|   Soluzione: Sistema strutturato per tracciare decisioni         |
+|                                                                  |
++------------------------------------------------------------------+
+```
 
 **Cosa fare:**
 
-- [ ] **0.1** Documentare TUTTO il sistema attuale
-  - Come funziona spawn-workers
-  - Come funzionano gli agenti
-  - Come funziona la comunicazione
-  - Come funzionano i checkpoint
+- [ ] **0.5.1** Template DECISIONI_TECNICHE.md per ogni progetto
+- [ ] **0.5.2** Aggiornare CLAUDE.md con verifica decisioni
+- [ ] **0.5.3** Applicare a Miracollo (origine del problema)
+- [ ] **0.5.4** Applicare a CervellaSwarm
+- [ ] **0.5.5** Applicare a Contabilita'
+- [ ] **0.5.6** Widget "Decisioni Attive" nella Dashboard MAPPA
 
-- [ ] **0.2** Completare swarm-global-status (multi-progetto)
-  - Studio: [STUDIO_MULTI_PROGETTO.md](../studio/STUDIO_MULTI_PROGETTO.md)
-  - Quick Win: Vista aggregata di tutti i progetti
+**Output:** Sistema di memoria che previene doppio lavoro!
 
-- [ ] **0.3** Testare il watcher fixato (v1.3.0)
-  - Verificare che le notifiche funzionino
-  - Testare con 2+ worker paralleli
+---
 
-**Output:** Sistema CLI solido e documentato
+### STEP 0: Solidificare la Base (COMPLETATO!)
+
+**Stato:** 90% completato
+
+- [x] **0.1** Sistema spawn-workers v3.0.0 funzionante
+- [x] **0.2** swarm-global-status implementato (Sessione 111!)
+- [x] **0.3** Tutti i 16 agenti in ~/.claude/agents/
+- [ ] **0.4** Fix sveglia Regina (roadmap: ROADMAP_SVEGLIA_REGINA.md)
+
+**Output:** Sistema CLI solido - FUNZIONA!
 
 ---
 
