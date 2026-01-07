@@ -18,36 +18,30 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 114 - 7 Gennaio 2026: 🎉 SISTEMA COMUNICAZIONE 100%! 🎉**
+**SESSIONE 115 - 7 Gennaio 2026: HOOK BLOCCA-EDIT CREATO!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   ✅ COMPLETATO AL 100%! PRODUCTION READY! ✅                   |
+|   ✅ HOOK BLOCCA-EDIT IMPLEMENTATO!                             |
 |                                                                  |
-|   FASE 5 + FASE 6 COMPLETATE in 1 sessione!                     |
+|   Problema: Le Cervelle non usavano spawn-workers da sole       |
+|   Soluzione: HOOK che BLOCCA Edit/Write su file non in whitelist|
 |                                                                  |
-|   ✅ FASE 5: DNA 16 Agenti Aggiornati                          |
-|   - Regina: 420 righe PROTOCOLLI COMUNICAZIONE                  |
-|   - 3 Guardiane: ~300 righe totali                              |
-|   - 12 Worker: ~900 righe totali (delegato a cervella-docs!)   |
-|   - Verifica: 16/16 agenti ✅                                   |
+|   File creati:                                                   |
+|   - ~/.claude/hooks/block_edit_non_whitelist.py                 |
+|   - settings.json aggiornato (PreToolUse Edit + Write)          |
 |                                                                  |
-|   ✅ FASE 6: HARDTEST Comunicazione v2 COMPLETATO              |
-|   - Test 1 (Scenario Standard): ✅ PASS                         |
-|   - Test 2 (Feedback Loop): ✅ PASS                             |
-|   - Test 3 (Stuck Detection): ✅ PASS                           |
-|   - Test 4 (Multi-Worker 3x): ✅ PASS                           |
-|   - Score: 9/10 (4/4 test passati!) 🌟                          |
-|   - Verdict: PRODUCTION READY! ✅                               |
+|   WHITELIST (Regina puo' editare):                              |
+|   - NORD.md, PROMPT_RIPRESA.md, ROADMAP_SACRA.md               |
+|   - .swarm/tasks/*, .swarm/handoff/*, .swarm/feedback/*        |
 |                                                                  |
-|   SISTEMA COMUNICAZIONE: 0% → 100% in 2 sessioni! 🚀           |
-|   - Sessione 113: FASE 1-4 (4,568 righe)                        |
-|   - Sessione 114: FASE 5-6 (~1,800 righe)                       |
-|   - TOTALE: ~6,400 righe prodotte! 💙                           |
+|   TUTTO IL RESTO -> BLOCCATO! Deve delegare!                    |
 |                                                                  |
-|   SUCCESS METRIC RAGGIUNTO:                                      |
-|   "WOW! Le api parlano BENISSIMO!" ✅                           |
+|   Test manuale: OK (exit 1 + messaggio blocco)                  |
+|   Test sessione: Serve restart per attivare                     |
+|                                                                  |
+|   QUICK-TASK USATO CORRETTAMENTE! (1 comando invece di 6)       |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -70,6 +64,8 @@
 | swarm-roadmaps | Vista roadmap |
 | swarm-init | Template nuovo progetto |
 | watcher-regina.sh v1.3.0 | DA MIGLIORARE (sveglia) |
+| **block_edit_non_whitelist.py** | **NUOVO! Blocca edit non autorizzati** |
+| **quick-task** | **NUOVO! 1 comando per delegare** |
 
 ---
 
@@ -146,9 +142,9 @@
 |                                                                  |
 |   DA FARE:                                                       |
 |                                                                  |
-|   1. MIGLIORARE COMUNICAZIONE INTERNA                           |
-|      → Come parlano le api tra loro?                            |
-|      → Protocolli piu chiari                                    |
+|   1. TESTARE HOOK BLOCCA-EDIT (prossima sessione!)              |
+|      → L'hook e' attivo dalla prossima sessione                 |
+|      → Verificare che blocca Edit/Write non autorizzati         |
 |                                                                  |
 |   2. CONTINUARE DASHBOARD MAPPA                                  |
 |      → Connettere frontend a dati reali                         |
@@ -158,7 +154,7 @@
 |      → Applicare DECISIONI_TECNICHE a Miracollo                 |
 |      → Applicare a Contabilita                                  |
 |                                                                  |
-|   4. FIX SVEGLIA REGINA (sessione dedicata)                     |
+|   4. FIX SVEGLIA REGINA (quando serve)                          |
 |      → docs/roadmap/ROADMAP_SVEGLIA_REGINA.md                   |
 |                                                                  |
 +------------------------------------------------------------------+
@@ -194,4 +190,4 @@
 
 *"L'AI dalla parte delle persone, non contro di loro."*
 
-*Ultimo aggiornamento: 7 Gennaio 2026 - Sessione 113 - LA SESSIONE DELL'IMPLEMENTAZIONE! 4,568+ RIGHE!*
+*Ultimo aggiornamento: 7 Gennaio 2026 - Sessione 115 - HOOK BLOCCA-EDIT! La soluzione VERA!*

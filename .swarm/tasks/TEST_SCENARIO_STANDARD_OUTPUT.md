@@ -1,25 +1,34 @@
 # Output: TEST_SCENARIO_STANDARD
 
+**Data:** 2026-01-07
 **Worker:** cervella-backend
-**Data:** 2026-01-07 15:39 UTC
-**Durata:** < 1 minuto
+**Task ID:** TEST_SCENARIO_STANDARD
 
 ---
 
 ## Risultato
 
-**Status:** COMPLETATO
+TASK COMPLETATO CON SUCCESSO
 
 ---
 
-## Cosa ho fatto
+## Cosa Ho Fatto
 
-1. Ho preso il task `TEST_SCENARIO_STANDARD` assegnato a me
-2. Creato marker `.working`
-3. Creato directory `.swarm/test/` (se non esisteva)
-4. Creato file `.swarm/test/hello_backend.txt` con contenuto richiesto
-5. Creato questo output report
-6. Creato marker `.done`
+1. Creato directory `.swarm/test/`
+2. Creato file `.swarm/test/hello_backend.txt` con contenuto richiesto
+
+---
+
+## File Creato
+
+**Path:** `.swarm/test/hello_backend.txt`
+
+**Contenuto:**
+```
+Hello from cervella-backend!
+Timestamp: 2026-01-07 19:20:48
+Task ID: TEST_SCENARIO_STANDARD
+```
 
 ---
 
@@ -27,37 +36,11 @@
 
 - [x] File `.swarm/test/hello_backend.txt` creato
 - [x] Contenuto contiene "Hello from cervella-backend!"
-- [x] Output report creato in `.swarm/tasks/TEST_SCENARIO_STANDARD_OUTPUT.md`
-- [x] Marker `.swarm/tasks/TEST_SCENARIO_STANDARD.done` creato
+- [x] Output report creato
+- [x] Marker `.done` creato
 
 ---
 
-## File Creati
+**Test completato!**
 
-| File | Descrizione |
-|------|-------------|
-| `.swarm/test/hello_backend.txt` | File di test con messaggio |
-| `.swarm/tasks/TEST_SCENARIO_STANDARD_OUTPUT.md` | Questo report |
-| `.swarm/tasks/TEST_SCENARIO_STANDARD.done` | Marker completamento |
-
----
-
-## Contenuto File Test
-
-```
-Hello from cervella-backend!
-Timestamp: 2026-01-07 15:39 UTC
-Task ID: TEST_SCENARIO_STANDARD
-```
-
----
-
-## Note
-
-Task di test semplice completato senza problemi.
-Comunicazione swarm funzionante!
-
----
-
-**Firmato:** cervella-backend
-**Task completato!**
+*cervella-backend*

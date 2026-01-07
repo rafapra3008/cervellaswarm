@@ -1,11 +1,91 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 7 Gennaio 2026 - Sessione 114 (COMPLETATA!)
-> **Versione:** v6.0.0 - 🎉 SISTEMA COMUNICAZIONE 100% COMPLETO!
+> **Ultimo aggiornamento:** 7 Gennaio 2026 - Sessione 115
+> **Versione:** v7.0.0 - HOOK BLOCCA-EDIT IMPLEMENTATO!
 
 ---
 
-## 🎉 DOVE SIAMO - GRANDE TRAGUARDO!
+## DOVE SIAMO - Sessione 115
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   ✅ HOOK BLOCCA-EDIT IMPLEMENTATO!                             ║
+║                                                                  ║
+║   Il problema "Cervelle non delegano" RISOLTO con ENFORCEMENT   ║
+║                                                                  ║
+║   📁 ~/.claude/hooks/block_edit_non_whitelist.py                ║
+║   📁 ~/.claude/settings.json (PreToolUse Edit + Write)          ║
+║                                                                  ║
+║   WHITELIST (Regina puo' editare):                              ║
+║   - NORD.md, PROMPT_RIPRESA.md, ROADMAP_SACRA.md               ║
+║   - .swarm/tasks/*, .swarm/handoff/*, .swarm/feedback/*        ║
+║                                                                  ║
+║   TUTTO IL RESTO -> BLOCCATO! Deve usare quick-task/spawn!     ║
+║                                                                  ║
+║   Test: Hook funziona (test manuale OK)                         ║
+║   Attivazione: Dalla prossima sessione!                         ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+---
+
+## IL FILO DEL DISCORSO - Sessione 115
+
+### Il Problema
+
+Rafa ha notato che le Cervelle NON usano spawn-workers da sole. Lui doveva sempre dire di farlo.
+Abbiamo provato 3-4 volte in sessioni precedenti (quick-task, regole DNA, etc.) ma non funzionava.
+
+### La Root Cause (già trovata nella Sessione 90!)
+
+- `quick-task` esiste e funziona!
+- Ma le Cervelle non lo usano perché non c'è ENFORCEMENT
+- Le regole nel DNA sono "suggerimenti", non "muri"
+
+### La Soluzione VERA
+
+HOOK che BLOCCA Edit/Write su file non in whitelist.
+
+**Non è una regola. È un MURO.**
+
+Se la Regina prova a fare Edit su `backend/main.py`:
+- Hook intercetta
+- BLOCCA con exit 1
+- Mostra messaggio: "Usa quick-task o spawn-workers!"
+
+### Lavoro Fatto
+
+1. **cervella-researcher** - Ricerca storia tentativi precedenti (6 trovati!)
+2. **cervella-backend** - Creato hook + aggiornato settings.json
+3. **Test manuale** - Hook funziona (exit 1 + messaggio blocco)
+
+### File Creati
+
+- `~/.claude/hooks/block_edit_non_whitelist.py` (160 righe)
+- `~/.claude/settings.json` aggiornato (PreToolUse per Edit + Write)
+- `docs/studio/STUDIO_STORIA_PROBLEMA_FINESTRE.md` (da researcher)
+
+### Quick-Task USATO!
+
+In questa sessione, ho usato `quick-task` correttamente:
+```bash
+quick-task "Creare hook..." --backend
+```
+Invece di fare 6 passi manuali, 1 comando! Questo è il modo giusto!
+
+---
+
+## PROSSIMA SESSIONE
+
+1. **TESTARE HOOK** - L'hook sarà attivo dalla prossima sessione
+2. Verificare che blocca Edit/Write non autorizzati
+3. Se funziona → abbiamo RISOLTO il problema della delegazione!
+
+---
+
+## 🎉 SESSIONE 114 - GRANDE TRAGUARDO (Precedente)
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
@@ -471,3 +551,31 @@ Vedi: `NORD.md` per dettagli completi.
 **Sessione:** 114
 **Stato:** COMPLETATA ✅
 **Prossimo:** Applicare sistema o continuare Dashboard (chiedi a Rafa!)
+
+---
+
+---
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-07 19:22 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: c5968eb - 🎉 SESSIONE 114 COMPLETATA! Sistema Comunicazione 100%!
+- **File modificati** (5):
+  - swarm/tasks/TEST_SCENARIO_STANDARD.ready
+  - .swarm/tasks/TEST_SCENARIO_STANDARD_OUTPUT.md
+  - .swarm/test/hello_backend.txt
+  - PROMPT_RIPRESA.md
+  - reports/scientist_prompt_20260107.md
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---
