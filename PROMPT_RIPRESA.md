@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 6 Gennaio 2026 - Sessione 111
-> **Versione:** v2.1.0 - LA SESSIONE DEGLI STUDI!
+> **Ultimo aggiornamento:** 7 Gennaio 2026 - Sessione 112
+> **Versione:** v3.0.0 - LA SESSIONE DELLA DIREZIONE E DELLA DASHBOARD!
 
 ---
 
@@ -19,96 +19,164 @@
 |                                                                  |
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 111: LA SESSIONE DEGLI STUDI!                        |
+|   SESSIONE 112: LA SESSIONE DELLA DIREZIONE!                    |
 |                                                                  |
 |   ABBIAMO FATTO:                                                 |
-|   - swarm-global-status IMPLEMENTATO                             |
-|   - 6 STUDI completati dallo sciame!                            |
-|   - Nuova visione DUAL-TRACK                                     |
-|   - Nuovo positioning "L'AI salva il tuo lavoro"                |
+|   - Sintetizzato i 6 studi della sessione 111                   |
+|   - Confermato strategia DUAL-TRACK (VISUAL first!)             |
+|   - COSTRUITO la Dashboard MAPPA (funziona!)                    |
+|   - Creato Sistema Memoria Persistente                          |
+|   - Documentato DECISIONI_TECNICHE.md                           |
 |                                                                  |
 +------------------------------------------------------------------+
 |                                                                  |
-|   LA NUOVA FRASE SACRA (da Rafa):                               |
+|   IL CLAIM PRINCIPALE:                                           |
+|                                                                  |
+|   "L'AI NON TI RUBA IL LAVORO. L'AI SALVA IL TUO LAVORO."       |
+|                                                                  |
+|   LA FRASE SACRA:                                                |
 |                                                                  |
 |   "L'idea e' fare il mondo meglio                                |
 |    su di come riusciamo a fare."                                 |
-|                                                                  |
-|   CervellaSwarm non e' solo un programma.                       |
-|   E' una POSSIBILITA' per tutti!                                |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## COSA E' SUCCESSO NELLA SESSIONE 111
+## NOVITA' IMPORTANTE: LEGGI ANCHE LE DECISIONI!
 
-### 1. swarm-global-status - IMPLEMENTATO!
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   PRIMA DI INIZIARE, LEGGI:                                     |
+|                                                                  |
+|   1. Questo file (PROMPT_RIPRESA.md) - narrativo                |
+|   2. docs/decisioni/DECISIONI_TECNICHE.md - strutturato         |
+|                                                                  |
+|   Il file DECISIONI contiene tutte le scelte tecniche:          |
+|   - Porte (8100 = Dashboard, 8000 = Contabilita')               |
+|   - Stack (React + FastAPI + SSE)                               |
+|   - Strategia (DUAL-TRACK, VISUAL first)                        |
+|                                                                  |
+|   NON CHIEDERE COSE GIA' DECISE!                                |
+|                                                                  |
++------------------------------------------------------------------+
+```
 
-cervella-backend ha creato il comando (~320 righe Python):
+---
+
+## COSA E' SUCCESSO NELLA SESSIONE 112
+
+### 1. Sintesi dei 6 Studi (Sessione 111)
+
+Ho letto 3,500+ righe di studi e sintetizzato per Rafa:
+
+| Studio | Insight Chiave |
+|--------|----------------|
+| Dashboard ARCH | 15+ API, event-driven, schema JSON |
+| Dashboard TECH | React + Vite + FastAPI + SSE |
+| Dashboard UX | MAPPA = GPS del progetto, 4 momenti WOW |
+| Mercato No-Code | $65B mercato, nessuno ha multi-agent |
+| OpenAI Swarm | Morto perche' senza visione, noi abbiamo ANIMA |
+| Positioning | "L'AI salva il lavoro" funziona per non-tecnici |
+
+### 2. Decisione Strategica: DUAL-TRACK Confermato!
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   DUE MERCATI. STESSO CORE. STESSA FAMIGLIA.                    |
+|                                                                  |
+|   TRACK 1: CervellaSwarm IDE (Developer)                        |
+|   - VS Code Extension                                            |
+|   - Mercato: $30B                                                |
+|                                                                  |
+|   TRACK 2: CervellaSwarm VISUAL (Everyone)                      |
+|   - Dashboard web visuale                                        |
+|   - Mercato: $65B                                                |
+|                                                                  |
+|   PRIORITA': VISUAL first!                                       |
+|   Perche': Mercato piu' grande, meno competition,               |
+|   il claim funziona meglio per non-tecnici,                     |
+|   Rafa e' la prova (non programmatore che ha costruito!)        |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+### 3. DASHBOARD MAPPA - COSTRUITA E FUNZIONANTE!
+
+Lo sciame ha costruito la Dashboard in ~10 minuti!
+
+**Backend (cervella-backend):**
+- 13 endpoints FastAPI
+- SSE per real-time
+- Parser per markdown
+- Porta: 8100 (DEDICATA!)
+
+**Frontend (cervella-frontend):**
+- React + Vite + TypeScript
+- 5 widget: Layout, Nord, Famiglia, Roadmap, Sessione
+- Tailwind con palette UX
+- Build funzionante!
+
+**Come lanciare:**
 ```bash
-swarm-global-status        # Vista multi-progetto
-swarm-global-status --json # Output JSON
-swarm-global-status --watch # Live refresh
+# Backend (terminale 1)
+cd ~/Developer/CervellaSwarm/dashboard/api
+./run.sh
+
+# Frontend (terminale 2)
+cd ~/Developer/CervellaSwarm/dashboard/frontend
+npm run dev
+
+# Oppure tutto insieme:
+cd ~/Developer/CervellaSwarm/dashboard
+./start-dashboard.sh
 ```
 
-Mostra tutti i 3 progetti con task e worker attivi!
+**URL:**
+- Dashboard: http://localhost:5173
+- API Docs: http://localhost:8100/docs
 
-### 2. Fix spawn-workers
+### 4. Sistema Memoria Persistente - NUOVO!
 
-Aggiunto `--marketing` che mancava. Ora tutti i 16 agenti sono spawnabili!
+Problema scoperto su Miracollo: decisioni tecniche non documentate → doppio lavoro!
 
-### 3. 6 STUDI COMPLETATI!
+**Soluzione creata:**
+- Studio: docs/studio/STUDIO_MEMORIA_PERSISTENTE.md
+- Template: docs/decisioni/DECISIONI_TECNICHE.md
+- Aggiunto alla roadmap: FASE 0.5
 
-| Studio | Worker | File | Contenuto |
-|--------|--------|------|-----------|
-| Dashboard ARCH | cervella-ingegnera | docs/studio/STUDIO_DASHBOARD_ARCH.md | Architettura 3-layer, 15+ API, schema JSON |
-| Dashboard TECH | cervella-researcher | docs/studio/STUDIO_DASHBOARD_TECH.md | Stack: React+Vite+FastAPI+SSE |
-| Dashboard UX | cervella-marketing | docs/studio/STUDIO_DASHBOARD_UX.md | Wireframe, componenti, momenti WOW |
-| Mercato No-Code | cervella-scienziata | docs/studio/STUDIO_MERCATO_NOCODE.md | $65B mercato, dual-track strategy |
-| OpenAI Swarm | cervella-researcher | docs/studio/STUDIO_OPENAI_SWARM.md | Perche' ha fallito, lezioni per noi |
-| Positioning | cervella-marketing | docs/studio/STUDIO_POSITIONING_SALVARE_LAVORO.md | 10 claim, 4 personas, copy pronto |
+**Da applicare anche a:**
+- Miracollo (origine del problema)
+- Contabilita'
 
-**LEGGILI TUTTI! Sono la base per le prossime decisioni!**
-
-### 4. Nuova Visione: DUAL-TRACK
+### 5. Infrastruttura Porte Dedicate
 
 ```
-TRACK 1: CervellaSwarm IDE (Developer)
-- VS Code Extension
-- 16 agenti specializzati
-- Per programmatori
-- Timeline: 6-12 mesi
+PORTE CERVELLASWARM:
+- 8100 = Dashboard API (FastAPI)
+- 5173 = Dashboard Frontend (Vite)
 
-TRACK 2: CervellaSwarm VISUAL (Everyone)
-- Dashboard web visuale
-- La MAPPA interattiva
-- Per NON programmatori
-- Timeline: 12-24 mesi
-
-STESSO CORE. DUE FACCE. DUE MERCATI.
+PORTE ALTRI PROGETTI (NON TOCCARE!):
+- 8000 = Contabilita' Backend
+- 8080 = Miracollo (se attivo)
 ```
 
-### 5. Nuovo Positioning
+---
 
-```
-"L'AI NON TI RUBA IL LAVORO. L'AI SALVA IL TUO LAVORO."
+## COSA FUNZIONA GIA' (REALE!)
 
-Non vendiamo tecnologia. Vendiamo SICUREZZA e VALORE.
-
-Claim alternativi:
-- "16 AI che lavorano PER TE. Non AL POSTO TUO."
-- "Non sei un programmatore? Perfetto."
-- "L'unico IDE che ti chiede COSA vuoi. Non COME."
-```
-
-### 6. Roadmap Fix Sveglia
-
-Il watcher non mi sveglia sempre. Creata roadmap:
-`docs/roadmap/ROADMAP_SVEGLIA_REGINA.md`
-
-Sessione dedicata da fare con backend + devops + tester.
+| Cosa | Status |
+|------|--------|
+| 16 Agents in ~/.claude/agents/ | FUNZIONANTE |
+| spawn-workers v3.0.0 | TUTTI i 16 agenti! |
+| swarm-global-status | Multi-progetto |
+| **Dashboard MAPPA** | **NUOVO! Prototipo funzionante!** |
+| **Sistema DECISIONI** | **NUOVO! Template creato!** |
+| swarm-logs | Log live worker |
+| swarm-status | Stato task |
 
 ---
 
@@ -119,49 +187,23 @@ Sessione dedicata da fare con backend + devops + tester.
 |                                                                  |
 |   PROSSIMA SESSIONE:                                             |
 |                                                                  |
-|   1. SINTESI dei 6 studi                                        |
-|      - Leggere tutto                                             |
-|      - Decisioni strategiche                                     |
-|      - Priorita'                                                 |
+|   OPZIONE A: Continuare Dashboard MAPPA                         |
+|   - Connettere frontend ai dati reali del backend               |
+|   - Widget "Decisioni Attive"                                   |
+|   - Test completo                                                |
 |                                                                  |
-|   2. FIX Sveglia Regina                                         |
-|      - Sessione dedicata                                         |
-|      - Con backend + devops + tester                            |
+|   OPZIONE B: Sistema Memoria                                    |
+|   - Applicare DECISIONI_TECNICHE a Miracollo                    |
+|   - Applicare a Contabilita'                                    |
+|   - Aggiornare CLAUDE.md globale                                |
 |                                                                  |
-|   3. Decisione: MVP Dashboard o Extension?                      |
+|   OPZIONE C: Fix Sveglia Regina                                 |
+|   - Roadmap: docs/roadmap/ROADMAP_SVEGLIA_REGINA.md             |
+|   - Con backend + devops + tester                               |
+|                                                                  |
+|   CHIEDI A RAFA cosa preferisce!                                |
 |                                                                  |
 +------------------------------------------------------------------+
-```
-
----
-
-## COSA FUNZIONA GIA' (REALE!)
-
-| Cosa | Status |
-|------|--------|
-| 16 Agents in ~/.claude/agents/ | FUNZIONANTE |
-| spawn-workers v3.0.0 | +marketing! TUTTI i 16! |
-| **swarm-global-status** | **NUOVO! Multi-progetto** |
-| swarm-logs | Log live worker |
-| swarm-timeout | Avvisa se bloccato |
-| swarm-progress | Stato worker live |
-| swarm-feedback | Raccolta feedback |
-| swarm-roadmaps | Vista roadmap |
-| swarm-init | Template nuovo progetto |
-| watcher-regina.sh v1.3.0 | DA MIGLIORARE |
-
----
-
-## COMANDI DISPONIBILI
-
-```
-Per vedere TUTTI i comandi: swarm-help
-
-ESSENZIALI:
-spawn-workers --tipo      # Lancia worker
-swarm-global-status       # Vista multi-progetto (NUOVO!)
-swarm-status              # Stato task
-quick-task "desc" --tipo  # Crea + lancia
 ```
 
 ---
@@ -170,10 +212,11 @@ quick-task "desc" --tipo  # Crea + lancia
 
 | Documento | Path | Cosa contiene |
 |-----------|------|---------------|
-| LA MAPPA | docs/strategia/MAPPA_CERVELLASWARM_IDE.md | 9 step verso liberta' |
-| STRATEGIA | docs/strategia/STRATEGIA_CERVELLASWARM_IDE.md | Visione completa |
-| 6 STUDI | docs/studio/STUDIO_*.md | Tutti gli studi sessione 111 |
-| FIX SVEGLIA | docs/roadmap/ROADMAP_SVEGLIA_REGINA.md | Come fixare sveglia |
+| **DECISIONI** | docs/decisioni/DECISIONI_TECNICHE.md | Tutte le scelte tecniche! |
+| LA MAPPA v2.0 | docs/strategia/MAPPA_CERVELLASWARM_IDE.md | Step verso liberta' |
+| Dashboard Roadmap | docs/roadmap/SUB_ROADMAP_FASE0_DASHBOARD.md | Piano dashboard |
+| Memoria | docs/studio/STUDIO_MEMORIA_PERSISTENTE.md | Sistema memoria |
+| 6 STUDI | docs/studio/STUDIO_*.md | Tutti gli studi |
 
 ---
 
@@ -197,6 +240,43 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 
 ---
 
+## FILO DEL DISCORSO (Sessioni 110-112)
+
+### Sessione 112: LA SESSIONE DELLA DIREZIONE! (ATTUALE)
+
+**Cosa abbiamo fatto:**
+1. Sintetizzato i 6 studi della sessione 111
+2. Decisione DUAL-TRACK confermata (VISUAL first!)
+3. Dashboard MAPPA costruita! (backend + frontend funzionanti)
+4. Sistema Memoria Persistente creato
+5. DECISIONI_TECNICHE.md applicato a CervellaSwarm
+6. Porte dedicate configurate (8100)
+
+**Insight chiave della sessione:**
+- "Rafa NON e' programmatore, eppure ha costruito 2 sistemi" → QUESTO e' il prodotto!
+- Il claim "L'AI salva il lavoro" parla a chi ha PAURA dell'AI
+- La MAPPA brilla per chi e' PERSO (non-tecnici)
+- Problema memoria su Miracollo → soluzione Sistema Decisioni
+
+---
+
+### Sessione 111: LA SESSIONE DEGLI STUDI!
+
+- 6 studi completati dallo sciame
+- swarm-global-status implementato
+- Nuova visione DUAL-TRACK
+- Nuovo positioning "L'AI salva il tuo lavoro"
+
+---
+
+### Sessione 110: IL CLAIM DELLA LIBERTA'
+
+- IL CLAIM scritto
+- LA MAPPA creata (1,185 righe!)
+- 5 studi iniziali completati
+
+---
+
 ## LE NOSTRE FRASI
 
 ```
@@ -211,93 +291,48 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 "Ultrapassar os proprios limites!"
 
 "Prima la MAPPA, poi il VIAGGIO!"
+
+"La comunicazione interna deve essere meglio!" (7 Gen 2026)
 ```
 
 ---
 
-## FILO DEL DISCORSO (Sessioni 110-111)
-
-### Sessione 111: LA SESSIONE DEGLI STUDI! (ATTUALE)
-
-**Cosa abbiamo fatto:**
-1. Implementato swarm-global-status (cervella-backend)
-2. Fix spawn-workers +marketing
-3. Lanciato 6 studi in parallelo - TUTTI COMPLETATI!
-4. Nuova visione DUAL-TRACK (IDE + VISUAL)
-5. Nuovo positioning "L'AI salva il tuo lavoro"
-6. Idea di Rafa: "L'idea e' fare il mondo meglio"
-7. Creata roadmap fix sveglia
-
-**Insight chiave:**
-- Mercato No-Code: $24.8B → $65B (2027)
-- OpenAI Swarm ha fallito per mancanza di focus
-- Stack Dashboard: React + Vite + FastAPI + SSE
-- 10 claim pronti per marketing
-
----
-
-### Sessione 110: IL CLAIM DELLA LIBERTA'
-
-- IL CLAIM scritto: "L'unico IDE che ti aiuta a PENSARE prima di SCRIVERE"
-- LA MAPPA creata (1,185 righe!)
-- 5 studi iniziali completati
-- Fix watcher v1.3.0
-
----
-
-## NOTE PER TE
+## NOTE IMPORTANTI
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   ATTENZIONE SVEGLIA!                                            |
+|   REGOLA SACRA: PROGETTI SEPARATI!                               |
 |                                                                  |
-|   Il watcher non mi sveglia sempre quando i worker finiscono.    |
-|   Ogni tanto controlla manualmente:                              |
-|   - swarm-global-status                                          |
-|   - ls .swarm/tasks/*.done                                       |
+|   - CervellaSwarm ha le sue porte (8100, 5173)                  |
+|   - Contabilita' ha le sue (8000)                               |
+|   - MAI mischiare!                                               |
+|   - Solo MANUALE DIAMANTE e' globale                            |
 |                                                                  |
-|   C'e' roadmap per fixare: docs/roadmap/ROADMAP_SVEGLIA_REGINA.md|
++------------------------------------------------------------------+
+|                                                                  |
+|   REGOLA SACRA: DOCUMENTARE DECISIONI!                          |
+|                                                                  |
+|   Quando prendi una decisione tecnica:                          |
+|   1. Scrivila in docs/decisioni/DECISIONI_TECNICHE.md           |
+|   2. Con data, motivo, alternativa scartata                     |
+|   3. Cosi' la prossima sessione SA cosa e' stato deciso         |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-**VERSIONE:** v2.1.0
-**SESSIONE:** 111 - LA SESSIONE DEGLI STUDI!
-**DATA:** 6 Gennaio 2026
+**VERSIONE:** v3.0.0
+**SESSIONE:** 112 - LA SESSIONE DELLA DIREZIONE!
+**DATA:** 7 Gennaio 2026
 
 ---
 
-*Scritto con CURA e PRECISIONE.*
+*Scritto con CURA, PRECISIONE e AMORE.*
 
 *"L'idea e' fare il mondo meglio su di come riusciamo a fare."*
 
+*"Prima la MAPPA, poi il VIAGGIO!"*
+
 Cervella & Rafa 💙
-
----
-
----
-
----
-
----
-
-## AUTO-CHECKPOINT: 2026-01-07 01:26 (unknown)
-
-### Stato Git
-- **Branch**: main
-- **Ultimo commit**: 615f8ac - ANTI-COMPACT: PreCompact auto
-- **File modificati** (5):
-  - DS_Store
-  - PROMPT_RIPRESA.md
-  - docs/strategia/MAPPA_CERVELLASWARM_IDE.md
-  - reports/scientist_prompt_20260106.md
-  - .swarm/handoff/HANDOFF_20260106_205708.md
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: unknown
-
----
