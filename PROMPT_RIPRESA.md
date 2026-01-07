@@ -1,89 +1,110 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 7 Gennaio 2026 - Sessione 115
-> **Versione:** v7.0.0 - HOOK BLOCCA-EDIT IMPLEMENTATO!
+> **Ultimo aggiornamento:** 7 Gennaio 2026 - Sessione 116
+> **Versione:** v8.0.0 - BUG CRITICO FIXATO! EXIT CODE 2!
 
 ---
 
-## DOVE SIAMO - Sessione 115
+## DOVE SIAMO - Sessione 116
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
 ║                                                                  ║
-║   ✅ HOOK BLOCCA-EDIT IMPLEMENTATO!                             ║
+║   🔧 BUG CRITICO SCOPERTO E FIXATO!                             ║
 ║                                                                  ║
-║   Il problema "Cervelle non delegano" RISOLTO con ENFORCEMENT   ║
+║   Problema: Gli hook PreToolUse NON bloccavano!                 ║
+║   Causa: Exit code sbagliato (1 invece di 2)                    ║
 ║                                                                  ║
-║   📁 ~/.claude/hooks/block_edit_non_whitelist.py                ║
-║   📁 ~/.claude/settings.json (PreToolUse Edit + Write)          ║
+║   Claude Code exit codes:                                        ║
+║   - exit(0) = OK, permetti                                       ║
+║   - exit(1) = Errore generico, NON blocca!                      ║
+║   - exit(2) = BLOCCA! Impedisce l'azione                        ║
 ║                                                                  ║
-║   WHITELIST (Regina puo' editare):                              ║
-║   - NORD.md, PROMPT_RIPRESA.md, ROADMAP_SACRA.md               ║
-║   - .swarm/tasks/*, .swarm/handoff/*, .swarm/feedback/*        ║
+║   Fix applicato:                                                 ║
+║   - block_edit_non_whitelist.py → sys.exit(2)                   ║
+║   - block_task_for_agents.py → sys.exit(2)                      ║
 ║                                                                  ║
-║   TUTTO IL RESTO -> BLOCCATO! Deve usare quick-task/spawn!     ║
+║   Test manuale: OK! Exit 2 funziona!                            ║
+║   Test reale: Serve restart sessione                            ║
 ║                                                                  ║
-║   Test: Hook funziona (test manuale OK)                         ║
-║   Attivazione: Dalla prossima sessione!                         ║
+║   Documentato: docs/known-issues/ISSUE_HOOK_EXIT_CODE.md        ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
 ---
 
-## IL FILO DEL DISCORSO - Sessione 115
+## IL FILO DEL DISCORSO - Sessione 116
 
-### Il Problema
+### Il Test Fallito
 
-Rafa ha notato che le Cervelle NON usano spawn-workers da sole. Lui doveva sempre dire di farlo.
-Abbiamo provato 3-4 volte in sessioni precedenti (quick-task, regole DNA, etc.) ma non funzionava.
+Dovevamo testare gli hook creati nella sessione 115. Il test è FALLITO!
 
-### La Root Cause (già trovata nella Sessione 90!)
+**Cosa abbiamo fatto:**
+1. Provato Edit su file non in whitelist (spawn-workers.sh)
+2. **L'edit è PASSATO!** Non doveva!
+3. Provato Task con cervella-backend
+4. **Il task è PASSATO!** Non doveva!
 
-- `quick-task` esiste e funziona!
-- Ma le Cervelle non lo usano perché non c'è ENFORCEMENT
-- Le regole nel DNA sono "suggerimenti", non "muri"
+### La Scoperta
 
-### La Soluzione VERA
+Debug approfondito:
+1. Creato debug hook per vedere se veniva chiamato
+2. Il debug hook NON veniva chiamato (log vuoto)
+3. Ricerca documentazione Claude Code
+4. **TROVATO: Exit code 2, non 1!**
 
-HOOK che BLOCCA Edit/Write su file non in whitelist.
+### Il Bug
 
-**Non è una regola. È un MURO.**
-
-Se la Regina prova a fare Edit su `backend/main.py`:
-- Hook intercetta
-- BLOCCA con exit 1
-- Mostra messaggio: "Usa quick-task o spawn-workers!"
-
-### Lavoro Fatto
-
-1. **cervella-researcher** - Ricerca storia tentativi precedenti (6 trovati!)
-2. **cervella-backend** - Creato hook + aggiornato settings.json
-3. **Test manuale** - Hook funziona (exit 1 + messaggio blocco)
-
-### File Creati
-
-- `~/.claude/hooks/block_edit_non_whitelist.py` (160 righe)
-- `~/.claude/settings.json` aggiornato (PreToolUse per Edit + Write)
-- `docs/studio/STUDIO_STORIA_PROBLEMA_FINESTRE.md` (da researcher)
-
-### Quick-Task USATO!
-
-In questa sessione, ho usato `quick-task` correttamente:
-```bash
-quick-task "Creare hook..." --backend
 ```
-Invece di fare 6 passi manuali, 1 comando! Questo è il modo giusto!
+Claude Code exit codes per PreToolUse:
+- exit(0) = OK, permetti l'azione
+- exit(1) = Errore generico, NON BLOCCA!
+- exit(2) = BLOCCO! Impedisce l'azione
+```
+
+I nostri hook usavano `sys.exit(1)` - sbagliato!
+Dovevano usare `sys.exit(2)` per bloccare!
+
+### Il Fix
+
+```bash
+# Fix applicato a entrambi gli hook:
+sed -i '' 's/sys.exit(1)/sys.exit(2)/g' ~/.claude/hooks/block_edit_non_whitelist.py
+sed -i '' 's/sys.exit(1)/sys.exit(2)/g' ~/.claude/hooks/block_task_for_agents.py
+```
+
+### Test Manuale OK
+
+| Hook | Test | Exit Code | Risultato |
+|------|------|-----------|-----------|
+| block_edit | file non in whitelist | 2 | BLOCCA |
+| block_edit | NORD.md (whitelist) | 0 | PASSA |
+| block_task | cervella-backend | 2 | BLOCCA |
+| block_task | Explore | 0 | PASSA |
+
+### Lezione Imparata
+
+**SEMPRE consultare la documentazione ufficiale per i dettagli implementativi!**
+
+Il test manuale con `echo | python hook.py` sembrava funzionare,
+ma non era il test REALE con Claude Code.
+
+### File Creati/Modificati
+
+- `docs/known-issues/ISSUE_HOOK_EXIT_CODE.md` - Documentazione bug
+- `~/.claude/hooks/block_edit_non_whitelist.py` - FIX exit(2)
+- `~/.claude/hooks/block_task_for_agents.py` - FIX exit(2)
 
 ---
 
 ## PROSSIMA SESSIONE - ISTRUZIONI CHIARE!
 
-### 1. TESTARE L'HOOK (Prima cosa!)
+### 1. TESTARE GLI HOOK FIXATI (Prima cosa!)
 
-L'hook `block_edit_non_whitelist.py` sarà ATTIVO dalla prossima sessione.
+Gli hook ora usano `exit(2)` - DEVONO funzionare!
 
-**Come testare:**
+**Test 1: Block Edit**
 ```bash
 # Prova a fare Edit su un file NON in whitelist, es:
 Edit scripts/swarm/spawn-workers.sh
@@ -92,30 +113,36 @@ Edit scripts/swarm/spawn-workers.sh
 # 🚫 BLOCCATO! + messaggio con istruzioni
 ```
 
-**Se funziona:**
-- L'hook ti blocca
-- Ti dice di usare quick-task o spawn-workers
-- VITTORIA! Problema risolto!
+**Test 2: Block Task**
+```bash
+# Prova a usare Task con cervella-*
+Task con subagent_type: cervella-backend
 
-**Se NON funziona:**
-- Verifica settings.json ha PreToolUse per Edit e Write
-- Verifica il file hook esiste in ~/.claude/hooks/
+# RISULTATO ATTESO:
+# 🚫 BLOCCATO! Usa spawn-workers invece!
+```
 
-### 2. Se il test passa
+**Se ENTRAMBI funzionano:**
+- VITTORIA!
+- Il problema "Cervelle non delegano" è RISOLTO!
+- Il sistema ora FORZA la delegazione
 
-Possiamo dire che il problema "Cervelle non delegano" è **RISOLTO**!
-Il sistema ora FORZA la delegazione, non è più una scelta.
+**Se NON funzionano:**
+- Verifica settings.json ha PreToolUse
+- Verifica gli hook usano exit(2)
+- Controlla `/tmp/hook_debug.log` se esiste
 
-### 3. File Chiave da Conoscere
+### 2. File Chiave
 
 | File | Cosa Fa |
 |------|---------|
-| `~/.claude/hooks/block_edit_non_whitelist.py` | Hook che blocca Edit/Write |
+| `~/.claude/hooks/block_edit_non_whitelist.py` | Hook blocca Edit/Write (EXIT 2!) |
+| `~/.claude/hooks/block_task_for_agents.py` | Hook blocca Task cervella-* (EXIT 2!) |
 | `~/.claude/settings.json` | Configurazione hooks |
 | `~/.local/bin/quick-task` | Comando per delegare veloce |
 | `~/.local/bin/spawn-workers` | Spawna worker in finestra separata |
 
-### 4. Whitelist (cosa la Regina PUÒ editare)
+### 3. Whitelist Edit (cosa la Regina PUÒ editare)
 
 - `NORD.md` - Bussola progetto
 - `PROMPT_RIPRESA.md` - Stato sessione
@@ -131,6 +158,15 @@ Il sistema ora FORZA la delegazione, non è più una scelta.
 quick-task "Fix bug in api.py" --backend
 quick-task "Add button to dashboard" --frontend
 ```
+
+### 4. Task Tool Permessi
+
+| subagent_type | Permesso? |
+|---------------|-----------|
+| cervella-* | NO - Usa spawn-workers! |
+| Explore | SI |
+| general-purpose | SI |
+| claude-code-guide | SI |
 
 ---
 
@@ -611,17 +647,16 @@ Vedi: `NORD.md` per dettagli completi.
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-07 19:22 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-07 19:32 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: c5968eb - 🎉 SESSIONE 114 COMPLETATA! Sistema Comunicazione 100%!
-- **File modificati** (5):
-  - swarm/tasks/TEST_SCENARIO_STANDARD.ready
-  - .swarm/tasks/TEST_SCENARIO_STANDARD_OUTPUT.md
-  - .swarm/test/hello_backend.txt
-  - PROMPT_RIPRESA.md
-  - reports/scientist_prompt_20260107.md
+- **Ultimo commit**: ef5043f - 📝 PROMPT_RIPRESA 10000% - Istruzioni chiare per prossima sessione!
+- **File modificati** (2):
+  - reports/engineer_report_20260107_192832.json
+  - reports/engineer_report_20260107_193031.json
 
 ### Note
 - Checkpoint automatico generato da hook

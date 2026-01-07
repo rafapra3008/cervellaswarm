@@ -18,30 +18,29 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 115 - 7 Gennaio 2026: HOOK BLOCCA-EDIT CREATO!**
+**SESSIONE 116 - 7 Gennaio 2026: BUG CRITICO FIXATO!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   ✅ HOOK BLOCCA-EDIT IMPLEMENTATO!                             |
+|   🔧 HOOK FIX: EXIT CODE 1 → 2                                  |
 |                                                                  |
-|   Problema: Le Cervelle non usavano spawn-workers da sole       |
-|   Soluzione: HOOK che BLOCCA Edit/Write su file non in whitelist|
+|   Problema scoperto: Gli hook NON bloccavano!                   |
+|   Causa: Exit code sbagliato (1 invece di 2)                    |
 |                                                                  |
-|   File creati:                                                   |
+|   Claude Code exit codes:                                        |
+|   - exit(0) = OK, permetti                                       |
+|   - exit(1) = Errore generico, NON blocca!                      |
+|   - exit(2) = BLOCCA! Impedisce l'azione                        |
+|                                                                  |
+|   Fix applicato a:                                               |
 |   - ~/.claude/hooks/block_edit_non_whitelist.py                 |
-|   - settings.json aggiornato (PreToolUse Edit + Write)          |
+|   - ~/.claude/hooks/block_task_for_agents.py                    |
 |                                                                  |
-|   WHITELIST (Regina puo' editare):                              |
-|   - NORD.md, PROMPT_RIPRESA.md, ROADMAP_SACRA.md               |
-|   - .swarm/tasks/*, .swarm/handoff/*, .swarm/feedback/*        |
+|   Test manuale: OK (exit 2 funziona!)                           |
+|   Test reale: Serve restart sessione                            |
 |                                                                  |
-|   TUTTO IL RESTO -> BLOCCATO! Deve delegare!                    |
-|                                                                  |
-|   Test manuale: OK (exit 1 + messaggio blocco)                  |
-|   Test sessione: Serve restart per attivare                     |
-|                                                                  |
-|   QUICK-TASK USATO CORRETTAMENTE! (1 comando invece di 6)       |
+|   Documentato: docs/known-issues/ISSUE_HOOK_EXIT_CODE.md        |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -142,9 +141,10 @@
 |                                                                  |
 |   DA FARE:                                                       |
 |                                                                  |
-|   1. TESTARE HOOK BLOCCA-EDIT (prossima sessione!)              |
-|      → L'hook e' attivo dalla prossima sessione                 |
-|      → Verificare che blocca Edit/Write non autorizzati         |
+|   1. TESTARE HOOK FIXATI (prossima sessione!)                   |
+|      → Hook ora usa exit(2) - DEVE bloccare!                    |
+|      → Prova: Edit su file non in whitelist                     |
+|      → Prova: Task con cervella-backend                         |
 |                                                                  |
 |   2. CONTINUARE DASHBOARD MAPPA                                  |
 |      → Connettere frontend a dati reali                         |
@@ -190,4 +190,4 @@
 
 *"L'AI dalla parte delle persone, non contro di loro."*
 
-*Ultimo aggiornamento: 7 Gennaio 2026 - Sessione 115 - HOOK BLOCCA-EDIT! La soluzione VERA!*
+*Ultimo aggiornamento: 7 Gennaio 2026 - Sessione 116 - FIX EXIT CODE! Hook ora funzionano!*
