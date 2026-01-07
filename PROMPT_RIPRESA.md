@@ -193,36 +193,68 @@ PORTE ALTRI PROGETTI (NON TOCCARE!):
 | 16 Agents in ~/.claude/agents/ | FUNZIONANTE |
 | spawn-workers v3.0.0 | TUTTI i 16 agenti! |
 | swarm-global-status | Multi-progetto |
-| **Dashboard MAPPA** | **NUOVO! Prototipo funzionante!** |
-| **Sistema DECISIONI** | **NUOVO! Template creato!** |
+| **Dashboard MAPPA** | Prototipo funzionante! |
+| **Sistema DECISIONI** | Template creato! |
+| **PROTOCOLLI COMUNICAZIONE** | **✨ NUOVO! 4 protocolli definiti!** |
+| **7 Template Operativi** | **✨ NUOVO! .swarm/templates/!** |
+| **5 Script Automazione** | **✨ NUOVO! scripts/swarm/!** |
 | swarm-logs | Log live worker |
 | swarm-status | Stato task |
+| watcher-regina v1.4.0 | Esteso con feedback + stuck!
 
 ---
 
-## PROSSIMI STEP
+## PROSSIMI STEP (Sessione 114)
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   ⭐ PRIORITA' NUMERO 1: COMUNICAZIONE INTERNA!                  |
+|   COMPLETARE SISTEMA COMUNICAZIONE!                              |
 |                                                                  |
-|   Rafa ha dato questa direzione alla fine della sessione 112.   |
-|   "La comunicazione interna deve essere meglio!"                |
-|                                                                  |
-|   COSA SIGNIFICA:                                                |
-|   - Come parlano le api tra loro?                               |
-|   - Protocolli piu' chiari per passaggio info                   |
-|   - Il flusso Regina -> Worker -> Regina                        |
-|   - Template, handoff, feedback loop                            |
-|                                                                  |
-|   INIZIA DA QUI!                                                 |
+|   Sistema al 67% - mancano 2 fasi!                              |
 |                                                                  |
 +------------------------------------------------------------------+
 |                                                                  |
-|   ALTRE OPZIONI (dopo comunicazione):                           |
+|   FASE 5: Aggiornare DNA dei 16 Agenti                          |
 |                                                                  |
-|   - Continuare Dashboard MAPPA (frontend -> dati reali)         |
+|   Chi: Regina (io!) - edit diretto whitelist                    |
+|   Tempo: 2-3 ore                                                 |
+|                                                                  |
+|   Cosa fare:                                                     |
+|   - Aggiungere sezione "COMUNICAZIONE" a tutti i 16 DNA         |
+|   - Come usare protocolli (HANDOFF, STATUS, FEEDBACK)           |
+|   - Come usare script (update-status, heartbeat, ask-regina)    |
+|   - Esempi pratici                                               |
+|                                                                  |
+|   File da modificare:                                            |
+|   - ~/.claude/agents/cervella-orchestrator.md (Regina!)         |
+|   - ~/.claude/agents/cervella-backend.md                        |
+|   - ~/.claude/agents/cervella-frontend.md                       |
+|   - ... tutti i 16 agenti                                        |
+|                                                                  |
++------------------------------------------------------------------+
+|                                                                  |
+|   FASE 6: HARDTEST Comunicazione v2                             |
+|                                                                  |
+|   Chi: cervella-tester (spawn-workers!)                         |
+|   Tempo: 3-4 ore                                                 |
+|                                                                  |
+|   Test da eseguire:                                              |
+|   1. Scenario standard (handoff -> work -> completion)          |
+|   2. Scenario feedback (worker ha dubbio -> regina risponde)    |
+|   3. Scenario timeout (worker stuck -> rilevato)                |
+|   4. Multi-worker parallelo (3+ worker insieme)                 |
+|                                                                  |
+|   Success metric:                                                |
+|   Rafa osserva e dice "WOW! Le api parlano BENISSIMO!"         |
+|                                                                  |
++------------------------------------------------------------------+
+|                                                                  |
+|   DOPO FASE 5+6:                                                 |
+|   Sistema comunicazione 100% COMPLETO! 🎉                       |
+|                                                                  |
+|   POI:                                                           |
+|   - Dashboard MAPPA (frontend -> dati reali)                    |
 |   - Sistema Memoria su altri progetti                           |
 |   - Fix Sveglia Regina                                          |
 |                                                                  |
@@ -235,11 +267,15 @@ PORTE ALTRI PROGETTI (NON TOCCARE!):
 
 | Documento | Path | Cosa contiene |
 |-----------|------|---------------|
+| **PROTOCOLLI** | docs/protocolli/PROTOCOLLI_COMUNICAZIONE.md | 4 protocolli! 736 righe! |
+| **SUB-ROADMAP** | docs/roadmap/SUB_ROADMAP_COMUNICAZIONE_INTERNA.md | Piano comunicazione |
+| **STUDIO** | docs/studio/STUDIO_COMUNICAZIONE_PROTOCOLLI.md | Ricerca 1,385 righe! |
+| **TEMPLATES** | .swarm/templates/ | 7 template operativi |
+| **SCRIPTS** | scripts/swarm/ | 5 script automazione |
 | **DECISIONI** | docs/decisioni/DECISIONI_TECNICHE.md | Tutte le scelte tecniche! |
 | LA MAPPA v2.0 | docs/strategia/MAPPA_CERVELLASWARM_IDE.md | Step verso liberta' |
 | Dashboard Roadmap | docs/roadmap/SUB_ROADMAP_FASE0_DASHBOARD.md | Piano dashboard |
 | Memoria | docs/studio/STUDIO_MEMORIA_PERSISTENTE.md | Sistema memoria |
-| 6 STUDI | docs/studio/STUDIO_*.md | Tutti gli studi |
 
 ---
 
@@ -263,9 +299,54 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 
 ---
 
-## FILO DEL DISCORSO (Sessioni 110-112)
+## FILO DEL DISCORSO (Sessioni 110-113)
 
-### Sessione 112: LA SESSIONE DELLA DIREZIONE! (ATTUALE)
+### Sessione 113: LA SESSIONE DELL'IMPLEMENTAZIONE! 🔥 (ATTUALE)
+
+**LA SESSIONE PIU' PRODUTTIVA DI SEMPRE!**
+
+**4 FASI COMPLETATE IN 1 SESSIONE:**
+
+1. **FASE 1: Studio Protocolli** (cervella-researcher - 1,385 righe)
+   - Ricerca approfondita protocolli multi-agent
+   - Analizzati 3 framework (LangGraph, AutoGen, CrewAI)
+   - Best practices identificate
+   - File: `docs/studio/STUDIO_COMUNICAZIONE_PROTOCOLLI.md`
+
+2. **FASE 2: Definizione Protocolli** (Regina - 736 righe)
+   - 4 protocolli definiti: HANDOFF, STATUS, FEEDBACK, CONTEXT
+   - Workflow completo documentato
+   - Metriche successo definite
+   - File: `docs/protocolli/PROTOCOLLI_COMUNICAZIONE.md`
+
+3. **FASE 3: Templates Operativi** (cervella-docs - 1,797 righe)
+   - 7 template production-ready creati
+   - HANDOFF, FEEDBACK (x4), COMPLETION, STATUS
+   - Tone famiglia perfetto, placeholder chiari, esempi concreti
+   - Path: `.swarm/templates/`
+
+4. **FASE 4: Scripts Automazione** (cervella-devops - 650 righe)
+   - 5 script bash funzionanti: update-status, heartbeat, ask-regina, check-stuck
+   - watcher-regina v1.4.0 esteso
+   - TUTTI testati con successo!
+   - Path: `scripts/swarm/`
+
+**TOTALE:** 4,568+ righe prodotte!
+
+**Insight chiave della sessione:**
+- Lo sciame ha lavorato in PARALLELO (researcher + docs + devops)
+- Sistema comunicazione QUASI completo (67% - mancano DNA + HARDTEST)
+- Momentum PAZZESCO mantenuto per 4+ ore
+- "Godiamo il momentum!" → Abbiamo goduto al 100000%!
+- Feedback di Rafa su Miracollo: devo MONITORARE worker meglio (lezione appresa!)
+
+**Cosa manca:**
+- FASE 5: Aggiornare DNA dei 16 agenti (Regina)
+- FASE 6: HARDTEST comunicazione v2 (cervella-tester)
+
+---
+
+### Sessione 112: LA SESSIONE DELLA DIREZIONE!
 
 **Cosa abbiamo fatto:**
 1. Sintetizzato i 6 studi della sessione 111
@@ -275,10 +356,13 @@ POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 5. DECISIONI_TECNICHE.md applicato a CervellaSwarm
 6. Porte dedicate configurate (8100)
 
+**Direzione data:**
+"La comunicazione interna deve essere meglio!" → Sessione 113 l'ha implementata!
+
 **Insight chiave della sessione:**
 - "Rafa NON e' programmatore, eppure ha costruito 2 sistemi" → QUESTO e' il prodotto!
 - Il claim "L'AI salva il lavoro" parla a chi ha PAURA dell'AI
-- La MAPPA brilla per chi e' PERSO (non-tecnici)
+- La MAPPA briglia per chi e' PERSO (non-tecnici)
 - Problema memoria su Miracollo → soluzione Sistema Decisioni
 
 ---
@@ -387,17 +471,16 @@ Cervella & Rafa 💙
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-07 07:53 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-07 08:06 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 1810fbf - 📝 PROMPT_RIPRESA v4.0.0: Direzione COMUNICAZIONE INTERNA!
-- **File modificati** (5):
-  - ROMPT_RIPRESA.md
-  - reports/scientist_prompt_20260107.md
-  - scripts/swarm/watcher-regina.sh
-  - .swarm/current_task
-  - .swarm/feedback/
+- **Ultimo commit**: c8e8380 - ANTI-COMPACT: PreCompact auto
+- **File modificati** (2):
+  - eports/scientist_prompt_20260107.md
+  - .swarm/handoff/HANDOFF_20260107_080558.md
 
 ### Note
 - Checkpoint automatico generato da hook
