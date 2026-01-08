@@ -219,3 +219,27 @@ tmux kill-session -t swarm_NAME_*
 **Sessione:** 122
 **Stato:** Implementazione completata - Pronta per uso in produzione!
 **Prossimo:** Test headless in produzione
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-08 10:49 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 1d5c644 - 🚀 Sessione 122: spawn-workers v3.0.0 --headless + load_context v2.1.0
+- **File modificati** (5):
+  - ROMPT_RIPRESA.md
+  - reports/scientist_prompt_20260108.md
+  - scripts/swarm/spawn-workers.sh
+  - scripts/swarm/watcher-regina.sh
+  - .swarm/tasks/TASK_HEADLESS_DEFAULT.done
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---

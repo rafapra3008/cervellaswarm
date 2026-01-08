@@ -12,12 +12,13 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 3.0.0
+# Versione: 3.1.0
 # Data: 2026-01-08
 # Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
 # v2.0.0: Config centralizzata ~/.swarm/config
 #
 # CHANGELOG:
+# v3.1.0: HEADLESS DEFAULT! --headless è ora il comportamento standard. Usa --window per finestre.
 # v3.0.0: HEADLESS MODE! --headless usa tmux invece di Terminal.app. Zero finestre!
 # v2.9.0: FIX AUTO-SVEGLIA! Cerca watcher ANCHE in ~/.claude/scripts/ (globale). Funziona in TUTTI i progetti!
 # v2.8.0: MAX WORKERS! Limite default 5 per evitare sovraccarico. Flag --max-workers N per cambiare.
@@ -52,9 +53,9 @@ AUTO_SVEGLIA=true
 MAX_WORKERS=5
 
 # ============================================================================
-# HEADLESS MODE (v3.0.0) - tmux invece di Terminal.app
+# HEADLESS MODE (v3.1.0) - tmux invece di Terminal.app (DEFAULT!)
 # ============================================================================
-HEADLESS_MODE=false
+HEADLESS_MODE=true
 
 # ============================================================================
 # CONFIGURAZIONE CENTRALIZZATA (v2.0.0)
@@ -720,8 +721,8 @@ show_usage() {
     echo "  --guardiane            Spawna tutte le guardiane"
     echo "  --list                 Lista worker disponibili"
     echo "  --no-auto-sveglia      Disabilita AUTO-SVEGLIA (default: attivo!)"
-    echo "  --headless             Usa tmux headless (no finestre Terminal)"
-    echo "  --window               Usa Terminal.app (default)"
+    echo "  --headless             Usa tmux headless (DEFAULT)"
+    echo "  --window               Apre finestra Terminal (vecchio comportamento)"
     echo "  --help                 Mostra questo help"
     echo ""
     echo "  AUTO-SVEGLIA e' ATTIVO di default! La Regina viene svegliata automaticamente."
@@ -907,7 +908,12 @@ main() {
     fi
     echo "=============================================="
     echo ""
-    print_info "Le finestre Terminal sono aperte!"
+    if [ "$HEADLESS_MODE" = true ]; then
+        print_info "Worker in background (tmux headless)!"
+        print_info "Usa 'tmux list-sessions' per vedere le sessioni"
+    else
+        print_info "Le finestre Terminal sono aperte!"
+    fi
     print_info "I worker stanno cercando task in .swarm/tasks/"
     echo ""
 

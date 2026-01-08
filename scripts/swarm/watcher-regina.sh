@@ -8,10 +8,14 @@
 #   ./watcher-regina.sh                    # Default: .swarm/tasks, VS Code
 #   ./watcher-regina.sh .swarm/tasks Code  # Esplicito
 #
-# Versione: 1.4.0
-# Data: 7 Gennaio 2026
+# Versione: 1.5.0
+# Data: 8 Gennaio 2026
 # Cervella & Rafa
 #
+# v1.5.0: HEADLESS SUPPORT!
+#         - Log notifiche in ~/.swarm/notifications.log
+#         - Double bell (terminal bell + macOS notification)
+#         - Monitoraggio sessioni tmux headless
 # v1.4.0: ESTENSIONE COMUNICAZIONE!
 #         - Check heartbeat periodico (ogni 2min)
 #         - Watch .swarm/feedback/ per feedback worker
@@ -26,7 +30,13 @@ set -e
 WATCH_DIR="${1:-.swarm/tasks}"
 SHOW_DASHBOARD=0
 LAST_STUCK_CHECK=0
+LAST_TMUX_CHECK=0
 CHECK_STUCK_INTERVAL=120  # 2 minuti
+CHECK_TMUX_INTERVAL=30    # 30 secondi per tmux
+NOTIFICATION_LOG="$HOME/.swarm/notifications.log"
+
+# Assicura che la directory per il log esista
+mkdir -p "$HOME/.swarm"
 
 # Parse arguments
 if [[ "${1:-}" == "--dashboard" ]]; then
@@ -43,6 +53,12 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
+
+# Funzione per loggare notifiche
+log_notification() {
+    local msg="$1"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $msg" >> "$NOTIFICATION_LOG"
+}
 
 echo -e "${BLUE}"
 echo "=============================================="
@@ -66,12 +82,15 @@ fi
 echo -e "${GREEN}[OK]${NC} Monitoring: $WATCH_DIR"
 echo -e "${GREEN}[OK]${NC} Monitoring: .swarm/feedback/"
 echo -e "${GREEN}[OK]${NC} Check stuck: ogni ${CHECK_STUCK_INTERVAL}s"
-echo -e "${GREEN}[OK]${NC} Solo notifiche - sicuro con multiple finestre!"
+echo -e "${GREEN}[OK]${NC} Check tmux: ogni ${CHECK_TMUX_INTERVAL}s"
+echo -e "${GREEN}[OK]${NC} Log notifiche: $NOTIFICATION_LOG"
+echo -e "${GREEN}[OK]${NC} Double bell + notifica macOS"
 echo ""
 echo "In attesa di:"
 echo "  - file .done (task completati)"
 echo "  - feedback worker (.swarm/feedback/)"
 echo "  - worker stuck (heartbeat monitoring)"
+echo "  - sessioni tmux headless terminate"
 echo ""
 echo "(Ctrl+C per terminare)"
 echo ""
@@ -81,6 +100,14 @@ sveglia_regina() {
     local task_name="$1"
 
     echo -e "${GREEN}[!]${NC} Rilevato: $task_name completato!"
+
+    # Terminal bell (attenzione immediata) - double bell per affidabilita
+    printf '\a'
+    sleep 0.3
+    printf '\a'
+
+    # Log della notifica
+    log_notification "TASK_DONE: $task_name"
 
     # Notifica macOS (sempre) - SICURA con multiple finestre!
     # Click sulla notifica apre l'output del task
@@ -116,6 +143,12 @@ notifica_feedback() {
     local tipo=$(echo "$filename" | cut -d'_' -f1)
 
     echo -e "${YELLOW}[!]${NC} Rilevato feedback: $tipo"
+
+    # Terminal bell (attenzione immediata)
+    printf '\a'
+
+    # Log della notifica
+    log_notification "FEEDBACK: $tipo - $filename"
 
     # Notifica macOS
     local emoji="💬"
@@ -165,11 +198,63 @@ check_stuck_periodico() {
     fi
 }
 
+# Funzione per monitorare sessioni tmux headless
+check_tmux_sessions() {
+    local now=$(date +%s)
+
+    # Controlla se è passato abbastanza tempo
+    if [ $((now - LAST_TMUX_CHECK)) -lt $CHECK_TMUX_INTERVAL ]; then
+        return
+    fi
+
+    LAST_TMUX_CHECK=$now
+
+    # Verifica se tmux è disponibile
+    if ! command -v tmux &>/dev/null; then
+        return
+    fi
+
+    # Lista sessioni swarm
+    local sessions=$(tmux list-sessions 2>/dev/null | grep "^swarm_" | cut -d: -f1)
+
+    for session in $sessions; do
+        # Check se il pane è "dead" (comando terminato)
+        local status=$(tmux display-message -t "$session" -p '#{pane_dead}' 2>/dev/null)
+        if [ "$status" = "1" ]; then
+            echo -e "${GREEN}[!]${NC} Sessione tmux terminata: $session"
+
+            # Terminal bell
+            printf '\a'
+
+            # Log
+            log_notification "TMUX_DONE: $session"
+
+            # Notifica macOS
+            if command -v terminal-notifier &>/dev/null; then
+                terminal-notifier \
+                    -title "Worker Headless Completato!" \
+                    -subtitle "$session" \
+                    -message "Sessione tmux terminata" \
+                    -sound Glass \
+                    2>/dev/null
+            else
+                osascript -e "display notification \"$session terminato!\" with title \"CervellaSwarm\" sound name \"Glass\"" 2>/dev/null
+            fi
+
+            # Opzionale: termina la sessione morta
+            # tmux kill-session -t "$session" 2>/dev/null
+        fi
+    done
+}
+
 # Monitor con fswatch - watch multiple directories!
 # Watcher .swarm/tasks/ e .swarm/feedback/
 fswatch -0 "$WATCH_DIR" .swarm/feedback 2>/dev/null | while read -d "" event; do
     # Check periodico stuck workers
     check_stuck_periodico
+
+    # Check periodico sessioni tmux headless
+    check_tmux_sessions
 
     # Handler file .done (task completati)
     if [[ "$event" == *.done ]]; then
