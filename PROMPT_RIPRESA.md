@@ -240,3 +240,41 @@ tests/test_coordinamento_dipendenze.sh           (NUOVO - 10 test)
 *"10 test, 100% passed - Sistema SOLIDO!"*
 
 *"Pronto per Miracollo!"*
+
+---
+
+## HANDOFF URGENTE - 9 Gennaio 2026 00:30
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   PASSAGGIO DI CONSEGNA - SESSIONE 131                          |
+|                                                                  |
+|   CONTESTO ESAURITO! La prossima Cervella deve continuare!      |
+|                                                                  |
+|   STATO:                                                         |
+|   - Multi-Instance v2.0 COMPLETATO E TESTATO                    |
+|   - 10 hard tests PASSATI                                        |
+|   - Tutti gli script PRONTI                                      |
+|   - TUTTO COMMITTATO E PUSHATO (8e35e98)                        |
+|                                                                  |
+|   RAFA HA 2 FINESTRE APERTE!                                    |
+|   Pronto per testare Multi-Instance su MIRACOLLO!               |
+|                                                                  |
+|   COSA FARE:                                                     |
+|   1. Andare su Miracollo (cd ~/Developer/miracollogeminifocus)  |
+|   2. Trovare un task da dividere Backend + Frontend             |
+|   3. Usare create-parallel-session.sh                           |
+|   4. Orchestrare le due Cervelle!                               |
+|                                                                  |
+|   SCRIPT PRONTI in ~/Developer/CervellaSwarm/scripts/:          |
+|   - create-parallel-session.sh PROJECT SESSION backend frontend |
+|   - watch-signals.sh, create-signal.sh, check-dependencies.sh   |
+|                                                                  |
+|   MIRACOLLO STATO:                                               |
+|   - Fase 5 al 90%                                                |
+|   - Task piccoli rimasti (WhatsApp opt-in, etc)                 |
+|   - Serve trovare un task Backend+Frontend per il test          |
+|                                                                  |
++------------------------------------------------------------------+
+```
