@@ -1,0 +1,78 @@
+[0;35m
+==============================================
+  SPAWN-WORKERS.SH - LA MAGIA!
+  CervellaSwarm Multi-Finestra
+==============================================
+[0m
+
+[0;34m[i][0m Spawning 1 worker(s)... (max: 5)
+
+[0;34m[i][0m Spawning cervella-docs (headless)...
+[0;32m[OK][0m cervella-docs spawned (headless)! Session: swarm_docs_1767874866
+
+==============================================
+[0;32m[OK][0m Spawned: 1 worker(s)
+==============================================
+
+[0;34m[i][0m Worker in background (tmux headless)!
+[0;34m[i][0m Usa 'tmux list-sessions' per vedere le sessioni
+[0;34m[i][0m I worker stanno cercando task in .swarm/tasks/
+
+
+[0;34m[i][0m Avvio AUTO-SVEGLIA watcher...
+[0;32m[OK][0m Watcher AUTO-SVEGLIA avviato! (PID: 20407)
+[0;34m[i][0m La Regina verra' svegliata quando i worker finiscono!
+
+[0;34m
+==============================================
+  WATCHER-REGINA - La Magia Sopra Magia!
+==============================================
+[0m
+[0;32m[OK][0m Monitoring: /Users/rafapra/Developer/CervellaSwarm/.swarm/tasks
+[0;32m[OK][0m Monitoring: .swarm/feedback/
+[0;32m[OK][0m Check stuck: ogni 120s
+[0;32m[OK][0m Check tmux: ogni 30s
+[0;32m[OK][0m Log notifiche: /Users/rafapra/.swarm/notifications.log
+[0;32m[OK][0m Double bell + notifica macOS
+
+In attesa di:
+  - file .done (task completati)
+  - feedback worker (.swarm/feedback/)
+  - worker stuck (heartbeat monitoring)
+  - sessioni tmux headless terminate
+
+(Ctrl+C per terminare)
+
+[1;33m[!][0m Worker stuck detected
+[0;32m[!][0m Sessione tmux terminata: swarm_backend_1767873844
+[0;32m[!][0m Sessione tmux terminata: swarm_backend_1767874108
+[0;32m[!][0m Sessione tmux terminata: swarm_backend_1767874167
+[0;32m[!][0m Sessione tmux terminata: swarm_data_1767869068
+[0;32m[!][0m Sessione tmux terminata: swarm_devops_1767873443
+[0;32m[!][0m Sessione tmux terminata: swarm_docs_1767874362
+[0;32m[!][0m Sessione tmux terminata: swarm_researcher_1767867694
+[0;32m[!][0m Sessione tmux terminata: swarm_researcher_1767871718
+[0;32m[!][0m Sessione tmux terminata: swarm_tester_1767869459
+[0;32m[!][0m Sessione tmux terminata: swarm_backend_1767873844
+[0;32m[!][0m Sessione tmux terminata: swarm_backend_1767874108
+[0;32m[!][0m Sessione tmux terminata: swarm_backend_1767874167
+[0;32m[!][0m Sessione tmux terminata: swarm_data_1767869068
+[0;32m[!][0m Sessione tmux terminata: swarm_devops_1767873443
+[0;32m[!][0m Sessione tmux terminata: swarm_docs_1767874362
+[0;32m[!][0m Sessione tmux terminata: swarm_researcher_1767867694
+[0;32m[!][0m Sessione tmux terminata: swarm_researcher_1767871718
+[0;32m[!][0m Sessione tmux terminata: swarm_tester_1767869459
+[0;32m[!][0m Rilevato: TASK_TEST_WATCHER_v124 completato!
+[1;33m[!][0m Worker stuck detected
+[0;32m[!][0m Sessione tmux terminata: swarm_backend_1767873844
+[0;32m[!][0m Sessione tmux terminata: swarm_backend_1767874108
+[0;32m[!][0m Sessione tmux terminata: swarm_backend_1767874167
+[0;32m[!][0m Sessione tmux terminata: swarm_data_1767869068
+[0;32m[!][0m Sessione tmux terminata: swarm_devops_1767873443
+[0;32m[!][0m Sessione tmux terminata: swarm_docs_1767874362
+[0;32m[!][0m Sessione tmux terminata: swarm_docs_1767874866
+[0;32m[!][0m Sessione tmux terminata: swarm_researcher_1767867694
+[0;32m[!][0m Sessione tmux terminata: swarm_researcher_1767871718
+[0;32m[!][0m Sessione tmux terminata: swarm_tester_1767869459
+[0;32m[!][0m Rilevato: TASK_HARDTEST_REALTIME_v124 completato!
+

@@ -12,13 +12,12 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 3.2.0
+# Versione: 3.1.0
 # Data: 2026-01-08
 # Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
 # v2.0.0: Config centralizzata ~/.swarm/config
 #
 # CHANGELOG:
-# v3.2.0: OUTPUT REALTIME! stdbuf -oL per unbuffered output. Vediamo progresso worker in tempo reale!
 # v3.1.0: HEADLESS DEFAULT! --headless è ora il comportamento standard. Usa --window per finestre.
 # v3.0.0: HEADLESS MODE! --headless usa tmux invece di Terminal.app. Zero finestre!
 # v2.9.0: FIX AUTO-SVEGLIA! Cerca watcher ANCHE in ~/.claude/scripts/ (globale). Funziona in TUTTI i progetti!
@@ -57,22 +56,6 @@ MAX_WORKERS=5
 # HEADLESS MODE (v3.1.0) - tmux invece di Terminal.app (DEFAULT!)
 # ============================================================================
 HEADLESS_MODE=true
-
-# ============================================================================
-# OUTPUT UNBUFFERED (v3.2.0) - Output realtime dai worker!
-# ============================================================================
-# Cerca stdbuf/gstdbuf/unbuffer per line-buffered output
-# Permette di vedere progresso worker in tempo reale invece di a blocchi
-STDBUF_CMD=""
-if command -v stdbuf &>/dev/null; then
-    STDBUF_CMD="stdbuf -oL"
-elif command -v gstdbuf &>/dev/null; then
-    STDBUF_CMD="gstdbuf -oL"
-elif command -v unbuffer &>/dev/null; then
-    STDBUF_CMD="unbuffer"
-    # unbuffer mescola stdout+stderr, ma meglio di niente
-fi
-# Se nessuno trovato, STDBUF_CMD resta "" e output sara' bufferizzato (degraded mode)
 
 # ============================================================================
 # CONFIGURAZIONE CENTRALIZZATA (v2.0.0)
@@ -519,8 +502,7 @@ RUNNEREOF
     echo "SWARM_DIR=\"${SWARM_DIR}\"" >> "$runner_script"
     # v3.0.0: CERVELLASWARM_WORKER=1 permette ai Worker di bypassare hook blocco edit!
     echo "export CERVELLASWARM_WORKER=1" >> "$runner_script"
-    # v3.2.0: STDBUF_CMD per output realtime
-    echo "${STDBUF_CMD} ${claude_path} -p --append-system-prompt \"\$(cat ${prompt_file})\" \"${initial_prompt}\" 2>&1 | tee \"\$LOG_FILE\"" >> "$runner_script"
+    echo "${claude_path} -p --append-system-prompt \"\$(cat ${prompt_file})\" \"${initial_prompt}\" 2>&1 | tee \"\$LOG_FILE\"" >> "$runner_script"
 
     # Aggiungi chiusura automatica finestra Terminal con notifica dettagliata (v2.4.0)
     cat >> "$runner_script" << 'CLOSEWINDOWEOF'
@@ -697,11 +679,10 @@ spawn_worker_headless() {
     date +%s > "${SWARM_DIR}/status/worker_${worker_name}.start"
 
     # Spawn in tmux detached (NESSUNA FINESTRA!)
-    # v3.2.0: Aggiunto STDBUF_CMD per output realtime
     tmux new-session -d -s "$session_name" \
         "cd ${PROJECT_ROOT} && \
          export CERVELLASWARM_WORKER=1 && \
-         ${STDBUF_CMD} ${claude_path} -p --append-system-prompt \"\$(cat ${prompt_file})\" \"${initial_prompt}\" 2>&1 | tee \"${log_file}\"; \
+         ${claude_path} -p --append-system-prompt \"\$(cat ${prompt_file})\" \"${initial_prompt}\" 2>&1 | tee \"${log_file}\"; \
          echo 'WORKER_DONE' >> \"${log_file}\""
 
     # Imposta remain-on-exit per catturare output dopo fine
@@ -761,13 +742,6 @@ show_usage() {
 
 main() {
     print_header
-
-    # v3.2.0: Warning se stdbuf non trovato
-    if [ -z "$STDBUF_CMD" ]; then
-        print_warning "stdbuf non trovato - output worker potrebbe essere ritardato"
-        print_info "Per output realtime: brew install coreutils"
-        echo ""
-    fi
 
     # Verifica .swarm/ esiste
     if [ ! -d "${SWARM_DIR}" ]; then

@@ -1,0 +1,20 @@
+[0;35m
+==============================================
+  SPAWN-WORKERS.SH - LA MAGIA!
+  CervellaSwarm Multi-Finestra
+==============================================
+[0m
+
+[0;34m[i][0m Spawning 1 worker(s)... (max: 5)
+
+[0;34m[i][0m Spawning cervella-docs (headless)...
+[0;32m[OK][0m cervella-docs spawned (headless)! Session: swarm_docs_1767874362
+
+==============================================
+[0;32m[OK][0m Spawned: 1 worker(s)
+==============================================
+
+[0;34m[i][0m Worker in background (tmux headless)!
+[0;34m[i][0m Usa 'tmux list-sessions' per vedere le sessioni
+[0;34m[i][0m I worker stanno cercando task in .swarm/tasks/
+

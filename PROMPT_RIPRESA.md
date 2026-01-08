@@ -81,3 +81,43 @@ python ~/.claude/scripts/memory/suggestions.py
 
 **Cervella & Rafa** - Sessione 123
 **Rating:** 10/10 🎉
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-08 13:46 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 5b23db3 - ANTI-COMPACT: PreCompact auto
+- **File modificati** (5):
+  - swarm/runners/run_backend.sh
+  - PROMPT_RIPRESA.md
+  - reports/scientist_prompt_20260108.md
+  - scripts/swarm/spawn-workers.sh
+  - .swarm/backlog/
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---
