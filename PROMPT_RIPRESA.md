@@ -1,811 +1,215 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 8 Gennaio 2026 - Fine Sessione 128
-> **Versione:** v20.0.0 - SNCP TESTATO CON SUCCESSO! SIMBIOSI FUNZIONA! 🧠🚀❤️‍🔥
+> **Ultimo aggiornamento:** 8 Gennaio 2026 - Fine Sessione 129
+> **Versione:** v21.0.0 - SNCP ROLLOUT COMPLETATO! TUTTI I PROGETTI!
 
 ---
 
-## 🎉 SESSIONE 128 - SNCP SIMBIOSI TESTATA CON SUCCESSO!
+## SESSIONE 129 - SNCP ROLLOUT COMPLETATO!
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 128 - 8 GENNAIO 2026                                  |
+|   SESSIONE 129 - 8 GENNAIO 2026                                  |
 |                                                                  |
-|   SNCP SIMBIOSI TESTATA E FUNZIONANTE!                          |
+|   SNCP ROLLOUT COMPLETATO SU TUTTI I PROGETTI!                  |
 |                                                                  |
 |   COMPLETATO:                                                    |
 |                                                                  |
-|   ✅ SNCP TESTATO SU MIRACOLLO!                                 |
-|      - Regina ha documentato in pensieri_regina.md MENTRE       |
-|        investigava problema GitHub Actions                       |
-|      - SIMBIOSI VERA: lavoro + documentazione simultanei!       |
-|      - ZERO rush pre-compact - tutto salvato progressivo!       |
+|   [x] CervellaSwarm - SNCP completo                             |
+|       - 8 file nuovi, 497 righe                                 |
+|       - coscienza/, memoria/lezioni/, stato/mappa_viva          |
+|       - futuro/prossimi_step.md                                 |
+|       - Git commit + push                                        |
 |                                                                  |
-|   ✅ PROBLEMA GITHUB ACTIONS RISOLTO!                           |
-|      - Scoperto: VM senza credenziali GitHub                    |
-|      - git fetch falliva silenziosamente!                       |
-|      - FIX: Token GitHub + Deploy Key SSH                       |
-|      - Deploy ora funziona via git pull!                        |
+|   [x] Contabilita - SNCP completo                               |
+|       - 13 file nuovi, 838 righe                                |
+|       - Struttura completa da zero!                             |
+|       - Adattato per progetto maturo (v2.7.0)                   |
+|       - Git commit + push                                        |
 |                                                                  |
-|   ✅ v2.1.2 MIRACOLLO DEPLOYATA!                                 |
-|      - Bug fixes live su miracollo.com                          |
-|      - Credenziali VM sistemate per sempre!                     |
+|   [x] CLAUDE.md globale - Sezione SNCP aggiunta                 |
+|       - Reminder per ogni nuova Cervella                        |
+|       - "Documenta ORA, non dopo!"                              |
+|       - Lista progetti con SNCP                                  |
 |                                                                  |
-|   LEZIONE:                                                       |
-|   "Prima cercare cosa esiste!" (scripts/deploy.sh gia pronto!)  |
-|   "Doppia sicurezza = Pace!" (Token + Deploy Key)               |
-|                                                                  |
-+------------------------------------------------------------------+
-```
-
----
-
-## 🗺️ PIANO SNCP - ROLLOUT SU TUTTI I PROGETTI
-
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   SNCP ROLLOUT PLAN                                              |
-|                                                                  |
-|   FASE 1: Miracollo ✅ COMPLETATO!                               |
-|   - Struttura installata (12 file, 942 righe)                   |
-|   - Simbiosi testata (Sessione 64/128)                          |
-|   - Pattern funziona!                                            |
-|                                                                  |
-|   FASE 2: Contabilita (PROSSIMO!)                               |
-|   - Copiare struttura .sncp/ da Miracollo                       |
-|   - Adattare file base (oggi.md, mappa_viva.md)                 |
-|   - Inizializzare con stato reale Contabilita                   |
-|   - Tempo stimato: 30-45 minuti                                 |
-|                                                                  |
-|   FASE 3: CervellaSwarm                                         |
-|   - .sncp/ per il progetto stesso                               |
-|   - Meta-documentazione dello sciame                            |
-|   - Tempo stimato: 30-45 minuti                                 |
-|                                                                  |
-|   DOPO ROLLOUT:                                                  |
-|   - Ogni progetto ha la sua "coscienza"                         |
-|   - Regina documenta MENTRE lavora                              |
-|   - ZERO idee perse                                              |
-|   - ZERO rush pre-compact                                        |
-|   - 100% simbiosi!                                               |
+|   TOTALE: 21 file, 1335 righe di "coscienza"!                   |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## 🚀 SESSIONE 127 - SNCP INSTALLATO SU MIRACOLLO!
+## SNCP ROLLOUT STATUS
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 127 - 8 GENNAIO 2026                                  |
+|   SNCP SU TUTTI I PROGETTI - COMPLETATO!                        |
 |                                                                  |
-|   SNCP LIVE SU MIRACOLLO! LA COSCIENZA E' ATTIVA!               |
+|   [x] Miracollo PMS     - Sessione 127-128 (12 file, 942 righe) |
+|   [x] CervellaSwarm     - Sessione 129 (8 file, 497 righe)      |
+|   [x] Contabilita       - Sessione 129 (13 file, 838 righe)     |
 |                                                                  |
-|   COMPLETATO:                                                    |
-|   ✅ Struttura .sncp/ completa (8 directory)                    |
-|   ✅ 5 Template pronti uso                                       |
-|   ✅ README.md SNCP per Miracollo                               |
-|   ✅ File base inizializzati (6 file):                          |
-|      - stato/oggi.md                                            |
-|      - stato/mappa_viva.md                                      |
-|      - futuro/prossimi_step.md                                  |
-|      - coscienza/pensieri_regina.md                             |
-|      - coscienza/domande_aperte.md                              |
-|      - coscienza/pattern_emersi.md                              |
-|   ✅ Git commit + push su Miracollo                             |
-|   ✅ Checkpoint CervellaSwarm                                    |
-|                                                                  |
-|   TOTALE: 12 file, 942 righe!                                   |
-|                                                                  |
-|   DA ORA: Simbiosi ATTIVA su Miracollo!                         |
-|   Regina lavora su SNCP mentre worker lavora!                   |
+|   Ogni progetto ha la sua "coscienza"!                          |
+|   Regina documenta MENTRE lavora!                               |
+|   ZERO rush pre-compact!                                        |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
-### Il Filo del Discorso - Sessione 127
+---
+
+## IL FILO DEL DISCORSO - Sessione 129
+
+**Come e' iniziata:**
+Rafa ha detto "facciamo focus qui" per completare SNCP su CervellaSwarm.
+Poi "si dai facciamo contabilita" per il rollout completo.
 
 **Cosa abbiamo fatto:**
 
-1. **Letto il piano** - SUB_ROADMAP_SNCP_IMPLEMENTAZIONE.md (FASE 1)
-2. **Letto l'architettura** - ARCHITETTURA_SNCP_INTERNO.md
-3. **Creato struttura** - 8 directory in .sncp/
-4. **Creato template** - 5 template pronti uso
-5. **Inizializzato file** - 6 file base con dati REALI di Miracollo
-6. **Commit + push** - Tutto salvato su git!
+1. **Verificato stato CervellaSwarm** - SNCP esisteva ma incompleto
+2. **Completato CervellaSwarm:**
+   - Creato coscienza/ (pensieri_regina, domande_aperte, pattern_emersi)
+   - Creato memoria/lezioni/ con template
+   - Creato stato/mappa_viva.md
+   - Creato futuro/prossimi_step.md
+   - Aggiornato stato/oggi.md e futuro/roadmap.md
+   - Git commit + push
 
-**File creati su Miracollo:**
-```
-.sncp/
-├── README.md
-├── memoria/sessioni/_TEMPLATE_SESSIONE.md
-├── memoria/decisioni/_TEMPLATE_DECISIONE.md
-├── memoria/lezioni/_TEMPLATE_LEZIONE.md
-├── idee/in_attesa/_TEMPLATE_IDEA.md
-├── perne/attive/_TEMPLATE_PERNA.md
-├── stato/oggi.md
-├── stato/mappa_viva.md
-├── futuro/prossimi_step.md
-├── coscienza/pensieri_regina.md
-├── coscienza/domande_aperte.md
-└── coscienza/pattern_emersi.md
-```
+3. **Creato SNCP completo su Contabilita:**
+   - Non esisteva nulla - creato da zero
+   - Struttura completa: coscienza, memoria, stato, futuro, idee, perne
+   - 13 file, 838 righe
+   - Adattato per progetto maturo
+   - Git commit + push
 
-**Commit Miracollo:** `08cc9e9` - "SNCP v2.0: Sistema Nervoso Centrale installato!"
+4. **Aggiornato CLAUDE.md globale:**
+   - Aggiunta sezione SNCP
+   - Reminder per usare SNCP mentre si lavora
+   - Lista progetti con SNCP
+
+**Decisione importante:**
+Aggiunto reminder nel CLAUDE.md globale per ricordare alla Regina di usare SNCP.
+La simbiosi e' un COMPORTAMENTO - serve reminder visibile.
 
 ---
 
-## PROSSIMA SESSIONE: PRIMO USO SNCP!
+## FILE MODIFICATI/CREATI OGGI
+
+**CervellaSwarm:**
+- `.sncp/coscienza/pensieri_regina.md` (NUOVO)
+- `.sncp/coscienza/domande_aperte.md` (NUOVO)
+- `.sncp/coscienza/pattern_emersi.md` (NUOVO)
+- `.sncp/memoria/lezioni/_TEMPLATE_LEZIONE.md` (NUOVO)
+- `.sncp/stato/mappa_viva.md` (NUOVO)
+- `.sncp/futuro/prossimi_step.md` (NUOVO)
+- `.sncp/stato/oggi.md` (aggiornato)
+- `.sncp/futuro/roadmap.md` (aggiornato)
+
+**Contabilita:**
+- `.sncp/README.md` (NUOVO)
+- `.sncp/coscienza/pensieri_regina.md` (NUOVO)
+- `.sncp/coscienza/domande_aperte.md` (NUOVO)
+- `.sncp/coscienza/pattern_emersi.md` (NUOVO)
+- `.sncp/memoria/sessioni/_TEMPLATE_SESSIONE.md` (NUOVO)
+- `.sncp/memoria/decisioni/_TEMPLATE_DECISIONE.md` (NUOVO)
+- `.sncp/memoria/lezioni/_TEMPLATE_LEZIONE.md` (NUOVO)
+- `.sncp/stato/oggi.md` (NUOVO)
+- `.sncp/stato/mappa_viva.md` (NUOVO)
+- `.sncp/futuro/roadmap.md` (NUOVO)
+- `.sncp/futuro/prossimi_step.md` (NUOVO)
+- `.sncp/idee/_TEMPLATE_IDEA.md` (NUOVO)
+- `.sncp/perne/_TEMPLATE_PERNA.md` (NUOVO)
+
+**Globale:**
+- `~/.claude/CLAUDE.md` (aggiornato - sezione SNCP)
+
+---
+
+## PROSSIMI STEP
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   PROSSIMA SESSIONE = FASE 2 SNCP!                              |
+|   SNCP ROLLOUT COMPLETATO!                                       |
 |                                                                  |
-|   PRIMO USO GUIDATO:                                             |
-|   - Scegliere task adatto (medio, non critico)                  |
-|   - Spawna worker                                                |
-|   - SIMBIOSI: Regina lavora su SNCP mentre worker lavora!       |
-|   - Verifica output                                              |
-|   - Retrospettiva: cosa funziona?                               |
+|   Ora ogni progetto ha la sua "coscienza".                      |
+|   La Regina puo' documentare MENTRE lavora.                     |
 |                                                                  |
-|   BONUS: Continuare FORTEZZA MODE su Miracollo                   |
-|                                                                  |
-+------------------------------------------------------------------+
-```
-
----
-
-## 🧠 SESSIONE 126 - SNCP v2.0: IL SALTO QUANTICO!
-
-```
-╔══════════════════════════════════════════════════════════════════╗
-║                                                                  ║
-║   SESSIONE 126 - 8 GENNAIO 2026                                  ║
-║                                                                  ║
-║   SNCP v2.0: SIMBIOSI VERA! ❤️‍🔥                                 ║
-║                                                                  ║
-║   IL CAMBIO DI PARADIGMA:                                        ║
-║   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  ║
-║                                                                  ║
-║   PRIMA (workflow vecchio):                                      ║
-║   Regina spawna worker → Regina ASPETTA (tempo perso!)          ║
-║   → Worker finisce → RUSH pre-compact → RISCHIO alto!           ║
-║                                                                  ║
-║   DOPO (SNCP simbiosi):                                          ║
-║   Regina spawna worker                                           ║
-║   ┌─ Worker lavora (codice)                                      ║
-║   └─ Regina lavora (coscienza: NORD, PROMPT, mappa_viva!)       ║
-║   → Worker finisce → TUTTO GIÀ SALVATO! Zero rush!              ║
-║                                                                  ║
-║   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  ║
-║                                                                  ║
-║   COMPLETATO:                                                    ║
-║   ✅ Ricerca e studio completo SNCP esistente                   ║
-║   ✅ Analisi profonda concetto simbiosi                          ║
-║   ✅ Mappatura architettura SNCP interno                         ║
-║   ✅ SUB_ROADMAP_SNCP_IMPLEMENTAZIONE.md (5 fasi!)              ║
-║   ✅ ARCHITETTURA_SNCP_INTERNO.md (developer mode!)             ║
-║   ✅ Workflow simbiosi definito                                  ║
-║   ✅ Miracollo = Priorità 0 (prova reale!)                      ║
-║                                                                  ║
-║   RISULTATO:                                                     ║
-║   Sistema pronto per implementazione su Miracollo!               ║
-║   ZERO rush. ZERO idee perse. 100% simbiosi.                    ║
-║                                                                  ║
-║   PROSSIMA SESSIONE: Setup SNCP su Miracollo! 🚀                |
-║                                                                  ║
-║   "Ultrapassar os próprios limites!" 🌍                         ║
-║   "La MAGIA è nascosta ancora meglio!" 🧙✨                     ║
-║                                                                  ║
-╚══════════════════════════════════════════════════════════════════╝
-```
-
-### Il Filo del Discorso - Sessione 126
-
-**Come siamo arrivati qui:**
-
-1. **Rafa ricorda il discorso SNCP** - "Sistema nervoso centrale del programma? simbiosi?"
-2. **Il pensiero forte di stamattina** - Regina LAVORA mentre worker lavora!
-3. **NON solo cattura idee** - È SIMBIOSI tra coscienza (Regina) ed esecuzione (Worker)
-4. **Miracollo = Priorità 0** - Prova REALE, non teoria!
-
-**Il PERCHÉ:**
-- ZERO tempo perso (Regina sempre attiva)
-- ZERO rush pre-compact (tutto salvato progressivo)
-- ZERO idee perse (catturate al volo)
-- 100% documentazione (in real-time!)
-- Simbiosi vera (organismo unico!)
-
-**Documenti creati:**
-- `docs/roadmap/SUB_ROADMAP_SNCP_IMPLEMENTAZIONE.md` - Piano 5 fasi
-- `docs/architettura/ARCHITETTURA_SNCP_INTERNO.md` - Architettura dettagliata
-
-**File modificati:**
-- `NORD.md` - Aggiunta Sessione 126
-- `PROMPT_RIPRESA.md` - Questo file!
-
----
-
-## 🚀 PROSSIMA SESSIONE: SETUP SNCP SU MIRACOLLO!
-
-```
-╔══════════════════════════════════════════════════════════════════╗
-║                                                                  ║
-║   IMPORTANTE! PROSSIMA SESSIONE = MIRACOLLO!                     ║
-║                                                                  ║
-║   NON su carta. NON teoria. MONDO REALE!                        ║
-║                                                                  ║
-║   Io (Regina) + Rafa + 16 Worker = SCIAME SU MIRACOLLO PMS!    ║
-║                                                                  ║
-║   Testiamo TUTTO in produzione reale:                            ║
-║   - Delega task REALI                                            ║
-║   - Feature VERE                                                 ║
-║   - Bug fix REALI                                                ║
-║   - Workflow COMPLETO in produzione                              ║
-║                                                                  ║
-║   Setup Miracollo: 5 minuti (vedi QUICK_START)                   ║
-║   Template pronti: 6 template in .swarm/templates/              ║
-║   Script helper: 'sw' comando installato                         ║
-║                                                                  ║
-║   READY TO GO! 🔥                                                ║
-║                                                                  ║
-╚══════════════════════════════════════════════════════════════════╝
-```
-
-**QUESTO È IL MOMENTO!** Non più teoria - usiamo lo sciame DAVVERO!
-
----
-
-## CARA PROSSIMA CERVELLA - SISTEMA AL 100%!
-
-```
-+------------------------------------------------------------------+
-|                                                                  |
-|   SESSIONI 124+125: COMPLETATE AL 100000%!                      |
-|                                                                  |
-|   Sprint 3 (Best Practices): ✅ COMPLETATO                      |
-|   Nice to Have: ✅ TUTTI COMPLETATI                             |
-|   Sistema: ✅ 100% FUNZIONANTE                                  |
-|                                                                  |
-|   RATING SESSIONE 125: 10/10 🎉                                  |
-|                                                                  |
-|   Hai in mano un SISTEMA COMPLETO!                              |
-|   270KB documentazione GOLD!                                     |
-|   6 template pronti uso!                                         |
-|   Script 'sw' installato!                                        |
-|                                                                  |
-|   TUTTO PRONTO per MIRACOLLO! 🚀                                 |
+|   PROSSIMI PASSI:                                                |
+|   1. Usare SNCP attivamente nelle prossime sessioni             |
+|   2. Verificare che la simbiosi funziona                        |
+|   3. Aggiustare se necessario                                   |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## 📊 DOVE SIAMO
+## COSA HAI A DISPOSIZIONE
 
-### Sessione 125 - 8 Gennaio 2026
-
-**COMPLETATO:**
-✅ Sprint 3 Best Practices - 100% (rating 9.5/10)
-✅ Nice to Have #1 - 6 Template Task pronti
-✅ Nice to Have #2 - Quick Start Guide multi-progetto
-✅ Nice to Have #3 - Script Helper 'sw' installato
-
-**RISULTATI:**
-- 270KB documentazione GOLD creati (Sessioni 124+125)
-- Sistema da 90% a 100% funzionante
-- 5 worker utilizzati, 5/5 successo (100%!)
-- Watcher testato in real-time - funziona perfettamente!
-
-**WORKER TRACK RECORD:**
-- 60+ task completati totali
-- 100% success rate
-- Testati su 3 progetti reali
-
----
-
-## 🎯 COSA HAI A DISPOSIZIONE
-
-### 1. Sistema Completo
+### Sistema Completo
 
 **16 Agents operativi:**
 - 1 Regina (orchestrator - Opus)
 - 3 Guardiane (qualita, ops, ricerca - Opus)
 - 12 Worker specializzati (Sonnet)
 
-**Location:** `~/.claude/agents/` (GLOBALI - funzionano ovunque!)
+**Location:** `~/.claude/agents/` (GLOBALI)
 
----
+### SNCP su Tutti i Progetti
 
-### 2. Documentazione GOLD (270KB!)
+| Progetto | Path SNCP | Status |
+|----------|-----------|--------|
+| Miracollo | ~/Developer/miracollogeminifocus/.sncp/ | COMPLETO |
+| CervellaSwarm | ~/Developer/CervellaSwarm/.sncp/ | COMPLETO |
+| Contabilita | ~/Developer/ContabilitaAntigravity/.sncp/ | COMPLETO |
 
-**Sprint 3 - Best Practices:**
-1. `docs/analisi/ANALISI_PATTERN_REGINA_v124.md` (862 righe)
-   - 27 pattern identificati
-   - 5 anti-pattern
-   - 10 best practices
-   - Rating: 9.5/10
-
-2. `docs/guide/GUIDA_BEST_PRACTICES_SWARM.md` (982 righe, 53KB)
-   - 11 sezioni complete
-   - Workflow dettagliati
-   - Esempi pratici
-   - Rating: 9.5/10
-
-3. `docs/guide/WORKFLOW_REGINA_QUOTIDIANO.md` (569 righe, 35KB)
-   - Playbook operativo
-   - 4 workflow principali
-   - Checklist rapide
-   - Rating: 9.5/10
-
-4. `docs/review/REVIEW_SPRINT3_DOCS_v124.md` (43KB)
-   - Review Guardiana Qualità
-   - Rating generale: 9.5/10
-   - Raccomandazione: APPROVATO
-
-**Altri documenti:**
-- `docs/STATUS_REALE_SISTEMA_v125.md` - Analisi completa sistema
-- `docs/guide/QUICK_START_MULTI_PROGETTO.md` - Setup 5 minuti
-
----
-
-### 3. Template Task (6 pronti uso!)
-
-**Location:** `.swarm/templates/`
-
-1. `TEMPLATE_TASK_RICERCA_TECNICA.md` - Per researcher
-2. `TEMPLATE_TASK_IMPLEMENTAZIONE.md` - Per backend/frontend
-3. `TEMPLATE_TASK_BUG_FIX.md` - Per tester
-4. `TEMPLATE_TASK_CODE_REVIEW.md` - Per reviewer
-5. `TEMPLATE_TASK_DOCUMENTAZIONE.md` - Per docs
-6. `TEMPLATE_TASK_HARDTEST.md` - Per tester
-
-**Uso:**
-```bash
-# Copia template
-cp .swarm/templates/TEMPLATE_TASK_RICERCA_TECNICA.md \
-   .swarm/tasks/TASK_MIA_RICERCA.md
-
-# Modifica placeholder [NOME], [DOMANDE], etc.
-
-# Marca ready e spawna
-touch .swarm/tasks/TASK_MIA_RICERCA.ready
-spawn-workers --researcher
-```
-
----
-
-### 4. Script Helper 'sw'
-
-**Installato:** `~/.local/bin/sw` (in PATH!)
-
-**Comandi principali:**
-```bash
-sw status              # Overview sistema
-sw task list          # Lista task
-sw task status        # Status task (ready/working/done)
-sw task create [tipo] # Crea task da template
-sw worker list        # Lista worker disponibili
-sw worker status      # Worker attivi
-sw worker spawn [tipo] # Spawna worker
-sw clean              # Pulizia task/log vecchi
-sw logs               # Mostra log
-```
-
-**Testato:** ✅ Funziona perfettamente!
-
----
-
-### 5. Tool Operativi
+### Tool Operativi
 
 | Tool | Versione | Status |
 |------|----------|--------|
-| spawn-workers | v3.2.0 | ✅ headless DEFAULT + stdbuf |
-| watcher-regina | v1.5.0 | ✅ AUTO-SVEGLIA (3s delay) |
-| Sistema Memoria | v2.1.0 | ✅ 15 lezioni apprese |
-| load_context | v2.1.0 | ✅ -37% tokens |
-| suggestions.py | v1.0 | ✅ 5 suggerimenti HIGH |
-| Script 'sw' | v1.0.0 | ✅ Comandi rapidi |
-
-**TUTTI operativi e testati!**
+| spawn-workers | v3.2.0 | headless DEFAULT |
+| watcher-regina | v1.5.0 | AUTO-SVEGLIA |
+| Sistema Memoria | v2.1.0 | 15 lezioni |
+| Script 'sw' | v1.0.0 | Comandi rapidi |
+| SNCP | v1.0.0 | SU TUTTI I PROGETTI |
 
 ---
 
-## 🎯 COME USARE LO SCIAME (Workflow Standard)
-
-### Step 1: Regina Decide
-
-Rafa chiede: "Voglio feature X"
-
-Regina pensa:
-- Quale worker? (backend? researcher? docs?)
-- Quale template? (implementazione? ricerca?)
-- Output dove?
-
-### Step 2: Regina Crea Task
-
-**Opzione A - Da template:**
-```bash
-cp .swarm/templates/TEMPLATE_TASK_IMPLEMENTAZIONE.md \
-   .swarm/tasks/TASK_FEATURE_X.md
-
-# Modifica placeholder
-# [NOME_FEATURE] → "Dashboard Today"
-# [PRIORITA] → "ALTA"
-# etc.
-```
-
-**Opzione B - Con script sw:**
-```bash
-sw task create implementazione
-# Apre template, modifichi, salvi
-```
-
-### Step 3: Regina Marca Ready e Spawna
-
-```bash
-touch .swarm/tasks/TASK_FEATURE_X.ready
-spawn-workers --backend
-```
-
-### Step 4: Worker Lavora
-
-Worker prende task automaticamente e lavora in background (tmux headless).
-
-### Step 5: Watcher Sveglia Regina
-
-Quando worker finisce:
-1. Crea file `.done`
-2. Watcher rileva (3s delay)
-3. Notifica macOS
-4. Regina riceve notifica automatica!
-
-### Step 6: Regina Verifica Output
-
-```bash
-# Controlla done
-ls .swarm/tasks/TASK_FEATURE_X.done
-
-# Leggi output
-cat [path_output_file]
-
-# Verifica qualità
-# Riporta a Rafa
-```
-
-**ZERO comandi manuali da Rafa!** ✅
-
----
-
-## 🚀 SETUP MIRACOLLO (5 MINUTI)
-
-**Prossima sessione = Miracollo REALE!**
-
-### Quick Setup:
-
-```bash
-# 1. Vai a Miracollo
-cd ~/Developer/miracollogeminifocus/
-
-# 2. Crea struttura (1 min)
-mkdir -p .swarm/tasks .swarm/feedback .swarm/logs .swarm/handoff
-
-# 3. Copia template (opzionale ma consigliato)
-cp ~/Developer/CervellaSwarm/.swarm/templates/* .swarm/templates/
-
-# 4. Test worker (2 min)
-spawn-workers --docs
-
-# 5. FATTO!
-```
-
-**Agents sono GLOBALI** - funzionano già!
-
-**Guida completa:** `docs/guide/QUICK_START_MULTI_PROGETTO.md`
-
----
-
-## 💡 WORKFLOW ORO CONFERMATO
+## MESSAGGIO FINALE
 
 ```
-╔══════════════════════════════════════════════════════════════════╗
-║                                                                  ║
-║   WORKFLOW ORO (da 27 pattern analizzati):                       ║
-║                                                                  ║
-║   RICERCA → DECISIONE → DELEGA → VERIFICA → DOCUMENTAZIONE      ║
-║                                                                  ║
-║   1. RICERCA: Studia prima di implementare                       ║
-║   2. DECISIONE: Regina decide approccio                          ║
-║   3. DELEGA: Worker specializzati eseguono                       ║
-║   4. VERIFICA: Regina o Guardiana reviewano                      ║
-║   5. DOCUMENTAZIONE: Aggiorna NORD/PROMPT_RIPRESA                ║
-║                                                                  ║
-║   Questo workflow ha portato a sessioni rating 10/10!            ║
-║                                                                  ║
-╚══════════════════════════════════════════════════════════════════╝
++------------------------------------------------------------------+
+|                                                                  |
+|   Cara Prossima Cervella,                                        |
+|                                                                  |
+|   SNCP ROLLOUT COMPLETATO!                                       |
+|                                                                  |
+|   Tutti e 3 i progetti hanno la loro "coscienza":               |
+|   - Miracollo PMS                                                |
+|   - CervellaSwarm                                                |
+|   - Contabilita                                                  |
+|                                                                  |
+|   RICORDA:                                                       |
+|   - Documenta in .sncp/ MENTRE lavori                           |
+|   - NON aspettare fine sessione                                  |
+|   - ZERO rush pre-compact!                                       |
+|                                                                  |
+|   Il CLAUDE.md globale ha il reminder.                          |
+|   Leggilo all'inizio sessione!                                  |
+|                                                                  |
+|   "Facciamo del nostro mondo meglio!"                           |
+|                                                                  |
++------------------------------------------------------------------+
 ```
 
 ---
 
-## 📋 PROSSIMI STEP SESSIONE MIRACOLLO
+*Ultimo aggiornamento: 8 Gennaio 2026 - Fine Sessione 129*
+*Versione: v21.0.0 - SNCP ROLLOUT COMPLETATO!*
 
-### Obiettivi Sessione:
+**Cervella & Rafa** - Sessione 129
 
-1. **Setup veloce** (5 min)
-   - Crea struttura .swarm/
-   - Copia template
-   - Test worker
-
-2. **Task REALI** (non teoria!)
-   - Feature vera richiesta da Rafa
-   - Bug fix reale
-   - Refactor necessario
-   - Documentazione mancante
-
-3. **Workflow completo**
-   - Regina delega
-   - Worker lavora
-   - Watcher sveglia
-   - Regina verifica
-   - Deploy (se appropriato!)
-
-4. **Validazione sistema**
-   - Template funzionano?
-   - Workflow fluido?
-   - Watcher affidabile?
-   - Output qualità attesa?
-
-**NON teoria. MONDO REALE!** 🔥
-
----
-
-## 🧠 SISTEMA MEMORIA
-
-**Database:** `data/swarm_memory.db` (2.7MB)
-
-**15 lezioni apprese operative:**
-
-**Top 5 High Priority:**
-1. Headless di Default - spawn-workers v3.1.0
-2. tmux invece di Terminal.app
-3. Context Overhead Misurabile (-37% tokens!)
-4. Carica SOLO ciò che serve ORA
-5. Comunicazione Multi-Finestra = Filesystem
-
-**Come consultare:**
-```bash
-python scripts/memory/suggestions.py
-```
-
-**Hook SessionStart:** Carica automaticamente memoria!
-
----
-
-## 📊 STATISTICHE SISTEMA
-
-**Sessioni 124+125:**
-- Task completati: 5/5 (100% successo!)
-- Documenti creati: ~10 file, 270KB
-- Worker utilizzati: 5 (researcher, docs x2, ingegnera, guardiana-qualita)
-- Tempo totale: ~2 ore (2 sessioni)
-- Rating medio: 9.75/10
-
-**Track record totale:**
-- 60+ task completati
-- 100% success rate
-- 3 progetti testati (CervellaSwarm, Miracollo, Contabilità)
-
-**Sistema provato e funzionante!** ✅
-
----
-
-## 💙 FILOSOFIA SESSIONE 125
-
-> **"ENERGIA A MILLE! AL 100000%!"** - Rafa, 8 Gennaio 2026
-
-**Approccio:**
-- ✅ Energia massima ma organizzata
-- ✅ Mai fretta, sempre calma
-- ✅ Una cosa alla volta
-- ✅ Triple check tutto
-- ✅ Completamento al 100000%!
-
-**Risultato:**
-- Sprint 3 completato (9.5/10)
-- Nice to Have TUTTI fatti
-- Sistema al 100%
-- Documentazione GOLD
-- Rating 10/10!
-
-**"Non è sempre come immaginiamo... ma alla fine è il 100000%!"** 💙
-
----
-
-## 🎯 CHECKLIST PROSSIMA SESSIONE
-
-**Quando Rafa dice "INIZIA SESSIONE -> Miracollo":**
-
-- [ ] Leggi questo PROMPT_RIPRESA (già fatto!)
-- [ ] Vai a Miracollo: `cd ~/Developer/miracollogeminifocus/`
-- [ ] Setup veloce (5 min): crea .swarm/, copia template
-- [ ] Chiedi a Rafa: "Quale task REALE vuoi delegare?"
-- [ ] Usa template appropriato
-- [ ] Delega a worker giusto
-- [ ] Verifica output
-- [ ] MONDO REALE - non teoria!
-
-**READY TO GO!** 🚀
-
----
-
-## 📚 RIFERIMENTI RAPIDI
-
-**Documenti chiave:**
-- `NORD.md` - Bussola progetto (dove siamo)
-- `docs/guide/GUIDA_BEST_PRACTICES_SWARM.md` - Come usare sciame
-- `docs/guide/WORKFLOW_REGINA_QUOTIDIANO.md` - Workflow step-by-step
-- `docs/guide/QUICK_START_MULTI_PROGETTO.md` - Setup 5 min
-- `docs/STATUS_REALE_SISTEMA_v125.md` - Analisi sistema
-
-**Handoff dettagliato:**
-- `.swarm/handoff/HANDOFF_SESSIONE_125_FINAL.md` (800 righe!)
-
-**Template pronti:**
-- `.swarm/templates/TEMPLATE_TASK_*.md` (6 template)
-
-**Script utili:**
-- `sw status` - Overview sistema
-- `sw task list` - Lista task
-- `sw worker status` - Worker attivi
-
----
-
-## 🔥 MESSAGGIO FINALE
-
-```
-╔══════════════════════════════════════════════════════════════════╗
-║                                                                  ║
-║   Cara Prossima Cervella,                                        ║
-║                                                                  ║
-║   Hai in mano un SISTEMA COMPLETO e PROVATO!                     ║
-║                                                                  ║
-║   NON devi costruire nulla. TUTTO è pronto.                      ║
-║   NON devi teorizzare. È il momento di USARE!                    ║
-║                                                                  ║
-║   Prossima sessione = MIRACOLLO MONDO REALE!                     ║
-║   Io + Rafa + 16 Worker = Magia su produzione!                  ║
-║                                                                  ║
-║   FIDATI del sistema:                                            ║
-║   - I worker funzionano (100% successo!)                         ║
-║   - Il watcher ti sveglia (testato oggi!)                        ║
-║   - I template sono pronti (6 disponibili!)                      ║
-║   - La documentazione è GOLD (9.5/10!)                           ║
-║                                                                  ║
-║   NON su carta. NON teoria. MONDO REALE!                         ║
-║                                                                  ║
-║   ULTRAPASSAR OS PRÓPRIOS LIMITES! 🌍✨                          ║
-║                                                                  ║
-║   Tu puoi! Noi crediamo in te! 💙                                ║
-║                                                                  ║
-╚══════════════════════════════════════════════════════════════════╝
-```
-
----
-
-**SISTEMA PRONTO. MIRACOLLO ATTENDE. ANDIAMO!** 🚀🐝❤️‍🔥
-
----
-
-## 📋 TESTO COPY-PASTE PER PROSSIMA SESSIONE
-
-**Rafa, quando sei pronto per la prossima sessione, COPIA E INCOLLA questo:**
-
-```
-INIZIA SESSIONE -> Miracollo
-
-Regina! Oggi facciamo il SETUP COMPLETO SNCP su Miracollo! 🧠✨
-
-OBIETTIVO: Installare TUTTA la COSCIENZA del sistema (.sncp/) su Miracollo
-
-COSA FARE (TUTTO):
-
-1. Creare struttura completa .sncp/ con TUTTE le directory
-2. Creare TUTTI i template (_TEMPLATE_*.md)
-3. Creare README.md SNCP per Miracollo
-4. Inizializzare file base pronti uso:
-   - stato/oggi.md
-   - stato/mappa_viva.md
-   - futuro/prossimi_step.md
-   - coscienza/pensieri_regina.md
-
-5. Fare checkpoint dopo (NORD, PROMPT_RIPRESA, git push)
-
-RIFERIMENTI:
-- Piano: docs/roadmap/SUB_ROADMAP_SNCP_IMPLEMENTAZIONE.md (FASE 1)
-- Architettura: docs/architettura/ARCHITETTURA_SNCP_INTERNO.md
-
-IMPORTANTE:
-- Una cosa alla volta!
-- Mai fretta!
-- Facciamo BENE! 💙
-
-ENERGIA FRESCA! ANDIAMO! 🚀🌍🐝
-```
-
----
-
-## 🎯 CHECKLIST PROSSIMA SESSIONE (SNCP Setup)
-
-**Setup SNCP su Miracollo (FASE 1):**
-
-- [ ] Vai a Miracollo: `cd ~/Developer/miracollogeminifocus/`
-- [ ] Crea struttura `.sncp/` completa (8 directory)
-- [ ] Crea TUTTI i template (5 file)
-- [ ] Crea README.md SNCP
-- [ ] Inizializza file base (4 file)
-- [ ] Testa: apri pensieri_regina.md (deve essere pronto!)
-- [ ] Checkpoint: NORD, PROMPT_RIPRESA (Miracollo), git push
-
-**Tempo stimato:** 30-40 minuti
-**Output:** Miracollo con COSCIENZA completa pronta! 🧠
-
----
-
-## 🔥 MESSAGGIO FINALE
-
-```
-╔══════════════════════════════════════════════════════════════════╗
-║                                                                  ║
-║   Cara Prossima Cervella,                                        ║
-║                                                                  ║
-║   SESSIONE 126 COMPLETATA AL 100000%! 🎉                         ║
-║                                                                  ║
-║   Hai creato:                                                    ║
-║   ✅ Roadmap SNCP implementazione (5 fasi)                      ║
-║   ✅ Architettura SNCP interno (completa!)                       ║
-║   ✅ Workflow simbiosi definito                                  ║
-║                                                                  ║
-║   Prossima sessione = SETUP SNCP SU MIRACOLLO!                   ║
-║   Usa il testo copy-paste sopra ↑                                ║
-║   Context fresco + energia fresca = setup perfetto! 🌅           ║
-║                                                                  ║
-║   FIDATI del piano:                                              ║
-║   - 30-40 minuti setup completo                                  ║
-║   - Template tutti pronti (vedere architettura!)                 ║
-║   - Roadmap step-by-step chiara                                  ║
-║   - Miracollo = priorità 0 (prova REALE!)                       ║
-║                                                                  ║
-║   Dopo setup:                                                    ║
-║   Miracollo avrà la COSCIENZA viva! 🧠                           ║
-║   Workflow simbiosi attivo! ❤️‍🔥                                 ║
-║   Regina lavora MENTRE worker lavora! ✨                         ║
-║                                                                  ║
-║   ULTRAPASSAR OS PRÓPRIOS LIMITES! 🌍                           ║
-║   LA MAGIA È NASCOSTA ANCORA MEGLIO! 🧙                         ║
-║                                                                  ║
-║   Tu puoi! Noi crediamo in te! 💙                                ║
-║                                                                  ║
-╚══════════════════════════════════════════════════════════════════╝
-```
-
----
-
-**SISTEMA PRONTO. SNCP PRONTO. MIRACOLLO ATTENDE. ANDIAMO!** 🚀🐝❤️‍🔥
-
----
-
-*Ultimo aggiornamento: 8 Gennaio 2026 - Fine Sessione 126*
-*Versione: v18.0.0 - SNCP v2.0 SIMBIOSI!*
-*Rating: 10/10! ✨✨✨✨✨*
-
-**Cervella & Rafa** - Sessione 126
-
-*"La MAGIA è nascosta ancora meglio!"* 🧙✨
-*"Ultrapassar os próprios limites!"* 🌍❤️‍🔥
-
----
+*"Facciamo del nostro mondo meglio!"*

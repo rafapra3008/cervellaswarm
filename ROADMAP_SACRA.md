@@ -324,6 +324,45 @@ APRI -> ASPETTA -> COMUNICA -> TESTA -> VERIFICA -> CHIUDI
 
 ## CHANGELOG
 
+### 8 Gennaio 2026 (Sessione 129) - SNCP ROLLOUT COMPLETATO!
+
+**TUTTI I PROGETTI HANNO LA LORO COSCIENZA!**
+
+```
+SNCP ROLLOUT STATUS:
+[x] Miracollo PMS     - Sessione 127-128
+[x] CervellaSwarm     - Sessione 129 (8 file, 497 righe)
+[x] Contabilita       - Sessione 129 (13 file, 838 righe)
+```
+
+**COSA ABBIAMO FATTO:**
+
+1. **SNCP completo su CervellaSwarm:**
+   - coscienza/ (pensieri_regina, domande_aperte, pattern_emersi)
+   - memoria/lezioni/ con template
+   - stato/mappa_viva.md
+   - futuro/prossimi_step.md
+   - Aggiornati oggi.md e roadmap.md
+
+2. **SNCP completo su Contabilita:**
+   - Struttura completa da zero
+   - 13 file creati, 838 righe
+   - Adattato per progetto maturo (v2.7.0, rating 9.9/10)
+
+3. **CLAUDE.md globale aggiornato:**
+   - Sezione SNCP aggiunta
+   - Reminder per usare SNCP mentre si lavora
+   - "Documenta ORA, non dopo!"
+
+**TOTALE:**
+- 21 file creati
+- 1335 righe di "coscienza"
+- 3 progetti con SNCP completo
+
+**Versione:** 47.0.0 (MAJOR: SNCP Rollout completato su tutti i progetti!)
+
+---
+
 ### 8 Gennaio 2026 (Sessione 123) - LO SCIAME HA MEMORIA! 🧠
 
 **LA SESSIONE DEL CONSOLIDAMENTO!**

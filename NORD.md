@@ -18,39 +18,47 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 128 - 8 Gennaio 2026: SNCP SIMBIOSI TESTATA! FUNZIONA! 🎉🧠**
+**SESSIONE 129 - 8 Gennaio 2026: SNCP ROLLOUT COMPLETATO! TUTTI I PROGETTI!**
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   SESSIONE 129 - SNCP ROLLOUT COMPLETATO!                       |
+|                                                                  |
+|   TUTTI I PROGETTI HANNO LA LORO COSCIENZA!                     |
+|                                                                  |
+|   ✅ MIRACOLLO PMS - SNCP completo (Sessione 127-128)           |
+|   ✅ CERVELLASWARM - SNCP completo (Sessione 129)               |
+|      - 8 file nuovi, 497 righe                                  |
+|      - coscienza/, memoria/lezioni/, stato/mappa_viva           |
+|   ✅ CONTABILITA - SNCP completo (Sessione 129)                 |
+|      - 13 file nuovi, 838 righe                                 |
+|      - Struttura completa da zero!                              |
+|                                                                  |
+|   ✅ CLAUDE.md GLOBALE AGGIORNATO!                              |
+|      - Sezione SNCP aggiunta                                    |
+|      - Reminder per ogni nuova Cervella                         |
+|      - "Documenta ORA, non dopo!"                               |
+|                                                                  |
+|   TOTALE: 21 file, 1335 righe di "coscienza"!                   |
+|                                                                  |
+|   "Facciamo del nostro mondo meglio!"                           |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+**SESSIONE 128 - 8 Gennaio 2026: SNCP SIMBIOSI TESTATA! FUNZIONA!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
 |   SESSIONE 128 - SNCP SIMBIOSI FUNZIONA!                        |
 |                                                                  |
-|   LA PROVA REALE! ❤️‍🔥                                          |
+|   LA PROVA REALE!                                               |
 |                                                                  |
-|   ✅ SNCP TESTATO SU MIRACOLLO!                                 |
-|      - Regina ha documentato in pensieri_regina.md              |
-|        MENTRE investigava problema GitHub Actions               |
-|      - SIMBIOSI VERA: lavoro + doc simultanei!                  |
-|                                                                  |
-|   ✅ PROBLEMA CRITICO SCOPERTO E RISOLTO!                       |
-|      - GitHub Actions diceva "success" ma non deployava         |
-|      - VM senza credenziali GitHub (git fetch falliva!)         |
-|      - FIX: Token GitHub + Deploy Key SSH                       |
-|                                                                  |
-|   ✅ v2.1.2 MIRACOLLO DEPLOYATA E LIVE!                         |
-|      - Bug fixes attivi su miracollo.com                        |
-|      - Credenziali VM sistemate per sempre                      |
-|                                                                  |
-|   LEZIONI:                                                       |
-|   - "Prima cercare cosa esiste!" (deploy.sh gia pronto!)        |
-|   - "Doppia sicurezza = Pace!" (Token + Deploy Key)             |
-|                                                                  |
-|   PROSSIMA SESSIONE - SNCP ROLLOUT:                             |
-|   1. SNCP su Contabilita (30-45 min)                            |
-|   2. SNCP su CervellaSwarm (30-45 min)                          |
-|   3. Ogni progetto avra la sua "coscienza"!                     |
-|                                                                  |
-|   "Miracolo su Miracollo!" 🚀                                    |
+|   - SNCP TESTATO SU MIRACOLLO!                                  |
+|   - PROBLEMA CRITICO SCOPERTO E RISOLTO!                        |
+|   - v2.1.2 MIRACOLLO DEPLOYATA E LIVE!                          |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
