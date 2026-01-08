@@ -18,30 +18,29 @@
 
 ## DOVE SIAMO
 
-**SESSIONE 123 - 8 Gennaio 2026: LO SCIAME HA MEMORIA! 🧠**
+**SESSIONE 124 - 8 Gennaio 2026: BEST PRACTICES & DECISIONI PRAGMATICHE! 📚**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 123 - CONSOLIDAMENTO!                                |
+|   SESSIONE 124 - DOCUMENTAZIONE & PRAGMATISMO!                  |
 |                                                                  |
-|   Sessione 119: SNCP nasce (brainstorm)                         |
-|   Sessione 120: HARDTEST famiglia                               |
-|   Sessione 121: Semplificazione sistema + Ricerche              |
-|   Sessione 122: IMPLEMENTAZIONE (spawn v3.0, load_context v2.1) |
-|   Sessione 123: CONSOLIDAMENTO! Sistema Memoria                 |
+|   Sprint 2 (Fix Buffering): QUASI COMPLETATO                    |
+|   ✅ Ricerca unbuffered (1,045 righe ⭐⭐⭐⭐⭐)                  |
+|   ✅ Implementazione spawn-workers v3.2.0 (stdbuf -oL)          |
+|   ✅ HARDTEST (scoperto limite claude -p mode)                  |
+|   📋 DECISIONE: Backlog futuro, focus su importante!            |
 |                                                                  |
-|   COMPLETATO OGGI (Sprint 1):                                    |
-|   ✅ 15 lezioni apprese nel database (Rating 10/10!)            |
-|   ✅ Sistema memoria operativo e testato                         |
-|   ✅ suggestions.py funzionante                                  |
-|   ✅ Lo sciame impara dai suoi errori!                           |
+|   Sprint 3 (Best Practices): IN CORSO (75%)                     |
+|   ✅ Analisi Pattern (27 pattern, 900 righe!)                   |
+|   🔄 Guida Best Practices (docs #1 lavora)                      |
+|   ⏳ Workflow Regina (docs #2 pronto)                           |
+|   ⏳ Review Guardiana (da fare)                                 |
 |                                                                  |
-|   COME LAVORIAMO:                                                |
-|   - spawn-workers headless = ZERO finestre (v3.1.0)             |
-|   - Worker in background via tmux                               |
-|   - Context ottimizzato (-37-59% tokens)                        |
-|   - Database memoria: lo sciame RICORDA! 🐝                     |
+|   WORKFLOW ORO IDENTIFICATO:                                     |
+|   RICERCA → DECISIONE → DELEGA → VERIFICA → DOCUMENTAZIONE      |
+|                                                                  |
+|   HANDOFF: Contesto 72%, continuiamo su nuova finestra! 🚀     |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -142,29 +141,26 @@
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   COMPLETATI:                                                    |
-|   [x] Test hook fixati - PASSATO! (Sessione 118)                |
-|   [x] Test spawn-workers - PASSATO! Worker editano!             |
-|   [x] SNCP nasce - Sessione 119                                 |
-|   [x] HARDTEST famiglia - Sessione 120                          |
-|   [x] Sistema semplificato - Sessione 121                       |
-|   [x] spawn-workers v3.0.0 --headless - Sessione 122           |
-|   [x] spawn-workers v3.1.0 headless DEFAULT - Sessione 122     |
-|   [x] load_context.py v2.1.0 ottimizzato - Sessione 122        |
-|   [x] Sprint 1: 15 Lezioni nel Database - Sessione 123! 🎉     |
+|   COMPLETATI SESSIONE 124:                                       |
+|   [x] Sprint 2: Ricerca + Implementazione v3.2.0                |
+|   [x] HARDTEST unbuffered (scoperto limite)                     |
+|   [x] Decisione pragmatica: backlog futuro                      |
+|   [x] Sprint 3: Analisi Pattern (27 pattern!)                   |
 |                                                                  |
-|   SISTEMA ATTUALE:                                               |
-|   - spawn-workers headless = worker in tmux (no finestre!)     |
-|   - Context overhead ridotto del 37-59%                         |
-|   - Database memoria: 15 lezioni apprese operative              |
-|   - suggestions.py: lo sciame può consultare lezioni!           |
-|   - Auto-sveglia: watcher notifica task completati              |
+|   IN CORSO (Sessione 125):                                       |
+|   [ ] Sprint 3: Guida Best Practices (docs lavora)              |
+|   [ ] Sprint 3: Workflow Regina (docs pronto)                   |
+|   [ ] Sprint 3: Review Guardiana                                |
+|   [ ] Checkpoint completo Sessione 124-125                      |
 |                                                                  |
-|   PROSSIMI (Consolidamento):                                     |
-|   [ ] Sprint 2: Fix Buffering Output (realtime logs)            |
-|   [ ] Sprint 3: Documentare Best Practices                      |
+|   DOPO Sprint 3:                                                 |
 |   [ ] Sprint 4: Validazione su Miracollo                        |
+|   [ ] Consolidamento multi-progetto                             |
 |   [ ] Widget "Decisioni Attive" (SNCP)                          |
+|                                                                  |
+|   BACKLOG FUTURO:                                                |
+|   [ ] Output realtime (ricerca claude CLI modes)                |
+|   [ ] Heartbeat enhancement (worker visibility)                 |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
