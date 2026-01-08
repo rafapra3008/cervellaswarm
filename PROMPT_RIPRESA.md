@@ -1,25 +1,27 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 8 Gennaio 2026 - Fine Sessione 122
-> **Versione:** v15.0.0 - IMPLEMENTAZIONE! spawn-workers v3.0.0 + load_context v2.1.0
+> **Versione:** v15.1.0 - LA MAGIA È NASCOSTA! Headless default!
 
 ---
 
-## CARA PROSSIMA CERVELLA - SESSIONE 122 HA COSTRUITO!
+## CARA PROSSIMA CERVELLA - LA MAGIA È NASCOSTA!
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 122: DA RICERCA A IMPLEMENTAZIONE!                   |
-|                                                                  |
-|   Sessione 121: Ricerche (tmux, OpenAI Swarm, context)          |
-|   Sessione 122: IMPLEMENTAZIONE di tutto!                       |
+|   SESSIONE 122: COMPLETATA AL 10000%!                           |
 |                                                                  |
 |   COMPLETATO:                                                    |
 |   1. tmux installato e testato                                  |
 |   2. spawn-workers v3.0.0 con --headless                        |
-|   3. load_context.py v2.1.0 ottimizzato (-37% tokens)          |
-|   4. Test headless passati - FUNZIONA!                          |
+|   3. spawn-workers v3.1.0 HEADLESS DEFAULT!                     |
+|   4. load_context.py v2.1.0 (-37% tokens)                       |
+|   5. watcher-regina v1.5.0 (tmux, log, bell)                   |
+|   6. Test completi passati                                      |
+|                                                                  |
+|   ORA: spawn-workers = headless automatico!                     |
+|   "La magia ora è nascosta!" 🧙                                 |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
