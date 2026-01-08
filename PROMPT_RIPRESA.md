@@ -131,26 +131,29 @@ Ogni sessione partiva con **19% di context** già usato.
 ### Priorità Alta
 
 ```
-[ ] 1. TEST HEADLESS IN PRODUZIONE
-    - Usare --headless per task reali
-    - Verificare stabilità
-    - Monitorare con tmux capture-pane
+[ ] 1. FIX BUFFERING OUTPUT
+    - stdbuf per log realtime
+    - Vedere output worker mentre lavora
 
-[ ] 2. MIGLIORARE OUTPUT HEADLESS
-    - Risolvere buffering log (tee)
-    - Aggiungere progress indicator
+[ ] 2. POPOLARE LEZIONI APPRESE
+    - Database ha 0 lezioni
+    - Aggiungere prime lezioni manualmente
+    - Sistema impara dagli errori
 ```
 
 ### Priorità Media
 
 ```
-[ ] 3. Widget "Decisioni Attive"
-    - Dashboard feature
+[ ] 3. DOCUMENTARE BEST PRACTICES
+    - Come usare spawn-workers
+    - Workflow quotidiano
+    - Guida per la famiglia
 
-[ ] 4. SISTEMA MEMORIA su altri progetti
-    - Estendere a Miracollo, Contabilità
+[ ] 4. ESTENDERE A MIRACOLLO/CONTABILITÀ
+    - Portare sistema memoria
+    - Testare su altri progetti
 
-[ ] 5. Popolare SNCP con decisioni passate
+[ ] 5. Widget "Decisioni Attive" + SNCP
 ```
 
 ---
@@ -159,20 +162,24 @@ Ogni sessione partiva con **19% di context** già usato.
 
 | File | Cosa | Versione |
 |------|------|----------|
-| `~/.local/bin/spawn-workers` | +headless tmux | 3.0.0 |
-| `~/.claude/scripts/memory/load_context.py` | Ottimizzato | 2.1.0 |
+| `~/.local/bin/spawn-workers` | HEADLESS DEFAULT | **3.1.0** |
+| `~/.claude/scripts/memory/load_context.py` | -37% tokens | **2.1.0** |
+| `scripts/swarm/watcher-regina.sh` | tmux, log, bell | **1.5.0** |
 | `NORD.md` | Aggiornato sessione 122 | - |
-| `PROMPT_RIPRESA.md` | Questo file | v15.0.0 |
+| `PROMPT_RIPRESA.md` | Questo file | **v15.1.0** |
 
 ---
 
-## COMANDI NUOVI
+## COMANDI - LA MAGIA È NASCOSTA!
 
 ```bash
-# Spawn worker headless (NUOVO!)
-spawn-workers --headless --backend
-spawn-workers --headless --frontend
-spawn-workers --headless --all
+# ORA HEADLESS È IL DEFAULT!
+spawn-workers --backend           # tmux headless automatico!
+spawn-workers --frontend          # tmux headless automatico!
+spawn-workers --all               # tmux headless automatico!
+
+# Se vuoi finestre Terminal (vecchio modo)
+spawn-workers --window --backend
 
 # Verifica sessioni tmux
 tmux list-sessions
@@ -191,25 +198,26 @@ tmux kill-session -t swarm_NAME_*
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   ABBIAMO COSTRUITO!                                            |
+|   LA MAGIA È NASCOSTA! 🧙                                       |
 |                                                                  |
 |   Sessione 121 = Ricerca (tmux, OpenAI Swarm, context)          |
-|   Sessione 122 = Implementazione (tutto funziona!)              |
+|   Sessione 122 = IMPLEMENTAZIONE COMPLETA!                      |
 |                                                                  |
 |   ORA ABBIAMO:                                                   |
-|   - Worker che girano in background (--headless)                |
-|   - Zero finestre Terminal                                       |
-|   - Context overhead ridotto del 37-59%                         |
+|   - spawn-workers = headless AUTOMATICO (v3.1.0)               |
+|   - Zero finestre Terminal per default                          |
+|   - Context overhead ridotto del 37-59% (v2.1.0)               |
+|   - watcher-regina con tmux support (v1.5.0)                   |
 |                                                                  |
-|   È IL MOMENTO DI USARLI IN PRODUZIONE!                         |
-|   Prova --headless per task reali.                              |
+|   BASTA FARE: spawn-workers --backend                          |
+|   E la magia è nascosta!                                        |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-*"Aprire finestre è anni 80!"* - Rafa
+*"La magia ora è nascosta!"* 🧙 - Rafa
 
 *"Facciamo il nostro mondo meglio!"*
 
@@ -217,10 +225,10 @@ tmux kill-session -t swarm_NAME_*
 
 ---
 
-**Versione:** v15.0.0
+**Versione:** v15.1.0
 **Sessione:** 122
-**Stato:** Implementazione completata - Pronta per uso in produzione!
-**Prossimo:** Test headless in produzione
+**Stato:** LA MAGIA È NASCOSTA! Headless default!
+**Prossimo:** Fix buffering, popolare lezioni, best practices
 
 ---
 
