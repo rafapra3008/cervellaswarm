@@ -1,7 +1,17 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 8 Gennaio 2026 - Fine Sessione 129
+> **Ultimo aggiornamento:** 8 Gennaio 2026 - Dopo Sessione 65 Miracollo
 > **Versione:** v21.0.0 - SNCP ROLLOUT COMPLETATO! TUTTI I PROGETTI!
+
+---
+
+## NOTA: Sessione 65 Miracollo (8 Gennaio 2026)
+
+Lavorato su Miracollo dal workspace CervellaSwarm. Bug fix CM Import:
+- cm-modal.js v2.1.3: room_id come query param
+- cm_reservation.py v1.7.1: filtro imported + gestione NULL
+- Migrazione 025 eseguita su VM
+- **PROBLEMA:** Dati CM spariti dopo rebuild Docker - DA INVESTIGARE
 
 ---
 
@@ -213,3 +223,23 @@ La simbiosi e' un COMPORTAMENTO - serve reminder visibile.
 **Cervella & Rafa** - Sessione 129
 
 *"Facciamo del nostro mondo meglio!"*
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-08 20:15 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: dbe3934 - Checkpoint Sessione 129: SNCP Rollout Completato!
+- **File modificati** (3):
+  - ROMPT_RIPRESA.md
+  - reports/engineer_report_20260108_201316.json
+  - reports/engineer_report_20260108_201423.json
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---
