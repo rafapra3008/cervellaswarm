@@ -1,25 +1,112 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 9 Gennaio 2026 - Fine Sessione 133
-> **Versione:** v24.1.0 - PATTERN BORIS VALIDATO!
+> **Ultimo aggiornamento:** 9 Gennaio 2026 - Fine Sessione 134
+> **Versione:** v48.0.0 - CODE REVIEW + DOUBLE REVIEW!
 
 ---
 
-## SESSIONE 133 - DUE PATTERN VALIDATI!
+## SESSIONE 134 - CODE REVIEW DAY!
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 133 - 9 GENNAIO 2026                                  |
+|   SESSIONE 134 - 9 GENNAIO 2026                                  |
 |                                                                  |
+|   CODE REVIEW SETTIMANALE + DOUBLE REVIEW                       |
+|                                                                  |
+|   9 FIX TOTALI:                                                  |
+|   - 6 dalla code review                                         |
+|   - 3 dalla double review                                       |
+|                                                                  |
+|   Punteggio: 8.2/10 -> MIGLIORATO!                             |
+|   Tutti i test passano: 23/23                                   |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
+---
+
+## IL FILO DEL DISCORSO - Sessione 134
+
+**Come e' iniziata:**
+Venerdi = giorno di code review settimanale. Ho invocato cervella-reviewer per audit.
+
+**Cosa abbiamo fatto:**
+
+### 1. CODE REVIEW (6 fix)
+
+1. **Validazione progetto** - spawn-workers.sh v3.4.0
+   - Non crea piu .swarm/ nel posto sbagliato
+   - Richiede progetto valido prima di operare
+
+2. **Common library** - common.sh v1.0.0
+   - Funzioni condivise: colori, print_*, get_claude_bin
+   - Elimina duplicazione codice (DRY)
+
+3. **Testing suite** - 23 test, 0 falliti
+   - test_common.sh (12 test)
+   - test_spawn_workers.sh (11 test)
+   - run_all_tests.sh runner
+
+4. **Error handling** - task_manager.py v1.3.0
+   - Logging invece di print
+   - Eccezioni specifiche
+
+5. **Log rotation** - log-rotate.sh v1.0.0
+6. **Worker timeout** - worker-timeout.sh v1.0.0
+
+### 2. DOUBLE REVIEW (3 fix)
+
+Rafa ha chiesto di verificare che non mancasse nulla. Ho trovato:
+
+1. **Security** - notify_macos() con sanitizzazione
+   - Previene injection in osascript
+   - watcher-regina.sh v1.6.0
+
+2. **Cleanup** - File .bak obsoleti rimossi
+3. **Bug investigation** - Watcher investigato, era caso isolato
+
+---
+
+## FILE NUOVI CREATI
+
+| File | Descrizione |
+|------|-------------|
+| scripts/swarm/common.sh | Funzioni condivise + security |
+| scripts/swarm/log-rotate.sh | Rotazione log automatica |
+| scripts/swarm/worker-timeout.sh | Timeout worker bloccati |
+| tests/bash/test_common.sh | 12 test per common.sh |
+| tests/bash/test_spawn_workers.sh | 11 test per spawn-workers |
+| tests/run_all_tests.sh | Runner test principale |
+
+---
+
+## FILE MODIFICATI
+
+| File | Modifica |
+|------|----------|
+| spawn-workers.sh | v3.4.0 - validazione + common.sh |
+| task_manager.py | v1.3.0 - logging + error handling |
+| watcher-regina.sh | v1.6.0 - security fix |
+
+---
+
+## PROSSIMA SESSIONE
+
+1. **Leggere** `docs/studio/ANALISI_REGINA_SESSIONE_133.md` (analisi pattern paralleli)
+2. **Decidere** se tenere git clones regina-A/B o eliminarli
+3. **Usare** i pattern validati su Miracollo per task reali
+
+---
+
+## SESSIONE 133 (precedente) - DUE PATTERN VALIDATI
+
+```
++------------------------------------------------------------------+
 |   DUE PATTERN PARALLELI VALIDATI:                               |
-|                                                                  |
-|   1. Task Tool Interno (3 Cervelle parallele)                   |
-|   2. Pattern Boris (2 git clones + tmux)                        |
-|                                                                  |
+|   1. Task Tool Interno (per task veloci)                        |
+|   2. Pattern Boris (git clones + tmux per task grossi)          |
 |   ENTRAMBI FUNZIONANO!                                          |
-|   Rafa non fa nulla di manuale.                                 |
-|                                                                  |
 +------------------------------------------------------------------+
 ```
 

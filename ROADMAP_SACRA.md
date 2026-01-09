@@ -6,7 +6,7 @@
 
 ## OVERVIEW
 
-> **Aggiornato:** 8 Gennaio 2026 - Sessione 123 - LO SCIAME HA MEMORIA! (v46.0.0)
+> **Aggiornato:** 9 Gennaio 2026 - Sessione 134 - CODE REVIEW DAY! (v48.0.0)
 
 ```
 +------------------------------------------------------------------+
@@ -323,6 +323,48 @@ APRI -> ASPETTA -> COMUNICA -> TESTA -> VERIFICA -> CHIUDI
 ---
 
 ## CHANGELOG
+
+### 9 Gennaio 2026 (Sessione 134) - CODE REVIEW DAY!
+
+**CODE REVIEW SETTIMANALE + DOUBLE REVIEW**
+
+```
+9 FIX TOTALI - Punteggio: 8.2/10 -> MIGLIORATO!
+```
+
+**CODE REVIEW (6 fix):**
+
+1. **Validazione progetto** - spawn-workers.sh v3.4.0
+   - Non crea piu .swarm/ nel posto sbagliato
+   - Richiede progetto valido prima di operare
+
+2. **Common library** - common.sh v1.0.0
+   - Funzioni condivise: colori, print_*, get_claude_bin
+   - Elimina duplicazione codice (DRY)
+
+3. **Testing suite** - 23 test, 0 falliti
+   - test_common.sh (12 test)
+   - test_spawn_workers.sh (11 test)
+
+4. **Error handling** - task_manager.py v1.3.0
+   - Logging invece di print
+   - Eccezioni specifiche
+
+5. **Log rotation** - log-rotate.sh v1.0.0
+6. **Worker timeout** - worker-timeout.sh v1.0.0
+
+**DOUBLE REVIEW (3 fix):**
+
+1. **Security** - notify_macos() con sanitizzazione
+   - Previene injection in osascript
+   - watcher-regina.sh v1.6.0
+
+2. **Cleanup** - File .bak obsoleti rimossi
+3. **Bug investigation** - Watcher investigato, era caso isolato
+
+**Versione:** 48.0.0 (MAJOR: Code Review completa + Security fix!)
+
+---
 
 ### 8 Gennaio 2026 (Sessione 129) - SNCP ROLLOUT COMPLETATO!
 
