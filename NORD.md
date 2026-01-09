@@ -18,25 +18,39 @@
 
 ## DOVE SIAMO
 
+**SESSIONE 135 - 9 Gennaio 2026: FASE 2.2 DNA FAMIGLIA COMPLETATA!**
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   SESSIONE 135 - DNA FAMIGLIA AGGIORNATI!                       |
+|                                                                  |
+|   FASE 2.2 COMPLETATA:                                          |
+|   - 16/16 DNA con REGOLE CONTEXT-SMART                          |
+|   - 12 Worker (Sonnet) aggiornati                               |
+|   - 3 Guardiane (Opus) aggiornate                               |
+|   - 1 Orchestrator aggiornata                                    |
+|                                                                  |
+|   OGNI DNA ORA HA:                                              |
+|   - Max 500 token per risposta                                   |
+|   - Usa SNCP (memoria esterna)                                   |
+|   - Regola 5 minuti (avvisa se lungo)                           |
+|   - Output strutturato FATTO/DA FARE/NOTE                       |
+|                                                                  |
+|   PROSSIMO: FASE 2.3 - CLAUDE.md globale snello                 |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
 **SESSIONE 134 - 9 Gennaio 2026: FASE 1 CONTEXT OPTIMIZATION COMPLETATA!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 134 - LA NOSTRA STRADA DEFINITA!                     |
-|                                                                  |
 |   FASE 1 COMPLETATA:                                            |
-|   - CLAUDE.md: 199 -> 47 linee (-86%)                           |
+|   - CLAUDE.md progetto: 199 -> 47 linee (-86%)                  |
 |   - PROMPT_RIPRESA: 555 -> 65 linee (-92%)                      |
 |   - RISPARMIO: ~5,900 token per sessione!                       |
-|                                                                  |
-|   DECISIONI CHIAVE:                                              |
-|   - Task < 5 min = Task tool interno                            |
-|   - Task > 5 min = Git clone separato                           |
-|   - SNCP = memoria esterna                                       |
-|   - 2-3 worker max                                               |
-|                                                                  |
-|   PROSSIMO: FASE 2 - DNA Famiglia (16 membri)                   |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -218,4 +232,4 @@
 
 *"Da 1x a Nx... il futuro e' parallelo!"*
 
-*Ultimo aggiornamento: 9 Gennaio 2026 - Sessione 134 - CODE REVIEW + DOUBLE REVIEW COMPLETATI!*
+*Ultimo aggiornamento: 9 Gennaio 2026 - Sessione 135 - FASE 2.2 DNA Famiglia completata!*
