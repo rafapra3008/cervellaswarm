@@ -47,7 +47,7 @@ Quando arriva task grande:
 
 ## Azione
 
-- [ ] Creare `.sncp/regole/PRINCIPI_LAVORO.md` in ogni progetto
+- [x] Creare `.sncp/regole/PRINCIPI_LAVORO.md` in ogni progetto (FATTO 9 Gen - Sessione 138)
 - [ ] Aggiungere a hook inizio sessione
 - [ ] Regina legge SEMPRE prima di task grandi
 

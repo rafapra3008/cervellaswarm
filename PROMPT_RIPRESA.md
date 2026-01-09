@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 9 Gennaio 2026 - 10:30
-> **Versione:** v53.0.0 - Studio Workflow + Test su Miracollo
+> **Ultimo aggiornamento:** 9 Gennaio 2026 - 11:30
+> **Versione:** v55.0.0 - Sessione 138 COMPLETA
 
 ---
 
@@ -9,40 +9,26 @@
 
 | Cosa | Stato |
 |------|-------|
-| Context Optimization | COMPLETATA (tutti i progetti) |
-| Studio Workflow Ottimale | COMPLETATO |
-| Test Workflow su Miracollo | COMPLETATO (Sessione 71) |
+| Context Optimization | COMPLETATA |
+| Studio Workflow | COMPLETATO |
+| Regole SNCP | COMPLETATE (tutti i progetti) |
+| RICERCA PRODOTTO | IN CORSO (vedere mappa) |
 
 ---
 
-## Sessione 137 - Studio Workflow + Test
+## Sessione 138 - COMPLETATA
 
 **Cosa fatto:**
-- Studio Workflow Ottimale Regina-Rafa (completo!)
-- Test workflow su Miracollo: Database Fortezza Sprint A
-- Promemoria migliorare SNCP annotato
 
-**Risultati Test Workflow:**
-- Plan mode funziona
-- Delega a worker funziona (cervella-data, cervella-backend)
-- Checkpoint strutturato funziona
-- 2 sprint completati su Miracollo (FK + VIEW)
+1. **Regole Workflow in SNCP** (tutti i progetti)
+   - Creato `.sncp/regole/PRINCIPI_LAVORO.md`
+   - CervellaSwarm, Miracollo, Contabilita
+   - "Se devo ripetere, non e scritto abbastanza bene"
 
-**File creati:**
-- `.sncp/idee/STUDIO_WORKFLOW_OTTIMALE.md` (workflow Rafa-Regina)
-- `.sncp/idee/MIGLIORARE_SNCP.md` (promemoria)
-
----
-
-## Workflow Validato
-
-```
-INIZIO (15 min)     → Plan mode + validazione insieme
-ESECUZIONE (60 min) → Regina autonoma, spawna worker
-CHIUSURA (15 min)   → Deploy + checkpoint
-```
-
-**Principio chiave:** "Lavoro grande = tanti lavori piccoli"
+2. **Miracollo Database Fortezza 6.0.1** - COMPLETATO!
+   - Sprint A.3: Cleanup history (DB -60%, 2.5MB → 992KB)
+   - Sprint B: Backup automatico (systemd timer ogni 6h)
+   - Sprint C: Documentazione schema (694 righe)
 
 ---
 
@@ -50,17 +36,35 @@ CHIUSURA (15 min)   → Deploy + checkpoint
 
 | Cosa | Dove |
 |------|------|
-| Studio Workflow | `.sncp/idee/STUDIO_WORKFLOW_OTTIMALE.md` |
-| Migliorare SNCP | `.sncp/idee/MIGLIORARE_SNCP.md` |
-| Roadmap Context | `.sncp/idee/LA_NOSTRA_STRADA_ROADMAP_FINALE.md` |
+| Regole Lavoro | `.sncp/regole/PRINCIPI_LAVORO.md` |
+| Workflow Studio | `.sncp/idee/STUDIO_WORKFLOW_OTTIMALE.md` |
+| Mappa Prodotto | `.sncp/idee/PRODOTTO_MAPPA_MASTER.md` |
+| Ricerche Prodotto | `.sncp/idee/ricerche_prodotto/` |
+
+---
+
+## Miracollo Status
+
+| Sprint | Stato |
+|--------|-------|
+| A: Audit DB | ✅ |
+| A.1: FK | ✅ |
+| A.2: VIEW | ✅ |
+| A.3: Cleanup | ✅ (Sessione 138) |
+| B: Backup | ✅ (Sessione 138) |
+| C: Docs | ✅ (Sessione 138) |
+
+**DATABASE FORTEZZA = COMPLETATO!**
+
+Prossimo su Miracollo: 6.0.2 UX Planning Ottimizzato
 
 ---
 
 ## Prossimi Step
 
-1. Implementare regole workflow in SNCP (scritte, non ripetute)
-2. Continuare test workflow su altri progetti
-3. Monitorare risparmio token reale
+1. Continuare ricerca prodotto (differenziatori)
+2. Miracollo 6.0.2: UX Planning
+3. Monitorare backup automatico
 
 ---
 
