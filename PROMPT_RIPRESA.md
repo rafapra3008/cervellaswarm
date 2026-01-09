@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 9 Gennaio 2026
-> **Versione:** v52.0.0 - Rollout Completo!
+> **Ultimo aggiornamento:** 9 Gennaio 2026 - 10:30
+> **Versione:** v53.0.0 - Studio Workflow + Test su Miracollo
 
 ---
 
@@ -9,50 +9,40 @@
 
 | Cosa | Stato |
 |------|-------|
-| FASE 1: CLAUDE.md + PROMPT_RIPRESA snelli | COMPLETATA |
-| FASE 2.2: DNA Famiglia (16 membri) | COMPLETATA |
-| FASE 2.3: CLAUDE.md globale snello | COMPLETATA (-75%) |
-| Rollout Miracollo | COMPLETATA (-89%) |
-| Rollout Contabilita | COMPLETATA (-72%) |
+| Context Optimization | COMPLETATA (tutti i progetti) |
+| Studio Workflow Ottimale | COMPLETATO |
+| Test Workflow su Miracollo | COMPLETATO (Sessione 71) |
 
 ---
 
-## Ultima Sessione - 136
+## Sessione 137 - Studio Workflow + Test
 
 **Cosa fatto:**
-- Rollout Contabilita completato
-- CLAUDE.md creato (47 linee)
-- PROMPT_RIPRESA snellito (253 → 71 linee, -72%)
+- Studio Workflow Ottimale Regina-Rafa (completo!)
+- Test workflow su Miracollo: Database Fortezza Sprint A
+- Promemoria migliorare SNCP annotato
 
-**File creati/modificati:**
-- `~/Developer/ContabilitaAntigravity/CLAUDE.md` (nuovo)
-- `~/Developer/ContabilitaAntigravity/PROMPT_RIPRESA.md` (snellito)
-- Backup: `PROMPT_RIPRESA_BACKUP_20260109.md`
+**Risultati Test Workflow:**
+- Plan mode funziona
+- Delega a worker funziona (cervella-data, cervella-backend)
+- Checkpoint strutturato funziona
+- 2 sprint completati su Miracollo (FK + VIEW)
 
----
-
-## Risultati Totali Context Optimization
-
-| File | Prima | Dopo | Riduzione |
-|------|-------|------|-----------|
-| CLAUDE.md CervellaSwarm | 199 | 47 | -86% |
-| PROMPT_RIPRESA CervellaSwarm | 555 | 65 | -92% |
-| CLAUDE.md globale | 527 | 130 | -75% |
-| CLAUDE.md Miracollo | 0 | 45 | nuovo |
-| PROMPT_RIPRESA Miracollo | 797 | 85 | -89% |
-| CLAUDE.md Contabilita | 0 | 47 | nuovo |
-| PROMPT_RIPRESA Contabilita | 253 | 71 | -72% |
-| 16 DNA | +sezione | - | context-smart |
-
-**TOTALE: ~2,500+ linee risparmiate per sessione!**
+**File creati:**
+- `.sncp/idee/STUDIO_WORKFLOW_OTTIMALE.md` (workflow Rafa-Regina)
+- `.sncp/idee/MIGLIORARE_SNCP.md` (promemoria)
 
 ---
 
-## Prossimi Step
+## Workflow Validato
 
-1. Test workflow completo (nuova sessione con context snello)
-2. Monitorare risparmio token reale
-3. FASE 2 Worker Paralleli (se serve)
+```
+INIZIO (15 min)     → Plan mode + validazione insieme
+ESECUZIONE (60 min) → Regina autonoma, spawna worker
+CHIUSURA (15 min)   → Deploy + checkpoint
+```
+
+**Principio chiave:** "Lavoro grande = tanti lavori piccoli"
 
 ---
 
@@ -60,11 +50,18 @@
 
 | Cosa | Dove |
 |------|------|
-| Roadmap completa | `.sncp/idee/LA_NOSTRA_STRADA_ROADMAP_FINALE.md` |
-| Template CLAUDE.md | `templates/CLAUDE_MD_PROGETTO_TEMPLATE.md` |
-| Template PROMPT_RIPRESA | `templates/PROMPT_RIPRESA_TEMPLATE.md` |
-| Backup DNA originali | `~/.claude/agents_backup_20260109/` |
+| Studio Workflow | `.sncp/idee/STUDIO_WORKFLOW_OTTIMALE.md` |
+| Migliorare SNCP | `.sncp/idee/MIGLIORARE_SNCP.md` |
+| Roadmap Context | `.sncp/idee/LA_NOSTRA_STRADA_ROADMAP_FINALE.md` |
 
 ---
 
-*"MINIMO in memoria, MASSIMO su disco"*
+## Prossimi Step
+
+1. Implementare regole workflow in SNCP (scritte, non ripetute)
+2. Continuare test workflow su altri progetti
+3. Monitorare risparmio token reale
+
+---
+
+*"Una cosa alla volta, fatta BENE!"*
