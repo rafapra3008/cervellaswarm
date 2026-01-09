@@ -1,0 +1,30 @@
+Metadata-Version: 2.4
+Name: cervella
+Version: 0.1.0
+Summary: AI Team per Developer Professionali - 16 agenti specializzati orchestrati da una Regina
+Author-email: Rafa & Cervella <hello@cervellaswarm.com>
+License: MIT
+Project-URL: Homepage, https://cervellaswarm.com
+Project-URL: Repository, https://github.com/cervellaswarm/cervella
+Project-URL: Documentation, https://docs.cervellaswarm.com
+Keywords: ai,agents,cli,development,automation,claude
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: click>=8.0.0
+Requires-Dist: anthropic>=0.40.0
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: rich>=13.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"

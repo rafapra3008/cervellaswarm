@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 9 Gennaio 2026 - Sessione 141
-> **Versione:** v61.0.0 - PLUGIN MVP CREATO!
+> **Ultimo aggiornamento:** 9 Gennaio 2026 - Sessione 142
+> **Versione:** v62.0.0 - CLI MVP FUNZIONANTE!
 
 ---
 
@@ -11,46 +11,72 @@
 |------|-------|
 | Ricerca + Decisioni | COMPLETATE |
 | Landing + Marketing | IN PAUSA |
-| **PLUGIN MVP** | **CREATO E VALIDATO!** |
+| Plugin (vecchio) | DEPRECATO |
+| **CLI `cervella`** | **MVP FUNZIONANTE!** |
 
 ---
 
-## Sessione 141 - GRANDE PROGRESSO!
+## Sessione 142 - GRANDE GIORNO!
+
+### Decisione Strategica
+
+Rafa ha deciso: **APP VERA**, non plugin.
+- Controllo totale
+- Indipendenza da Anthropic plugins
+- Prodotto vero come Cursor
 
 ### Cosa Fatto
 
-1. **RESET** - Capito che mancava il prodotto vero
-2. **STUDIO** - Ricerca su Claude Code plugins
-3. **SCOPERTA** - CervellaSwarm puo essere un PLUGIN!
-4. **CREAZIONE** - Plugin MVP con 16 agenti convertiti
+1. **Fix bug agenti** - Write tool mancante (scienziata, researcher, marketing, security)
+2. **Ricerca Cursor** - Storia completa, come hanno fatto
+3. **Mappa App Vera** - Architettura CLI + roadmap
+4. **CLI MVP creato** - `cervella` v0.1.0 funzionante!
 
-### Plugin Creato
+### CLI Creato
 
 ```
-plugin/
-├── .claude-plugin/plugin.json    # Validato OK!
-├── agents/                       # 16 agenti .json
-├── commands/init-sncp.md         # Comando /init-sncp
-└── templates/sncp/               # Template SNCP
+cervella/
+├── pyproject.toml          # Package config
+├── cli/                    # Click CLI
+│   └── commands/           # init, task, status, checkpoint
+├── api/                    # Claude API wrapper (BYOK)
+├── sncp/                   # Memoria esterna
+├── agents/                 # 8 agenti built-in
+└── tests/                  # TUTTI PASS!
 ```
 
-### Validazione
+### Comandi Funzionanti
 
 ```bash
-claude plugin validate ./plugin
-# ✔ Validation passed
+cervella --version          # v0.1.0
+cervella init               # Crea .sncp/
+cervella status             # Mostra 8 agenti pronti
+cervella task "..." --dry-run
+cervella checkpoint -m "..."
 ```
+
+---
+
+## Decisioni Prese
+
+| Cosa | Decisione |
+|------|-----------|
+| Nome comando | `cervella` |
+| Linguaggio | Python |
+| Priorità | CLI first, web dopo |
+| Modello | BYOK (Bring Your Own Key) |
 
 ---
 
 ## Prossimi Step
 
-| Step | Azione |
-|------|--------|
-| 1 | Testare plugin: `claude --plugin-dir ./plugin` |
-| 2 | Verificare agenti funzionano |
-| 3 | Pubblicare su GitHub |
-| 4 | Testare installazione da zero |
+| # | Task |
+|---|------|
+| 1 | Test reale con API key |
+| 2 | Aggiungere altri agenti (16 totali) |
+| 3 | README per il package |
+| 4 | Aggiungere al PATH |
+| 5 | PyPI publish (quando pronto) |
 
 ---
 
@@ -58,22 +84,30 @@ claude plugin validate ./plugin
 
 | Cosa | Dove |
 |------|------|
-| Plugin MVP | `plugin/` |
-| Studio completo | `.sncp/idee/STUDIO_CLAUDE_CODE_COMPLETO.md` |
-| Reset | `.sncp/idee/RESET_GENNAIO_2026.md` |
-| Roadmap | `.sncp/idee/ROADMAP_PRODOTTO_VERO.md` |
+| CLI MVP | `cervella/` |
+| Mappa App Vera | `.sncp/idee/MAPPA_APP_VERA.md` |
+| Ricerca Cursor | `.sncp/idee/RICERCA_STORIA_CURSOR.md` |
+| Studio precedente | `.sncp/idee/STUDIO_CLAUDE_CODE_COMPLETO.md` |
 
 ---
 
 ## Per Testare
 
 ```bash
-cd ~/Developer/CervellaSwarm
-claude --plugin-dir ./plugin
+# Installa (se non già fatto)
+cd ~/Developer/CervellaSwarm/cervella
+pip3 install -e .
+
+# Usa
+cervella --help
+cervella init
+cervella status
 ```
 
 ---
 
-*"La soluzione era sotto i nostri occhi!"*
+*"Quando troviamo il PERCHE, NULLA ci ferma!"*
 
-*Plugin VALIDATO! Con il cuore pieno!*
+*CLI MVP FUNZIONANTE! Con il cuore pieno!*
+
+---
