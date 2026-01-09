@@ -1,48 +1,50 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 9 Gennaio 2026 - 14:30
-> **Versione:** v59.0.0 - Sessione 140 INCREDIBILE!
+> **Ultimo aggiornamento:** 9 Gennaio 2026 - Sessione 141
+> **Versione:** v60.0.0 - RESET: Il Prodotto Vero
 
 ---
 
-## Stato Attuale - CervellaSwarm
+## Stato Attuale
 
 | Cosa | Stato |
 |------|-------|
-| FASE 1+2 | COMPLETATE (Ricerca + Decisioni) |
-| **FASE 3** | **IN CORSO - Landing completa!** |
-| Architettura | CLI + Web Dashboard |
-| Pricing | $0 / $19 / $39 |
+| Ricerca + Decisioni | COMPLETATE |
+| Landing + Marketing | IN PAUSA (pronte per dopo) |
+| **IL PRODOTTO VERO** | **DA COSTRUIRE** |
 
 ---
 
-## Sessione 140 - LANDING PAGE COMPLETATA!
+## RESET - 9 Gennaio 2026
 
-**Creato oggi:**
-1. `landing/index.html` - Landing page principale
-2. `landing/how-it-works.html` - Come funziona (4 step)
-3. `landing/faq.html` - FAQ moderna (5 sezioni)
-4. `landing/getting-started.html` - Guida 5 minuti
+**Realizzazione di Rafa:**
+> "Prima dobbiamo creare in sé la CervellaSwarm...
+> perché non abbiamo il prodotto ancora"
 
-**Documenti SNCP:**
-- `MARKETING_VENDITA_MASTER.md` - Piano completo
-- `SESSIONE_DEDICATA_VIDEO_CONTENUTI.md` - Video/GIF/Beta
-- `TEASER_SCRIPT_STORYBOARD.md` - Script video pronto
+**Cosa mancava:** Un prodotto che altri possono installare e usare.
 
-**Dashboard:** Aggiornato NORD.md + ROADMAP_SACRA.md
+**Nuova direzione:** Prima COSTRUIRE, poi VENDERE.
 
 ---
 
-## TODO Prossimi Step
+## Nuova Roadmap
 
-| Task | Status |
-|------|--------|
-| Landing + How It Works + FAQ + Getting Started | FATTO! |
-| Setup email (Resend/SendGrid) | DA FARE |
-| Payment integration (Stripe) | DA FARE |
-| Deploy landing (Vercel/Netlify) | DA FARE |
-| Video teaser | SESSIONE DEDICATA |
-| Beta testing 5-10 persone | DOPO LANDING |
+| Fase | Obiettivo | Status |
+|------|-----------|--------|
+| A | Studiare come costruire | DA FARE |
+| B | Decidere architettura MVP | DA FARE |
+| C | Costruire MVP funzionante | DA FARE |
+| D | Validare su altri computer | DA FARE |
+| E | Tornare a marketing | DOPO |
+
+---
+
+## Prossimo Step Concreto
+
+**FASE A.1.1:** Studiare come funziona Claude Code
+- Documentazione Anthropic
+- Come si configurano agenti custom
+- Limiti e possibilità
 
 ---
 
@@ -50,24 +52,23 @@
 
 | Cosa | Dove |
 |------|------|
-| Landing Page | `landing/` (4 file HTML) |
-| Piano Marketing | `.sncp/idee/MARKETING_VENDITA_MASTER.md` |
-| Roadmap FASE 3 | `.sncp/idee/FASE_3_ROADMAP.md` |
-| Ricerche | `.sncp/idee/ricerche_prodotto/` |
+| Reset completo | `.sncp/idee/RESET_GENNAIO_2026.md` |
+| Roadmap nuova | `.sncp/idee/ROADMAP_PRODOTTO_VERO.md` |
+| Ricerche (pronte) | `.sncp/idee/ricerche_prodotto/` |
+| Landing (in pausa) | `landing/` |
 
 ---
 
-## Come Vedere la Landing
+## In Pausa (ma pronto)
 
-```bash
-open landing/index.html
-# oppure
-cd landing && python -m http.server 8080
-# poi vai a http://localhost:8080
-```
+- Landing page (4 pagine in `landing/`)
+- Marketing plan (`MARKETING_VENDITA_MASTER.md`)
+- Video script (`TEASER_SCRIPT_STORYBOARD.md`)
+- Email/Payment setup
 
 ---
 
-*"Sessione INCREDIBILE! 4 pagine in una sessione!"*
+*"Dobbiamo vedere la cosa vera... averla... provarla...
+installarla su altri computer... avere fiducia"*
 
-*"Con il cuore pieno di energia buona!"*
+*Con il cuore pieno di energia buona!*

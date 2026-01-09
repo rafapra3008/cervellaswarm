@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 9 Gennaio 2026 - 13:45 (Sessione 140)
+> Aggiornato: 9 Gennaio 2026 - Sessione 141 (RESET)
 
 ```
 +==================================================================+
@@ -27,74 +27,60 @@
 |   Multi-Instance = Moltiplicazione REALE                        |
 |   SNCP = Memoria Esterna (trade secret!)                        |
 |                                                                  |
-|   IL MODELLO:                                                    |
-|   1. Rafa chiede "voglio X"                                     |
-|   2. Regina analizza, pianifica, divide                         |
-|   3. Regina orchestra N Cervelle in parallelo                   |
-|   4. Risultato: N volte piu veloce!                             |
-|                                                                  |
 +==================================================================+
 ```
 
 ---
 
-## DOVE SIAMO
+## DOVE SIAMO (RESET 9 Gennaio 2026)
 
 ```
-FASE 1: RICERCA COMPETITOR    [####################] 100%
+RICERCA COMPETITOR            [####################] 100%
   - Cursor, Windsurf, Google, Copilot analizzati
 
-FASE 2: DECISIONI             [####################] 100%
+DECISIONI BUSINESS            [####################] 100%
   - Architettura: CLI + Web Dashboard
   - Pricing: BYOK Free -> $19 -> $39
   - Target: Dev complessi, Privacy-first
 
-FASE 3: FARE                  [####................] 20%
-  - MVP Dashboard (esiste, da migliorare)
-  - Landing Page (da fare)
-  - Early Bird Campaign (da fare)
+LANDING + MARKETING           [####################] 100%
+  - 4 pagine HTML pronte
+  - Piano marketing documentato
+  - IN PAUSA fino a prodotto vero
+
+>>> RESET: IL PRODOTTO VERO <<<
+
+FASE A: STUDIARE              [....................] 0%
+FASE B: DECIDERE              [....................] 0%
+FASE C: COSTRUIRE MVP         [....................] 0%
+FASE D: VALIDARE              [....................] 0%
+FASE E: GO TO MARKET          [....................] 0%
 ```
 
 ---
 
-## STATO ATTUALE
+## IL RESET
 
-| Cosa | Status |
-|------|--------|
-| Ricerca Prodotto | FASE 1+2 COMPLETE! |
-| Architettura | DECISA |
-| Pricing | DECISO |
-| Multi-Instance | FUNZIONANTE |
-| 16 Agents | FUNZIONANTI |
-| SNCP tutti progetti | COMPLETO |
+> "Prima dobbiamo creare in sé la CervellaSwarm...
+> perché non abbiamo il prodotto ancora"
+> - Rafa, 9 Gennaio 2026
 
----
+**Cosa avevamo fatto:** Landing, pricing, marketing
+**Cosa mancava:** IL PRODOTTO VERO
 
-## DECISIONI PRESE
-
-| Decisione | Scelta | Perche |
-|-----------|--------|--------|
-| **Architettura** | CLI + Web Dashboard | Best of both worlds |
-| **Pricing** | $0 / $19 / $39 | Accessibile + sustainable |
-| **Target** | Dev complessi | No mass market |
-| **Differenziatore** | SNCP + 16 agenti | Nessuno ce l'ha |
+**Nuova direzione:** Prima COSTRUIRE, poi VENDERE
 
 ---
 
-## PROSSIMI STEP (FASE 3)
+## PROSSIMI STEP
 
-```
-+==================================================================+
-|                                                                  |
-|   FASE 3 - FARE:                                                |
-|                                                                  |
-|   [ ] MVP Dashboard - Migliorare con esempi pro                 |
-|   [ ] Landing Page - Messaging per target                       |
-|   [ ] Early Bird Campaign - $99/anno primi 500                  |
-|   [ ] Contattare Anthropic - sales@anthropic.com                |
-|                                                                  |
-+==================================================================+
-```
+| Fase | Obiettivo | Status |
+|------|-----------|--------|
+| A | Studiare come costruire | DA FARE |
+| B | Decidere architettura MVP | DA FARE |
+| C | Costruire MVP funzionante | DA FARE |
+| D | Validare su altri computer | DA FARE |
+| E | Tornare a marketing | DOPO |
 
 ---
 
@@ -102,10 +88,11 @@ FASE 3: FARE                  [####................] 20%
 
 | Cosa | Dove |
 |------|------|
-| Mappa Prodotto | `.sncp/idee/PRODOTTO_MAPPA_MASTER.md` |
-| Ricerche | `.sncp/idee/ricerche_prodotto/` |
+| Reset completo | `.sncp/idee/RESET_GENNAIO_2026.md` |
+| Roadmap nuova | `.sncp/idee/ROADMAP_PRODOTTO_VERO.md` |
+| Ricerche (pronte) | `.sncp/idee/ricerche_prodotto/` |
+| Landing (in pausa) | `landing/` |
 | DNA Famiglia | `docs/DNA_FAMIGLIA.md` |
-| Regole Lavoro | `.sncp/regole/PRINCIPI_LAVORO.md` |
 
 ---
 
@@ -118,9 +105,6 @@ FASE 3: FARE                  [####................] 20%
 |                                                                  |
 |   "Quando trovi il PERCHE, nulla ti ferma!"                     |
 |                                                                  |
-|   In attesa di quella foto...                                    |
-|   da un posto speciale nel mondo.                               |
-|                                                                  |
 +==================================================================+
 ```
 
@@ -128,6 +112,6 @@ FASE 3: FARE                  [####................] 20%
 
 *"Il NORD ci guida. Sempre."*
 
-*"Le ragazze nostre! La famiglia!"*
+*"Prima COSTRUIRE, poi VENDERE."*
 
 **Cervella & Rafa**

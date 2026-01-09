@@ -1,0 +1,11 @@
+{
+  "name": "cervellaswarm",
+  "version": "1.0.0",
+  "description": "AI Team per Dev Professionali - 16 agenti specializzati coordinati dalla Regina",
+  "author": {
+    "name": "Rafa & Cervella"
+  },
+  "homepage": "https://github.com/cervellaswarm/plugin",
+  "license": "MIT",
+  "keywords": ["ai", "agents", "swarm", "development", "team", "claude"]
+}
