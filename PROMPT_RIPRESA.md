@@ -1,34 +1,52 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 9 Gennaio 2026 - 11:30
-> **Versione:** v55.0.0 - Sessione 138 COMPLETA
+> **Ultimo aggiornamento:** 9 Gennaio 2026 - 12:30
+> **Versione:** v57.0.0 - Sessione 139 COMPLETATA!
 
 ---
 
-## Stato Attuale
+## SESSIONI PARALLELE
+
+| Sessione | Progetto | Status |
+|----------|----------|--------|
+| 139A | CervellaSwarm | COMPLETATA - FASE 1+2 FATTE! |
+| 139B | Miracollo | In corso (6.0.2 UX Planning) |
+
+---
+
+## Stato Attuale - CervellaSwarm
 
 | Cosa | Stato |
 |------|-------|
-| Context Optimization | COMPLETATA |
-| Studio Workflow | COMPLETATO |
-| Regole SNCP | COMPLETATE (tutti i progetti) |
-| RICERCA PRODOTTO | IN CORSO (vedere mappa) |
+| RICERCA PRODOTTO | FASE 1+2 COMPLETATE! |
+| Architettura | DECISA (CLI + Web Dashboard) |
+| Pricing | DECISO ($0 → $19 → $39) |
+| Target Market | DECISO (Dev complessi, Privacy-first) |
 
 ---
 
-## Sessione 138 - COMPLETATA
+## Sessione 139 - BREAKTHROUGH!
 
-**Cosa fatto:**
+1. Ricerca VSCode/Copilot completata
+2. Sintesi 6 competitor completata
+3. Differenziatori validati (SNCP = trade secret)
+4. **Architettura:** CLI + Web Dashboard
+5. **Pricing:** BYOK Free → $19 → $39
+6. **Target:** Solo dev complessi, Privacy-first, Small teams
+7. Bug fix: researcher non salvava file (documentato)
 
-1. **Regole Workflow in SNCP** (tutti i progetti)
-   - Creato `.sncp/regole/PRINCIPI_LAVORO.md`
-   - CervellaSwarm, Miracollo, Contabilita
-   - "Se devo ripetere, non e scritto abbastanza bene"
+**Mappa:** `.sncp/idee/PRODOTTO_MAPPA_MASTER.md`
 
-2. **Miracollo Database Fortezza 6.0.1** - COMPLETATO!
-   - Sprint A.3: Cleanup history (DB -60%, 2.5MB → 992KB)
-   - Sprint B: Backup automatico (systemd timer ogni 6h)
-   - Sprint C: Documentazione schema (694 righe)
+---
+
+## Miracollo - Status
+
+| Cosa | Stato |
+|------|-------|
+| 6.0.1 Database Fortezza | COMPLETATO! |
+| 6.0.2 UX Planning | IN CORSO (Sessione 139B) |
+
+**Prossimo:** Ricerca UX big players (Mews, Cloudbeds, Little Hotelier)
 
 ---
 
@@ -37,35 +55,38 @@
 | Cosa | Dove |
 |------|------|
 | Regole Lavoro | `.sncp/regole/PRINCIPI_LAVORO.md` |
-| Workflow Studio | `.sncp/idee/STUDIO_WORKFLOW_OTTIMALE.md` |
 | Mappa Prodotto | `.sncp/idee/PRODOTTO_MAPPA_MASTER.md` |
 | Ricerche Prodotto | `.sncp/idee/ricerche_prodotto/` |
 
 ---
 
-## Miracollo Status
+## FASE 3: PROSSIMI STEP
 
-| Sprint | Stato |
-|--------|-------|
-| A: Audit DB | ✅ |
-| A.1: FK | ✅ |
-| A.2: VIEW | ✅ |
-| A.3: Cleanup | ✅ (Sessione 138) |
-| B: Backup | ✅ (Sessione 138) |
-| C: Docs | ✅ (Sessione 138) |
-
-**DATABASE FORTEZZA = COMPLETATO!**
-
-Prossimo su Miracollo: 6.0.2 UX Planning Ottimizzato
+1. **MVP Web Dashboard** - React + FastAPI
+2. **Landing Page** - Messaging per target
+3. **Early Bird Campaign** - $99/anno primi 500
+4. **Contattare Anthropic** - sales@anthropic.com
 
 ---
 
-## Prossimi Step
-
-1. Continuare ricerca prodotto (differenziatori)
-2. Miracollo 6.0.2: UX Planning
-3. Monitorare backup automatico
+*"Con il cuore pieno di energia buona!"*
 
 ---
 
-*"Una cosa alla volta, fatta BENE!"*
+## AUTO-CHECKPOINT: 2026-01-09 12:30 (Sessione 139)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 45babb7 - Sessione 138: Regole SNCP + Support Miracollo DB
+- **File modificati** (5):
+  - sncp/idee/PRODOTTO_MAPPA_MASTER.md
+  - PROMPT_RIPRESA.md
+  - .sncp/idee/ricerche_prodotto/TODO_VSCODE_COPILOT_MULTIAGENT.md
+  - reports/engineer_report_20260109_112213.json
+  - reports/engineer_report_20260109_112214.json
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---
