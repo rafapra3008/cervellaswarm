@@ -2,7 +2,7 @@
 
 **Rilevato:** 6 Gennaio 2026 - Sessione 108
 **Priorità:** MEDIA
-**Stato:** da_sistemare
+**Stato:** investigato_v1.6.0
 
 ---
 
@@ -54,3 +54,23 @@ Da sistemare in una sessione futura dedicata.
 ---
 
 *"Documentare sempre i bug per il futuro!"*
+
+---
+
+## INVESTIGAZIONE (9 Gennaio 2026 - Sessione 134)
+
+**Analisi:**
+- Il watcher usa `fswatch` che e' istantaneo (non polling)
+- Il ritardo di 3 minuti era probabilmente un caso isolato
+- Possibile causa: fswatch non era in esecuzione al momento
+
+**Miglioramenti applicati in v1.6.0:**
+1. Aggiunto source common.sh per funzioni condivise
+2. Implementato `notify_macos()` con sanitizzazione input (security fix)
+3. Fallback sicuro se common.sh non disponibile
+
+**Raccomandazione:**
+- Monitorare se il problema si ripresenta
+- Se si ripete, aggiungere logging piu' dettagliato
+
+**Status:** Migliorato, da monitorare

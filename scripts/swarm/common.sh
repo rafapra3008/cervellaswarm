@@ -206,3 +206,51 @@ timestamp() {
 timestamp_file() {
     date '+%Y%m%d_%H%M%S'
 }
+
+# ============================================================================
+# SECURITY - Escaping per notifiche macOS
+# ============================================================================
+
+# Sanitizza stringa per uso sicuro in osascript
+# Rimuove/escapa caratteri che potrebbero causare injection
+sanitize_for_osascript() {
+    local input="$1"
+    # Rimuove backslash, virgolette, newline
+    # Limita lunghezza a 200 caratteri per notifiche
+    echo "$input" | tr -d '\\\"' | tr '\n' ' ' | cut -c1-200
+}
+
+# Invia notifica macOS in modo sicuro
+notify_macos() {
+    local title="$1"
+    local message="$2"
+    local sound="${3:-Glass}"
+
+    # Sanitizza input
+    title=$(sanitize_for_osascript "$title")
+    message=$(sanitize_for_osascript "$message")
+
+    # Invia notifica
+    osascript -e "display notification \"$message\" with title \"$title\" sound name \"$sound\"" 2>/dev/null || true
+}
+
+# Notifica con terminal-notifier se disponibile (supporta click action)
+notify_macos_advanced() {
+    local title="$1"
+    local message="$2"
+    local sound="${3:-Glass}"
+    local open_url="${4:-}"
+
+    title=$(sanitize_for_osascript "$title")
+    message=$(sanitize_for_osascript "$message")
+
+    if command -v terminal-notifier &>/dev/null && [[ -n "$open_url" ]]; then
+        terminal-notifier \
+            -title "$title" \
+            -message "$message" \
+            -sound "$sound" \
+            -open "$open_url" 2>/dev/null
+    else
+        notify_macos "$title" "$message" "$sound"
+    fi
+}

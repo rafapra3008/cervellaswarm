@@ -8,8 +8,8 @@
 #   ./watcher-regina.sh                    # Default: .swarm/tasks, VS Code
 #   ./watcher-regina.sh .swarm/tasks Code  # Esplicito
 #
-# Versione: 1.5.0
-# Data: 8 Gennaio 2026
+# Versione: 1.6.0
+# Data: 9 Gennaio 2026
 # Cervella & Rafa
 #
 # v1.5.0: HEADLESS SUPPORT!
@@ -23,8 +23,15 @@
 # v1.1.0: RIMOSSO keystroke! Solo notifiche.
 #         Sicuro con multiple finestre aperte.
 #         Click notifica apre output direttamente.
+# v1.6.0: SECURITY FIX! Usa notify_macos per notifiche sicure (no injection)
 
 set -e
+
+# Source common functions
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ -f "${SCRIPT_DIR}/common.sh" ]]; then
+    source "${SCRIPT_DIR}/common.sh"
+fi
 
 # Configurazione
 WATCH_DIR="${1:-.swarm/tasks}"
@@ -126,7 +133,12 @@ sveglia_regina() {
             ${output_file:+-open "$output_file"} \
             2>/dev/null
     else
-        osascript -e "display notification \"$task_name completato!\" with title \"CervellaSwarm\" sound name \"Glass\"" 2>/dev/null
+        # Usa notify_macos se disponibile (da common.sh), altrimenti fallback
+        if type notify_macos &>/dev/null; then
+            notify_macos "CervellaSwarm" "$task_name completato!" "Glass"
+        else
+            osascript -e "display notification \"$(echo "$task_name" | tr -d '\"')\" with title \"CervellaSwarm\" sound name \"Glass\"" 2>/dev/null
+        fi
     fi
 
     # RIMOSSO: keystroke nella finestra
@@ -175,7 +187,11 @@ notifica_feedback() {
             -open "$feedback_file" \
             2>/dev/null
     else
-        osascript -e "display notification \"Worker feedback: ${tipo}\" with title \"${emoji} Feedback\" sound name \"Glass\"" 2>/dev/null
+        if type notify_macos &>/dev/null; then
+            notify_macos "${emoji} Feedback" "Worker feedback: ${tipo}" "Glass"
+        else
+            osascript -e "display notification \"Worker feedback: $(echo "$tipo" | tr -d '\"')\" with title \"${emoji} Feedback\" sound name \"Glass\"" 2>/dev/null
+        fi
     fi
 }
 
@@ -238,7 +254,11 @@ check_tmux_sessions() {
                     -sound Glass \
                     2>/dev/null
             else
-                osascript -e "display notification \"$session terminato!\" with title \"CervellaSwarm\" sound name \"Glass\"" 2>/dev/null
+                if type notify_macos &>/dev/null; then
+                    notify_macos "CervellaSwarm" "$session terminato!" "Glass"
+                else
+                    osascript -e "display notification \"$(echo "$session" | tr -d '\"') terminato!\" with title \"CervellaSwarm\" sound name \"Glass\"" 2>/dev/null
+                fi
             fi
 
             # Opzionale: termina la sessione morta
