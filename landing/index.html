@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CervellaSwarm - 16 AI Agents. One Unstoppable Team.</title>
+    <meta name="description" content="CervellaSwarm coordinates 16 specialized AI agents that work together with persistent memory and quality gates. IDE-agnostic. Privacy-first.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#F59E0B',
+                        secondary: '#1E293B',
+                        accent: '#8B5CF6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+        }
+        .glow {
+            box-shadow: 0 0 40px rgba(245, 158, 11, 0.3);
+        }
+    </style>
+</head>
+<body class="gradient-bg text-white">
+    <!-- Early Bird Banner -->
+    <div class="bg-primary text-secondary py-2 text-center font-semibold">
+        Early Bird: $99/year (57% off) - First 500 users only!
+        <a href="#pricing" class="underline ml-2">Claim Your Spot</a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="container mx-auto px-6 py-6 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <span class="text-3xl">👸</span>
+            <span class="text-2xl font-bold">CervellaSwarm</span>
+        </div>
+        <div class="hidden md:flex space-x-8">
+            <a href="#features" class="hover:text-primary transition">Features</a>
+            <a href="#pricing" class="hover:text-primary transition">Pricing</a>
+            <a href="#how-it-works" class="hover:text-primary transition">How It Works</a>
+        </div>
+        <a href="#cta" class="bg-primary text-secondary px-6 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition">
+            Start Free
+        </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="container mx-auto px-6 py-20 text-center">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            16 Specialized AI Agents.<br>
+            <span class="text-primary">One Unstoppable Team.</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-10">
+            CervellaSwarm coordinates 16 specialized AI agents - frontend, backend, tester, reviewer -
+            that work together with persistent memory and quality gates.
+            <span class="text-primary font-semibold">Your code stays local. Always.</span>
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+            <a href="#cta" class="bg-primary text-secondary px-8 py-4 rounded-lg text-xl font-bold hover:bg-yellow-400 transition glow">
+                Start Building Free
+            </a>
+            <a href="#how-it-works" class="border-2 border-white px-8 py-4 rounded-lg text-xl font-semibold hover:bg-white hover:text-secondary transition">
+                See How It Works
+            </a>
+        </div>
+
+        <!-- Swarm Visual -->
+        <div class="relative max-w-2xl mx-auto mt-16">
+            <div class="text-8xl mb-4">👑</div>
+            <p class="text-gray-400 mb-8">The Queen coordinates the swarm</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <span class="text-4xl" title="Frontend">🎨</span>
+                <span class="text-4xl" title="Backend">⚙️</span>
+                <span class="text-4xl" title="Tester">🧪</span>
+                <span class="text-4xl" title="Reviewer">📋</span>
+                <span class="text-4xl" title="Researcher">🔬</span>
+                <span class="text-4xl" title="DevOps">🚀</span>
+                <span class="text-4xl" title="Security">🔒</span>
+                <span class="text-4xl" title="Docs">📝</span>
+                <span class="text-4xl" title="Data">📊</span>
+                <span class="text-4xl" title="Marketing">📈</span>
+                <span class="text-4xl" title="Guardiana">🛡️</span>
+                <span class="text-4xl" title="Guardiana">🛡️</span>
+                <span class="text-4xl" title="Guardiana">🛡️</span>
+            </div>
+            <p class="text-gray-400 mt-4">16 specialists ready to build</p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="container mx-auto px-6 py-20">
+        <h2 class="text-4xl font-bold text-center mb-16">Why CervellaSwarm?</h2>
+
+        <div class="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+            <!-- Feature 1 -->
+            <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700">
+                <div class="text-5xl mb-4">🐝</div>
+                <h3 class="text-2xl font-bold mb-3 text-primary">16 Specialists > 4 Generalists</h3>
+                <p class="text-gray-300">
+                    A frontend dev, a backend dev, a tester, a reviewer... and 12 more.
+                    Each one expert in their field. Working together, not taking turns.
+                </p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700">
+                <div class="text-5xl mb-4">🧠</div>
+                <h3 class="text-2xl font-bold mb-3 text-primary">Never Explain Context Twice</h3>
+                <p class="text-gray-300">
+                    SNCP: persistent memory that remembers your decisions, your code, your style.
+                    Start where you left off, every time.
+                </p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700">
+                <div class="text-5xl mb-4">🛡️</div>
+                <h3 class="text-2xl font-bold mb-3 text-primary">3 Quality Gates Stop Bugs</h3>
+                <p class="text-gray-300">
+                    Three Guardians (powered by Claude Opus) verify every output before it reaches
+                    your codebase. Quality over speed.
+                </p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700">
+                <div class="text-5xl mb-4">🔒</div>
+                <h3 class="text-2xl font-bold mb-3 text-primary">Your Code Never Leaves</h3>
+                <p class="text-gray-300">
+                    Zero training on your data. Zero cloud storage. 100% local control.
+                    Perfect for healthcare, finance, and privacy-first teams.
+                </p>
+            </div>
+        </div>
+
+        <!-- Comparison -->
+        <div class="mt-20 max-w-3xl mx-auto">
+            <h3 class="text-2xl font-bold text-center mb-8">CervellaSwarm vs Others</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b border-slate-700">
+                            <th class="py-4 px-4"></th>
+                            <th class="py-4 px-4 text-primary font-bold">CervellaSwarm</th>
+                            <th class="py-4 px-4 text-gray-400">Cursor</th>
+                            <th class="py-4 px-4 text-gray-400">Copilot</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-slate-800">
+                            <td class="py-4 px-4">AI Agents</td>
+                            <td class="py-4 px-4 text-primary font-semibold">16 specialized</td>
+                            <td class="py-4 px-4">1 general</td>
+                            <td class="py-4 px-4">4 generic</td>
+                        </tr>
+                        <tr class="border-b border-slate-800">
+                            <td class="py-4 px-4">Memory</td>
+                            <td class="py-4 px-4 text-primary font-semibold">SNCP persistent</td>
+                            <td class="py-4 px-4">Session only</td>
+                            <td class="py-4 px-4">Limited</td>
+                        </tr>
+                        <tr class="border-b border-slate-800">
+                            <td class="py-4 px-4">Quality Gates</td>
+                            <td class="py-4 px-4 text-primary font-semibold">3 Guardians</td>
+                            <td class="py-4 px-4">None</td>
+                            <td class="py-4 px-4">None</td>
+                        </tr>
+                        <tr class="border-b border-slate-800">
+                            <td class="py-4 px-4">IDE Lock-in</td>
+                            <td class="py-4 px-4 text-primary font-semibold">Any editor</td>
+                            <td class="py-4 px-4">VSCode fork</td>
+                            <td class="py-4 px-4">VSCode/JB</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4">Price</td>
+                            <td class="py-4 px-4 text-primary font-semibold">$19/mo</td>
+                            <td class="py-4 px-4">$20/mo</td>
+                            <td class="py-4 px-4">$10/mo</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="container mx-auto px-6 py-20">
+        <h2 class="text-4xl font-bold text-center mb-4">Simple Pricing. No Surprises.</h2>
+        <p class="text-gray-400 text-center mb-16">Start free, upgrade when ready.</p>
+
+        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <!-- Free -->
+            <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700">
+                <h3 class="text-2xl font-bold mb-2">Free</h3>
+                <p class="text-gray-400 mb-4">Bring Your Own Key</p>
+                <div class="text-4xl font-bold mb-6">$0<span class="text-lg text-gray-400">/mo</span></div>
+                <ul class="space-y-3 mb-8 text-gray-300">
+                    <li>✓ Your Anthropic API key</li>
+                    <li>✓ CLI + 16 agents</li>
+                    <li>✓ Full SNCP memory</li>
+                    <li>✓ Community support</li>
+                </ul>
+                <a href="#cta" class="block text-center border-2 border-primary text-primary px-6 py-3 rounded-lg font-semibold hover:bg-primary hover:text-secondary transition">
+                    Start Free
+                </a>
+            </div>
+
+            <!-- Essentials - Popular -->
+            <div class="bg-slate-800/50 p-8 rounded-2xl border-2 border-primary relative">
+                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary text-secondary px-4 py-1 rounded-full text-sm font-bold">
+                    MOST POPULAR
+                </div>
+                <h3 class="text-2xl font-bold mb-2">Essentials</h3>
+                <p class="text-gray-400 mb-4">For individual developers</p>
+                <div class="text-4xl font-bold mb-6 text-primary">$19<span class="text-lg text-gray-400">/mo</span></div>
+                <ul class="space-y-3 mb-8 text-gray-300">
+                    <li>✓ Hosted tokens included</li>
+                    <li>✓ Web dashboard</li>
+                    <li>✓ 100 tasks/month</li>
+                    <li>✓ Email support</li>
+                </ul>
+                <a href="#cta" class="block text-center bg-primary text-secondary px-6 py-3 rounded-lg font-bold hover:bg-yellow-400 transition">
+                    Get Started
+                </a>
+            </div>
+
+            <!-- Professional -->
+            <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700">
+                <h3 class="text-2xl font-bold mb-2">Professional</h3>
+                <p class="text-gray-400 mb-4">For teams</p>
+                <div class="text-4xl font-bold mb-6">$39<span class="text-lg text-gray-400">/mo</span></div>
+                <ul class="space-y-3 mb-8 text-gray-300">
+                    <li>✓ Unlimited tasks</li>
+                    <li>✓ Team collaboration</li>
+                    <li>✓ Custom agents</li>
+                    <li>✓ Priority support</li>
+                </ul>
+                <a href="#cta" class="block text-center border-2 border-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-secondary transition">
+                    Contact Us
+                </a>
+            </div>
+        </div>
+
+        <!-- Early Bird -->
+        <div class="mt-12 text-center">
+            <div class="inline-block bg-gradient-to-r from-primary to-yellow-400 text-secondary px-8 py-4 rounded-xl">
+                <span class="font-bold text-lg">Early Bird Special:</span>
+                $99/year (save 57%) -
+                <span class="font-bold">First 500 users only!</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="container mx-auto px-6 py-20">
+        <div class="bg-slate-800/50 p-12 rounded-3xl border border-slate-700 text-center max-w-3xl mx-auto">
+            <h2 class="text-4xl font-bold mb-4">Ready to Build Better?</h2>
+            <p class="text-xl text-gray-300 mb-8">
+                Join developers who ship faster with 16 AI specialists.
+            </p>
+            <form class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+                <input
+                    type="email"
+                    placeholder="Enter your email"
+                    class="flex-1 px-6 py-4 rounded-lg bg-slate-900 border border-slate-700 focus:border-primary focus:outline-none"
+                >
+                <button type="submit" class="bg-primary text-secondary px-8 py-4 rounded-lg font-bold hover:bg-yellow-400 transition whitespace-nowrap">
+                    Get Early Access
+                </button>
+            </form>
+            <p class="text-gray-500 text-sm mt-4">
+                Free forever with BYOK. No credit card required.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="container mx-auto px-6 py-12 border-t border-slate-800">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                <span class="text-2xl">👸</span>
+                <span class="text-xl font-bold">CervellaSwarm</span>
+            </div>
+            <div class="flex space-x-8 text-gray-400">
+                <a href="#" class="hover:text-white transition">Docs</a>
+                <a href="#" class="hover:text-white transition">GitHub</a>
+                <a href="#" class="hover:text-white transition">Discord</a>
+                <a href="mailto:hello@cervellaswarm.com" class="hover:text-white transition">Contact</a>
+            </div>
+        </div>
+        <div class="text-center text-gray-500 mt-8">
+            <p>"Build Better. Together."</p>
+            <p class="text-sm mt-2">2026 CervellaSwarm. Made with love by the swarm.</p>
+        </div>
+    </footer>
+</body>
+</html>

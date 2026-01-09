@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 9 Gennaio 2026 - 12:30
-> **Versione:** v57.0.0 - Sessione 139 COMPLETATA!
+> **Ultimo aggiornamento:** 9 Gennaio 2026 - 13:25
+> **Versione:** v58.0.0 - Sessione 140 COMPLETATA!
 
 ---
 
@@ -9,8 +9,8 @@
 
 | Sessione | Progetto | Status |
 |----------|----------|--------|
+| 140 | Miracollo | COMPLETATA - Bug fix 6.0.2 |
 | 139A | CervellaSwarm | COMPLETATA - FASE 1+2 FATTE! |
-| 139B | Miracollo | In corso (6.0.2 UX Planning) |
 
 ---
 
@@ -25,17 +25,19 @@
 
 ---
 
-## Sessione 139 - BREAKTHROUGH!
+## Sessione 140 - Bug Fix Miracollo
 
-1. Ricerca VSCode/Copilot completata
-2. Sintesi 6 competitor completata
-3. Differenziatori validati (SNCP = trade secret)
-4. **Architettura:** CLI + Web Dashboard
-5. **Pricing:** BYOK Free → $19 → $39
-6. **Target:** Solo dev complessi, Privacy-first, Small teams
-7. Bug fix: researcher non salvava file (documentato)
+**Problema:** Pagine admin.html e reports.html non funzionavano
 
-**Mappa:** `.sncp/idee/PRODOTTO_MAPPA_MASTER.md`
+**Fix applicati:**
+1. `pages.py` - Route mancanti per admin.html e reports.html
+2. `city_tax.py` - Bug get_conn() (connessione DB chiusa)
+3. `admin.html` - API_BASE hardcoded + hotel_code mancante
+
+**Review cervella-reviewer:** 7.5/10 - Solido!
+- MAJOR da fixare pre-produzione: Privacy/GDPR + SQL performance
+
+**Git:** Miracollo master @ 3f6a966
 
 ---
 
@@ -44,9 +46,12 @@
 | Cosa | Stato |
 |------|-------|
 | 6.0.1 Database Fortezza | COMPLETATO! |
-| 6.0.2 UX Planning | IN CORSO (Sessione 139B) |
+| 6.0.2 UX Planning | COMPLETATO! (test locale OK) |
+| Deploy VM | PROSSIMO |
 
-**Prossimo:** Ricerca UX big players (Mews, Cloudbeds, Little Hotelier)
+**Pagine funzionanti:**
+- http://localhost:8001/admin.html (City Tax + Guest Reg)
+- http://localhost:8001/reports.html (ISTAT Export)
 
 ---
 
@@ -60,37 +65,16 @@
 
 ---
 
-## FASE 3: PROSSIMI STEP
+## PROSSIMI STEP
 
-1. **MVP Web Dashboard** - React + FastAPI
-2. **Landing Page** - Messaging per target
-3. **Early Bird Campaign** - $99/anno primi 500
-4. **Contattare Anthropic** - sales@anthropic.com
+### Miracollo
+1. Deploy su VM (FORTEZZA MODE)
+2. Fix MAJOR pre-produzione (Privacy, SQL)
+
+### CervellaSwarm
+1. MVP Web Dashboard - React + FastAPI
+2. Landing Page - Messaging per target
 
 ---
 
 *"Con il cuore pieno di energia buona!"*
-
----
-
----
-
----
-
-## AUTO-CHECKPOINT: 2026-01-09 12:36 (unknown)
-
-### Stato Git
-- **Branch**: main
-- **Ultimo commit**: 87fe85e - Docs: Bug timing hook documentato
-- **File modificati** (5):
-  - DS_Store
-  - PROMPT_RIPRESA.md
-  - docs/.DS_Store
-  - reports/scientist_prompt_20260109.md
-  - .sncp/memoria/decisioni/2026-01-09_istat_export_endpoint.md
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: unknown
-
----

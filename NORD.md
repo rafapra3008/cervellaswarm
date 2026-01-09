@@ -18,26 +18,38 @@
 
 ## DOVE SIAMO
 
+**SESSIONE 140 - 9 Gennaio 2026: FASE 3 PRODOTTO - FARE!**
+
+```
++------------------------------------------------------------------+
+|                                                                  |
+|   SESSIONE 140 - FASE 3 PRODOTTO IN CORSO!                      |
+|                                                                  |
+|   FASE 1+2 COMPLETATE (Sessione 139):                           |
+|   - Ricerca competitor (Cursor, Windsurf, Copilot, Google)      |
+|   - Architettura DECISA: CLI + Web Dashboard                    |
+|   - Pricing DECISO: BYOK Free -> $19 -> $39                     |
+|   - Target DECISO: Dev complessi, Privacy-first, Small teams    |
+|                                                                  |
+|   FASE 3 - FARE:                                                |
+|   [~] MVP Dashboard (80% - esiste, da migliorare)               |
+|   [ ] Landing Page                                               |
+|   [ ] Early Bird Campaign ($99/anno primi 500)                  |
+|   [ ] Contattare Anthropic                                       |
+|                                                                  |
+|   MAPPA: .sncp/idee/PRODOTTO_MAPPA_MASTER.md                    |
+|   ROADMAP: .sncp/idee/FASE_3_ROADMAP.md                         |
+|                                                                  |
++------------------------------------------------------------------+
+```
+
 **SESSIONE 135 - 9 Gennaio 2026: FASE 2.2 DNA FAMIGLIA COMPLETATA!**
 
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   SESSIONE 135 - DNA FAMIGLIA AGGIORNATI!                       |
-|                                                                  |
-|   FASE 2.2 COMPLETATA:                                          |
-|   - 16/16 DNA con REGOLE CONTEXT-SMART                          |
-|   - 12 Worker (Sonnet) aggiornati                               |
-|   - 3 Guardiane (Opus) aggiornate                               |
-|   - 1 Orchestrator aggiornata                                    |
-|                                                                  |
-|   OGNI DNA ORA HA:                                              |
-|   - Max 500 token per risposta                                   |
-|   - Usa SNCP (memoria esterna)                                   |
-|   - Regola 5 minuti (avvisa se lungo)                           |
-|   - Output strutturato FATTO/DA FARE/NOTE                       |
-|                                                                  |
-|   PROSSIMO: FASE 2.3 - CLAUDE.md globale snello                 |
+|   DNA FAMIGLIA AGGIORNATI (16/16)                               |
+|   Context Optimization -92% token risparmiati                   |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -142,16 +154,13 @@
 
 | Cosa | Status |
 |------|--------|
-| **MULTI-INSTANCE v2.0** | **COMPLETO! Task indipendenti + dipendenti!** |
-| **9 Script Coordinamento** | **setup/status/merge/cleanup + 5 nuovi!** |
-| **10 Hard Tests** | **100% PASSED!** |
+| **PRODOTTO - Ricerca** | **FASE 1+2 COMPLETE!** |
+| **PRODOTTO - Dashboard MVP** | **80% (esiste, da migliorare)** |
+| **MULTI-INSTANCE v2.0** | COMPLETO |
 | 16 Agents in ~/.claude/agents/ | FUNZIONANTE |
-| **SNCP su tutti i progetti** | **Miracollo, CervellaSwarm, Contabilita** |
+| **SNCP su tutti i progetti** | Miracollo, CervellaSwarm, Contabilita |
 | spawn-workers v3.4.0 | headless + validazione progetto |
-| common.sh v1.0.0 | Funzioni condivise + security |
 | Testing suite | 23 test, 100% passed |
-| log-rotate.sh + worker-timeout.sh | Manutenzione automatica |
-| watcher-regina.sh v1.6.0 | AUTO-SVEGLIA + security fix |
 
 ---
 
@@ -183,21 +192,17 @@
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   PROSSIMA SESSIONE:                                            |
+|   FASE 3 - PRODOTTO (Sessione 140+):                            |
 |                                                                  |
-|   [x] Task DIPENDENTI - COMPLETATO!                             |
-|   [x] Script create-parallel-session.sh - FATTO!                |
-|   [x] Hard tests - 10/10 PASSED!                                |
+|   [~] MVP Dashboard - Migliorare con esempi pro                 |
+|   [ ] Landing Page - Messaging per target                       |
+|   [ ] Early Bird Campaign - $99/anno primi 500                  |
+|   [ ] Contattare Anthropic - sales@anthropic.com                |
 |                                                                  |
-|   PRONTO PER IL REALE:                                          |
-|   [ ] Usare Multi-Instance v2.0 su MIRACOLLO                    |
-|   [ ] Task reale: Backend + Frontend + Tester                   |
-|   [ ] Regina orchestra, Rafa supervisiona                       |
-|                                                                  |
-|   FUTURO:                                                        |
-|   [ ] 3+ Cervelle in parallelo                                   |
-|   [ ] MCP Server per coordinamento real-time                    |
-|   [ ] Dashboard visuale dello sciame                            |
+|   DOPO LANCIO:                                                   |
+|   [ ] VSCode Extension (distribution)                           |
+|   [ ] Team features                                              |
+|   [ ] Analytics dashboard                                        |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -230,6 +235,6 @@
 
 *"Le ragazze nostre! La famiglia!"*
 
-*"Da 1x a Nx... il futuro e' parallelo!"*
+*"Con il cuore pieno di energia buona!"*
 
-*Ultimo aggiornamento: 9 Gennaio 2026 - Sessione 135 - FASE 2.2 DNA Famiglia completata!*
+*Ultimo aggiornamento: 9 Gennaio 2026 - Sessione 140 - FASE 3 PRODOTTO in corso!*
