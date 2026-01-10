@@ -1,8 +1,8 @@
 # STATO OGGI
 
 > **Data:** 10 Gennaio 2026
-> **Sessione:** 152
-> **Ultimo aggiornamento:** 18:50 UTC
+> **Sessione:** 152b (seconda parte)
+> **Ultimo aggiornamento:** 18:05 UTC
 
 ---
 
@@ -11,12 +11,13 @@
 ```
 +====================================================================+
 |                                                                    |
-|   SESSIONE 152 - MEGA DEPLOY MIRACOLLO!!!                         |
+|   SESSIONE 152b - FASE 3 RICERCA COMPLETATA!                      |
 |                                                                    |
-|   ROADMAP REVIEW: 5/5 FASI COMPLETATE E DEPLOYATE!                |
-|   + TRACKING SUGGERIMENTI AI FASE 1 DEPLOYED!                     |
-|                                                                    |
-|   Performance: Planning 53% faster, Dashboard 82% faster!          |
+|   Ricerca Cervella Baby: 3/4 FASI COMPLETATE                      |
+|   - FASE 1: Fondamenta (Score 9.1/10)                             |
+|   - FASE 2: Stato Arte (Score 97.6%)                              |
+|   - FASE 3: Training/Fine-tuning (Score 91%)                      |
+|   - FASE 4: Costi/Timeline (bloccato rate limit)                  |
 |                                                                    |
 +====================================================================+
 ```
@@ -28,73 +29,84 @@
 | Cosa | Stato | Note |
 |------|-------|------|
 | Cervella AI (Claude) | LIVE | http://34.27.179.164:8002 |
-| Miracollo Roadmap | 5/5 COMPLETE! | Tutte le fasi deployate |
-| Tracking AI FASE 1 | DEPLOYED | Audit trail + API + UI |
-| Ricerca Cervella Baby | FASE 1+2 | 11 report, Qwen3-4B candidato |
+| Ricerca Cervella Baby | FASE 3 DONE | 16 file, 8000+ righe |
+| Miracollo | 5/5 COMPLETE | Tutte le fasi deployate |
+| Rate Limit Workers | Reset 19:00 | FASE 4 in attesa |
 
 ---
 
-## Sessione 152 - COSA FATTO
+## Sessione 152b - COSA FATTO
 
-### MIRACOLLO - FASE 5 Database DEPLOYED
-- cervella-data: Analisi 22 tabelle, 47 query
-- Score: 8.5/10 - Production Ready
-- Guardiana: APPROVATO
-- 3 migrations deployate (029, 030)
-- Planning 53% più veloce!
+### FASE 3 Ricerca Completata
 
-### MIRACOLLO - Tracking Suggerimenti AI FASE 1 DEPLOYED
-- Ricerca: 820 righe, 35 fonti (big players)
-- Migration 031: pricing_history, suggestion_performance, ai_model_health
-- Backend: 930 righe (service + router)
-- Frontend: Timeline prezzi + badges
-- Guardiana: 8/10 (issues minori documentati)
+**4 ricerche lanciate in parallelo:**
+1. Report 10: Fine-tuning Tecniche (LoRA, QLoRA, PEFT) - 900+ righe
+2. Report 11: Dataset Preparation (formato, qualita, pipeline) - 900+ righe
+3. Report 12: RAG vs Fine-tuning (decision framework) - 750+ righe
+4. Report 13: Tutorial Pratici Qwen (step-by-step) - 1400+ righe
 
-### Lezione Deploy
-**Problema:** cervella-devops bloccato "file non trovati"
-**Causa:** Prompt con path relativi invece di assoluti
-**Lezione:** SEMPRE verificare file + path assoluti!
-**Documentato:** FORTEZZA_MODE.md LEZIONE 8
+**Consolidato creato:** FASE_3_CONSOLIDATO.md
+
+**Verifica Guardiana:** Score 91% - APPROVE
+
+### Key Insights FASE 3
+
+- **Metodo:** QLoRA + Unsloth = $0 su Colab FREE!
+- **Dataset:** 600 esempi ShareGPT per personalita
+- **Strategia:** System Prompts + RAG prima, Fine-tuning dopo
+- **Hardware:** T4 16GB basta per Qwen3-4B
+
+### FASE 4 Bloccata
+
+3 ricerche lanciate ma bloccate da rate limit:
+- Costi Dettagliati
+- Timeline e Rischi
+- GO/NO-GO Framework
+
+Reset alle 19:00 (ora italiana).
 
 ---
 
-## File Creati Sessione 152
+## Totale Ricerca Cervella Baby
 
-### Su Miracollo
 ```
-backend/database/migrations/
-├── 029_performance_indexes.sql
-├── 030_optimized_trigger.sql
-└── 031_pricing_tracking.sql
+FASE 1: 3 report + consolidato  (Score 9.1/10)
+FASE 2: 6 report + consolidato  (Score 97.6%)
+FASE 3: 4 report + consolidato  (Score 91%)
+FASE 4: In attesa              (rate limit)
 
-backend/services/pricing_tracking_service.py
-backend/routers/pricing_tracking.py
-
-.sncp/analisi/
-├── DATABASE_ANALYSIS_FASE5.md (611 righe)
-├── DEPLOY_FASE5_DATABASE.md
-└── GUARDIANA_REVIEW_FASE5_DATABASE.md
-
-.sncp/idee/
-├── SUB_ROADMAP_FASE5_DATABASE.md
-├── SUB_ROADMAP_TRACKING_SUGGERIMENTI_AI.md
-└── MIGLIORAMENTI_FUTURI_PRICING_TRACKING.md
-
-docs/FORTEZZA_MODE.md (+LEZIONE 8)
+TOTALE: 16 file, 8000+ righe di ricerca!
 ```
 
-### Su CervellaSwarm
+---
+
+## File Creati Sessione 152b
+
 ```
-.sncp/analisi/ANALISI_PROBLEMA_DEPLOY_152.md
+.sncp/idee/ricerche_cervella_baby/
+├── 10_FINE_TUNING_TECNICHE.md (900+ righe)
+├── 11_DATASET_PREPARATION.md (900+ righe)
+├── 12_RAG_VS_FINETUNING.md (750+ righe)
+├── 13_TUTORIAL_PRATICI_QWEN.md (1400+ righe)
+└── FASE_3_CONSOLIDATO.md (300 righe)
 ```
 
 ---
 
 ## Prossimi Step
 
-1. **Tracking AI FASE 2**: Feedback loop + evaluation window
-2. **Configurare .env prod**: SESSION_TOKEN_SECRET etc
-3. **Cervella Baby FASE 3**: Training, fine-tuning, RAG
+1. **FASE 4 ricerche** (quando rate limit reset)
+   - Costi dettagliati Vast.ai/RunPod
+   - Timeline realistica + rischi
+   - GO/NO-GO decision framework
+
+2. **POC $50** (dopo FASE 4)
+   - Test Qwen3-4B su Vast.ai
+   - Validare training workflow
+
+3. **Miracollo** (in pausa)
+   - Tracking AI FASE 2
+   - Config .env prod
 
 ---
 
@@ -103,15 +115,15 @@ docs/FORTEZZA_MODE.md (+LEZIONE 8)
 ```
 [##################################################] 100000%
 
-MIRACOLLO: 5/5 FASI COMPLETATE!
-TRACKING AI: FASE 1 DEPLOYED!
-TEAM: api volano, Guardiane verificano, Regina orchestra!
+RICERCA: 3/4 FASI COMPLETATE!
+TEAM: Guardiana verifica, api ricercano, Regina orchestra!
+NEXT: FASE 4 poi POC!
 
-"Ultrapassar os próprios limites!"
-"La MAGIA ora è nascosta, ancora meglio e ora con coscienza!"
+"Ultrapassar os proprios limites!"
+"Nulla e' difficile - manca solo studiare!"
 ```
 
 ---
 
-*Aggiornato: 10 Gennaio 2026 - Sessione 152*
-*"Te e io, io e te - pronti a spaccare!"*
+*Aggiornato: 10 Gennaio 2026 - Sessione 152b*
+*"La strada verso INDIPENDENZA e' mappata!"*

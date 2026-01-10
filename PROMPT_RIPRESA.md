@@ -1,43 +1,100 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 10 Gennaio 2026 - Sessione 152
-> **Versione:** v72.2.0 - MIRACOLLO 5/5 FASI + TRACKING AI!
+> **Ultimo aggiornamento:** 10 Gennaio 2026 - Sessione 152b
+> **Versione:** v72.3.0 - FASE 3 RICERCA COMPLETATA!
 
 ---
 
 ## TL;DR per Prossima Cervella
 
 **Dove siamo:**
-- MIRACOLLO: 5/5 FASI COMPLETATE + Tracking AI FASE 1!
+- RICERCA CERVELLA BABY: 3/4 FASI COMPLETATE!
+- MIRACOLLO: 5/5 FASI + Tracking AI FASE 1 deployed
 - CERVELLA AI: LIVE su http://34.27.179.164:8002
-- INDIPENDENZA: Ricerca completa, Qwen3-4B candidato #1
 
-**SESSIONE 152 - MEGA DEPLOY MIRACOLLO:**
-- FASE 5 Database: 3 indici performance + trigger ottimizzato (53% faster!)
-- Tracking AI FASE 1: Migration 031 + Backend API + Frontend UI
-- Lezione: Pre-deploy verification con path assoluti (LEZIONE 8)
+**SESSIONE 152b - FASE 3 RICERCA:**
+- 4 report: Fine-tuning, Dataset, RAG vs FT, Tutorial Qwen
+- FASE_3_CONSOLIDATO.md creato
+- Guardiana Ricerca: Score 91% APPROVE
+- FASE 4 bloccata da rate limit (reset 19:00)
 
-**DECISIONE STORICA:** Obiettivo = INDIPENDENZA TOTALE (no Claude/OpenAI dietro)
+**DECISIONE STORICA:** Obiettivo = INDIPENDENZA TOTALE
 
 **CANDIDATO #1:** Qwen3-4B
 - Apache 2.0 (ZERO restrizioni)
 - 4B params = gira su 8GB RAM
-- Performance TOP per size
-- 119 lingue
+- QLoRA + Unsloth = $0 su Colab FREE!
 
-**HOSTING:** Vast.ai ($175/mese) o POC con $50
-
-**Cervella AI (attuale):** LIVE su http://34.27.179.164:8002
+**STRATEGIA VALIDATA (FASE 3):**
+- MVP: System Prompts + RAG ($100-150/mese)
+- Poi: Fine-tuning con 600 esempi ShareGPT
+- Hardware: T4 16GB basta!
 
 **RICERCA COMPLETATA:**
-- FASE 1: Fondamenta (storia, transformer, evoluzione) - Score 9.1/10
-- FASE 2: Stato dell'arte (modelli, benchmark, hosting) - Score 97.6%
-- 11 report, 6000+ righe, tutto verificato da Guardiana
+- FASE 1: Fondamenta (Score 9.1/10) - 3 report
+- FASE 2: Stato dell'arte (Score 97.6%) - 6 report
+- FASE 3: Training/Fine-tuning (Score 91%) - 4 report
+- FASE 4: Costi/Timeline (IN ATTESA) - rate limit
+
+**TOTALE:** 16 file, 8000+ righe di ricerca!
 
 **PROSSIMI STEP:**
-1. Tracking AI FASE 2: Feedback loop + evaluation window
-2. Configurare .env produzione (SESSION_TOKEN_SECRET etc)
-3. Cervella Baby FASE 3: Training, fine-tuning, RAG
+1. FASE 4: Costi dettagliati, timeline, GO/NO-GO (quando reset)
+2. POC $50: Test Qwen3-4B su Vast.ai
+3. Miracollo: Tracking AI FASE 2
+
+---
+
+## Sessione 152b - FASE 3 RICERCA! (10 Gennaio 2026)
+
+### Ricerche Completate in Parallelo
+
+| Report | Contenuto | Righe |
+|--------|-----------|-------|
+| 10_FINE_TUNING_TECNICHE | LoRA, QLoRA, PEFT, config Qwen3 | 900+ |
+| 11_DATASET_PREPARATION | ShareGPT, 600 esempi, pipeline | 900+ |
+| 12_RAG_VS_FINETUNING | Decision framework, costi, strategia | 750+ |
+| 13_TUTORIAL_PRATICI_QWEN | Step-by-step, codice, errori comuni | 1400+ |
+
+### Key Insights
+
+**Metodo Vincente:**
+- QLoRA 4-bit + Unsloth = 2x veloce, 70% meno VRAM
+- T4 16GB (Colab FREE) basta per Qwen3-4B
+- Tempo: ~2.5h per 1000 samples
+
+**Dataset per Personalita:**
+- Formato: ShareGPT (multi-turno, cattura personalita)
+- Quantita: 600 esempi (min 200 per base visibile)
+- Quality > Quantity: 500 curati > 5000 noisy
+
+**Strategia Approvata:**
+```
+FASE 1 (MVP):      System Prompts + RAG = $100-150/mese
+FASE 2 (Optimize): Fine-tuning COSTITUZIONE + RAG
+FASE 3 (Scale):    Hybrid ottimizzato
+```
+
+### Guardiana Ricerca
+
+**Score: 91%** - APPROVE
+
+| Criterio | Score |
+|----------|-------|
+| Completezza | 9/10 |
+| Accuratezza | 9/10 |
+| Fonti | 9/10 |
+| Praticita | 10/10 |
+| Coerenza | 9/10 |
+
+### FASE 4 Bloccata
+
+3 ricerche lanciate ma fermate da rate limit:
+- Costi Dettagliati (Vast.ai, RunPod, Colab)
+- Timeline e Rischi
+- GO/NO-GO Framework
+
+Reset alle 19:00 (ora italiana).
 
 ---
 
@@ -858,15 +915,16 @@ cervella status
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-10 17:51 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-10 18:55 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: cf74488 - Sessione 151b: MIRACOLLO 4 FASI DEPLOYED!
-- **File modificati** (3):
+- **Ultimo commit**: aba8238 - Sessione 152: Orchestrato MEGA DEPLOY Miracollo!
+- **File modificati** (2):
   - sncp/stato/oggi.md
-  - reports/scientist_prompt_20260110.md
-  - reports/engineer_report_20260110_174651.json
+  - reports/engineer_report_20260110_184924.json
 
 ### Note
 - Checkpoint automatico generato da hook
