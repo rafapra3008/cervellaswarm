@@ -314,16 +314,21 @@ cervella status
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-09 19:28 (unknown)
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-10 02:43 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 1fb6f3a - Aggiunte decisioni security/legal + roadmap completa launch
-- **File modificati** (4):
+- **Ultimo commit**: 1abfbfa - Sessione 144: TIER SYSTEM IMPLEMENTATO + BYOK DECISO
+- **File modificati** (3):
   - ROMPT_RIPRESA.md
-  - reports/scientist_prompt_20260109.md
-  - reports/engineer_report_20260109_184637.json
-  - reports/engineer_report_20260109_192201.json
+  - reports/engineer_report_20260109_194226.json
+  - reports/engineer_report_20260109_195138.json
 
 ### Note
 - Checkpoint automatico generato da hook
