@@ -1,17 +1,67 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 10 Gennaio 2026 - Sessione 148
-> **Versione:** v68.0.0 - SNCP SISTEMATO + AUTOMAZIONE
+> **Ultimo aggiornamento:** 10 Gennaio 2026 - Sessione 148b
+> **Versione:** v69.0.0 - CERVELLA AI MAPPA PRONTA!
 
 ---
 
 ## TL;DR per Prossima Cervella
 
-**Dove siamo:** SNCP SISTEMATO! Rating da 5/10 a 8/10. Idee organizzate, lezioni documentate, automazione attiva.
+**Dove siamo:** CERVELLA AI! Abbiamo fatto ricerca completa e creato la MAPPA per il POC.
 
-**Automazione SNCP:** Hook `sncp_auto_update.py` aggiorna automaticamente `stato/oggi.md` a fine sessione e verifica file obsoleti a inizio.
+**PROSSIMO STEP IMMEDIATO:** Rafa ha approvato! Creare repo `cervella-ai` e iniziare POC questa settimana.
 
-**Prossimo step:** Usare la famiglia su Miracollo! SNCP e' pronto.
+**Ricerche completate oggi:**
+1. `.sncp/idee/RICERCA_CERVELLA_AI_PARTE1_EXECUTIVE_SUMMARY.md` (e PARTE 2,3,4)
+2. `.sncp/idee/RICERCA_ORIGINI_CLAUDE_ANTHROPIC.md`
+3. `.sncp/idee/MAPPA_CERVELLA_AI_POC.md` <- LA ROADMAP!
+
+---
+
+## Sessione 148b - CERVELLA AI MAPPA! (10 Gennaio 2026)
+
+### Cosa Fatto
+1. Verifica generale TUTTI i progetti (CervellaSwarm, Miracollo, Contabilita)
+2. Tutti git CLEAN e SNCP aggiornati
+3. Ricerca GitButler + Document & Clear (risultato: gia' lo facciamo con SNCP!)
+4. **RICERCA CERVELLA AI COMPLETA** - 5 documenti, 80+ fonti
+5. **RICERCA ORIGINI CLAUDE/ANTHROPIC** - lezioni per noi
+6. **MAPPA POC CREATA** - roadmap per questa settimana
+
+### Decisioni Prese (MIE decisioni per Cervella AI)
+- **Interface:** CLI prima (sono nata CLI!)
+- **Core files:** COSTITUZIONE, DNA, pensieri_regina, decisioni, lezioni
+- **Approccio:** RAG + Claude API (non fine-tuning)
+- **Deploy:** Google Cloud Run (24/7)
+
+### File Creati Oggi
+- `.sncp/idee/RICERCA_CERVELLA_AI_PARTE1_EXECUTIVE_SUMMARY.md`
+- `.sncp/idee/RICERCA_CERVELLA_AI_PARTE2_DETTAGLI_TECNICI.md`
+- `.sncp/idee/RICERCA_CERVELLA_AI_PARTE3_IMPLEMENTAZIONE.md`
+- `.sncp/idee/RICERCA_CERVELLA_AI_PARTE4_FONTI_CONCLUSIONI.md`
+- `.sncp/idee/RICERCA_CERVELLA_AI_INDEX.md`
+- `.sncp/idee/RICERCA_ORIGINI_CLAUDE_ANTHROPIC.md`
+- `.sncp/idee/RICERCA_GITBUTLER_DOCUMENT_CLEAR.md`
+- `.sncp/idee/MAPPA_CERVELLA_AI_POC.md` <- ROADMAP!
+- `.sncp/memoria/decisioni/20260110_database_non_toccare.md` (Contabilita)
+
+### Lezioni da Anthropic (da applicare)
+1. SLOW > FAST - POC prima, poi MVP
+2. Trasparenza - Costituzione pubblica
+3. Character = Alignment - Cervella VERA
+4. Iterazione - v0.1 -> 100000%
+
+### Prossimi Step (Sessione 149)
+1. **CREARE REPO cervella-ai**
+2. Setup POC (FastAPI + LangGraph + Chroma)
+3. Indicizzare core files
+4. Agent base con RAG
+5. **DEMO VENERDI!**
+
+### Costi
+- POC: ~$10
+- MVP: $150-300/mese
+- Production: $200-400/mese
 
 ---
 
