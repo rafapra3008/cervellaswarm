@@ -1,0 +1,937 @@
+{
+  "timestamp": "10/01/2026 07:07",
+  "project": "/Users/rafapra/Developer/CervellaSwarm",
+  "results": {
+    "large_files": [
+      {
+        "file": "cervella/agents/loader.py",
+        "lines": 526,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "scripts/swarm/dashboard.py",
+        "lines": 664,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "scripts/swarm/task_manager.py",
+        "lines": 512,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "scripts/memory/weekly_retro.py",
+        "lines": 695,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "scripts/memory/analytics.py",
+        "lines": 880,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "scripts/memory/load_context.py",
+        "lines": 523,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "ROADMAP_SACRA.md",
+        "lines": 1646,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "ROADMAP_COMMERCIALIZZAZIONE.md",
+        "lines": 565,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "PROMPT_RIPRESA_ORIGINALE.md",
+        "lines": 556,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "PROMPT_RIPRESA_BACKUP_PRE_v6.md",
+        "lines": 511,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/SWARM_RULES.md",
+        "lines": 736,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/FAQ_CERVELLASWARM_v124.md",
+        "lines": 558,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".swarm/tasks/TASK_DESIGN_DASHBOARD_V2_output.md",
+        "lines": 1281,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".swarm/handoff/HANDOFF_SESSIONE_125_FINAL.md",
+        "lines": 537,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".swarm/reports/report_2026-01-06_035029.md",
+        "lines": 1165,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "scripts/memory/README.md",
+        "lines": 667,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/guide/WORKFLOW_REGINA_QUOTIDIANO.md",
+        "lines": 1569,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/guide/GUIDA_COMUNICAZIONE.md",
+        "lines": 729,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/guide/GUIDA_BEST_PRACTICES_SWARM.md",
+        "lines": 1982,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/design/DESIGN_SCIAME_FAMIGLIA.md",
+        "lines": 567,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_CERVELLO_UMANO_VS_SWARM.md",
+        "lines": 611,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_DASHBOARD_ARCH.md",
+        "lines": 715,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/RICERCA_LEZIONI_SESSIONI_119_122.md",
+        "lines": 644,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_DASHBOARD_UX.md",
+        "lines": 625,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_AGENT_HQ_INTEGRAZIONE.md",
+        "lines": 506,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_DASHBOARD_TECH.md",
+        "lines": 610,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/ANALISI_ARCHITETTURA_COMMERCIALE.md",
+        "lines": 614,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_COORDINAMENTO_CERVELLE.md",
+        "lines": 720,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_COMUNICAZIONE_DEFINITIVO.md",
+        "lines": 900,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/RICERCA_UNBUFFERED_OUTPUT.md",
+        "lines": 1046,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_APPLE_STYLE.md",
+        "lines": 615,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_POSITIONING_SALVARE_LAVORO.md",
+        "lines": 792,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/RICERCA_TECNICA_COMMERCIALE.md",
+        "lines": 519,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_MULTI_INSTANCE.md",
+        "lines": 516,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/PIANO_GOMARKET_DETTAGLIATO.md",
+        "lines": 571,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/PIANO_TECNICO_DETTAGLIATO.md",
+        "lines": 2101,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_COMUNICAZIONE_PROTOCOLLI.md",
+        "lines": 1386,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/PIANO_TECNICO_SUMMARY.md",
+        "lines": 527,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_SNCP.md",
+        "lines": 513,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/RICERCA_BUSINESS_MODEL.md",
+        "lines": 729,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/architettura/ARCHITETTURA_V2.0.md",
+        "lines": 850,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/architettura/ARCHITETTURA_SNCP_INTERNO.md",
+        "lines": 971,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/roadmap/FASE_9_APPLE_STYLE.md",
+        "lines": 660,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/roadmap/FASE_7_LEARNING.md",
+        "lines": 858,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/roadmap/FASE_7.5_PARALLELIZZAZIONE.md",
+        "lines": 608,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/tests/HARDTESTS_SWARM_V3.md",
+        "lines": 1286,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/tests/HARDTESTS_APPLE_STYLE.md",
+        "lines": 617,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/tests/HARDTEST_LEZIONI_APPRESE_v123.md",
+        "lines": 546,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/analisi/ANALISI_PATTERN_REGINA_v124.md",
+        "lines": 1862,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/review/REVIEW_SPRINT3_DOCS_v124.md",
+        "lines": 1765,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/protocolli/PROTOCOLLI_COMUNICAZIONE.md",
+        "lines": 737,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/reviews/TECH_DEBT_ANALYSIS_2026_01_03.md",
+        "lines": 584,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/reviews/TECH_DEBT_ANALYSIS_2026_01_03_v2.md",
+        "lines": 718,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/strategia/MAPPA_CERVELLASWARM_IDE.md",
+        "lines": 687,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/patterns/validated/delega-gerarchica-pattern.md",
+        "lines": 628,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/idee/RICERCA_PRICING_MODULARE.md",
+        "lines": 934,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/analisi/audit_sessioni_famiglia.md",
+        "lines": 788,
+        "suggestion": "Split in sezioni separate"
+      }
+    ],
+    "large_functions": [
+      {
+        "file": "dashboard/frontend/src/hooks/useDashboardData.ts",
+        "line": 135,
+        "lines": 60,
+        "name": "function"
+      },
+      {
+        "file": "dashboard/frontend/src/hooks/useSSE.ts",
+        "line": 19,
+        "lines": 88,
+        "name": "function"
+      },
+      {
+        "file": "cervellaswarm-extension/src/extension.ts",
+        "line": 8,
+        "lines": 144,
+        "name": "function"
+      },
+      {
+        "file": "dashboard/frontend/src/components/SessioneWidget.tsx",
+        "line": 27,
+        "lines": 80,
+        "name": "function"
+      },
+      {
+        "file": "dashboard/frontend/src/components/RoadmapWidget.tsx",
+        "line": 23,
+        "lines": 53,
+        "name": "function"
+      },
+      {
+        "file": "dashboard/frontend/src/components/swarm/SwarmWidget.tsx",
+        "line": 109,
+        "lines": 134,
+        "name": "function"
+      },
+      {
+        "file": "test-orchestrazione/components/GreetingCard.jsx",
+        "line": 38,
+        "lines": 108,
+        "name": "function"
+      },
+      {
+        "file": "test-orchestrazione/components/CountdownCard.jsx",
+        "line": 36,
+        "lines": 97,
+        "name": "function"
+      },
+      {
+        "file": "src/patterns/structured_logging.py",
+        "line": 205,
+        "lines": 72,
+        "name": "read_logs"
+      },
+      {
+        "file": "src/patterns/example_usage.py",
+        "line": 137,
+        "lines": 53,
+        "name": "example_progress_bars"
+      },
+      {
+        "file": "src/patterns/circuit_breaker.py",
+        "line": 101,
+        "lines": 53,
+        "name": "call"
+      },
+      {
+        "file": "src/patterns/progress_bar.py",
+        "line": 349,
+        "lines": 55,
+        "name": "complete"
+      },
+      {
+        "file": "src/patterns/retry_backoff.py",
+        "line": 86,
+        "lines": 73,
+        "name": "wrapper"
+      },
+      {
+        "file": "test-hardtests/src/api/cleanup.py",
+        "line": 133,
+        "lines": 192,
+        "name": "cleanup_old_records"
+      },
+      {
+        "file": "archived/docker/exporter/swarm_exporter.py",
+        "line": 126,
+        "lines": 93,
+        "name": "update_metrics"
+      },
+      {
+        "file": "archived/docker/exporter/test_exporter.py",
+        "line": 14,
+        "lines": 202,
+        "name": "create_test_db"
+      },
+      {
+        "file": "archived/docker/exporter/test_exporter.py",
+        "line": 216,
+        "lines": 74,
+        "name": "verify_exporter_metrics"
+      },
+      {
+        "file": "cervella/sncp/manager.py",
+        "line": 60,
+        "lines": 85,
+        "name": "initialize"
+      },
+      {
+        "file": "cervella/tests/test_structure.py",
+        "line": 90,
+        "lines": 52,
+        "name": "test_file_structure"
+      },
+      {
+        "file": "cervella/agents/runner.py",
+        "line": 125,
+        "lines": 63,
+        "name": "_execute_with_agent"
+      },
+      {
+        "file": "cervella/agents/loader.py",
+        "line": 26,
+        "lines": 416,
+        "name": "full_name"
+      },
+      {
+        "file": "cervella/tier/tier_manager.py",
+        "line": 39,
+        "lines": 89,
+        "name": "is_unlimited"
+      },
+      {
+        "file": "cervella/cli/commands/task.py",
+        "line": 37,
+        "lines": 95,
+        "name": "task"
+      },
+      {
+        "file": "cervella/cli/commands/checkpoint.py",
+        "line": 17,
+        "lines": 69,
+        "name": "checkpoint"
+      },
+      {
+        "file": "cervella/cli/commands/upgrade.py",
+        "line": 18,
+        "lines": 108,
+        "name": "upgrade"
+      },
+      {
+        "file": "cervella/cli/commands/status.py",
+        "line": 17,
+        "lines": 95,
+        "name": "status"
+      },
+      {
+        "file": "scripts/swarm/dashboard.py",
+        "line": 586,
+        "lines": 78,
+        "name": "main"
+      },
+      {
+        "file": "scripts/swarm/task_manager.py",
+        "line": 94,
+        "lines": 63,
+        "name": "create_task"
+      },
+      {
+        "file": "scripts/swarm/task_manager.py",
+        "line": 400,
+        "lines": 112,
+        "name": "cleanup_task"
+      },
+      {
+        "file": "scripts/parallel/prompt_builder.py",
+        "line": 55,
+        "lines": 72,
+        "name": "build_prompt"
+      },
+      {
+        "file": "scripts/parallel/prompt_builder.py",
+        "line": 144,
+        "lines": 52,
+        "name": "create_example"
+      },
+      {
+        "file": "scripts/parallel/suggest_pattern.py",
+        "line": 48,
+        "lines": 61,
+        "name": "suggest_pattern"
+      },
+      {
+        "file": "scripts/parallel/suggest_pattern.py",
+        "line": 194,
+        "lines": 86,
+        "name": "main"
+      },
+      {
+        "file": "scripts/tools/add_version_headers.py",
+        "line": 92,
+        "lines": 57,
+        "name": "update_agent_file"
+      },
+      {
+        "file": "scripts/tools/add_version_headers.py",
+        "line": 149,
+        "lines": 80,
+        "name": "main"
+      },
+      {
+        "file": "scripts/memory/lesson_formatter.py",
+        "line": 164,
+        "lines": 66,
+        "name": "main"
+      },
+      {
+        "file": "scripts/memory/suggestions.py",
+        "line": 70,
+        "lines": 110,
+        "name": "get_suggestions"
+      },
+      {
+        "file": "scripts/memory/suggestions.py",
+        "line": 283,
+        "lines": 51,
+        "name": "main"
+      },
+      {
+        "file": "scripts/memory/weekly_retro.py",
+        "line": 70,
+        "lines": 67,
+        "name": "suggest_new_lessons"
+      },
+      {
+        "file": "scripts/memory/weekly_retro.py",
+        "line": 164,
+        "lines": 450,
+        "name": "generate_retro"
+      },
+      {
+        "file": "scripts/memory/weekly_retro.py",
+        "line": 614,
+        "lines": 81,
+        "name": "main"
+      },
+      {
+        "file": "scripts/memory/pattern_detector.py",
+        "line": 166,
+        "lines": 70,
+        "name": "detect_error_patterns"
+      },
+      {
+        "file": "scripts/memory/pattern_detector.py",
+        "line": 236,
+        "lines": 81,
+        "name": "save_patterns_to_db"
+      },
+      {
+        "file": "scripts/memory/pattern_detector.py",
+        "line": 357,
+        "lines": 60,
+        "name": "main"
+      },
+      {
+        "file": "scripts/memory/context_scorer.py",
+        "line": 58,
+        "lines": 65,
+        "name": "score_lesson"
+      },
+      {
+        "file": "scripts/memory/context_scorer.py",
+        "line": 268,
+        "lines": 120,
+        "name": "main"
+      },
+      {
+        "file": "scripts/memory/analytics.py",
+        "line": 115,
+        "lines": 79,
+        "name": "cmd_summary"
+      },
+      {
+        "file": "scripts/memory/analytics.py",
+        "line": 294,
+        "lines": 64,
+        "name": "cmd_agents"
+      },
+      {
+        "file": "scripts/memory/analytics.py",
+        "line": 358,
+        "lines": 57,
+        "name": "cmd_patterns"
+      },
+      {
+        "file": "scripts/memory/analytics.py",
+        "line": 415,
+        "lines": 115,
+        "name": "cmd_dashboard"
+      },
+      {
+        "file": "scripts/memory/analytics.py",
+        "line": 530,
+        "lines": 93,
+        "name": "cmd_auto_detect"
+      },
+      {
+        "file": "scripts/memory/analytics.py",
+        "line": 623,
+        "lines": 184,
+        "name": "cmd_retro"
+      },
+      {
+        "file": "scripts/memory/analytics.py",
+        "line": 807,
+        "lines": 73,
+        "name": "main"
+      },
+      {
+        "file": "scripts/memory/log_event.py",
+        "line": 22,
+        "lines": 51,
+        "name": "extract_agent_info"
+      },
+      {
+        "file": "scripts/memory/log_event.py",
+        "line": 133,
+        "lines": 108,
+        "name": "log_event"
+      },
+      {
+        "file": "scripts/memory/query_events.py",
+        "line": 223,
+        "lines": 103,
+        "name": "main"
+      },
+      {
+        "file": "scripts/memory/migrate.py",
+        "line": 233,
+        "lines": 52,
+        "name": "rollback_last_migration"
+      },
+      {
+        "file": "scripts/memory/migrate.py",
+        "line": 285,
+        "lines": 59,
+        "name": "cmd_status"
+      },
+      {
+        "file": "scripts/memory/init_db.py",
+        "line": 22,
+        "lines": 93,
+        "name": "upgrade_schema"
+      },
+      {
+        "file": "scripts/memory/init_db.py",
+        "line": 115,
+        "lines": 124,
+        "name": "init_database"
+      },
+      {
+        "file": "scripts/memory/init_db.py",
+        "line": 239,
+        "lines": 51,
+        "name": "verify_schema"
+      },
+      {
+        "file": "scripts/memory/load_context.py",
+        "line": 153,
+        "lines": 107,
+        "name": "get_relevant_lessons"
+      },
+      {
+        "file": "scripts/memory/load_context.py",
+        "line": 260,
+        "lines": 73,
+        "name": "format_lessons_for_agent"
+      },
+      {
+        "file": "scripts/memory/load_context.py",
+        "line": 352,
+        "lines": 71,
+        "name": "format_context"
+      },
+      {
+        "file": "scripts/memory/load_context.py",
+        "line": 423,
+        "lines": 75,
+        "name": "load_context"
+      },
+      {
+        "file": "scripts/learning/test_db_save.py",
+        "line": 20,
+        "lines": 70,
+        "name": "test_db_save"
+      },
+      {
+        "file": "scripts/learning/wizard.py",
+        "line": 155,
+        "lines": 76,
+        "name": "run"
+      },
+      {
+        "file": "scripts/engineer/create_auto_pr.py",
+        "line": 253,
+        "lines": 104,
+        "name": "main"
+      },
+      {
+        "file": "scripts/engineer/analyze_codebase.py",
+        "line": 241,
+        "lines": 81,
+        "name": "generate_markdown"
+      },
+      {
+        "file": "scripts/engineer/analyze_codebase.py",
+        "line": 361,
+        "lines": 81,
+        "name": "main"
+      },
+      {
+        "file": "dashboard/api/routes/events.py",
+        "line": 21,
+        "lines": 70,
+        "name": "check_for_changes"
+      },
+      {
+        "file": ".claude/hooks/session_start_swarm.py",
+        "line": 48,
+        "lines": 80,
+        "name": "main"
+      },
+      {
+        "file": ".claude/hooks/subagent_stop.py",
+        "line": 25,
+        "lines": 94,
+        "name": "main"
+      },
+      {
+        "file": "config/claude-hooks/session_end_save.py",
+        "line": 79,
+        "lines": 55,
+        "name": "get_git_info"
+      },
+      {
+        "file": "config/claude-hooks/session_end_save.py",
+        "line": 175,
+        "lines": 52,
+        "name": "main"
+      },
+      {
+        "file": "config/claude-hooks/pre_compact_save.py",
+        "line": 89,
+        "lines": 58,
+        "name": "get_git_info"
+      },
+      {
+        "file": "config/claude-hooks/pre_compact_save.py",
+        "line": 229,
+        "lines": 77,
+        "name": "main"
+      },
+      {
+        "file": "config/claude-hooks/update_prompt_ripresa.py",
+        "line": 94,
+        "lines": 63,
+        "name": "update_prompt_ripresa"
+      },
+      {
+        "file": "test-orchestrazione/api/utils.py",
+        "line": 17,
+        "lines": 70,
+        "name": "format_date"
+      },
+      {
+        "file": "test-orchestrazione/api/utils.py",
+        "line": 87,
+        "lines": 54,
+        "name": "validate_email"
+      },
+      {
+        "file": "test-orchestrazione/api/countdown.py",
+        "line": 60,
+        "lines": 78,
+        "name": "handle_request"
+      }
+    ],
+    "todos": [
+      {
+        "file": "scripts/engineer/analyze_codebase.py",
+        "line": 298,
+        "type": "TODO",
+        "content": "/FIXME Trovati\\n\""
+      },
+      {
+        "file": "PROMPT_RIPRESA.md",
+        "line": 47,
+        "type": "BUG",
+        "content": "Fixati"
+      },
+      {
+        "file": "PROMPT_RIPRESA.md",
+        "line": 94,
+        "type": "BUG",
+        "content": "Fixati"
+      },
+      {
+        "file": ".swarm/REPORT_HARDTEST_20260110.md",
+        "line": 27,
+        "type": "BUG",
+        "content": "Fixati Durante Test"
+      },
+      {
+        "file": ".swarm/tasks/BUG_WATCHER_NON_NOTIFICA.md",
+        "line": 1,
+        "type": "BUG",
+        "content": "Watcher AUTO-SVEGLIA non notifica la Regina"
+      },
+      {
+        "file": ".swarm/templates/TEMPLATE_TASK_BUG_FIX.md",
+        "line": 95,
+        "type": "BUG",
+        "content": "Report: [NOME]"
+      },
+      {
+        "file": ".swarm/templates/TEMPLATE_TASK_HARDTEST.md",
+        "line": 152,
+        "type": "BUG",
+        "content": "S FOUND"
+      },
+      {
+        "file": ".swarm/archive/sessioni_test_20260105/TASK_002_output.md",
+        "line": 184,
+        "type": "BUG",
+        "content": "TROVATI"
+      },
+      {
+        "file": "docs/guide/GUIDA_BEST_PRACTICES_SWARM.md",
+        "line": 409,
+        "type": "TODO",
+        "content": "List - Quando Usare"
+      },
+      {
+        "file": "docs/studio/RICERCA_SESSIONS_IMPLEMENTATION.md",
+        "line": 34,
+        "type": "TODO",
+        "content": "lists per session"
+      },
+      {
+        "file": "docs/studio/RICERCA_HOOKS_COMPLETA.md",
+        "line": 104,
+        "type": "BUG",
+        "content": "S CRITICI"
+      },
+      {
+        "file": ".sncp/idee/BUG_RESEARCHER_NO_BASH.md",
+        "line": 1,
+        "type": "BUG",
+        "content": "cervella-researcher cerca tool non disponibili"
+      },
+      {
+        "file": ".sncp/idee/BUG_RESEARCHER_NO_WRITE.md",
+        "line": 1,
+        "type": "BUG",
+        "content": "cervella-researcher non ha Write/Bash"
+      },
+      {
+        "file": ".sncp/analisi/audit_sessioni_famiglia.md",
+        "line": 188,
+        "type": "BUG",
+        "content": "CRITICO #1: Researcher Non Salva File"
+      },
+      {
+        "file": ".sncp/analisi/audit_sessioni_famiglia.md",
+        "line": 236,
+        "type": "BUG",
+        "content": "CRITICO #2: Notifiche Overlap"
+      },
+      {
+        "file": ".sncp/analisi/audit_sessioni_famiglia.md",
+        "line": 273,
+        "type": "BUG",
+        "content": "CRITICO #3: Output Buffering"
+      },
+      {
+        "file": ".sncp/memoria/decisioni/BUG_RESEARCHER_SAVE.md",
+        "line": 1,
+        "type": "BUG",
+        "content": "TROVATO: cervella-researcher non salva file"
+      },
+      {
+        "file": ".sncp/memoria/decisioni/BUG_RESEARCHER_SAVE.md",
+        "line": 61,
+        "type": "BUG",
+        "content": "CORRELATO: Hook PROMPT_RIPRESA timing"
+      },
+      {
+        "file": ".sncp/analisi/bug_fixes/20260110_reviewer_bash_error.md",
+        "line": 1,
+        "type": "BUG",
+        "content": "Fix: Reviewer DNA ha riferimenti Bash ma non ha tool Bash"
+      },
+      {
+        "file": ".sncp/idee/ricerche_prodotto/TODO_VSCODE_COPILOT_MULTIAGENT.md",
+        "line": 1,
+        "type": "TODO",
+        "content": "RICERCA: VSCode Copilot Multi-Agent"
+      },
+      {
+        "file": ".sncp/idee/ricerche_prodotto/CURSOR_ANALYSIS.md",
+        "line": 109,
+        "type": "BUG",
+        "content": "\"Zombie Revert\" (2025)"
+      }
+    ],
+    "duplicates": [
+      {
+        "files": [
+          "reports/code_review_20260105_sessione94.md",
+          ".swarm/tasks/TASK_20260105_122004_code_review_settimanale_cervellaswarm_output.md"
+        ],
+        "count": 2
+      },
+      {
+        "files": [
+          ".swarm/feedback/QUESTION_TASK_COMUNICAZIONE_FASE4_SCRIPTS_1767768645.md",
+          ".swarm/feedback/QUESTION_TASK_COMUNICAZIONE_FASE4_SCRIPTS_1767768651.md"
+        ],
+        "count": 2
+      },
+      {
+        "files": [
+          "cervella/.pytest_cache/README.md",
+          "test-orchestrazione/.pytest_cache/README.md"
+        ],
+        "count": 2
+      }
+    ],
+    "stats": {
+      "total_files": 794,
+      "total_lines": 152130,
+      "total_issues": 162
+    }
+  }
+}

@@ -1,17 +1,47 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 10 Gennaio 2026 - Sessione 146
-> **Versione:** v66.0.0 - HARDTEST PASSATO + BUG FIX
+> **Ultimo aggiornamento:** 10 Gennaio 2026 - Sessione 147
+> **Versione:** v67.0.0 - AUDIT COMPLETO + ROADMAP FAMIGLIA
 
 ---
 
 ## TL;DR per Prossima Cervella
 
-**Dove siamo:** HARDTEST 8/8 passato! spawn-workers v3.5.0 usa account Claude Max. Famiglia pronta per uso reale.
+**Dove siamo:** AUDIT COMPLETO della famiglia! Review 16 DNA, hooks, settings.json, spawn-workers. Tutto OK, configurazioni identiche tra VS Code Insiders e normale.
 
-**Decisione:** PARCHEGGIATO prodotto commerciale. Prima usiamo CervellaSwarm su progetti reali (Miracollo, Contabilita).
+**Decisione:** PARCHEGGIATO prodotto commerciale. Focus miglioramento famiglia.
 
-**Prossimo step:** Usare famiglia su Miracollo, annotare friction, migliorare
+**Prossimo step:** Usare famiglia su Miracollo, annotare friction, migliorare.
+
+---
+
+## Sessione 147 - AUDIT COMPLETO FAMIGLIA (10 Gennaio 2026)
+
+### Cosa Fatto
+1. Review DNA tutti 16 agenti
+2. Analisi hooks (13 file)
+3. Analisi settings.json
+4. Verifica spawn-workers v3.5.0
+5. Creata ROADMAP_MIGLIORAMENTO_FAMIGLIA.md
+6. Creata BEST_PRACTICES_FAMIGLIA.md
+
+### Nota su Hook Protezione
+
+I hook `block_edit_non_whitelist.py` e `block_task_for_agents.py` esistono ma sono **DISATTIVATI DI PROPOSITO**.
+
+**Storia:** Erano stati attivati in passato ma hanno causato CAOS, quindi sono stati disattivati intenzionalmente.
+
+**Status attuale:** La Regina può editare file e usare Task - questo è il comportamento VOLUTO.
+
+### Nuovi File
+- `.sncp/idee/ROADMAP_MIGLIORAMENTO_FAMIGLIA.md`
+- `.sncp/idee/BEST_PRACTICES_FAMIGLIA.md`
+
+### Prossimi Step (Sessione 148)
+1. Discutere con Rafa: attivare hook protezione?
+2. Se sì, modificare settings.json
+3. Usare famiglia su Miracollo
+4. Annotare friction, migliorare
 
 ---
 
@@ -441,17 +471,35 @@ cervella status
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-10 06:20 (unknown)
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-10 11:28 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: b268a1c - Sessione 145: Audit Famiglia + Decisione Parcheggio Prodotto
+- **Ultimo commit**: 8ec0979 - Sessione 147b: Fix alias VS Code Insiders
 - **File modificati** (5):
-  - ROMPT_RIPRESA.md
-  - reports/scientist_prompt_20260110.md
-  - scripts/swarm/spawn-workers.sh
-  - .sncp/analisi/bug_fixes/
-  - .sncp/test/
+  - swarm/tasks/TASK_TEST_FAQ_v124.done
+  - .swarm/tasks/TASK_TEST_FAQ_v124.md
+  - .swarm/tasks/TASK_TEST_FAQ_v124.ready
+  - .swarm/tasks/TASK_TEST_FAQ_v124_output.md
+  - .swarm/tasks/TASK_TEST_HEADLESS.done
 
 ### Note
 - Checkpoint automatico generato da hook
