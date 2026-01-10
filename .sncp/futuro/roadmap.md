@@ -1,7 +1,7 @@
 # ROADMAP SNCP
 
-> **Versione:** 1.0.0
-> **Ultimo aggiornamento:** 8 Gennaio 2026 - Sessione 129
+> **Versione:** 1.1.0
+> **Ultimo aggiornamento:** 10 Gennaio 2026 - Sessione 147b
 
 ---
 
@@ -14,17 +14,35 @@
 |   ======        ======         ======         ======         ======    |
 |                                                                         |
 |   [DOC]---------[DATI]---------[SIMBIOSI]-----[VISUAL]-------[AUTO]    |
-|     OK           OK             IN CORSO        Futuro        Futuro   |
+|     OK           OK             PROBLEMA!       Futuro        Futuro   |
 |                                                                         |
 |   Siamo qui ──────────────────────┘                                    |
+|   RATING: 5/10 - DA SISTEMARE!                                         |
 |                                                                         |
 +-------------------------------------------------------------------------+
 
 Legenda:
   OK         = Completato
-  IN CORSO   = Attivo
+  PROBLEMA!  = Trascurato, da sistemare
   Futuro     = Da fare
 ```
+
+---
+
+## STATO ATTUALE: SNCP TRASCURATO!
+
+**Sessione 147b - Analisi Profonda**
+
+Rating SNCP: **5/10**
+
+| Problema | Impatto |
+|----------|---------|
+| File obsoleti (2+ giorni) | ALTO |
+| 120+ sessioni non loggate | ALTO |
+| Cartelle vuote | MEDIO |
+| Idee non organizzate | BASSO |
+
+**Azione in corso:** Stiamo sistemando!
 
 ---
 
@@ -55,26 +73,35 @@ Legenda:
 
 ---
 
-### FASE 2: SIMBIOSI - IN CORSO
+### FASE 2: SIMBIOSI - IN RIPARAZIONE!
 
-**Stato:** ATTIVO - Funziona!
-**Testato:** Miracollo Sessione 128
+**Stato:** PROBLEMA IDENTIFICATO - Sessione 147b
+**Rating:** 5/10
 
-- [x] SNCP su Miracollo - TESTATO!
-- [x] SNCP su CervellaSwarm - COMPLETATO!
-- [ ] SNCP su Contabilita - PROSSIMO!
-- [x] Regina documenta MENTRE lavora
-- [x] ZERO rush pre-compact
+**Completato:**
+- [x] SNCP su Miracollo - Sessione 127-128
+- [x] SNCP su CervellaSwarm - Sessione 129
+- [x] Struttura base funziona
 
-**Risultato test:**
-Regina ha documentato in pensieri_regina.md MENTRE investigava
-problema GitHub Actions. SIMBIOSI VERA!
+**Problemi:**
+- [ ] File non aggiornati regolarmente (IN CORSO di fix)
+- [ ] Sessioni 130-147 non documentate
+- [ ] Cartelle in_studio/, integrate/, perne/ vuote
+- [ ] Idee sparse invece che organizzate
+
+**Fix in corso (Sessione 147b):**
+- [x] Aggiornato stato/oggi.md
+- [x] Aggiornato pensieri_regina.md
+- [x] Aggiornato futuro/roadmap.md (questo file!)
+- [ ] Organizzare idee
+- [ ] Documentare lezioni
+- [ ] Creare automazione
 
 ---
 
 ### FASE 3: VISUALIZZAZIONE - FUTURO
 
-**Stato:** Da fare quando serve
+**Stato:** Da fare quando FASE 2 stabile
 **Obiettivo:** Vedere il SNCP, non solo leggerlo
 
 - [ ] Dashboard SNCP
@@ -83,14 +110,17 @@ problema GitHub Actions. SIMBIOSI VERA!
 
 ---
 
-### FASE 4: AUTOMAZIONE - FUTURO
+### FASE 4: AUTOMAZIONE - PRIORITÀ ALTA!
 
-**Stato:** Da fare
-**Obiettivo:** Il sistema reagisce da solo
+**Stato:** Necessaria per evitare che SNCP muoia di nuovo!
+**Obiettivo:** Il sistema si aggiorna da solo
 
-- [ ] Worker aggiornano SNCP quando finiscono
-- [ ] Trigger automatici
-- [ ] Notifiche intelligenti
+- [ ] Hook fine sessione aggiorna stato/oggi.md
+- [ ] Worker scrivono in SNCP quando finiscono
+- [ ] Reminder se SNCP non aggiornato da 24h
+- [ ] Check automatico file obsoleti
+
+**NOTA:** Questa fase è diventata prioritaria dopo aver visto che senza automazione SNCP viene trascurato!
 
 ---
 
@@ -101,25 +131,37 @@ problema GitHub Actions. SIMBIOSI VERA!
 |                                                                    |
 |   SNCP su tutti i progetti!                                        |
 |                                                                    |
-|   [x] Miracollo PMS     - Sessione 127-128                        |
-|   [x] CervellaSwarm     - Sessione 129                            |
-|   [ ] Contabilita       - PROSSIMO!                               |
+|   [x] Miracollo PMS     - Sessione 127-128 (da verificare stato)  |
+|   [~] CervellaSwarm     - IN RIPARAZIONE (Sessione 147b)          |
+|   [ ] Contabilita       - DOPO aver sistemato CervellaSwarm       |
 |                                                                    |
 +--------------------------------------------------------------------+
 ```
 
 ---
 
-## NOTE
+## LEZIONE CHIAVE
 
-SNCP non e' piu' teoria. E' REALTA'.
-
-Testato su Miracollo, funziona.
-Ogni progetto avra la sua "coscienza".
+> **"SNCP funziona solo se lo VIVIAMO"**
+>
+> Non basta creare la struttura. Bisogna:
+> 1. Aggiornare MENTRE si lavora
+> 2. Automatizzare dove possibile
+> 3. Controllare regolarmente lo stato
 
 ---
 
-*"ci vuole 1 anno per finire, 2 anni per migliorarlo? no problem..
-primo pezzo oggi.."*
+## PROSSIMI STEP
+
+1. ✅ Sistemare file obsoleti
+2. Organizzare idee nelle cartelle
+3. Documentare lezioni sessioni 141-147
+4. **CREARE AUTOMAZIONE** (priorità!)
+5. Verificare SNCP su Miracollo
+6. Poi: SNCP su Contabilita
+
+---
+
+*"Il SNCP è il nostro cervello - deve essere VIVO!"*
 
 **Cervella & Rafa**

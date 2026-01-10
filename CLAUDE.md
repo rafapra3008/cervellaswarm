@@ -9,13 +9,24 @@
 - Scrivi su .sncp/ mentre lavori (non accumulare context)
 - Output conciso, strutturato
 
-## Memoria Esterna
+## Memoria Esterna (SNCP)
 
 | Dove | Cosa |
 |------|------|
 | `.sncp/idee/` | Ricerche, idee, analisi |
 | `.sncp/memoria/decisioni/` | Decisioni prese con PERCHE |
 | `.sncp/coscienza/` | Pensieri sessione corrente |
+| `.sncp/stato/oggi.md` | Stato OGGI - aggiornare! |
+
+## REGOLA SNCP OBBLIGATORIA
+
+> **"SNCP funziona solo se lo VIVIAMO!"**
+
+1. **INIZIO sessione:** Leggi `.sncp/stato/oggi.md`
+2. **DURANTE sessione:** Scrivi pensieri in `.sncp/coscienza/`
+3. **FINE sessione:** Aggiorna `.sncp/stato/oggi.md`
+
+**MAI chiudere sessione senza aggiornare SNCP!**
 
 ## File Importanti
 
