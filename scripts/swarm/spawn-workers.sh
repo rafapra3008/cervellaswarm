@@ -12,12 +12,13 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 3.4.0
-# Data: 2026-01-09
+# Versione: 3.5.0
+# Data: 2026-01-10
 # Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
 # v2.0.0: Config centralizzata ~/.swarm/config
 #
 # CHANGELOG:
+# v3.5.0: CLAUDE MAX! Unset ANTHROPIC_API_KEY per usare account Claude Max invece di API credits.
 # v3.4.0: COMMON LIBRARY! Source common.sh per funzioni condivise (DRY). Backward compatible.
 # v3.3.0: VALIDAZIONE PROGETTO! Non crea piu .swarm/ nel posto sbagliato. Richiede progetto valido.
 # v3.2.0: OUTPUT REALTIME! stdbuf -oL per unbuffered output. Vediamo progresso worker in tempo reale!
@@ -539,6 +540,8 @@ RUNNEREOF
     echo "SWARM_DIR=\"${SWARM_DIR}\"" >> "$runner_script"
     # v3.0.0: CERVELLASWARM_WORKER=1 permette ai Worker di bypassare hook blocco edit!
     echo "export CERVELLASWARM_WORKER=1" >> "$runner_script"
+    # v3.5.0: Unset ANTHROPIC_API_KEY per usare account Claude Max invece di API
+    echo "unset ANTHROPIC_API_KEY" >> "$runner_script"
     # v3.2.0: STDBUF_CMD per output realtime
     echo "${STDBUF_CMD} ${claude_path} -p --append-system-prompt \"\$(cat ${prompt_file})\" \"${initial_prompt}\" 2>&1 | tee \"\$LOG_FILE\"" >> "$runner_script"
 
@@ -718,9 +721,11 @@ spawn_worker_headless() {
 
     # Spawn in tmux detached (NESSUNA FINESTRA!)
     # v3.2.0: Aggiunto STDBUF_CMD per output realtime
+    # v3.5.0: Unset ANTHROPIC_API_KEY per usare account Claude Max invece di API
     tmux new-session -d -s "$session_name" \
         "cd ${PROJECT_ROOT} && \
          export CERVELLASWARM_WORKER=1 && \
+         unset ANTHROPIC_API_KEY && \
          ${STDBUF_CMD} ${claude_path} -p --append-system-prompt \"\$(cat ${prompt_file})\" \"${initial_prompt}\" 2>&1 | tee \"${log_file}\"; \
          echo 'WORKER_DONE' >> \"${log_file}\""
 

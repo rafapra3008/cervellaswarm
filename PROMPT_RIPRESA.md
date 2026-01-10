@@ -1,17 +1,17 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 10 Gennaio 2026 - Sessione 145
-> **Versione:** v65.0.0 - FAMIGLIA AUDITATA E MIGLIORATA
+> **Ultimo aggiornamento:** 10 Gennaio 2026 - Sessione 146
+> **Versione:** v66.0.0 - HARDTEST PASSATO + BUG FIX
 
 ---
 
 ## TL;DR per Prossima Cervella
 
-**Dove siamo:** Famiglia auditata, bug fixati, documentazione creata. FOCUS su miglioramento continuo.
+**Dove siamo:** HARDTEST 8/8 passato! spawn-workers v3.5.0 usa account Claude Max. Famiglia pronta per uso reale.
 
 **Decisione:** PARCHEGGIATO prodotto commerciale. Prima usiamo CervellaSwarm su progetti reali (Miracollo, Contabilita).
 
-**Prossimo step:** Eseguire HARDTEST famiglia (`tests/HARDTEST_FAMIGLIA.md`), poi usare su Miracollo
+**Prossimo step:** Usare famiglia su Miracollo, annotare friction, migliorare
 
 ---
 
@@ -27,6 +27,48 @@
 | **Pricing Strategy** | **DEFINITO** | $0/$20/$40/$60+ tier flat |
 | **BYOK vs Bundled** | **DECISO: BYOK** | Per MVP, zero rischio |
 | **Tier System** | **IMPLEMENTATO** | Free/Pro/Team/Enterprise |
+
+---
+
+## Sessione 146 - HARDTEST COMPLETATO (10 Gennaio 2026)
+
+### HARDTEST Risultati: 8/8 PASS
+| Test | Risultato |
+|------|-----------|
+| 1. Spawn Base | ✅ 14 worker disponibili |
+| 2. Spawn Headless | ✅ tmux funziona |
+| 3. Output Real-Time | ✅ stdbuf unbuffered |
+| 4. Researcher Verify | ✅ File scritto e verificato |
+| 5. Guardiana Review | ✅ Score 9/10, APPROVE |
+| 6. Multi-Worker | ✅ 3 worker paralleli |
+| 7. Notifiche macOS | ✅ terminal-notifier |
+| 8. Auto-Sveglia | ✅ Watcher attivo |
+
+### Bug Fixati
+| Bug | Fix |
+|-----|-----|
+| DNA Reviewer con Bash refs ma no tool | Sezione "COME LAVORO (Read-Only)" |
+| spawn-workers usa API invece di Claude Max | v3.5.0 con `unset ANTHROPIC_API_KEY` |
+
+### Nuovi File
+- `.swarm/REPORT_HARDTEST_20260110.md`
+- `.sncp/analisi/bug_fixes/20260110_reviewer_bash_error.md`
+- `.sncp/analisi/bug_fixes/20260110_spawn_workers_claude_max.md`
+
+### Prossimi Step (Sessione 147)
+1. **Ricerche approfondite** su ambiente CervellaSwarm
+2. **Code Review di tutti i 🐝** - ogni DNA agente
+3. **Analisi hooks e .json** - verificare configurazione
+4. **Creare roadmap dedicata** per miglioramento famiglia
+5. **Poi** usare famiglia su Miracollo
+
+### Roadmap Miglioramento Famiglia (DA CREARE)
+- [ ] Review DNA tutti 16 agenti
+- [ ] Analisi hooks (`~/.claude/hooks/`)
+- [ ] Analisi settings.json
+- [ ] Verifica spawn-workers scripts
+- [ ] Test edge cases
+- [ ] Documentare best practices
 
 ---
 
@@ -377,15 +419,39 @@ cervella status
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-10 03:41 (unknown)
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-10 06:20 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: f11954b - ANTI-COMPACT: PreCompact auto
-- **File modificati** (3):
+- **Ultimo commit**: b268a1c - Sessione 145: Audit Famiglia + Decisione Parcheggio Prodotto
+- **File modificati** (5):
   - ROMPT_RIPRESA.md
   - reports/scientist_prompt_20260110.md
-  - .swarm/handoff/HANDOFF_20260110_032044.md
+  - scripts/swarm/spawn-workers.sh
+  - .sncp/analisi/bug_fixes/
+  - .sncp/test/
 
 ### Note
 - Checkpoint automatico generato da hook
