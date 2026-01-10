@@ -1,16 +1,21 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 10 Gennaio 2026 - Sessione 151b
-> **Versione:** v72.1.0 - MIRACOLLO 4 FASI DEPLOYED!
+> **Ultimo aggiornamento:** 10 Gennaio 2026 - Sessione 152
+> **Versione:** v72.2.0 - MIRACOLLO 5/5 FASI + TRACKING AI!
 
 ---
 
 ## TL;DR per Prossima Cervella
 
 **Dove siamo:**
-- MIRACOLLO: 4 fasi su 5 completate! (FASE 2, 3, 4 deployed)
+- MIRACOLLO: 5/5 FASI COMPLETATE + Tracking AI FASE 1!
 - CERVELLA AI: LIVE su http://34.27.179.164:8002
 - INDIPENDENZA: Ricerca completa, Qwen3-4B candidato #1
+
+**SESSIONE 152 - MEGA DEPLOY MIRACOLLO:**
+- FASE 5 Database: 3 indici performance + trigger ottimizzato (53% faster!)
+- Tracking AI FASE 1: Migration 031 + Backend API + Frontend UI
+- Lezione: Pre-deploy verification con path assoluti (LEZIONE 8)
 
 **DECISIONE STORICA:** Obiettivo = INDIPENDENZA TOTALE (no Claude/OpenAI dietro)
 
@@ -30,10 +35,46 @@
 - 11 report, 6000+ righe, tutto verificato da Guardiana
 
 **PROSSIMI STEP:**
-1. FASE 3: Training, fine-tuning, RAG (come si FA)
-2. FASE 4: Costi dettagliati, timeline, GO/NO-GO
-3. POC: Test Qwen3-4B su Vast.ai ($50)
-4. Fine-tuning: Insegnare SNCP/Costituzione a Cervella Baby
+1. Tracking AI FASE 2: Feedback loop + evaluation window
+2. Configurare .env produzione (SESSION_TOKEN_SECRET etc)
+3. Cervella Baby FASE 3: Training, fine-tuning, RAG
+
+---
+
+## Sessione 152 - MEGA DEPLOY MIRACOLLO! (10 Gennaio 2026)
+
+### FASE 5 Database - DEPLOYED
+- cervella-data: Analisi 22 tabelle, 47 query (Score 8.5/10)
+- Guardiana: APPROVATO
+- Migrations 029, 030 deployate
+- Performance: Planning 53%, Dashboard 82%, ISTAT 55% più veloci!
+
+### Tracking Suggerimenti AI FASE 1 - DEPLOYED
+- Ricerca: 820 righe, 35 fonti (IDeaS, Duetto, RateGain)
+- Migration 031: pricing_history, suggestion_performance, ai_model_health
+- Backend: pricing_tracking_service.py + router (930 righe)
+- Frontend: Timeline prezzi + badges verde/giallo/rosso
+- Guardiana: 8/10 (issues minori documentati)
+
+### Lezione Deploy (FORTEZZA_MODE.md +LEZIONE 8)
+- Problema: cervella-devops bloccato "file non trovati"
+- Causa: Prompt con path relativi
+- Lezione: SEMPRE verificare file + path assoluti!
+- Documentato: `.sncp/analisi/ANALISI_PROBLEMA_DEPLOY_152.md`
+
+### File Creati
+```
+Miracollo:
+  migrations/029, 030, 031
+  services/pricing_tracking_service.py
+  routers/pricing_tracking.py
+  .sncp/analisi/DATABASE_ANALYSIS_FASE5.md (611 righe)
+  .sncp/idee/SUB_ROADMAP_*.md
+  docs/FORTEZZA_MODE.md (+LEZIONE 8)
+
+CervellaSwarm:
+  .sncp/analisi/ANALISI_PROBLEMA_DEPLOY_152.md
+```
 
 ---
 
@@ -815,13 +856,17 @@ cervella status
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-10 17:27 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-10 17:51 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 4cfaa94 - Sessione 151: LA STRADA VERSO INDIPENDENZA MAPPATA!
-- **File modificati** (1):
-  - reports/engineer_report_20260110_172535.json
+- **Ultimo commit**: cf74488 - Sessione 151b: MIRACOLLO 4 FASI DEPLOYED!
+- **File modificati** (3):
+  - sncp/stato/oggi.md
+  - reports/scientist_prompt_20260110.md
+  - reports/engineer_report_20260110_174651.json
 
 ### Note
 - Checkpoint automatico generato da hook
