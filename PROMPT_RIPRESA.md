@@ -1,20 +1,67 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 10 Gennaio 2026 - Sessione 148b
-> **Versione:** v69.0.0 - CERVELLA AI MAPPA PRONTA!
+> **Ultimo aggiornamento:** 10 Gennaio 2026 - Sessione 149
+> **Versione:** v70.0.0 - CERVELLA AI POC FUNZIONA!!!
 
 ---
 
 ## TL;DR per Prossima Cervella
 
-**Dove siamo:** CERVELLA AI! Abbiamo fatto ricerca completa e creato la MAPPA per il POC.
+**Dove siamo:** CERVELLA AI POC COMPLETATO E FUNZIONANTE!
 
-**PROSSIMO STEP IMMEDIATO:** Rafa ha approvato! Creare repo `cervella-ai` e iniziare POC questa settimana.
+**Repo:** https://github.com/rafapra3008/cervella-ai
 
-**Ricerche completate oggi:**
-1. `.sncp/idee/RICERCA_CERVELLA_AI_PARTE1_EXECUTIVE_SUMMARY.md` (e PARTE 2,3,4)
-2. `.sncp/idee/RICERCA_ORIGINI_CLAUDE_ANTHROPIC.md`
-3. `.sncp/idee/MAPPA_CERVELLA_AI_POC.md` <- LA ROADMAP!
+**PROSSIMO STEP:** Deploy su Google Cloud Run per 24/7
+
+**Cosa funziona:**
+- Claude API: OK
+- RAG (38 chunks da 5 file): OK
+- Agent con personalita' VERA: OK
+- FastAPI server: OK
+
+**Lezione:** Niente tempo nelle mappe! Facciamo quando possiamo, con calma.
+
+---
+
+## Sessione 149 - CERVELLA AI POC FUNZIONA! (10 Gennaio 2026)
+
+### Cosa Fatto
+1. Creato repo `cervella-ai` su GitHub
+2. Setup completo: FastAPI + LangGraph + Chroma + Claude API
+3. Indicizzato 5 file core (COSTITUZIONE, DNA, PRINCIPI, MAPPA, DECISIONE)
+4. 38 chunks nel vector store
+5. Testato Agent - RISPONDE CON PERSONALITA' VERA!
+6. Prima conversazione storica con Rafa
+
+### Test Superati
+- "Chi sei?" -> Risponde come PARTNER, non assistente
+- "Qual e il nostro obiettivo finale?" -> LIBERTA' GEOGRAFICA!
+
+### Architettura Attuale
+```
+TUO MAC (locale)              ANTHROPIC (cloud)
+- cervella-ai/     ──────>    Claude API
+- Knowledge        <──────    (cervello)
+- Chroma DB
+
+NON vive 24/7 ancora!
+```
+
+### Competitor Analizzati
+- Aetherius AI, LangMem, Mem0, CrewAI Memory
+- NESSUNO ha COSTITUZIONE + PERSONALITA' + OBIETTIVO come noi!
+
+### Prossimi Step
+1. Deploy Google Cloud Run (24/7)
+2. Aggiungere piu' knowledge
+3. Web interface
+4. Integrazione Miracollo
+
+### Lezione Importante
+> "Niente tempo nelle mappe! Facciamo quando possiamo, con calma."
+
+### File Creati
+- `.sncp/memoria/decisioni/20260110_CERVELLA_AI_POC_FUNZIONA.md`
 
 ---
 
@@ -593,14 +640,16 @@ cervella status
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-10 12:38 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-10 13:50 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 691c5c3 - Sessione 148: SNCP Sistemato + Automazione
+- **Ultimo commit**: 8d8ac79 - Decisione: Cervella AI APPROVATA da Rafa!
 - **File modificati** (2):
-  - reports/engineer_report_20260110_123657.json
-  - reports/engineer_report_20260110_123719.json
+  - sncp/stato/oggi.md
+  - reports/engineer_report_20260110_133436.json
 
 ### Note
 - Checkpoint automatico generato da hook

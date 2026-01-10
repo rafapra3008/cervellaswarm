@@ -102,3 +102,11 @@ Pronti per usare la famiglia su progetti reali!
 *Prossimo aggiornamento: fine sessione (automatico)*
 
 **"SNCP funziona solo se lo VIVIAMO - ora e' automatico!"**
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-10 13:50 (session_end)
+
+- **Progetto**: CervellaSwarm
+- **Evento**: session_end
+- **Generato da**: sncp_auto_update.py v1.0.0
