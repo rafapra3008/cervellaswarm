@@ -313,18 +313,17 @@ Sprint completati:      3.1 (Backend Integration)
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-11 22:30 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-11 22:31 (auto)
 
 ### Stato Git
 - **Branch**: main
 - **Ultimo commit**: ffcf611 - ANTI-COMPACT: PreCompact auto
-- **File modificati** (3):
-  - sncp/stato/oggi.md
-  - PROMPT_RIPRESA.md
-  - reports/scientist_prompt_20260111.md
+- **File modificati**: Nessuno (git pulito)
 
 ### Note
 - Checkpoint automatico generato da hook
-- Trigger: unknown
+- Trigger: auto
 
 ---
