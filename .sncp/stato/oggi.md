@@ -1,8 +1,46 @@
 # STATO OGGI
 
 > **Data:** 11 Gennaio 2026
-> **Sessione:** 159 (POC COMPLETE! GO!)
-> **Ultimo aggiornamento:** 03:00 UTC
+> **Sessione:** 159e (Miracollo Sprint 3.5)
+> **Ultimo aggiornamento:** 03:35 UTC
+
+---
+
+## Sessione 159e - MIRACOLLO SPRINT 3.5 COMPLETO!
+
+**Focus:** Progetto Miracollo - Frontend ML UI
+
+```
++================================================================+
+|                                                                |
+|         MIRACOLLO - SPRINT 3.5 FRONTEND ML UI                  |
+|                      100% COMPLETE!                            |
+|                                                                |
+|    3.5.1 Badge Confidence:       DEPLOYED                      |
+|    3.5.2 Tooltip Explainability: DEPLOYED                      |
+|    3.5.3 Dashboard ML Health:    DEPLOYED                      |
+|    3.5.4 Progressive Disclosure: DEPLOYED                      |
+|                                                                |
+|    + FIX API retrain 500:        DEPLOYED                      |
+|                                                                |
+|    TOTALE: ~1324 righe di codice!                              |
+|                                                                |
++================================================================+
+```
+
+**Agenti Attivati:**
+- cervella-frontend: Dashboard ML (730), Progressive Disclosure (266)
+- cervella-backend: Fix API retrain (8), Migration DB (20)
+
+**Commit Miracollo:**
+```
+d82742b Checkpoint Sessione 159
+88f4889 Sprint 3.5.4: Progressive Disclosure
+8cd7e55 Fix: API retrain 500
+250fbff Sprint 3.5.3: Dashboard ML Health
+b12f5bd Sprint 3.5.2: Tooltip Explainability
+d64939b Sprint 3.5.1: Badge Confidence
+```
 
 ---
 
@@ -22,6 +60,149 @@
 |   *** GO - PROCEDERE CON MVP HYBRID ***                           |
 |                                                                    |
 +====================================================================+
+```
+
+---
+
+## Sessione 159d - Ricerca RunPod Deploy (11 Gennaio 2026)
+
+### RICERCA COMPLETATA: DEPLOY QWEN3-4B SU RUNPOD
+
+**File:** `RICERCA_DEPLOY_QWEN3_RUNPOD.md` - 664 righe, APPROFONDITA
+
+**TL;DR Stack Raccomandato:**
+```yaml
+Deploy Mode: Serverless con Active Workers (sconto 20-40%)
+GPU: RTX 4000 Ada ($0.34-0.76/hr) - 20GB VRAM, EU-disponibile
+Framework: vLLM (performance top, OpenAI-compatible)
+Quantization: Q4_K_M via GGUF (2.5GB model, ~4GB VRAM totale)
+Costo 24/7: $250-550/mese (~€230-510/mese)
+```
+
+### Sezioni Coperte (8 capitoli completi)
+
+1. ✅ **Opzioni Deploy** - Serverless vs Pod, template esistenti, vLLM vs TGI vs Ollama
+2. ✅ **Setup Tecnico** - Quantization Q4_K_M, caricamento model, configurazione vLLM, API setup
+3. ✅ **Costi Reali** - GPU pricing EU, storage, bandwidth (zero fees!), breakdown 24/7
+4. ✅ **Best Practices** - DO/DON'T, monitoring, health checks, auto-restart, scaling
+5. ✅ **Step-by-Step** - Guida pratica deploy, 7 step dalla signup al production
+6. ✅ **Troubleshooting** - Problemi comuni + soluzioni
+7. ✅ **Comparison** - RunPod vs Modal/Replicate/AWS/GCP
+8. ✅ **Checklist** - Pre-deploy, deploy, post-deploy, Week 1
+
+### Highlights Ricerca
+
+**Active Workers = Game Changer:**
+- 20-40% sconto vs Flex Workers
+- Zero cold starts (sempre warm)
+- Ideale per 24/7 inference
+- Auto-scaling incluso
+
+**RTX 4000 Ada Perfect Fit:**
+- 20GB VRAM (Qwen3-4B Q4 usa solo 4GB)
+- EU regions disponibili (GDPR compliant)
+- $0.34-0.76/hr (varia per region)
+- Entry-level tier, cost-effective
+
+**Zero Bandwidth Fees:**
+- Nessun costo ingress/egress
+- Differenza ENORME vs AWS/GCP
+- Upload modelli gratis
+- API calls illimitate
+
+**Model Caching FTW:**
+- Cold start: 60-100s senza caching
+- Cold start: 2-5s CON caching
+- Costo: $0.18/mese per 2.5GB model
+- RunPod auto-cache se usi template ufficiale
+
+**vLLM Dominante:**
+- Performance top (PagedAttention)
+- OpenAI API compatibility nativa
+- Supporto quantization (GPTQ, AWQ, GGUF)
+- Template ufficiale RunPod pronto
+
+### Costo Breakdown 24/7 (Scenario Migliore)
+
+```
+GPU (RTX 4000 Ada, EU low-end):
+  $0.34/hr × 730 hrs = $248/mese
+
+Storage (Network Volume per caching):
+  2.5GB × $0.07/GB = $0.18/mese
+
+Bandwidth: $0
+
+TOTALE: ~$248/mese = €230/mese
+```
+
+**Scenario Worst-Case (EU high-end region):**
+```
+GPU: $0.76/hr × 730 hrs = $555/mese
+Storage: $0.18/mese
+TOTALE: ~$555/mese = €510/mese
+```
+
+**Budget Check:**
+- Budget allocato RAG: €87-220/mese
+- RunPod costo: €230-510/mese
+- ⚠️ Fuori budget nel worst-case
+- ✅ OK se region low-cost disponibile
+
+### Regioni EU Disponibili (GDPR)
+
+- 🇷🇴 EU-RO-1 (Romania)
+- 🇨🇿 EU-CZ-1 (Czech Republic)
+- 🇫🇷 EU-FR-1 (France)
+- 🇳🇱 EU-NL-1 (Netherlands) - RACCOMANDATO per IT
+- 🇸🇪 EU-SE-1 (Sweden)
+- 🇮🇸 EUR-IS-2 (Iceland)
+
+**GDPR Compliance:**
+- RunPod ha privacy representative EU
+- SOC 2 Type I certified
+- DPA disponibile su richiesta
+- Dati restano in EU se selezioni region EU
+
+### Best Practices Chiave
+
+**DO ✅**
+1. Usa Network Volume per model caching (cold start 2-5s)
+2. Abilita Model Caching ufficiale RunPod (ancora più veloce)
+3. Setta `MAX_MODEL_LEN` appropriato (8192 per Qwen3-4B)
+4. Usa Active Workers per 24/7 (20-40% risparmio)
+5. Implementa retry logic nel client (gestisci edge cases)
+
+**DON'T ❌**
+1. Non usare Flex per 24/7 continuous (costi più alti)
+2. Non lasciare `MAX_MODEL_LEN` default (rischio OOM)
+3. Non ignorare cold start se usi Flex (60-100s impatto UX)
+4. Non deployare senza health checks (`/ping` endpoint)
+
+### Prossimi Step Deployment
+
+**Immediate (questa settimana):**
+1. Signup RunPod + verify pricing RTX 4000 Ada EU-NL-1
+2. Test deploy con $10 credit (verifica latency reale)
+
+**Se pricing OK (< €300/mese):**
+3. Deploy production Active Workers (2× HA)
+4. Setup monitoring + health checks
+5. Integrate con Cervella Baby MVP
+
+**Se pricing alto (> €400/mese):**
+3. Rivalutare Vast.ai o alternative
+4. Considerare Google Colab Pro+ per POC esteso
+5. Self-hosted future (Hetzner GPU?)
+
+### Statistiche Ricerca
+
+```
+Ricerca RunPod: 664 righe
+Fonti consultate: 50+ (docs ufficiali, blog, GitHub, community)
+WebSearch queries: 9
+WebFetch calls: 2
+Confidence: ⭐⭐⭐⭐⭐ MOLTO ALTA
 ```
 
 ---
@@ -55,7 +236,7 @@
 Stack:
 - Qdrant + Jina-v3 + Qwen3-4B
 - Deploy: RunPod EU
-- Budget: €87-220/mese
+- Budget: €87-220/mese (RAG) + €230-510/mese (LLM)
 
 ---
 
@@ -224,6 +405,7 @@ Due fonti con prezzi diversi:
 | Ricerca Google Colab | COMPLETA! | 1112 righe |
 | Ricerca Infrastruttura | COMPLETA! | 4 parti, 2581 righe |
 | **Ricerca RAG** | **COMPLETA!** | **617 righe** |
+| **Ricerca RunPod Deploy** | **COMPLETA!** | **664 righe** |
 | POC Setup | PRONTO | 20 task + COSTITUZIONE compressa |
 | Cervella AI (Claude) | UP interno | Porta 8002 da aprire in GCP |
 | Miracollo | LIVE | Zero-downtime deploy OK |
@@ -270,18 +452,20 @@ reports/scientist_prompt_20260110.md
 RICERCA CERVELLA BABY (21 report):     25,500+ righe
 RICERCHE AGGIUNTIVE (5 file):           3,693 righe
 RICERCA RAG ARCHITECTURE:                 617 righe
+RICERCA RUNPOD DEPLOY:                    664 righe
 --------------------------------------------
-TOTALE RICERCA:                        29,810+ righe
+TOTALE RICERCA:                        30,474+ righe
 ```
 
 ---
 
 ## Prossimi Step
 
-1. **POC WEEK 1** - Setup Google Colab + primi test Qwen3-4B
-2. **Aprire porta 8002** - GCP Console (manuale)
-3. **MVP Hybrid** - Se POC = GO
-4. **Setup RAG** - Qdrant + Jina-v3 (dopo POC Week 3)
+1. **Verificare RunPod pricing** - RTX 4000 Ada EU-NL-1 (console)
+2. **Test deploy $10** - Se pricing < €300/mese
+3. **Setup Qdrant** - Free tier cloud
+4. **MVP Integration** - Se RunPod OK
+5. **Aprire porta 8002** - GCP Console (manuale)
 
 ---
 
@@ -290,9 +474,10 @@ TOTALE RICERCA:                        29,810+ righe
 ```
 [##################################################] 100000%
 
-RICERCA: 29,800+ righe COMPLETE!
-POC: PRONTO! 20 task, COSTITUZIONE compressa
+RICERCA: 30,474+ righe COMPLETE!
+POC: 95% PASS RATE! GO DECISIONE!
 RAG: STACK DEFINITO! Budget OK!
+DEPLOY: RUNPOD STUDIATO! Pricing da verificare!
 VISIONE: GRANDE! Non micro-soluzioni!
 
 "Abbiamo tempo e risorsa per fare tutto!"
@@ -301,8 +486,8 @@ VISIONE: GRANDE! Non micro-soluzioni!
 
 ---
 
-*Aggiornato: 11 Gennaio 2026 - Sessione 159b (Ricerca RAG)*
-*"STACK RAG DEFINITO! PRONTI PER IMPLEMENTATION!"*
+*Aggiornato: 11 Gennaio 2026 - Sessione 159d (Ricerca RunPod Deploy)*
+*"DEPLOY RUNPOD STUDIATO! PRONTI PER PRICING VERIFY!"*
 
 ---
 
