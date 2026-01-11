@@ -1,8 +1,68 @@
 # STATO OGGI
 
 > **Data:** 11 Gennaio 2026
-> **Sessione:** 159e (Miracollo Sprint 3.5)
-> **Ultimo aggiornamento:** 03:35 UTC
+> **Sessione:** 160 (MVP Infrastructure Decision)
+> **Ultimo aggiornamento:** 04:15 UTC
+
+---
+
+## Sessione 160 - MVP INFRASTRUCTURE DECISION (11 Gennaio 2026)
+
+### RISULTATO: CAMBIO PROVIDER! Genesis Cloud invece di RunPod
+
+```
++================================================================+
+|                                                                |
+|         MVP INFRASTRUCTURE: DECISIONE PRESA!                   |
+|                                                                |
+|   DOMINIO: cervellaai.com COMPRATO!                            |
+|                                                                |
+|   PROVIDER GPU: Genesis Cloud (NON RunPod!)                    |
+|   - RunPod Serverless: €248-510/mese (TROPPO!)                 |
+|   - Genesis Cloud RTX 3080: €54/mese (78% RISPARMIO!)          |
+|                                                                |
+|   PROSSIMO STEP: Signup Genesis Cloud + Test                   |
+|                                                                |
++================================================================+
+```
+
+### Cosa Abbiamo Fatto
+
+1. **Dominio cervellaai.com** - COMPRATO!
+2. **Account RunPod** - Creato (ma non usato)
+3. **Ricerca RunPod Deploy** - 664 righe (RICERCA_DEPLOY_QWEN3_RUNPOD.md)
+4. **Ricerca Alternative** - 1127 righe (RICERCA_ALTERNATIVE_RUNPOD_2026.md)
+5. **Roadmap MVP** - Creata (ROADMAP_MVP_CERVELLA_BABY.md)
+
+### Decisione Chiave: Genesis Cloud
+
+**PERCHE Genesis Cloud invece di RunPod:**
+
+| Provider | Costo/mese | EU/GDPR | Note |
+|----------|------------|---------|------|
+| RunPod Serverless | €248-510 | Si | TROPPO COSTOSO |
+| Genesis Cloud | €54 | Norway | 78% RISPARMIO! |
+
+- RTX 3080 (10GB VRAM) perfetta per Qwen3-4B (serve 4GB)
+- Norway datacenter = EU GDPR compliant
+- 100% energia rinnovabile
+- $15 free credits per iniziare
+
+### Ricerche Create Sessione 160
+
+| File | Righe | TL;DR |
+|------|-------|-------|
+| RICERCA_DEPLOY_QWEN3_RUNPOD.md | 664 | vLLM + Active Workers + RTX 4000 |
+| RICERCA_ALTERNATIVE_RUNPOD_2026.md | 1127 | Genesis Cloud VINCE! |
+| ROADMAP_MVP_CERVELLA_BABY.md | ~200 | 3 fasi MVP |
+
+### Prossimi Step
+
+1. **Signup Genesis Cloud** - genesiscloud.com
+2. **Richiedere quota RTX 3080** - Norway datacenter
+3. **Deploy test Qwen3-4B** - 1 settimana test (~€12)
+4. **Se OK** - Produzione su Genesis Cloud
+5. **Se NO** - Backup: TensorDock o Hetzner
 
 ---
 

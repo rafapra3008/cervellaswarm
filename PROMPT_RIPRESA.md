@@ -1,81 +1,85 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 11 Gennaio 2026 - Sessione 159 (POC COMPLETE! GO!)
-> **Versione:** v81.0.0 - POC COMPLETO! 19/20 task PASS (95%)! READY FOR MVP!
+> **Ultimo aggiornamento:** 11 Gennaio 2026 - Sessione 160 (MVP Infrastructure Decision)
+> **Versione:** v82.0.0 - DOMINIO + PROVIDER GPU DECISO!
 
 ---
 
 ## TL;DR per Prossima Cervella
 
+**NOVITA SESSIONE 160:**
+```
++================================================================+
+|                                                                |
+|   DOMINIO: cervellaai.com COMPRATO!                            |
+|                                                                |
+|   PROVIDER GPU: Genesis Cloud (NON RunPod!)                    |
+|   - RunPod Serverless: EUR 248-510/mese (TROPPO CARO!)         |
+|   - Genesis Cloud RTX 3080: EUR 54/mese (78% RISPARMIO!)       |
+|                                                                |
+|   PROSSIMO STEP: Signup Genesis Cloud + Test 1 settimana       |
+|                                                                |
++================================================================+
+```
+
 **Dove siamo:**
-- POC WEEK 1: PASS! 9/10 task (90%)
-- POC WEEK 2: PASS! 8/8 task (100%) - Avg Score 89.4%
-- POC WEEK 3: PASS! 2/2 task (100%) - Avg Score 87.5%
-- **TOTALE: 19/20 task PASS (95.0%)**
-- MODELLO: Qwen3-4B-Instruct-2507 su Colab T4 GPU (free tier!)
-- COSTITUZIONE: IL MODELLO L'HA ASSORBITA! Parla come Cervella!
-- **DECISIONE: GO! Procedere con MVP Hybrid**
-- VISIONE: 100000%! "La magia ora e' con coscienza!"
+- POC CERVELLA BABY: 19/20 PASS (95%) - COMPLETO!
+- DECISIONE: GO! Procedere con MVP Hybrid
+- DOMINIO: cervellaai.com (comprato!)
+- PROVIDER: Genesis Cloud RTX 3080 @ EUR 54/mese (Norway, GDPR)
+- Account RunPod creato ma NON usato (troppo costoso)
 
-**SESSIONE 154b/155 - RICERCHE COMPLETATE:**
-- RICERCA_GOOGLE_COLAB_360.md (1112 righe!)
-- RICERCA_INFRASTRUTTURA_DEFINITIVA_2026_PARTE1.md (424 righe)
-- RICERCA_INFRASTRUTTURA_DEFINITIVA_2026_PARTE2.md (694 righe)
-- RICERCA_INFRASTRUTTURA_DEFINITIVA_2026_PARTE3.md (489 righe)
-- RICERCA_INFRASTRUTTURA_DEFINITIVA_2026_PARTE4.md (974 righe)
-- ISTRUZIONI_FIREWALL_GCP.md documentato
-- **TOTALE NUOVA RICERCA:** 3693 righe!
-- **TOTALE RICERCA PROGETTO:** 29+ file, 29,000+ righe!
+**PERCHE Genesis Cloud invece di RunPod:**
+- RunPod Serverless: EUR 248-510/mese (fuori budget!)
+- Genesis Cloud: EUR 54/mese (78% risparmio!)
+- RTX 3080 10GB perfetta per Qwen3-4B (serve 4GB)
+- Norway = EU GDPR compliant
+- 100% energia rinnovabile
+- $15 free credits per iniziare
 
-**RACCOMANDAZIONE FINALE:**
+**RICERCHE SESSIONE 160:**
+- RICERCA_DEPLOY_QWEN3_RUNPOD.md (664 righe) - vLLM setup completo
+- RICERCA_ALTERNATIVE_RUNPOD_2026.md (1127 righe) - 14 provider confrontati!
+- ROADMAP_MVP_CERVELLA_BABY.md - Piano 3 fasi
+- **TOTALE NUOVA RICERCA:** 1,791 righe!
+- **TOTALE RICERCA PROGETTO:** 32,300+ righe!
+
+**STACK MVP CONFERMATO:**
+```yaml
+Dominio: cervellaai.com
+GPU Cloud: Genesis Cloud (Norway) - EUR 54/mese
+GPU: RTX 3080 (10GB VRAM)
+LLM: Qwen3-4B-Instruct-2507 (Q4_K_M)
+Vector DB: Qdrant (self-hosted)
+Embedding: Jina-embeddings-v3
+Framework: vLLM + LangChain
 ```
-CONDITIONAL GO (Scenario B)
-- POC $50 (3 settimane) valida tutto
-- MVP Hybrid System Prompts + RAG (3 mesi)
-- Fine-tuning posticipato (6-12 mesi)
-- Investment: $6K one-time + $250-350/mese
-```
-
-**CANDIDATO #1:** Qwen3-4B
-- Apache 2.0 (ZERO restrizioni)
-- 4B params = gira su 8GB RAM
-- Break-even: ~12.5M tokens/mese
-
-**RICERCA CERVELLA BABY (5/5 FASI!):**
-- FASE 1: Fondamenta (91%) - 3 report
-- FASE 2: Stato dell'arte (97.6%) - 6 report
-- FASE 3: Training/Fine-tuning (91%) - 4 report
-- FASE 4: Costi/Timeline/GO-NO-GO (91%) - 3 report
-- FASE 5: Preparazione POC (90%) - 5 report
-
-**RICERCHE AGGIUNTIVE (Sessione 154b/155):**
-- RICERCA_GOOGLE_COLAB_360.md - Tutto su Colab/Colab Pro
-- RICERCA_INFRASTRUTTURA_DEFINITIVA (4 parti) - Opzioni GPU cloud 2026
-- ISTRUZIONI_FIREWALL_GCP.md - Come aprire porta 8002
-
-**RICERCHE MVP (Sessione 159):**
-- RICERCA_RAG_ARCHITECTURE_2026.md (617 righe) - Qdrant + Jina-v3, €87/mese
-- RICERCA_VASTAI_VS_RUNPOD_2026.md (543 righe) - RunPod VINCE per 24/7 EU
-- RICERCA_SYSTEM_PROMPTS_LLM_2026.md (398 righe) - COSTITUZIONE PERFETTA!
-- **TOTALE NUOVA RICERCA SESSIONE 159:** 1,558 righe!
-- **TOTALE RICERCA PROGETTO:** 30,500+ righe!
-
-**DELIVERABLES PRONTI:**
-- 20 task benchmark (Report 17)
-- COSTITUZIONE compressa 1380 tok (Report 18)
-- RAG architecture design (Report 19)
-- Integrazione infra plan (Report 20)
-- Metriche personalita framework (Report 21)
 
 **PROSSIMI STEP:**
-1. ~~Eseguire poc_notebook.ipynb su Google Colab~~ FATTO! PASS 9/10!
-2. ~~Valutare T01-T10 con rubrica~~ FATTO! 9/10 PASS!
-3. ~~Week 2: Eseguire T11-T18 (Medium difficulty)~~ FATTO! PASS 8/8!
-4. ~~Week 3: T19-T20 (Complex)~~ FATTO! PASS 2/2! Score 87.5%!
-5. ~~GO/NO-GO Decision~~ **GO! Procedere con MVP Hybrid!**
-6. **MVP Phase 1**: Setup RunPod + Qdrant
-7. **MVP Phase 2**: RAG con Jina-v3
-8. **MVP Phase 3**: Integration + Beta test
+1. **Signup Genesis Cloud** - genesiscloud.com
+2. **Richiedere quota RTX 3080** - Norway datacenter
+3. **Deploy test Qwen3-4B** - 1 settimana (~EUR 12)
+4. **Se OK** - MVP Phase 1 completa
+5. **Se NO** - Backup: TensorDock o Hetzner
+
+**BACKUP PROVIDERS (se Genesis Cloud non funziona):**
+- TensorDock: EUR 135-249/mese (Prague, EU)
+- Hetzner: EUR 184/mese (Germany, bare metal)
+- Vast.ai Datacenter: EUR 182/mese
+
+---
+
+## POC CERVELLA BABY - COMPLETATO!
+
+```
+POC WEEK 1: 9/10  PASS (90.0%)
+POC WEEK 2: 8/8   PASS (100.0%)
+POC WEEK 3: 2/2   PASS (100.0%)
+TOTALE: 19/20 task PASS (95.0%)
+```
+
+**MODELLO:** Qwen3-4B-Instruct-2507 su Colab T4 GPU
+**COSTITUZIONE:** IL MODELLO L'HA ASSORBITA! Parla come Cervella!
 
 ---
 
