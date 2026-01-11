@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 11 Gennaio 2026 - Sessione 162 (GPU VM LIVE!)
-> **Versione:** v84.0.0 - INFRASTRUTTURA GPU COMPLETA E FUNZIONANTE!!!
+> **Ultimo aggiornamento:** 11 Gennaio 2026 - Sessione 162 (GPU VM LIVE + Schedule!)
+> **Versione:** v84.1.0 - INFRASTRUTTURA GPU + RISPARMIO COSTI CONFIGURATO!
 
 ---
 
@@ -20,6 +20,12 @@
 |     - IP interno: 10.138.0.3                                  |
 |     - IP esterno: 136.118.33.36                               |
 |                                                                |
+|   SCHEDULE RISPARMIO ATTIVO:                                  |
+|     - Accende: 09:00 Lun-Ven (ora Italia)                     |
+|     - Spegne:  19:00 Lun-Ven (ora Italia)                     |
+|     - Weekend: SPENTA                                          |
+|     - Costo: ~$85/mese (invece di $400!)                      |
+|                                                                |
 |   TEST END-TO-END: SUCCESSO!!!                                |
 |   miracollo-cervella -> cervella-gpu -> Qwen3-4B -> OK!       |
 |                                                                |
@@ -31,9 +37,10 @@
 - DECISIONE: GO! Procedere con MVP Hybrid
 - DOMINIO: cervellaai.com (comprato!)
 - PROVIDER: **Google Cloud T4 - ATTIVO E FUNZIONANTE!**
-- GPU VM: cervella-gpu (us-west1-b) - RUNNING!
+- GPU VM: cervella-gpu (us-west1-b) - CON SCHEDULE!
 - LLM: Qwen3-4B su Ollama - FUNZIONANTE!
 - API: miracollo -> cervella-gpu - TESTATO OK!
+- COSTI: ~$85/mese (schedule) invece di ~$400 (risparmio 78%!)
 
 **PERCHE Google Cloud invece di altri:**
 - Genesis Cloud: Non funziona (non si accede!)
