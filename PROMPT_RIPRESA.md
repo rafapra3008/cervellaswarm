@@ -274,20 +274,24 @@ Sprint completati:      3.1 (Backend Integration)
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-11 21:33 (auto)
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-11 21:35 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 626084d - Sessione 166: Multi-Sessione Validato + Context Discovery
+- **Ultimo commit**: d44d952 - ANTI-COMPACT: PreCompact auto
 - **File modificati** (5):
-  - .sncp/idee/20260111_ANALISI_CACHE_CONTROL_VANTAGGIO_STRATEGICO.md
-  - .sncp/idee/20260111_RICERCA_CACHE_INVALIDATION.md
-  - .sncp/idee/20260111_RICERCA_CONTROLLO_CACHE.md
-  - .sncp/idee/CRITICO_WORKFLOW_LOCALE_VM_PRODUZIONE.md
-  - .sncp/stato/oggi.md
+  - sncp/stato/oggi.md
+  - .swarm/handoff/HANDOFF_166_CACHE_RESEARCH.md
+  - PROMPT_RIPRESA.md
+  - reports/scientist_prompt_20260111.md
+  - scripts/swarm/invalidate-cache.sh
 
 ### Note
 - Checkpoint automatico generato da hook
-- Trigger: auto
+- Trigger: unknown
 
 ---

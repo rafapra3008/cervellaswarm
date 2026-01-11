@@ -232,3 +232,19 @@ miracollo-cervella: RUNNING
 - **Impact**: ALTO - Game changer per workflow
 - **File creati**: 2 (ricerca + script)
 - **Generato da**: cervella-researcher
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-11 21:33 (session_end)
+
+- **Progetto**: CervellaSwarm
+- **Evento**: session_end
+- **Generato da**: sncp_auto_update.py v2.0.0
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-11 21:35 (session_end)
+
+- **Progetto**: CervellaSwarm
+- **Evento**: session_end
+- **Generato da**: sncp_auto_update.py v2.0.0
