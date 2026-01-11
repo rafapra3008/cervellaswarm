@@ -1,11 +1,47 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 11 Gennaio 2026 - Sessione 167
-> **Versione:** v90.0.0 - MIRACOLLO SISTEMATO + GAP FIX
+> **Ultimo aggiornamento:** 11 Gennaio 2026 - Sessione 168
+> **Versione:** v91.0.0 - PROTOCOLLO IBRIDO + VM PULITA
 
 ---
 
 ## TL;DR per Prossima Cervella
+
+**SESSIONE 168 - PROTOCOLLO IBRIDO VM + LOCALE**
+
+```
++================================================================+
+|                                                                |
+|   SESSIONE 168: WORKFLOW IBRIDO DEFINITIVO                     |
+|                                                                |
+|   NUOVO MODO DI LAVORARE:                                      |
+|   - LOCALE = Moduli COMPLETI (Room Manager, Email, etc.)       |
+|   - VM = Solo fix/manutenzione esistente                       |
+|   - MAI sostituire, solo AGGIUNGERE (plug-in)                  |
+|   - Lab Docker per test prima di produzione                    |
+|                                                                |
+|   RICERCA + DOCUMENTAZIONE:                                    |
+|   [x] Workflow ibrido studiato (850 righe ricerca)             |
+|   [x] 7 regole ferree definite (530 righe)                     |
+|   [x] Protocollo definitivo (350 righe)                        |
+|   [x] Template sessioni parallele pronti                       |
+|                                                                |
+|   PULIZIA VM MIRACOLLO:                                        |
+|   [x] Audit codice non committato                              |
+|   [x] Backend ROTTO ripristinato (era copia-incolla errata)    |
+|   [x] Frontend fix GAP #1 COMMITTATO (b428a69)                 |
+|   [ ] Push GitHub (serve config credenziali su VM)             |
+|                                                                |
+|   FILE CHIAVE:                                                 |
+|   - .sncp/idee/20260111_PROTOCOLLO_IBRIDO_DEFINITIVO.md        |
+|   - .sncp/idee/20260111_RICERCA_WORKFLOW_IBRIDO_VM_LOCALE.md   |
+|   - .sncp/idee/20260111_REGOLE_WORKFLOW_IBRIDO.md              |
+|   - .sncp/sessioni_parallele/20260111_miracollo_ibrido/        |
+|                                                                |
++================================================================+
+```
+
+---
 
 **SESSIONE 167 - MIRACOLLO WORKFLOW + GAP #1 RISOLTO!**
 
@@ -22,14 +58,9 @@
 |                                                                |
 |   GAP RISOLTI:                                                 |
 |   [x] GAP #1: Price History (bug timeline vs changes)          |
-|   [~] GAP #2: Modal Preview (fix applicato, da testare)        |
+|   [~] GAP #2: Modal Preview (da rifare - fix era rotto)        |
 |   [ ] GAP #3: ML Samples (prossima sessione)                   |
 |   [ ] GAP #4: Simula (prossima sessione)                       |
-|                                                                |
-|   FILE CHIAVE:                                                 |
-|   - .sncp/idee/WORKFLOW_MIRACOLLO_SOLO_VM.md                   |
-|   - Miracollo VM: .sncp/reports/DEBUG_GAP1_PRICE_HISTORY.md    |
-|   - Miracollo VM: .sncp/reports/DEBUG_GAP2_MODAL_PREVIEW.md    |
 |                                                                |
 +================================================================+
 ```
@@ -319,15 +350,19 @@ Sprint completati:      3.1 (Backend Integration)
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-11 22:33 (unknown)
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-11 22:34 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 5c0a151 - ANTI-COMPACT: PreCompact auto
+- **Ultimo commit**: 3cdc23a - Sessione 167: Cache Investigation - Scoperte Parziali
 - **File modificati** (3):
   - sncp/stato/oggi.md
-  - reports/scientist_prompt_20260111.md
-  - .swarm/handoff/HANDOFF_20260111_223352.md
+  - PROMPT_RIPRESA.md
+  - reports/engineer_report_20260111_223404.json
 
 ### Note
 - Checkpoint automatico generato da hook

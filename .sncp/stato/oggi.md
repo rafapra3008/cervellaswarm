@@ -1,8 +1,39 @@
 # STATO OGGI
 
 > **Data:** 11 Gennaio 2026 (Domenica)
-> **Sessione:** 167 - MIRACOLLO SISTEMATO + GAP #1 RISOLTO
-> **Ultimo aggiornamento:** 22:30 UTC
+> **Sessione:** 168 - PROTOCOLLO IBRIDO + PULIZIA VM
+> **Ultimo aggiornamento:** 23:45 UTC
+
+---
+
+## Sessione 168 - PROTOCOLLO IBRIDO DEFINITIVO
+
+```
++================================================================+
+|                                                                |
+|   SESSIONE 168: WORKFLOW IBRIDO VM + LOCALE                    |
+|                                                                |
+|   RICERCA COMPLETATA:                                          |
+|   [x] Workflow ibrido VM + Locale studiato                     |
+|   [x] 7 regole ferree definite                                 |
+|   [x] Protocollo definitivo documentato                        |
+|   [x] Template sessioni parallele creati                       |
+|                                                                |
+|   PULIZIA VM MIRACOLLO:                                        |
+|   [x] Audit completo codice non committato                     |
+|   [x] Backend ROTTO ripristinato                               |
+|   [x] Frontend fix GAP #1 COMMITTATO                           |
+|   [x] Commit: b428a69 sulla VM                                 |
+|   [ ] Push GitHub (serve config credenziali)                   |
+|                                                                |
+|   FILOSOFIA NUOVA:                                             |
+|   - LOCALE = Moduli COMPLETI (Room Manager, Email, etc.)       |
+|   - VM = Solo fix/manutenzione esistente                       |
+|   - MAI sostituire, solo AGGIUNGERE (plug-in)                  |
+|   - Lab Docker per test prima di produzione                    |
+|                                                                |
++================================================================+
+```
 
 ---
 
@@ -298,6 +329,14 @@ miracollo-cervella: RUNNING
 ---
 
 ## AUTO-CHECKPOINT: 2026-01-11 22:33 (session_end)
+
+- **Progetto**: CervellaSwarm
+- **Evento**: session_end
+- **Generato da**: sncp_auto_update.py v2.0.0
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-11 22:34 (session_end)
 
 - **Progetto**: CervellaSwarm
 - **Evento**: session_end
