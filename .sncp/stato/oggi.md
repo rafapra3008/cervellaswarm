@@ -1,8 +1,38 @@
 # STATO OGGI
 
 > **Data:** 11 Gennaio 2026 (Domenica)
-> **Sessione:** 166 - Multi-Sessione + Context Discovery + CACHE CONTROL
-> **Ultimo aggiornamento:** 21:45 UTC
+> **Sessione:** 167 - MIRACOLLO SISTEMATO + GAP #1 RISOLTO
+> **Ultimo aggiornamento:** 22:30 UTC
+
+---
+
+## Sessione 167 - MIRACOLLO WORKFLOW + GAP FIX
+
+```
++================================================================+
+|                                                                |
+|   SESSIONE 167: GRANDE PULIZIA MIRACOLLO!                      |
+|                                                                |
+|   WORKFLOW SISTEMATO:                                          |
+|   [x] Confronto Locale vs VM completato                        |
+|   [x] 10 migrazioni applicate su VM                            |
+|   [x] Locale spostato in _OLD_miracollogeminifocus             |
+|   [x] Docker locale spento                                     |
+|   [x] CLAUDE.md VM aggiornato                                  |
+|   [x] Documentato: WORKFLOW_MIRACOLLO_SOLO_VM.md               |
+|                                                                |
+|   GAP MIRACOLLO:                                               |
+|   [x] GAP #1: Price History RISOLTO!                           |
+|       - Bug: API "timeline" vs codice "changes"                |
+|       - Bug: formato date con spazio                           |
+|       - Bug: campi changed_at vs date                          |
+|       - Log aggiunti per debug futuro                          |
+|   [~] GAP #2: Modal Preview fix applicato (da testare)         |
+|   [ ] GAP #3: ML Samples (prossima sessione)                   |
+|   [ ] GAP #4: Simula (prossima sessione)                       |
+|                                                                |
++================================================================+
+```
 
 ---
 
@@ -244,6 +274,22 @@ miracollo-cervella: RUNNING
 ---
 
 ## AUTO-CHECKPOINT: 2026-01-11 21:35 (session_end)
+
+- **Progetto**: CervellaSwarm
+- **Evento**: session_end
+- **Generato da**: sncp_auto_update.py v2.0.0
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-11 22:30 (session_end)
+
+- **Progetto**: CervellaSwarm
+- **Evento**: session_end
+- **Generato da**: sncp_auto_update.py v2.0.0
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-11 22:30 (session_end)
 
 - **Progetto**: CervellaSwarm
 - **Evento**: session_end

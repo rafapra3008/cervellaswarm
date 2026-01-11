@@ -1,11 +1,40 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 11 Gennaio 2026 - Sessione 166
-> **Versione:** v89.0.0 - SISTEMA MULTI-SESSIONE VALIDATO!
+> **Ultimo aggiornamento:** 11 Gennaio 2026 - Sessione 167
+> **Versione:** v90.0.0 - MIRACOLLO SISTEMATO + GAP FIX
 
 ---
 
 ## TL;DR per Prossima Cervella
+
+**SESSIONE 167 - MIRACOLLO WORKFLOW + GAP #1 RISOLTO!**
+
+```
++================================================================+
+|                                                                |
+|   SESSIONE 167: GRANDE PULIZIA MIRACOLLO!                      |
+|                                                                |
+|   WORKFLOW NUOVO:                                              |
+|   - Miracollo = SOLO VM (locale in _OLD)                       |
+|   - 10 migrazioni applicate su VM                              |
+|   - Docker locale spento                                       |
+|   - Documentato: WORKFLOW_MIRACOLLO_SOLO_VM.md                 |
+|                                                                |
+|   GAP RISOLTI:                                                 |
+|   [x] GAP #1: Price History (bug timeline vs changes)          |
+|   [~] GAP #2: Modal Preview (fix applicato, da testare)        |
+|   [ ] GAP #3: ML Samples (prossima sessione)                   |
+|   [ ] GAP #4: Simula (prossima sessione)                       |
+|                                                                |
+|   FILE CHIAVE:                                                 |
+|   - .sncp/idee/WORKFLOW_MIRACOLLO_SOLO_VM.md                   |
+|   - Miracollo VM: .sncp/reports/DEBUG_GAP1_PRICE_HISTORY.md    |
+|   - Miracollo VM: .sncp/reports/DEBUG_GAP2_MODAL_PREVIEW.md    |
+|                                                                |
++================================================================+
+```
+
+---
 
 **SESSIONE 166 - MULTI-SESSIONE PRONTO + SCOPERTA CONTEXT!**
 
@@ -278,17 +307,21 @@ Sprint completati:      3.1 (Backend Integration)
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-11 21:35 (unknown)
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-11 22:30 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: d44d952 - ANTI-COMPACT: PreCompact auto
-- **File modificati** (5):
+- **Ultimo commit**: ffcf611 - ANTI-COMPACT: PreCompact auto
+- **File modificati** (3):
   - sncp/stato/oggi.md
-  - .swarm/handoff/HANDOFF_166_CACHE_RESEARCH.md
   - PROMPT_RIPRESA.md
   - reports/scientist_prompt_20260111.md
-  - scripts/swarm/invalidate-cache.sh
 
 ### Note
 - Checkpoint automatico generato da hook
