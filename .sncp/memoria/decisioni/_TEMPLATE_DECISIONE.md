@@ -3,6 +3,8 @@
 > **Data:** YYYY-MM-DD
 > **Sessione:** NNN
 > **Categoria:** architettura | processo | strategia | tecnica | altro
+> **Status:** PROPOSTA | APPROVATA | SUPERSEDED
+> **Autore:** [Cervella/Rafa/Insieme]
 
 ---
 

@@ -2,8 +2,10 @@
 
 > **Data:** YYYY-MM-DD
 > **Sessione:** NNN
-> **Categoria:** [tecnica/processo/comunicazione/architettura]
-> **Priorita:** [alta/media/bassa]
+> **Categoria:** Bug-Fix | Optimization | Process | Architecture
+> **Severity:** Critical | Major | Minor
+> **Applicabilità:** Questo progetto | Tutti i progetti
+> **Costo se ripetuto:** [X ore/risorse]
 
 ---
 
