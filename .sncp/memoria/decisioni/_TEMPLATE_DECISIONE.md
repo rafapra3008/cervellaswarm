@@ -49,6 +49,16 @@ Contro:
 
 ---
 
+## Tabella Comparativa
+
+| Opzione | Pro Principale | Contro Principale | Motivo Scarto |
+|---------|----------------|-------------------|---------------|
+| A | ... | ... | [se scartata] |
+| B | ... | ... | [se scartata] |
+| C | ... | ... | [se scartata] |
+
+---
+
 ## La Decisione
 
 **Abbiamo scelto:** [Opzione X]

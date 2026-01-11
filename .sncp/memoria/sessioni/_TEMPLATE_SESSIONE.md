@@ -1,8 +1,11 @@
 # SESSIONE NNN
 
 > **Data:** YYYY-MM-DD
+> **Progetto:** CervellaSwarm | Miracollo | Contabilita
 > **Durata:** ~X ore
 > **Energia:** Alta | Media | Bassa
+> **Autore:** Regina | Worker [nome]
+> **Tipo:** Feature | Bug-Fix | Research | Refactor | Planning
 
 ---
 
@@ -88,4 +91,24 @@
 
 ---
 
-*Sessione documentata da: Cervella*
+## Link SNCP
+
+| Tipo | File | Status |
+|------|------|--------|
+| Decisione | `memoria/decisioni/DECISIONE_*.md` | Creata/Aggiornata |
+| Lezione | `memoria/lezioni/LEZIONE_*.md` | Creata/Aggiornata |
+| Idea | `idee/*.md` | Nuova/In attesa |
+
+---
+
+## Prossima Sessione
+
+Cosa fare nella prossima sessione?
+
+1. ...
+2. ...
+
+---
+
+*Sessione documentata da: [Regina/Worker]*
+*Ultimo aggiornamento: YYYY-MM-DD*

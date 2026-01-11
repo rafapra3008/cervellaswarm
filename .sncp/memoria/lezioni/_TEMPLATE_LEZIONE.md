@@ -55,6 +55,24 @@ Perche questa lezione e preziosa per il futuro?
 
 ---
 
+## Applica Quando
+
+Situazioni dove questa lezione si applica:
+
+- [ ] [Situazione tipo 1]
+- [ ] [Situazione tipo 2]
+- [ ] [Trigger specifico]
+
+---
+
+## Implementato?
+
+- [ ] **NO** - Da implementare
+- [ ] **SI** - Dove: [path/file o processo]
+- [ ] **PARZIALE** - Manca: [cosa manca]
+
+---
+
 ## Verifica Apprendimento
 
 Come sappiamo se abbiamo davvero imparato?
@@ -66,3 +84,4 @@ Come sappiamo se abbiamo davvero imparato?
 ---
 
 *Lezione documentata da: Regina*
+*Ultimo aggiornamento: 11 Gennaio 2026*

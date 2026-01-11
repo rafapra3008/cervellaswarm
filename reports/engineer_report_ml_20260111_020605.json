@@ -1,0 +1,183 @@
+{
+  "timestamp": "11/01/2026 02:06",
+  "project": "/Users/rafapra/Developer/miracollogeminifocus/backend/ml",
+  "results": {
+    "large_files": [
+      {
+        "file": "model_trainer.py",
+        "lines": 618,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "ml_scheduler.py",
+        "lines": 661,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "confidence_scorer.py",
+        "lines": 674,
+        "suggestion": "Split in moduli separati"
+      }
+    ],
+    "large_functions": [
+      {
+        "file": "feature_engineering.py",
+        "line": 59,
+        "lines": 89,
+        "name": "prepare_features"
+      },
+      {
+        "file": "feature_engineering.py",
+        "line": 240,
+        "lines": 57,
+        "name": "encode_categorical"
+      },
+      {
+        "file": "feature_engineering.py",
+        "line": 297,
+        "lines": 56,
+        "name": "handle_missing_values"
+      },
+      {
+        "file": "feature_engineering.py",
+        "line": 353,
+        "lines": 69,
+        "name": "get_feature_matrix"
+      },
+      {
+        "file": "feature_engineering.py",
+        "line": 441,
+        "lines": 56,
+        "name": "validate_features"
+      },
+      {
+        "file": "model_trainer.py",
+        "line": 62,
+        "lines": 211,
+        "name": "train_model"
+      },
+      {
+        "file": "model_trainer.py",
+        "line": 381,
+        "lines": 110,
+        "name": "predict_performance"
+      },
+      {
+        "file": "model_trainer.py",
+        "line": 491,
+        "lines": 127,
+        "name": "get_model_metadata"
+      },
+      {
+        "file": "data_preparation.py",
+        "line": 60,
+        "lines": 129,
+        "name": "collect_training_data"
+      },
+      {
+        "file": "data_preparation.py",
+        "line": 189,
+        "lines": 65,
+        "name": "collect_acceptance_data"
+      },
+      {
+        "file": "data_preparation.py",
+        "line": 254,
+        "lines": 130,
+        "name": "get_training_stats"
+      },
+      {
+        "file": "data_preparation.py",
+        "line": 384,
+        "lines": 112,
+        "name": "export_training_csv"
+      },
+      {
+        "file": "ml_scheduler.py",
+        "line": 32,
+        "lines": 54,
+        "name": "start_ml_scheduler"
+      },
+      {
+        "file": "ml_scheduler.py",
+        "line": 105,
+        "lines": 105,
+        "name": "weekly_retrain_job"
+      },
+      {
+        "file": "ml_scheduler.py",
+        "line": 257,
+        "lines": 146,
+        "name": "update_ai_model_health"
+      },
+      {
+        "file": "ml_scheduler.py",
+        "line": 435,
+        "lines": 97,
+        "name": "trigger_retrain"
+      },
+      {
+        "file": "ml_scheduler.py",
+        "line": 532,
+        "lines": 129,
+        "name": "get_scheduler_status"
+      },
+      {
+        "file": "confidence_scorer.py",
+        "line": 106,
+        "lines": 68,
+        "name": "calculate_confidence"
+      },
+      {
+        "file": "confidence_scorer.py",
+        "line": 174,
+        "lines": 79,
+        "name": "get_model_variance_confidence"
+      },
+      {
+        "file": "confidence_scorer.py",
+        "line": 253,
+        "lines": 65,
+        "name": "get_prediction_confidence"
+      },
+      {
+        "file": "confidence_scorer.py",
+        "line": 318,
+        "lines": 62,
+        "name": "get_acceptance_rate"
+      },
+      {
+        "file": "confidence_scorer.py",
+        "line": 380,
+        "lines": 62,
+        "name": "get_data_quality_score"
+      },
+      {
+        "file": "confidence_scorer.py",
+        "line": 442,
+        "lines": 105,
+        "name": "get_confidence_breakdown"
+      },
+      {
+        "file": "confidence_scorer.py",
+        "line": 572,
+        "lines": 102,
+        "name": "should_show_suggestion"
+      }
+    ],
+    "todos": [
+      {
+        "file": "ml_scheduler.py",
+        "line": 589,
+        "type": "TODO",
+        "content": "store in DB se necessario"
+      }
+    ],
+    "duplicates": [],
+    "stats": {
+      "total_files": 7,
+      "total_lines": 3294,
+      "total_issues": 28
+    }
+  }
+}
