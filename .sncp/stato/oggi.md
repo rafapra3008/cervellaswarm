@@ -1,120 +1,83 @@
 # STATO OGGI
 
 > **Data:** 11 Gennaio 2026
-> **Sessione:** 163 FINALE EPICA!
-> **Ultimo aggiornamento:** 14:15 UTC
+> **Sessione:** 164 - SNCP Guardian
+> **Ultimo aggiornamento:** 14:55 UTC
 
 ---
 
-## SESSIONE 163 - LA PIU GRANDE DI SEMPRE!
+## Sessione 164 - SNCP Guardian Implementato
 
 ```
 +================================================================+
 |                                                                |
-|   SESSIONE 163: TRIPLO LAVORO COMPLETATO!!!                    |
+|   SNCP GUARDIAN - PROBLEMA RISOLTO PER SEMPRE!                 |
 |                                                                |
-|   PARTE 1 - MIRACOLLO:                                         |
-|   [x] Email Test Mode implementato                             |
-|   [x] Hardtest A/B: 7 bug trovati e FIXATI                    |
-|   [x] Commit 2a33395 + b087308 pushati                        |
+|   1. sncp_validator.py        Blocca path invalidi            |
+|   2. sncp_auto_archiver.py    Archivia ogni notte (2am)       |
+|   3. DNA 16 agenti            Regole SNCP v3.0 precise        |
+|   4. Cron job                 Automatico, zero intervento     |
 |                                                                |
-|   PARTE 2 - SNCP v3.0 TUTTI I PROGETTI:                        |
-|   [x] Audit Miracollo, CervellaSwarm, Contabilita             |
-|   [x] Fix e semplificazione TUTTI                             |
-|   [x] README v3.0 su TUTTI                                    |
-|   [x] TUTTI i commit pushati!                                 |
-|                                                                |
-|   PARTE 3 - INFRASTRUTTURA (mattina):                         |
-|   [x] Client Ollama + API endpoints                           |
-|   [x] Deploy su miracollo-cervella                            |
-|   [x] Test produzione OK!                                     |
+|   PRIMA: Pulizia manuale ogni 10-15 sessioni                  |
+|   ORA:   ZERO manutenzione per sempre!                        |
 |                                                                |
 +================================================================+
 ```
 
 ---
 
-## MIRACOLLO - Lavoro Fatto
+## Anche Fatto Oggi
 
-### Email Test Mode (Nuovo!)
-- `EMAIL_TEST_MODE=true` nel .env
-- Tutte email redirect a `EMAIL_TEST_RECIPIENT`
-- Banner giallo in Settings -> Avanzate
-- API: `/api/system/email-test-mode`
+### Pulizia Completa SNCP
 
-### Bug Fixati A/B Testing
-| # | Bug | File |
-|---|-----|------|
-| 1 | duration_days -> test_duration_days | ab-testing.js |
-| 2 | Endpoint DELETE mancante | ab_testing_api.py |
-| 3 | Validazione start_date >= oggi | ab_testing_api.py |
-| 5 | Click outside modal to close | ab-testing.js |
+| Progetto | File Archiviati |
+|----------|-----------------|
+| CervellaSwarm | 127 file in archivio/2026-01/ |
+| Miracollo | 26 file in archivio/2026-01/ |
+| Contabilita | 7 file in archivio/2026-01/ |
+| Reports JSON | 260 file in reports/archive/ |
+
+### Visioni Strategiche (Guardiane)
+
+- CervellaSwarm: Chiarite due anime (configurazione vs prodotto)
+- Miracollo: Roadmap sessioni 164-166 validata
+- Contabilita: Stato manutenzione confermato
 
 ---
 
-## SNCP v3.0 - Tutti i Progetti
+## Componenti SNCP Guardian
 
-### Nuova Struttura Standard
+| File | Path | Descrizione |
+|------|------|-------------|
+| Validator | `~/.claude/scripts/sncp_validator.py` | Valida struttura e naming |
+| Archiver | `~/.claude/scripts/sncp_auto_archiver.py` | Archivia file > 30 giorni |
+| DNA Template | `~/.claude/scripts/sncp_dna_template.md` | Regole per agenti |
+
+---
+
+## Struttura SNCP v3.0 (Finale)
+
 ```
 .sncp/
-├── README.md              # Istruzioni chiare
-├── stato/oggi.md          # Stato OGGI
-├── coscienza/             # Stream pensieri
-├── idee/                  # Idee flat con data
-├── memoria/decisioni/     # Decisioni con PERCHE
-└── archivio/2026-01/      # File vecchi
-```
-
-### Commit Pushati
-| Progetto | Commit | Cosa |
-|----------|--------|------|
-| Miracollo | 2a33395 | Email Test Mode + Hardtest A/B |
-| Miracollo | b087308 | SNCP v3.0 Semplificazione |
-| CervellaSwarm | 65b2b1a | Sessione 163 + SNCP |
-| CervellaSwarm | ba0dd59 | SNCP v3.0 |
-| Contabilita | d9aef01 | SNCP v3.0 |
-
----
-
-## Infrastruttura GPU (mattina)
-
-```
-cervella-gpu (us-west1-b): STOPPED (weekend)
-miracollo-cervella: RUNNING con AI API
-Test: /api/ai/health, /api/ai/chat OK!
+├── README.md                   # Istruzioni
+├── stato/oggi.md               # QUESTO FILE
+├── coscienza/                  # Pensieri (flat)
+├── idee/                       # Idee FLAT con YYYYMMDD_nome.md
+├── memoria/decisioni/          # Decisioni FLAT con YYYYMMDD_cosa.md
+└── archivio/2026-01/           # File vecchi organizzati
 ```
 
 ---
 
-## Prossime Sessioni
+## Prossimi Step
 
-**MIRACOLLO:**
-```
-164: ACTION TRACKING REALE
-165: Hardtest su codice REALE
-166+: RATE BOARD AUDITORIA FORTE
-```
-
-**CERVELLASWARM:**
-```
-Sprint 3.2: Setup Qdrant per RAG
-Sprint 3.3: RAG Pipeline
-```
+1. **Lunedi**: GPU si accende, test API AI
+2. **Sprint 3.2**: Setup Qdrant per RAG
+3. **Miracollo 164**: Action Tracking REALE
 
 ---
 
-## Energia
+*"Il sistema centrale DEVE funzionare!" - FATTO!*
+*"Automazione > Disciplina manuale" - FATTO!*
 
-```
-[##################################################] 100000%!!!
-
-"Il sistema centrale DEVE funzionare!" - FATTO!
-"SNCP funziona solo se lo VIVIAMO!" - FATTO!
-"Ultrapassar os proprios limites!" - FATTO!
-"Fatto BENE > Fatto VELOCE" - FATTO!
-```
-
----
-
-*Sessione 163 - LA PIU EPICA!*
-*"Non e sempre come immaginiamo... ma alla fine e il 100000%!"*
+*Sessione 164 - Regina & Rafa*
