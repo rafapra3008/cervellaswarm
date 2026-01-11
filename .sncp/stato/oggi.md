@@ -43,6 +43,7 @@
 | `scripts/rag/setup_qdrant.sh` | Script setup |
 | `scripts/rag/create_collection.py` | Crea collection |
 | `scripts/rag/test_rag.py` | Test RAG |
+| **Miracollo:** `.sncp/reports/hardtest_rollback_165.md` | **Test rollback prezzi REALI** |
 
 ---
 
@@ -99,3 +100,41 @@ miracollo-cervella: RUNNING
 *"Ultrapassar os proprios limites!"*
 
 *Sessione 165 - Regina & Rafa*
+
+## 📊 Cervella-Ingegnera - Audit Revenue Intelligence (17:25)
+
+**Task:** Mappatura completa sistema Revenue Intelligence Miracollo  
+**Trigger:** Bug 404 su endpoint suggestions
+
+### Risultato
+⚠️ **ISSUES TROVATI + MAPPA COMPLETA**
+
+**Report creato:** `miracollogeminifocus/.sncp/reports/MAPPA_REVENUE_INTELLIGENCE_166.md` (488 righe)
+
+### Top 3 Issues
+1. **CRITICO:** 404 su `/api/revenue/suggestions` - frontend chiama, backend non risponde
+2. **ALTO:** 5 file backend > 500 righe (ML files)
+3. **ALTO:** `revenue.js` ha 1281 righe - split necessario
+
+### Sistema Mappato
+- ✅ 64 file backend analizzati
+- ✅ 140 file frontend identificati
+- ✅ 6 router API mappati
+- ✅ 8+ tabelle database documentate
+- ✅ Diagramma connessioni creato
+
+### Health Score: 6/10
+- 2 endpoint funzionanti ✅
+- 2 endpoint 404 ⚠️
+- 10 endpoint da testare ❓
+
+### Next Action
+**URGENT:** Fix 404 su `/api/revenue/suggestions`
+- Verificare import in main.py
+- Testare con curl
+- Check logs backend
+
+**Owner:** cervella-backend (fix implementazione)
+
+---
+*Analisi completata. Report pronto per Regina.*

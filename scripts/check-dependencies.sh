@@ -68,7 +68,8 @@ if [ -z "$DEPENDENCIES" ] && [ -f "$DEPS_DIR/sessione_corrente.md" ]; then
 
     if [ -n "$DEPS_LINE" ]; then
         # Estrai dipendenze (formato: "- **Dipende da:** TASK-001, TASK-002")
-        DEPENDENCIES=$(echo "$DEPS_LINE" | sed 's/.*Dipende da:[[:space:]]*//' | sed 's/[[:space:]]*$//')
+        # Rimuovi markdown (**), trim spazi iniziali/finali
+        DEPENDENCIES=$(echo "$DEPS_LINE" | sed 's/.*Dipende da:[[:space:]]*//' | sed 's/\*\*//g' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
         echo -e "${BLUE}Dipendenze (da file):${NC} $DEPENDENCIES"
     fi
 fi

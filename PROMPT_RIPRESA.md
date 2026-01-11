@@ -241,17 +241,18 @@ Sprint completati:      3.1 (Backend Integration)
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-11 16:14 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-11 20:06 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 8713827 - Sessione 164: Reports finali
-- **File modificati** (5):
+- **Ultimo commit**: 594232f - Sessione 165: Costituzione Cervella AI + Sprint 3.2 Preparato
+- **File modificati** (4):
   - sncp/stato/oggi.md
-  - PROMPT_RIPRESA.md
-  - reports/scientist_prompt_20260111.md
-  - .sncp/idee/20260111_RICERCA_QDRANT_OLLAMA.md
-  - .sncp/idee/20260111_SPRINT_3.2_PLAN.md
+  - reports/engineer_report_20260111_162612.json
+  - reports/engineer_report_20260111_171021.json
+  - reports/engineer_report_20260111_171154.json
 
 ### Note
 - Checkpoint automatico generato da hook
