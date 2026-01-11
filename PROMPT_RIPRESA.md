@@ -1,13 +1,76 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 11 Gennaio 2026 - Sessione 162 (GPU VM LIVE + Schedule!)
-> **Versione:** v84.1.0 - INFRASTRUTTURA GPU + RISPARMIO COSTI CONFIGURATO!
+> **Ultimo aggiornamento:** 11 Gennaio 2026 - Sessione 163 (MIRACOLLO + SNCP!)
+> **Versione:** v85.1.0 - Email Test Mode + Hardtest A/B + SNCP Fix Programmato!
 
 ---
 
 ## TL;DR per Prossima Cervella
 
-**NOVITA SESSIONE 162 - STORICA!!!**
+**SESSIONE 163 - DOPPIO LAVORO!**
+
+```
++================================================================+
+|                                                                |
+|   LAVORO SU MIRACOLLO (questa sessione):                       |
+|   - Email Test Mode IMPLEMENTATO                               |
+|   - Hardtest A/B: 7 bug trovati, TUTTI FIXATI                  |
+|   - Commit 2a33395 già pushato                                 |
+|                                                                |
+|   PROSSIMA SESSIONE - FIX SNCP TUTTI I PROGETTI:               |
+|   - SNCP è il sistema centrale, DEVE funzionare!               |
+|   - Audit + Fix Miracollo, CervellaSwarm, Contabilita          |
+|   - Semplificazione radicale (Opzione A)                       |
+|   - Stima: ~3h 30min                                           |
+|                                                                |
+|   File: .sncp/idee/ROADMAP_FIX_SNCP_TUTTI_PROGETTI.md          |
+|                                                                |
++================================================================+
+```
+
+**MIRACOLLO SESSIONE 163:**
+- Email Test Mode: variabili config + redirect + UI banner
+- Hardtest A/B: 7 bug trovati (3 critici, 2 alti, 2 medi)
+- Bug fixati: duration_days, DELETE endpoint, start_date validation, modal click
+- Commit: 2a33395 (già su origin/master)
+
+**PROSSIMA SESSIONE CERVELLASWARM:**
+```
+PRIORITA 1: FIX SNCP TUTTI I PROGETTI (~3h 30min)
+- Audit tutti (Miracollo 6/10, altri da verificare)
+- Semplificazione radicale (eliminare overhead)
+- Nuova struttura: stato/, coscienza/, idee/, decisioni/, archivio/
+- Template standard per tutti i progetti
+```
+
+---
+
+**NOVITA SESSIONE 163 (prima parte) - INTEGRAZIONE BACKEND!!!**
+```
++================================================================+
+|                                                                |
+|   SPRINT 3.1 COMPLETATO!!!                                    |
+|                                                                |
+|   Backend Miracollo ora parla con cervella-gpu!               |
+|                                                                |
+|   CREATO:                                                     |
+|   - backend/services/ollama/ (client completo)                |
+|   - backend/routers/ollama_api.py (4 endpoints)               |
+|                                                                |
+|   ENDPOINTS:                                                  |
+|   - GET  /api/ai/health   - Health check GPU                  |
+|   - GET  /api/ai/models   - Lista modelli                     |
+|   - POST /api/ai/chat     - Chat con LLM                      |
+|   - POST /api/ai/generate - Generate semplice                 |
+|                                                                |
+|   TEST LIVE: "Hello, who are you?"                            |
+|   RISPOSTA: "I'm Qwen, a large-scale language model..."       |
+|   TEMPO: 12.5s (6s load + 6s inference)                       |
+|                                                                |
++================================================================+
+```
+
+**SESSIONE 162 - RECAP:**
 ```
 +================================================================+
 |                                                                |
@@ -25,9 +88,6 @@
 |     - Spegne:  19:00 Lun-Ven (ora Italia)                     |
 |     - Weekend: SPENTA                                          |
 |     - Costo: ~$85/mese (invece di $400!)                      |
-|                                                                |
-|   TEST END-TO-END: SUCCESSO!!!                                |
-|   miracollo-cervella -> cervella-gpu -> Qwen3-4B -> OK!       |
 |                                                                |
 +================================================================+
 ```
@@ -97,8 +157,18 @@ SESSIONE 162 - TUTTO FATTO:
 [x] Test end-to-end da miracollo: SUCCESSO!
 ```
 
-**PROSSIMI STEP:**
-1. **Integrare Miracollo con GPU VM** - Usare API Ollama da backend
+**SPRINT 3.1 - COMPLETATO!!!**
+```
+SESSIONE 163 - BACKEND INTEGRATION:
+[x] Client Ollama creato (services/ollama/)
+[x] Router API creato (routers/ollama_api.py)
+[x] Error handling + timeout (60s)
+[x] Registrato in main.py (39 routers!)
+[x] Test live: miracollo -> GPU -> Qwen3 = OK!
+```
+
+**PROSSIMI STEP (Sprint 3.2+):**
+1. **Deploy su VM** - Push codice + restart backend
 2. **Setup Qdrant** - Vector DB per RAG
 3. **Implementare RAG pipeline** - Embedding + retrieval
 4. **Fine-tune Costituzione** - Personalizzare Qwen3 con nostri valori
@@ -186,17 +256,21 @@ TOTALE RICERCA:                        34,324+ righe
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-11 07:23 (unknown)
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-11 13:15 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 14ebec6 - Sessione 161: GCP GPU VINCITORE + Ricerche Provider Complete
+- **Ultimo commit**: 61fbe31 - Sessione 162 FINALE: Schedule Risparmio + Roadmap Aggiornata
 - **File modificati** (5):
   - sncp/stato/oggi.md
   - PROMPT_RIPRESA.md
   - reports/scientist_prompt_20260111.md
-  - .swarm/tasks/BACKEND_STATUS.txt
-  - .swarm/tasks/MONITORING_DASHBOARD_OUTPUT.md
+  - reports/engineer_report_20260111_130532.json
+  - reports/engineer_report_20260111_130904.json
 
 ### Note
 - Checkpoint automatico generato da hook

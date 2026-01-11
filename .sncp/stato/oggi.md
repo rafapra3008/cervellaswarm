@@ -1,105 +1,101 @@
 # STATO OGGI
 
 > **Data:** 11 Gennaio 2026
-> **Sessione:** 162 (GPU VM LIVE!!!)
-> **Ultimo aggiornamento:** 12:50 UTC
+> **Sessione:** 163 (Miracollo + SNCP Analysis!)
+> **Ultimo aggiornamento:** 13:50 UTC
 
 ---
 
-## Sessione 162 - INFRASTRUTTURA GPU COMPLETA!!! (11 Gennaio 2026)
-
-### RISULTATO: GPU VM FUNZIONANTE END-TO-END!!!
+## Sessione 163 - DOPPIO LAVORO!
 
 ```
 +================================================================+
 |                                                                |
-|         SESSIONE 162: STORICA!!!                               |
+|   SESSIONE 163: MIRACOLLO + ANALISI SNCP                       |
 |                                                                |
-|   [x] Quota GPU richiesta e approvata (3 minuti!)             |
-|   [x] VM cervella-gpu creata (us-west1-b)                     |
-|   [x] Driver NVIDIA 550.54.15 + CUDA 12.4                     |
-|   [x] Ollama installato                                       |
-|   [x] Qwen3-4B scaricato (2.5GB)                              |
-|   [x] API configurata per accesso interno                     |
-|   [x] Test end-to-end: miracollo -> GPU -> OK!!!              |
+|   PARTE 1 - MIRACOLLO:                                         |
+|   [x] Email Test Mode implementato                             |
+|   [x] Hardtest A/B: 7 bug trovati                              |
+|   [x] Tutti i bug fixati nella stessa sessione                 |
+|   [x] Commit 2a33395 pushato                                   |
+|                                                                |
+|   PARTE 2 - ANALISI SNCP:                                      |
+|   [x] Guardiana Qualita ha analizzato SNCP Miracollo           |
+|   [x] Risultato: 6/10 - Funzionale ma disordinato              |
+|   [x] Decisione: Opzione A - Semplificazione radicale          |
+|   [x] Roadmap creata per prossima sessione                     |
 |                                                                |
 +================================================================+
 ```
 
-### Dettagli Tecnici VM
+---
 
-```
-cervella-gpu:
-  Zona: us-west1-b
-  Machine: n1-standard-4 (4 vCPU, 15GB RAM)
-  GPU: Tesla T4 (16GB VRAM)
-  Disco: 100GB SSD
-  IP interno: 10.138.0.3
-  IP esterno: 136.118.33.36
+## Lavoro Miracollo (Sessione 163)
 
-Software:
-  OS: Ubuntu 22.04 LTS
-  Driver: NVIDIA 550.54.15
-  CUDA: 12.4
-  Ollama: latest
-  Modello: qwen3:4b (Q4_K_M, 2.5GB)
+### Email Test Mode (Nuovo!)
+- `EMAIL_TEST_MODE=true` nel .env
+- Tutte le email vanno a `EMAIL_TEST_RECIPIENT`
+- Banner giallo in Settings -> Avanzate
+- API: `/api/system/email-test-mode`
 
-API:
-  Endpoint: http://10.138.0.3:11434
-  Firewall: allow-ollama-internal (tcp:11434 da 10.0.0.0/8)
-```
-
-### Test Eseguiti
-
-| Test | Risultato |
-|------|-----------|
-| nvidia-smi | GPU T4 rilevata, 15360 MiB VRAM |
-| ollama pull qwen3:4b | Download completato (2.5GB) |
-| Inference locale | Funzionante (6.65s response) |
-| API da miracollo | SUCCESSO! "2+2 = 4" |
-
-### Costi Stimati
-
-```
-cervella-gpu (us-west1-b):
-  n1-standard-4: ~$0.19/ora
-  T4 GPU: ~$0.35/ora
-  Disco 100GB SSD: ~$0.02/ora
-  ---------------------------------
-  Totale: ~$0.56/ora = ~$400/mese (on-demand)
-
-  Con CUD 1 anno: ~$0.35/ora = ~$250/mese
-  Con CUD 3 anni: ~$0.25/ora = ~$180/mese
-```
-
-### Prossimi Step
-
-1. **Integrare Miracollo** - Backend chiama API Ollama
-2. **Setup Qdrant** - Vector DB per RAG
-3. **RAG Pipeline** - Embedding + retrieval
-4. **Costituzione** - Fine-tune/prompt con nostri valori
-5. **Attivare CUD** - Committed Use Discount per risparmiare
+### Bug Fixati A/B Testing
+| # | Bug | File |
+|---|-----|------|
+| 1 | duration_days -> test_duration_days | ab-testing.js |
+| 2 | Endpoint DELETE mancante | ab_testing_api.py |
+| 3 | Validazione start_date >= oggi | ab_testing_api.py |
+| 5 | Click outside modal to close | ab-testing.js |
 
 ---
 
-## Architettura Attuale
+## Analisi SNCP (Tutti i Progetti)
+
+### Risultato Audit Miracollo
+- **Score:** 6/10
+- **Stato:** Funzionale ma disordinato
+- **Problema principale:** Solo 2 file usati (oggi.md, pensieri.md)
+- **Overhead:** 40+ file in idee/, cartelle vuote, file obsoleti
+
+### Decisione: Opzione A - Semplificazione Radicale
+
+Nuova struttura per TUTTI i progetti:
+```
+.sncp/
+├── README.md
+├── stato/oggi.md
+├── coscienza/pensieri.md
+├── idee/YYYYMMDD_nome.md
+├── decisioni/YYYYMMDD_cosa.md
+└── archivio/
+```
+
+---
+
+## Prossima Sessione CervellaSwarm
+
+**PRIORITA 1: FIX SNCP TUTTI I PROGETTI**
 
 ```
-[CLIENT]
-    |
-    v
-[miracollo-cervella] (us-central1-b)
-    |  Backend Python/FastAPI
-    |
-    |---[API interna]--->
-    |
-    v
-[cervella-gpu] (us-west1-b)
-    |  Ollama + Qwen3-4B
-    |  Tesla T4 GPU
-    |
-    v
-[RISPOSTA LLM]
+Stima: ~3h 30min
+
+FASE 1: Audit tutti (30min)
+FASE 2: Fix Miracollo (1h)
+FASE 3: Fix CervellaSwarm (1h)
+FASE 4: Fix Contabilita (30min)
+FASE 5: Template standard (30min)
+```
+
+**File roadmap:** `.sncp/idee/ROADMAP_FIX_SNCP_TUTTI_PROGETTI.md`
+
+---
+
+## Recap Sessione 162 (Infrastruttura GPU)
+
+```
+[x] GPU VM cervella-gpu creata
+[x] Schedule risparmio attivo
+[x] Backend Miracollo integrato con GPU
+[x] Test end-to-end: OK!
 ```
 
 ---
@@ -107,20 +103,15 @@ cervella-gpu (us-west1-b):
 ## Energia del Progetto
 
 ```
-[##################################################] 100000%
+[##################################################] INFINITA!
 
-INFRASTRUTTURA GPU: COMPLETA!!!
-POC: 95% PASS RATE - CONFERMATO!
-VM GPU: cervella-gpu RUNNING!
-LLM: Qwen3-4B FUNZIONANTE!
-API: miracollo -> GPU TESTATA!
-
-"Provare sempre ci piace!"
+"Il sistema centrale DEVE funzionare!"
+"Semplificare = usare di piu!"
 "La magia ora e' con coscienza!"
-"Il mondo lo facciamo meglio, con il cuore!"
+"Ultrapassar os proprios limites!"
 ```
 
 ---
 
-*Aggiornato: 11 Gennaio 2026 - Sessione 162*
-*"SESSIONE STORICA - GPU VM LIVE!!!"*
+*Aggiornato: 11 Gennaio 2026 - Sessione 163*
+*Regina + Guardiana Qualita*
