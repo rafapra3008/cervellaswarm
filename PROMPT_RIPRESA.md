@@ -1,11 +1,58 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 12 Gennaio 2026 - Sessione 177
-> **Versione:** v101.0.0 - AUTOPILOT REALE + WORKFLOW SICURO
+> **Ultimo aggiornamento:** 12 Gennaio 2026 - Sessione 176 MiracOllook
+> **Versione:** v102.0.0 - MIRACOLLOOK P0 COMPLETATO!
 
 ---
 
-## SESSIONE 177 - RIEPILOGO
+## SESSIONE 176 - MIRACOLLOOK P0 COMPLETATO!
+
+```
++================================================================+
+|                                                                |
+|   SESSIONE 176: MIRACOLLOOK DA DEMO A PRODOTTO REALE!          |
+|                                                                |
+|   P0 100% COMPLETATO:                                          |
+|   [x] P0.1 Fix ComposeModal (send funziona!)                   |
+|   [x] P0.2 ReplyModal NUOVO (rispondere funziona!)             |
+|   [x] P0.3 ForwardModal NUOVO (inoltrare funziona!)            |
+|   [x] P0.4 Archive/Delete (backend + frontend)                 |
+|   [x] P0.5 Database Token (SQLite, login persiste!)            |
+|                                                                |
+|   MIRACOLLOOK ORA E USABILE:                                   |
+|   [x] Puoi LEGGERE email                                       |
+|   [x] Puoi INVIARE email (C)                                   |
+|   [x] Puoi RISPONDERE (R)                                      |
+|   [x] Puoi INOLTRARE (F)                                       |
+|   [x] Puoi ARCHIVIARE (E)                                      |
+|   [x] Puoi ELIMINARE (#)                                       |
+|   [x] Token PERSISTONO al restart                              |
+|                                                                |
+|   AVVIARE:                                                     |
+|   # Backend                                                    |
+|   cd ~/Developer/miracollogeminifocus/miracallook/backend      |
+|   source venv/bin/activate && uvicorn main:app --port 8001     |
+|                                                                |
+|   # Frontend                                                   |
+|   cd ~/Developer/miracollogeminifocus/miracallook/frontend     |
+|   npm run dev                                                  |
+|                                                                |
+|   MAPPA VERA: .sncp/progetti/miracollo/moduli/miracallook/     |
+|               MAPPA_MIRACOLLOOK_VERA.md                        |
+|                                                                |
+|   PROSSIMI STEP (P1):                                          |
+|   [ ] Search UI                                                |
+|   [ ] Rename MiracAllook → MiracOllook                         |
+|   [ ] Reply All modal                                          |
+|   [ ] AI summaries in lista                                    |
+|   [ ] Refresh/Sync                                             |
+|                                                                |
++================================================================+
+```
+
+---
+
+## SESSIONE 177 - RIEPILOGO (Precedente)
 
 ```
 +================================================================+
@@ -218,15 +265,17 @@ GET  https://miracollo.com/api/v1/properties/{id}/room-types
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-12 14:56 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-12 15:47 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 35ac0c3 - Checkpoint finale Sessione 175: Auto-update
+- **Ultimo commit**: f316b71 - Handoff Sessione 177
 - **File modificati** (3):
-  - sncp/stato/oggi.md
-  - reports/engineer_report_20260112_145002.json
-  - reports/engineer_report_20260112_145321.json
+  - eports/scientist_prompt_20260112.md
+  - reports/engineer_report_20260112_153141.json
+  - reports/engineer_report_20260112_153214.json
 
 ### Note
 - Checkpoint automatico generato da hook
