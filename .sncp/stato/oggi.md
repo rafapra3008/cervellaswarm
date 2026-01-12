@@ -1,8 +1,50 @@
 # STATO OGGI
 
-> **Data:** 11 Gennaio 2026 (Domenica)
-> **Sessione:** 168 - PROTOCOLLO IBRIDO + PULIZIA VM
-> **Ultimo aggiornamento:** 23:45 UTC
+> **Data:** 12 Gennaio 2026 (Domenica)
+> **Sessione:** 169 - AUDIT + FIX MIRACOLLO
+> **Ultimo aggiornamento:** 05:30 UTC
+
+---
+
+## Sessione 169 - AUDIT COMPLETO + FIX
+
+```
++================================================================+
+|                                                                |
+|   SESSIONE 169: GRANDE PULIZIA MIRACOLLO!                     |
+|                                                                |
+|   INFRASTRUTTURA:                                              |
+|   [x] SSH Key GitHub configurata su VM                         |
+|   [x] Remote cambiato HTTPS -> SSH                             |
+|   [x] Migration 034-035 applicate                              |
+|       - suggestion_applications                                |
+|       - pricing_versions                                       |
+|       - monitoring_snapshots                                   |
+|       - monitoring_notifications                               |
+|                                                                |
+|   FIX APPLICATI:                                               |
+|   [x] GAP #2 Modal Preview (campi backend)                     |
+|   [x] Error handling migliorato                                |
+|   [x] console.log -> DEBUG mode                                |
+|                                                                |
+|   SESSIONE PARALLELA:                                          |
+|   - Tester sta creando test coverage                           |
+|   - 619 righe test_pricing_tracking.py                         |
+|   - In corso: test_confidence_scorer.py                        |
+|                                                                |
+|   RESEARCHER:                                                  |
+|   - Studiando GAP #3 (ML) e GAP #4 (What-If)                   |
+|   - Creando roadmap dettagliata                                |
+|                                                                |
+|   DA FARE:                                                     |
+|   [ ] Split file grandi (action_tracking, revenue.js)          |
+|   [ ] Copiare test su VM ed eseguirli                          |
+|   [ ] Push su GitHub                                           |
+|                                                                |
++================================================================+
+```
+
+---
 
 ---
 
@@ -341,3 +383,59 @@ miracollo-cervella: RUNNING
 - **Progetto**: CervellaSwarm
 - **Evento**: session_end
 - **Generato da**: sncp_auto_update.py v2.0.0
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-12 04:52 (session_end)
+
+- **Progetto**: CervellaSwarm
+- **Evento**: session_end
+- **Generato da**: sncp_auto_update.py v2.0.0
+
+---
+
+## 📊 Cervella-Ingegnera - AUDIT VM MIRACOLLO (04:15)
+
+**Task:** Audit completo infrastruttura VM produzione
+**Durata:** 15 minuti analisi sistematica
+
+### Risultato
+⚠️ **5 CRITICI | 7 ALTO | 4 MEDIO | 3 BASSO**
+
+**Health Score: 4/10** - ATTENZIONE RICHIESTA
+
+**Report completo:** `.sncp/reports/AUDIT_MIRACOLLO_VM_20260112.md` (620 righe)
+
+### Top 5 Show-Stoppers
+1. **CRITICO:** NO GIT REPOSITORY - Zero version control
+2. **CRITICO:** Tabella DB mancante - Errori ogni 2 min
+3. **CRITICO:** Git credentials non configurate
+4. **CRITICO:** SSL certificates non verificabili
+5. **CRITICO:** Secrets esposti in docker inspect
+
+### Cosa Funziona ✅
+- VM stabile (11 giorni uptime)
+- Container healthy (nginx, backend, cervella-ai)
+- Backup automatici ogni 6h
+- API risponde correttamente
+- Disk/Memory ok (56% / 49%)
+
+### Cosa NON Funziona 🔴
+- NO repository Git (né miracollo né cervella-ai!)
+- 19 file Python sparsi in HOME
+- 2 container backend (1 inutile)
+- NO docker-compose (tutto manuale)
+- NO Alembic migrations
+- Notification worker ROTTO
+
+### Next Action URGENTE
+**P0:** Configurare Git + Clonare repo
+- 15 min setup git config
+- 30 min clone + credentials
+- **BLOCKER:** Decidere quale repo è source of truth
+
+**Owner:** Rafa (decisione repo) + cervella-backend (implementazione)
+
+### Effort Totale: 17 ore (2.5 giorni)
+
+---

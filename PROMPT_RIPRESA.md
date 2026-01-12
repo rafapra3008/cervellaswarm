@@ -1,11 +1,52 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 11 Gennaio 2026 - Sessione 168
-> **Versione:** v91.0.0 - PROTOCOLLO IBRIDO + VM PULITA
+> **Ultimo aggiornamento:** 12 Gennaio 2026 - Sessione 169
+> **Versione:** v92.0.0 - AUDIT + FIX MIRACOLLO
 
 ---
 
 ## TL;DR per Prossima Cervella
+
+**SESSIONE 169 - AUDIT COMPLETO + FIX MIRACOLLO**
+
+```
++================================================================+
+|                                                                |
+|   SESSIONE 169: AUDIT + FIX + SESSIONE PARALLELA              |
+|                                                                |
+|   INFRASTRUTTURA FIXATA:                                       |
+|   [x] SSH Key GitHub su VM configurata                         |
+|   [x] Remote cambiato da HTTPS a SSH (funziona!)              |
+|   [x] Migration 034-035 applicate (4 tabelle nuove)           |
+|   [x] GAP #2 Modal Preview fixato (campi aggiunti)            |
+|   [x] Error handling migliorato                                |
+|   [x] console.log condizionati a DEBUG mode                   |
+|                                                                |
+|   SESSIONE PARALLELA IN CORSO:                                 |
+|   - Tester sta creando test (coverage 30% -> 70%)             |
+|   - File: .sncp/sessioni_parallele/20260112_miracollo_test_coverage/
+|   - test_pricing_tracking.py: 619 righe CREATO               |
+|   - test_confidence_scorer.py: IN CORSO                       |
+|                                                                |
+|   RESEARCHER IN BACKGROUND:                                    |
+|   - Sta studiando GAP #3 (ML) e GAP #4 (What-If)              |
+|   - Output: .sncp/idee/20260112_RICERCA_GAP3_GAP4_ML_WHATIF.md |
+|                                                                |
+|   DA FARE (PROSSIMA SESSIONE):                                 |
+|   [ ] Split action_tracking_api.py (950 righe -> 3 file)      |
+|   [ ] Split revenue.js (1282 righe -> 5 file)                 |
+|   [ ] Copiare test da SNCP a VM e eseguirli                   |
+|   [ ] Push commit su GitHub (SSH ora funziona!)               |
+|                                                                |
+|   FILE CREATI OGGI:                                            |
+|   - .sncp/idee/20260112_VISIONE_REVENUE_INTELLIGENCE_FUTURO.md |
+|   - .sncp/reports/GUARDIANA_AUDIT_REVENUE_20260112.md          |
+|   - .sncp/reports/AUDIT_MIRACOLLO_VM_20260112.md               |
+|                                                                |
++================================================================+
+```
+
+---
 
 **SESSIONE 168 - PROTOCOLLO IBRIDO VM + LOCALE**
 
@@ -354,15 +395,16 @@ Sprint completati:      3.1 (Backend Integration)
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-11 22:34 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-12 04:52 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 3cdc23a - Sessione 167: Cache Investigation - Scoperte Parziali
-- **File modificati** (3):
+- **Ultimo commit**: c92f953 - Sessione 168: Protocollo Ibrido VM + Locale Definitivo
+- **File modificati** (2):
   - sncp/stato/oggi.md
-  - PROMPT_RIPRESA.md
-  - reports/engineer_report_20260111_223404.json
+  - reports/engineer_report_20260111_233755.json
 
 ### Note
 - Checkpoint automatico generato da hook
