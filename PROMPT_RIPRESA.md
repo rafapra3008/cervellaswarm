@@ -1,7 +1,30 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 12 Gennaio 2026 - Sessione 170
-> **Versione:** v93.0.0 - PULIZIA INFRASTRUTTURA COMPLETATA
+> **Ultimo aggiornamento:** 12 Gennaio 2026 - Sessione 171
+> **Versione:** v94.0.0 - SNCP RIORGANIZZATO PER PROGETTI
+
+---
+
+## PRIMA DI TUTTO - DOVE SONO I FILE!
+
+```
++================================================================+
+|                                                                |
+|   REGOLA CRITICA - LEGGI PRIMA DI FARE QUALSIASI COSA!        |
+|                                                                |
+|   TUTTI gli SNCP sono in: CervellaSwarm/.sncp/progetti/        |
+|                                                                |
+|   Miracollo    → .sncp/progetti/miracollo/stato.md             |
+|   CervellaSwarm → .sncp/progetti/cervellaswarm/stato.md        |
+|   Contabilita  → .sncp/progetti/contabilita/stato.md           |
+|                                                                |
+|   MAI cercare in miracollogeminifocus/.sncp/ (NON ESISTE!)     |
+|   MAI cercare in ContabilitaAntigravity/.sncp/ (NON ESISTE!)   |
+|                                                                |
++================================================================+
+```
+
+**Per Miracollo leggi:** `.sncp/progetti/miracollo/stato.md`
 
 ---
 
@@ -432,17 +455,17 @@ Sprint completati:      3.1 (Backend Integration)
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-12 06:00 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-12 07:24 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 5ee804e - ANTI-COMPACT: PreCompact auto
-- **File modificati** (5):
-  - sncp/sessioni_parallele/20260112_split_revenue_js/LOG_COMPLETATO.md
-  - .sncp/sessioni_parallele/20260112_split_revenue_js/revenue-core.js
-  - .sncp/sessioni_parallele/20260112_split_revenue_js/revenue-suggestions.js
-  - .sncp/stato/oggi.md
-  - PROMPT_RIPRESA.md
+- **Ultimo commit**: 19730c3 - Sessione 170: Handoff completo
+- **File modificati** (3):
+  - sncp/stato/oggi.md
+  - reports/scientist_prompt_20260112.md
+  - reports/engineer_report_20260112_064324.json
 
 ### Note
 - Checkpoint automatico generato da hook

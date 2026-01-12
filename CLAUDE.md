@@ -1,6 +1,7 @@
 # CervellaSwarm
 
 > Sistema multi-agent: 16 Cervelle coordinate dalla Regina.
+> "Lavoriamo in pace! Senza casino! Dipende da noi!"
 
 ## Regole Context-Smart
 
@@ -9,24 +10,51 @@
 - Scrivi su .sncp/ mentre lavori (non accumulare context)
 - Output conciso, strutturato
 
-## Memoria Esterna (SNCP)
+## Memoria Esterna (SNCP) - STRUTTURA PROGETTI
+
+> **SNCP = Sistema Nervoso Centrale Progetti**
+> Ogni progetto ha la sua cartella dedicata!
+
+### Path per Progetto
+
+| Progetto | Path SNCP |
+|----------|-----------|
+| **Miracollo** | `.sncp/progetti/miracollo/` |
+| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/` |
+| **Contabilita** | `.sncp/progetti/contabilita/` |
+
+### Struttura Ogni Progetto
+
+```
+.sncp/progetti/{progetto}/
+├── stato.md          # Stato attuale (LEGGERE SEMPRE!)
+├── idee/             # Ricerche, idee, analisi
+├── decisioni/        # Decisioni prese con PERCHE
+├── reports/          # Audit, test, verifiche
+├── roadmaps/         # Piani di lavoro
+├── workflow/         # Protocolli specifici
+└── sessioni_parallele/
+```
+
+### File Globali (non di progetto)
 
 | Dove | Cosa |
 |------|------|
-| `.sncp/idee/` | Ricerche, idee, analisi |
-| `.sncp/memoria/decisioni/` | Decisioni prese con PERCHE |
+| `.sncp/stato/oggi.md` | Stato GENERALE (tutti i progetti) |
 | `.sncp/coscienza/` | Pensieri sessione corrente |
-| `.sncp/stato/oggi.md` | Stato OGGI - aggiornare! |
+| `.sncp/handoff/` | Handoff tra sessioni |
+| `.sncp/memoria/decisioni/` | Decisioni GLOBALI |
 
 ## REGOLA SNCP OBBLIGATORIA
 
 > **"SNCP funziona solo se lo VIVIAMO!"**
 
-1. **INIZIO sessione:** Leggi `.sncp/stato/oggi.md`
-2. **DURANTE sessione:** Scrivi pensieri in `.sncp/coscienza/`
-3. **FINE sessione:** Aggiorna `.sncp/stato/oggi.md`
+1. **INIZIO sessione:** Leggi `.sncp/progetti/{progetto}/stato.md`
+2. **DURANTE sessione:** Scrivi in `.sncp/progetti/{progetto}/`
+3. **FINE sessione:** Aggiorna `stato.md` del progetto
 
-**MAI chiudere sessione senza aggiornare SNCP!**
+**MAI mescolare file di progetti diversi!**
+**MAI cercare file Miracollo in miracollogeminifocus locale!**
 
 ## File Importanti
 
@@ -34,7 +62,8 @@
 |------|--------|
 | PROMPT_RIPRESA.md | Inizio sessione |
 | NORD.md | Direzione progetto |
-| .sncp/idee/LA_NOSTRA_STRADA_ROADMAP_FINALE.md | Roadmap context optimization |
+| `.sncp/progetti/miracollo/stato.md` | Stato Miracollo |
+| `.sncp/progetti/miracollo/roadmaps/` | Roadmap Revenue
 
 ## La Famiglia
 
