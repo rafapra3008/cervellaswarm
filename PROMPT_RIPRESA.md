@@ -30,6 +30,47 @@
 
 ## TL;DR per Prossima Cervella
 
+**SESSIONE 171 - SNCP RIORGANIZZATO + GAP #2 RISOLTO + ROADMAP WHAT-IF!**
+
+```
++================================================================+
+|                                                                |
+|   SESSIONE 171: ORGANIZZAZIONE + GAP CHIUSI!                   |
+|                                                                |
+|   SNCP RIORGANIZZATO:                                          |
+|   [x] Struttura .sncp/progetti/ creata                         |
+|   [x] miracollo/, cervellaswarm/, contabilita/ separati        |
+|   [x] Regole aggiornate in ~/.claude/CLAUDE.md (GLOBALE!)      |
+|   [x] MAI cercare in miracollogeminifocus/.sncp/               |
+|                                                                |
+|   GAP MIRACOLLO:                                               |
+|   [x] GAP #1 Price History: RISOLTO                            |
+|   [x] GAP #2 Modal Preview: RISOLTO (testato con screenshot)   |
+|   [~] GAP #3 ML Samples: Ricerca OK (dopo What-If)             |
+|   [~] GAP #4 What-If: ROADMAP CREATA! (6 fasi)                 |
+|                                                                |
+|   ROADMAP WHAT-IF SIMULATOR:                                   |
+|   - Fase 1: Backend API Base (elasticity-based)                |
+|   - Fase 2: Frontend UI Base (slider + impact cards)           |
+|   - Fase 3: Grafico price vs occupancy                         |
+|   - Fase 4: AI Explanation avanzata                            |
+|   - Fase 5: Azioni (applica, salva scenario)                   |
+|   - Fase 6: Ottimizzazioni                                     |
+|   File: .sncp/progetti/miracollo/roadmaps/ROADMAP_WHATIF.md    |
+|                                                                |
+|   SESSIONE PARALLELA:                                          |
+|   [x] Room Manager avviato (lab locale)                        |
+|                                                                |
+|   PROSSIMI STEP:                                               |
+|   [ ] What-If Simulator - FASE 1 (Backend API)                 |
+|   [ ] docker-compose.prod.yml                                  |
+|   [ ] RateBoard hard tests                                     |
+|                                                                |
++================================================================+
+```
+
+---
+
 **SESSIONE 170 - AUDIT + PULIZIA + 63 TEST PASSATI!**
 
 ```
