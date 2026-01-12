@@ -131,3 +131,27 @@ GET  https://miracollo.com/api/v1/properties/{id}/room-types
 ---
 
 *Pronta!* Rafa, cosa facciamo oggi?
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-12 10:58 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: c4fe288 - Sessione 172: What-If Simulator COMPLETO + Regole Permanenti
+- **File modificati** (5):
+  - sncp/progetti/miracollo/stato.md
+  - .sncp/stato/oggi.md
+  - PROMPT_RIPRESA.md
+  - reports/scientist_prompt_20260112.md
+  - .sncp/progetti/miracollo/moduli/miracallook/
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---
