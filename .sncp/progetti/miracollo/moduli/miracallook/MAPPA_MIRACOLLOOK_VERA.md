@@ -118,22 +118,22 @@ DA FARE (P1/P2):
 Sessione 176 - 12 Gennaio 2026
 ```
 
-### P1 - IMPORTANTE (Per uso quotidiano)
+### P1 - IMPORTANTE - IN CORSO!
 
 ```
 Obiettivo: Da USABILE a PRODUTTIVO
-Status: PROSSIMO
+Status: 2/5 COMPLETATI
 
-6. [ ] SEARCH UI
-   - Input nella toolbar
-   - Shortcut / già funziona
-   - Chiama Gmail search API
-   - Risultati in EmailList
+6. [x] SEARCH UI                              ← FATTO Sessione 176!
+   - Backend: GET /gmail/search?q=...
+   - Frontend: SearchBar con debounce
+   - Shortcut / per focus
+   - Query Gmail: from:, to:, subject:, is:unread, etc.
 
-7. [ ] RINOMINARE MiracAllook → MiracOllook
-   - Tutti i file
-   - Tutti i commenti
-   - Package.json, titoli, etc.
+7. [x] RINOMINARE MiracAllook → MiracOllook   ← FATTO Sessione 176!
+   - Backend: 10 file
+   - Frontend: 4 file
+   - Docs: 2 file
 
 8. [ ] REPLY ALL MODAL
    - Come Reply ma con tutti i destinatari

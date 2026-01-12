@@ -1,11 +1,11 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 12 Gennaio 2026 - Sessione 176 MiracOllook
-> **Versione:** v102.0.0 - MIRACOLLOOK P0 COMPLETATO!
+> **Versione:** v103.0.0 - MIRACOLLOOK P0 + P1 PARZIALE!
 
 ---
 
-## SESSIONE 176 - MIRACOLLOOK P0 COMPLETATO!
+## SESSIONE 176 - MIRACOLLOOK EPICA!
 
 ```
 +================================================================+
@@ -19,14 +19,20 @@
 |   [x] P0.4 Archive/Delete (backend + frontend)                 |
 |   [x] P0.5 Database Token (SQLite, login persiste!)            |
 |                                                                |
-|   MIRACOLLOOK ORA E USABILE:                                   |
+|   P1 PARZIALE (2/5):                                           |
+|   [x] P1.1 Search UI (backend + frontend SearchBar)            |
+|   [x] P1.2 Rename MiracAllook → MiracOllook (16 file)          |
+|                                                                |
+|   MIRACOLLOOK ORA E USABILE + RICERCABILE:                     |
 |   [x] Puoi LEGGERE email                                       |
 |   [x] Puoi INVIARE email (C)                                   |
 |   [x] Puoi RISPONDERE (R)                                      |
 |   [x] Puoi INOLTRARE (F)                                       |
 |   [x] Puoi ARCHIVIARE (E)                                      |
 |   [x] Puoi ELIMINARE (#)                                       |
+|   [x] Puoi CERCARE (/)                                         |
 |   [x] Token PERSISTONO al restart                              |
+|   [x] Nome corretto: MiracOllook                               |
 |                                                                |
 |   AVVIARE:                                                     |
 |   # Backend                                                    |
@@ -40,9 +46,7 @@
 |   MAPPA VERA: .sncp/progetti/miracollo/moduli/miracallook/     |
 |               MAPPA_MIRACOLLOOK_VERA.md                        |
 |                                                                |
-|   PROSSIMI STEP (P1):                                          |
-|   [ ] Search UI                                                |
-|   [ ] Rename MiracAllook → MiracOllook                         |
+|   PROSSIMI STEP (P1 rimanenti):                                |
 |   [ ] Reply All modal                                          |
 |   [ ] AI summaries in lista                                    |
 |   [ ] Refresh/Sync                                             |
