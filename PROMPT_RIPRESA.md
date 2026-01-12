@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 12 Gennaio 2026 - Sessione 172
-> **Versione:** v95.0.0 - WHAT-IF SIMULATOR COMPLETO!
+> **Ultimo aggiornamento:** 12 Gennaio 2026 - Sessione 173
+> **Versione:** v96.0.0 - WHAT-IF FASE 3-4-5 COMPLETATE!
 
 ---
 
@@ -30,34 +30,39 @@
 
 ## TL;DR per Prossima Cervella
 
-**SESSIONE 172 - WHAT-IF SIMULATOR COMPLETO AL 100%!**
+**SESSIONE 173 - WHAT-IF AVANZATO + WORKFLOW SOLO VM!**
 
 ```
 +================================================================+
 |                                                                |
-|   SESSIONE 172: WHAT-IF LIVE + REGOLE PERMANENTI!              |
+|   SESSIONE 173: WHAT-IF FASE 3-4-5 + WORKFLOW DEFINITIVO!      |
 |                                                                |
-|   WHAT-IF SIMULATOR:                                           |
-|   [x] Backend API deployato (simulate, price-curve, health)    |
-|   [x] Frontend UI deployato (slider, cards, explanation)       |
-|   [x] Endpoint properties/room-types creati e funzionanti      |
-|   [x] TODO rimossi dal codice                                  |
-|   [x] Menu aggiornato (12 file HTML!)                          |
-|   [x] TESTATO CON SCREENSHOT - FUNZIONA!                       |
+|   WHAT-IF SIMULATOR AVANZATO:                                  |
+|   [x] FASE 3: Grafico Price vs Occupancy (Chart.js)            |
+|   [x] FASE 4: AI Explanation Avanzata                          |
+|       - Strategia PREMIUM/VOLUME/OTTIMALE/MODERATO             |
+|       - Contesto temporale (giorno, stagione, weekend)         |
+|       - Barra confidence visuale (verde/giallo/rosso)          |
+|       - Consiglio personalizzato                               |
+|   [x] FASE 5: Bottoni Azione                                   |
+|       - Reset / Salva Scenario / Applica Prezzo                |
+|       - Modale conferma applicazione                           |
+|       - Lista scenari salvati (localStorage, max 5)            |
+|   [x] Bug fix dropdown vuoti                                   |
 |                                                                |
 |   URL LIVE: https://miracollo.com/what-if.html                 |
 |                                                                |
-|   REGOLE PERMANENTI AGGIUNTE:                                  |
-|   [x] Costituzione obbligatoria (inizio + fine ogni agente)    |
-|   [x] Rafa MAI operazioni tecniche (in CLAUDE.md)              |
-|   [x] Checklist Deploy obbligatoria                            |
-|   [x] QUALITA_TARGET.md creato (target 9.5/10)                 |
+|   WORKFLOW SOLO VM (DECISIONE DEFINITIVA):                     |
+|   - Tutto il lavoro su VM produzione                           |
+|   - Commit ogni feature completata                             |
+|   - Pull locale settimanale (backup)                           |
+|   - UNA cosa alla volta, NIENTE sessioni parallele             |
+|   - Documento: workflow/20260112_WORKFLOW_SOLO_VM_DEFINITIVO   |
 |                                                                |
 |   PROSSIMI STEP MIRACOLLO:                                     |
-|   [ ] Test What-If con utenti reali                            |
-|   [ ] FASE 3-6 What-If (grafico, AI avanzata, azioni)          |
-|   [ ] Room Manager consolidamento                              |
-|   [ ] docker-compose.prod.yml                                  |
+|   [ ] Revenue Fix: Cancellare azioni (nota in SNCP)            |
+|   [ ] RateBoard Avanzata: Hard tests + miglioramenti           |
+|   [ ] FASE 6 What-If: Ottimizzazioni (cache, performance)      |
 |                                                                |
 +================================================================+
 ```

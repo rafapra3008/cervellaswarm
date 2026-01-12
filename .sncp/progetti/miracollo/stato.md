@@ -16,7 +16,7 @@ TEST: 63 PASSATI (target 80%+ coverage)
 
 ---
 
-## Sessione 173 - MOMENTUM ALTO!
+## Sessione 173 - COMPLETATA CON SUCCESSO!
 
 ### Completati
 1. [x] Workflow SOLO VM documentato (workflow/20260112_WORKFLOW_SOLO_VM_DEFINITIVO.md)
@@ -25,11 +25,17 @@ TEST: 63 PASSATI (target 80%+ coverage)
 4. [x] FASE 4 What-If: AI Explanation Avanzata (commit 357b5a1)
    - Strategia PREMIUM/VOLUME/OTTIMALE/MODERATO
    - Contesto temporale (giorno, stagione, weekend)
-   - Barra confidence visuale (verde/giallo/rosso)
+   - Barra confidence visuale
    - Consiglio personalizzato
+5. [x] FASE 5 What-If: Bottoni Azione (commit a19e624)
+   - Reset / Salva Scenario / Applica Prezzo
+   - Modale conferma applicazione
+   - Lista scenari salvati (localStorage)
+6. [x] Bug fix dropdown vuoti (funzioni fuori classe)
 
-### In Corso
-5. [ ] FASE 5 What-If: Bottoni Applica/Salva Scenario
+### Prossima Sessione
+- [ ] Revenue Fix: Cancellare azioni (nota in idee/TODO_REVENUE_CANCELLA_AZIONE.md)
+- [ ] RateBoard Avanzata: Hard tests + miglioramenti
 
 ### Code Review
 - Score attuale: 7.0/10 → target 9.5/10
