@@ -457,15 +457,17 @@ Sprint completati:      3.1 (Backend Integration)
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-12 07:24 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-12 08:05 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 19730c3 - Sessione 170: Handoff completo
+- **Ultimo commit**: dcfcbc6 - Sessione 171: SNCP riorganizzato per progetti
 - **File modificati** (3):
   - sncp/stato/oggi.md
   - reports/scientist_prompt_20260112.md
-  - reports/engineer_report_20260112_064324.json
+  - reports/engineer_report_20260112_080434.json
 
 ### Note
 - Checkpoint automatico generato da hook

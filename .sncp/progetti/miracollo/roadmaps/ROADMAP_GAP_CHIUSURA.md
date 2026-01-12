@@ -16,7 +16,7 @@
 | GAP | Nome | Status | Priorità |
 |-----|------|--------|----------|
 | #1 | Price History | RISOLTO | - |
-| #2 | Modal Preview | DA TESTARE | P0 |
+| #2 | Modal Preview | RISOLTO (12 Gen) | - |
 | #3 | ML Samples | RICERCA OK | P2 |
 | #4 | What-If Simulator | RICERCA OK | P1 |
 
@@ -36,32 +36,23 @@
 
 ## GAP #2 - Modal Preview
 
-### Status: DA TESTARE
+### Status: RISOLTO (12 Gennaio 2026)
 
 **Cosa era:** Modal preview suggerimento non mostrava dati corretti
 **Cosa fatto:** Backend aggiornato, campi allineati
+**Testato:** 12 Gen 2026 - Screenshot conferma
 
-**Test necessario:**
-1. [ ] Creare nuovo suggerimento pricing su VM
-2. [ ] Verificare che il modal mostri tutti i campi
-3. [ ] Verificare formattazione date e prezzi
-4. [ ] Screenshot di conferma
+**Verificato:**
+- [x] Camera: Standard Double
+- [x] Periodo: 15 Gen - 31 Gen (155 notti)
+- [x] PRIMA: €120.00/notte
+- [x] DOPO: €108.00/notte
+- [x] Sconto: +15.0%
+- [x] Revenue stimato: €1836.00
+- [x] Bottoni: Vai al Monitoring + OK
+- [x] Console: NO ISSUES
 
-**Tempo stimato:** 30 minuti
-
-**Come testare:**
-```bash
-# SSH alla VM
-ssh miracollo-cervella
-
-# Verificare API suggestions
-curl https://api.miracollo.com/api/v1/pricing/suggestions
-
-# Creare nuovo suggerimento (da RateBoard UI)
-# Poi verificare modal preview
-```
-
-**Criterio di successo:** Modal mostra tutti i dati corretti
+**Azione:** NESSUNA - Chiuso!
 
 ---
 
@@ -113,12 +104,11 @@ curl https://api.miracollo.com/api/v1/pricing/suggestions
 ### FASE 1: Chiudere GAP #2
 
 ```
-[ ] Test GAP #2 Modal Preview
-    - SSH a VM
-    - Creare suggerimento
-    - Verificare modal
+[x] Test GAP #2 Modal Preview - COMPLETATO 12 Gen 2026
+    - API verificata
+    - Modal testato da Rafa
     - Screenshot conferma
-    - Marcare RISOLTO
+    - RISOLTO!
 ```
 
 ### FASE 2: Decisione GAP #3 e #4

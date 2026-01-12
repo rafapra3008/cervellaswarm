@@ -8,8 +8,8 @@
 ```
 INFRASTRUTTURA: PULITA (nginx + backend-12)
 GAP #1: RISOLTO
-GAP #2: DA TESTARE
-GAP #3-4: RICERCA COMPLETATA
+GAP #2: RISOLTO (12 Gen)
+GAP #3-4: RICERCA COMPLETATA (What-If prima, ML dopo)
 TEST: 63 PASSATI
 ```
 
@@ -20,9 +20,9 @@ TEST: 63 PASSATI
 | GAP | Descrizione | Status |
 |-----|-------------|--------|
 | #1 | Price History | RISOLTO |
-| #2 | Modal Preview | FIX applicato, DA TESTARE |
-| #3 | ML Samples | Ricerca completata (130-150h stimato) |
-| #4 | What-If Simulator | Ricerca completata (70-85h stimato) |
+| #2 | Modal Preview | RISOLTO (testato 12 Gen) |
+| #3 | ML Samples | Ricerca completata |
+| #4 | What-If Simulator | Ricerca completata |
 
 ---
 
