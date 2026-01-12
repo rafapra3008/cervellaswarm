@@ -1,5 +1,5 @@
 # Stato Miracollo
-> Ultimo aggiornamento: 12 Gennaio 2026 - Sessione 175 EPICA!
+> Ultimo aggiornamento: 12 Gennaio 2026 - Sessione 177
 
 ---
 
@@ -7,120 +7,139 @@
 
 ```
 INFRASTRUTTURA: PULITA (nginx + backend-13)
-WHAT-IF: COMPLETO
-MIRACALLOOK: FASE 0-9 + DESIGN SYSTEM COMPLETO!
-  - Backend: http://localhost:8001
-  - Frontend: http://localhost:5174
-  - Design Premium stile Miracollo!
-  - Guest Sidebar BELLISSIMA!
-ROOM MANAGER: IN PAUSA
+AUTOPILOT: FUNZIONANTE IN PRODUZIONE! (era "su carta", ora REALE!)
+WHAT-IF: COMPLETO + PREZZO REALE
+RATEBOARD: 7.5/10 -> Roadmap Diamante pronta
+WORKFLOW GIT: PROTETTO con hooks automatici
+AMBIENTE LOCALE: CONFIGURATO per test
+MIRACALLOOK: FASE 0-9 + DESIGN SYSTEM COMPLETO
 ```
 
 ---
 
-## Sessione 175 - EPICA! MIRACALLOOK COMPLETO!
+## Sessione 177 - AUTOPILOT REALE + WORKFLOW SICURO
 
-### PARTE 1: Funzionalità (mattina/pomeriggio)
+### Lavoro Completato
 
-1. [x] **Ricerca Big Players** (2100+ righe!)
-2. [x] **FASE 3**: Backend invio email
-3. [x] **FASE 4**: UI React three-panel
-4. [x] **FASE 5**: Keyboard shortcuts + Cmd+K
-5. [x] **FASE 6**: AI Summarization (Claude 3 Haiku)
-6. [x] **FASE 7**: Split Inbox (8 categorie)
-7. [x] **FASE 8**: Smart Bundles (raggruppamento auto)
-8. [x] **FASE 9**: Guest Sidebar (info PMS mock)
+1. **Autopilot da "su carta" a REALE!**
+   - Era già implementato ma con 3 bug
+   - FIX: hotel_code → hotel_id
+   - FIX: status → is_active
+   - FIX: parametri generate_ai_suggestions
+   - Testato in locale E in produzione
+   - DRY RUN funziona: 2 suggerimenti (Capodanno, Epifania)
 
-### PARTE 2: Design System (pomeriggio)
+2. **Workflow Git Sicuro**
+   - Problema identificato: fix su VM venivano persi
+   - Soluzione: Trunk-Based Development
+   - Hook pre-push installato (locale + VM)
+   - Se provi a pushare senza pull → BLOCCATO!
+   - CLAUDE.md aggiornato con regole
 
-9. [x] **4 Ricerche Parallele**:
-   - Design patterns email clients
-   - UX Strategy Miracallook
-   - Analisi codebase UI
-   - Design Miracollo esistente
+3. **Ambiente Locale Configurato**
+   - docker-compose.local.yml creato
+   - DB copiato da VM per test
+   - Backend locale funzionante su :8001
 
-10. [x] **MAPPA Design** creata
+4. **Idea Messaging Bot documentata**
+   - WhatsApp o Telegram?
+   - Use cases: revenue, pasti, eventi
+   - Salvata su SNCP per futuro
 
-11. [x] **FASE 1 Design**: Fix Layout ThreePanel
-    - Proporzioni: 200px | 320px | flex-1 | 280px
+### File Creati Sessione 177
 
-12. [x] **FASE 2 Design**: Colori Miracollo
-    - Background: #0a0e1a
-    - Accent: #6366f1 (indigo)
+```
+miracollogeminifocus/
+├── CLAUDE.md                    # Aggiornato con workflow
+├── backend/routers/autopilot.py # 3 bug fixati
+├── docker-compose.local.yml     # Ambiente test locale
+└── scripts/
+    ├── git-safe-push.sh         # Push sicuro
+    └── install-git-hooks.sh     # Installa protezione
 
-13. [x] **FASE 3 Design**: Typography
-    - Inter, Outfit, JetBrains Mono
+CervellaSwarm/.sncp/progetti/miracollo/
+├── workflow/
+│   ├── WORKFLOW_GIT_MIRACOLLO.md
+│   └── REGOLA_GIT_OBBLIGATORIA.md
+└── idee/
+    └── IDEA_MESSAGING_BOT_20260112.md
+```
 
-14. [x] **FASE 4 Design**: Components Polish
-    - Gradient buttons
-    - Glassmorphism
-    - Premium styling
+### Commits Sessione 177
+
+| Repo | Commit | Cosa |
+|------|--------|------|
+| Miracollo | d9a27d6 | Fix Autopilot query bugs |
+| Miracollo | ba27058 | Workflow Git + Protezione |
 
 ---
 
-## Miracallook - Stato Finale
+## Autopilot - Stato Attuale
+
+| Aspetto | Valore |
+|---------|--------|
+| **Enabled** | NO (disabilitato) |
+| **Min Confidence** | 80% |
+| **Run Frequency** | daily |
+| **API** | FUNZIONANTE! |
+
+### Test DRY RUN (Produzione)
+```
+suggestions_evaluated: 2
+- Capodanno! +40% (confidence 70%) → skipped
+- Epifania! +25% (confidence 70%) → skipped
+```
+
+---
+
+## Prossimi Step (da Roadmap Diamante)
+
+### FASE 1: FONDAMENTA
+- [x] Fix Validazione (Sessione 176)
+- [x] Fix Autopilot bugs (Sessione 177)
+- [ ] Test Autopilot con dati reali
+- [ ] Test Coverage Base (target 60%)
+
+### FASE 2: DIFFERENZIAZIONE
+- [ ] Transparent AI
+- [ ] Complete existing features
+
+### FASE 3: MOONSHOT
+- [ ] WhatsApp/Telegram Integration
+
+---
+
+## Workflow Git - Regola Sacra
+
+```
+PRIMA DI OGNI LAVORO:     git pull
+DOPO OGNI MODIFICA:       git commit + git push
+
+Hook installato: push bloccato se non sincronizzato!
+```
+
+---
+
+## API Live
+
+```bash
+# Produzione
+https://miracollo.com/api/autopilot/status
+https://miracollo.com/api/autopilot/run?dry_run=true
+
+# Locale
+http://localhost:8001/api/autopilot/status
+```
+
+---
+
+## Miracallook - Stato (Sessione 175)
 
 **Location:** `~/Developer/miracollogeminifocus/miracallook/`
-
-**Fasi Completate:** TUTTE LE P0!
-- FASE 0: Studio + Roadmap
-- FASE 1: OAuth2 + Login
-- FASE 2: Lettura Email
-- FASE 3: Invio Email
-- FASE 4: UI React
-- FASE 5: Keyboard Shortcuts
-- FASE 6: AI Summarization
-- FASE 7: Split Inbox
-- FASE 8: Smart Bundles
-- FASE 9: Guest Sidebar
-- DESIGN: Layout + Colori + Typography + Polish
-
-**Come Avviare:**
-```bash
-# Backend
-cd ~/Developer/miracollogeminifocus/miracallook/backend
-source venv/bin/activate
-uvicorn main:app --port 8001 --reload
-
-# Frontend
-cd ~/Developer/miracollogeminifocus/miracallook/frontend
-npm run dev
-```
-
-**URL:**
-- Backend: http://localhost:8001
-- Frontend: http://localhost:5174
-
-**Features:**
-- Gmail OAuth
-- Lettura + Invio email
-- Cmd+K Command Palette
-- Split Inbox (8 categorie)
-- Smart Bundles (collapsibili)
-- Guest Sidebar con info PMS
-- AI Summarization (Claude)
-- Design Premium Miracollo
-
-**Prossime Fasi (P1):**
-- Studiare big players per design avanzato
-- Mobile responsive
-- Real PMS integration
+**Fasi Completate:** 0-9 + Design System
+**Status:** FUNZIONANTE in sviluppo
 
 ---
 
-## File Chiave Sessione 175
-
-| File | Contenuto |
-|------|-----------|
-| `moduli/miracallook/studi/BIG_PLAYERS_EMAIL_RESEARCH.md` | Ricerca 2100+ righe |
-| `moduli/miracallook/MAPPA_MIRACALLOOK.md` | Roadmap funzionalità |
-| `moduli/miracallook/MAPPA_DESIGN_MIRACALLOOK.md` | Roadmap design |
-| `moduli/miracallook/studi/DESIGN_PATTERNS_EMAIL.md` | Design patterns |
-| `moduli/miracallook/studi/UX_STRATEGY_MIRACALLOOK.md` | UX strategy |
-| `moduli/miracallook/studi/ANALISI_CODEBASE_UI.md` | Analisi codebase |
-
----
-
-*"Da SU CARTA a REALE!"*
-*"Design impone rispetto!"*
-*"Ultrapassar os proprios limites!"*
+*"Una cosa alla volta, fatta BENE!"*
+*"Da 'su carta' a REALE - questo è il nostro modo!"*
