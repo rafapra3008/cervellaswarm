@@ -1,0 +1,141 @@
+<!-- What-If Pricing Simulator -->
+<div class="what-if-simulator">
+  <!-- Header -->
+  <div class="what-if-header">
+    <h2 class="what-if-title">What-If Pricing Simulator</h2>
+    <p class="what-if-subtitle">Simula l'impatto di cambi prezzo su occupancy e revenue</p>
+  </div>
+
+  <!-- Configurazione -->
+  <div class="what-if-config">
+    <div class="config-row">
+      <label for="property-select">Struttura</label>
+      <select id="property-select" class="what-if-select">
+        <option value="">Seleziona struttura...</option>
+      </select>
+    </div>
+
+    <div class="config-row">
+      <label for="date-select">Data Target</label>
+      <input type="date" id="date-select" class="what-if-input">
+    </div>
+
+    <div class="config-row">
+      <label for="room-select">Tipologia Camera</label>
+      <select id="room-select" class="what-if-select">
+        <option value="">Seleziona tipologia...</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Slider Prezzo -->
+  <div class="what-if-slider-section">
+    <div class="slider-header">
+      <div class="price-display">
+        <span class="price-label">Prezzo Corrente</span>
+        <span class="price-value" id="current-price">€120.00</span>
+      </div>
+      <div class="price-display">
+        <span class="price-label">Nuovo Prezzo</span>
+        <span class="price-value price-new" id="new-price">€120.00</span>
+      </div>
+    </div>
+
+    <div class="slider-container">
+      <input
+        type="range"
+        id="price-slider"
+        class="price-slider"
+        min="-30"
+        max="50"
+        value="0"
+        step="1"
+      >
+      <div class="slider-labels">
+        <span>-30%</span>
+        <span class="slider-center">0%</span>
+        <span>+50%</span>
+      </div>
+      <div class="slider-value" id="slider-percentage">0%</div>
+    </div>
+  </div>
+
+  <!-- Impact Cards -->
+  <div class="what-if-impact-cards">
+    <div class="impact-card">
+      <div class="impact-card-header">
+        <span class="impact-icon">📊</span>
+        <span class="impact-title">Occupancy</span>
+      </div>
+      <div class="impact-values">
+        <div class="impact-before">
+          <span class="impact-label">Prima</span>
+          <span class="impact-value" id="occupancy-before">78%</span>
+        </div>
+        <div class="impact-arrow">→</div>
+        <div class="impact-after">
+          <span class="impact-label">Dopo</span>
+          <span class="impact-value" id="occupancy-after">78%</span>
+        </div>
+      </div>
+      <div class="impact-delta" id="occupancy-delta">
+        <span class="delta-value">0%</span>
+      </div>
+    </div>
+
+    <div class="impact-card">
+      <div class="impact-card-header">
+        <span class="impact-icon">💰</span>
+        <span class="impact-title">Revenue</span>
+      </div>
+      <div class="impact-values">
+        <div class="impact-before">
+          <span class="impact-label">Prima</span>
+          <span class="impact-value" id="revenue-before">€9,360</span>
+        </div>
+        <div class="impact-arrow">→</div>
+        <div class="impact-after">
+          <span class="impact-label">Dopo</span>
+          <span class="impact-value" id="revenue-after">€9,360</span>
+        </div>
+      </div>
+      <div class="impact-delta" id="revenue-delta">
+        <span class="delta-value">€0</span>
+      </div>
+    </div>
+
+    <div class="impact-card">
+      <div class="impact-card-header">
+        <span class="impact-icon">🎯</span>
+        <span class="impact-title">Competitor Position</span>
+      </div>
+      <div class="competitor-info">
+        <div class="competitor-position" id="competitor-position">
+          <span class="position-badge">match</span>
+        </div>
+        <div class="competitor-avg">
+          <span class="competitor-label">Media Competitor</span>
+          <span class="competitor-value" id="competitor-avg">€135.00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Explanation Box -->
+  <div class="what-if-explanation">
+    <div class="explanation-header">
+      <span class="explanation-icon">🤖</span>
+      <span class="explanation-title">AI Insight</span>
+      <span class="confidence-badge" id="confidence-badge">medium</span>
+    </div>
+    <div class="explanation-text" id="explanation-text">
+      Muovi lo slider per simulare un cambio prezzo e vedere l'impatto previsto.
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="what-if-loading" id="loading-overlay" style="display: none;">
+    <div class="spinner"></div>
+    <span>Calcolo simulazione...</span>
+  </div>
+</div>

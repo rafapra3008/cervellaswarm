@@ -1,5 +1,5 @@
 # Stato Miracollo
-> Ultimo aggiornamento: 12 Gennaio 2026 - Sessione 171 (Researcher) ✅
+> Ultimo aggiornamento: 12 Gennaio 2026 - Sessione 172
 
 ---
 
@@ -10,10 +10,11 @@ INFRASTRUTTURA: PULITA (nginx + backend-12)
 GAP #1: RISOLTO
 GAP #2: RISOLTO (12 Gen)
 GAP #3: Ricerca OK (ML - dopo What-If)
-GAP #4: Ricerca OK + STRUTTURA BACKEND MAPPATA ✅
+GAP #4: WHAT-IF FASE 1 DEPLOYATO! ✅
 ROOM MANAGER: BIG PLAYERS RICERCA COMPLETATA ✅
 TEST: 63 PASSATI
 SNCP: RIORGANIZZATO per progetti!
+WHAT-IF API: LIVE su miracollo.com! ✅
 ```
 
 ---
@@ -29,28 +30,34 @@ SNCP: RIORGANIZZATO per progetti!
 
 ---
 
-## What-If Simulator - READY! 🚀
+## What-If Simulator - FASE 1 LIVE!
 
-**Status**: Backend structure mappato, pattern identificati, piano implementazione pronto
+**Status**: API DEPLOYATA su miracollo.com - Sessione 172
 
-**File Chiave Creati**:
-- `roadmaps/ROADMAP_WHATIF_SIMULATOR.md` - Piano 6 fasi
-- `idee/20260112_STRUTTURA_BACKEND_VM.md` - **MAPPA COMPLETA** (700+ righe)
-- `idee/20260112_RICERCA_GAP3_GAP4_ML_WHATIF.md` - Ricerca ML + What-If
+**Endpoints Attivi**:
+```
+GET  /api/v1/what-if/health      -> OK
+POST /api/v1/what-if/simulate    -> OK
+GET  /api/v1/what-if/price-curve -> OK
+```
 
-**Cosa Mappato**:
-- ✅ Struttura cartelle backend (/app/miracollo/backend/)
-- ✅ Pattern architetturale (Router → Service → Database)
-- ✅ Esempi codice router esistenti (revenue_bucchi.py, revenue_suggestions.py)
-- ✅ Pydantic models + error handling
-- ✅ Piano inserimento What-If (2 file nuovi + 2 righe main.py)
-- ✅ Template completi router + service
-- ✅ Checklist implementazione
+**File Deployati**:
+- `routers/what_if_api.py` (344 righe)
+- `services/what_if_calculator.py` (incluso nel router per MVP)
+- `main.py` aggiornato (+2 righe)
+
+**Sessione 172 - Cosa Fatto**:
+- [x] Code Review (7.5/10 -> target 9.5)
+- [x] Ricerca struttura backend VM (700+ righe)
+- [x] Creazione moduli Python What-If
+- [x] Deploy via Guardiana Ops
+- [x] Health check OK
+- [x] Regole permanenti aggiunte (Costituzione, No-ops Rafa, Checklist Deploy)
 
 **Prossimo Step**:
-1. Backend worker implementa `what_if_api.py` + `what_if_calculator.py`
-2. Test su Lab VM
-3. Deploy produzione
+1. [ ] FASE 2: Frontend UI (slider + impact cards)
+2. [ ] Integrare con DB reale (sostituire fallback)
+3. [ ] Test con dati Nido Lodge
 
 ---
 
@@ -173,3 +180,45 @@ SNCP: RIORGANIZZATO per progetti!
 ---
 
 *Aggiornare questo file a ogni sessione*
+
+---
+
+## UPDATE: 12 Gennaio 2026 - Analisi PMS Esistente
+
+**Azione:** Analisi approfondita codebase Miracollo per Room Manager  
+**Eseguita da:** Cervella Ingegnera
+
+**Risultato:** ⚠️ SOVRAPPOSIZIONI CRITICHE TROVATE
+
+### Scoperte Principali
+
+1. **Housekeeping GIA' ESISTE** - Router + API + colonne DB funzionanti
+2. **Planning GIA' MOSTRA stato camere** - Integrazione completa
+3. **Room Manager DUPLICA endpoint** - Rischio technical debt
+
+### Valore Aggiunto Room Manager
+
+✅ Task system housekeeping strutturato  
+✅ Maintenance tracking  
+✅ Audit trail stati camera  
+✅ Services layer (RoomService, HousekeepingService)  
+
+### Duplicazioni Trovate
+
+❌ Endpoint cambio stato camera (2 router)  
+❌ Due campi stato (`housekeeping_status` + `status`)  
+❌ Vista camere (planning.html + room-manager.html)  
+
+### Decisioni Architetturali Richieste
+
+1. **Stati camera:** Un campo o due? (`status` vs `housekeeping_status`)
+2. **Router:** Consolidare in uno o mantenere separati?
+3. **Frontend:** Una vista o due (receptionist vs governante)?
+
+### Report Completo
+
+Path: `.sncp/progetti/miracollo/moduli/room_manager/studi/ANALISI_PMS_ESISTENTE.md`
+
+**Raccomandazione:** Consolidare PRIMA di proseguire sviluppo.
+
+---
