@@ -1,7 +1,46 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 12 Gennaio 2026 - Sessione 178
-> **Versione:** v104.0.0 - FASE 2 TRANSPARENT AI COMPLETA!
+> **Ultimo aggiornamento:** 12 Gennaio 2026 - Sessione 178b
+> **Versione:** v105.0.0 - MIRACOLLOOK NORD DEFINITO!
+
+---
+
+## SESSIONE 178b - MIRACOLLOOK: IL NORD!
+
+```
++================================================================+
+|                                                                |
+|   SESSIONE 178b: VISIONE MIRACOLLOOK DEFINITA!                 |
+|                                                                |
+|   NON E UN EMAIL CLIENT.                                       |
+|   E IL CENTRO COMUNICAZIONI DELL'HOTEL INTELLIGENTE.           |
+|                                                                |
+|   LA VISIONE:                                                  |
+|   - Email + WhatsApp + SMS in UN posto                         |
+|   - Identifica automaticamente il cliente                      |
+|   - Mostra context PMS (camera, date, note)                    |
+|   - Preventivi automatici (verifica + genera + invia)          |
+|   - Documenti -> PMS (AI compila)                              |
+|                                                                |
+|   NESSUN COMPETITOR HA QUESTO!                                 |
+|                                                                |
+|   IMPLEMENTATO OGGI:                                           |
+|   [x] P1.3 Reply All modal                                     |
+|   [x] P1.4 AI summaries in lista                               |
+|   [x] P1.5 Refresh/Sync inbox                                  |
+|   [x] NORD_MIRACOLLOOK.md creato!                              |
+|                                                                |
+|   NORD: .sncp/progetti/miracollo/moduli/miracallook/           |
+|         NORD_MIRACOLLOOK.md                                    |
+|                                                                |
+|   PROSSIMI STEP:                                               |
+|   [ ] Fix OAuth (aggiungere porta 8002 in Google Console)      |
+|   [ ] Test completo P0/P1                                      |
+|   [ ] FASE 1: Email client solido                              |
+|   [ ] FASE 2: PMS Integration (LA MAGIA!)                      |
+|                                                                |
++================================================================+
+```
 
 ---
 
