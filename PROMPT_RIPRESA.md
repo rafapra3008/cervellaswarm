@@ -244,8 +244,11 @@ FASE 6: MOONSHOT - MESSAGING ...... SOGNO
 ## ALTRI PROGETTI
 
 **MIRACOLLOOK:**
-- P0 COMPLETO + P1 parziale (Search + Rename)
-- Da fare: Reply All, AI summaries, Refresh
+- P0 + P1 COMPLETI (Audit Guardiana 8/10)
+- Codice REALE funzionante (non "su carta")
+- Repo: ~/Developer/miracollook
+- Backend: porta 8002, Frontend: porta 5173
+- PROSSIMO: Aggiungere http://localhost:8002/auth/callback in Google Console
 
 **AUTOPILOT:**
 - FUNZIONANTE in produzione
