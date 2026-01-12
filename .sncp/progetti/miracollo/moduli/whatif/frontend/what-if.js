@@ -52,17 +52,21 @@ class WhatIfSimulator {
   // API Calls
   async loadProperties() {
     try {
-      // TODO: Replace with actual properties endpoint
-      // For now, mock data
-      const properties = [
-        { id: 42, name: 'Hotel Example' },
-        { id: 43, name: 'B&B Demo' }
-      ];
+      const response = await fetch(`${this.apiBaseUrl}/properties`);
 
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+
+      const properties = await response.json();
       this.populateSelect(this.elements.propertySelect, properties);
+
     } catch (error) {
       console.error('Error loading properties:', error);
       this.showError('Errore nel caricamento strutture');
+
+      // Fallback: mostra almeno l'interfaccia
+      this.populateSelect(this.elements.propertySelect, []);
     }
   }
 
@@ -71,17 +75,21 @@ class WhatIfSimulator {
     if (!propertyId) return;
 
     try {
-      // TODO: Replace with actual room types endpoint
-      // For now, mock data
-      const roomTypes = [
-        { id: 3, name: 'Standard Double' },
-        { id: 4, name: 'Deluxe Suite' }
-      ];
+      const response = await fetch(`${this.apiBaseUrl}/properties/${propertyId}/room-types`);
 
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+
+      const roomTypes = await response.json();
       this.populateSelect(this.elements.roomSelect, roomTypes);
+
     } catch (error) {
       console.error('Error loading room types:', error);
       this.showError('Errore nel caricamento tipologie camera');
+
+      // Fallback: mostra almeno l'interfaccia
+      this.populateSelect(this.elements.roomSelect, []);
     }
   }
 
