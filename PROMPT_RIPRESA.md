@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 12 Gennaio 2026 - Sessione 173
-> **Versione:** v96.0.0 - WHAT-IF FASE 3-4-5 COMPLETATE!
+> **Ultimo aggiornamento:** 12 Gennaio 2026 - Sessione 174
+> **Versione:** v97.0.0 - MIRACALLOOK NATO!
 
 ---
 
@@ -30,39 +30,43 @@
 
 ## TL;DR per Prossima Cervella
 
-**SESSIONE 173 - WHAT-IF AVANZATO + WORKFLOW SOLO VM!**
+**SESSIONE 174 - MIRACALLOOK NATO!**
 
 ```
 +================================================================+
 |                                                                |
-|   SESSIONE 173: WHAT-IF FASE 3-4-5 + WORKFLOW DEFINITIVO!      |
+|   SESSIONE 174: MIRACALLOOK - CLIENT EMAIL AI CREATO!          |
 |                                                                |
-|   WHAT-IF SIMULATOR AVANZATO:                                  |
-|   [x] FASE 3: Grafico Price vs Occupancy (Chart.js)            |
-|   [x] FASE 4: AI Explanation Avanzata                          |
-|       - Strategia PREMIUM/VOLUME/OTTIMALE/MODERATO             |
-|       - Contesto temporale (giorno, stagione, weekend)         |
-|       - Barra confidence visuale (verde/giallo/rosso)          |
-|       - Consiglio personalizzato                               |
-|   [x] FASE 5: Bottoni Azione                                   |
-|       - Reset / Salva Scenario / Applica Prezzo                |
-|       - Modale conferma applicazione                           |
-|       - Lista scenari salvati (localStorage, max 5)            |
-|   [x] Bug fix dropdown vuoti                                   |
+|   MIRACALLOOK = Miracollo + Outlook (tipo Superhuman)          |
 |                                                                |
-|   URL LIVE: https://miracollo.com/what-if.html                 |
+|   COMPLETATO:                                                  |
+|   [x] Ricerca Superhuman + Gmail API                           |
+|   [x] Google Cloud Project (miracollook)                       |
+|   [x] OAuth2 configurato (External + test users)               |
+|   [x] Backend FastAPI completo                                 |
+|   [x] Login Gmail FUNZIONA!                                    |
+|   [x] Lettura inbox FUNZIONA!                                  |
 |                                                                |
-|   WORKFLOW SOLO VM (DECISIONE DEFINITIVA):                     |
-|   - Tutto il lavoro su VM produzione                           |
-|   - Commit ogni feature completata                             |
-|   - Pull locale settimanale (backup)                           |
-|   - UNA cosa alla volta, NIENTE sessioni parallele             |
-|   - Documento: workflow/20260112_WORKFLOW_SOLO_VM_DEFINITIVO   |
+|   LOCATION: miracollogeminifocus/miracallook/                  |
 |                                                                |
-|   PROSSIMI STEP MIRACOLLO:                                     |
-|   [ ] Revenue Fix: Cancellare azioni (nota in SNCP)            |
-|   [ ] RateBoard Avanzata: Hard tests + miglioramenti           |
-|   [ ] FASE 6 What-If: Ottimizzazioni (cache, performance)      |
+|   AVVIARE SERVER:                                              |
+|   cd miracallook/backend                                       |
+|   source venv/bin/activate                                     |
+|   uvicorn main:app --port 8001                                 |
+|                                                                |
+|   URL: http://localhost:8001                                   |
+|                                                                |
+|   PROSSIME FASI MIRACALLOOK:                                   |
+|   [ ] FASE 3: Invio email                                      |
+|   [ ] FASE 4: UI React                                         |
+|   [ ] FASE 5: Keyboard shortcuts                               |
+|   [ ] FASE 6-8: AI features (Claude)                           |
+|                                                                |
+|   ROADMAP: .sncp/progetti/miracollo/moduli/miracallook/        |
+|            ROADMAP_MIRACALLOOK.md                              |
+|                                                                |
+|   ROOM MANAGER: IN PAUSA (decisioni architetturali)            |
+|   WHAT-IF: COMPLETO (FASE 1-5)                                 |
 |                                                                |
 +================================================================+
 ```
@@ -143,17 +147,17 @@ GET  https://miracollo.com/api/v1/properties/{id}/room-types
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-12 10:58 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-12 12:07 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: c4fe288 - Sessione 172: What-If Simulator COMPLETO + Regole Permanenti
-- **File modificati** (5):
-  - sncp/progetti/miracollo/stato.md
+- **Ultimo commit**: e946f66 - Sessione 173 FINALE: What-If FASE 3-4-5 + Workflow SOLO VM
+- **File modificati** (3):
+  - sncp/progetti/miracollo/moduli/miracallook/ROADMAP_MIRACALLOOK.md
   - .sncp/stato/oggi.md
-  - PROMPT_RIPRESA.md
-  - reports/scientist_prompt_20260112.md
-  - .sncp/progetti/miracollo/moduli/miracallook/
+  - reports/engineer_report_20260112_115004.json
 
 ### Note
 - Checkpoint automatico generato da hook

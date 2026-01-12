@@ -2,7 +2,7 @@
 
 > **Progetto:** Client Email AI tipo Superhuman - Modulo Miracollo
 > **Creato:** 12 Gennaio 2026
-> **Status:** FASE 0 - STUDIO
+> **Status:** FASE 2 COMPLETATA - OAuth + Lettura Email FUNZIONANTI!
 > **Nome:** Miracallook (Miracollo + Outlook)
 
 ---
@@ -89,55 +89,59 @@ Se usate Google Workspace (email @vostrodominio):
 
 ## FASI SVILUPPO
 
-### FASE 0: STUDIO (Questa settimana)
+### FASE 0: STUDIO - COMPLETATA!
 - [x] Ricerca Superhuman features
 - [x] Ricerca Gmail API limiti
 - [x] Ricerca OAuth2 requirements
 - [x] Architettura definita
-- [ ] Definire MVP features (cosa nella prima versione?)
-- [ ] Setup Google Cloud Project
+- [x] Definire MVP features
+- [x] Setup Google Cloud Project (miracollook)
 
 **Output:** Roadmap completa, decisioni prese
+**Completata:** 12 Gennaio 2026
 
 ---
 
-### FASE 1: FONDAMENTA (Backend Base)
+### FASE 1: FONDAMENTA (Backend Base) - COMPLETATA!
 **Obiettivo:** Connessione Gmail funzionante
 
 **Task:**
-1. [ ] Creare Google Cloud Project
-2. [ ] Configurare OAuth2 consent screen
-3. [ ] Ottenere credentials (client_id, client_secret)
-4. [ ] FastAPI endpoint: `/auth/google` (login)
-5. [ ] FastAPI endpoint: `/auth/callback` (OAuth callback)
-6. [ ] Salvare refresh tokens (encrypted)
-7. [ ] Test: login con account Gmail
+1. [x] Creare Google Cloud Project (miracollook)
+2. [x] Configurare OAuth2 consent screen (External + test users)
+3. [x] Ottenere credentials (client_id, client_secret)
+4. [x] FastAPI endpoint: `/auth/login` (inizia OAuth)
+5. [x] FastAPI endpoint: `/auth/callback` (OAuth callback)
+6. [x] Salvare tokens in memoria (DB dopo)
+7. [x] Test: login con account Gmail - FUNZIONA!
 
 **Tech:**
 - FastAPI
 - google-auth, google-auth-oauthlib
-- SQLite o PostgreSQL per tokens
+- Storage in memoria (per ora)
 
 **Output:** Login Gmail funzionante
+**Completata:** 12 Gennaio 2026
 
 ---
 
-### FASE 2: LETTURA EMAIL (Backend)
+### FASE 2: LETTURA EMAIL (Backend) - COMPLETATA!
 **Obiettivo:** Leggere inbox da Gmail
 
 **Task:**
-1. [ ] Endpoint: `GET /emails` (lista email)
-2. [ ] Endpoint: `GET /emails/{id}` (singola email)
-3. [ ] Endpoint: `GET /threads/{id}` (conversazione)
-4. [ ] Parsing email (HTML to text, attachments)
-5. [ ] Cache locale (evitare chiamate ripetute)
-6. [ ] Sync incrementale (solo nuove email)
+1. [x] Endpoint: `GET /gmail/inbox` (lista email JSON)
+2. [x] Endpoint: `GET /gmail/inbox/html` (lista email HTML)
+3. [x] Endpoint: `GET /gmail/message/{id}` (singola email)
+4. [x] Endpoint: `GET /gmail/profile` (profilo Gmail)
+5. [x] Endpoint: `GET /gmail/labels` (liste label)
+6. [ ] Cache locale (dopo)
+7. [ ] Sync incrementale (dopo)
 
 **Tech:**
 - Gmail API (messages.list, messages.get)
-- Redis o SQLite per cache
+- Senza cache per ora
 
-**Output:** API che restituisce email
+**Output:** API che restituisce email - FUNZIONA!
+**Completata:** 12 Gennaio 2026
 
 ---
 
@@ -335,18 +339,43 @@ Se usate Google Workspace (email @vostrodominio):
 
 ## PROSSIMO STEP IMMEDIATO
 
-**FASE 0 - Completare Studio:**
+**FASE 3 - Invio Email:**
 
-1. [x] Rafa decide: nome progetto? -> **Miracallook!**
-2. [x] Rafa decide: MVP con AI? -> **Si, con Cervella/Claude!**
-3. [x] Rafa decide: dove deploy? -> **Locale prima!**
-4. [x] Rafa decide: quale email? -> **Focus Gmail!**
-5. [ ] Creare Google Cloud Project
-6. [ ] Test connessione Gmail API base
+1. [ ] Endpoint: `POST /gmail/send`
+2. [ ] Endpoint: `POST /gmail/reply`
+3. [ ] Test invio email
+
+**FASE 4 - UI React (dopo invio):**
+
+1. [ ] Setup React + Vite + Tailwind
+2. [ ] Layout tipo Superhuman
+3. [ ] Keyboard shortcuts
+
+---
+
+## STRUTTURA FILE (12 Gennaio 2026)
+
+```
+miracollogeminifocus/miracallook/
+├── .env                    # Credenziali OAuth (NON in git!)
+├── .env.example
+├── README.md
+└── backend/
+    ├── main.py             # FastAPI app
+    ├── requirements.txt
+    ├── venv/               # Virtual environment
+    ├── auth/
+    │   └── google.py       # OAuth2 Google
+    └── gmail/
+        └── api.py          # Gmail API endpoints
+```
+
+**Server:** `uvicorn main:app --port 8001`
+**URL locale:** http://localhost:8001
 
 ---
 
 *"Miracallook - Un client email che lavora per te, non contro di te."*
 
 *Creato: 12 Gennaio 2026*
-*Ultimo update: 12 Gennaio 2026*
+*Ultimo update: 12 Gennaio 2026 - FASE 0, 1, 2 COMPLETATE!*
