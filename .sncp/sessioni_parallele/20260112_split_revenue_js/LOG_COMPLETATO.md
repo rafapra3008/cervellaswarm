@@ -57,8 +57,19 @@ L'ordine e' importante:
 4. **revenue-charts.js** - Dipende da escapeHtml, formatDateShort
 5. **revenue-actions.js** - Dipende da loadData, showToast + contiene DOMContentLoaded
 
+## FIX POST-AUDIT (12 Gennaio 2026)
+
+**Guardiana Qualita ha trovato bug BLOCCANTE:**
+- `formatDateRange()` era in `revenue-suggestions.js` ma usata in `revenue-bucchi.js`
+- Ordine caricamento: core -> bucchi -> suggestions = ReferenceError!
+
+**FIX APPLICATO:**
+- Spostata `formatDateRange()` in `revenue-core.js` (righe 133-143)
+- Rimossa da `revenue-suggestions.js` (rimasto solo commento)
+
 ## PROSSIMI STEP
 
+- [x] FIX formatDateRange (FATTO 12 Gen)
 - [ ] Backup del vecchio revenue.js (opzionale, git lo ha)
 - [ ] Test manuale nel browser
 - [ ] Commit su GitHub

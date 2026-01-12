@@ -195,17 +195,7 @@ function formatFeatureName(name) {
         .replace(/\b\w/g, l => l.toUpperCase());
 }
 
-// Format date range
-function formatDateRange(start, end) {
-    const s = new Date(start);
-    const e = new Date(end);
-    const opts = { day: 'numeric', month: 'short' };
-
-    if (start === end) {
-        return s.toLocaleDateString('it-IT', opts);
-    }
-    return `${s.toLocaleDateString('it-IT', opts)} - ${e.toLocaleDateString('it-IT', opts)}`;
-}
+// NOTE: formatDateRange() is in revenue-core.js (loaded first)
 
 // Render suggestions
 function renderSuggestions(data) {

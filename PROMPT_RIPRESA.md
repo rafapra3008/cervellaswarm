@@ -399,15 +399,27 @@ Sprint completati:      3.1 (Backend Integration)
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-12 05:47 (unknown)
+---
+
+---
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-12 06:00 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 8fc695f - ANTI-COMPACT: PreCompact auto
-- **File modificati** (3):
-  - sncp/stato/oggi.md
-  - reports/scientist_prompt_20260112.md
-  - .swarm/handoff/HANDOFF_20260112_054700.md
+- **Ultimo commit**: 5ee804e - ANTI-COMPACT: PreCompact auto
+- **File modificati** (5):
+  - sncp/sessioni_parallele/20260112_split_revenue_js/LOG_COMPLETATO.md
+  - .sncp/sessioni_parallele/20260112_split_revenue_js/revenue-core.js
+  - .sncp/sessioni_parallele/20260112_split_revenue_js/revenue-suggestions.js
+  - .sncp/stato/oggi.md
+  - PROMPT_RIPRESA.md
 
 ### Note
 - Checkpoint automatico generato da hook
