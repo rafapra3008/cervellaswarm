@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 12 Gennaio 2026 - Sessione 175 FINALE
-> **Versione:** v99.0.0 - Revenue Fix Completato!
+> **Ultimo aggiornamento:** 12 Gennaio 2026 - Sessione 175 STORICA!
+> **Versione:** v100.0.0 - MIRACALLOOK FUNZIONANTE!
 
 ---
 
@@ -30,35 +30,51 @@
 
 ## TL;DR per Prossima Cervella
 
-**SESSIONE 175 FINALE - TUTTO COMPLETATO!**
+**SESSIONE 175 STORICA - MIRACALLOOK FUNZIONANTE!**
 
 ```
 +================================================================+
 |                                                                |
-|   SESSIONE 175: CODE REVIEW + BUG FIX + REVENUE FIX            |
+|   SESSIONE 175 STORICA: MIRACALLOOK DA SU CARTA A REALE!       |
 |                                                                |
-|   PARTE 1 - CODE REVIEW + CI/CD:                               |
-|   [x] Code Review What-If: 7.5/10 (47 issues)                  |
-|   [x] Bug Fix Dropdown What-If (metodi fuori classe)           |
-|   [x] Fix Workflow GitHub: docker compose (v3.1.0)             |
-|   [x] Commit 61b8b11 - CHECK VERDE!                            |
+|   MATTINA - Code Review + Revenue Fix (altra chat):            |
+|   [x] Code Review What-If: 7.5/10                              |
+|   [x] Revenue Fix: bottone Cancella                            |
 |                                                                |
-|   PARTE 2 - REVENUE FIX:                                       |
-|   [x] Migration 036: soft delete (deleted_at, deleted_by)      |
-|   [x] Endpoint DELETE /api/suggestions/applications/{id}       |
-|   [x] Frontend: bottone Cancella + confirm dialog              |
-|   [x] Commit befd6d9 - DEPLOYATO!                              |
+|   POMERIGGIO - MIRACALLOOK FASE 3-4-5:                         |
+|   [x] Ricerca Big Players (2100+ righe!)                       |
+|   [x] Mappa Dettagliata con obiettivi                          |
+|   [x] FASE 3: Backend invio email (send/reply/forward)         |
+|   [x] FASE 4: UI React (three-panel, dark mode)                |
+|   [x] FASE 5: Keyboard Shortcuts + Command Palette (Cmd+K)     |
+|   [x] Bug fix CORS, API response, componenti                   |
 |                                                                |
-|   PROSSIMI STEP:                                               |
-|   [ ] RateBoard Hard tests                                     |
-|   [ ] What-If: Applica prezzo REALE (ora è fake!)              |
-|   [ ] Fix XSS + auth (code review)                             |
-|   [ ] Workflow: auto-migration                                 |
-|   [ ] Monitoring post-azione (idea Rafa!)                      |
+|   MIRACALLOOK ORA FUNZIONA!                                    |
+|   - Backend: http://localhost:8001                             |
+|   - Frontend: http://localhost:5174                            |
+|   - Cmd+K = Command Palette tipo Superhuman!                   |
 |                                                                |
-|   MIRACALLOOK: FASE 0-2 + RICERCA BIG PLAYERS (45 pagine!)     |
+|   AVVIARE:                                                     |
+|   # Backend                                                    |
+|   cd ~/Developer/miracollogeminifocus/miracallook/backend      |
+|   source venv/bin/activate && uvicorn main:app --port 8001     |
+|                                                                |
+|   # Frontend                                                   |
+|   cd ~/Developer/miracollogeminifocus/miracallook/frontend     |
+|   npm run dev                                                  |
+|                                                                |
+|   PROSSIME FASI MIRACALLOOK:                                   |
+|   [ ] FASE 6: AI Summarization (Claude)                        |
+|   [ ] Split Inbox (VIP, Check-in, Team)                        |
+|   [ ] Smart Bundles (OTA, System)                              |
+|   [ ] Guest Sidebar (integrazione PMS Miracollo)               |
+|                                                                |
+|   FILE CHIAVE:                                                 |
+|   - BIG_PLAYERS_EMAIL_RESEARCH.md (ricerca 2100+ righe)        |
+|   - MAPPA_MIRACALLOOK.md (roadmap dettagliata)                 |
+|                                                                |
 |   ROOM MANAGER: IN PAUSA                                       |
-|   WHAT-IF: COMPLETO + BUG FIX                                  |
+|   WHAT-IF: COMPLETO                                            |
 |                                                                |
 +================================================================+
 ```
@@ -145,16 +161,17 @@ GET  https://miracollo.com/api/v1/properties/{id}/room-types
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-12 12:18 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-12 13:17 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 4eb6eaf - ANTI-COMPACT: PreCompact auto
-- **File modificati** (4):
-  - sncp/stato/oggi.md
-  - PROMPT_RIPRESA.md
-  - reports/scientist_prompt_20260112.md
-  - .swarm/handoff/HANDOFF_20260112_121213.md
+- **Ultimo commit**: 266f936 - Sessione 175 FINALE: Code Review + Revenue Fix
+- **File modificati** (3):
+  - eports/scientist_prompt_20260112.md
+  - .sncp/progetti/miracollo/reports/frontend_phase4_20260112.md
+  - reports/engineer_report_20260112_130457.json
 
 ### Note
 - Checkpoint automatico generato da hook
