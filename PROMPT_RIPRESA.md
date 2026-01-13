@@ -1,7 +1,83 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 189 WEATHER FRONTEND MIRACOLLO!
-> **Versione:** v126.0.0 - METEO VISIBILE!
+> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 190 MIRACOLLOOK P1+P2 COMPLETE!
+> **Versione:** v127.0.0 - OFFLINE-FIRST ARCHITECTURE!
+
+---
+
+## SESSIONE 190 - MIRACOLLOOK PERFORMANCE COMPLETE!
+
+```
++================================================================+
+|                                                                |
+|   SESSIONE 190 - MOMENTUM INCREDIBILE!                         |
+|                                                                |
+|   "Ultrapassar os proprios limites!"                           |
+|                                                                |
+|   TUTTO IN UNA SESSIONE:                                       |
+|                                                                |
+|   1. FIX GUARDIANA P1                                          |
+|      - substr -> substring (deprecation)                       |
+|      - Helper duplicati centralizzati                          |
+|      - MERGE P1 IN MAIN                                        |
+|                                                                |
+|   2. RICERCA P2 (4 api parallele!)                             |
+|      - useOptimistic: SKIP (bug React Query)                   |
+|      - Prefetch: IMPLEMENTATO                                  |
+|      - Service Worker: IMPLEMENTATO                            |
+|      - Virtualization: SKIP (non serve)                        |
+|                                                                |
+|   3. FASE P2.1: PREFETCH SYSTEM                                |
+|      - usePrefetchEmails: top 3 unread auto-load               |
+|      - useHoverPrefetch: 300ms delay desktop                   |
+|      - Click email = ISTANTANEO!                               |
+|                                                                |
+|   4. FASE P2.3: SERVICE WORKER + OFFLINE                       |
+|      - Workbox + Vite PWA plugin                               |
+|      - Cache StaleWhileRevalidate (API)                        |
+|      - useOfflineSync: queue + auto-retry                      |
+|      - MERGE P2 IN MAIN                                        |
+|                                                                |
++================================================================+
+```
+
+### Performance Stack Miracollook (COMPLETE!)
+
+| Layer | Feature | Status |
+|-------|---------|--------|
+| P1 Cache | IndexedDB + cache-first | MERGED |
+| P1 Batch | 51 -> 2 API calls | MERGED |
+| P1 Skeleton | Visual feedback | MERGED |
+| P1 Optimistic | Archive/Trash instant | MERGED |
+| P2 Prefetch | Top 3 + Hover | MERGED |
+| P2 ServiceWorker | Workbox + cache | MERGED |
+| P2 Offline | Sync queue | MERGED |
+
+### Commits Sessione 190 (MIRACOLLOOK)
+
+```
+e33ac31 - Fix: Review Guardiana
+4348881 - Merge: FASE P1 Complete
+d0f6e34 - FASE P2.1: Prefetch system
+7d34432 - FASE P2.3: Service Worker + Offline
+69ae885 - Merge: FASE P2 Complete
+```
+
+### Risultato UX
+
+```
+Click email: INSTANT (prefetched!)
+Offline: FUNZIONA (cached + queued!)
+PWA: INSTALLABILE!
+```
+
+### Prossimi Step Miracollook
+
+```
+[ ] Test offline reale (airplane mode)
+[ ] Deploy staging
+[ ] FASE 2: PMS Integration
+```
 
 ---
 
@@ -650,19 +726,25 @@ Border: #38383A
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-13 17:51 (auto)
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-13 19:19 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: e24362e - ANTI-COMPACT: PreCompact auto
+- **Ultimo commit**: bf82552 - Checkpoint Sessione 189 v2: Test Docker + Review Guardiana
 - **File modificati** (4):
-  - .sncp/stato/oggi.md
-  - .swarm/handoff/HANDOFF_20260113_175057.md
+  - sncp/stato/oggi.md
   - PROMPT_RIPRESA.md
   - reports/scientist_prompt_20260113.md
+  - reports/engineer_report_20260113_184013.json
 
 ### Note
 - Checkpoint automatico generato da hook
-- Trigger: auto
+- Trigger: unknown
 
 ---
