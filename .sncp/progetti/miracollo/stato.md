@@ -1,39 +1,40 @@
 # Stato Miracollo
-> Ultimo aggiornamento: 13 Gennaio 2026 - Sessione 183 BUG FIX
+> Ultimo aggiornamento: 13 Gennaio 2026 - Sessione 185 BUG FIX AI PANEL
 
 ---
 
-## SESSIONE 183 - BUG FIX + DEBUG
+## SESSIONE 185 - FIX AI PANEL COMPLETATO!
 
 ```
 +================================================================+
 |                                                                |
-|   SESSIONE 183: FIX MULTIPLI + DEBUG AI PANEL                  |
+|   SESSIONE 185: BUG AI PANEL RISOLTO!                          |
 |                                                                |
-|   COMPLETATI:                                                  |
-|   [x] Fix A/B Testing API (get_db context manager)             |
-|   [x] Fix A/B Testing migration 033 (tabelle create)           |
-|   [x] Fix CSP onclick inline in revenue.html                   |
-|   [x] Fix room-types API call (aggiunto hotel_code)            |
-|   [x] Fix room-types array handling (API ritorna array)        |
-|   [x] SSH config sistemato (alias miracollo.com)               |
-|   [x] Rateboard griglia ora si vede!                           |
-|   [x] AI Suggestions panel si apre (con singola camera)        |
+|   PROBLEMA:                                                    |
+|   - AI Panel non si espandeva con "Tutte le camere"            |
+|   - CSS sembrava corretto ma pannello non si vedeva            |
 |                                                                |
-|   BUG ANCORA APERTO:                                           |
-|   [ ] AI Panel non si espande con "Tutte le camere"            |
-|       - Debug logs aggiunti (rateboard-core.js)                |
-|       - CSS sembra invertito (log mostrano max-height 48px     |
-|         quando collapsed=false)                                |
-|       - Da investigare prossima sessione                       |
+|   INVESTIGAZIONE (con LOG strategici):                         |
+|   - CSS era OK (Guardiana Ops ha verificato MD5 identici)      |
+|   - Il problema era di VIEWPORT/POSIZIONE!                     |
+|   - Panel TOP: 1245px, Viewport: 1286px                        |
+|   - Il pannello era TAGLIATO dall'overflow!                    |
 |                                                                |
-|   COMMITS OGGI:                                                |
-|   - 9561f98: Fix AI Suggestions panel toggle                   |
-|   - fb5662f: Fix CSP compliance onclick                        |
-|   - 581e128: Fix A/B Testing API get_db                        |
-|   - a8a14ac: Fix room-types API hotel_code                     |
-|   - 7058895: Fix room-types array handling                     |
-|   - c090b04: Simplify AI panel CSS + debug logs                |
+|   SOLUZIONE:                                                   |
+|   - position: fixed; bottom: 0; left: 260px; right: 0;         |
+|   - Il pannello ora è SEMPRE visibile in fondo allo schermo    |
+|   - padding-bottom: 60px su main-content per spazio            |
+|                                                                |
+|   COMMITS SESSIONE 185:                                        |
+|   - d62aca8: Fix AI Panel CSS (ID selector)                    |
+|   - 9bfb2d2: Fix AI Panel layout flex shrink                   |
+|   - 8641286: Add position logs                                 |
+|   - 38b547b: Add debug logs                                    |
+|   - 88af147: Fix sticky (non funzionava)                       |
+|   - 5aaa9d8: Fix position fixed (FUNZIONA!)                    |
+|                                                                |
+|   CSS FINALE: v2.8.0                                           |
+|   JS: v3.0.3 (con debug logs, da rimuovere dopo)               |
 |                                                                |
 +================================================================+
 ```
@@ -47,9 +48,9 @@
 | File legacy revenue.js | `frontend/revenue.js` (1296 righe) | BASSA | Duplicato, sistema usa moduli separati |
 | hotelId hardcoded | `revenue-suggestions.js`, `revenue.js` (4 occorrenze) | MEDIA | Funziona, ma no multi-hotel |
 | What-If Apply | `revenue-suggestions.js:558` | BASSA | Placeholder TODO |
-| AI Panel CSS invertito | `rateboard.css` | ALTA | Debug logs aggiunti, da fixare |
+| Debug logs AI Panel | `rateboard-core.js` | BASSA | Da rimuovere quando stabile |
 
-*Aggiornato: 13 Gennaio 2026 - Sessione 183*
+*Aggiornato: 13 Gennaio 2026 - Sessione 185*
 
 ---
 
@@ -59,13 +60,13 @@
 INFRASTRUTTURA: PULITA (nginx + backend-14)
 AUTOPILOT: FUNZIONANTE IN PRODUZIONE!
 WHAT-IF: COMPLETO E FUNZIONANTE!
-RATEBOARD: 8.5/10 (bug AI panel con tutte le camere)
+RATEBOARD: 9/10 (AI Panel ORA FUNZIONA con tutte le camere!)
 A/B TESTING: FUNZIONANTE (migration + API fix)
 REVENUE: CSP FIXATO (onclick rimossi)
 WORKFLOW GIT: PROTETTO con hooks automatici
 SSH: CONFIGURATO (miracollo.com alias)
 
->>> SESSIONE 183: MOLTI FIX, UN BUG APERTO <<<
+>>> SESSIONE 185: BUG AI PANEL RISOLTO! <<<
 ```
 
 ---

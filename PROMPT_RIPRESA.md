@@ -1,36 +1,75 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 185 MIRACOLLOOK
-> **Versione:** v115.0.0 - TAILWIND V4 FIXATO! Design Salutare FUNZIONANTE!
+> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 185 MIRACOLLO + MIRACOLLOOK
+> **Versione:** v117.0.0 - BUG AI PANEL RISOLTO + Quick Actions!
 
 ---
 
-## SESSIONE 185 - FIX TAILWIND V4
+## SESSIONE 185 - MIRACOLLO: FIX AI PANEL
+
+```
++================================================================+
+|                                                                |
+|   BUG AI PANEL RISOLTO!                                         |
+|                                                                |
+|   PROBLEMA:                                                    |
+|   - AI Panel non si espandeva con "Tutte le camere"            |
+|   - Si vedeva solo con singola camera                          |
+|                                                                |
+|   INVESTIGAZIONE (metodo LOG):                                 |
+|   - CSS era corretto (Guardiana Ops verificato)                |
+|   - Problema era di VIEWPORT/POSIZIONE                         |
+|   - Panel TOP: 1245px, Viewport: 1286px → TAGLIATO!            |
+|                                                                |
+|   SOLUZIONE:                                                   |
+|   position: fixed; bottom: 0; left: 260px; right: 0;           |
+|   Pannello ora SEMPRE visibile in fondo allo schermo!          |
+|                                                                |
+|   COMMITS:                                                     |
+|   - 5aaa9d8: Fix position fixed (FUNZIONA!)                    |
+|   - CSS v2.8.0, JS v3.0.3                                      |
+|                                                                |
+|   LOCALE = VM ALLINEATI (verificato MD5)                       |
+|                                                                |
++================================================================+
+```
+
+---
+
+## STATO MIRACOLLO
+
+```
+RATEBOARD:        9/10 (AI Panel ORA FUNZIONA!)
+AUTOPILOT:        FUNZIONANTE
+WHAT-IF:          COMPLETO
+A/B TESTING:      FUNZIONANTE
+REVENUE:          OK
+```
+
+---
+
+## SESSIONE 185 - MIRACOLLOOK: COMPLETATA!
 
 ```
 +================================================================+
 |                                                                |
 |   "Non esistono cose difficili, esistono cose non studiate!"   |
 |                                                                |
-|   COMPLETATI:                                                  |
-|   [x] Ricerca COMPLETA Tailwind v4 (1100+ righe!)              |
-|   [x] 3 approcci confrontati (tabella comparativa)             |
-|   [x] Decisione: @theme (metodo ufficiale v4)                  |
-|   [x] Implementato @theme con 24+ colori in index.css          |
-|   [x] Cleanup tailwind.config.js (solo fonts/shadows)          |
-|   [x] Build completo SENZA errori                              |
-|   [x] Fix bug TypeScript EmailList.tsx                         |
+|   PARTE 1: FIX TAILWIND V4                                     |
+|   [x] Ricerca completa (1100+ righe)                           |
+|   [x] @theme con 24+ colori in index.css                       |
+|   [x] Design Salutare FUNZIONANTE (verificato!)                |
 |   [x] Mantra aggiunto alla COSTITUZIONE                        |
 |                                                                |
-|   RISULTATO:                                                   |
-|   - 18 CSS variables generate                                  |
-|   - 24+ classi utility funzionanti (bg-miracollo-*)            |
-|   - Build 5x piu veloci                                        |
-|   - Future-proof (standard v4)                                 |
+|   PARTE 2: QUICK ACTIONS                                       |
+|   [x] Ricerca pattern (Superhuman, Gmail, Apple)               |
+|   [x] Marketing ha validato specs (700+ righe)                 |
+|   [x] QuickActions.tsx implementato                            |
+|   [x] 4 bottoni: Confirm, Reject, Snooze, VIP                  |
+|   [x] Hover on email list FUNZIONANTE                          |
 |                                                                |
-|   RICERCA SALVATA (nostro standard!):                          |
-|   .sncp/progetti/miracollo/moduli/miracallook/studi/           |
-|   RICERCA_TAILWIND_V4_CUSTOM_COLORS.md                         |
+|   NUOVO IN COSTITUZIONE:                                       |
+|   "Non esistono cose difficili, esistono cose non studiate!"   |
 |                                                                |
 +================================================================+
 ```
@@ -41,11 +80,12 @@
 
 ```
 FASE 0 (Fondamenta)     [####################] 100% COMPLETA!
-FASE 1 (Email Solido)   [########............] 40%
+FASE 1 (Email Solido)   [##########..........] 50%
 FASE 2 (PMS Integration)[....................] 0%
 
 DOCKER SETUP           [####################] 100% COMPLETA!
 DESIGN UPGRADE         [####################] 100% COMPLETA!
+QUICK ACTIONS HOVER    [####################] 100% COMPLETA!
 ```
 
 ---
@@ -55,20 +95,19 @@ DESIGN UPGRADE         [####################] 100% COMPLETA!
 ```
 +================================================================+
 |                                                                |
-|   PRIORITA 1: VERIFICA VISUALE DESIGN                          |
-|   - Aprire http://localhost:5173                               |
-|   - Verificare background #1C1C1E                              |
-|   - Verificare accent #7c7dff                                  |
-|   - Screenshot per confronto                                   |
+|   PRIORITA 1: KEYBOARD SHORTCUTS (Sprint 2)                    |
+|   - j/k per navigare tra email                                 |
+|   - e archive, r reply, a assign, s snooze, f flag             |
+|   - Specs in QUICK_ACTIONS_SPECS_VALIDATED.md                  |
 |                                                                |
-|   PRIORITA 2: CONTINUARE EMAIL LIST                            |
-|   - Quick actions on hover (archive, star, delete)             |
-|   - VIP warm accent #d4985c                                    |
-|   - Keyboard shortcuts                                         |
+|   PRIORITA 2: BACKEND API PER QUICK ACTIONS                    |
+|   - POST /emails/{id}/confirm                                  |
+|   - POST /emails/{id}/reject                                   |
+|   - POST /emails/{id}/snooze                                   |
+|   - POST /emails/{id}/vip                                      |
 |                                                                |
 |   PRIORITA 3: EMAIL COMPOSE                                    |
 |   - Modal compose con Design Salutare                          |
-|   - Rich text editor                                           |
 |                                                                |
 +================================================================+
 ```
