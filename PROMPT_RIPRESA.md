@@ -1,7 +1,69 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 190 WEATHER LIVE + AUTOPILOT FIX!
-> **Versione:** v128.0.0 - WEATHER PRODUZIONE ALLEGHE!
+> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 191 MIRACOLLOOK DOCS!
+> **Versione:** v129.0.0 - DOCUMENTAZIONE MIRACOLLOOK RIORGANIZZATA!
+
+---
+
+## SESSIONE 191 - MIRACOLLOOK DOCUMENTAZIONE COMPLETA!
+
+```
++================================================================+
+|                                                                |
+|   SESSIONE 191 - "Se documentiamo = facciamo!"                 |
+|                                                                |
+|   Focus: ORGANIZZAZIONE MIRACOLLOOK                            |
+|                                                                |
+|   1. RICERCA COMPETITOR (4 in parallelo)                       |
+|      - Shortwave: AI-first, Ghostwriter, Bundles               |
+|      - Callbell: Multi-canale WhatsApp (perdono messaggi!)     |
+|      - Baseline: Must-have email client 2026                   |
+|      - Analisi codebase: funzioni BASE mancanti                |
+|                                                                |
+|   2. RIORGANIZZAZIONE DOCUMENTAZIONE                           |
+|      - COSTITUZIONE aggiornata (FASE 0->100%)                  |
+|      - NORD aggiornato (P1+P2 complete)                        |
+|      - ROADMAP_MASTER aggiornata                               |
+|      - MAPPA_FUNZIONI creata (Have vs Need)                    |
+|      - GUIDA_SESSIONE creata                                   |
+|      - Documenti obsoleti archiviati                           |
+|                                                                |
+|   3. FUNZIONI BASE MANCANTI (~40h totali)                      |
+|      CRITICI: Mark Read/Unread (2h), Drafts (6h)               |
+|      ALTI: Bulk, Threads, Labels, Attachments upload           |
+|      MEDI: Contacts, Settings, Firma                           |
+|                                                                |
+|   "Senza comunicazione, non esiste Miracollo!"                 |
+|                                                                |
++================================================================+
+```
+
+### Struttura Docs Miracollook (PULITA!)
+
+```
+.sncp/progetti/miracollo/moduli/miracallook/
++-- COSTITUZIONE_MIRACOLLOOK.md   [AGGIORNATA]
++-- NORD_MIRACOLLOOK.md           [AGGIORNATO]
++-- stato.md                      [AGGIORNATO]
++-- MAPPA_FUNZIONI.md             [NUOVA]
++-- ROADMAP_MIRACOLLOOK_MASTER.md [AGGIORNATA]
++-- GUIDA_SESSIONE.md             [NUOVA]
++-- ricerche/                     [3 nuove ricerche]
++-- archivio/                     [docs obsoleti]
+```
+
+### Prossimi Step Miracollook
+
+```
+SPRINT 1 - CRITICI (~8h):
+[ ] Mark as Read/Unread     (2h)
+[ ] Drafts auto-save        (6h)
+
+SPRINT 2 - ALTI (~16h):
+[ ] Bulk Actions, Thread View, Labels, Upload Attachments
+
+POI: FASE 2 = PMS Integration = LA MAGIA!
+```
 
 ---
 
