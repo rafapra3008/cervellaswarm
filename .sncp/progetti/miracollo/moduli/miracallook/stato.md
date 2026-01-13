@@ -1,7 +1,7 @@
 # STATO - Miracollook
 
-> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 186 (Finale)
-> **Status:** VISTE COMPLETE! Quick Actions + Archived/Starred/Snoozed/Trash!
+> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 187
+> **Status:** RESIZE PANNELLI + ATTACHMENTS! FASE 1 al 75%!
 
 ---
 
@@ -25,13 +25,50 @@
 
 ```
 FASE 0 (Fondamenta)     [####################] 100% COMPLETA!
-FASE 1 (Email Solido)   [############........] 60%
+FASE 1 (Email Solido)   [###############.....] 75%
 FASE 2 (PMS Integration)[....................] 0%
 
 DOCKER SETUP           [####################] 100% COMPLETA!
 DESIGN UPGRADE         [####################] 100% COMPLETA!
 QUICK ACTIONS          [####################] 100% COMPLETA!
 KEYBOARD SHORTCUTS     [####################] 100% COMPLETA!
+RESIZE PANNELLI        [####################] 100% COMPLETA!
+ATTACHMENTS VIEW       [####################] 100% COMPLETA!
+```
+
+---
+
+## SESSIONE 187 - RESIZE PANNELLI + ATTACHMENTS!
+
+```
++================================================================+
+|                                                                |
+|   "La strada e bella perche la stiamo camminando insieme"      |
+|                                                                |
+|   RESIZE PANNELLI:                                             |
+|   ----------------                                             |
+|   [x] Ricerca react-resizable-panels v4.4.0                    |
+|   [x] API v4: Group, Panel, Separator (non PanelGroup!)        |
+|   [x] ThreePanel.tsx convertito                                |
+|   [x] Sidebar collapsible                                      |
+|   [x] localStorage persistence (autoSaveId)                    |
+|   [x] Build OK!                                                |
+|                                                                |
+|   ATTACHMENTS:                                                 |
+|   ------------                                                 |
+|   [x] Ricerca Gmail API attachments (1200+ righe)              |
+|   [x] Backend: GET /message/{id}/attachments                   |
+|   [x] Backend: GET .../download (streaming)                    |
+|   [x] Frontend: AttachmentList.tsx component                   |
+|   [x] Integrato in EmailDetail.tsx                             |
+|   [x] Icone per tipo file (PDF, Word, immagini)                |
+|   [x] Spinner durante download                                 |
+|   [x] Build OK!                                                |
+|                                                                |
+|   RIMANE (prossima sessione):                                  |
+|   [ ] Upload attachments in Compose                            |
+|                                                                |
++================================================================+
 ```
 
 ---
@@ -232,13 +269,14 @@ Nome corretto: Miracollook (una parola, lowercase)
 Porta backend: 8002
 Porta frontend: 5173
 SNCP: CervellaSwarm/.sncp/progetti/miracollo/moduli/miracallook/
-Versione: 1.4.0 (Quick Actions API Complete!)
+Versione: 1.5.0 (Resize + Attachments!)
 Tailwind: v4.1.18 con @theme (FUNZIONANTE!)
+react-resizable-panels: v4.4.0 (API: Group, Panel, Separator)
 ```
 
 ---
 
-*Aggiornato: 13 Gennaio 2026 - Sessione 186*
+*Aggiornato: 13 Gennaio 2026 - Sessione 187*
 *"Non esistono cose difficili, esistono cose non studiate!"*
-*"Fatto BENE > Fatto VELOCE"*
+*"La strada e bella perche la stiamo camminando insieme"*
 *"Ultrapassar os proprios limites!"*

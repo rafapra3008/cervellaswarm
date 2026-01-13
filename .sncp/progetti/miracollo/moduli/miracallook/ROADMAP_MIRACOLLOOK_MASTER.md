@@ -1,8 +1,8 @@
 # ROADMAP MIRACOLLOOK - Master
 
-**Data:** 13 Gennaio 2026 - Sessione 186
-**Health Score:** 7.5/10
-**Status:** MVP Funzionante, serve polish per produzione
+**Data:** 13 Gennaio 2026 - Sessione 187
+**Health Score:** 8.0/10
+**Status:** MVP Funzionante con Resize + Attachments!
 
 ---
 
@@ -23,7 +23,7 @@ LA MAGIA = PMS Integration + Guest Recognition
 
 ```
 FASE 0 (Fondamenta)     [####################] 100%
-FASE 1 (Email Solido)   [##############......] 70%
+FASE 1 (Email Solido)   [###############.....] 75%
 FASE 2 (PMS Integration)[....................] 0%
 FASE 3 (Hotel Workflow) [....................] 0%
 ```
@@ -42,15 +42,15 @@ FASE 3 (Hotel Workflow) [....................] 0%
 - [x] AI Summarization
 - [x] Smart Bundles (categorizzazione auto)
 - [x] Design Salutare (Tailwind v4)
+- [x] Resize pannelli (react-resizable-panels v4.4.0) - Sessione 187
+- [x] Attachments view (lista allegati) - Sessione 187
+- [x] Attachments download (streaming) - Sessione 187
 
 ### Da Fare - CRITICO
 | Feature | Priorita | Effort | Note |
 |---------|----------|--------|------|
 | **Split gmail/api.py** | CRITICO | 6h | 1391 righe, serve refactoring |
-| **Attachments view** | CRITICO | 4h | Lista attachments in email |
-| **Attachments download** | CRITICO | 2h | Gmail API supporta |
 | **Attachments upload** | CRITICO | 6h | Compose con file |
-| **Resize pannelli** | ALTO | 4h | react-resizable-panels |
 
 ### Da Fare - ALTO
 | Feature | Priorita | Effort | Note |
