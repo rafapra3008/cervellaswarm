@@ -25,6 +25,22 @@
 
 ---
 
+### Technical Research
+
+| File | Data | Tipo | Status |
+|------|------|------|--------|
+| [RICERCA_RESIZE_PANNELLI.md](./RICERCA_RESIZE_PANNELLI.md) | 2026-01-13 | Tech Research | ✅ Complete |
+
+**Contenuto:**
+- Analisi librerie React resizable panels
+- Competitor analysis (Missive, Superhuman, VS Code, Linear)
+- UX best practices (min/max, snap points, keyboard shortcuts)
+- Implementazione suggerita per Miracollook
+- Code examples con React 19 + Tailwind v4
+- **Raccomandazione:** react-resizable-panels (bvaughn)
+
+---
+
 ## TODO - Studi Futuri
 
 ### User Testing
@@ -54,6 +70,7 @@ FORMATO: {TIPO}_{NOME}_{DATE}.md
 
 ESEMPI:
 - UX_STRATEGY_MIRACALLOOK.md
+- RICERCA_RESIZE_PANNELLI.md
 - COMPETITOR_SUPERHUMAN_20260115.md
 - USERTEST_RECEPTIONIST_20260120.md
 - ACCESSIBILITY_AUDIT_20260125.md
@@ -61,4 +78,4 @@ ESEMPI:
 
 ---
 
-*Ultimo aggiornamento: 12 Gennaio 2026*
+*Ultimo aggiornamento: 13 Gennaio 2026*

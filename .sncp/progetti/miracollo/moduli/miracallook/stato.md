@@ -1,7 +1,7 @@
 # STATO - Miracollook
 
-> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 182
-> **Status:** DOCKER COMPLETO! Bug icone giganti da fixare.
+> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 183
+> **Status:** DESIGN UPGRADE IN CORSO - Tailwind v4 fixato!
 
 ---
 
@@ -29,74 +29,39 @@ FASE 1 (Email Solido)   [####................] 20%
 FASE 2 (PMS Integration)[....................] 0%
 
 DOCKER SETUP           [####################] 100% COMPLETA!
-DESIGN UPGRADE         [####................] 20%  ← BUG ICONE!
+DESIGN UPGRADE         [########............] 40%  ← IN CORSO
 ```
 
 ---
 
-## SESSIONE 182 - COSA ABBIAMO FATTO
+## SESSIONE 183 - COSA ABBIAMO FATTO
 
 ```
 +================================================================+
 |                                                                |
-|   1. DOCKER SETUP COMPLETO!                                    |
-|      - Dockerfile backend (prod + dev)                         |
-|      - Dockerfile frontend (prod + dev)                        |
-|      - docker-compose.yml (dev)                                |
-|      - docker-compose.prod.yml (prod)                          |
-|      - nginx.conf con cache headers                            |
-|      - Hot reload funzionante                                  |
-|      - Volume persistente per database                         |
+|   1. FIX TAILWIND V4 (BUG CRITICO!)                            |
+|      - Problema: @tailwind directives NON supportate in v4     |
+|      - Fix: @import "tailwindcss" invece di @tailwind          |
+|      - Icone sidebar ora funzionano (w-5 h-5 OK!)              |
+|      - Ricerca documentata in SNCP                             |
 |                                                                |
-|   2. VERSIONING AGGIUNTO                                       |
-|      - Backend: __version__ = "1.0.0"                          |
-|      - Backend: /version endpoint                              |
-|      - Frontend: config.ts con APP_VERSION                     |
-|      - Docker: ARG/ENV pattern                                 |
+|   2. FIX LOGO MIRACOLLOOK                                      |
+|      - Problema: gradient scuro (#6366f1) invisibile su bg     |
+|      - Fix: gradient chiaro (#a5b4fc -> #c4b5fd)               |
+|      - Nome corretto: "Miracollook" (non MiracOllook)          |
 |                                                                |
-|   3. CACHE BUSTING                                             |
-|      - Vite lo fa automatico (hash nei filename)               |
-|      - nginx: index.html NO cache                              |
-|      - nginx: /assets/* cache 1 anno                           |
+|   3. AUDIT COLORI + NUOVA PALETTE                              |
+|      - Guardiana Qualita ha fatto audit completo               |
+|      - text-muted: #64748b -> #8b9cb5 (contrasto 6.0:1)        |
+|      - border: #2d3654 -> #475569 (piu visibile)               |
+|      - bg-card/hover: aggiornati per coerenza                  |
+|      - Glassmorphism: border 0.08 -> 0.15                      |
 |                                                                |
-|   4. BUG SCOPERTO: ICONE GIGANTI                               |
-|      - Sidebar ha icone ENORMI (dovrebbero essere 20px)        |
-|      - Non era cache - confermato con Docker fresh             |
-|      - DA FIXARE prossima sessione                             |
+|   4. RICERCA RESIZE PANNELLI (in corso)                        |
+|      - Studio come Missive/Superhuman implementano resize      |
+|      - Output: studi/RICERCA_RESIZE_PANNELLI.md                |
 |                                                                |
 +================================================================+
-```
-
----
-
-## BUG CRITICO - ICONE SIDEBAR
-
-```
-PROBLEMA:
-- Le icone nella sidebar sono GIGANTI (~100px invece di 20px)
-- Il codice dice "w-5 h-5" ma il risultato e sbagliato
-- Confermato che NON e cache (testato con Docker fresh)
-
-IPOTESI:
-- Forse c'e CSS che sovrascrive
-- Forse Heroicons non applica correttamente le classi
-- Da investigare prossima sessione
-
-FILE DA CONTROLLARE:
-- frontend/src/components/Sidebar/Sidebar.tsx
-- frontend/src/index.css
-- frontend/tailwind.config.js
-```
-
----
-
-## SESSIONE 181 - RECAP
-
-```
-- OAuth FUNZIONA e testato
-- Costituzione Miracollook creata
-- Regola Consulenza Esperti aggiunta
-- Roadmap Design + Sidebar Specs create
 ```
 
 ---
@@ -117,18 +82,18 @@ docker compose down
 
 ---
 
-## PROSSIMO STEP
+## PROSSIMI STEP
 
 ```
 +================================================================+
 |                                                                |
-|   1. FIX BUG ICONE GIGANTI (CRITICO!)                          |
-|      - Investigare perche w-5 h-5 non funziona                 |
-|      - Fixare sidebar                                          |
-|      - Verificare visivamente                                  |
+|   1. IMPLEMENTARE RESIZE PANNELLI                              |
+|      - Dopo ricerca, scegliere approccio                       |
+|      - Sidebar, List, Detail ridimensionabili                  |
 |                                                                |
 |   2. CONTINUARE DESIGN UPGRADE                                 |
-|      - Sprint 2: Email List                                    |
+|      - Sprint 2: Email List (spacing, gruppi data)             |
+|      - Sprint 3: Polish finale                                 |
 |                                                                |
 +================================================================+
 ```
@@ -142,29 +107,30 @@ docker compose down
 | COSTITUZIONE_MIRACOLLOOK.md | Regole progetto |
 | NORD_MIRACOLLOOK.md | Visione e 6 fasi |
 | ROADMAP_DESIGN.md | Piano design upgrade |
-| SIDEBAR_DESIGN_SPECS.md | Specs sidebar (da Marketing) |
-| docker-compose.yml | Docker dev setup |
-| docker-compose.prod.yml | Docker prod setup |
+| SIDEBAR_DESIGN_SPECS.md | Specs sidebar |
+| AUDIT_COLORI_MIRACOLLOOK.md | Audit palette colori |
 
 ---
 
-## STRUTTURA DOCKER
+## PALETTE COLORI (Sessione 183)
 
 ```
-miracollook/
-├── backend/
-│   ├── Dockerfile          # Production
-│   ├── Dockerfile.dev      # Development
-│   └── .dockerignore
-├── frontend/
-│   ├── Dockerfile          # Production (nginx)
-│   ├── Dockerfile.dev      # Development (vite)
-│   ├── nginx.conf          # Cache headers + SPA
-│   └── .dockerignore
-├── docker-compose.yml      # Dev (hot reload)
-├── docker-compose.prod.yml # Prod
-├── .env                    # Secrets (non committare!)
-└── .env.example            # Template
+Background:
+  miracollo-bg: #0a0e1a
+  miracollo-bg-card: #1e2642      (aggiornato)
+  miracollo-bg-hover: #2a3352     (aggiornato)
+
+Text:
+  miracollo-text: #f8fafc
+  miracollo-text-secondary: #94a3b8
+  miracollo-text-muted: #8b9cb5   (aggiornato)
+
+Accent:
+  miracollo-accent: #6366f1
+  miracollo-accent-light: #a5b4fc (nuovo - logo)
+
+Border:
+  miracollo-border: #475569       (aggiornato)
 ```
 
 ---
@@ -177,9 +143,10 @@ Porta backend: 8002
 Porta frontend: 5173
 SNCP: CervellaSwarm/.sncp/progetti/miracollo/moduli/miracallook/
 Versione: 1.0.0
+Tailwind: v4.1.18 (usa @import "tailwindcss")
 ```
 
 ---
 
-*Aggiornato: 13 Gennaio 2026 - Sessione 182*
-*"Docker prima di tutto! Cache mai piu!"*
+*Aggiornato: 13 Gennaio 2026 - Sessione 183*
+*"I dettagli fanno SEMPRE la differenza!"*

@@ -1,5 +1,17 @@
 # Stato Miracollo
-> Ultimo aggiornamento: 13 Gennaio 2026 - Sessione 180 CONSOLIDAMENTO COMPLETATO!
+> Ultimo aggiornamento: 13 Gennaio 2026 - Sessione 183 BUG FIX + DEPLOY
+
+---
+
+## TECH DEBT (da fare quando serve)
+
+| Cosa | File | Priorità | Note |
+|------|------|----------|------|
+| File legacy revenue.js | `frontend/revenue.js` (1296 righe) | BASSA | Duplicato, sistema usa moduli separati |
+| hotelId hardcoded | `revenue-suggestions.js`, `revenue.js` (4 occorrenze) | MEDIA | Funziona, ma no multi-hotel |
+| What-If Apply | `revenue-suggestions.js:558` | BASSA | Placeholder TODO |
+
+*Aggiunto: 13 Gennaio 2026 - Sessione 183*
 
 ---
 
