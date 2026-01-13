@@ -1,29 +1,30 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 188 ROADMAP EXTERNAL DATA + PERFORMANCE!
-> **Versione:** v123.0.0 - L'AI CHE CAPISCE IL MONDO!
+> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 188 WEATHER API IMPLEMENTATA!
+> **Versione:** v124.0.0 - L'AI CHE CAPISCE IL MONDO - METEO LIVE!
 
 ---
 
-## SESSIONE 188 (cont.) - ROADMAP EXTERNAL DATA MIRACOLLO!
+## SESSIONE 188 FINALE - WEATHER API FUNZIONANTE!
 
 ```
 +================================================================+
 |                                                                |
-|   "L'AI CHE CAPISCE IL MONDO"                                  |
+|   "L'AI CHE CAPISCE IL MONDO" - METEO LIVE!                    |
 |                                                                |
 |   COSA ABBIAMO FATTO:                                          |
 |   1. Verificato codice esistente (festivita GIA OK!)           |
 |   2. Lanciate 2 ricerche parallele (Meteo + Eventi)            |
 |   3. Creata ROADMAP EXTERNAL DATA completa (61 sub-task!)      |
+|   4. IMPLEMENTATO Weather Service (450+ righe)                 |
+|   5. IMPLEMENTATO Weather Router (350+ righe, 7 endpoint)      |
+|   6. TESTATO API - Cortina -1.7C Partly Cloudy!               |
 |                                                                |
-|   RICERCHE COMPLETATE:                                         |
-|   - Meteo RMS: 950+ righe (WeatherAPI.com GRATIS!)             |
-|   - Eventi Locali: 1600+ righe in 3 parti                      |
-|   - TODO Completo: 147 task identificati                       |
-|                                                                |
-|   ROADMAP SALVATA:                                             |
-|   .sncp/progetti/miracollo/roadmaps/ROADMAP_EXTERNAL_DATA.md   |
+|   API TEST RISULTATO:                                          |
+|   Location: Cortina D'ampezzo, Italy                          |
+|   Current temp: -1.7C                                          |
+|   Condition: Partly Cloudy                                     |
+|   STATUS: OK!                                                  |
 |                                                                |
 +================================================================+
 ```
@@ -31,16 +32,50 @@
 ### Stato Miracollo Post-Sessione 188
 
 ```
-RATEBOARD:              9.0/10 (target 9.5/10)
+RATEBOARD:              9.1/10 (target 9.5/10)
 FESTIVITA:              GIA FATTO! (calendar_events.py - 13+ eventi)
-METEO:                  ROADMAP PRONTA! (5-6 giorni)
+METEO BACKEND:          FATTO! (weather_service.py + weather.py)
+METEO FRONTEND:         TODO (WeatherWidget)
 EVENTI LOCALI:          ROADMAP PRONTA! (3 settimane)
 COMPETITOR SCRAPING:    POC 85% (serve URL da Rafa)
 
->>> PROSSIMO STEP MIRACOLLO: Implementare METEO (FASE 4.B) <<<
+>>> PROSSIMO STEP: Integrare weather in suggerimenti_engine.py <<<
 ```
 
-### File Creati Sessione 188 (Miracollo)
+### File CREATI in Miracollo (Sessione 188)
+
+```
+miracollogeminifocus/backend/
+├── services/
+│   └── weather_service.py     (NUOVO! 450+ righe)
+├── routers/
+│   └── weather.py             (NUOVO! 350+ righe)
+├── core/
+│   └── config.py              (MODIFICATO - Weather settings)
+└── main.py                    (MODIFICATO - mount router)
+```
+
+### Weather API Endpoints Disponibili
+
+```
+GET  /api/weather/status              - Test API connection
+GET  /api/weather/forecast/{hotel_id} - Forecast 1-14 giorni
+GET  /api/weather/metrics/{hotel_id}  - Metriche neve aggregate
+GET  /api/weather/impact/{hotel_id}   - Impatto su demand
+GET  /api/weather/impact-range/{hotel_id} - Impatto range date
+GET  /api/weather/cache/stats         - Statistiche cache
+POST /api/weather/cache/clear         - Svuota cache
+```
+
+### IMPORTANTE: .env da configurare
+
+```env
+WEATHER_API_KEY=c5add656caef48288d1164756261301
+WEATHER_CACHE_TTL=21600
+WEATHER_DEFAULT_LOCATION=46.5369,12.1389
+```
+
+### File SNCP Creati (Sessione 188)
 
 ```
 CervellaSwarm/.sncp/progetti/miracollo/
@@ -53,7 +88,7 @@ CervellaSwarm/.sncp/progetti/miracollo/
 │   └── 20260113_RICERCA_EVENTI_LOCALI_PARTE3.md
 ├── reports/
 │   └── 20260113_RICERCA_COMPLETA_TODO_MIRACOLLO.md
-└── stato.md (Aggiornato con TUTTO!)
+└── stato.md (Aggiornato con implementazione!)
 ```
 
 ---
@@ -463,16 +498,23 @@ Border: #38383A
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-13 17:42 (unknown)
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-13 17:51 (auto)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 2bd216c - Minor: Add engineer report
-- **File modificati** (1):
-  - reports/engineer_report_20260113_174110.json
+- **Ultimo commit**: e24362e - ANTI-COMPACT: PreCompact auto
+- **File modificati** (4):
+  - .sncp/stato/oggi.md
+  - .swarm/handoff/HANDOFF_20260113_175057.md
+  - PROMPT_RIPRESA.md
+  - reports/scientist_prompt_20260113.md
 
 ### Note
 - Checkpoint automatico generato da hook
-- Trigger: unknown
+- Trigger: auto
 
 ---
