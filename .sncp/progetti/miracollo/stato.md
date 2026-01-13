@@ -1,31 +1,28 @@
 # Stato Miracollo
-> Ultimo aggiornamento: 13 Gennaio 2026 - Sessione 188 WEATHER API IMPLEMENTATA!
+> Ultimo aggiornamento: 13 Gennaio 2026 - Sessione 188 WEATHER INTEGRATION COMPLETA!
 
 ---
 
-## SESSIONE 188 - WEATHER API FUNZIONANTE!
+## SESSIONE 188 - WEATHER INTEGRATO NEI SUGGERIMENTI!
 
 ```
 +================================================================+
 |                                                                |
-|   "L'AI CHE CAPISCE IL MONDO" - METEO LIVE!                    |
+|   "L'AI CHE CAPISCE IL MONDO" - METEO + SUGGERIMENTI!          |
 |                                                                |
 |   COSA ABBIAMO FATTO OGGI:                                     |
 |   1. Verificato codice esistente (festivita GIA OK!)           |
 |   2. Lanciate 2 ricerche parallele (Meteo + Eventi)            |
 |   3. Creata ROADMAP EXTERNAL DATA completa (61 sub-task!)      |
-|   4. IMPLEMENTATO Weather Service COMPLETO!                    |
-|   5. TESTATO con API key - Cortina -1.7C Partly Cloudy!       |
+|   4. IMPLEMENTATO Weather Service (450+ righe)                 |
+|   5. TESTATO API - Cortina -1.7C Partly Cloudy! OK!           |
+|   6. INTEGRATO Weather in suggerimenti_engine.py!              |
 |                                                                |
-|   FILE CREATI IN MIRACOLLO:                                    |
-|   - backend/services/weather_service.py (450+ righe)           |
-|   - backend/routers/weather.py (350+ righe)                    |
-|   - backend/core/config.py (aggiornato con Weather settings)   |
+|   NUOVI SUGGERIMENTI WEATHER-BASED:                            |
+|   - weather_boost: Neve in arrivo? ALZA PREZZO! +10-25%        |
+|   - weather_promo: No neve? PROMOZIONE! -5-20%                 |
 |                                                                |
-|   TEST API: OK!                                                |
-|   Location: Cortina D'ampezzo, Italy                          |
-|   Current temp: -1.7C                                          |
-|   Condition: Partly Cloudy                                     |
+|   L'AI ORA CAPISCE IL METEO E SUGGERISCE AZIONI!               |
 |                                                                |
 +================================================================+
 ```
@@ -34,7 +31,7 @@
 
 ## QUADRO COMPLETO - COSA ABBIAMO E COSA MANCA
 
-### RATEBOARD Score: 9.1/10 -> Target 9.5/10
+### RATEBOARD Score: 9.2/10 -> Target 9.5/10
 
 ```
 COMPLETATO (REALE, funziona in produzione):
@@ -48,16 +45,16 @@ COMPLETATO (REALE, funziona in produzione):
 [x] Festivita italiane (13+ eventi in calendar_events.py)
 [x] Stagionalita (alta/media/bassa)
 [x] Weekend detection
-[x] WEATHER API BACKEND (100% - TESTATO!)   <-- NUOVO!
+[x] WEATHER API BACKEND (100% - TESTATO!)
+[x] WEATHER INTEGRATION SUGGERIMENTI (100%)   <-- NUOVO!
 
 IN PROGRESS / POC PRONTO:
 [~] Competitor Scraping (85% - POC Playwright funziona!)
 [~] Autopilot (codice OK, da testare staging)
-[~] Weather Frontend UI (backend pronto, UI da fare)
+[~] Weather Frontend UI (backend + integration OK, UI da fare)
 
 DA FARE (studiato, roadmap pronta):
 [ ] FASE 4: External Data - EVENTI LOCALI (roadmap pronta!)
-[ ] Weather Integration in Rateboard (suggerimenti)
 
 DA FARE (non ancora studiato):
 [ ] FASE 5: ML AI Suggestions avanzato
@@ -67,9 +64,9 @@ DA FARE (non ancora studiato):
 
 ---
 
-## WEATHER API - IMPLEMENTAZIONE COMPLETATA!
+## WEATHER - IMPLEMENTAZIONE COMPLETA!
 
-### File Creati
+### File Creati/Modificati
 
 | File | Linee | Descrizione |
 |------|-------|-------------|
@@ -78,6 +75,14 @@ DA FARE (non ancora studiato):
 | `backend/core/config.py` | +20 | Weather settings |
 | `backend/routers/__init__.py` | +2 | Export weather_router |
 | `backend/main.py` | +2 | Import + mount router |
+| `backend/services/suggerimenti_engine.py` | +120 | **INTEGRATION!** Weather in suggerimenti |
+
+### Nuovi Tipi Suggerimento
+
+| Tipo | Trigger | Azione |
+|------|---------|--------|
+| `weather_boost` | Multiplier >= 1.10 (neve!) | Alza prezzo +10-25% |
+| `weather_promo` | Multiplier <= 0.95 (no neve) | Promo -5-20% |
 
 ### Endpoints Disponibili
 
