@@ -1,7 +1,7 @@
 # STATO - Miracollook
 
 > **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 182
-> **Status:** DESIGN UPGRADE Sprint 1 COMPLETO! Sidebar professionale!
+> **Status:** DOCKER COMPLETO! Bug icone giganti da fixare.
 
 ---
 
@@ -28,7 +28,8 @@ FASE 0 (Fondamenta)     [####################] 100% COMPLETA!
 FASE 1 (Email Solido)   [####................] 20%
 FASE 2 (PMS Integration)[....................] 0%
 
-DESIGN UPGRADE          [######..............] 33%  ← SPRINT 1 DONE!
+DOCKER SETUP           [####################] 100% COMPLETA!
+DESIGN UPGRADE         [####................] 20%  ← BUG ICONE!
 ```
 
 ---
@@ -38,31 +39,53 @@ DESIGN UPGRADE          [######..............] 33%  ← SPRINT 1 DONE!
 ```
 +================================================================+
 |                                                                |
-|   DESIGN UPGRADE - SPRINT 1 COMPLETO!                          |
+|   1. DOCKER SETUP COMPLETO!                                    |
+|      - Dockerfile backend (prod + dev)                         |
+|      - Dockerfile frontend (prod + dev)                        |
+|      - docker-compose.yml (dev)                                |
+|      - docker-compose.prod.yml (prod)                          |
+|      - nginx.conf con cache headers                            |
+|      - Hot reload funzionante                                  |
+|      - Volume persistente per database                         |
 |                                                                |
-|   1. GUARDIANA HA VERIFICATO SPECS (9/10)                      |
-|      - Colori HEX completi e coerenti                          |
-|      - Icone mappate correttamente                             |
-|      - Accessibilita OK                                        |
+|   2. VERSIONING AGGIUNTO                                       |
+|      - Backend: __version__ = "1.0.0"                          |
+|      - Backend: /version endpoint                              |
+|      - Frontend: config.ts con APP_VERSION                     |
+|      - Docker: ARG/ENV pattern                                 |
 |                                                                |
-|   2. FRONTEND HA IMPLEMENTATO SIDEBAR                          |
-|      - Heroicons professionali (no emoji!)                     |
-|      - Logo gradient + version badge                           |
-|      - Compose button con hover lift                           |
-|      - 8 categorie con icone colorate                          |
-|      - Active state con gradient + border                      |
-|      - Separator "CATEGORIES"                                  |
-|      - Build OK (379.18 kB)                                    |
+|   3. CACHE BUSTING                                             |
+|      - Vite lo fa automatico (hash nei filename)               |
+|      - nginx: index.html NO cache                              |
+|      - nginx: /assets/* cache 1 anno                           |
 |                                                                |
-|   3. GUARDIANA HA VERIFICATO IMPLEMENTAZIONE (9/10)            |
-|      - Tutti criteri passati                                   |
-|      - Pronto per test visivo                                  |
-|                                                                |
-|   PROCESSO RISPETTATO:                                         |
-|   Marketing specs → Guardiana verifica → Frontend implementa   |
-|   → Guardiana verifica → Test visivo                           |
+|   4. BUG SCOPERTO: ICONE GIGANTI                               |
+|      - Sidebar ha icone ENORMI (dovrebbero essere 20px)        |
+|      - Non era cache - confermato con Docker fresh             |
+|      - DA FIXARE prossima sessione                             |
 |                                                                |
 +================================================================+
+```
+
+---
+
+## BUG CRITICO - ICONE SIDEBAR
+
+```
+PROBLEMA:
+- Le icone nella sidebar sono GIGANTI (~100px invece di 20px)
+- Il codice dice "w-5 h-5" ma il risultato e sbagliato
+- Confermato che NON e cache (testato con Docker fresh)
+
+IPOTESI:
+- Forse c'e CSS che sovrascrive
+- Forse Heroicons non applica correttamente le classi
+- Da investigare prossima sessione
+
+FILE DA CONTROLLARE:
+- frontend/src/components/Sidebar/Sidebar.tsx
+- frontend/src/index.css
+- frontend/tailwind.config.js
 ```
 
 ---
@@ -78,13 +101,18 @@ DESIGN UPGRADE          [######..............] 33%  ← SPRINT 1 DONE!
 
 ---
 
-## STATO SERVIZI
+## STATO SERVIZI (DOCKER!)
 
 ```
-Backend:  http://localhost:8002  ✓
-Frontend: http://localhost:5173  ✓
-OAuth:    FUNZIONANTE            ✓
-Database: SQLite (tokens ok)     ✓
+# Avviare con Docker (CONSIGLIATO)
+cd ~/Developer/miracollook
+docker compose up
+
+Backend:  http://localhost:8002  (container)
+Frontend: http://localhost:5173  (container)
+
+# Fermare
+docker compose down
 ```
 
 ---
@@ -94,13 +122,13 @@ Database: SQLite (tokens ok)     ✓
 ```
 +================================================================+
 |                                                                |
-|   TEST VISIVO SIDEBAR (con Rafa)                               |
-|   Poi: DESIGN UPGRADE - SPRINT 2 (Email List)                  |
+|   1. FIX BUG ICONE GIGANTI (CRITICO!)                          |
+|      - Investigare perche w-5 h-5 non funziona                 |
+|      - Fixare sidebar                                          |
+|      - Verificare visivamente                                  |
 |                                                                |
-|   1. Marketing crea Email List specs                           |
-|   2. Guardiana verifica specs                                  |
-|   3. Frontend implementa                                       |
-|   4. Guardiana verifica risultato                              |
+|   2. CONTINUARE DESIGN UPGRADE                                 |
+|      - Sprint 2: Email List                                    |
 |                                                                |
 +================================================================+
 ```
@@ -115,20 +143,28 @@ Database: SQLite (tokens ok)     ✓
 | NORD_MIRACOLLOOK.md | Visione e 6 fasi |
 | ROADMAP_DESIGN.md | Piano design upgrade |
 | SIDEBAR_DESIGN_SPECS.md | Specs sidebar (da Marketing) |
-| secrets/CREDENZIALI_OAUTH.md | Backup credenziali |
+| docker-compose.yml | Docker dev setup |
+| docker-compose.prod.yml | Docker prod setup |
 
 ---
 
-## AVVIARE MIRACOLLOOK
+## STRUTTURA DOCKER
 
-```bash
-# Backend (porta 8002)
-cd ~/Developer/miracollook/backend
-source venv/bin/activate && uvicorn main:app --port 8002 --reload
-
-# Frontend (porta 5173)
-cd ~/Developer/miracollook/frontend
-npm run dev
+```
+miracollook/
+├── backend/
+│   ├── Dockerfile          # Production
+│   ├── Dockerfile.dev      # Development
+│   └── .dockerignore
+├── frontend/
+│   ├── Dockerfile          # Production (nginx)
+│   ├── Dockerfile.dev      # Development (vite)
+│   ├── nginx.conf          # Cache headers + SPA
+│   └── .dockerignore
+├── docker-compose.yml      # Dev (hot reload)
+├── docker-compose.prod.yml # Prod
+├── .env                    # Secrets (non committare!)
+└── .env.example            # Template
 ```
 
 ---
@@ -137,11 +173,13 @@ npm run dev
 
 ```
 Nome corretto: Miracollook (una parola, lowercase)
-Porta: 8002 (mai 8000/8001)
+Porta backend: 8002
+Porta frontend: 5173
 SNCP: CervellaSwarm/.sncp/progetti/miracollo/moduli/miracallook/
+Versione: 1.0.0
 ```
 
 ---
 
-*Aggiornato: 13 Gennaio 2026 - Sessione 181*
-*"DESIGN IMPONE RISPETTO!"*
+*Aggiornato: 13 Gennaio 2026 - Sessione 182*
+*"Docker prima di tutto! Cache mai piu!"*

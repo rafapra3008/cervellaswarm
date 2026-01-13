@@ -1,7 +1,60 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 180 MIRACOLLO
-> **Versione:** v110.0.0 - CONSOLIDAMENTO FASE 1-2-3 + DEPLOY!
+> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 182 MIRACOLLOOK
+> **Versione:** v111.0.0 - DOCKER SETUP COMPLETO + VERSIONING!
+
+---
+
+## SESSIONE 182 - MIRACOLLOOK DOCKER SETUP!
+
+```
++================================================================+
+|                                                                |
+|   SESSIONE 182: DOCKER + VERSIONING + CACHE BUSTING!           |
+|                                                                |
+|   DOCKER SETUP COMPLETO:                                       |
+|   - Dockerfile backend (prod + dev)                            |
+|   - Dockerfile frontend (prod + dev, multi-stage nginx)        |
+|   - docker-compose.yml (dev con hot reload)                    |
+|   - docker-compose.prod.yml (prod)                             |
+|   - nginx.conf (cache headers, SPA routing)                    |
+|   - Volume persistente per SQLite                              |
+|   - TESTATO E FUNZIONANTE!                                     |
+|                                                                |
+|   VERSIONING:                                                  |
+|   - Backend: __version__ = "1.0.0"                             |
+|   - Backend: /version e /health endpoints                      |
+|   - Frontend: config.ts con APP_VERSION                        |
+|   - Docker: ARG/ENV pattern                                    |
+|                                                                |
+|   CACHE BUSTING:                                               |
+|   - Vite: AUTOMATICO (hash nei filename)                       |
+|   - nginx: index.html NO cache, /assets/* 1 anno               |
+|                                                                |
+|   BUG SCOPERTO - ICONE GIGANTI:                                |
+|   - Sidebar ha icone ~100px invece di 20px                     |
+|   - NON era cache (confermato con Docker fresh)                |
+|   - DA FIXARE prossima sessione                                |
+|   - File: frontend/src/components/Sidebar/Sidebar.tsx          |
+|                                                                |
+|   COMANDI:                                                     |
+|   cd ~/Developer/miracollook                                   |
+|   docker compose up          # Avvia                           |
+|   docker compose down        # Ferma                           |
+|   docker compose up --build  # Rebuild                         |
+|                                                                |
+|   SERVIZI:                                                     |
+|   - Backend:  http://localhost:8002                            |
+|   - Frontend: http://localhost:5173                            |
+|                                                                |
+|   PROSSIMA SESSIONE:                                           |
+|   1. FIX BUG ICONE GIGANTI (critico!)                          |
+|   2. Continuare Design Upgrade Sprint 2                        |
+|                                                                |
+|   "Docker prima di tutto! Cache mai piu!"                      |
+|                                                                |
++================================================================+
+```
 
 ---
 
@@ -410,17 +463,16 @@ GET /api/analytics/ai-transparency-report
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-13 05:22 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-13 05:43 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: dca247a - Sessione 181: PROTOCOLLO DIAMANTE - Comunicazione Inter-Agent!
-- **File modificati** (5):
-  - sncp/progetti/miracollo/moduli/miracallook/stato.md
-  - .sncp/stato/oggi.md
-  - reports/engineer_report_20260113_050901.json
-  - reports/engineer_report_20260113_051722.json
-  - reports/engineer_report_20260113_051910.json
+- **Ultimo commit**: 3a994e8 - Checkpoint Sessione 180 MIRACOLLO: Consolidamento Completato!
+- **File modificati** (2):
+  - sncp/stato/oggi.md
+  - reports/engineer_report_20260113_053806.json
 
 ### Note
 - Checkpoint automatico generato da hook
