@@ -1,86 +1,80 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 186 AUDIT RATEBOARD
-> **Versione:** v118.0.0 - AUDIT COMPLETO + ROADMAP ORGANIZZATA
+> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 186 MIRACOLLOOK
+> **Versione:** v119.0.0 - QUICK ACTIONS API COMPLETE + BUG FIX
 
 ---
 
-## SESSIONE 186 - AUDIT RATEBOARD COMPLETO!
+## SESSIONE 186 - MIRACOLLOOK: QUICK ACTIONS COMPLETE!
 
 ```
 +================================================================+
 |                                                                |
-|   AUDIT COMPLETO RATEBOARD - La Casa e in Ordine!              |
+|   QUICK ACTIONS: DA UI A SISTEMA COMPLETO!                     |
 |                                                                |
-|   SCORE ATTUALE: 8.5/10                                        |
+|   BACKEND API (gmail/api.py):                                  |
+|   [x] POST /gmail/star - VIP (embed=True)                      |
+|   [x] POST /gmail/unstar - Remove VIP                          |
+|   [x] POST /gmail/snooze - Snooze email                        |
+|   [x] POST /gmail/archive - (gia esisteva)                     |
 |                                                                |
-|   VANTAGGI UNICI (NESSUN competitor li ha!):                   |
-|   ✅ Native PMS Integration                                    |
-|   ✅ Learning AI (FASE 3 completata)                           |
-|   ✅ Transparent AI (come TakeUp $11M!)                        |
+|   FRONTEND INTEGRATION:                                        |
+|   [x] useStarEmail() hook + useSnoozeEmail()                   |
+|   [x] handleConfirm/Reject -> archive                          |
+|   [x] handleSnooze -> snooze API                               |
+|   [x] handleVIP -> star API                                    |
+|   [x] Auto-refetch inbox dopo azione                           |
+|   [x] Toast feedback (success/error)                           |
 |                                                                |
-|   GAP CRITICO IDENTIFICATO:                                    |
-|   ❌ Competitor Scraping (tutti lo hanno, noi no!)             |
+|   BUG FIX:                                                     |
+|   [x] Button nested in button -> div role="button"             |
+|   [x] API 422 -> embed=True in FastAPI                         |
+|   [x] Bundle Quick Actions -> props passate correttamente      |
 |                                                                |
-|   FEATURES VERIFICATE DAL CODICE:                              |
-|   - Heatmap: 100% OK                                           |
-|   - What-If: 100% OK                                           |
-|   - Learning: 100% OK                                          |
-|   - AI Suggestions: 85% (rule-based, NON ML vero!)             |
-|   - Competitor: 60% (schema OK, dati MANUALI)                  |
-|   - Autopilot: 90% (codice OK, mai testato prod!)              |
-|   - Bulk Edit: 70% (manca preview e undo)                      |
+|   GUARDIANA QUALITA: 4x PASS (10/10)                           |
 |                                                                |
 +================================================================+
 ```
 
 ---
 
-## DOCUMENTI CREATI SESSIONE 186
+## STATO MIRACOLLOOK
 
 ```
-.sncp/progetti/miracollo/
-├── reports/
-│   └── 20260113_AUDIT_RATEBOARD_COMPLETO.md
-├── roadmaps/
-│   ├── ROADMAP_RATEBOARD_MASTER.md          ← BUSSOLA PRINCIPALE
-│   └── SUBROADMAP_ML_AI_SUGGESTIONS.md      ← Piano ML graduale
-├── idee/
-│   ├── 20260113_VISIONE_BOT_HOTEL.md        ← Bot tutti reparti
-│   └── 20260113_RICERCA_COMPETITOR_RMS_*.md ← 1640+ righe ricerca
-└── stato.md                                  ← Aggiornato
-```
+FASE 0 (Fondamenta)     [####################] 100% COMPLETA!
+FASE 1 (Email Solido)   [############........] 60%
+FASE 2 (PMS Integration)[....................] 0%
 
----
-
-## STATO MIRACOLLO
-
-```
-RATEBOARD:        8.5/10 (post-audit, obiettivo 9.5)
-AUTOPILOT:        CODICE OK, DA TESTARE STAGING
-WHAT-IF:          COMPLETO
-A/B TESTING:      FUNZIONANTE
-REVENUE:          OK
-COMPETITOR DATA:  GAP CRITICO - PRIORITA #1
+DOCKER SETUP           [####################] 100% COMPLETA!
+DESIGN UPGRADE         [####################] 100% COMPLETA!
+QUICK ACTIONS UI       [####################] 100% COMPLETA!
+QUICK ACTIONS API      [####################] 100% COMPLETA!
+KEYBOARD SHORTCUTS     [####################] 100% (gia implementati!)
 ```
 
 ---
 
-## PRIORITA PROSSIME SESSIONI
+## PROSSIME PRIORITA MIRACOLLOOK
 
 ```
-Q1 2026 (CRITICO):
-1. POC Competitor Scraping (Booking.com)
-2. Test Autopilot in staging
-3. Split file grossi (tech debt CSS/JS)
+PRIORITA 1: EMAIL COMPOSE (Sprint 3)
+- Modal compose con Design Salutare
+- Rich text editor
+- Attach files
 
-Q2 2026:
-4. ML AI Suggestions (fasi graduali - subroadmap pronta)
-5. Bulk Edit preview/undo
+PRIORITA 2: LEARNING AIDS
+- Tooltip hints con shortcuts
+- Footer bar keyboard shortcuts
+- Onboarding modal
 
-Q3/Q4 2026:
-6. Bot Telegram MVP (revenue + chef)
-7. Espandere bot a tutti reparti
+PRIORITA 3: VISTE AGGIUNTIVE
+- Vista "Archived" per vedere email archiviate
+- Vista "Starred/VIP"
+- Vista "Snoozed"
+
+PRIORITA 4: ASSIGN TO USER (Hotel differenziator)
+- UI per selezionare utente
+- Sistema label custom
 ```
 
 ---
