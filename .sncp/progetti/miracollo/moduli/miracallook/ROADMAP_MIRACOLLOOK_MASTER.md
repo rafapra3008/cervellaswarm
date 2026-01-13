@@ -1,8 +1,9 @@
 # ROADMAP MIRACOLLOOK - Master
 
 **Data:** 13 Gennaio 2026 - Sessione 188
-**Health Score:** 8.0/10
-**Status:** MVP Funzionante - ORA FASE PERFORMANCE!
+**Aggiornato:** 13 Gennaio 2026 - Sessione 191
+**Health Score:** 8.5/10
+**Status:** v2.0.0 - Performance P1+P2 COMPLETE!
 
 ---
 
@@ -22,19 +23,20 @@ LA MAGIA = PMS Integration + Guest Recognition + VELOCITA SUPERHUMAN!
 ## DOVE SIAMO
 
 ```
-FASE 0 (Fondamenta)     [####################] 100%
-FASE 1 (Email Solido)   [###############.....] 75%
->>> FASE PERFORMANCE    [....................] 0% <<< PRIORITA!
+FASE 0 (Fondamenta)     [####################] 100% COMPLETA!
+FASE PERFORMANCE P1     [####################] 100% MERGED!
+FASE PERFORMANCE P2     [####################] 100% MERGED!
+FASE 1 (Email Solido)   [###############.....] 75% <<< PROSSIMO!
 FASE 2 (PMS Integration)[....................] 0%
 FASE 3 (Hotel Workflow) [....................] 0%
 ```
 
 ---
 
-## FASE PERFORMANCE - INSTANT FEEL (NUOVA PRIORITA!)
+## FASE PERFORMANCE - INSTANT FEEL - COMPLETA!
 
 > **SCOPERTA SESSIONE 188:** I big (Gmail, Superhuman) usano le STESSE tecnologie browser!
-> Possiamo avere velocita Superhuman ($30/mese) GRATIS!
+> **COMPLETATA SESSIONE 190:** P1 + P2 MERGED in main! v2.0.0!
 
 ### Perche Prima di Tutto?
 
@@ -54,26 +56,27 @@ FASE 3 (Hotel Workflow) [....................] 0%
 +================================================================+
 ```
 
-### FASE P1 - FONDAMENTA (Week 1-2) - CRITICO
+### FASE P1 - FONDAMENTA - COMPLETA!
 
-| Step | Feature | Effort | Impatto |
-|------|---------|--------|---------|
-| 1 | **IndexedDB Schema** | 2 giorni | Cache locale persistente |
-| 2 | **Batch API** | 1 giorno | 50 email in 2 chiamate (non 50) |
-| 3 | **Lista Virtualizzata** | 1 giorno | No freeze con 1000+ email |
-| 4 | **Skeleton Loading** | 0.5 giorni | Perceived performance |
+| Step | Feature | Status |
+|------|---------|--------|
+| 1 | **IndexedDB Schema** | DONE - db.ts |
+| 2 | **Batch API** | DONE - 51→2 API calls |
+| 3 | **Skeleton Loading** | DONE - EmailSkeleton.tsx |
+| 4 | **Optimistic UI** | DONE - useEmails.ts |
 
-**Risultato:** Inbox <1s (vs 3s attuale)
+**Risultato:** Inbox ~1s (vs 3s prima!)
 
-### FASE P2 - OTTIMIZZAZIONI (Week 3-4) - ALTO
+### FASE P2 - OTTIMIZZAZIONI - COMPLETA!
 
-| Step | Feature | Effort | Impatto |
-|------|---------|--------|---------|
-| 5 | **Optimistic UI** | 2 giorni | Azioni istantanee |
-| 6 | **Prefetch Intelligente** | 1.5 giorni | Top 5 email pronte |
-| 7 | **Service Worker** | 2 giorni | Offline capability |
+| Step | Feature | Status |
+|------|---------|--------|
+| 5 | **Prefetch Intelligente** | DONE - usePrefetchEmails.ts |
+| 6 | **Hover Prefetch** | DONE - useHoverPrefetch.ts |
+| 7 | **Service Worker** | DONE - Workbox + vite-plugin-pwa |
+| 8 | **Offline Sync** | DONE - useOfflineSync.ts |
 
-**Risultato:** Compete con Superhuman!
+**Risultato:** Click email = INSTANT! PWA installabile!
 
 ### FASE P3 - POLISH (Week 5-6) - MEDIO
 
@@ -103,7 +106,7 @@ FASE 3 (Hotel Workflow) [....................] 0%
 
 ---
 
-## FASE 1 - EMAIL CLIENT SOLIDO (75% - IN PAUSA)
+## FASE 1 - EMAIL CLIENT SOLIDO (75%) - PROSSIMO STEP!
 
 ### Completato
 - [x] Layout three-panel
@@ -118,15 +121,32 @@ FASE 3 (Hotel Workflow) [....................] 0%
 - [x] Resize pannelli (react-resizable-panels v4.4.0)
 - [x] Attachments view (lista allegati)
 - [x] Attachments download (streaming)
+- [x] Performance P1+P2 (Sessione 190)
 
-### Da Fare (DOPO Fase Performance)
-| Feature | Priorita | Effort | Note |
-|---------|----------|--------|------|
-| **Attachments upload** | CRITICO | 6h | Compose con file |
-| **Split gmail/api.py** | CRITICO | 6h | 1391 righe |
-| Multi-select | ALTO | 6h | Checkbox + batch |
-| Undo actions | ALTO | 4h | Toast con "Undo" |
-| Search avanzata UI | ALTO | 4h | Modal con filtri |
+### Da Fare - FUNZIONI BASE MANCANTI (Sessione 191)
+
+**CRITICHE (~8h):**
+| Feature | Effort | Note |
+|---------|--------|------|
+| **Mark as Read/Unread** | 2h | Gmail API modify labels |
+| **Drafts (auto-save)** | 6h | Gmail Drafts API |
+
+**ALTE (~16h):**
+| Feature | Effort | Note |
+|---------|--------|------|
+| **Bulk Actions** | 5h | Checkbox + batch API |
+| **Thread View** | 4h | Visualizza conversazione |
+| **Labels Custom** | 3h | Crea cartelle |
+| **Upload Attachments** | 4h | Compose con file |
+
+**MEDIE (~16h):**
+| Feature | Effort | Note |
+|---------|--------|------|
+| **Contacts Autocomplete** | 6h | Google People API |
+| **Settings Page** | 8h | Preferenze utente |
+| **Firma email** | 2h | Signature in compose |
+
+**TOTALE: ~40h per email client COMPLETO**
 
 ---
 

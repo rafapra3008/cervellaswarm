@@ -12,6 +12,7 @@
 ```
 
 > Creato: 13 Gennaio 2026 - Sessione 181
+> Aggiornato: 13 Gennaio 2026 - Sessione 191
 > Autori: Rafa & Cervella
 
 ---
@@ -93,13 +94,13 @@ MAI dire "e fatto" se non e REALE!
 ## LE 6 FASI
 
 ```
-FASE 0: FONDAMENTA         [##################--] 95%
-        OAuth + Login flow + Test base
-        PROSSIMO STEP!
+FASE 0: FONDAMENTA         [####################] 100% COMPLETA!
+        OAuth + Login + UI Base + Performance P1/P2
 
-FASE 1: EMAIL SOLIDO       [....................] 0%
+FASE 1: EMAIL SOLIDO       [###############.....] 75%
         Sostituire Outlook per uso quotidiano
-        Attachments, signatures, contacts
+        PROSSIMO STEP: Funzioni base mancanti
+        (Mark Read, Drafts, Bulk, Labels, Contacts)
 
 FASE 2: PMS INTEGRATION    [....................] 0%
         LA MAGIA! Guest detection, context sidebar
@@ -333,20 +334,33 @@ PERCHE: No feature creep, focus su una cosa
 
 ---
 
-## PROSSIMO STEP (13 Gennaio 2026)
+## PROSSIMO STEP (Sessione 191+)
 
 ```
 +====================================================================+
 |                                                                    |
-|   COMPLETARE FASE 0!                                               |
+|   COMPLETARE FASE 1 - EMAIL SOLIDO!                                |
 |                                                                    |
-|   [x] OAuth credenziali configurate                                |
-|   [x] .env creato e backuppato                                     |
-|   [ ] Auth flow frontend (useAuth + LoginPage)                     |
-|   [ ] Test login completo                                          |
-|   [ ] Test leggere/inviare/rispondere                              |
+|   FUNZIONI BASE MANCANTI (dall'analisi Ingegnera):                 |
 |                                                                    |
-|   Quando FASE 0 = 100% → inizia FASE 1                             |
+|   CRITICHE:                                                        |
+|   [ ] Mark as Read/Unread                    (2h)                  |
+|   [ ] Drafts (bozze auto-save)               (6h)                  |
+|                                                                    |
+|   ALTE:                                                            |
+|   [ ] Bulk Actions (selezione multipla)      (5h)                  |
+|   [ ] Thread View (conversazioni)            (4h)                  |
+|   [ ] Labels Custom (crea cartelle)          (3h)                  |
+|   [ ] Upload Attachments                     (4h)                  |
+|                                                                    |
+|   MEDIE:                                                           |
+|   [ ] Contatti Autocomplete                  (6h)                  |
+|   [ ] Settings Page                          (8h)                  |
+|   [ ] Firma email                            (2h)                  |
+|                                                                    |
+|   TOTALE: ~40h per email client completo                           |
+|                                                                    |
+|   Quando FASE 1 = 100% → inizia FASE 2 (PMS = LA MAGIA!)          |
 |                                                                    |
 +====================================================================+
 ```

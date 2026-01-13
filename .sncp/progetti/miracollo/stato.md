@@ -12,7 +12,7 @@
 |                                                                |
 |   Weather API in produzione: ✓ OK                              |
 |   URL: https://miracollo.com/api/weather/status                |
-|   Cortina: -4.7°C Cloudy                                       |
+|   Location: Alleghe (46.4068, 12.0217) - -4.9°C                |
 |   RATEBOARD: 9.3/10 confermato!                                |
 |                                                                |
 |   >>> FASE 1 METEO 100% COMPLETATA <<<                         |
@@ -178,7 +178,7 @@ POST /api/weather/cache/clear         - Svuota cache
 # Weather API (Sessione 188)
 WEATHER_API_KEY=c5add656caef48288d1164756261301
 WEATHER_CACHE_TTL=21600   # 6 ore
-WEATHER_DEFAULT_LOCATION=46.5369,12.1389  # Naturae Lodge
+WEATHER_DEFAULT_LOCATION=46.4068,12.0217  # Alleghe (Naturae Lodge)
 ```
 
 ### Test Risultato
@@ -377,11 +377,12 @@ RATEBOARD:          9.3/10 → Target 9.5/10 (manca 0.2!)
 FESTIVITA:          ✓ FATTO (calendar_events.py)
 METEO BACKEND:      ✓ FATTO (weather_service.py)
 METEO INTEGRATION:  ✓ FATTO (suggerimenti_engine.py)
-METEO FRONTEND:     ✓ FATTO (weather-widget.js)
+METEO FRONTEND:     ✓ FATTO (weather-widget.js + CSS)
 METEO DEPLOY:       ✓ FATTO (PRODUZIONE LIVE!) → +0.1!
+METEO LOCATION:     ✓ AGGIORNATO A ALLEGHE (46.4068, 12.0217)
+FIX AUTOPILOT:      ✓ FATTO (CSS open state bug risolto)
 EVENTI LOCALI:      ROADMAP PRONTA → +0.2
 COMPETITOR:         POC 85% (serve URL)
-AUTOPILOT:          Codice OK, da testare
 
 >>> FASE 1 METEO 100% COMPLETATA! <<<
 >>> PROSSIMO: FASE 2 EVENTI LOCALI (Sprint B) <<<
@@ -406,4 +407,4 @@ AUTOPILOT:          Codice OK, da testare
 *"Fatto BENE > Fatto VELOCE"*
 *"Una cosa alla volta, standard 100000%!"*
 
-*Aggiornato: 13 Gennaio 2026 - Sessione 190 (Weather Deploy PRODUZIONE LIVE!)*
+*Aggiornato: 13 Gennaio 2026 - Sessione 190 (Weather Deploy PRODUZIONE LIVE + Location Alleghe + Fix Autopilot)*

@@ -3,6 +3,7 @@
 > **Il Centro Comunicazioni dell'Hotel Intelligente**
 >
 > Creato: 12 Gennaio 2026 - Sessione 178
+> Aggiornato: 13 Gennaio 2026 - Sessione 191
 > Autori: Rafa & Cervella
 
 ---
@@ -212,37 +213,62 @@ MiracOllook:
 
 ## FASI DI SVILUPPO
 
-### FASE 0: FONDAMENTA (Dove siamo ora)
+### FASE 0: FONDAMENTA - COMPLETA!
 
 ```
-[####################] 95%
+[####################] 100%
 
 - [x] OAuth Gmail
 - [x] Lettura inbox
 - [x] Invio email
 - [x] Reply / Reply All / Forward
-- [x] Archive / Delete
+- [x] Archive / Delete / Star / Snooze
 - [x] Search
-- [x] AI Summaries
+- [x] AI Summaries (Claude)
 - [x] Keyboard shortcuts
 - [x] Dark mode premium
-- [ ] OAuth funzionante (fix porta)
-- [ ] Test completo
+- [x] Categories (VIP, Check-in, Team, etc.)
+- [x] Smart Bundles
+- [x] Guest Sidebar (mock)
+- [x] Command Palette (Cmd+K)
+
+PERFORMANCE (v2.0.0):
+- [x] P1: IndexedDB cache, batch API, skeleton, optimistic
+- [x] P2: Prefetch, Service Worker, Offline mode, PWA
 ```
 
-### FASE 1: EMAIL CLIENT SOLIDO
+### FASE 1: EMAIL CLIENT SOLIDO - IN CORSO (75%)
 
 ```
+[###############.....] 75%
+
 Obiettivo: Sostituire Outlook per uso quotidiano
 
-[ ] Attachments (upload/download)
+GIA FATTO:
+[x] Attachments download/preview
+[x] Offline mode (PWA) - P2 complete!
+[x] Performance ottimizzata - P1/P2 complete!
+
+DA FARE (Funzioni BASE mancanti - ~40h totali):
+
+CRITICHE:
+[ ] Mark as Read/Unread                    (2h)
+[ ] Drafts (bozze auto-save)               (6h)
+
+ALTE:
+[ ] Bulk Actions (selezione multipla)      (5h)
+[ ] Thread View (conversazioni)            (4h)
+[ ] Labels/Folders custom                  (3h)
+[ ] Upload Attachments in compose          (4h)
+
+MEDIE:
+[ ] Contacts autocomplete                  (6h)
+[ ] Settings page                          (8h)
+[ ] Signatures                             (2h)
+
+FUTURE:
 [ ] Multiple accounts
-[ ] Folders/Labels management
-[ ] Contacts autocomplete
-[ ] Signatures
-[ ] Offline mode (PWA)
 [ ] Notifiche desktop
-[ ] Performance ottimizzata (1000+ email)
 ```
 
 ### FASE 2: PMS INTEGRATION

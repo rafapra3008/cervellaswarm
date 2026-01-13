@@ -1,7 +1,52 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 190 MIRACOLLOOK P1+P2 COMPLETE!
-> **Versione:** v127.0.0 - OFFLINE-FIRST ARCHITECTURE!
+> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 190 WEATHER LIVE + AUTOPILOT FIX!
+> **Versione:** v128.0.0 - WEATHER PRODUZIONE ALLEGHE!
+
+---
+
+## SESSIONE 190 - MIRACOLLO WEATHER LIVE + FIX AUTOPILOT!
+
+```
++================================================================+
+|                                                                |
+|   WEATHER DEPLOY PRODUZIONE COMPLETATO!                        |
+|                                                                |
+|   1. Weather API LIVE in produzione                            |
+|      - URL: https://miracollo.com/api/weather/status           |
+|      - Location: ALLEGHE (era Cortina)                         |
+|      - Coordinate: 46.4068, 12.0217                            |
+|      - Temperatura: -4.9C Partly Cloudy                        |
+|                                                                |
+|   2. Fix Rotellina Autopilot                                   |
+|      - Bug: CSS usava "open", JS usava "active"                |
+|      - Fix: Cambiato JS classList.add('open')                  |
+|      - Modal ora si apre correttamente!                        |
+|                                                                |
+|   3. Weather Widget FUNZIONA!                                   |
+|      - Visibile in Revenue Intelligence                        |
+|      - Temp attuale + neve 3gg/7gg + demand impact             |
+|                                                                |
+|   RATEBOARD: 9.3/10 (target 9.5 con Eventi Locali)            |
+|                                                                |
++================================================================+
+```
+
+### Commits Miracollo (Sessione 190)
+
+```
+4c40e9b - Weather Deploy Prep: CSS versioning + .env.example
+fab6ed2 - Fix: Autopilot settings modal (active->open)
+09f079d - Config: Weather location Alleghe (was Cortina)
+```
+
+### Prossimi Step Miracollo
+
+```
+1. [ ] Sprint B: Eventi Locali (+0.2 = 9.5!)
+2. [ ] Competitor Scraping (serve URL hotel)
+3. [ ] Autopilot test staging
+```
 
 ---
 
@@ -127,13 +172,13 @@ API: /api/weather/status + /api/weather/metrics/{hotel_id}
 METEO BACKEND:      ✓ 100% (weather_service.py - Sessione 188)
 METEO INTEGRATION:  ✓ 100% (suggerimenti_engine.py - Sessione 188)
 METEO FRONTEND:     ✓ 100% (weather-widget.js - Sessione 189)
-METEO DEPLOY:       TODO (serve .env WEATHER_API_KEY)
+METEO DEPLOY:       ✓ 100% (LIVE Alleghe! - Sessione 190)
 ```
 
 ### Prossimi Step Miracollo
 
 ```
-1. [ ] Deploy Weather su staging/produzione
+1. [x] Deploy Weather su staging/produzione - FATTO!
 2. [ ] Sprint B: Eventi Locali (3 settimane, +0.2)
 3. [ ] Target 9.5/10 RATEBOARD
 ```
