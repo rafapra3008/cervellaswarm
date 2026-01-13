@@ -1,7 +1,7 @@
 # STATO - Miracollook
 
-> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 185
-> **Status:** TAILWIND V4 FIXATO! Design Salutare FUNZIONANTE!
+> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 186
+> **Status:** QUICK ACTIONS API COMPLETE! Frontend collegato al Backend!
 
 ---
 
@@ -25,11 +25,48 @@
 
 ```
 FASE 0 (Fondamenta)     [####################] 100% COMPLETA!
-FASE 1 (Email Solido)   [########............] 40%
+FASE 1 (Email Solido)   [############........] 60%
 FASE 2 (PMS Integration)[....................] 0%
 
 DOCKER SETUP           [####################] 100% COMPLETA!
 DESIGN UPGRADE         [####################] 100% COMPLETA!
+QUICK ACTIONS          [####################] 100% COMPLETA!
+KEYBOARD SHORTCUTS     [####################] 100% COMPLETA!
+```
+
+---
+
+## SESSIONE 186 - QUICK ACTIONS API COMPLETE!
+
+```
++================================================================+
+|                                                                |
+|   QUICK ACTIONS: DA UI A BACKEND COMPLETO!                     |
+|                                                                |
+|   BACKEND (gmail/api.py):                                      |
+|   [x] POST /gmail/star - Aggiunge STARRED label (VIP)          |
+|   [x] POST /gmail/unstar - Rimuove STARRED label               |
+|   [x] POST /gmail/snooze - Crea/usa label SNOOZED              |
+|   [x] POST /gmail/archive - (gia esisteva)                     |
+|                                                                |
+|   FRONTEND (React Query):                                      |
+|   [x] useStarEmail() hook                                      |
+|   [x] useSnoozeEmail() hook                                    |
+|   [x] handleConfirm -> archive                                 |
+|   [x] handleReject -> archive                                  |
+|   [x] handleSnooze -> snooze                                   |
+|   [x] handleVIP -> star                                        |
+|   [x] Auto-refetch inbox dopo azione                           |
+|   [x] Toast feedback (success/error)                           |
+|                                                                |
+|   KEYBOARD SHORTCUTS (gia implementati!):                      |
+|   [x] j/k navigazione                                          |
+|   [x] e archive, r reply, c compose                            |
+|   [x] f forward, s snooze                                      |
+|                                                                |
+|   GUARDIANA QUALITA: PASS 8/10                                 |
+|                                                                |
++================================================================+
 ```
 
 ---
@@ -133,21 +170,24 @@ docker compose down
 ```
 +================================================================+
 |                                                                |
-|   PRIORITA 1: KEYBOARD SHORTCUTS (Sprint 2)                    |
-|   - j/k per navigare tra email                                 |
-|   - e per archive, r per reply                                 |
-|   - a per assign, s per snooze, f per flag                     |
-|   - Specs gia pronte in QUICK_ACTIONS_SPECS_VALIDATED.md       |
+|   COMPLETATI SESSIONE 186:                                     |
+|   [x] KEYBOARD SHORTCUTS (Sprint 2) - GIA IMPLEMENTATI!        |
+|   [x] BACKEND API QUICK ACTIONS - COMPLETO!                    |
+|   [x] FRONTEND-BACKEND INTEGRATION - COMPLETO!                 |
 |                                                                |
-|   PRIORITA 2: BACKEND API PER QUICK ACTIONS                    |
-|   - Endpoint POST /emails/{id}/confirm                         |
-|   - Endpoint POST /emails/{id}/reject                          |
-|   - Endpoint POST /emails/{id}/snooze                          |
-|   - Endpoint POST /emails/{id}/vip                             |
-|                                                                |
-|   PRIORITA 3: EMAIL COMPOSE                                    |
+|   PRIORITA 1: EMAIL COMPOSE (Sprint 3)                         |
 |   - Modal compose con Design Salutare                          |
 |   - Rich text editor                                           |
+|   - Attach files                                               |
+|                                                                |
+|   PRIORITA 2: LEARNING AIDS (Sprint 3)                         |
+|   - Tooltip hints con shortcuts                                |
+|   - Footer bar keyboard shortcuts                              |
+|   - Onboarding modal (first login)                             |
+|                                                                |
+|   PRIORITA 3: ASSIGN TO USER (Hotel differentiator)            |
+|   - UI per selezionare utente                                  |
+|   - Sistema label custom per assignment                        |
 |                                                                |
 +================================================================+
 ```
@@ -192,12 +232,13 @@ Nome corretto: Miracollook (una parola, lowercase)
 Porta backend: 8002
 Porta frontend: 5173
 SNCP: CervellaSwarm/.sncp/progetti/miracollo/moduli/miracallook/
-Versione: 1.3.0 (Design Salutare + Quick Actions!)
+Versione: 1.4.0 (Quick Actions API Complete!)
 Tailwind: v4.1.18 con @theme (FUNZIONANTE!)
 ```
 
 ---
 
-*Aggiornato: 13 Gennaio 2026 - Sessione 185 (Checkpoint Finale)*
+*Aggiornato: 13 Gennaio 2026 - Sessione 186*
 *"Non esistono cose difficili, esistono cose non studiate!"*
 *"Fatto BENE > Fatto VELOCE"*
+*"Ultrapassar os proprios limites!"*

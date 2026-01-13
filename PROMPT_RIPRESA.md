@@ -1,37 +1,54 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 185 MIRACOLLO + MIRACOLLOOK
-> **Versione:** v117.0.0 - BUG AI PANEL RISOLTO + Quick Actions!
+> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 186 AUDIT RATEBOARD
+> **Versione:** v118.0.0 - AUDIT COMPLETO + ROADMAP ORGANIZZATA
 
 ---
 
-## SESSIONE 185 - MIRACOLLO: FIX AI PANEL
+## SESSIONE 186 - AUDIT RATEBOARD COMPLETO!
 
 ```
 +================================================================+
 |                                                                |
-|   BUG AI PANEL RISOLTO!                                         |
+|   AUDIT COMPLETO RATEBOARD - La Casa e in Ordine!              |
 |                                                                |
-|   PROBLEMA:                                                    |
-|   - AI Panel non si espandeva con "Tutte le camere"            |
-|   - Si vedeva solo con singola camera                          |
+|   SCORE ATTUALE: 8.5/10                                        |
 |                                                                |
-|   INVESTIGAZIONE (metodo LOG):                                 |
-|   - CSS era corretto (Guardiana Ops verificato)                |
-|   - Problema era di VIEWPORT/POSIZIONE                         |
-|   - Panel TOP: 1245px, Viewport: 1286px → TAGLIATO!            |
+|   VANTAGGI UNICI (NESSUN competitor li ha!):                   |
+|   ✅ Native PMS Integration                                    |
+|   ✅ Learning AI (FASE 3 completata)                           |
+|   ✅ Transparent AI (come TakeUp $11M!)                        |
 |                                                                |
-|   SOLUZIONE:                                                   |
-|   position: fixed; bottom: 0; left: 260px; right: 0;           |
-|   Pannello ora SEMPRE visibile in fondo allo schermo!          |
+|   GAP CRITICO IDENTIFICATO:                                    |
+|   ❌ Competitor Scraping (tutti lo hanno, noi no!)             |
 |                                                                |
-|   COMMITS:                                                     |
-|   - 5aaa9d8: Fix position fixed (FUNZIONA!)                    |
-|   - CSS v2.8.0, JS v3.0.3                                      |
-|                                                                |
-|   LOCALE = VM ALLINEATI (verificato MD5)                       |
+|   FEATURES VERIFICATE DAL CODICE:                              |
+|   - Heatmap: 100% OK                                           |
+|   - What-If: 100% OK                                           |
+|   - Learning: 100% OK                                          |
+|   - AI Suggestions: 85% (rule-based, NON ML vero!)             |
+|   - Competitor: 60% (schema OK, dati MANUALI)                  |
+|   - Autopilot: 90% (codice OK, mai testato prod!)              |
+|   - Bulk Edit: 70% (manca preview e undo)                      |
 |                                                                |
 +================================================================+
+```
+
+---
+
+## DOCUMENTI CREATI SESSIONE 186
+
+```
+.sncp/progetti/miracollo/
+├── reports/
+│   └── 20260113_AUDIT_RATEBOARD_COMPLETO.md
+├── roadmaps/
+│   ├── ROADMAP_RATEBOARD_MASTER.md          ← BUSSOLA PRINCIPALE
+│   └── SUBROADMAP_ML_AI_SUGGESTIONS.md      ← Piano ML graduale
+├── idee/
+│   ├── 20260113_VISIONE_BOT_HOTEL.md        ← Bot tutti reparti
+│   └── 20260113_RICERCA_COMPETITOR_RMS_*.md ← 1640+ righe ricerca
+└── stato.md                                  ← Aggiornato
 ```
 
 ---
@@ -39,11 +56,31 @@
 ## STATO MIRACOLLO
 
 ```
-RATEBOARD:        9/10 (AI Panel ORA FUNZIONA!)
-AUTOPILOT:        FUNZIONANTE
+RATEBOARD:        8.5/10 (post-audit, obiettivo 9.5)
+AUTOPILOT:        CODICE OK, DA TESTARE STAGING
 WHAT-IF:          COMPLETO
 A/B TESTING:      FUNZIONANTE
 REVENUE:          OK
+COMPETITOR DATA:  GAP CRITICO - PRIORITA #1
+```
+
+---
+
+## PRIORITA PROSSIME SESSIONI
+
+```
+Q1 2026 (CRITICO):
+1. POC Competitor Scraping (Booking.com)
+2. Test Autopilot in staging
+3. Split file grossi (tech debt CSS/JS)
+
+Q2 2026:
+4. ML AI Suggestions (fasi graduali - subroadmap pronta)
+5. Bulk Edit preview/undo
+
+Q3/Q4 2026:
+6. Bot Telegram MVP (revenue + chef)
+7. Espandere bot a tutti reparti
 ```
 
 ---
@@ -180,14 +217,19 @@ Border: #38383A
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-13 09:50 (unknown)
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-13 11:48 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 2b58f58 - Checkpoint Sessione 184: MIRACOLLOOK Design + BUG TAILWIND V4
-- **File modificati** (2):
-  - .swarm/handoff/HANDOFF_20260113_SESSION184.md
-  - reports/engineer_report_20260113_094750.json
+- **Ultimo commit**: 7ae0756 - Checkpoint Sessione 185: MIRACOLLO Fix AI Panel + MIRACOLLOOK Quick Actions
+- **File modificati** (3):
+  - sncp/stato/oggi.md
+  - PROMPT_RIPRESA.md
+  - reports/engineer_report_20260113_114808.json
 
 ### Note
 - Checkpoint automatico generato da hook
