@@ -1,7 +1,7 @@
-# STATO - MiracOllook
+# STATO - Miracollook
 
-> **Ultimo aggiornamento:** 12 Gennaio 2026 - Sessione 179
-> **Status:** P0+P1 COMPLETATI - PRONTO PER TEST REALE
+> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 181
+> **Status:** FASE 0 COMPLETA! OAuth funziona, pronto per DESIGN UPGRADE
 
 ---
 
@@ -24,59 +24,87 @@
 ## DOVE SIAMO
 
 ```
-FASE 0 (Fondamenta)     [####################] 100%
+FASE 0 (Fondamenta)     [####################] 100% ← COMPLETA!
 FASE 1 (Email Solido)   [####................] 20%
 FASE 2 (PMS Integration)[....................] 0%
-```
 
-### Audit Guardiana (12 Gen 2026)
-
-**VERDETTO: 8/10 - CODICE REALE E FUNZIONANTE**
-
-| Feature | Backend | Frontend | Status |
-|---------|:-------:|:--------:|:------:|
-| OAuth Gmail | OK | OK | FUNZIONA |
-| Lettura inbox | OK | OK | FUNZIONA |
-| Invio email | OK | OK | FUNZIONA |
-| Reply | OK | OK | FUNZIONA |
-| Reply All | OK | OK | FUNZIONA |
-| Forward | OK | OK | FUNZIONA |
-| Archive | OK | OK | FUNZIONA |
-| Delete | OK | OK | FUNZIONA |
-| Search | OK | OK | FUNZIONA |
-| AI Summaries | OK | OK | FUNZIONA |
-| Keyboard shortcuts | - | OK | FUNZIONA |
-| Database tokens | OK | - | FUNZIONA |
-| Token auto-refresh | NO | - | MANCA |
-| Multi-user | NO | NO | MANCA |
-| PMS Integration | NO | MOCK | MANCA (P2) |
-
----
-
-## REPOSITORY
-
-```
-Path:     ~/Developer/miracollook
-GitHub:   https://github.com/rafapra3008/miracollook
-Backend:  porta 8002
-Frontend: porta 5173
+DESIGN UPGRADE          [##..................] 10%  ← PROSSIMO!
 ```
 
 ---
 
-## PROSSIMO STEP CRITICO
+## SESSIONE 181 - COSA ABBIAMO FATTO
 
 ```
 +================================================================+
 |                                                                |
-|   AGGIUNGERE IN GOOGLE CONSOLE:                                |
+|   1. OAUTH FUNZIONA!                                           |
+|      - Credenziali .env configurate                            |
+|      - Backup in secrets/CREDENZIALI_OAUTH.md                  |
+|      - Redirect dopo login → frontend                          |
 |                                                                |
-|   http://localhost:8002/auth/callback                          |
+|   2. AUTH FLOW FRONTEND                                        |
+|      - useAuth hook creato                                     |
+|      - LoginPage implementata                                  |
+|      - App.tsx con AuthGuard                                   |
 |                                                                |
-|   Senza questo, OAuth non funziona!                            |
+|   3. COSTITUZIONE MIRACOLLOOK                                  |
+|      - 5 principi sacri                                        |
+|      - 6 fasi definite                                         |
+|      - Regole operative                                        |
+|                                                                |
+|   4. REGOLA CONSULENZA ESPERTI                                 |
+|      - Aggiunta a COSTITUZIONE generale                        |
+|      - "La Regina orchestra, non fa tutto da sola"             |
+|                                                                |
+|   5. ROADMAP DESIGN                                            |
+|      - Gap analysis vs Miracollo PMS                           |
+|      - 3 sprint design pianificati                             |
+|      - Specs Sidebar create da Marketing                       |
 |                                                                |
 +================================================================+
 ```
+
+---
+
+## STATO SERVIZI
+
+```
+Backend:  http://localhost:8002  ✓
+Frontend: http://localhost:5173  ✓
+OAuth:    FUNZIONANTE            ✓
+Database: SQLite (tokens ok)     ✓
+```
+
+---
+
+## PROSSIMO STEP
+
+```
++================================================================+
+|                                                                |
+|   DESIGN UPGRADE - SPRINT 1                                    |
+|                                                                |
+|   1. Guardiana verifica Sidebar specs                          |
+|   2. Frontend implementa Sidebar                               |
+|   3. Guardiana verifica risultato                              |
+|                                                                |
+|   Target: Miracollook bello come Miracollo PMS!                |
+|                                                                |
++================================================================+
+```
+
+---
+
+## FILE IMPORTANTI
+
+| File | Descrizione |
+|------|-------------|
+| COSTITUZIONE_MIRACOLLOOK.md | Regole progetto |
+| NORD_MIRACOLLOOK.md | Visione e 6 fasi |
+| ROADMAP_DESIGN.md | Piano design upgrade |
+| SIDEBAR_DESIGN_SPECS.md | Specs sidebar (da Marketing) |
+| secrets/CREDENZIALI_OAUTH.md | Backup credenziali |
 
 ---
 
@@ -94,14 +122,15 @@ npm run dev
 
 ---
 
-## DOCUMENTI CORRELATI
+## NOTE
 
-| Documento | Descrizione |
-|-----------|-------------|
-| NORD_MIRACOLLOOK.md | Visione e roadmap fasi |
-| MAPPA_MIRACOLLOOK_VERA.md | Dettaglio tecnico P0-P3 |
-| AUDIT_REALE_12GEN.md | Audit Guardiana Qualita |
+```
+Nome corretto: Miracollook (una parola, lowercase)
+Porta: 8002 (mai 8000/8001)
+SNCP: CervellaSwarm/.sncp/progetti/miracollo/moduli/miracallook/
+```
 
 ---
 
-*Aggiornato: 12 Gennaio 2026 - Sessione 179*
+*Aggiornato: 13 Gennaio 2026 - Sessione 181*
+*"DESIGN IMPONE RISPETTO!"*

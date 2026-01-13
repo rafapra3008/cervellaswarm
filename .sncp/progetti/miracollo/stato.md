@@ -620,6 +620,26 @@ SMB-FIRST:
 | 6.3 | Comandi interattivi | TODO | Accetta/rifiuta |
 | 6.4 | Revenue nel telefono! | TODO | Full integration |
 
+### FASE 7: AI PLANNING - Suggerimenti nel Planning
+*Status: FUTURO*
+*Aggiunto: 13 Gennaio 2026 - Sessione 180*
+
+> Planning oggi gestisce prenotazioni. Domani suggerira COME ottimizzarle!
+
+| Step | Cosa | Status | Note |
+|------|------|--------|------|
+| 7.1 | Ricerca AI per planning | TODO | Cosa suggerire? |
+| 7.2 | Backend: generazione suggerimenti | TODO | API nuove |
+| 7.3 | Frontend: mostrare suggerimenti | TODO | UI in planning.html |
+| 7.4 | Integrare FASE 2 (Transparent) | TODO | Confidence, Explanation |
+| 7.5 | Integrare FASE 3 (Learning) | TODO | Feedback, Tracking |
+
+**Possibili Suggerimenti:**
+- "Sposta questa prenotazione per ottimizzare occupancy"
+- "Proponi upgrade a camera piu grande"
+- "Guest ricorrente - offri sconto fedelta"
+- "Overbooking risk - considera alternativa"
+
 ---
 
 ## La Visione Finale
