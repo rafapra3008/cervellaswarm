@@ -105,6 +105,20 @@ METEO DEPLOY:       TODO (serve .env WEATHER_API_KEY)
 | Archive/Trash | Aspetta | Istantaneo |
 | Cache locale | No | IndexedDB |
 
+### Test Docker + Review Guardiana
+
+```
+TEST DOCKER: TUTTO OK!
+- /inbox-batch: 5 email in 2 API calls
+- /messages/batch: OK (fixato embed=True)
+- Frontend/Backend: UP
+
+REVIEW GUARDIANA: APPROVE 8/10
+- Tutti i file PASS
+- 3 suggerimenti non bloccanti (fix prossima sessione)
+- Sicurezza: OK
+```
+
 ### Branch Attivo
 
 ```
@@ -117,12 +131,15 @@ a037d26 - FASE P1: IndexedDB cache layer
 66f25a4 - FASE P1: Cache + optimistic updates
 00670cc - FASE P1.2: Batch API endpoints
 ba4245d - FASE P1: Skeleton loading
+adc166d - Fix: messages/batch embed=True
 ```
 
 ### Prossimi Step MIRACOLLOOK
 
 ```
-[ ] FASE P1.3: react-window virtualizzazione (bassa priorita)
+PROSSIMA SESSIONE:
+[ ] Fix 3 suggerimenti Guardiana (substr, duplicati, split)
+[ ] Merge P1 in main
 [ ] FASE P2: useOptimistic, prefetch top 5, Service Worker
 [ ] Merge branch in main quando P1 testato
 ```

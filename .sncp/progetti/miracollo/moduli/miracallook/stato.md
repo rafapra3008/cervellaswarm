@@ -1,7 +1,7 @@
 # STATO - Miracollook
 
-> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 189 FINALE
-> **Status:** FASE PERFORMANCE P1 QUASI COMPLETA!
+> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 189 FINALE v2
+> **Status:** FASE P1 TESTATA + REVIEW GUARDIANA APPROVATA!
 
 ---
 
@@ -130,7 +130,51 @@ a037d26 - FASE P1: IndexedDB cache layer + web-vitals setup
 66f25a4 - FASE P1: Integrate cache with useEmails + optimistic updates
 00670cc - FASE P1.2: Batch API endpoints for performance
 ba4245d - FASE P1: Skeleton loading + react-window installed
+adc166d - Fix: messages/batch endpoint accepts object body
 ```
+
+---
+
+## TEST DOCKER + REVIEW GUARDIANA
+
+### Test Docker (Sessione 189 v2)
+
+```
++================================================================+
+|                                                                |
+|   TEST DOCKER - TUTTO FUNZIONA!                                |
+|                                                                |
+|   /inbox-batch         OK - 5 email in 2 API calls             |
+|   /messages/batch      OK - (fixato embed=True)                |
+|   Frontend             UP - localhost:5173                     |
+|   Backend              UP - localhost:8002                     |
+|                                                                |
++================================================================+
+```
+
+### Review Guardiana Qualita
+
+```
+VERDETTO: APPROVE
+SCORE: 8/10
+
+| File | Righe | Verdict |
+|------|-------|---------|
+| db.ts | 375 | PASS |
+| useEmails.ts | 302 | PASS |
+| useEmailCache.ts | 223 | PASS |
+| api.py batch | 1775 | PASS |
+| EmailSkeleton.tsx | 94 | PASS |
+
+SUGGERIMENTI (non bloccanti - prossima sessione):
+1. substr deprecated -> usare substring
+2. Helper functions duplicati -> centralizzare
+3. api.py grande -> split futuro (non urgente)
+
+SICUREZZA: OK - No issues
+```
+
+Report completo: `.sncp/progetti/miracollo/moduli/miracallook/reports/REVIEW_P1_GUARDIANA.md`
 
 ---
 
