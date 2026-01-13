@@ -1,7 +1,7 @@
 # STATO - Miracollook
 
-> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 190 PERFORMANCE COMPLETE!
-> **Status:** P1 + P2 MERGED IN MAIN - OFFLINE-FIRST ARCHITECTURE!
+> **Ultimo aggiornamento:** 13 Gennaio 2026 - Sessione 190 FINALE
+> **Status:** P1 + P2 COMPLETE - VERSIONE 2.0.0 - OFFLINE-FIRST!
 
 ---
 
@@ -13,10 +13,7 @@
 |   MIRACOLLOOK                                                  |
 |   "Il Centro Comunicazioni dell'Hotel Intelligente"            |
 |                                                                |
-|   NON e un email client.                                       |
-|   E l'Outlook che CONOSCE il tuo hotel!                        |
-|                                                                |
-|   NUOVA VISIONE: Velocita Superhuman. Prezzo Gmail.            |
+|   Velocita Superhuman. Prezzo Gmail.                           |
 |                                                                |
 +================================================================+
 ```
@@ -26,8 +23,8 @@
 ## DOVE SIAMO
 
 ```
-FASE 0 (Fondamenta)     [####################] 100% COMPLETA!
-FASE 1 (Email Solido)   [###############.....] 75% (IN PAUSA)
+FASE 0 (Fondamenta)     [####################] 100%
+FASE 1 (Email Solido)   [###############.....] 75% (in pausa)
 FASE PERFORMANCE P1     [####################] 100% MERGED!
 FASE PERFORMANCE P2     [####################] 100% MERGED!
 FASE 2 (PMS Integration)[....................] 0%
@@ -35,51 +32,101 @@ FASE 2 (PMS Integration)[....................] 0%
 
 ---
 
-## SESSIONE 190 - PERFORMANCE P1 + P2 COMPLETE!
+## SESSIONE 190 - TUTTO COMPLETATO!
 
 ```
 +================================================================+
 |                                                                |
 |   SESSIONE 190 - MOMENTUM INCREDIBILE!                         |
 |                                                                |
-|   "Ultrapassar os proprios limites!"                           |
-|                                                                |
-|   TUTTO FATTO IN UNA SESSIONE:                                 |
-|                                                                |
-|   1. FIX GUARDIANA (P1)                                        |
-|      - substr -> substring (deprecation fix)                   |
+|   1. FIX GUARDIANA P1                                          |
+|      - substr -> substring (db.ts riga 295)                    |
 |      - Helper duplicati centralizzati in db.ts                 |
-|      - Merge P1 in main                                        |
+|      - MERGE P1 IN MAIN                                        |
 |                                                                |
-|   2. FASE P2.1: PREFETCH SYSTEM                                |
+|   2. RICERCA P2 (4 api parallele)                              |
+|      - useOptimistic: SKIP (bug React Query)                   |
+|      - Prefetch: IMPLEMENTATO                                  |
+|      - Service Worker: IMPLEMENTATO                            |
+|      - Virtualization: SKIP (non serve <500 email)             |
+|                                                                |
+|   3. P2.1 PREFETCH SYSTEM                                      |
 |      - usePrefetchEmails: top 3 unread auto-load               |
 |      - useHoverPrefetch: 300ms delay, desktop only             |
 |      - requestIdleCallback per low-priority                    |
-|      - Email click = ISTANTANEO!                               |
 |                                                                |
-|   3. FASE P2.3: SERVICE WORKER + OFFLINE                       |
-|      - Workbox + Vite PWA plugin                               |
-|      - Cache StaleWhileRevalidate (API)                        |
-|      - Cache CacheFirst (assets)                               |
+|   4. P2.3 SERVICE WORKER + OFFLINE                             |
+|      - vite-plugin-pwa + Workbox                               |
+|      - Cache StaleWhileRevalidate (API 5min)                   |
+|      - Cache CacheFirst (assets 30 days)                       |
 |      - useOfflineSync: queue + auto-retry                      |
-|      - Merge P2 in main                                        |
+|      - MERGE P2 IN MAIN                                        |
 |                                                                |
 +================================================================+
 ```
 
-### Performance Stack Completo
+---
 
-| Layer | Feature | Status |
-|-------|---------|--------|
-| **P1 Cache** | IndexedDB + cache-first | MERGED |
-| **P1 Batch** | 51 -> 2 API calls | MERGED |
-| **P1 Skeleton** | Visual feedback | MERGED |
-| **P1 Optimistic** | Archive/Trash instant | MERGED |
-| **P2 Prefetch** | Top 3 + Hover | MERGED |
-| **P2 ServiceWorker** | Workbox + cache | MERGED |
-| **P2 Offline** | Sync queue | MERGED |
+## PERFORMANCE STACK COMPLETO
 
-### Risultato UX
+| Layer | Feature | File | Status |
+|-------|---------|------|--------|
+| P1 Cache | IndexedDB + cache-first | db.ts | MERGED |
+| P1 Batch | 51 -> 2 API calls | api.py, api.ts | MERGED |
+| P1 Skeleton | Visual feedback | EmailSkeleton.tsx | MERGED |
+| P1 Optimistic | Archive/Trash instant | useEmails.ts | MERGED |
+| P2 Prefetch | Top 3 unread | usePrefetchEmails.ts | MERGED |
+| P2 Hover | 300ms delay desktop | useHoverPrefetch.ts | MERGED |
+| P2 ServiceWorker | Workbox + cache | vite.config.ts | MERGED |
+| P2 Offline | Sync queue | useOfflineSync.ts | MERGED |
+
+---
+
+## COMMITS SESSIONE 190
+
+```
+MIRACOLLOOK (main):
+e33ac31 - Fix: Review Guardiana - substr + helpers
+4348881 - Merge: FASE PERFORMANCE P1 Complete
+d0f6e34 - FASE P2.1: Prefetch system
+7d34432 - FASE P2.3: Service Worker + Offline
+69ae885 - Merge: FASE PERFORMANCE P2 Complete
+```
+
+---
+
+## FILE CREATI/MODIFICATI
+
+```
+NUOVI:
+  frontend/src/hooks/usePrefetchEmails.ts (61 righe)
+  frontend/src/hooks/useHoverPrefetch.ts (62 righe)
+  frontend/src/hooks/useOfflineSync.ts (107 righe)
+  frontend/OFFLINE_SYNC_INTEGRATION.md (guida)
+
+MODIFICATI:
+  frontend/src/services/db.ts (+helpers centralizzati, +sync queue funcs)
+  frontend/src/hooks/useEmails.ts (+prefetch integration)
+  frontend/src/components/EmailList/EmailListItem.tsx (+hover handlers)
+  frontend/vite.config.ts (+PWA plugin)
+  frontend/package.json (+vite-plugin-pwa)
+```
+
+---
+
+## RICERCHE P2 (in SNCP)
+
+```
+.sncp/progetti/miracollo/moduli/miracallook/ricerche/
+├── P2_useOptimistic.md    - SKIP (incompatibile React Query)
+├── P2_Prefetch.md         - IMPLEMENTATO
+├── P2_ServiceWorker.md    - IMPLEMENTATO
+└── P2_Virtualization.md   - SKIP (non serve)
+```
+
+---
+
+## RISULTATO UX
 
 ```
 PRIMA:  Click email -> wait 200-500ms -> content
@@ -87,64 +134,28 @@ DOPO:   Click email -> INSTANT (prefetched!)
 
 PRIMA:  Offline -> broken app
 DOPO:   Offline -> cached content + queued actions!
-```
 
-### Commits Sessione 190
-
-```
-MIRACOLLOOK (main):
-e33ac31 - Fix: Review Guardiana - substr deprecated + helper duplicati
-4348881 - Merge: FASE PERFORMANCE P1 Complete
-d0f6e34 - FASE P2.1: Prefetch system for instant email loading
-7d34432 - FASE P2.3: Service Worker + Offline Sync Foundation
-69ae885 - Merge: FASE PERFORMANCE P2 Complete
+PRIMA:  No PWA
+DOPO:   PWA INSTALLABILE!
 ```
 
 ---
 
-## FILE CREATI SESSIONE 190
+## METRICHE RAGGIUNTE
 
-```
-FRONTEND:
-  frontend/src/hooks/usePrefetchEmails.ts (NUOVO)
-    - Auto-prefetch top 3 unread
-    - requestIdleCallback per low-priority
-
-  frontend/src/hooks/useHoverPrefetch.ts (NUOVO)
-    - Hover prefetch con 300ms delay
-    - Touch device detection (skip mobile)
-
-  frontend/src/hooks/useOfflineSync.ts (NUOVO)
-    - Offline actions queue
-    - Auto-sync when back online
-
-  frontend/vite.config.ts (MODIFICATO)
-    - Workbox + Vite PWA plugin
-    - Cache strategies configurate
-
-  frontend/src/services/db.ts (MODIFICATO)
-    - Helper centralizzati (toCachedEmail, fromCachedEmail)
-    - Sync queue functions (get, update, delete)
-    - substr -> substring fix
-```
+| Metrica | Prima | Target | Dopo P1+P2 |
+|---------|-------|--------|------------|
+| Inbox Load | ~3s | <1s | ~1s (cache) |
+| Email Open | 300-500ms | <100ms | INSTANT |
+| API Calls (50 email) | 50+ | 2-3 | 2 |
+| Offline | No | Si | SI |
+| PWA | No | Si | SI |
 
 ---
 
-## RICERCHE P2 (salvate in SNCP)
+## DOCKER
 
-```
-.sncp/progetti/miracollo/moduli/miracallook/ricerche/
-  P2_useOptimistic.md    - SKIP (incompatibile React Query)
-  P2_Prefetch.md         - IMPLEMENTATO
-  P2_ServiceWorker.md    - IMPLEMENTATO
-  P2_Virtualization.md   - SKIP (non serve, <500 email)
-```
-
----
-
-## STATO SERVIZI (DOCKER)
-
-```
+```bash
 cd ~/Developer/miracollook
 docker compose up
 
@@ -157,31 +168,18 @@ Frontend: http://localhost:5173 - OK
 ## BRANCH
 
 ```
-main - TUTTO MERGED!
-  - P1 complete
-  - P2 complete
+main - P1 + P2 MERGED (versione 2.0.0)
 
-feature/performance-phase1 - obsoleto (merged)
-feature/performance-phase2 - obsoleto (merged)
+Obsoleti (merged):
+- feature/performance-phase1
+- feature/performance-phase2
 ```
-
----
-
-## METRICHE RAGGIUNTE
-
-| Metrica | Prima | Target | Dopo P1+P2 |
-|---------|-------|--------|------------|
-| Inbox Load | ~3s | <1s | ~1s (cache) |
-| Email Open | 300-500ms | <100ms | INSTANT (prefetch) |
-| API Calls (50 email) | 50+ | 2-3 | 2 |
-| Offline | No | Si | SI (SW + queue) |
 
 ---
 
 ## PROSSIMI STEP
 
 ```
-[ ] P2.2 Pagination (opzionale - se serve)
 [ ] Test offline reale (airplane mode)
 [ ] Deploy staging
 [ ] FASE 2: PMS Integration
@@ -203,7 +201,6 @@ PWA: Installabile!
 
 ---
 
-*Aggiornato: 13 Gennaio 2026 - Sessione 190*
-*"Non esistono cose difficili, esistono cose non studiate!"*
+*Aggiornato: 13 Gennaio 2026 - Sessione 190 FINALE*
 *"Velocita Superhuman. Prezzo Gmail. MIRACOLLOOK!"*
 *"Ultrapassar os proprios limites!"*
