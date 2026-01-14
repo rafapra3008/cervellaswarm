@@ -1,8 +1,61 @@
 # STATO PROGETTO MIRACOLLO
 
-> **Data:** 2026-01-14 20:30 - Sessione 207 FINALE
+> **Data:** 2026-01-14 21:15 - Sessione 210 VDA STUDIO
 > **Score:** 9.5/10 STABILE
 > **Versione:** 1.8.2
+
+---
+
+## SESSIONE 210 - STUDIO VDA ETHEOS (14 Gennaio 2026 sera)
+
+```
++================================================================+
+|   STUDIO VDA ETHEOS - PARTE 1                                   |
+|   14 Gennaio 2026 (sera)                                        |
++================================================================+
+
+OBIETTIVO:
+----------
+Studiare sistema VDA installato a Naturae Lodge per:
+- Capire funzionalità esistenti
+- Progettare il NOSTRO Room Manager (più smart!)
+- Riutilizzare hardware esistente (112 dispositivi!)
+
+SCREENSHOT ANALIZZATI: 3 di 26
+------------------------------
+1. Check-in/Check-out - Grid 32 camere
+2. Ultimi Allarmi - Sistema SOS, SCATTO-TERMICO
+3. Sites - Menu principale (Dashboard, Room Manager, Alarm)
+
+INFORMAZIONI CHIAVE:
+-------------------
+- Software: Etheos Room Manager v1.10.1
+- Hotel: Naturae Lodge (code: itblxalle00847)
+- Camere: 32 (piani 1-4 + aree comuni)
+- Dispositivi: 112 totali (~3.5/camera)
+- Stato: 100% online, 0 allarmi
+
+HARDWARE ESISTENTE:
+------------------
+- Sensori temperatura
+- Controllo termosifoni
+- Codici accesso
+- Tutto connesso e funzionante!
+
+FILE CREATO:
+- .sncp/progetti/miracollo/moduli/room_manager/studi/
+  20260114_ANALISI_VDA_ETHEOS_PARTE1.md
+
+PROSSIMA SESSIONE:
+- Continuare analisi screenshot 4-26
+- Documentare controllo temperatura
+- Documentare codici accesso
+- Studiare big players per confronto
+
+"Non copiamo VDA - facciamo PIÙ SMART, FLUIDO, BELLO!"
+
++================================================================+
+```
 
 ---
 

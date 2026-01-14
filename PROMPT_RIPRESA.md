@@ -1,7 +1,63 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 209 COMUNICAZIONE INTERNA
-> **Versione:** v2.17.0 - HOOK AUTOMATICI ATTIVI!
+> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 210 STUDIO VDA
+> **Versione:** v2.18.0 - STUDIO VDA ETHEOS IN CORSO!
+
+---
+
+## SESSIONE 210 - STUDIO VDA ETHEOS PARTE 1 (14 Gennaio 2026 sera)
+
+```
++================================================================+
+|   MIRACOLLO - STUDIO VDA ETHEOS                                 |
+|   14 Gennaio 2026 (sera)                                        |
++================================================================+
+
+CONTESTO:
+---------
+Naturae Lodge ha sistema VDA Etheos installato con:
+- 32 camere
+- 112 dispositivi (sensori, termosifoni, accessi)
+- 100% online, 0 problemi
+
+OBIETTIVO:
+----------
+Studiare VDA per progettare il NOSTRO Room Manager:
+- PIÙ SMART (AI, automazioni)
+- PIÙ FLUIDO (UX moderna)
+- PIÙ BELLO (design)
+- RIUTILIZZA hardware esistente!
+
+SCREENSHOT ANALIZZATI: 3 di 26
+------------------------------
+Rafa ha fatto 26 screenshot del sistema VDA.
+Per evitare limite immagini, analizziamo a blocchi.
+
+PARTE 1 COMPLETATA:
+- Screenshot 1: Check-in/Check-out (grid 32 camere)
+- Screenshot 2: Allarmi (SOS, SCATTO-TERMICO, MUR)
+- Screenshot 3: Sites menu (Dashboard, Room Manager, Alarm)
+
+INFORMAZIONI CHIAVE:
+- Software: Etheos Room Manager v1.10.1
+- Codice hotel: itblxalle00847
+- Camere: 101-405 + aree comuni (BAR, Clima, Atrio...)
+
+FILE CREATO:
+.sncp/progetti/miracollo/moduli/room_manager/studi/
+  20260114_ANALISI_VDA_ETHEOS_PARTE1.md
+
+PROSSIMA SESSIONE (PARTE 2):
+- Screenshot 4-10
+- Controllo temperatura
+- Codici accesso
+- Dashboard statistiche
+
+"Non copiamo VDA - facciamo PIÙ SMART, FLUIDO, BELLO!"
+"Meglio 5 sessioni pulite che 1 persa per limite!"
+
++================================================================+
+```
 
 ---
 

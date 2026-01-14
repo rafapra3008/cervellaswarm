@@ -1,8 +1,42 @@
 # STATO OGGI
 
 > **Data:** 14 Gennaio 2026 (Martedi)
-> **Sessione:** 208 - ROOM MANAGER FASE 1
-> **Ultimo aggiornamento:** Sessione 208 (sera)
+> **Sessione:** 210 - STUDIO VDA ETHEOS
+> **Ultimo aggiornamento:** Sessione 210 (sera tardi)
+
+---
+
+## SESSIONE 210 - STUDIO VDA ETHEOS PARTE 1
+
+```
++================================================================+
+|   MIRACOLLO - STUDIO VDA ETHEOS                                 |
+|   14 Gennaio 2026 (sera)                                        |
++================================================================+
+
+OBIETTIVO:
+Studiare sistema VDA installato a Naturae Lodge per:
+- Capire funzionalita esistenti
+- Progettare il NOSTRO Room Manager (piu smart!)
+- Riutilizzare hardware esistente (112 dispositivi!)
+
+FATTO:
+- Analizzato 3 di 26 screenshot VDA
+- Documentato: Check-in, Allarmi, Menu principale
+- Creato report PARTE 1
+
+INFORMAZIONI CHIAVE:
+- Etheos Room Manager v1.10.1
+- 32 camere (101-405 + aree comuni)
+- 112 dispositivi (~3.5 per camera)
+- 100% online, 0 allarmi
+
+PROSSIMA SESSIONE: Screenshot 4-26
+
+"Non copiamo VDA - facciamo PIU SMART, FLUIDO, BELLO!"
+
++================================================================+
+```
 
 ---
 
@@ -136,3 +170,19 @@ cervella-gpu:        SPENTA (schedule weekend)
 *"Un po' ogni giorno fino al 100000%!"*
 
 *Sessione 207 - 14 Gennaio 2026*
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-14 20:50 (session_end)
+
+- **Progetto**: CervellaSwarm
+- **Evento**: session_end
+- **Generato da**: sncp_auto_update.py v2.0.0
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-14 20:52 (session_end)
+
+- **Progetto**: CervellaSwarm
+- **Evento**: session_end
+- **Generato da**: sncp_auto_update.py v2.0.0

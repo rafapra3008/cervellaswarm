@@ -1,0 +1,39 @@
+
+[0;36m+================================================================+[0m
+[0;36m|                                                                |[0m
+[0;36m|   [0;35mSNCP HEALTH DASHBOARD[0;36m                                       |[0m
+[0;36m|   [0mSistema Nervoso Centrale Progetti[0;36m                            |[0m
+[0;36m|                                                                |[0m
+[0;36m|   Data: 2026-01-14 21:08                                       |[0m
+[0;36m+================================================================+[0m
+
+[0;34m--- STATISTICHE GLOBALI ---[0m
+
+  [0;36mSNCP Root:[0m /Users/rafapra/Developer/CervellaSwarm/.sncp
+  [0;36mTotale file MD:[0m 483
+  [0;36mFile obsoleti (>30gg):[0m 0
+
+  [0;36moggi.md:[0m 154 righe [[0;32mOK[0m] - ultimo update: 2026-01-14
+
+[0;34m--- PROGETTI ---[0m
+
+  Progetto        | Files    | stato.md         | Obsoleti
+  ----------------|----------|------------------|----------
+  miracollo       | 218 files | stato: 488 righe [[0;31m!![0m] | obsoleti:  0 [[0;32mOK[0m]
+  cervellaswarm   |  37 files | stato: 160 righe [[0;32mOK[0m] | obsoleti:  0 [[0;32mOK[0m]
+  contabilita     |   1 files | stato:  29 righe [[0;32mOK[0m] | obsoleti:  0 [[0;32mOK[0m]
+
+[0;34m--- RACCOMANDAZIONI ---[0m
+
+  [1;33m[!][0m miracollo/stato.md ha 488 righe - considera split
+
+[0;34m--- SCORE SNCP ---[0m
+
+  SNCP Health Score: [0;32m100/100[0m
+
+  [##############################] 100%
+
+[0;36m+================================================================+[0m
+[0;36m|   [0m"Se documentiamo = facciamo!"[0;36m                               |[0m
+[0;36m+================================================================+[0m
+
