@@ -1,101 +1,38 @@
 # STATO OGGI
 
 > **Data:** 14 Gennaio 2026 (Martedi)
-> **Sessione:** 211 (Parallele: Miracollo + CervellaSwarm)
-> **Ultimo aggiornamento:** Sessione 211 (sera)
+> **Sessioni:** 211 CervellaSwarm + 212 Miracollo (parallele)
+> **Ultimo aggiornamento:** Fine giornata
 
 ---
 
-## SESSIONE 211 - CERVELLASWARM: AUDIT + FIX CRITICO!
+## CERVELLASWARM - Sessione 211 MONUMENTALE!
 
 ```
-+================================================================+
-|   CERVELLASWARM - AUDIT COMPLETO + FIX!                        |
-|   14 Gennaio 2026 (sera)                                        |
-+================================================================+
+SCORE: 8.2 → 9.4 (+1.2 punti!)
+GAP al target 9.5: solo 0.1 punti!
 
-PARTE 1 - SEMPLIFICAZIONE:
-- Struttura SNCP: da 14 a 10 cartelle
-- README SNCP aggiornato v4.0
+4 PARTI COMPLETATE:
+1. Semplificazione SNCP v4.0 (14→10 cartelle)
+2. Audit + Fix symlink CRITICO
+3. Test automatici (3 test, 17 check OK)
+4. Studio Comunicazione Interna (600+ righe)
 
-PARTE 2 - AUDIT E FIX:
-- Ingegnera: Audit completo sistema
-- TROVATO: symlink NON esistevano! (su carta)
-- Guardiana: CONFERMATO problema
-- FIX: Creati symlink sncp-init + verify-sync
-- TESTATI: Entrambi funzionano!
-
-SCORE: 8.2 → 9.2 → 9.4 = +1.2 punti totali!
-GAP al target: 0.1 punti (quasi al 9.5!)
-
-"SU CARTA != REALE" - La Costituzione aveva ragione!
-
-+================================================================+
+COMMIT: 4 pushed (119e5d1, 730e308, 1353bd6, 59f09b9)
 ```
 
 ---
 
-## SESSIONE 211 - STUDIO VDA ETHEOS PARTE 2
+## MIRACOLLO - Sessione 212 Room Manager
 
 ```
-+================================================================+
-|   MIRACOLLO - STUDIO VDA ETHEOS PARTE 2                         |
-|   14 Gennaio 2026 (sera)                                        |
-+================================================================+
+STUDIO COMPLETATO:
+- VDA Etheos: 26 screenshot analizzati
+- Big players: Mews, Opera, Cloudbeds, Scidoo
+- Architettura DECISA!
 
-FATTO:
-- Analizzati 18 screenshot (4-21) in 3 blocchi
-- Documentato PARTE 2 in SNCP
-- Checkpoint completo
-
-SCOPERTE CHIAVE:
-- Sistema chiavi: BLE + CODICE, ospiti/staff separati
-- HVAC: 2 termostati/camera, rilevamento finestre
-- Sensori: presenza, porta, DND, MUR real-time
-- Hardware: MODBUS standard, 4 device/camera
-- 7 moduli VDA (incluso Scheduler e Activity Log!)
-
-SCREENSHOT:
-- PARTE 1 (Sess 210): 1-3 completati
-- PARTE 2 (Sess 211): 4-21 completati
-- PARTE 3 (prossima): 22-26 (ultimi 5)
-
-FILE:
-- ANALISI_VDA_ETHEOS_PARTE2.md creato
-
-"Non copiamo VDA - facciamo PIU SMART, FLUIDO, BELLO!"
-
-+================================================================+
-```
-
----
-
-## SESSIONE 210 - STUDIO VDA ETHEOS PARTE 1
-
-```
-+================================================================+
-|   MIRACOLLO - STUDIO VDA ETHEOS                                 |
-|   14 Gennaio 2026 (sera)                                        |
-+================================================================+
-
-OBIETTIVO:
-Studiare sistema VDA installato a Naturae Lodge per:
-- Capire funzionalita esistenti
-- Progettare il NOSTRO Room Manager (piu smart!)
-- Riutilizzare hardware esistente (112 dispositivi!)
-
-FATTO:
-- Analizzato 3 di 26 screenshot VDA
-- Documentato: Check-in, Allarmi, Menu principale
-- Creato report PARTE 1
-
-INFORMAZIONI CHIAVE:
-- Etheos Room Manager v1.10.1
-- 32 camere (101-405 + aree comuni)
-- 112 dispositivi (~3.5 per camera)
-- 100% online, 0 allarmi
-
-+================================================================+
+VANTAGGIO COMPETITIVO:
+PMS + Hardware integrato (nessun altro lo fa!)
 ```
 
 ---
@@ -104,35 +41,25 @@ INFORMAZIONI CHIAVE:
 
 | Progetto | Area | Score | Note |
 |----------|------|-------|------|
-| CervellaSwarm | SNCP | 9.4/10 | v4.0 + test automatici! |
-| CervellaSwarm | Log | 7.5/10 | SwarmLogger v2.0.0 |
-| CervellaSwarm | Agenti | 8.5/10 | 16 operativi |
-| CervellaSwarm | Infra | 9.5/10 | Hook + Launchd VERIFICATI! |
+| CervellaSwarm | SNCP | 9.4/10 | v4.0 + test + audit |
+| CervellaSwarm | Infra | 9.5/10 | Hook + Launchd OK |
 | Miracollo | RateParity | 9.5/10 | STABILE |
-| Miracollo | Room Manager | Studio | VDA Etheos |
-| **MEDIA** | - | **8.8/10** | Target: 9.5 (gap: 0.7) |
+| Miracollo | Room Manager | Studio | Architettura decisa |
+| **MEDIA** | - | **9.1/10** | Target: 9.5 |
 
 ---
 
 ## Prossimi Step
 
-### Miracollo (Room Manager)
-1. [ ] PARTE 3: Screenshot 22-26 (ultimi 5)
-2. [ ] Studio big players (Mews, Opera)
-3. [ ] Confronto e decisioni architettura
-4. [ ] Implementazione Room Manager
+### CervellaSwarm
+- [ ] Worker prompt "READ SNCP FIRST"
+- [ ] Watcher auto-start DEFAULT
+
+### Miracollo
+- [ ] MVP Room Manager (Backend + Frontend)
+- [ ] VDA MODBUS integration
 
 ---
 
-## Infrastruttura
-
-```
-miracollo-cervella:  RUNNING - 34.27.179.164
-cervella-gpu:        SPENTA (schedule weekend)
-```
-
----
-
-*"Non copiamo VDA - facciamo PIU SMART, FLUIDO, BELLO!"*
-
-*Sessione 211 - 14 Gennaio 2026*
+*"SU CARTA != REALE" - La Costituzione aveva ragione!*
+*14 Gennaio 2026*
