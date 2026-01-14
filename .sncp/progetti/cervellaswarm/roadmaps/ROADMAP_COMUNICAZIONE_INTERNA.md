@@ -1,8 +1,8 @@
 # ROADMAP - Comunicazione Interna Automatica
 
 > **Data:** 14 Gennaio 2026
-> **Sessione:** 207 (planning) / 209 (FASE 1)
-> **Status:** IN CORSO - FASE 1 COMPLETATA!
+> **Sessione:** 207 (planning) / 209 (FASE 1 + FASE 2)
+> **Status:** IN CORSO - FASE 1 + FASE 2 COMPLETATE!
 > **Priorità:** ALTA - "Avere attrezzature ma non usarle = non averle"
 
 ---
@@ -48,18 +48,19 @@
 - File: `~/.claude/settings.json` (hooks section)
 - Script wrapper che chiama gli script SNCP
 
-### LIVELLO 2: REGOLE REGINA (CLAUDE.md)
+### LIVELLO 2: REGOLE REGINA (CLAUDE.md) - FATTO!
 
-| Regola | Quando | Azione |
-|--------|--------|--------|
-| verify-sync PRIMA commit | Ogni commit | Regina chiama verify-sync |
-| Guardiana per task complessi | Task > 1h | Regina consulta Guardiana |
-| Cleanup fine sessione | Ogni fine | Regina pulisce checkpoint |
-| Delegare ai Worker | Task specifici | Regina NON fa edit diretti |
+| Regola | Quando | Azione | Status |
+|--------|--------|--------|--------|
+| verify-sync PRIMA commit | Ogni commit | Regina chiama verify-sync | FATTO |
+| Guardiana per task complessi | Task > 30min | Regina consulta Guardiana | FATTO |
+| Cleanup fine sessione | Ogni fine | Regina pulisce checkpoint | DA FARE |
+| Delegare ai Worker | Task specifici | Regina NON fa edit diretti | FATTO |
 
-**Implementazione:**
-- Aggiungere sezione "AUTOMAZIONI OBBLIGATORIE" in CLAUDE.md
-- Checklist automatica
+**Implementazione (Sessione 209):**
+- Sezione "AUTOMAZIONI OBBLIGATORIE" in CervellaSwarm/CLAUDE.md
+- Sezione "AUTOMAZIONI OBBLIGATORIE" in ~/.claude/CLAUDE.md (globale)
+- Checklist fine sessione definita
 
 ### LIVELLO 3: CRON JOBS
 
@@ -89,11 +90,18 @@
     - Verify-sync: Funziona! Rileva commit non documentati
 ```
 
-### FASE 2 - Regole Regina (1h)
+### FASE 2 - Regole Regina (1h) - COMPLETATA!
 ```
-[ ] Aggiornare CLAUDE.md con sezione AUTOMAZIONI
-[ ] Definire checklist obbligatoria
-[ ] Testare che Regina segue le regole
+[X] Aggiornare CLAUDE.md con sezione AUTOMAZIONI
+    - CervellaSwarm/CLAUDE.md (progetto)
+    - ~/.claude/CLAUDE.md (globale)
+[X] Definire checklist obbligatoria
+    - PRIMA commit: verify-sync
+    - TASK complessi: consultare Guardiana
+    - FINE sessione: checklist automatica
+[X] Testare che Regina segue le regole
+    - Regole scritte in modo prescrittivo
+    - Hook automatici come enforcement
 ```
 
 ### FASE 3 - Cron Manutenzione (1h)

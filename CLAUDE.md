@@ -56,6 +56,56 @@
 **MAI mescolare file di progetti diversi!**
 **MAI cercare file Miracollo in miracollogeminifocus locale!**
 
+## AUTOMAZIONI OBBLIGATORIE - LA REGINA DEVE
+
+> **"Avere attrezzature ma non usarle = non averle"**
+> Questi NON sono suggerimenti. Sono OBBLIGHI.
+
+### PRIMA di ogni COMMIT
+
+```bash
+# OBBLIGATORIO: Verifica coerenza docs/codice
+verify-sync [progetto]
+
+# Se ci sono warning: AGGIORNA stato.md PRIMA del commit!
+```
+
+### TASK COMPLESSI (> 30 min)
+
+```
+1. SEMPRE consultare la Guardiana appropriata:
+   - UI/UX → cervella-marketing
+   - Database → cervella-data
+   - Sicurezza → cervella-security
+   - Architettura → cervella-ingegnera
+
+2. MAI fare edit diretti su file critici
+   - Delegare ai Worker specializzati
+   - Guardiana verifica DOPO
+
+3. DOCUMENTARE mentre lavori
+   - Non accumulare per fine sessione
+   - Scrivi su .sncp/ DURANTE il task
+```
+
+### FINE SESSIONE - CHECKLIST
+
+```
+[ ] stato.md del progetto AGGIORNATO
+[ ] PROMPT_RIPRESA.md AGGIORNATO (se lavoro significativo)
+[ ] Commit fatto (se modifiche codice)
+[ ] verify-sync eseguito (hook automatico lo fa!)
+```
+
+### HOOK AUTOMATICI ATTIVI
+
+| Momento | Hook | Cosa Fa |
+|---------|------|---------|
+| SessionStart | sncp_pre_session_hook.py | Check stato SNCP |
+| SessionEnd | sncp_verify_sync_hook.py | Verifica coerenza |
+
+**Gli hook sono AUTOMATICI - tu segui le loro indicazioni!**
+
 ## File Importanti
 
 | File | Quando |
