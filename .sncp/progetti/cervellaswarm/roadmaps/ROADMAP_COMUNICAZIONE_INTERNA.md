@@ -1,8 +1,8 @@
 # ROADMAP - Comunicazione Interna Automatica
 
 > **Data:** 14 Gennaio 2026
-> **Sessione:** 207
-> **Status:** PIANIFICATO - Da implementare prossime sessioni
+> **Sessione:** 207 (planning) / 209 (FASE 1)
+> **Status:** IN CORSO - FASE 1 COMPLETATA!
 > **Priorità:** ALTA - "Avere attrezzature ma non usarle = non averle"
 
 ---
@@ -39,8 +39,8 @@
 | Hook | Quando | Cosa Fa | Status |
 |------|--------|---------|--------|
 | SessionStart | Inizio sessione | Legge COSTITUZIONE | FATTO |
-| SessionStart | Inizio sessione | Chiama pre-session-check.sh | DA FARE |
-| SessionEnd | Fine sessione | Chiama verify-sync.sh | DA FARE |
+| SessionStart | Inizio sessione | Chiama pre-session-check.sh | FATTO (Sessione 209) |
+| SessionEnd | Fine sessione | Chiama verify-sync.sh | FATTO (Sessione 209) |
 | SessionEnd | Fine sessione | Pulisce checkpoint duplicati | DA FARE |
 | PreCommit | Prima di commit | Verifica docs aggiornati | DA FARE |
 
@@ -77,12 +77,16 @@
 
 ## PIANO IMPLEMENTAZIONE
 
-### FASE 1 - Hook Base (1-2h)
+### FASE 1 - Hook Base (1-2h) - COMPLETATA!
 ```
-[ ] Creare wrapper script per hooks
-[ ] Aggiungere pre-session-check a SessionStart
-[ ] Aggiungere verify-sync a SessionEnd
-[ ] Testare su sessione reale
+[X] Creare wrapper script per hooks
+    - sncp_pre_session_hook.py (Sessione 209)
+    - sncp_verify_sync_hook.py (Sessione 209)
+[X] Aggiungere pre-session-check a SessionStart
+[X] Aggiungere verify-sync a SessionEnd
+[X] Testare su sessione reale
+    - Pre-session: OK
+    - Verify-sync: Funziona! Rileva commit non documentati
 ```
 
 ### FASE 2 - Regole Regina (1h)

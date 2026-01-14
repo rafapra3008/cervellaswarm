@@ -1,20 +1,47 @@
 # Stato CervellaSwarm
-> Ultimo aggiornamento: 14 Gennaio 2026 - Sessione 207 (sera)
+> Ultimo aggiornamento: 14 Gennaio 2026 - Sessione 209
 
 ---
 
 ## TL;DR
 
 ```
-SCORE ATTUALE: 8.0/10 media (era 7.8)
+SCORE ATTUALE: 8.2/10 media (era 8.0)
 TARGET: 9.5/10
-GAP: 1.5 punti
+GAP: 1.3 punti
 
-SESSIONE 207: SNCP TOOLS CREATI!
-- sncp-init.sh FUNZIONA (8.8/10 Guardiana)
-- verify-sync.sh FUNZIONA
-- Roadmap 2026 COMPLETA
-- Business Plan COMPLETO
+SESSIONE 209: COMUNICAZIONE INTERNA FASE 1 COMPLETATA!
+- Hook pre-session automatico ATTIVO
+- Hook verify-sync automatico ATTIVO
+- Settings.json aggiornato
+- Sistema che si usa DA SOLO!
+```
+
+---
+
+## SESSIONE 209 - COMUNICAZIONE INTERNA FASE 1!
+
+```
++================================================================+
+|                                                                |
+|   FASE 1 COMPLETATA - HOOK AUTOMATICI!                         |
+|                                                                |
+|   CREATO:                                                      |
+|   - sncp_pre_session_hook.py (wrapper Python)                  |
+|   - sncp_verify_sync_hook.py (wrapper Python)                  |
+|   - Integrazione in settings.json                              |
+|                                                                |
+|   ORA AUTOMATICO:                                              |
+|   - INIZIO sessione: pre-session-check.sh                      |
+|   - FINE sessione: verify-sync.sh                              |
+|                                                                |
+|   TEST:                                                        |
+|   - Pre-session: "SNCP OK"                                     |
+|   - Verify-sync: Rileva commit non documentati!                |
+|                                                                |
+|   PROSSIMO: FASE 2 (Regole Regina in CLAUDE.md)                |
+|                                                                |
++================================================================+
 ```
 
 ---
@@ -86,6 +113,11 @@ sncp-init nome-progetto           # Wizard nuovo progetto
 sncp-init nome --analyze          # Con analisi stack
 verify-sync                       # Check coerenza tutti
 verify-sync miracollo --verbose   # Check singolo progetto
+
+# HOOK AUTOMATICI (Sessione 209)
+# Questi sono chiamati automaticamente da settings.json!
+# - sncp_pre_session_hook.py  -> SessionStart
+# - sncp_verify_sync_hook.py  -> SessionEnd
 
 # ESISTENTI
 ./scripts/sncp/health-check.sh        # Dashboard ASCII
