@@ -1,7 +1,88 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 201
-> **Versione:** v141.0.0 - CERVELLASWARM SCORE 7.5/10!
+> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 202
+> **Versione:** v142.0.0 - CERVELLASWARM SCORE 7.8/10!
+
+---
+
+## SESSIONE 202 - P1 COMPLETATI! SNCP + LOG + AGENTI
+
+```
++================================================================+
+|                                                                |
+|   SESSIONE 202: CervellaSwarm da 7.5 a 7.8/10!                 |
+|                                                                |
+|   SNCP SPRINT 2 - AUTOMAZIONE BASE:                            |
+|   [x] pre-session-check.sh - verifica stato all'avvio          |
+|   [x] post-session-update.sh - prompt aggiornamento            |
+|   [x] health-check.sh - dashboard ASCII completa               |
+|   [x] compact-state.sh - compattazione automatica              |
+|   [x] 5 worker templates con SNCP output section               |
+|   [x] _SNCP_WORKER_OUTPUT.md - template condiviso              |
+|                                                                |
+|   LOG P1 - SISTEMA ALERTING:                                   |
+|   [x] AlertSystem con pattern detection                        |
+|   [x] ConsoleNotifier, FileNotifier, SlackNotifier             |
+|   [x] PatternDetector (keywords, spikes, stuck agents)         |
+|   [x] check-alerts.sh wrapper script                           |
+|   [x] alert_check_cron.sh per cron                             |
+|                                                                |
+|   AGENTI P1 - JSON MANIFESTS:                                  |
+|   [x] output_schema aggiunto a 5 agenti top                    |
+|       - cervella-backend v1.1.0                                |
+|       - cervella-frontend v1.1.0                               |
+|       - cervella-researcher v1.1.0                             |
+|       - cervella-guardiana-qualita v1.1.0                      |
+|       - cervella-tester v1.1.0                                 |
+|                                                                |
++================================================================+
+```
+
+### Score CervellaSwarm Aggiornati
+
+```
+SNCP (Memoria)      7.5 -> 8.0  (+0.5) <- Automazione!
+SISTEMA LOG         7.0 -> 7.5  (+0.5) <- Alerting!
+AGENTI (Cervelle)   8.2 -> 8.5  (+0.3) <- output_schema!
+INFRASTRUTTURA      8.5 -> 8.5  (=)
+
+MEDIA:              7.5 -> 7.8  (+0.3)
+TARGET:             9.5
+GAP:                2.0 -> 1.7
+```
+
+### NUOVI SCRIPT
+
+```
+scripts/sncp/
+  pre-session-check.sh    # Check all'avvio
+  post-session-update.sh  # Prompt fine sessione
+  health-check.sh         # Dashboard ASCII
+  compact-state.sh        # Compattazione
+
+scripts/alerting/
+  check-alerts.sh         # Wrapper alerting
+
+src/alerting/
+  alert_system.py         # Core sistema
+  detectors.py            # Pattern detection
+  notifiers/              # Console, File, Slack
+```
+
+### DOCUMENTAZIONE CHIAVE
+
+- MAPPA: `.sncp/progetti/cervellaswarm/MAPPA_9.5_MASTER.md`
+- WORKER OUTPUT: `~/.claude/agents/_SNCP_WORKER_OUTPUT.md`
+- Alerting: `src/alerting/`
+
+### Prossimi Step (P2 MEDIO)
+
+```
+1. SNCP Dashboard real-time
+2. LOG Real-time SSE dashboard
+3. AGENTI JSON schema per tutti 16
+4. Slack webhook configuration
+```
 
 ---
 
@@ -199,15 +280,21 @@ cd frontend && npm run dev
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-14 14:28 (unknown)
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-14 14:43 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 1fb7459 - Sessione 201 FINALE: Checkpoint Completo
-- **File modificati** (3):
-  - eports/scientist_prompt_20260114.md
-  - .sncp/progetti/miracollo/workflow/UPTIME_MONITORING_SETUP.md
-  - reports/engineer_report_20260114_141651.json
+- **Ultimo commit**: efc57c8 - ANTI-COMPACT: PreCompact auto
+- **File modificati** (5):
+  - sncp/stato/oggi.md
+  - PROMPT_RIPRESA.md
+  - reports/scientist_prompt_20260114.md
+  - .swarm/handoff/HANDOFF_20260114_144119.md
+  - scripts/cron/alert_check_cron.sh
 
 ### Note
 - Checkpoint automatico generato da hook
