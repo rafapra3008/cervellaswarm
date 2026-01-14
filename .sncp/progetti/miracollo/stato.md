@@ -85,7 +85,7 @@ IMPLEMENTATO:
 
 **Effort Totale Eventi:** 3 settimane (40-60h)
 
-### FASE 5: COMPETITOR REAL-TIME - POC PRONTO (85%)
+### FASE 5: COMPETITOR REAL-TIME - POC PRONTO (100%)
 
 | Task | Status | Note |
 |------|--------|------|
@@ -93,8 +93,9 @@ IMPLEMENTATO:
 | playwright_scraping_client.py | FATTO | Client GRATIS! |
 | competitor_scraping_service.py | FATTO | v1.1.0 con factory |
 | Test Booking.com | FATTO | 7 prezzi estratti |
-| Integrare Playwright nel POC | TODO | 4h |
-| Test con URL reale | TODO | 2h (serve URL da Rafa) |
+| Test 6 competitor alleghe | **FATTO** | ✅ 32 prezzi, 100% success! |
+| Integrare Playwright nel POC | **FATTO** | Sessione 202 |
+| **PROSSIMO:** DB schema + scheduler | TODO | 1 settimana |
 
 ---
 
@@ -132,34 +133,38 @@ backend/
 
 ---
 
-## PROSSIMI STEP PRIORITIZZATI (Aggiornato Sessione 189)
+## INFRASTRUTTURA & MONITORING
+
+| Task | Status | Note |
+|------|--------|------|
+| UptimeRobot Setup Guide | **FATTO** | Guida completa in docs/UPTIME_MONITORING_GUIDE.md |
+| - Monitor #1 Health Check | Documentato | https://miracollo.com/api/health |
+| - Monitor #2 Health Detailed | Documentato | https://miracollo.com/api/health/detailed |
+| - Alert Email | Documentato | Setup con UptimeRobot |
+| - Alert Telegram | Documentato | Setup con bot @uptimerobot_bot |
+
+---
+
+## PROSSIMI STEP PRIORITIZZATI (Aggiornato Sessione 195)
 
 ```
 +================================================================+
-|   PERCORSO 9.2 → 9.5 (mancano 0.3 punti)                       |
+|   INFRASTRUTTURA & OSSERVABILITA'                              |
 +================================================================+
 
-SPRINT A: CHIUDERE WEATHER (+0.1)
-├── 1. [ ] WeatherWidget frontend
-├── 2. [ ] Test staging con weather
-├── 3. [ ] .env produzione (WEATHER_API_KEY)
-└── 4. [ ] Deploy produzione
+SPRINT MONITORING (NUOVI):
+├── 1. [x] UptimeRobot setup guide (FATTO Sessione 195)
+├── 2. [ ] Rafa setup UptimeRobot via browser
+├── 3. [ ] Primo test alert (simulare downtime)
+└── 4. [ ] Verificare alert email/Telegram funzionano
 
-SPRINT B: EVENTI LOCALI (+0.2)
-├── 1. [ ] Database schema eventi
-├── 2. [ ] EventService backend
-├── 3. [ ] API endpoints eventi
-├── 4. [ ] UI gestione eventi
-└── 5. [ ] Integrazione suggerimenti
-
-BONUS (non bloccanti per 9.5):
-├── [ ] Unit tests weather
-├── [ ] Unit tests eventi
-├── [ ] Competitor Scraping (serve URL da Rafa)
-└── [ ] Autopilot test staging
+PROSSIMI (POST-MONITORING):
+├── [ ] ELK Stack per logs centrali (2-3 days)
+├── [ ] DataDog metrics & performance (1 day)
+└── [ ] Custom business metrics
 ```
 
-**PRIORITÀ:** Sprint A → Sprint B → Bonus
+**PRIORITÀ:** Monitoring → Feature Development
 
 ---
 
@@ -179,10 +184,15 @@ EVENTI LOCALI:      ✓ FATTO + DEPLOYED! (Sessione 192-193)
   - 8 API endpoints funzionanti
   - 6 eventi seed (Olimpiadi, Coppa Mondo, etc.)
   - API LIVE: GET /api/events/ -> 200 OK
-COMPETITOR:         POC 85% (serve URL)
+COMPETITOR:         ✅ 100% PRONTO! (Sessione 202)
+  - Test 6 competitor alleghe: 32 prezzi estratti
+  - Booking.com parser: 100% success rate
+  - Scraping service: ready for production
+  - PROSSIMO: DB schema + scheduler
 
 >>> FASE 1 METEO 100% COMPLETATA! <<<
 >>> FASE 2 EVENTI LOCALI 100% COMPLETATA! <<<
+>>> FASE 5 COMPETITOR POC 100% COMPLETATA! <<<
 >>> PROSSIMO: Decidere insieme a Rafa <<<
 ```
 

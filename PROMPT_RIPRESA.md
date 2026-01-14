@@ -112,3 +112,19 @@ echo "y" | ./scripts/sncp/compact-state.sh FILE  # Compattazione
 
 *"Su carta != Reale"*
 *"Un po' ogni giorno fino al 100000%!"*
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-14 15:14 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 6ea6553 - Sessione 203: Reset Filosofico - Su Carta != Reale
+- **File modificati** (1):
+  - reports/engineer_report_20260114_151358.json
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---

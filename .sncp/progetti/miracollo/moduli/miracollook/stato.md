@@ -1,7 +1,43 @@
 # STATO - Miracollook
 
 > **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 202
-> **Status:** v2.5.0 - FASE 1 EMAIL SOLIDO 100% + CONTEXT MENU RICERCATO!
+> **Status:** v2.6.0 - UPLOAD ATTACHMENTS IMPLEMENTATO!
+
+---
+
+## SESSIONE 202 - UPLOAD ATTACHMENTS IMPLEMENTATO!
+
+```
++================================================================+
+|                                                                |
+|   UPLOAD ATTACHMENTS - COMPLETO E VERIFICATO!                  |
+|                                                                |
+|   BACKEND (compose.py + utils.py):                             |
+|   - create_message() con supporto MIMEMultipart                |
+|   - Endpoint /send accetta UploadFile                          |
+|   - Validazione 25MB (limite Gmail)                            |
+|   - MIME type auto-detection                                   |
+|   - Backward compatible (email senza allegati funziona)        |
+|                                                                |
+|   FRONTEND:                                                    |
+|   - useAttachments.ts - Hook gestione files                    |
+|   - AttachmentPicker.tsx - UI con preview                      |
+|   - api.ts - FormData per upload                               |
+|   - ComposeModal.tsx - Integrato picker                        |
+|                                                                |
+|   FEATURES:                                                    |
+|   - Preview thumbnail per immagini                             |
+|   - Icons per altri tipi file                                  |
+|   - Warning a 20MB, error a 25MB                               |
+|   - Remove singolo attachment                                  |
+|   - Cleanup memory automatico                                  |
+|                                                                |
+|   AUDIT GUARDIANA QUALITA: PASSED 9/10                         |
+|   - Ready to merge                                             |
+|   - 2 issue minori non bloccanti                               |
+|                                                                |
++================================================================+
+```
 
 ---
 
