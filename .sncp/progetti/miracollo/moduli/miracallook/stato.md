@@ -1,7 +1,7 @@
 # STATO - Miracollook
 
-> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 192 FINALE
-> **Status:** v2.1.1 - QUALITY 9.5/10!
+> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 194
+> **Status:** v2.3.0 - QUALITY 9.5/10! + DRAFTS + BULK ACTIONS!
 
 ---
 
@@ -30,6 +30,92 @@ FASE PERFORMANCE P2     [####################] 100% MERGED!
 FASE 1 (Email Solido)   [###############.....] 75% <<< PROSSIMO!
 FASE 2 (PMS Integration)[....................] 0%
 ```
+
+---
+
+## SESSIONE 194 - DRAFTS AUTO-SAVE COMPLETATO!
+
+```
++================================================================+
+|                                                                |
+|   DRAFTS AUTO-SAVE - "Mai piu email perse!"                    |
+|                                                                |
+|   BACKEND (drafts.py - 280 righe):                             |
+|   - POST /gmail/drafts/create - Crea draft                     |
+|   - PUT /gmail/drafts/{id} - Aggiorna draft                    |
+|   - GET /gmail/drafts - Lista drafts                           |
+|   - GET /gmail/drafts/{id} - Ottieni draft                     |
+|   - POST /gmail/drafts/{id}/send - Invia draft                 |
+|   - DELETE /gmail/drafts/{id} - Elimina draft                  |
+|                                                                |
+|   FRONTEND (useDraft.ts - 180 righe):                          |
+|   - Debounce 2s auto-save                                      |
+|   - LocalStorage fallback (crash recovery)                     |
+|   - Status indicator: Saving.../Saved HH:MM/Error              |
+|   - Recovery modal: "Restore draft?"                           |
+|                                                                |
+|   API FRONTEND (api.ts):                                       |
+|   - createDraft, updateDraft, listDrafts                       |
+|   - getDraft, sendDraft, deleteDraft                           |
+|                                                                |
+|   COMPOSEMODAL AGGIORNATO:                                     |
+|   - Auto-save integrato                                        |
+|   - Status indicator in header                                 |
+|   - Recovery prompt on open                                    |
+|   - beforeunload fallback                                      |
+|                                                                |
+|   SPRINT 1 CRITICI: 100% COMPLETATO!                           |
+|                                                                |
++================================================================+
+```
+
+### Bulk Actions (stesso giorno!)
+
+```
++================================================================+
+|   BULK ACTIONS - "Seleziona, agisci, fatto!"                   |
++================================================================+
+
+BACKEND (actions.py +415 righe):
+- POST /gmail/bulk/archive
+- POST /gmail/bulk/trash
+- POST /gmail/bulk/star
+- POST /gmail/bulk/unstar
+- POST /gmail/bulk/mark-read
+- POST /gmail/bulk/mark-unread
+(Tutti con Gmail batch API, max 50 msg)
+
+FRONTEND:
+- useSelection.ts - Hook selezione multipla
+- BulkActionsToolbar.tsx - Toolbar contestuale
+- EmailListItem + checkbox
+- EmailList + Select All
+- 5 bulk hooks con optimistic update
+
+UX:
+- Checkbox su hover o quando selezionato
+- Toolbar appare con counter "X selected"
+- Optimistic update (archive/trash instant)
+- Select All in header
+
++================================================================+
+```
+
+### File Creati/Modificati Sessione 194
+
+| File | Tipo | Righe | Descrizione |
+|------|------|-------|-------------|
+| `backend/gmail/drafts.py` | NUOVO | 280 | 6 endpoint drafts |
+| `backend/gmail/actions.py` | MOD | +415 | 6 endpoint bulk actions |
+| `backend/gmail/api.py` | MOD | +2 | Include drafts router |
+| `frontend/src/hooks/useDraft.ts` | NUOVO | 180 | Hook auto-save |
+| `frontend/src/hooks/useSelection.ts` | NUOVO | 50 | Hook selezione multipla |
+| `frontend/src/components/EmailList/BulkActionsToolbar.tsx` | NUOVO | 120 | Toolbar bulk actions |
+| `frontend/src/services/api.ts` | MOD | +35 | API drafts + bulk methods |
+| `frontend/src/hooks/useEmails.ts` | MOD | +80 | 5 bulk hooks |
+| `frontend/src/components/EmailList/EmailListItem.tsx` | MOD | +30 | Checkbox selezione |
+| `frontend/src/components/EmailList/EmailList.tsx` | MOD | +50 | Selection + toolbar |
+| `frontend/src/components/Compose/ComposeModal.tsx` | MOD | +100 | Drafts integration |
 
 ---
 
@@ -186,18 +272,22 @@ Frontend: http://localhost:5173 - OK
 ```
 SPRINT 1 - CRITICI:
 [x] Mark as Read/Unread     (2h) - FATTO Sessione 192!
-[ ] Drafts auto-save        (6h) <<< PROSSIMO
+[x] Drafts auto-save        (6h) - FATTO Sessione 194!
 
-SPRINT 2 - ALTI (~16h):
-[ ] Bulk Actions            (5h)
-[ ] Thread View             (4h)
+SPRINT 2 - ALTI (~7h):
+[x] Bulk Actions            (5h) - FATTO Sessione 194!
+[ ] Thread View             (4h) <<< PROSSIMO
 [ ] Labels Custom           (3h)
-[ ] Upload Attachments      (4h)
 
-SPRINT 3 - MEDI (~16h):
+SPRINT 3 - COMPOSIZIONE (~14h):
+[ ] Upload Attachments      (4h)
 [ ] Contacts Autocomplete   (6h)
+[ ] Templates risposte      (4h)
+
+SPRINT 4 - POLISH (~12h):
 [ ] Settings Page           (8h)
 [ ] Firma email             (2h)
+[ ] Light mode              (2h)
 
 POI:
 [ ] FASE 2: PMS Integration (LA MAGIA!)

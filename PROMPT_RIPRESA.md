@@ -1,7 +1,87 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 192 FINALE
-> **Versione:** v132.0.0 - MIRACOLLOOK 9.5/10 + EVENTI LOCALI!
+> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 194
+> **Versione:** v133.0.0 - MIRACOLLOOK v2.3.0 + DRAFTS + BULK ACTIONS!
+
+---
+
+## SESSIONE 194 - MIRACOLLOOK DRAFTS + BULK ACTIONS!
+
+```
++================================================================+
+|                                                                |
+|   MIRACOLLOOK v2.3.0 - "Due feature, una sessione!"            |
+|                                                                |
+|   1. DRAFTS AUTO-SAVE (Sprint 1 completato!)                   |
+|      BACKEND (drafts.py - 280 righe):                          |
+|      - POST /gmail/drafts/create                               |
+|      - PUT /gmail/drafts/{id}                                  |
+|      - GET /gmail/drafts                                       |
+|      - GET /gmail/drafts/{id}                                  |
+|      - POST /gmail/drafts/{id}/send                            |
+|      - DELETE /gmail/drafts/{id}                               |
+|                                                                |
+|      FRONTEND (useDraft.ts - 180 righe):                       |
+|      - Debounce 2s auto-save                                   |
+|      - LocalStorage fallback (crash recovery)                  |
+|      - Status: "Saving..." / "Saved HH:MM" / "Error"           |
+|      - Recovery modal: "Restore draft?"                        |
+|                                                                |
+|   2. BULK ACTIONS (Sprint 2 parziale!)                         |
+|      BACKEND (actions.py +415 righe):                          |
+|      - POST /gmail/bulk/archive                                |
+|      - POST /gmail/bulk/trash                                  |
+|      - POST /gmail/bulk/star                                   |
+|      - POST /gmail/bulk/unstar                                 |
+|      - POST /gmail/bulk/mark-read                              |
+|      - POST /gmail/bulk/mark-unread                            |
+|      (Tutti con Gmail batch API, max 50 msg)                   |
+|                                                                |
+|      FRONTEND:                                                 |
+|      - useSelection.ts - Hook selezione multipla               |
+|      - BulkActionsToolbar.tsx - Toolbar contestuale            |
+|      - Checkbox su hover/selected                              |
+|      - Select All in header                                    |
+|      - Optimistic update istantaneo                            |
+|                                                                |
+|   STATO SPRINT:                                                |
+|   [x] Sprint 1 CRITICI: 100% (Mark Read + Drafts)              |
+|   [~] Sprint 2 ALTI: 40% (Bulk OK, mancano Thread + Labels)    |
+|                                                                |
++================================================================+
+```
+
+### File Creati/Modificati Sessione 194
+
+| File | Tipo | Descrizione |
+|------|------|-------------|
+| `backend/gmail/drafts.py` | NUOVO | 6 endpoint drafts |
+| `backend/gmail/actions.py` | MOD | +6 endpoint bulk |
+| `frontend/src/hooks/useDraft.ts` | NUOVO | Hook auto-save |
+| `frontend/src/hooks/useSelection.ts` | NUOVO | Hook selezione |
+| `frontend/src/components/EmailList/BulkActionsToolbar.tsx` | NUOVO | Toolbar bulk |
+| `frontend/src/services/api.ts` | MOD | API drafts + bulk |
+| `frontend/src/hooks/useEmails.ts` | MOD | 5 bulk hooks |
+| `frontend/src/components/EmailList/*` | MOD | Checkbox + toolbar |
+| `frontend/src/components/Compose/ComposeModal.tsx` | MOD | Drafts UI |
+
+### Prossimi Step Miracollook
+
+```
+SPRINT 2 (rimanente ~7h):
+[ ] Thread View (4h) <<< PROSSIMO
+[ ] Labels Custom (3h)
+
+SPRINT 3 (~14h):
+[ ] Upload Attachments (4h)
+[ ] Contacts Autocomplete (6h)
+[ ] Templates risposte (4h)
+
+SPRINT 4 (~12h):
+[ ] Settings page (8h)
+[ ] Firma email (2h)
+[ ] Light mode (2h)
+```
 
 ---
 
@@ -1019,17 +1099,16 @@ Border: #38383A
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-14 06:42 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-14 06:48 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 9219f39 - ANTI-COMPACT: PreCompact auto
-- **File modificati** (5):
+- **Ultimo commit**: c7a8cf6 - Sessione 192 FINALE: SNCP update Miracollook 9.5/10
+- **File modificati** (2):
   - sncp/stato/oggi.md
-  - .swarm/handoff/HANDOFF_20260114_062506.md
-  - PROMPT_RIPRESA.md
-  - reports/engineer_report_20260114_062538.json
-  - reports/scientist_prompt_20260114.md
+  - reports/engineer_report_20260114_064437.json
 
 ### Note
 - Checkpoint automatico generato da hook

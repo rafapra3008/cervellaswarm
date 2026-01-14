@@ -42,9 +42,9 @@ Poi: PMS + WhatsApp = 11/10 (la MAGIA!)
 | Inoltra (Forward) | HAVE | - | - |
 | Cerca email | HAVE | - | - |
 | Archive/Trash/Star/Snooze | HAVE | - | - |
-| **Mark as Read/Unread** | NEED | 2h | CRITICO |
-| **Drafts (bozze)** | NEED | 6h | CRITICO |
-| **Bulk Actions (selezione multipla)** | NEED | 5h | ALTO |
+| **Mark as Read/Unread** | HAVE | - | - |
+| **Drafts (bozze)** | HAVE | - | - |
+| **Bulk Actions (selezione multipla)** | HAVE | - | - |
 | **Thread View** | NEED | 4h | ALTO |
 
 ### BULK ACTIONS - Dettaglio
@@ -181,16 +181,16 @@ Poi: PMS + WhatsApp = 11/10 (la MAGIA!)
 
 ## PIANO IMPLEMENTAZIONE
 
-### SPRINT 1 - CRITICI (8h totali)
+### SPRINT 1 - CRITICI (8h totali) - COMPLETATO!
 ```
-[ ] Mark as Read/Unread     - 2h
-[ ] Drafts auto-save        - 6h
+[x] Mark as Read/Unread     - 2h - FATTO Sessione 192!
+[x] Drafts auto-save        - 6h - FATTO Sessione 194!
 ```
-**Risultato:** Email client USABILE quotidianamente
+**Risultato:** Email client USABILE quotidianamente - OK!
 
-### SPRINT 2 - BASE COMPLETE (12h totali)
+### SPRINT 2 - BASE COMPLETE (7h rimanenti)
 ```
-[ ] Bulk Actions            - 5h
+[x] Bulk Actions            - 5h - FATTO Sessione 194!
 [ ] Thread View             - 4h
 [ ] Labels Custom           - 3h
 ```
