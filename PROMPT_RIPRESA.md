@@ -129,3 +129,19 @@ cd frontend && npm run dev
 ---
 
 **Pronta!** Rafa, cosa facciamo nella prossima sessione?
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-14 13:00 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 315a068 - Sessione 200: MenuMaster Prototipo Completo
+- **File modificati** (1):
+  - reports/engineer_report_20260114_125558.json
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---

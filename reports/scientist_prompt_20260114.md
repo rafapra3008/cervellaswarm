@@ -87,4 +87,4 @@ Scrivi il report in: `reports/DAILY_RESEARCH_20260114.md`
 ---
 
 *Generato automaticamente da La Scienziata - SessionStart Hook*
-*2026-01-14 12:04:06*
+*2026-01-14 13:59:37*
