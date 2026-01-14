@@ -1,7 +1,63 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 205 MENTE LOCALE
-> **Versione:** v2.11.0 - COSTITUZIONE + RICERCA CRYPTO
+> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 206 MIRACOLLO TEST
+> **Versione:** v2.12.0 - ML VERIFICATO + TEST SUITE WHATSAPP
+
+---
+
+## SESSIONE 206 - MIRACOLLO ML + TEST SUITE (14 Gennaio 2026 sera)
+
+```
++================================================================+
+|                                                                |
+|   SESSIONE 206 - MIRACOLLO FOCUS                               |
+|   14 Gennaio 2026 (sera)                                       |
+|                                                                |
+|   PARTE 1: VERIFICA ML IN PRODUZIONE                           |
+|   -----------------------------------                          |
+|   - Deploy check: Container UP (14 Gen 15:58)                  |
+|   - Commit ec8e129 (ML v1.1.0) IN PRODUZIONE                   |
+|   - API /ml/model-info: 15,245 samples, R2 0.383               |
+|   - SCREENSHOT UI: Confidence 92% e 79%!                       |
+|   - PRIMA era 67% fisso (fallback)                             |
+|   - IL ML E' REALE! Non su carta!                              |
+|                                                                |
+|   PARTE 2: TEST SUITE WHATSAPP COMPLETA                        |
+|   -------------------------------------                        |
+|   - test_whatsapp_rate_limiter.py: 32 test (100% PASS)         |
+|   - test_whatsapp_security.py: 32 test (100% PASS)             |
+|   - test_whatsapp_webhook.py: 24 test (skip if deps)           |
+|   - TOTALE: 88 test, 67KB, 2000+ righe!                        |
+|                                                                |
+|   COVERAGE:                                                    |
+|   - Rate limiting (IP 100/min, phone 10/min)                   |
+|   - HMAC SHA256 signature validation                           |
+|   - Timing attack protection                                   |
+|   - Webhook GET/POST endpoints                                 |
+|   - Meta JSON + Twilio form-data                               |
+|                                                                |
+|   GIT MIRACOLLO:                                                |
+|   - c867f6e (rate limiter test)                                |
+|   - 9b31a01 (security + webhook test)                          |
+|   TUTTI PUSHATI!                                               |
+|                                                                |
++================================================================+
+```
+
+### Stato Miracollo - WhatsApp Blindato!
+
+```
+WHATSAPP v2.4.0:
+[x] Rate Limiting - 32 test
+[x] Signature HMAC - 32 test
+[x] Webhook - 24 test
+[x] IN PRODUZIONE
+
+ML v1.1.0:
+[x] Modello trainato - 15,245 samples
+[x] Confidence REALE - 92%, 79%
+[x] IN PRODUZIONE
+```
 
 ---
 
@@ -551,15 +607,21 @@ echo "y" | ./scripts/sncp/compact-state.sh FILE  # Compattazione
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-14 18:23 (unknown)
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-14 18:28 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 48a46b2 - ANTI-COMPACT: PreCompact auto
-- **File modificati** (3):
-  - sncp/stato/oggi.md
-  - reports/scientist_prompt_20260114.md
-  - .swarm/handoff/HANDOFF_20260114_182341.md
+- **Ultimo commit**: cc371b9 - Sessione 205 MENTE LOCALE: Costituzione + Ricerca Crypto
+- **File modificati** (5):
+  - .sncp/progetti/miracollo/reports/TEST_20260114_whatsapp_rate_limiter.md
+  - .sncp/progetti/miracollo/stato.md
+  - .sncp/stato/oggi.md
+  - PROMPT_RIPRESA.md
+  - reports/engineer_report_20260114_182535.json
 
 ### Note
 - Checkpoint automatico generato da hook
