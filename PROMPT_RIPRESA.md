@@ -1,7 +1,55 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 207 ROOM MANAGER PLANNING
-> **Versione:** v2.14.0 - ROOM MANAGER PIANO COMPLETO
+> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 207 SNCP TOOLS
+> **Versione:** v2.15.0 - SNCP INIT + VERIFY-SYNC
+
+---
+
+## SESSIONE 207 CONTINUA - SNCP TOOLS CREATI! (14 Gennaio 2026 sera)
+
+```
++================================================================+
+|   SESSIONE 207 - FOCUS CERVELLASWARM                           |
+|   14 Gennaio 2026 (sera tardi)                                 |
++================================================================+
+
+MILESTONE 1.1 COMPLETATO! (da Roadmap FASE 1)
+
+CREATO:
+--------
+1. sncp-init.sh - Wizard nuovo progetto
+   - Auto-detect stack (--analyze)
+   - Crea struttura completa
+   - Guardiana: 8.8/10 APPROVATO!
+   - Symlink: sncp-init
+
+2. verify-sync.sh - Verifica coerenza docs/codice
+   - Check stato.md freshness
+   - Check commit non documentati
+   - Check migrations
+   - Symlink: verify-sync
+
+DOCUMENTAZIONE:
+- README.md SNCP aggiornato
+- stato.md CervellaSwarm aggiornato
+
+SCORE CERVELLASWARM:
+- SNCP: 8.0 -> 8.2 (+0.2)
+- Media: 8.0/10 (target 9.5)
+
+PROSSIMI STEP:
+[ ] Semplificare struttura SNCP (archivio vecchi)
+[ ] Prima sessione giornaliera completa
+[ ] Score 8.5+
+
+COMANDI NUOVI:
+  sncp-init nome-progetto           # Wizard
+  sncp-init nome --analyze          # Con auto-detect
+  verify-sync                       # Check coerenza
+  verify-sync miracollo --verbose   # Singolo progetto
+
++================================================================+
+```
 
 ---
 
@@ -749,41 +797,9 @@ echo "y" | ./scripts/sncp/compact-state.sh FILE  # Compattazione
 
 ---
 
+---
+
 **Pronta!** Rafa, cosa facciamo?
 
-*"Su carta != Reale"*
+*"Cursor l'ha fatto. Noi lo faremo."*
 *"Un po' ogni giorno fino al 100000%!"*
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
-## AUTO-CHECKPOINT: 2026-01-14 19:06 (unknown)
-
-### Stato Git
-- **Branch**: main
-- **Ultimo commit**: 8f7dd6d - Sessione 206: ML Verificato + Test Suite WhatsApp
-- **File modificati** (3):
-  - sncp/stato/oggi.md
-  - reports/scientist_prompt_20260114.md
-  - reports/engineer_report_20260114_185550.json
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: unknown
-
----
