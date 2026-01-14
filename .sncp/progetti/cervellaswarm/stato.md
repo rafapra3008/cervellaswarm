@@ -1,47 +1,35 @@
 # Stato CervellaSwarm
-> Ultimo aggiornamento: 14 Gennaio 2026 - Sessione 192
+> Ultimo aggiornamento: 14 Gennaio 2026 - Sessione 203
 
 ---
 
 ## TL;DR
 
 ```
-AUDIT COMPLETO: 4 aree analizzate
-SCORE ATTUALE: 7.2/10 media
-TARGET: 9.5/10 (nostro standard)
-DOCUMENTAZIONE: 3500+ righe di studio!
-STATUS: MAPPA PRONTA, decidere quando iniziare
+SCORE ATTUALE: 7.8/10 media (era 7.5)
+TARGET: 9.5/10
+GAP: 1.7 punti
+FOCUS: USARE quello che abbiamo, non aggiungere "su carta"!
 ```
 
 ---
 
-## SESSIONE 192 - AUDIT & STUDIO COMPLETO!
+## SESSIONE 203 - RESET FILOSOFICO!
 
 ```
 +================================================================+
 |                                                                |
-|   "Se documentiamo = facciamo!"                                |
+|   "SU CARTA" != "REALE"                                        |
+|   Solo cose USATE portano alla LIBERTA GEOGRAFICA!             |
 |                                                                |
-|   AUDIT COMPLETO CON GUARDIANE:                                |
+|   SCORE REALI POST-SESSIONE 202-203:                           |
 |                                                                |
-|   SNCP (Memoria):     7.0/10  --> target 9.5                   |
-|   Sistema Log:        6.0/10  --> target 9.5                   |
-|   Agenti (Cervelle):  7.8/10  --> target 9.5                   |
-|   Infrastruttura:     8.0/10  --> target 9.5                   |
+|   SNCP (Memoria):     8.0/10  (era 7.5) +0.5                   |
+|   Sistema Log:        7.5/10  (era 7.0) +0.5                   |
+|   Agenti (Cervelle):  8.5/10  (era 8.2) +0.3                   |
+|   Infrastruttura:     8.5/10  (=)                              |
 |                                                                |
-|   SCOPERTA: I big player usano i NOSTRI pattern!              |
-|   (CrewAI, LangChain, Microsoft - stessa struttura)            |
-|                                                                |
-|   MANCA: Automazione + Compaction + Chiarezza ruoli            |
-|                                                                |
-|   DELIVERABLES:                                                |
-|   - MAPPA_9.5_MASTER.md (la bussola!)                          |
-|   - STUDIO_SNCP_9.5.md (1037 righe)                            |
-|   - STUDIO_LOGGING_9.5_*.md (4 file, 1500+ righe)              |
-|   - STUDIO_AGENTI_9.5_*.md (4 file, 1400+ righe)               |
-|   - AUDIT_INFRA_20260114.md (384 righe)                        |
-|                                                                |
-|   EFFORT TOTALE: 80-100h su 2-3 mesi per 9.5                   |
+|   MEDIA: 7.8/10 | TARGET: 9.5 | GAP: 1.7                       |
 |                                                                |
 +================================================================+
 ```
@@ -50,78 +38,59 @@ STATUS: MAPPA PRONTA, decidere quando iniziare
 
 ## Score Dashboard
 
-| Area | Score | Gap | Sprint |
-|------|-------|-----|--------|
-| SNCP | 7.0 | -2.5 | 5 sprint (30h) |
-| Log | 6.0 | -3.5 | 4 sprint (12d) |
-| Agenti | 7.8 | -1.7 | 4 fasi (8-12w) |
-| Infra | 8.0 | -1.5 | Quick fixes (4h) |
+| Area | Score | Gap | Note |
+|------|-------|-----|------|
+| SNCP | 8.0 | -1.5 | Script testati! |
+| Log | 7.5 | -2.0 | Funziona |
+| Agenti | 8.5 | -1.0 | 16 operativi |
+| Infra | 8.5 | -1.0 | Tutto OK |
 
 ---
 
-## Problemi Critici Identificati
+## Cosa Funziona REALE
 
-### SNCP
-- `oggi.md` = 950 righe (max 300!)
-- 80% file obsoleti
-- Zero automazione
-
-### Log
-- NO distributed tracing (trace_id)
-- NO alerting system
-- Retention non definita
-
-### Agenti
-- Researcher vs Scienziata overlap
-- Output testo libero (no JSON)
-- Solo orchestrazione sequential
-
-### Infra
-- Cron non installato
-- hooks/ directory mancante
-- Heartbeat log 120k!
+| Cosa | Status | Testato |
+|------|--------|---------|
+| 4 Script SNCP | ATTIVI | Sessione 203 |
+| SwarmLogger v2.0.0 | ATTIVO | Quotidiano |
+| 16 Agenti | ATTIVI | Quotidiano |
+| Log Rotation | ATTIVO | Cron 3:00 |
 
 ---
 
-## File Creati Sessione 192
+## PARCHEGGIATO (pronto se serve)
+
+| Cosa | Perche |
+|------|--------|
+| AlertSystem | Monitoriamo manualmente |
+| JSON Schema x16 | 5 bastano |
+| Dashboard SSE | Overkill |
+| Telegram | DA DECIDERE futuro |
+
+---
+
+## 3 ABITUDINI per 9.5
 
 ```
-.sncp/progetti/cervellaswarm/
-+-- MAPPA_9.5_MASTER.md              <-- La BUSSOLA!
-+-- reports/
-    +-- STUDIO_SNCP_9.5.md           (1037 righe)
-    +-- STUDIO_LOGGING_9.5_INDEX.md
-    +-- STUDIO_LOGGING_9.5_PARTE1_STATO_ATTUALE.md
-    +-- STUDIO_LOGGING_9.5_PARTE2_BEST_PRACTICES.md
-    +-- STUDIO_LOGGING_9.5_PARTE3_ROADMAP.md
-    +-- STUDIO_AGENTI_9.5_INDEX.md
-    +-- STUDIO_AGENTI_9.5_PARTE1.md
-    +-- STUDIO_AGENTI_9.5_PARTE2.md
-    +-- STUDIO_AGENTI_9.5_PARTE3.md
-    +-- AUDIT_INFRA_20260114.md
-    +-- engineer_report_20260114_agents.md
-    +-- logging_system_analysis_20260114.md
++================================================================+
+|                                                                |
+|   1. health-check.sh a INIZIO sessione                         |
+|   2. compact-state.sh se file > 300 righe                      |
+|   3. Delegare SEMPRE ai worker                                 |
+|                                                                |
++================================================================+
 ```
 
 ---
 
-## Quick Wins Pronti
+## Script SNCP (TESTATI!)
 
-| Fix | Effort | Impatto |
-|-----|--------|---------|
-| Pulire oggi.md | 30 min | +0.5 SNCP |
-| Merge miracallook/miracollook | 10 min | Fix typo |
-| RUOLI_CHEAT_SHEET.md | 1h | Chiarezza agenti |
-| Setup cron weekly_retro | 30 min | Automazione |
-
----
-
-## Prossimi Step
-
-1. [ ] **QUICK WINS** - Pulizia facile (2h)
-2. [ ] **SNCP Sprint 1** - File Size Control (4h)
-3. [ ] **LOG Sprint 1** - Distributed Tracing (3d)
-4. [ ] **AGENTI Quick Win** - Rename + Cheat Sheet (1 settimana)
+```bash
+./scripts/sncp/health-check.sh        # Dashboard ASCII
+./scripts/sncp/pre-session-check.sh   # Check inizio
+./scripts/sncp/post-session-update.sh # Checklist fine
+./scripts/sncp/compact-state.sh FILE  # Compattazione
+```
 
 ---
 
@@ -130,21 +99,18 @@ STATUS: MAPPA PRONTA, decidere quando iniziare
 | Cosa | Path |
 |------|------|
 | MAPPA MASTER | `.sncp/progetti/cervellaswarm/MAPPA_9.5_MASTER.md` |
-| Studio SNCP | `.sncp/progetti/cervellaswarm/reports/STUDIO_SNCP_9.5.md` |
-| Studio Log | `.sncp/progetti/cervellaswarm/reports/STUDIO_LOGGING_9.5_*.md` |
-| Studio Agenti | `.sncp/progetti/cervellaswarm/reports/STUDIO_AGENTI_9.5_*.md` |
-| Audit Infra | `.sncp/progetti/cervellaswarm/reports/AUDIT_INFRA_20260114.md` |
+| Stato | `.sncp/progetti/cervellaswarm/stato.md` |
+| Script SNCP | `scripts/sncp/` |
 
 ---
 
-## Famiglia (invariato)
+## Famiglia
 
-- 1 Regina (Orchestrator) - coordina + consulta
-- 3 Guardiane (Opus) - validano vs SPECS
-- 12 Worker (Sonnet) - implementano seguendo SPECS
+- 1 Regina (Orchestrator)
+- 3 Guardiane (Opus)
+- 12 Worker (Sonnet)
 
 ---
 
-*"Se documentiamo = facciamo!"*
-*"Il nostro sistema e la nostra anima, cuore, cervello"*
-*Aggiornare questo file a ogni sessione CervellaSwarm*
+*"Su carta != Reale"*
+*"Un po' ogni giorno fino al 100000%!"*

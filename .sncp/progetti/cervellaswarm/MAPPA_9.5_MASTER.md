@@ -1,8 +1,8 @@
 # MAPPA MASTER - CervellaSwarm verso 9.5
 
-> **Data:** 14 Gennaio 2026 - Sessione 202 (AGGIORNATA!)
+> **Data:** 14 Gennaio 2026 - Sessione 203 (AGGIORNATA!)
 > **Obiettivo:** Portare TUTTI gli score a 9.5 minimo
-> **Filosofia:** "Se documentiamo = facciamo!"
+> **Filosofia:** "Su carta != Reale" - Solo cose USATE contano!
 
 ---
 
@@ -11,128 +11,180 @@
 ```
 +================================================================+
 |                                                                |
-|   CERVELLASWARM - STATO ATTUALE vs TARGET                      |
+|   CERVELLASWARM - STATO REALE POST-SESSIONE 202                |
 |                                                                |
-|   SNCP (Memoria)      [########--]  7.5/10  -->  9.5  (+0.5!)  |
-|   SISTEMA LOG         [#######---]  7.0/10  -->  9.5  (+1.0!)   |
-|   AGENTI (Cervelle)   [########--]  8.2/10  -->  9.5  (+0.4!)  |
-|   INFRASTRUTTURA      [#########-]  8.5/10  -->  9.5  (+0.5!)  |
+|   SNCP (Memoria)      [########--]  8.0/10  -->  9.5  GAP 1.5  |
+|   SISTEMA LOG         [########--]  7.5/10  -->  9.5  GAP 2.0  |
+|   AGENTI (Cervelle)   [#########-]  8.5/10  -->  9.5  GAP 1.0  |
+|   INFRASTRUTTURA      [#########-]  8.5/10  -->  9.5  GAP 1.0  |
 |                                                                |
-|   MEDIA ATTUALE:      7.5/10  (era 7.2)                        |
+|   MEDIA ATTUALE:      7.8/10  (era 7.5)                        |
 |   TARGET:             9.5/10                                   |
-|   GAP:                2.0 punti (era 2.3)                      |
+|   GAP:                1.7 punti                                |
 |                                                                |
 +================================================================+
 ```
 
-### Progressi Sessione 201
+### Progressi Sessione 202-203
 
 ```
 +================================================================+
-|   QUICK WINS COMPLETATI!                                       |
+|   SESSIONE 202: SNCP + Alerting + JSON Schema                  |
 |                                                                |
-|   [x] oggi.md compaction      1078 -> 186 righe (-83%)         |
-|   [x] Merge typo cartella     miracallook -> miracollook       |
-|   [x] RUOLI_CHEAT_SHEET.md    Chi fa cosa (docs/)              |
-|   [x] Cron weekly_retro       Ogni lunedi alle 8:00            |
+|   [x] 4 script SNCP automazione (TESTATI sessione 203!)        |
+|   [x] AlertSystem completo (PARCHEGGIATO - pronto se serve)    |
+|   [x] JSON schema 5 agenti (PARCHEGGIATO - completare se serve)|
+|   [x] miracollo/stato.md compattato (576 -> 208 righe)         |
 |                                                                |
-|   COMMIT: f09092c | PUSH: OK                                   |
+|   COMMIT: 6868187 | PUSH: OK                                   |
 +================================================================+
 ```
 
 ---
 
-## 1. SNCP (MEMORIA) - 7.5/10 --> 9.5
+## REALE vs PARCHEGGIATO (Sessione 203)
 
-### Stato Attuale (AGGIORNATO)
+```
++================================================================+
+|                                                                |
+|   "SU CARTA" != "REALE"                                        |
+|   Solo cose USATE portano alla LIBERTA GEOGRAFICA!             |
+|                                                                |
++================================================================+
+```
+
+### REALE (Lo usiamo ogni sessione)
+
+| Cosa | Status | Come lo usiamo |
+|------|--------|----------------|
+| Script SNCP | ATTIVO | health-check inizio sessione |
+| Compact-state | ATTIVO | Quando file > 300 righe |
+| SwarmLogger | ATTIVO | Tutti i worker lo usano |
+| 16 Agenti | ATTIVO | Spawn-workers quotidiano |
+
+### PARCHEGGIATO (Pronto, ma non prioritario)
+
+| Cosa | Perche parcheggiato | Quando riattivare |
+|------|---------------------|-------------------|
+| AlertSystem | Monitoriamo manualmente | Se troppe sessioni sfuggono |
+| JSON Schema x16 | 5 bastano per ora | Se serve validazione |
+| Dashboard real-time | Overkill per 1-2 sessioni/giorno | Se scale up |
+| Slack notifier | Non usiamo Slack | Mai (o Telegram) |
+
+### DA DECIDERE
+
+| Cosa | Domanda |
+|------|---------|
+| Telegram alerting | Serve notifica fine worker? |
+| RAG/Semantic search | Serve cercare in SNCP? |
+
+---
+
+## 1. SNCP (MEMORIA) - 8.0/10 --> 9.5
+
+### Stato Attuale (Sessione 203)
 - **Struttura:** OTTIMA (progetti separati, archivio mensile)
-- **Formato:** PERFETTO (Markdown + YAML frontmatter)
-- **Pattern:** ALLINEATI con industry standard
-- **oggi.md:** PULITO! (186 righe vs 1078)
-- **Typo cartelle:** RISOLTO (miracollook unificato)
+- **Automazione:** 4 SCRIPT FUNZIONANTI E TESTATI!
+  - `health-check.sh` - Dashboard ASCII (score 90/100)
+  - `pre-session-check.sh` - Verifica inizio sessione
+  - `post-session-update.sh` - Checklist fine sessione
+  - `compact-state.sh` - Compattazione automatica
+- **oggi.md:** 253 righe (sotto controllo)
+- **stato.md progetti:** Tutti < 300 righe
 
-### Problemi Rimanenti
-| Problema | Impatto | Fix | Status |
-|----------|---------|-----|--------|
-| ~~oggi.md = 950 righe~~ | ~~CRITICO~~ | ~~Compaction~~ | DONE! |
-| ~~Typo miracallook~~ | ~~ALTO~~ | ~~Merge~~ | DONE! |
-| 80% file obsoleti | ALTO | Automazione updates | TODO |
-| Worker non usano SNCP | ALTO | Integrazione spawn | TODO |
-| Zero visibility | MEDIO | Dashboard health | TODO |
+### Cosa Funziona REALE
+| Cosa | Status | Testato |
+|------|--------|---------|
+| health-check.sh | ATTIVO | Sessione 203 |
+| compact-state.sh | ATTIVO | miracollo 576->208 |
+| Archivio backup | ATTIVO | .sncp/archivio/2026-01/ |
 
-### Roadmap 9.5 (4 Sprint rimanenti)
+### Cosa Manca per 9.5
+| Gap | Impatto | Azione |
+|-----|---------|--------|
+| Usare script ogni sessione | ALTO | Abitudine! |
+| Worker output in SNCP | MEDIO | Template gia pronti |
+
+### Roadmap Semplificata
 ```
-Sprint 1: File Size Control     COMPLETATO!  --> 7.5 DONE
-Sprint 2: Automazione Base      8h   --> 9.0
-Sprint 3: Adoption/Integration  6h   --> 9.2
-Sprint 4: Dashboard/Monitoring  6h   --> 9.4
-Sprint 5: Polish/Documentation  6h   --> 9.5
+Sprint 1-2: COMPLETATI (8.0)
+Sprint 3: ADOZIONE - Usare ogni sessione     --> 8.5
+Sprint 4: VERIFICA - Funziona davvero?       --> 9.0
+Sprint 5: POLISH - Solo se serve             --> 9.5
 ```
-
-### Report Dettagliato
-`.sncp/progetti/cervellaswarm/reports/STUDIO_SNCP_9.5.md`
 
 ---
 
-## 2. SISTEMA LOG - 7.0/10 --> 9.5
+## 2. SISTEMA LOG - 7.5/10 --> 9.5
 
-### Stato Attuale (AGGIORNATO Sessione 201!)
+### Stato Attuale (Sessione 203)
 - **SwarmLogger v2.0.0:** ECCELLENTE con Distributed Tracing!
-  - trace_id, span_id, parent_span_id
-  - Context manager span() per nesting
-  - child_logger() per worker
-  - get_trace() per debugging
-- **Log Rotation:** Cron ogni 3:00 (46 worker logs puliti!)
-- **Database:** BUONA base (4.6MB, 4158 eventi)
-- **Heartbeat:** FUNZIONANTE
+- **Log Rotation:** Cron ogni 3:00 (ATTIVO)
+- **AlertSystem:** PRONTO ma PARCHEGGIATO
+  - PatternDetector (keywords, spikes, stuck agents)
+  - Notifiers (Console, File, Slack ready)
 
-### Problemi Rimanenti
-| Problema | Impatto | Fix | Status |
-|----------|---------|-----|--------|
-| ~~NO distributed tracing~~ | ~~CRITICO~~ | ~~trace_id, span_id~~ | DONE! |
-| ~~Log rotation manuale~~ | ~~ALTO~~ | ~~Cron 3:00~~ | DONE! |
-| NO alerting system | CRITICO | Pattern detector + Slack | NEXT! |
-| Retention non definita | ALTO | ILM automation | TODO |
-| Dashboard statico | ALTO | Real-time SSE | TODO |
+### Cosa Funziona REALE
+| Cosa | Status | Note |
+|------|--------|------|
+| SwarmLogger | ATTIVO | Tutti worker lo usano |
+| Log rotation | ATTIVO | Cron 3:00 |
+| Database eventi | ATTIVO | ~4.6MB |
 
-### Roadmap 9.5 (3 Sprint rimanenti)
+### PARCHEGGIATO (pronto se serve)
+| Cosa | Perche | Riattivare quando |
+|------|--------|-------------------|
+| AlertSystem | Monitoriamo manualmente | Se perdiamo errori |
+| Slack notifier | Non usiamo Slack | Mai |
+| Dashboard SSE | Overkill | Se scale up |
+
+### Cosa Manca per 9.5
+| Gap | Impatto | Decisione |
+|-----|---------|-----------|
+| Alerting automatico | MEDIO | PARCHEGGIATO |
+| Telegram notifiche | BASSO | DA DECIDERE |
+
+### Roadmap Semplificata
 ```
-Sprint 1: Tracing + Rotation    COMPLETATO!  --> 7.0 DONE
-Sprint 2: Alerting + Dashboard  4d   --> 8.0  <-- PROSSIMO
-Sprint 3: Error types + PII     3d   --> 9.0
-Sprint 4: Cost tracking + OTel  2d   --> 9.5
+Sprint 1-2: COMPLETATI (7.5)
+Sprint 3: TELEGRAM? - Se serve notifiche     --> 8.0
+Sprint 4: Solo se serve davvero              --> 9.0+
 ```
-
-### Quick Win PROSSIMO
-- [ ] Aggiungere trace_id a SwarmLogger
-- [ ] Setup log-rotate.sh in cron (heartbeat grande)
 
 ---
 
-## 3. AGENTI (CERVELLE) - 8.2/10 --> 9.5
+## 3. AGENTI (CERVELLE) - 8.5/10 --> 9.5
 
-### Stato Attuale (AGGIORNATO)
-- **16 agenti** tutti operativi
-- **Formato YAML:** ECCELLENTE (parseable, versionato)
-- **Gerarchia Regina/Guardiane/Worker:** SOLIDA
-- **SNCP integration:** OTTIMA
-- **RUOLI_CHEAT_SHEET.md:** CREATO!
+### Stato Attuale (Sessione 203)
+- **16 agenti** tutti operativi e USATI quotidianamente
+- **Gerarchia:** Regina + 3 Guardiane (Opus) + 12 Worker (Sonnet)
+- **RUOLI_CHEAT_SHEET.md:** Chi fa cosa (chiaro!)
+- **JSON Schema:** 5 agenti top hanno output_schema v1.1.0
 
-### Problemi Rimanenti
-| Problema | Impatto | Fix | Status |
-|----------|---------|-----|--------|
-| ~~Researcher vs Scienziata~~ | ~~ALTO~~ | ~~Chiarire ruoli~~ | DONE! |
-| ~~No CHEAT_SHEET~~ | ~~ALTO~~ | ~~Creare doc~~ | DONE! |
-| Output testo libero | MEDIO | JSON schema validato | TODO |
-| Solo sequential | MEDIO | Orchestrazione parallela | TODO |
-| Protocolli duplicati | BASSO | Refactor condiviso | TODO |
+### Cosa Funziona REALE
+| Cosa | Status | Note |
+|------|--------|------|
+| 16 agenti | ATTIVI | Spawn-workers quotidiano |
+| Gerarchia 3 livelli | ATTIVA | Regina delega sempre |
+| SNCP integration | ATTIVA | Worker scrivono in .sncp |
 
-### Roadmap 9.5 (3 FASI rimanenti)
+### PARCHEGGIATO
+| Cosa | Perche | Riattivare quando |
+|------|--------|-------------------|
+| JSON Schema x16 | 5 bastano | Se serve validazione strict |
+| Orchestrazione parallela | Sequenziale funziona | Se bottleneck |
+
+### Cosa Manca per 9.5
+| Gap | Impatto | Decisione |
+|-----|---------|-----------|
+| JSON altri 11 agenti | BASSO | PARCHEGGIATO |
+| Validazione output | BASSO | Solo se errori |
+
+### Roadmap Semplificata
 ```
-FASE 1: Ruoli Cristallini       COMPLETATO!  --> 8.2 DONE
-FASE 2: Comunicazione JSON      2 sprint  --> 9.0
-FASE 3: Orchestrazione Avanzata 3 sprint  --> 9.3
-FASE 4: Validazione Automatica  2 sprint  --> 9.5
+FASE 1-2: COMPLETATE (8.5)
+FASE 3: USARE - Delegare sempre, mai edit diretti  --> 9.0
+FASE 4: Solo se serve davvero                      --> 9.5
 ```
 
 ---
@@ -157,78 +209,88 @@ FASE 4: Validazione Automatica  2 sprint  --> 9.5
 
 ---
 
-## PRIORITA GLOBALE (AGGIORNATA Sessione 202)
+## PRIORITA GLOBALE (Sessione 203 - RESET!)
 
-### COMPLETATI (Sessione 201)
-- [x] **SNCP:** Pulire oggi.md (1078-->186 righe)
-- [x] **SNCP:** Merge miracallook typo
-- [x] **AGENTI:** RUOLI_CHEAT_SHEET.md
-- [x] **INFRA:** Cron weekly_retro
-- [x] **LOG:** SwarmLogger v2.0.0 (trace_id, span_id, parent_span_id!)
-- [x] **LOG:** Log rotation cron (ogni 3:00, 46 file puliti)
+### COMPLETATI (Sessioni 201-202)
+- [x] **SNCP:** 4 script automazione TESTATI!
+- [x] **SNCP:** Compaction miracollo (576->208)
+- [x] **LOG:** AlertSystem pronto (PARCHEGGIATO)
+- [x] **AGENTI:** JSON schema 5 top (PARCHEGGIATO)
 
-### P1 - ALTO (IN CORSO - Sessione 202)
-1. **SNCP:** Automazione updates (Sprint 2) <-- IN CORSO
-2. **LOG:** Basic alerting (Slack)
-3. **AGENTI:** JSON manifests top 5
+### FOCUS: 3 COSE REALI
 
-### P2 - MEDIO (prossimo mese)
-6. **SNCP:** Dashboard health
-7. **LOG:** Real-time dashboard
-8. **AGENTI:** JSON schema output
+```
++================================================================+
+|                                                                |
+|   INVECE DI AGGIUNGERE "SU CARTA"...                           |
+|   USIAMO QUELLO CHE ABBIAMO!                                   |
+|                                                                |
+|   1. health-check.sh ogni INIZIO sessione                      |
+|   2. compact-state.sh quando file > 300 righe                  |
+|   3. Delegare SEMPRE (mai edit diretti Regina)                 |
+|                                                                |
++================================================================+
+```
 
-### P3 - BASSO (quando c'e tempo)
-9. **SNCP:** Semantic search (ChromaDB)
-10. **LOG:** Cost tracking + OTel
-11. **AGENTI:** Orchestrazione parallela
-12. **INFRA:** RAG Qdrant
+### PARCHEGGIATO (pronto se serve)
+- AlertSystem automatico
+- JSON Schema altri 11 agenti
+- Dashboard real-time SSE
+- Semantic search ChromaDB
+- RAG Qdrant
+
+### DA DECIDERE (con Rafa)
+- Telegram notifiche fine worker?
+- Serve altro per 9.5 o basta USARE?
 
 ---
 
-## EFFORT RIMANENTE
+## LA VERITA SUL 9.5
 
 ```
 +================================================================+
 |                                                                |
-|   COMPLETATO:   ~6h (Quick Wins)                               |
+|   COME ARRIVIAMO A 9.5?                                        |
 |                                                                |
-|   RIMANENTE:                                                   |
-|   SNCP:      24h  (4 sprint rimanenti)                         |
-|   LOG:       12d  (4 sprint)                                   |
-|   AGENTI:    6-10 settimane (3 fasi rimanenti)                 |
-|   INFRA:     2h   (quick fixes rimanenti)                      |
+|   NON aggiungendo piu "su carta"!                              |
+|   MA usando quello che abbiamo OGNI GIORNO!                    |
 |                                                                |
-|   TOTALE:    ~70-90 ore lavoro                                 |
-|              (distribuito su 2-3 mesi)                          |
+|   SNCP 8.0 -> 9.5:  Usare script ogni sessione                 |
+|   LOG 7.5 -> 9.5:   Gia funziona, solo decidere Telegram       |
+|   AGENTI 8.5 -> 9.5: Delegare sempre, zero edit diretti        |
+|   INFRA 8.5 -> 9.5: Gia funziona!                              |
 |                                                                |
-+================================================================+
-```
-
----
-
-## PROSSIMO STEP (Sessione 202)
-
-```
-+================================================================+
-|                                                                |
-|   P1 IN CORSO: SNCP Sprint 2 - Automazione Base                |
-|                                                                |
-|   COSA: Scripts automazione SNCP                               |
-|   - pre-session-check.sh (avviso se stato.md obsoleto)         |
-|   - post-session-update.sh (prompt aggiornamento)              |
-|   - health-check.sh (dashboard ASCII)                          |
-|   - Worker templates con SNCP output                           |
-|                                                                |
-|   PERCHE: Score SNCP da 7.5 a 9.0 (automazione!)               |
-|   EFFORT: ~4-6 ore                                             |
+|   Il 9.5 non e FARE DI PIU.                                    |
+|   Il 9.5 e USARE BENE quello che c'e!                          |
 |                                                                |
 +================================================================+
 ```
 
 ---
 
-*"Il nostro sistema e la nostra anima, cuore, cervello"*
-*"Se documentiamo = facciamo!"*
-*"Non abbiamo fretta. Un po' ogni giorno fino al 100000%!"*
+## PROSSIMO STEP (Sessione 203)
 
-**Sessione 201 - 14 Gennaio 2026**
+```
++================================================================+
+|                                                                |
+|   ZERO NUOVE FEATURE!                                          |
+|                                                                |
+|   Solo 3 abitudini:                                            |
+|   1. health-check.sh a INIZIO sessione                         |
+|   2. compact-state.sh se file > 300 righe                      |
+|   3. Delegare SEMPRE ai worker                                 |
+|                                                                |
+|   DA DECIDERE con Rafa:                                        |
+|   - Telegram notifiche? (si/no)                                |
+|   - Serve altro? (probabilmente no!)                           |
+|                                                                |
++================================================================+
+```
+
+---
+
+*"Su carta != Reale"*
+*"Solo cose USATE portano alla LIBERTA GEOGRAFICA!"*
+*"Un po' ogni giorno fino al 100000%!"*
+
+**Sessione 203 - 14 Gennaio 2026**

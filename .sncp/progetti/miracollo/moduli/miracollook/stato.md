@@ -1,7 +1,42 @@
 # STATO - Miracollook
 
-> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 195
-> **Status:** v2.5.0 - THREAD VIEW + LABELS CUSTOM!
+> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 202
+> **Status:** v2.5.0 - FASE 1 EMAIL SOLIDO 100% + CONTEXT MENU RICERCATO!
+
+---
+
+## SESSIONE 202 - CONTEXT MENU RICERCA COMPLETA!
+
+```
++================================================================+
+|                                                                |
+|   CONTEXT MENU - RICERCA APPROFONDITA COMPLETATA!              |
+|                                                                |
+|   5 PARTI DI RICERCA:                                          |
+|   - PARTE 1: Gmail + Outlook (context menu tradizionale)       |
+|   - PARTE 2: Superhuman + Apple Mail (Command Palette)         |
+|   - PARTE 3: Implementazione Tecnica React                     |
+|   - PARTE 4: Best Practices + Raccomandazioni                  |
+|   - UX STRATEGY: Hotel-specific actions design                 |
+|                                                                |
+|   DIFFERENZIATORE MIRACOLLOOK:                                 |
+|   - Hotel Actions nel context menu (NESSUNO ha questo!)        |
+|   - Link to Booking, Create Note, Guest Profile                |
+|   - Context-aware menu (email ospite vs team vs normale)       |
+|                                                                |
+|   SPRINT PLAN (13h totali):                                    |
+|   Sprint 1 (3h): Menu base Gmail-equivalent                    |
+|   Sprint 2 (6h): Hotel Actions (IL VALORE!)                    |
+|   Sprint 3 (4h): Polish + Snooze smart                         |
+|                                                                |
+|   FILES SNCP CREATI:                                           |
+|   - studi/RICERCA_CONTEXT_MENU.md (indice)                     |
+|   - studi/RICERCA_CONTEXT_MENU_PARTE1-4.md                     |
+|   - studi/CONTEXT_MENU_UX_STRATEGY.md                          |
+|   - decisioni/CONTEXT_MENU_DESIGN_SPECS.md                     |
+|                                                                |
++================================================================+
+```
 
 ---
 
@@ -367,11 +402,33 @@ Frontend: http://localhost:5173 - OK
 ## PROSSIMI STEP
 
 ```
-SPRINT 1 - CRITICI:
+SPRINT 1 - CRITICI: ✅ COMPLETO!
 [x] Mark as Read/Unread     (2h) - FATTO Sessione 192!
 [x] Drafts auto-save        (6h) - FATTO Sessione 194!
 
-SPRINT 2 - ALTI (~7h):
+SPRINT 2 - ALTI: ✅ COMPLETO!
+[x] Bulk Actions            (5h) - FATTO Sessione 194!
+[x] Thread View             (4h) - FATTO Sessione 195!
+[x] Labels Custom           (3h) - FATTO Sessione 195!
+
+>>> CONTEXT MENU - RICERCA COMPLETA! (Sessione 202) <<<
+
+SPRINT CONTEXT MENU (~13h):
+[ ] Sprint 1: Menu base     (3h) - Gmail-equivalent
+[ ] Sprint 2: Hotel Actions (6h) - IL DIFFERENZIATORE!
+[ ] Sprint 3: Polish        (4h) - Snooze smart + analytics
+
+SPRINT 3 - COMPOSIZIONE (~14h):
+[ ] Upload Attachments      (4h) <<< PROSSIMO
+[ ] Contacts Autocomplete   (6h)
+[ ] Templates risposte      (4h)
+
+SPRINT 4 - POLISH (~12h):
+[ ] Settings Page           (8h)
+[ ] Firma email             (2h)
+[ ] Light mode toggle       (2h)
+
+SPRINT 2 - ALTI (~7h): (OLD - COMPLETATO!)
 [x] Bulk Actions            (5h) - FATTO Sessione 194!
 [ ] Thread View             (4h) <<< PROSSIMO
 [ ] Labels Custom           (3h)
