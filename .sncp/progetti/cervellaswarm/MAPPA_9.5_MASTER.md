@@ -1,6 +1,6 @@
 # MAPPA MASTER - CervellaSwarm verso 9.5
 
-> **Data:** 14 Gennaio 2026 - Sessione 201 (AGGIORNATA!)
+> **Data:** 14 Gennaio 2026 - Sessione 202 (AGGIORNATA!)
 > **Obiettivo:** Portare TUTTI gli score a 9.5 minimo
 > **Filosofia:** "Se documentiamo = facciamo!"
 
@@ -14,7 +14,7 @@
 |   CERVELLASWARM - STATO ATTUALE vs TARGET                      |
 |                                                                |
 |   SNCP (Memoria)      [########--]  7.5/10  -->  9.5  (+0.5!)  |
-|   SISTEMA LOG         [######----]  6.0/10  -->  9.5           |
+|   SISTEMA LOG         [#######---]  7.0/10  -->  9.5  (+1.0!)   |
 |   AGENTI (Cervelle)   [########--]  8.2/10  -->  9.5  (+0.4!)  |
 |   INFRASTRUTTURA      [#########-]  8.5/10  -->  9.5  (+0.5!)  |
 |                                                                |
@@ -74,25 +74,31 @@ Sprint 5: Polish/Documentation  6h   --> 9.5
 
 ---
 
-## 2. SISTEMA LOG - 6.0/10 --> 9.5
+## 2. SISTEMA LOG - 7.0/10 --> 9.5
 
-### Stato Attuale
-- **SwarmLogger:** ECCELLENTE (8/10) - NON toccare
+### Stato Attuale (AGGIORNATO Sessione 201!)
+- **SwarmLogger v2.0.0:** ECCELLENTE con Distributed Tracing!
+  - trace_id, span_id, parent_span_id
+  - Context manager span() per nesting
+  - child_logger() per worker
+  - get_trace() per debugging
+- **Log Rotation:** Cron ogni 3:00 (46 worker logs puliti!)
 - **Database:** BUONA base (4.6MB, 4158 eventi)
 - **Heartbeat:** FUNZIONANTE
 
-### Problemi Critici
+### Problemi Rimanenti
 | Problema | Impatto | Fix | Status |
 |----------|---------|-----|--------|
-| NO distributed tracing | CRITICO | trace_id, span_id | NEXT! |
-| NO alerting system | CRITICO | Pattern detector + Slack | TODO |
+| ~~NO distributed tracing~~ | ~~CRITICO~~ | ~~trace_id, span_id~~ | DONE! |
+| ~~Log rotation manuale~~ | ~~ALTO~~ | ~~Cron 3:00~~ | DONE! |
+| NO alerting system | CRITICO | Pattern detector + Slack | NEXT! |
 | Retention non definita | ALTO | ILM automation | TODO |
 | Dashboard statico | ALTO | Real-time SSE | TODO |
 
-### Roadmap 9.5 (4 Sprint = 12 giorni)
+### Roadmap 9.5 (3 Sprint rimanenti)
 ```
-Sprint 1: Tracing + Alerting    3d   --> 7.5  CRITICAL  <-- PROSSIMO
-Sprint 2: Retention + Dashboard 4d   --> 8.5
+Sprint 1: Tracing + Rotation    COMPLETATO!  --> 7.0 DONE
+Sprint 2: Alerting + Dashboard  4d   --> 8.0  <-- PROSSIMO
 Sprint 3: Error types + PII     3d   --> 9.0
 Sprint 4: Cost tracking + OTel  2d   --> 9.5
 ```
@@ -151,22 +157,20 @@ FASE 4: Validazione Automatica  2 sprint  --> 9.5
 
 ---
 
-## PRIORITA GLOBALE (AGGIORNATA)
+## PRIORITA GLOBALE (AGGIORNATA Sessione 202)
 
 ### COMPLETATI (Sessione 201)
 - [x] **SNCP:** Pulire oggi.md (1078-->186 righe)
 - [x] **SNCP:** Merge miracallook typo
 - [x] **AGENTI:** RUOLI_CHEAT_SHEET.md
 - [x] **INFRA:** Cron weekly_retro
+- [x] **LOG:** SwarmLogger v2.0.0 (trace_id, span_id, parent_span_id!)
+- [x] **LOG:** Log rotation cron (ogni 3:00, 46 file puliti)
 
-### P0 - CRITICO (PROSSIMI)
-1. **LOG:** Aggiungere trace_id a SwarmLogger
-2. **LOG:** Setup log-rotate.sh
-
-### P1 - ALTO (prossime 2 settimane)
-3. **SNCP:** Automazione updates
-4. **LOG:** Basic alerting (Slack)
-5. **AGENTI:** JSON manifests top 5
+### P1 - ALTO (IN CORSO - Sessione 202)
+1. **SNCP:** Automazione updates (Sprint 2) <-- IN CORSO
+2. **LOG:** Basic alerting (Slack)
+3. **AGENTI:** JSON manifests top 5
 
 ### P2 - MEDIO (prossimo mese)
 6. **SNCP:** Dashboard health
@@ -202,17 +206,21 @@ FASE 4: Validazione Automatica  2 sprint  --> 9.5
 
 ---
 
-## PROSSIMO STEP
+## PROSSIMO STEP (Sessione 202)
 
 ```
 +================================================================+
 |                                                                |
-|   P0 CRITICO: trace_id per SwarmLogger                         |
+|   P1 IN CORSO: SNCP Sprint 2 - Automazione Base                |
 |                                                                |
-|   COSA: Aggiungere distributed tracing                         |
-|   PERCHE: Score LOG da 6.0 a 7.5                               |
-|   COME: Modificare SwarmLogger.py                              |
-|   EFFORT: ~2-4 ore                                             |
+|   COSA: Scripts automazione SNCP                               |
+|   - pre-session-check.sh (avviso se stato.md obsoleto)         |
+|   - post-session-update.sh (prompt aggiornamento)              |
+|   - health-check.sh (dashboard ASCII)                          |
+|   - Worker templates con SNCP output                           |
+|                                                                |
+|   PERCHE: Score SNCP da 7.5 a 9.0 (automazione!)               |
+|   EFFORT: ~4-6 ore                                             |
 |                                                                |
 +================================================================+
 ```
