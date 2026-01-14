@@ -1,7 +1,81 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 210 STUDIO VDA
-> **Versione:** v2.18.0 - STUDIO VDA ETHEOS IN CORSO!
+> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 211 STUDIO VDA PARTE 2
+> **Versione:** v2.19.0 - STUDIO VDA ETHEOS AVANZATO!
+
+---
+
+## SESSIONE 211 - STUDIO VDA ETHEOS PARTE 2 (14 Gennaio 2026 sera)
+
+```
++================================================================+
+|   MIRACOLLO - STUDIO VDA ETHEOS PARTE 2                         |
+|   14 Gennaio 2026 (sera)                                        |
++================================================================+
+
+CONTINUAZIONE STUDIO VDA!
+-------------------------
+Analizzati 18 screenshot (4-21) in 3 blocchi:
+- BLOCCO 2: Screenshot 4-9 (Chiavi, DND, MUR)
+- BLOCCO 3: Screenshot 10-15 (HVAC, Room Control, Occupazione)
+- BLOCCO 4: Screenshot 16-21 (Staff, Dashboard, Device Manager)
+
+SCOPERTE CHIAVE SESSIONE 211:
+-----------------------------
+SISTEMA CHIAVI:
+- BLE (badge) + CODICE (PIN) - due tipi
+- Chiavi OSPITI separate da STAFF
+- Staff ha RFID + CODE backup
+- Zone multiple per chiave (camera + aree)
+- Profili ospite configurabili
+
+HVAC/TEMPERATURA:
+- 2 termostati per camera (BAGNO + CAMERA separati!)
+- Rilevamento FINESTRE APERTE! ("Open" nel display)
+- Range 16-28C configurabile
+- Comfort mode preset
+
+SENSORI REAL-TIME:
+- PRESENZA (occupazione vera, non check-in!)
+- PORTA (aperta/chiusa)
+- DND (Do Not Disturb)
+- MUR (Make Up Room - richiesta pulizia)
+
+HARDWARE:
+- Protocollo MODBUS (standard industriale!)
+- 4 dispositivi/camera: RCU, 6T Keypad, LT BLE, CON4
+- 112 dispositivi totali, 100% online
+
+7 MODULI VDA:
+1. Dashboard (KPI online/offline)
+2. Room Manager
+3. Device Manager
+4. Site Users
+5. Scheduler (automazioni!)
+6. Activity Log (audit!)
+7. Alarm Viewer
+
+PROGRESSSO SCREENSHOT:
+- PARTE 1 (Sess 210): 1-3 completati
+- PARTE 2 (Sess 211): 4-21 completati
+- PARTE 3 (prossima): 22-26 (ultimi 5)
+
+FILE CREATI:
+- 20260114_ANALISI_VDA_ETHEOS_PARTE1.md (Sess 210)
+- 20260114_ANALISI_VDA_ETHEOS_PARTE2.md (Sess 211)
+
+Path: .sncp/progetti/miracollo/moduli/room_manager/studi/
+
+PROSSIMA SESSIONE (PARTE 3):
+- Screenshot 22-26 (ultimi 5)
+- Studio big players (Mews, Opera, etc.)
+- Confronto e decisioni architettura
+- Definire come fare il NOSTRO!
+
+"Non copiamo VDA - facciamo PIU SMART, FLUIDO, BELLO!"
+
++================================================================+
+```
 
 ---
 
@@ -960,16 +1034,16 @@ echo "y" | ./scripts/sncp/compact-state.sh FILE  # Compattazione
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-14 21:09 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-14 21:19 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 78daf8e - Sessione 210: Studio VDA Etheos - Parte 1
-- **File modificati** (4):
-  - sncp/progetti/cervellaswarm/roadmaps/ROADMAP_COMUNICAZIONE_INTERNA.md
-  - .sncp/stato/oggi.md
-  - scripts/cron/README.md
-  - reports/engineer_report_20260114_210833.json
+- **Ultimo commit**: cd3095e - Sessione 209: ROADMAP COMUNICAZIONE INTERNA COMPLETATA!
+- **File modificati** (2):
+  - sncp/stato/oggi.md
+  - reports/engineer_report_20260114_211540.json
 
 ### Note
 - Checkpoint automatico generato da hook

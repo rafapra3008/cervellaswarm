@@ -1,8 +1,43 @@
 # STATO OGGI
 
 > **Data:** 14 Gennaio 2026 (Martedi)
-> **Sessione:** 210 - STUDIO VDA ETHEOS
-> **Ultimo aggiornamento:** Sessione 210 (sera tardi)
+> **Sessione:** 211 - STUDIO VDA ETHEOS PARTE 2
+> **Ultimo aggiornamento:** Sessione 211 (sera)
+
+---
+
+## SESSIONE 211 - STUDIO VDA ETHEOS PARTE 2
+
+```
++================================================================+
+|   MIRACOLLO - STUDIO VDA ETHEOS PARTE 2                         |
+|   14 Gennaio 2026 (sera)                                        |
++================================================================+
+
+FATTO:
+- Analizzati 18 screenshot (4-21) in 3 blocchi
+- Documentato PARTE 2 in SNCP
+- Checkpoint completo
+
+SCOPERTE CHIAVE:
+- Sistema chiavi: BLE + CODICE, ospiti/staff separati
+- HVAC: 2 termostati/camera, rilevamento finestre
+- Sensori: presenza, porta, DND, MUR real-time
+- Hardware: MODBUS standard, 4 device/camera
+- 7 moduli VDA (incluso Scheduler e Activity Log!)
+
+SCREENSHOT:
+- PARTE 1 (Sess 210): 1-3 completati
+- PARTE 2 (Sess 211): 4-21 completati
+- PARTE 3 (prossima): 22-26 (ultimi 5)
+
+FILE:
+- ANALISI_VDA_ETHEOS_PARTE2.md creato
+
+"Non copiamo VDA - facciamo PIU SMART, FLUIDO, BELLO!"
+
++================================================================+
+```
 
 ---
 
@@ -31,71 +66,6 @@ INFORMAZIONI CHIAVE:
 - 112 dispositivi (~3.5 per camera)
 - 100% online, 0 allarmi
 
-PROSSIMA SESSIONE: Screenshot 4-26
-
-"Non copiamo VDA - facciamo PIU SMART, FLUIDO, BELLO!"
-
-+================================================================+
-```
-
----
-
-## SESSIONE 208 - ROOM MANAGER FASE 1 COMPLETATA!
-
-```
-+================================================================+
-|   MIRACOLLO - ROOM MANAGER BACKEND FUNZIONANTE!                |
-|   14 Gennaio 2026 (sera)                                       |
-+================================================================+
-
-FATTO STASERA:
-- Analisi backend esistente (2 router paralleli)
-- Fix 10 placeholder hotel_id -> lookup reale
-- Fix import path services.py
-- Guardiana Qualita: 9/10 APPROVATO
-- Migration 036 applicata (4 tabelle nuove)
-- Dati test creati (hotel ALLE, 5 camere)
-- Test API: 5/5 PASSED!
-
-BRANCH: feature/room-manager
-WORKTREE: ~/Developer/miracollo-worktrees/room-manager/
-
-PROSSIMO: FASE 2 (Services Layer) o altre priorita
-
-+================================================================+
-```
-
----
-
-## SESSIONE 207 - GIORNATA STORICA!
-
-```
-+================================================================+
-|                                                                |
-|   SESSIONE 207 - TRE PARTI IMPORTANTI!                         |
-|   14 Gennaio 2026                                              |
-|                                                                |
-|   PARTE 1: MENTE LOCALE (DECISIONI STRATEGICHE)                |
-|   ---------------------------------------------                |
-|   - Crypto Tax -> NO (non conosciamo il mondo)                 |
-|   - CervellaSwarm Prodotto -> SI!                              |
-|   - Miracollo continua (60/40 split)                           |
-|   - Roadmap 2026 completa (4 fasi)                             |
-|   - Business Plan completo                                     |
-|                                                                |
-|   PARTE 2: ROOM MANAGER PLANNING (Miracollo)                   |
-|   -----------------------------------------                    |
-|   - Guardiana Qualita: 8/10 APPROVATO                          |
-|   - Piano 6 fasi creato                                        |
-|   - Decisioni Rafa confermate                                  |
-|                                                                |
-|   PARTE 3: SNCP TOOLS (CervellaSwarm)                          |
-|   -----------------------------------                          |
-|   - sncp-init.sh creato (8.8/10 Guardiana!)                    |
-|   - verify-sync.sh creato                                      |
-|   - 3 Guardiane audit: TUTTO APPROVATO!                        |
-|   - Score SNCP: 8.0 -> 8.2                                     |
-|                                                                |
 +================================================================+
 ```
 
@@ -105,55 +75,23 @@ PROSSIMO: FASE 2 (Services Layer) o altre priorita
 
 | Progetto | Area | Score | Note |
 |----------|------|-------|------|
-| CervellaSwarm | SNCP | 8.2/10 | sncp-init + verify-sync |
+| CervellaSwarm | SNCP | 8.4/10 | Hook automatici attivi |
 | CervellaSwarm | Log | 7.5/10 | SwarmLogger v2.0.0 |
 | CervellaSwarm | Agenti | 8.5/10 | 16 operativi |
 | CervellaSwarm | Infra | 8.5/10 | Production ready |
-| **MEDIA** | - | **8.0/10** | Target: 9.5 |
-
----
-
-## Comandi SNCP (NUOVI!)
-
-```bash
-# Wizard nuovo progetto
-sncp-init nome-progetto
-sncp-init nome --analyze    # con auto-detect stack
-
-# Verifica coerenza
-verify-sync                 # tutti
-verify-sync miracollo -v    # singolo verbose
-
-# Esistenti
-./scripts/sncp/health-check.sh
-./scripts/sncp/pre-session-check.sh
-./scripts/sncp/compact-state.sh FILE
-```
-
----
-
-## File Importanti Sessione 207
-
-| Cosa | Path |
-|------|------|
-| Roadmap 2026 | `.sncp/progetti/cervellaswarm/roadmaps/ROADMAP_2026_PRODOTTO.md` |
-| Business Plan | `.sncp/progetti/cervellaswarm/BUSINESS_PLAN_2026.md` |
-| Audit Qualita | `.sncp/progetti/cervellaswarm/reports/20260114_AUDIT_GUARDIANA_QUALITA_SNCP_TOOLS.md` |
-| Audit Ricerca | `.sncp/progetti/cervellaswarm/reports/20260114_AUDIT_GUARDIANA_RICERCA_SNCP_STRUCTURE.md` |
-| Audit Ops | `.sncp/progetti/cervellaswarm/reports/20260114_AUDIT_GUARDIANA_OPS_SNCP_INFRA.md` |
+| Miracollo | RateParity | 9.5/10 | STABILE |
+| Miracollo | Room Manager | Studio | VDA Etheos |
+| **MEDIA** | - | **8.4/10** | Target: 9.5 |
 
 ---
 
 ## Prossimi Step
 
-### CervellaSwarm (FASE 1 continua)
-1. [ ] Semplificare struttura SNCP (archivio vecchi)
-2. [ ] Prima sessione giornaliera completa
-3. [ ] Score 8.5+
-
 ### Miracollo (Room Manager)
-1. [ ] FASE 1: Consolidamento Backend
-2. [ ] Fix hotel_id placeholder
+1. [ ] PARTE 3: Screenshot 22-26 (ultimi 5)
+2. [ ] Studio big players (Mews, Opera)
+3. [ ] Confronto e decisioni architettura
+4. [ ] Implementazione Room Manager
 
 ---
 
@@ -166,31 +104,6 @@ cervella-gpu:        SPENTA (schedule weekend)
 
 ---
 
-*"Cursor l'ha fatto. Noi lo faremo."*
-*"Un po' ogni giorno fino al 100000%!"*
+*"Non copiamo VDA - facciamo PIU SMART, FLUIDO, BELLO!"*
 
-*Sessione 207 - 14 Gennaio 2026*
-
----
-
-## AUTO-CHECKPOINT: 2026-01-14 20:50 (session_end)
-
-- **Progetto**: CervellaSwarm
-- **Evento**: session_end
-- **Generato da**: sncp_auto_update.py v2.0.0
-
----
-
-## AUTO-CHECKPOINT: 2026-01-14 20:52 (session_end)
-
-- **Progetto**: CervellaSwarm
-- **Evento**: session_end
-- **Generato da**: sncp_auto_update.py v2.0.0
-
----
-
-## AUTO-CHECKPOINT: 2026-01-14 21:09 (session_end)
-
-- **Progetto**: CervellaSwarm
-- **Evento**: session_end
-- **Generato da**: sncp_auto_update.py v2.0.0
+*Sessione 211 - 14 Gennaio 2026*

@@ -1,8 +1,74 @@
 # STATO PROGETTO MIRACOLLO
 
-> **Data:** 2026-01-14 21:15 - Sessione 210 VDA STUDIO
+> **Data:** 2026-01-14 22:00 - Sessione 211 VDA STUDIO PARTE 2
 > **Score:** 9.5/10 STABILE
 > **Versione:** 1.8.2
+
+---
+
+## SESSIONE 211 - STUDIO VDA ETHEOS PARTE 2 (14 Gennaio 2026 sera)
+
+```
++================================================================+
+|   STUDIO VDA ETHEOS - PARTE 2                                   |
+|   14 Gennaio 2026 (sera)                                        |
++================================================================+
+
+CONTINUAZIONE STUDIO VDA!
+-------------------------
+Analizzati 18 screenshot (4-21) in 3 blocchi:
+- BLOCCO 2: Screenshot 4-9 (Chiavi, DND, MUR)
+- BLOCCO 3: Screenshot 10-15 (HVAC, Room Control, Occupazione)
+- BLOCCO 4: Screenshot 16-21 (Staff, Dashboard, Device Manager)
+
+SCOPERTE CHIAVE:
+----------------
+SISTEMA CHIAVI:
+- BLE (badge) + CODICE (PIN) - due tipi
+- Chiavi OSPITI separate da STAFF
+- Staff ha RFID + CODE backup
+- Zone multiple per chiave (camera + aree)
+- Profili ospite configurabili
+
+HVAC/TEMPERATURA:
+- 2 termostati per camera (BAGNO + CAMERA)
+- Rilevamento FINESTRE APERTE!
+- Range 16-28°C configurabile
+- Comfort mode preset
+
+SENSORI REAL-TIME:
+- PRESENZA (occupazione vera, non check-in!)
+- PORTA (aperta/chiusa)
+- DND (Do Not Disturb)
+- MUR (Make Up Room - richiesta pulizia)
+
+HARDWARE:
+- Protocollo MODBUS (standard industriale!)
+- 4 dispositivi/camera: RCU, Keypad, BLE, CON4
+- 112 dispositivi totali, 100% online
+
+MODULI VDA (7 totali):
+1. Dashboard (KPI)
+2. Room Manager
+3. Device Manager
+4. Site Users
+5. Scheduler (automazioni!)
+6. Activity Log (audit!)
+7. Alarm Viewer
+
+FILE CREATO:
+- .sncp/progetti/miracollo/moduli/room_manager/studi/
+  20260114_ANALISI_VDA_ETHEOS_PARTE2.md
+
+PROSSIMA SESSIONE (PARTE 3):
+- Screenshot 22-26 (ultimi 5)
+- Studio big players (Mews, Opera)
+- Confronto e decisioni architettura
+
+"Non copiamo VDA - facciamo PIÙ SMART, FLUIDO, BELLO!"
+
++================================================================+
+```
 
 ---
 
