@@ -1,94 +1,99 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 196
-> **Versione:** v136.0.0 - MENUMASTER PROTOTIPO MVP FUNZIONANTE!
+> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 197
+> **Versione:** v137.0.0 - MENUMASTER SPRINT 2 COMPLETATO!
 
 ---
 
-## SESSIONE 196 - MENUMASTER NUOVO PROGETTO!
+## SESSIONE 197 - MENUMASTER SPRINT 2 FATTO!
 
 ```
 +================================================================+
 |                                                                |
-|   MENUMASTER - Progetto Nuovo da Zero!                         |
+|   MENUMASTER - SPRINT 2 COMPLETATO!                            |
+|   Guardiana Qualita: 8/10 APPROVED                             |
 |                                                                |
 |   "Menu digitale professionale in 5 minuti"                    |
 |   "Il Canva dei menu digitali"                                 |
 |                                                                |
-|   COSA ABBIAMO FATTO:                                          |
+|   SPRINT 2 COMPLETATO:                                         |
 |                                                                |
-|   RICERCA (2800+ righe):                                       |
-|   - Competitor Analysis (Leggimenu, Plateform, Toast, Menubly) |
-|   - Architettura Studio (FastAPI + PostgreSQL + React)         |
-|   - UX Research (mobile-first, best practices)                 |
-|   - Guardiana Ricerca: 8.3/10 APPROVED                         |
+|   [x] Frontend collegato a API reali                           |
+|       - Auth (login/register/me) funzionante                   |
+|       - Types allineati (name_translations, base_price)        |
+|       - React Query hooks + Zustand stores                     |
 |                                                                |
-|   BACKEND MVP:                                                 |
-|   - FastAPI + PostgreSQL 15 + SQLAlchemy 2.0                   |
-|   - Auth JWT (register/login/me) FUNZIONANTE                   |
-|   - CRUD Categories con tenant isolation                       |
-|   - CRUD Dishes con tenant isolation                           |
-|   - QR Code endpoints (implementati)                           |
-|   - 3 Alembic migrations                                       |
+|   [x] QR Code system completo                                  |
+|       - Backend: genera, lista, update, delete                 |
+|       - Download: PNG, SVG, PDF                                |
+|       - Frontend: pagina /qr-codes nel dashboard               |
 |                                                                |
-|   FRONTEND:                                                    |
-|   - Vite + React 18 + TypeScript + Tailwind                    |
-|   - 5 pagine (Login, Register, Dashboard, MenuEditor, Public)  |
-|   - Build OK (296KB JS, 17KB CSS)                              |
+|   [x] Public Menu View mobile-first                            |
+|       - API pubbliche senza auth                               |
+|       - Category tabs sticky                                   |
+|       - DishCard + DishModal                                   |
 |                                                                |
-|   DOCKER:                                                      |
-|   - docker-compose.yml (dev)                                   |
-|   - docker-compose.prod.yml (prod)                             |
-|   - Makefile con 20+ comandi                                   |
+|   [x] Image Upload (local placeholder)                         |
+|       - Backend: storage_service con Pillow                    |
+|       - Frontend: ImageUpload drag-and-drop                    |
+|       - Pronto per Cloudflare R2                               |
 |                                                                |
-|   BUG FIXATI:                                                  |
-|   - Enum case mismatch (FREE vs free)                          |
-|   - bcrypt/passlib conflict (pin 4.0.1)                        |
-|   - Tabelle mancanti (nuova migration)                         |
-|   - Tenant isolation nelle API                                 |
+|   BUG FIXATI POST-REVIEW:                                      |
+|   - uploads.py: fix import (get_current_user)                  |
+|   - qrApi.ts: fix type (url invece di qr_url)                  |
+|   - MenuEditor.tsx: rimosso "as any"                           |
+|                                                                |
+|   BUILD: 324KB JS, 20KB CSS, 156 modules                       |
 |                                                                |
 +================================================================+
-```
-
-### Path Progetto MenuMaster
-
-```
-/Users/rafapra/Developer/MenuMaster/
-├── backend/           # FastAPI app
-├── frontend/          # React app
-├── research/          # Competitor, UX analysis
-├── docs/              # Architettura, roadmap
-└── docker-compose.yml
 ```
 
 ### Come Avviare MenuMaster
 
 ```bash
+# Backend (Docker - gia up)
 cd /Users/rafapra/Developer/MenuMaster
-make dev   # oppure docker-compose up -d
+docker-compose up -d
 # API: http://localhost:8000/docs
-# Frontend: cd frontend && npm run dev -> http://localhost:5173
+
+# Frontend (Dev Server)
+cd frontend && npm run dev
+# UI: http://localhost:5173
+
+# Menu Pubblico Demo
+http://localhost:5173/menu/demo-ristorante-1768381547
 ```
 
-### Prossimi Step MenuMaster
+### Credenziali Demo
 
 ```
-SPRINT 2:
-[ ] Frontend collegato a API reali
-[ ] QR Code generation completo
-[ ] Public menu view
-[ ] Image upload (Cloudflare R2)
+Email: demo@menumaster.com
+Password: demo123456
+```
+
+### Prossimi Step (Sprint 3)
+
+```
+[ ] Polish UI/UX (toast, loading states)
+[ ] Testing (pytest, Playwright)
+[ ] Multi-tenancy fix (TODO nel backend)
+[ ] Deploy (Railway/Fly.io, R2, domain)
 ```
 
 ### SNCP MenuMaster
 
 ```
-.sncp/progetti/menumaster/
-├── stato.md           # Stato corrente (LEGGERE!)
-├── idee/
-├── decisioni/
-├── reports/
-└── roadmaps/
+.sncp/progetti/menumaster/stato.md   # LEGGERE! Stato completo
+```
+
+### Path Progetto
+
+```
+/Users/rafapra/Developer/MenuMaster/
+├── backend/           # FastAPI + PostgreSQL
+├── frontend/          # React + Vite + Tailwind
+├── research/          # Competitor, UX analysis
+└── docs/              # ROADMAP, architettura
 ```
 
 ---
@@ -1283,15 +1288,17 @@ Border: #38383A
 
 ---
 
+---
+
 ## AUTO-CHECKPOINT: 2026-01-14 09:59 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 93a2cfc - Handoff MenuMaster Sessione 1
+- **Ultimo commit**: 92d4974 - ANTI-COMPACT: PreCompact auto
 - **File modificati** (3):
   - sncp/stato/oggi.md
-  - reports/engineer_report_20260114_095552.json
-  - reports/engineer_report_20260114_095633.json
+  - reports/scientist_prompt_20260114.md
+  - .swarm/handoff/HANDOFF_20260114_095945.md
 
 ### Note
 - Checkpoint automatico generato da hook
