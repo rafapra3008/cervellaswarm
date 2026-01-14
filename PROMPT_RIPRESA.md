@@ -1,7 +1,75 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 197
-> **Versione:** v137.0.0 - MENUMASTER SPRINT 2 COMPLETATO!
+> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 198
+> **Versione:** v138.0.0 - MENUMASTER per SESTO GRADO - Design Specs Complete!
+
+---
+
+## SESSIONE 198 - MENUMASTER per SESTO GRADO
+
+```
++================================================================+
+|                                                                |
+|   MENUMASTER per SESTO GRADO                                   |
+|   Strumento INTERNO gestione menu famiglia Pra                 |
+|                                                                |
+|   SESSIONE 198 - COMPLETATO:                                   |
+|                                                                |
+|   [x] Studiato Brand Manual Sesto Grado                        |
+|       - Colori: Arancio #E97E21, Marrone #7D3125               |
+|       - Font: ABOLITION (maiuscole)                            |
+|       - Logo: 6 gradi (arrampicata)                            |
+|                                                                |
+|   [x] Analizzati 3 menu PDF                                    |
+|       - Bistrot Leggero (pranzo) - 12 piatti                   |
+|       - Bistrot Unconventional (cena) - 12 piatti              |
+|       - Dessert - 5 piatti                                     |
+|       - Kids - 4 piatti                                        |
+|       - Pizza - 10 piatti                                      |
+|       TOTALE: 43 piatti con allergeni EU                       |
+|                                                                |
+|   [x] Design Specs UI/UX (cervella-marketing)                  |
+|       - Layout 3-column (sidebar/editor/preview)               |
+|       - Dark theme con accenti arancio/marrone                 |
+|       - Mobile responsive                                      |
+|       - Flow edit < 30 secondi                                 |
+|                                                                |
+|   [x] SNCP completo documentato                                |
+|       - stato.md con tutti i 43 piatti                         |
+|       - Design specs salvate                                   |
+|                                                                |
++================================================================+
+```
+
+### SNCP MenuMaster (LEGGERE!)
+
+```
+.sncp/progetti/menumaster/stato.md              # Stato completo + 43 piatti
+.sncp/progetti/menumaster/idee/20260114_DESIGN_SPECS_UI.md  # Design UI/UX
+```
+
+### Prossimi Step (Sessione 199)
+
+```
+1. Approvare design specs con Rafa
+2. Applicare colori brand (#E97E21, #7D3125)
+3. Semplificare flow (no login - uso interno)
+4. Creare struttura 5 menu
+5. Seed 43 piatti reali
+```
+
+### Come Avviare MenuMaster
+
+```bash
+# Backend (Docker)
+cd /Users/rafapra/Developer/MenuMaster
+docker-compose up -d
+# API: http://localhost:8000/docs
+
+# Frontend (porta ESCLUSIVA 5174!)
+cd frontend && npm run dev
+# UI: http://localhost:5174
+```
 
 ---
 
@@ -1292,14 +1360,17 @@ Border: #38383A
 
 ---
 
+---
+
 ## AUTO-CHECKPOINT: 2026-01-14 10:40 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: b5e79fe - Sessione 197: MenuMaster Sprint 2 COMPLETO
-- **File modificati** (2):
+- **Ultimo commit**: b5418e7 - ANTI-COMPACT: PreCompact auto
+- **File modificati** (3):
   - sncp/stato/oggi.md
-  - reports/engineer_report_20260114_103818.json
+  - reports/scientist_prompt_20260114.md
+  - .swarm/handoff/HANDOFF_20260114_104039.md
 
 ### Note
 - Checkpoint automatico generato da hook
