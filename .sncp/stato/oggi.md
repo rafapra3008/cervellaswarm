@@ -6,24 +6,29 @@
 
 ---
 
-## SESSIONE 211 - CERVELLASWARM: SEMPLIFICAZIONE SNCP v4.0
+## SESSIONE 211 - CERVELLASWARM: AUDIT + FIX CRITICO!
 
 ```
 +================================================================+
-|   CERVELLASWARM - MILESTONE 1.2 COMPLETATO!                    |
+|   CERVELLASWARM - AUDIT COMPLETO + FIX!                        |
 |   14 Gennaio 2026 (sera)                                        |
 +================================================================+
 
-FATTO:
+PARTE 1 - SEMPLIFICAZIONE:
 - Struttura SNCP: da 14 a 10 cartelle
-- Archiviato: coscienza/, perne/
-- Spostato: istruzioni/, roadmaps/
 - README SNCP aggiornato v4.0
-- Roadmap 2026 checkbox corretti
 
-SCORE: 8.5 → 8.7 (+0.2)
+PARTE 2 - AUDIT E FIX:
+- Ingegnera: Audit completo sistema
+- TROVATO: symlink NON esistevano! (su carta)
+- Guardiana: CONFERMATO problema
+- FIX: Creati symlink sncp-init + verify-sync
+- TESTATI: Entrambi funzionano!
 
-"SNCP: Da manuale a AUTOMATICO!"
+SCORE: 8.2 (audit) → 9.2 (dopo fix) = +1.0 punto!
+GAP al target: 0.3 punti
+
+"SU CARTA != REALE" - La Costituzione aveva ragione!
 
 +================================================================+
 ```
@@ -99,13 +104,13 @@ INFORMAZIONI CHIAVE:
 
 | Progetto | Area | Score | Note |
 |----------|------|-------|------|
-| CervellaSwarm | SNCP | 8.7/10 | v4.0 Semplificato! |
+| CervellaSwarm | SNCP | 9.2/10 | v4.0 + symlink FIXED! |
 | CervellaSwarm | Log | 7.5/10 | SwarmLogger v2.0.0 |
 | CervellaSwarm | Agenti | 8.5/10 | 16 operativi |
-| CervellaSwarm | Infra | 8.5/10 | Production ready |
+| CervellaSwarm | Infra | 9.0/10 | Hook + Launchd attivi |
 | Miracollo | RateParity | 9.5/10 | STABILE |
 | Miracollo | Room Manager | Studio | VDA Etheos |
-| **MEDIA** | - | **8.5/10** | Target: 9.5 |
+| **MEDIA** | - | **8.7/10** | Target: 9.5 (gap: 0.8) |
 
 ---
 
