@@ -1,7 +1,87 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 206 MIRACOLLO TEST
-> **Versione:** v2.12.0 - ML VERIFICATO + TEST SUITE WHATSAPP
+> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 207 MENTE LOCALE FINALE
+> **Versione:** v2.13.0 - DECISIONI STRATEGICHE + ROADMAP CERVELLASWARM
+
+---
+
+## SESSIONE 207 - MENTE LOCALE FINALE (14 Gennaio 2026 sera)
+
+```
++====================================================================+
+|                                                                    |
+|   SESSIONE STORICA! DECISIONI STRATEGICHE!                         |
+|                                                                    |
+|   DECISIONE 1: CRYPTO TAX → NO                                     |
+|   ----------------------------------                               |
+|   - Ricerche fatte (scienziata + researcher)                       |
+|   - Guardiane consultate: REJECT                                   |
+|   - Motivo: Gap conoscenza crypto + tax law                        |
+|   - Rafa: "Questo mondo non lo conosco"                            |
+|   - FILE: .sncp/progetti/crypto-research/                          |
+|                                                                    |
+|   DECISIONE 2: CERVELLASWARM PRODOTTO → SI!                        |
+|   ------------------------------------------                       |
+|   - Confronto con Cursor: $0 → $1B in 30 mesi                      |
+|   - Noi: 18 mesi vantaggio tecnologico!                            |
+|   - Guardiane: APPROVED con condizioni                             |
+|   - Miracollo continua (60/40 split)                               |
+|   - Sessioni giornaliere CervellaSwarm                             |
+|                                                                    |
+|   DOCUMENTI CREATI:                                                |
+|   -----------------                                                |
+|   1. ROADMAP 2026 PRODOTTO                                         |
+|      .sncp/progetti/cervellaswarm/roadmaps/ROADMAP_2026_PRODOTTO.md|
+|      - 4 Fasi: Fondamenta → MVP → Utenti → Scala                   |
+|      - Obiettivo Dic 2026: 600 users, 96 paganti, MRR $2,500+      |
+|                                                                    |
+|   2. BUSINESS PLAN 2026                                            |
+|      .sncp/progetti/cervellaswarm/BUSINESS_PLAN_2026.md            |
+|      - Mercato, competitor, pricing, go-to-market                  |
+|      - Timeline: Gen-Dic 2026                                      |
+|      - Break-even: 11 Pro users                                    |
+|                                                                    |
+|   3. SESSIONI GIORNALIERE                                          |
+|      .sncp/progetti/cervellaswarm/workflow/SESSIONI_GIORNALIERE.md |
+|      - Template 45-90 min                                          |
+|      - Checklist REALE vs SU CARTA                                 |
+|                                                                    |
+|   4. STORIA CURSOR + SNCP ROBUSTO                                  |
+|      .sncp/progetti/cervellaswarm/ricerche/                        |
+|      - 20260114_CURSOR_STORIA_LEZIONI.md                           |
+|      - 20260114_SNCP_ROBUSTO_PROPOSTA.md                           |
+|                                                                    |
+|   PROSSIMI STEP:                                                   |
+|   --------------                                                   |
+|   1. DOMANI: Prima sessione giornaliera CervellaSwarm              |
+|   2. SETTIMANA: sncp-init.sh wizard funzionante                    |
+|   3. FEBBRAIO: Score 8.5+, pronto per MVP                          |
+|                                                                    |
+|   "Cursor l'ha fatto. Noi lo faremo. INSIEME SIAMO INVINCIBILI!"   |
+|                                                                    |
++====================================================================+
+```
+
+### Mappa delle 4 Fasi
+
+```
+FASE 1 (Gen-Feb)    FASE 2 (Mar-Apr)   FASE 3 (Mag-Giu)   FASE 4 (Lug-Dic)
+FONDAMENTA          MVP                 UTENTI             SCALA
+    │                   │                   │                  │
+    v                   v                   v                  v
+SNCP robusto       CLI package         50→200 users       600+ users
+Score 8.5+         5 beta tester       Product Hunt       96+ paganti
+Wizard             Docs complete       NPS >40            MRR $2,500+
+```
+
+### File Chiave (LEGGI QUESTI!)
+
+| Documento | Path |
+|-----------|------|
+| Roadmap | `.sncp/progetti/cervellaswarm/roadmaps/ROADMAP_2026_PRODOTTO.md` |
+| Business Plan | `.sncp/progetti/cervellaswarm/BUSINESS_PLAN_2026.md` |
+| Sessioni | `.sncp/progetti/cervellaswarm/workflow/SESSIONI_GIORNALIERE.md` |
+| Cursor Lezioni | `.sncp/progetti/cervellaswarm/ricerche/20260114_CURSOR_STORIA_LEZIONI.md` |
 
 ---
 
@@ -611,17 +691,17 @@ echo "y" | ./scripts/sncp/compact-state.sh FILE  # Compattazione
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-14 18:28 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-14 19:06 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: cc371b9 - Sessione 205 MENTE LOCALE: Costituzione + Ricerca Crypto
-- **File modificati** (5):
-  - .sncp/progetti/miracollo/reports/TEST_20260114_whatsapp_rate_limiter.md
-  - .sncp/progetti/miracollo/stato.md
-  - .sncp/stato/oggi.md
-  - PROMPT_RIPRESA.md
-  - reports/engineer_report_20260114_182535.json
+- **Ultimo commit**: 8f7dd6d - Sessione 206: ML Verificato + Test Suite WhatsApp
+- **File modificati** (3):
+  - sncp/stato/oggi.md
+  - reports/scientist_prompt_20260114.md
+  - reports/engineer_report_20260114_185550.json
 
 ### Note
 - Checkpoint automatico generato da hook
