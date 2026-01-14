@@ -1,7 +1,55 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 204
-> **Versione:** v2.10.0 - ML VERIFICATO REALE IN PRODUZIONE!
+> **Ultimo aggiornamento:** 14 Gennaio 2026 - Sessione 205 MENTE LOCALE
+> **Versione:** v2.11.0 - COSTITUZIONE + RICERCA CRYPTO
+
+---
+
+## SESSIONE 205 - MENTE LOCALE (14 Gennaio 2026 sera)
+
+```
++================================================================+
+|                                                                |
+|   SESSIONE "MENTE LOCALE" - Rafa ha aperto discussione         |
+|                                                                |
+|   DOMANDA: Vale la pena continuare Miracollo o cercare         |
+|   altra strada per la liberta geografica?                      |
+|                                                                |
+|   PARTE 1: FIX COSTITUZIONE                                    |
+|   --------------------------                                   |
+|   - Hook SessionStart aggiornati (3 progetti)                  |
+|   - 16 file agent aggiornati con ordine ESPLICITO              |
+|   - Ora TUTTE le Cervelle leggono la Costituzione!             |
+|   - Testato e funzionante                                      |
+|                                                                |
+|   PARTE 2: RICERCA CRYPTO TOOLS                                |
+|   -----------------------------                                |
+|   - Lanciate scienziata + researcher in parallelo              |
+|   - ENTRAMBE convergono su: TAX + PORTFOLIO TOOL               |
+|   - Opportunita: $79/anno, AI per lost records                 |
+|   - Timing: 2026 anno boom (nuove regole IRS)                  |
+|   - Si vende da solo (SEO, no vendita attiva)                  |
+|                                                                |
+|   FILE RICERCA:                                                |
+|   .sncp/progetti/crypto-research/ricerche/                     |
+|   - 20260114_SCIENZIATA_mercato_crypto.md                      |
+|   - 20260114_RESEARCHER_INDEX.md (+ 6 parti)                   |
+|                                                                |
+|   DECISIONE PENDENTE:                                          |
+|   Rafa deve decidere se procedere con crypto tax tool          |
+|   o esplorare altre idee (trading, family portfolio, ecc)      |
+|                                                                |
++================================================================+
+```
+
+### Prossima Sessione - Cosa Fare
+
+```
+1. Chiedere a Rafa: "Hai deciso sul crypto tax tool?"
+2. Se SI -> Validazione (landing page + waitlist)
+3. Se NO -> Esplorare altre idee
+4. Se TRADING -> Capire capitale disponibile
+```
 
 ---
 
@@ -501,17 +549,17 @@ echo "y" | ./scripts/sncp/compact-state.sh FILE  # Compattazione
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-14 17:02 (unknown)
+---
+
+## AUTO-CHECKPOINT: 2026-01-14 18:23 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 8db0195 - Sessione 203 FINALE: ML Confidence v1.1.0 - 100%!
-- **File modificati** (5):
+- **Ultimo commit**: 48a46b2 - ANTI-COMPACT: PreCompact auto
+- **File modificati** (3):
   - sncp/stato/oggi.md
-  - reports/engineer_report_20260114_165109.json
-  - reports/engineer_report_20260114_165120.json
-  - reports/engineer_report_20260114_165822.json
-  - reports/engineer_report_20260114_170138.json
+  - reports/scientist_prompt_20260114.md
+  - .swarm/handoff/HANDOFF_20260114_182341.md
 
 ### Note
 - Checkpoint automatico generato da hook
