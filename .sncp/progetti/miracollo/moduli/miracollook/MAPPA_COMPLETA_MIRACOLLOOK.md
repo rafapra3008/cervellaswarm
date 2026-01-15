@@ -25,7 +25,7 @@ LA MAGIA = PMS Integration + Guest Recognition + VELOCITA SUPERHUMAN!
 ```
 FASE 0: FONDAMENTA          [####################] 100% COMPLETA!
 FASE P: PERFORMANCE         [####################] 100% MERGED!
-FASE 1: EMAIL CLIENT SOLIDO [################....] 80%
+FASE 1: EMAIL CLIENT SOLIDO [#################...] 85%
 FASE 2: PMS INTEGRATION     [....................] 0%
 FASE 3: HOTEL WORKFLOW      [....................] 0%
 FASE 4: MULTI-CHANNEL       [....................] 0%
@@ -182,7 +182,7 @@ FASE 4: MULTI-CHANNEL       [....................] 0%
 
 ---
 
-## FASE 1: EMAIL CLIENT SOLIDO [80%]
+## FASE 1: EMAIL CLIENT SOLIDO [85%]
 
 ### 1.1 Mark Read/Unread
 - **Status:** [FATTO] - Sessione 222
@@ -209,11 +209,10 @@ FASE 4: MULTI-CHANNEL       [....................] 0%
 - **Note:** useThread.ts + ThreadView.tsx + /gmail/thread/{id}
 
 ### 1.5 Resizable Panels
-- **Status:** [DA FARE]
+- **Status:** [FATTO] - Sessione 226
 - **Studio:** `studi/RICERCA_RESIZE_PANNELLI.md`, `studi/RICERCA_RESIZABLE_PANELS_V4.md`
 - **Dipende da:** 0.2
-- **Note:** react-resizable-panels v4.4.0 gia installato (da integrare)
-- **Effort:** 3h
+- **Note:** react-resizable-panels v4.4.1 integrato in ThreePanel.tsx con persistence localStorage
 
 ### 1.6 Context Menu
 - **Status:** [DA FARE]
@@ -440,7 +439,7 @@ FASE 4: MULTI-CHANNEL       [....................] 0%
 
 | Step | Feature | Effort | Studio |
 |------|---------|--------|--------|
-| 1.5 | Resizable Panels | 3h | ✅ PRONTO |
+| ~~1.5~~ | ~~Resizable Panels~~ | ~~3h~~ | ✅ **FATTO Sessione 226** |
 | 1.6 | Context Menu | 5h | ✅ PRONTO (2200 righe!) |
 | 1.7 | Bulk Actions | 7-10gg | ✅ PRONTO |
 | 1.8 | Labels Custom | 2-3gg | ✅ PRONTO |
@@ -467,7 +466,7 @@ FASE 4: MULTI-CHANNEL       [....................] 0%
 | Metrica | Attuale | FASE 1 100% | FASE 2 100% |
 |---------|---------|-------------|-------------|
 | Health Score | 8.0/10 | 9.5/10 | 10/10 |
-| Features Complete | 80% | 100% | 120%+ |
+| Features Complete | 85% | 100% | 120%+ |
 | Test Coverage | 0% | 70% | 80% |
 | Differenziazione | Bassa | Media | ALTA (PMS!) |
 
@@ -526,7 +525,7 @@ FASE 0 (Fondamenta)
 
 *"Lavoriamo in PACE! Senza CASINO! Dipende da NOI!"*
 
-*Ultimo aggiornamento: 15 Gennaio 2026 - Sessione 224*
+*Ultimo aggiornamento: 15 Gennaio 2026 - Sessione 226*
 *Cervella Guardiana Qualita - La Custode degli Standard*
 
 *"Non ri-fare, continua da dove altri hanno lasciato!"*

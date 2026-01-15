@@ -1,34 +1,29 @@
 # PROMPT RIPRESA - Miracollo
 
-> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 225
+> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 226
 > **LEGGI E AGISCI. NON RI-ANALIZZARE.**
 
 ---
 
 ## STATO IN UNA RIGA
 
-**MIRACOLLOOK: MAPPA COMPLETA + STUDI MACRO FATTI! 0h ricerca per FASE 1+2!**
+**MIRACOLLOOK: 1.5 Resizable Panels FATTO! FASE 1 ora 85%!**
 
 ---
 
-## SESSIONE 225: STUDI MACRO COMPLETATI!
+## SESSIONE 226: RESIZABLE PANELS COMPLETATO!
 
 ```
 +================================================================+
-|   STUDIATO TUTTO A LIVELLO MACRO!                               |
-|                                                                 |
-|   6 STUDI NUOVI CREATI:                                         |
-|   - Bulk Actions          (182 righe)                           |
-|   - Gmail Labels API      (~150 righe)                          |
-|   - Google People API     (357 righe)                           |
-|   - Settings UI           (150 righe)                           |
-|   - PMS Integration       (650 righe!)                          |
-|   - Testing Strategy      (150 righe)                           |
-|                                                                 |
-|   MAPPA_COMPLETA aggiornata con tutti i link                    |
-|   NORD aggiornato allo stato REALE                              |
-|                                                                 |
-|   FASE 1+2: 0h RICERCA MANCANTE!                                |
+|   1.5 RESIZABLE PANELS IMPLEMENTATO!                           |
+|                                                                |
+|   - ThreePanel.tsx con react-resizable-panels v4.4.1           |
+|   - Group, Panel, Separator API                                |
+|   - localStorage persistence per layout                        |
+|   - Collapsible sidebar e guest-sidebar                        |
+|   - Build OK, pronto per test manuale                          |
+|                                                                |
+|   MAPPA aggiornata: 1.5 [DA FARE] -> [FATTO]                   |
 +================================================================+
 ```
 
@@ -39,7 +34,7 @@
 ```
 FASE 0 (Fondamenta)     [####################] 100%
 FASE P (Performance)    [####################] 100%
-FASE 1 (Email Solido)   [################....] 80%
+FASE 1 (Email Solido)   [#################...] 85%
 FASE 2 (PMS Integration)[....................] 0%
 
 STUDI: TUTTI PRONTI per FASE 1 + FASE 2!
@@ -53,22 +48,19 @@ STUDI: TUTTI PRONTI per FASE 1 + FASE 2!
 |------|------|
 | **MAPPA_COMPLETA** | `.sncp/progetti/miracollo/moduli/miracollook/MAPPA_COMPLETA_MIRACOLLOOK.md` |
 | **NORD** | `.sncp/progetti/miracollo/moduli/miracollook/NORD_MIRACOLLOOK.md` |
-| **Studi MACRO** | `.sncp/progetti/miracollo/moduli/miracollook/studi/STUDIO_MACRO_*.md` |
+| **ThreePanel.tsx** | `miracallook/frontend/src/components/Layout/ThreePanel.tsx` |
 
 ---
 
 ## PROSSIMA SESSIONE
 
 ```
-OPZIONE A - Implementare con studi MICRO:
-  1.5 Resizable Panels (3h) - ricerca dettagliata pronta
+IMPLEMENTARE (studi MICRO pronti):
   1.6 Context Menu (5h) - 2200 righe di specs!
+  1.7 Bulk Actions (2-3gg MVP)
+  1.8 Labels Custom (2-3gg)
 
-OPZIONE B - Continuare studi MACRO:
-  FASE 3 Hotel Workflow - Team Inbox, Templates
-  FASE 4 Multi-Channel - WhatsApp Business
-
-TUTTO PRONTO per implementare FASE 1 + FASE 2!
+TUTTO PRONTO per completare FASE 1!
 ```
 
 ---
@@ -86,5 +78,4 @@ MAI scrivere "FATTO" senza:
 
 ---
 
-*"Studiato MACRO. Pronto per implementare con MICRO."*
-*"Un progresso al giorno = 365 progressi all'anno."*
+*"Un passo alla volta. 1.5 FATTO. Next: 1.6 Context Menu."*
