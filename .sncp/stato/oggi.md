@@ -45,3 +45,11 @@
 ---
 
 *"Due bug trovati e documentati. Prossima sessione li risolviamo!"*
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-15 18:13 (session_end)
+
+- **Progetto**: CervellaSwarm
+- **Evento**: session_end
+- **Generato da**: sncp_auto_update.py v2.0.0
