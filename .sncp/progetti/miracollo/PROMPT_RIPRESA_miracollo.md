@@ -1,63 +1,96 @@
 # PROMPT RIPRESA - Miracollo
 
-> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 227
-> **LEGGI E AGISCI. NON RI-ANALIZZARE.**
+> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 228
+> **PROBLEMI DA RISOLVERE - LAYOUT + EMAIL RENDER**
 
 ---
 
 ## STATO IN UNA RIGA
 
-**MIRACOLLOOK: 1.7 Bulk Actions CODICE SCRITTO - DA TESTARE!**
+**MIRACOLLOOK: Layout fixato parzialmente, 2 bug da risolvere**
 
 ---
 
-## SESSIONE 227: BULK ACTIONS IMPLEMENTATO
+## SESSIONE 228: PULIZIA E DEBUG
 
+### FATTO
+1. Docker Miracallook AZZERATO (pulito)
+2. Porte unificate: Miracallook = **8002** (era 8001 che conflittava con PMS)
+3. Fix Tailwind v4: `@import "tailwindcss"` invece di `@tailwind base/components/utilities`
+4. Trovato bug react-resizable-panels: calcolava dimensioni sbagliate
+5. Creato layout flexbox temporaneo (funziona ma senza resize)
+
+### BUG DA RISOLVERE
+
+**BUG 1: react-resizable-panels non funziona**
 ```
-+================================================================+
-|   1.7 BULK ACTIONS - CODICE COMPLETATO, NON TESTATO             |
-|                                                                 |
-|   FILE CREATI:                                                  |
-|   - hooks/useSelection.ts (98 righe)                            |
-|   - components/BulkActions/BulkActionsBar.tsx (96 righe)        |
-|   - components/BulkActions/index.ts                             |
-|                                                                 |
-|   FILE MODIFICATI:                                              |
-|   - EmailListItem.tsx (checkbox per email)                      |
-|   - EmailList.tsx (checkbox master + selection)                 |
-|   - App.tsx (bulk action handlers)                              |
-|   - api.ts (fix porta 8002 -> 8001)                             |
-|   - tailwind.config.js (animazioni)                             |
-|                                                                 |
-|   BUILD: COMPILA OK                                             |
-|   TEST: NON FATTO (problema Service Worker)                     |
-+================================================================+
+Sintomi:
+- Layout si schiaccia a sinistra (sidebar 3% invece di 15%)
+- La libreria calcola dimensioni sbagliate dal DOM
+- Anche con stili inline corretti, misura valori sbagliati
+
+Soluzione temporanea:
+- ThreePanel.tsx ora usa layout flexbox semplice (senza libreria)
+- Funziona ma NON ha ridimensionamento
+
+Da fare:
+- Investigare perche react-resizable-panels v4.4.1 non funziona
+- Oppure implementare resize manuale con CSS resize/drag
+```
+
+**BUG 2: Email mostra HTML grezzo**
+```
+Sintomi:
+- Contenuto email mostra codice invece di renderizzarlo
+- Si vedono tag markdown/HTML come testo
+
+Da investigare:
+- Componente EmailDetail o ThreadView
+- Come viene parsato il body dell'email
+- Potrebbe essere problema di escape HTML
 ```
 
 ---
 
-## PROBLEMA AMBIENTE DEV
+## COSA ABBIAMO TOLTO (DA RIMETTERE)
 
+**ThreePanel.tsx - Layout ridimensionabile**
 ```
-Service Worker VECCHIO interferisce con richieste API.
-Era configurato per porta 8002, ora porta corretta e' 8001.
+TOLTO:
+- import { Group, Panel, Separator } from 'react-resizable-panels'
+- Layout con Panel ridimensionabili
+- Persistenza layout in localStorage
+- ResizeHandle custom
 
-SOLUZIONE PROSSIMA SESSIONE:
-1. Browser DevTools -> Application -> Service Workers -> Unregister
-2. Storage -> Clear site data
-3. Chiudi e riapri Chrome
-4. Test su http://localhost:5173/
+ORA:
+- Layout flexbox semplice con width % fisse
+- NON ridimensionabile
+
+DA RIMETTERE:
+- Quando fixiamo react-resizable-panels
+- Oppure implementiamo resize CSS nativo
+```
+
+**Debug logs**
+```
+AGGIUNTI (da rimuovere dopo):
+- console.log in ThreePanel.tsx
+- console.warn per layout corrotti
 ```
 
 ---
 
-## STATO MIRACOLLOOK
+## FILE MODIFICATI (Sessione 228)
 
 ```
-FASE 0 (Fondamenta)     [####################] 100%
-FASE P (Performance)    [####################] 100%
-FASE 1 (Email Solido)   [##################..] 90%
-FASE 2 (PMS Integration)[....................] 0%
+miracallook/frontend/src/index.css          <- Fix @import tailwindcss + CSS esplicito
+miracallook/frontend/src/components/Layout/ThreePanel.tsx <- Layout semplificato
+miracallook/frontend/src/services/api.ts    <- Porta 8002
+miracallook/backend/main.py                 <- Porta 8002
+miracallook/backend/auth/google.py          <- Porta 8002
+miracallook/.env                            <- Porta 8002
+miracallook/start_dev.sh                    <- Porta 8002
+miracallook/README.md + TEST_*.md           <- Documentazione porte
 ```
 
 ---
@@ -65,22 +98,29 @@ FASE 2 (PMS Integration)[....................] 0%
 ## PROSSIMA SESSIONE
 
 ```
-1. PRIMA: Pulire Service Worker nel browser
-2. POI: Testare 1.7 Bulk Actions visualmente
-3. SE OK: Commit codice Bulk Actions
-4. DOPO: Continuare con 1.8 Labels Custom
+PRIORITA 1: Fixare rendering email (BUG 2)
+- Controllare EmailDetail.tsx / ThreadView.tsx
+- Verificare come viene mostrato email.body
+
+PRIORITA 2: Ripristinare resize pannelli (BUG 1)
+- Opzione A: Fixare react-resizable-panels
+- Opzione B: Implementare resize CSS nativo
+
+PRIORITA 3: Test completo Bulk Actions
+- Feature era pronta ma non testata per problemi layout
 ```
 
 ---
 
-## FILE CHIAVE
+## MAPPA PORTE (DEFINITIVA)
 
-| File | Cosa |
-|------|------|
-| **MAPPA** | `.sncp/progetti/miracollo/moduli/miracollook/MAPPA_COMPLETA_MIRACOLLOOK.md` |
-| **useSelection** | `frontend/src/hooks/useSelection.ts` |
-| **BulkActionsBar** | `frontend/src/components/BulkActions/` |
+| Progetto | Backend | Frontend |
+|----------|---------|----------|
+| Miracollo PMS | 8001 | 80/443 |
+| Miracallook | **8002** | 5173 |
+| MenuMaster | 8003 | - |
+| Contabilita | 8004 | - |
 
 ---
 
-*"Codice scritto, test pending. Un passo alla volta!"*
+*"Due bug trovati, capiti, documentati. Prossima sessione li risolviamo!"*

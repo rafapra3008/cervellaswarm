@@ -1,22 +1,25 @@
 # STATO OGGI - 15 Gennaio 2026
 
-> **Sessione:** 228 - CervellaSwarm
-> **Ultimo aggiornamento:** 17:45
+> **Sessione:** 228 - Miracallook Debug
+> **Ultimo aggiornamento:** 18:15
 
 ---
 
-## SESSIONE 228 - CERVELLASWARM
+## SESSIONE 228 - MIRACALLOOK DEBUG
 
 ```
 +================================================================+
-|   3 STEP COMPLETATI - CLI PRONTA PER NPM PUBLISH!              |
+|   PULIZIA + DEBUG LAYOUT                                        |
 |                                                                |
-|   2.12 Error Handling  [FATTO] +20 test, exit codes            |
-|   2.13 Help System     [FATTO] Help completo tutti comandi     |
-|   2.14 npm Publish     [FATTO] Ricerca + dry-run PASS          |
+|   FATTO:                                                        |
+|   - Docker azzerato (solo Miracallook)                          |
+|   - Porte unificate: Miracallook = 8002                         |
+|   - Fix Tailwind v4 (@import)                                   |
+|   - Debug react-resizable-panels                                |
 |                                                                |
-|   TEST: 134 PASS                                               |
-|   npm publish --dry-run: OK!                                   |
+|   BUG APERTI:                                                   |
+|   1. react-resizable-panels calcola male                        |
+|   2. Email mostra HTML grezzo                                   |
 +================================================================+
 ```
 
@@ -26,34 +29,19 @@
 
 | Progetto | Stato |
 |----------|-------|
-| CervellaSwarm | FASE 2: 90% (18/20), TOTALE 54% |
-| Miracollook | FASE 1: 90% (1.7 in progress) |
+| CervellaSwarm | FASE 2: 90% |
+| Miracollook | Debug in corso |
 
 ---
 
-## FILE PRINCIPALI SESSIONE 228
+## PROSSIMA SESSIONE
 
 ```
-NUOVI:
-- src/utils/errors.js (error system)
-- eslint.config.js
-- RICERCA_NPM_PUBLISH_COMPLETA.md (1110 righe)
-
-MODIFICATI:
-- bin/cervellaswarm.js (help)
-- package.json (scripts)
-- commands/*.js (error handling)
+1. Fix rendering email
+2. Fix/sostituire resize pannelli
+3. Test Bulk Actions
 ```
 
 ---
 
-## PROSSIMO
-
-```
-OPZIONE A: npm publish REALE (serve account npm + 2FA)
-OPZIONE B: CI/CD Pipeline (Step 2.17)
-```
-
----
-
-*"CLI pronta, 54% del progetto!"*
+*"Due bug trovati e documentati. Prossima sessione li risolviamo!"*
