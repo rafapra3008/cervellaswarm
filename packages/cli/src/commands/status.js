@@ -14,6 +14,7 @@
 import chalk from 'chalk';
 import { loadProjectContext } from '../sncp/loader.js';
 import { formatStatus } from '../display/status.js';
+import { CervellaError, displayError } from '../utils/errors.js';
 
 export async function statusCommand(options) {
   try {
@@ -21,11 +22,9 @@ export async function statusCommand(options) {
     const context = await loadProjectContext();
 
     if (!context) {
-      console.log('');
-      console.log(chalk.yellow('  No CervellaSwarm project found in this directory.'));
-      console.log(chalk.white('  Run `cervellaswarm init` to get started.'));
-      console.log('');
-      return;
+      const error = new CervellaError('NOT_INITIALIZED');
+      displayError(error);
+      process.exit(error.code);
     }
 
     // Display status
@@ -64,6 +63,12 @@ export async function statusCommand(options) {
     console.log('');
 
   } catch (error) {
-    console.error(chalk.red('  Error loading project status:'), error.message);
+    if (error instanceof CervellaError) {
+      displayError(error);
+      process.exit(error.code);
+    }
+    const cervellaError = new CervellaError('READ_FAILED', error.message);
+    displayError(cervellaError);
+    process.exit(cervellaError.code);
   }
 }

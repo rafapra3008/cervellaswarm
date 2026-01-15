@@ -16,6 +16,7 @@ import chalk from 'chalk';
 import { loadProjectContext } from '../sncp/loader.js';
 import { loadSessions, getLastSession, loadSession, formatSessionSummary } from '../session/manager.js';
 import { generateRecap } from '../display/recap.js';
+import { CervellaError, displayError } from '../utils/errors.js';
 
 export async function resumeCommand(options) {
   try {
@@ -23,11 +24,9 @@ export async function resumeCommand(options) {
     const context = await loadProjectContext();
 
     if (!context) {
-      console.log('');
-      console.log(chalk.yellow('  No CervellaSwarm project found.'));
-      console.log(chalk.white('  Run `cervellaswarm init` first.'));
-      console.log('');
-      return;
+      const error = new CervellaError('NOT_INITIALIZED');
+      displayError(error);
+      process.exit(error.code);
     }
 
     // List sessions if requested
@@ -80,7 +79,13 @@ export async function resumeCommand(options) {
     console.log('');
 
   } catch (error) {
-    console.error(chalk.red('  Error resuming session:'), error.message);
+    if (error instanceof CervellaError) {
+      displayError(error);
+      process.exit(error.code);
+    }
+    const cervellaError = new CervellaError('READ_FAILED', error.message);
+    displayError(cervellaError);
+    process.exit(cervellaError.code);
   }
 }
 

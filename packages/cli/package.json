@@ -4,13 +4,13 @@
   "description": "16 AI agents working as a team for your project. Not an assistant - a TEAM.",
   "main": "src/index.js",
   "bin": {
-    "cervellaswarm": "./bin/cervellaswarm.js",
-    "cs": "./bin/cervellaswarm.js"
+    "cervellaswarm": "bin/cervellaswarm.js",
+    "cs": "bin/cervellaswarm.js"
   },
   "type": "module",
   "scripts": {
     "start": "node bin/cervellaswarm.js",
-    "test": "node --test test/commands/*.test.js test/agents/*.test.js test/edge-cases.test.js",
+    "test": "node --test test/commands/*.test.js test/agents/*.test.js test/utils/*.test.js test/edge-cases.test.js",
     "test:watch": "node --test --watch",
     "test:coverage": "node --test --experimental-test-coverage",
     "test:commands": "node --test test/commands/",
@@ -19,7 +19,9 @@
     "test:edge": "node --test test/edge-cases.test.js",
     "test:integration": "node --test test/integration/",
     "hardtests": "./test/run_hardtests.sh",
-    "lint": "eslint src/"
+    "lint": "eslint src/",
+    "validate": "npm run lint && npm test",
+    "prepublishOnly": "npm run validate"
   },
   "keywords": [
     "ai",
@@ -36,7 +38,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cervellaswarm/cli"
+    "url": "git+https://github.com/cervellaswarm/cli.git"
   },
   "homepage": "https://cervellaswarm.dev",
   "bugs": {

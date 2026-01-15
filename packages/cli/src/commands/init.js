@@ -18,6 +18,7 @@ import { join } from 'path';
 import { runWizard } from '../wizard/questions.js';
 import { generateConstitution } from '../templates/constitution.js';
 import { initSNCP } from '../sncp/init.js';
+import { CervellaError, displayError, ExitCode } from '../utils/errors.js';
 
 /**
  * Check if project is already initialized
@@ -80,7 +81,9 @@ export async function initCommand(options) {
       console.log('');
     } catch (error) {
       spinner.fail('Initialization failed');
-      console.error(chalk.red(`  Error: ${error.message}`));
+      const cervellaError = new CervellaError('WRITE_FAILED', error.message);
+      displayError(cervellaError);
+      process.exit(cervellaError.code);
     }
     return;
   }
@@ -117,8 +120,10 @@ export async function initCommand(options) {
       console.log('');
       console.log(chalk.yellow('  Initialization cancelled.'));
       console.log(chalk.gray('  Run `cervellaswarm init` when you\'re ready.'));
-      return;
+      process.exit(ExitCode.CANCELLED);
     }
-    throw error;
+    const cervellaError = new CervellaError('WRITE_FAILED', error.message);
+    displayError(cervellaError);
+    process.exit(cervellaError.code);
   }
 }

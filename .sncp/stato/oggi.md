@@ -1,30 +1,22 @@
 # STATO OGGI - 15 Gennaio 2026
 
-> **Sessione:** 227 - Miracollook
-> **Ultimo aggiornamento:** 17:20
+> **Sessione:** 228 - CervellaSwarm
+> **Ultimo aggiornamento:** 17:45
 
 ---
 
-## SESSIONE 227 - MIRACOLLOOK
+## SESSIONE 228 - CERVELLASWARM
 
 ```
 +================================================================+
-|   1.7 BULK ACTIONS - CODICE SCRITTO (non testato)              |
+|   3 STEP COMPLETATI - CLI PRONTA PER NPM PUBLISH!              |
 |                                                                |
-|   FILE CREATI:                                                 |
-|   - useSelection.ts (hook selezione)                           |
-|   - BulkActionsBar/ (toolbar dinamica)                         |
+|   2.12 Error Handling  [FATTO] +20 test, exit codes            |
+|   2.13 Help System     [FATTO] Help completo tutti comandi     |
+|   2.14 npm Publish     [FATTO] Ricerca + dry-run PASS          |
 |                                                                |
-|   FILE MODIFICATI:                                             |
-|   - EmailListItem.tsx (checkbox)                               |
-|   - EmailList.tsx (checkbox master)                            |
-|   - App.tsx (bulk handlers)                                    |
-|   - api.ts (fix porta 8002 -> 8001)                            |
-|                                                                |
-|   BUILD: OK (compila senza errori)                             |
-|   TEST VISIVO: NON FATTO (problema Service Worker)             |
-|                                                                |
-|   NOTA: Codice da testare prossima sessione!                   |
+|   TEST: 134 PASS                                               |
+|   npm publish --dry-run: OK!                                   |
 +================================================================+
 ```
 
@@ -34,18 +26,34 @@
 
 | Progetto | Stato |
 |----------|-------|
-| CervellaSwarm | FASE 2: 75% |
+| CervellaSwarm | FASE 2: 90% (18/20), TOTALE 54% |
 | Miracollook | FASE 1: 90% (1.7 in progress) |
 
 ---
 
-## PROBLEMA AMBIENTE DEV
+## FILE PRINCIPALI SESSIONE 228
 
 ```
-Service Worker vecchio interferisce con le richieste.
-Soluzione: Unregister SW + Clear site data nel browser.
+NUOVI:
+- src/utils/errors.js (error system)
+- eslint.config.js
+- RICERCA_NPM_PUBLISH_COMPLETA.md (1110 righe)
+
+MODIFICATI:
+- bin/cervellaswarm.js (help)
+- package.json (scripts)
+- commands/*.js (error handling)
 ```
 
 ---
 
-*"Codice scritto, da testare!"*
+## PROSSIMO
+
+```
+OPZIONE A: npm publish REALE (serve account npm + 2FA)
+OPZIONE B: CI/CD Pipeline (Step 2.17)
+```
+
+---
+
+*"CLI pronta, 54% del progetto!"*

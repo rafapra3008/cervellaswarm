@@ -547,54 +547,85 @@ test/
 
 ## STEP 2.12: Error Handling
 
-**Stato:** [DA FARE]
+**Stato:** [FATTO] - Sessione 228 (15 Gen 2026)
 **Ricerca fatta:** Best practices CLI
 **Dipende da:** 2.11
 **Output:** `src/utils/errors.js`
 
-**DA CREARE:**
-- [ ] Messaggi chiari per ogni errore
-- [ ] Recovery suggestions
-- [ ] Exit codes standard
+**COMPLETATO (Sessione 228):**
+- [x] `src/utils/errors.js` - Sistema centralizzato errori
+- [x] ExitCode enum (0-7 + 130 per Ctrl+C)
+- [x] ErrorType con messaggi + recovery suggestions
+- [x] CervellaError class
+- [x] Refactor tutti i comandi (init, task, status, resume)
+- [x] 20 test specifici per error module
 
-**Criterio completamento:** Nessun crash durante uso normale
+**Exit Codes Standard:**
+```
+0 = Success, 1 = General, 2 = Misuse, 3 = Not initialized
+4 = API error, 5 = Config, 6 = I/O, 7 = Timeout, 130 = Cancelled
+```
+
+**Criterio completamento:** ✅ Nessun crash durante uso normale
 
 ---
 
 ## STEP 2.13: Help System
 
-**Stato:** [DA FARE]
+**Stato:** [FATTO] - Sessione 228 (15 Gen 2026)
 **Ricerca fatta:** Commander.js docs
 **Dipende da:** 2.12
 **Output:** --help per ogni comando
 
-**DA CREARE:**
-- [ ] cervellaswarm --help
-- [ ] cervellaswarm init --help
-- [ ] cervellaswarm task --help
-- [ ] cervellaswarm status --help
-- [ ] cervellaswarm resume --help
+**COMPLETATO (Sessione 228):**
+- [x] `cervellaswarm --help` - Getting Started + Examples + 8 Agenti
+- [x] `cervellaswarm init --help` - Wizard info + esempi
+- [x] `cervellaswarm task --help` - Lista agenti + auto-routing
+- [x] `cervellaswarm status --help` - Cosa mostra
+- [x] `cervellaswarm resume --help` - Recap adattivo
 
-**Criterio completamento:** Ogni comando ha help utile
+**Contenuti aggiunti:**
+- Getting Started section
+- Esempi pratici per ogni comando
+- Lista 8 agenti con descrizioni
+- Spiegazione auto-routing Regina
+
+**Criterio completamento:** ✅ Ogni comando ha help utile
 
 ---
 
 ## STEP 2.14: npm Publish Setup
 
-**Stato:** [DA STUDIARE]
-**Ricerca fatta:** NESSUNA - serve ricerca
+**Stato:** [FATTO] - Sessione 228 (15 Gen 2026)
+**Ricerca fatta:** `ricerche/RICERCA_20260115_NPM_PUBLISH_COMPLETA.md` (1110 righe!)
 **Dipende da:** 2.13
 **Output:** Package pubblicabile su npm
 
-**DA STUDIARE:**
-- [ ] npm account setup
-- [ ] Package naming (cervellaswarm o @cervellaswarm/cli?)
-- [ ] Versioning strategy (semver)
-- [ ] README per npm
-- [ ] .npmignore
-- [ ] prepublish scripts
+**RICERCA COMPLETATA (Sessione 228):**
+- [x] npm account setup - Workflow documentato
+- [x] Package naming → `cervellaswarm` (unscoped, brand diretto)
+- [x] Versioning strategy → 0.1.0 (semver, onesto signaling)
+- [x] README per npm → Gia' OK
+- [x] files field → Whitelist approach (gia' perfetto)
+- [x] prepublish scripts → Implementato!
 
-**Criterio completamento:** `npm publish` funziona
+**IMPLEMENTATO:**
+- [x] `prepublishOnly` script (lint + test)
+- [x] `validate` script
+- [x] `eslint.config.js` (ESLint 9 flat config)
+- [x] `npm pkg fix` (warnings corretti)
+
+**TESTATO:**
+- [x] `npm pack` → 21 file, 22.9 kB
+- [x] `npm publish --dry-run` → PASS
+- [x] 134 test PASS, 0 errori lint
+
+**PRONTO PER PUBLISH!** Solo serve:
+1. Setup account npm + 2FA
+2. `npm login` + `npm publish`
+3. Git tag v0.1.0
+
+**Criterio completamento:** ✅ `npm publish --dry-run` funziona
 
 ---
 
@@ -1239,8 +1270,10 @@ COSTO: €200-1,200 setup, €5-6K/anno running
 | `RICERCA_20260115_MULTI_AGENT_BEST_PRACTICES.md` | Multi-agent patterns | 300+ | 8/10 |
 | `20260114_CURSOR_STORIA_LEZIONI.md` | Storia Cursor | 200+ | 8/10 |
 | `20260114_SNCP_ROBUSTO_PROPOSTA.md` | SNCP design | 300+ | 8.8/10 |
+| `RICERCA_20260115_NPM_PUBLISH_COMPLETA.md` | npm publish workflow | 1110 | 10/10 |
 
 **TOTALE RICERCHE SESSIONE 225:** ~6600 righe (IP + Licensing + ToS/Legal + Protezione Pre-Publish)
+**TOTALE RICERCHE SESSIONE 228:** ~1110 righe (npm publish)
 
 ---
 
@@ -1248,7 +1281,9 @@ COSTO: €200-1,200 setup, €5-6K/anno running
 
 | Step | Topic | Urgenza | Stato |
 |------|-------|---------|-------|
-| 2.14 | npm publish setup | MEDIA | DA STUDIARE (4-6h) |
+| 2.12 | Error Handling | ALTA | ✅ FATTO (Sessione 228) |
+| 2.13 | Help System | ALTA | ✅ FATTO (Sessione 228) |
+| 2.14 | npm publish setup | MEDIA | ✅ FATTO (Sessione 228) |
 | **2.14.5** | **Protezione Pre-Publish** | **CRITICA** | **✅ FATTO (Sessione 226)** |
 | 2.15 | IP Protection | CRITICA | ✅ STUDIATO (Sessione 225) |
 | 2.16 | Licensing | CRITICA | ✅ STUDIATO (Sessione 225) |
@@ -1272,10 +1307,12 @@ COSTO: €200-1,200 setup, €5-6K/anno running
 |------|-------------|------------|---|
 | FASE 0 | 4 | 4 | 100% |
 | FASE 1 | 8 | 8 | 100% |
-| FASE 2 | 20 | 15 | 75% |
+| FASE 2 | 20 | 18 | 90% |
 | FASE 3 | 12 | 0 | 0% |
 | FASE 4 | 12 | 0 | 0% |
-| **TOTALE** | **56** | **27** | **48%** |
+| **TOTALE** | **56** | **30** | **54%** |
+
+> **Sessione 228:** +3 step (2.12, 2.13, 2.14) - Error Handling + Help System + npm Publish Setup!
 
 > **Sessione 227:** +4 step (2.7, 2.8, 2.9, 2.11) - CLI testata e funzionante!
 

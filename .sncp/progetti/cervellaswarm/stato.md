@@ -1,5 +1,5 @@
 # Stato CervellaSwarm
-> Ultimo aggiornamento: 15 Gennaio 2026 - Sessione 224 (Researcher)
+> Ultimo aggiornamento: 15 Gennaio 2026 - Sessione 227 (Researcher)
 
 ---
 
@@ -10,9 +10,77 @@ SCORE ATTUALE: 9.5/10 REALE!
 CLI: FUNZIONA! (node bin/cervellaswarm.js --help)
 FASE 2: INIZIATA - MVP in costruzione
 
-SESSIONE 224 (Researcher): PROTEZIONE PRE-PUBLISH STUDIATA!
-→ 32 minuti di lavoro bloccante identificati
-→ Checklist pronta per il team
+SESSIONE 227 (Researcher): RICERCA NPM PUBLISH COMPLETATA!
+→ 7 domande risponde, 60+ minuti ricerca
+→ Checklist ready-to-publish creata
+→ CervellaSwarm CLI: PRONTO PER PUBLISH! 🚀
+```
+
+---
+
+## SESSIONE 227 - RICERCA NPM PUBLISH! (15 Gennaio 2026)
+
+```
++================================================================+
+|   RICERCA COMPLETA NPM PUBLISH - 7 AREE CRITICHE!             |
++================================================================+
+
+DOMANDA RAFA:
+"Come pubblicare cervellaswarm CLI su npm - processo completo?"
+
+RICERCA COMPLETATA:
+-------------------
+7 ricerche web parallele:
+1. Package naming (scoped vs unscoped)
+2. package.json fields (required + best practices)
+3. Semver strategy (0.x.x vs 1.x.x)
+4. .npmignore vs files field
+5. prepublishOnly scripts
+6. Primo publish workflow (con 2FA 2025!)
+7. Post-publish management (deprecate vs unpublish)
+
+RISULTATI CHIAVE:
+-----------------
+✅ Nome: "cervellaswarm" unscoped (brand diretto)
+✅ Version: 0.1.0 (signaling onesto)
+✅ Files control: package.json files[] GIA' PERFETTO!
+✅ 2FA OBBLIGATORIO dal 2025 (novita'!)
+✅ Workflow sicuro: pack → test locale → dry-run → publish
+✅ Post-publish: deprecate > unpublish (policy 72h)
+
+RACCOMANDAZIONI SPECIFICHE:
+---------------------------
+1. Aggiungere prepublishOnly script (validate)
+2. Setup npm account + 2FA
+3. Test con npm pack + install locale
+4. Dry-run prima di publish
+5. Git tag v0.1.0 post-publish
+
+STATUS CERVELLASWARM CLI:
+-------------------------
+package.json: PRONTO ✅
+bin/cervellaswarm.js: FUNZIONA ✅
+files field: OTTIMALE ✅
+LICENSE: PRESENTE ✅
+README.md: OK ✅
+
+MANCA SOLO:
+-----------
+- prepublishOnly script (5 min)
+- npm account setup (10 min)
+- Final testing (15 min)
+
+TEMPO STIMATO PUBLISH: 2-3 ore
+RISK LEVEL: BASSO
+
+FILE CREATO:
+.sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_NPM_PUBLISH_COMPLETA.md
+(730 righe, tutte le risposte, checklist, timeline)
+
+FONTI: npm official docs, semver.org, community best practices
+(15+ link verificati, zero guesswork!)
+
++================================================================+
 ```
 
 ---

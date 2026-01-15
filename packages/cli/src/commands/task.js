@@ -18,27 +18,24 @@ import { routeTask } from '../agents/router.js';
 import { spawnAgent } from '../agents/spawner.js';
 import { saveTaskReport } from '../sncp/writer.js';
 import { createTaskSession } from '../session/manager.js';
+import { CervellaError, displayError, ExitCode } from '../utils/errors.js';
 
 export async function taskCommand(description, options) {
   try {
     // Validate description
     if (!description || description.trim().length === 0) {
-      console.log('');
-      console.log(chalk.yellow('  Please provide a task description.'));
-      console.log(chalk.white('  Example: cervellaswarm task "add login page"'));
-      console.log('');
-      return;
+      const error = new CervellaError('MISSING_DESCRIPTION');
+      displayError(error);
+      process.exit(error.code);
     }
 
     // Load project context
     const context = await loadProjectContext();
 
     if (!context) {
-      console.log('');
-      console.log(chalk.yellow('  No CervellaSwarm project found.'));
-      console.log(chalk.white('  Run `cervellaswarm init` first.'));
-      console.log('');
-      return;
+      const error = new CervellaError('NOT_INITIALIZED');
+      displayError(error);
+      process.exit(error.code);
     }
 
     console.log('');
@@ -84,6 +81,12 @@ export async function taskCommand(description, options) {
     }
 
   } catch (error) {
-    console.error(chalk.red('  Error executing task:'), error.message);
+    if (error instanceof CervellaError) {
+      displayError(error);
+      process.exit(error.code);
+    }
+    const cervellaError = new CervellaError('UNKNOWN', error.message);
+    displayError(cervellaError);
+    process.exit(cervellaError.code);
   }
 }
