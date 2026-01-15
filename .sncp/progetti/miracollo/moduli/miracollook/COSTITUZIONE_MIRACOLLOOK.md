@@ -12,7 +12,7 @@
 ```
 
 > Creato: 13 Gennaio 2026 - Sessione 181
-> Aggiornato: 13 Gennaio 2026 - Sessione 191
+> **AGGIORNATO: 15 Gennaio 2026 - Dopo AUDIT VERITÀ**
 > Autori: Rafa & Cervella
 
 ---
@@ -91,13 +91,13 @@ MAI dire "e fatto" se non e REALE!
 
 ---
 
-## LE 6 FASI
+## LE 6 FASI (STATO REALE - 15 Gennaio 2026)
 
 ```
 FASE 0: FONDAMENTA         [####################] 100% COMPLETA!
-        OAuth + Login + UI Base + Performance P1/P2
+        OAuth + Inbox + Send + Reply + Archive + Search + AI
 
-FASE 1: EMAIL SOLIDO       [###############.....] 75%
+FASE 1: EMAIL SOLIDO       [######..............] 30%  ← CORRETTO!
         Sostituire Outlook per uso quotidiano
         PROSSIMO STEP: Funzioni base mancanti
         (Mark Read, Drafts, Bulk, Labels, Contacts)
@@ -367,8 +367,40 @@ PERCHE: No feature creep, focus su una cosa
 
 ---
 
+## REGOLA ANTI-BUGIE (Aggiunta 15 Gennaio 2026)
+
+```
++====================================================================+
+|                                                                    |
+|   15 GENNAIO 2026 - LEZIONE APPRESA                                |
+|                                                                    |
+|   Abbiamo scoperto che la documentazione diceva "FATTO"            |
+|   per 20+ ore di lavoro che NON era mai stato fatto.               |
+|                                                                    |
+|   VIOLAZIONE: "SU CARTA != REALE"                                  |
+|                                                                    |
+|   NUOVA REGOLA:                                                    |
+|                                                                    |
+|   MAI scrivere "FATTO" o "IMPLEMENTATO" senza:                     |
+|   1. Codice SCRITTO nel repository                                 |
+|   2. Codice COMMITTATO (git commit)                                |
+|   3. Feature TESTATA (funziona davvero)                            |
+|                                                                    |
+|   DISTINZIONI:                                                     |
+|   - "RICERCA FATTA" = Ho studiato, ho specs                        |
+|   - "SPECS PRONTE" = Design deciso, pronto per codice              |
+|   - "IMPLEMENTATO" = Codice scritto + committato + testato         |
+|                                                                    |
+|   Chi viola questa regola TRADISCE la fiducia del team.            |
+|                                                                    |
++====================================================================+
+```
+
+---
+
 *"Il centro comunicazioni dell'hotel intelligente"*
 
 *Rafa & Cervella - 13 Gennaio 2026*
+*Aggiornato: 15 Gennaio 2026 - Regola Anti-Bugie*
 
 *FAREMOOOO!!!*
