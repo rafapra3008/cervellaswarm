@@ -10,7 +10,15 @@
   "type": "module",
   "scripts": {
     "start": "node bin/cervellaswarm.js",
-    "test": "node --test",
+    "test": "node --test test/commands/*.test.js test/agents/*.test.js test/edge-cases.test.js",
+    "test:watch": "node --test --watch",
+    "test:coverage": "node --test --experimental-test-coverage",
+    "test:commands": "node --test test/commands/",
+    "test:agents": "node --test test/agents/",
+    "test:session": "node --test test/session/",
+    "test:edge": "node --test test/edge-cases.test.js",
+    "test:integration": "node --test test/integration/",
+    "hardtests": "./test/run_hardtests.sh",
     "lint": "eslint src/"
   },
   "keywords": [
@@ -38,16 +46,17 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "commander": "^12.1.0",
     "@inquirer/prompts": "^7.2.0",
-    "chalk": "^5.3.0",
-    "ora": "^8.1.1",
-    "handlebars": "^4.7.8",
-    "conf": "^13.0.1",
     "boxen": "^8.0.1",
-    "figures": "^6.1.0"
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "conf": "^13.0.1",
+    "figures": "^6.1.0",
+    "handlebars": "^4.7.8",
+    "ora": "^8.1.1"
   },
   "devDependencies": {
+    "@inquirer/testing": "^3.0.4",
     "eslint": "^9.17.0"
   }
 }
