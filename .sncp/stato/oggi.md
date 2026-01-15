@@ -46,3 +46,11 @@ CervellaSwarm:
 ---
 
 *"CLI testata e funzionante! Un passo alla volta!"*
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-15 17:13 (session_end)
+
+- **Progetto**: CervellaSwarm
+- **Evento**: session_end
+- **Generato da**: sncp_auto_update.py v2.0.0
