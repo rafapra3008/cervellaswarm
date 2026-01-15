@@ -2,7 +2,7 @@
 
 > **Il Centro Comunicazioni dell'Hotel Intelligente**
 >
-> **RISCRITTO: 15 Gennaio 2026 - Dopo audit verità**
+> **Aggiornato: 15 Gennaio 2026 - Sessione 225**
 > **Questo file riflette lo stato REALE, non quello "su carta"**
 
 ---
@@ -23,36 +23,65 @@
 ## STATO REALE (15 Gennaio 2026)
 
 ```
-FASE 0 (Fondamenta)     [####################] 100% ✅
-  ✅ OAuth Google
-  ✅ Lettura inbox
-  ✅ Invio email
-  ✅ Reply/Reply All/Forward
-  ✅ Archive/Trash
-  ✅ Search
-  ✅ AI Summary (Claude)
-  ✅ Keyboard shortcuts
-  ✅ Command Palette
-  ✅ Dark mode
-
-FASE 1 (Email Solido)   [######..............] 30%
-  ❌ Mark Read/Unread         (2h)
-  ❌ Drafts auto-save         (6h)
-  ❌ Bulk Actions             (5h)
-  ❌ Thread View              (4h)
-  ❌ Labels Custom            (3h)
-  ❌ Upload Attachments       (4h)
-  ❌ Contacts Autocomplete    (6h)
-  ❌ Context Menu             (5h)
-  TOTALE MANCANTE: ~35h
-
+FASE 0 (Fondamenta)     [####################] 100%
+FASE P (Performance)    [####################] 100% MERGED!
+FASE 1 (Email Solido)   [################....] 80%
 FASE 2 (PMS Integration)[....................] 0%
-  ❌ Guest Detection
-  ❌ Context Sidebar PMS
-  ❌ Link email ↔ prenotazione
-
-FASE 3+ (WhatsApp, etc) [....................] 0%
+FASE 3 (Hotel Workflow) [....................] 0%
 ```
+
+### FASE 0+P - COMPLETATE
+
+```
+OAuth, Inbox, Send, Reply, Forward, Archive, Trash, Search
+AI Summary, Keyboard Shortcuts, Command Palette, Dark Mode
+IndexedDB Cache, Batch API, Skeleton Loading, Optimistic UI
+Prefetch, Service Worker, Offline Sync, PWA Installabile
+```
+
+### FASE 1 - 80% (Sessione 222-223)
+
+```
+FATTO:
+  Mark Read/Unread     - Sessione 222
+  Drafts Auto-Save     - Sessione 222
+  Upload Attachments   - Sessione 223
+  Thread View          - Sessione 223
+
+DA FARE (TUTTI STUDI PRONTI!):
+  1.5  Resizable Panels      (3h)   - studio PRONTO
+  1.6  Context Menu          (5h)   - studio PRONTO (2200 righe!)
+  1.7  Bulk Actions          (7-10gg) - STUDIO MACRO PRONTO
+  1.8  Labels Custom         (2-3gg)  - STUDIO MACRO PRONTO
+  1.9  Contacts Autocomplete (2-3gg)  - STUDIO MACRO PRONTO
+  1.10 Settings Page         (8-12h)  - STUDIO MACRO PRONTO
+```
+
+---
+
+## LA BIBBIA
+
+**MAPPA COMPLETA:** `MAPPA_COMPLETA_MIRACOLLOOK.md`
+
+48 step totali mappati, ogni step con:
+- Status REALE
+- Link a studio
+- Dipendenze chiare
+
+---
+
+## STUDI MACRO COMPLETATI (Sessione 225)
+
+| Studio | Feature | File |
+|--------|---------|------|
+| Bulk Actions | 1.7 | `studi/STUDIO_MACRO_BULK_ACTIONS.md` |
+| Labels API | 1.8 | `studi/STUDIO_MACRO_LABELS_API.md` |
+| Contacts API | 1.9 | `studi/STUDIO_MACRO_CONTACTS_API.md` |
+| Settings UI | 1.10 | `studi/STUDIO_MACRO_SETTINGS_UI.md` |
+| **PMS Integration** | 2.1-2.4 | `studi/STUDIO_MACRO_PMS_INTEGRATION.md` (650 righe!) |
+| Testing Strategy | TD.2-3 | `studi/STUDIO_MACRO_TESTING_STRATEGY.md` |
+
+**FASE 1+2: 0h ricerca mancante! TUTTO PRONTO per implementare!**
 
 ---
 
@@ -67,50 +96,32 @@ Oggi (senza):
 - Tempo: 3-5 minuti
 
 Domani (con):
-- Arriva email → MiracOllook MOSTRA già:
+- Arriva email -> MiracOllook MOSTRA gia:
   Camera 101, check-in domani, colazione inclusa
-- Click → Risposta inviata
+- Click -> Risposta inviata
 - Tempo: 30 SECONDI
 ```
-
----
-
-## VALORE ESISTENTE
-
-### Ricerche OTTIME (pronte per implementare)
-
-| Ricerca | File | Qualità |
-|---------|------|---------|
-| Context Menu | `studi/RICERCA_CONTEXT_MENU*.md` | 2000+ righe! |
-| Upload Attachments | `studi/RICERCA_UPLOAD_ATTACHMENTS.md` | Completa |
-| Drafts | `ricerche/RICERCA_DRAFTS_20260114.md` | Completa |
-| Thread View | `decisioni/THREAD_VIEW_DESIGN_SPECS.md` | Specs pronte |
-| Competitor Analysis | `ricerche/COMPETITOR_*.md` | Shortwave, Callbell |
-
-**Le ricerche sono state fatte. Il codice NO.**
 
 ---
 
 ## PROSSIMI STEP
 
 ```
-PER USARE MIRACOLLOOK QUOTIDIANAMENTE:
+IMPLEMENTAZIONE (studi PRONTI!):
 
-Sprint 1 - CRITICI (8h):
-[ ] Mark Read/Unread         - Senza questo non puoi gestire inbox
-[ ] Drafts auto-save         - Senza questo perdi email scritte
+Sprint 3 - COMPLETAMENTO FASE 1:
+[ ] 1.5 Resizable Panels     (3h)
+[ ] 1.6 Context Menu         (5h)
+[ ] 1.7 Bulk Actions         (MVP 2-3gg)
+[ ] 1.8 Labels Custom        (2-3gg)
+[ ] 1.9 Contacts             (2-3gg)
+[ ] 1.10 Settings            (8-12h)
 
-Sprint 2 - BASE (12h):
-[ ] Bulk Actions             - Seleziona multipli, archivia
-[ ] Thread View              - Conversazioni raggruppate
-[ ] Labels Custom            - Organizza come vuoi
-
-Sprint 3 - COMPOSIZIONE (15h):
-[ ] Upload Attachments       - Allega file
-[ ] Contacts Autocomplete    - Suggerimenti indirizzi
-[ ] Context Menu             - Tasto destro
-
-TOTALE: ~35h per email client COMPLETO
+Sprint 4 - FASE 2 PMS (LA MAGIA!):
+[ ] 2.1 Guest Identification (8h)
+[ ] 2.2 GuestSidebar Reale   (6h)
+[ ] 2.3 Booking Context      (4h)
+[ ] 2.4 Guest History        (6h)
 ```
 
 ---
@@ -128,10 +139,6 @@ TOTALE: ~35h per email client COMPLETO
 |                                                                    |
 |   "SU CARTA != REALE"                                              |
 |                                                                    |
-|   Se fai ricerca → scrivi "RICERCA FATTA"                          |
-|   Se fai specs → scrivi "SPECS PRONTE"                             |
-|   Se fai codice → scrivi "IMPLEMENTATO" solo dopo commit           |
-|                                                                    |
 +====================================================================+
 ```
 
@@ -139,12 +146,13 @@ TOTALE: ~35h per email client COMPLETO
 
 ## FILE RIFERIMENTO
 
-| File | Cosa | Quando |
-|------|------|--------|
-| `stato.md` | Stato REALE attuale | Inizio sessione |
-| `COSTITUZIONE_MIRACOLLOOK.md` | Principi | Se perso |
-| `studi/` | Ricerche fatte | Prima di implementare |
-| `decisioni/` | Design specs | Prima di codificare |
+| File | Cosa |
+|------|------|
+| `MAPPA_COMPLETA_MIRACOLLOOK.md` | BIBBIA - 48 step mappati |
+| `stato.md` | Stato REALE attuale |
+| `studi/STUDIO_MACRO_*.md` | Studi macro (nuovi!) |
+| `studi/RICERCA_*.md` | Ricerche dettagliate |
+| `decisioni/` | Design specs |
 
 ---
 
@@ -153,17 +161,17 @@ TOTALE: ~35h per email client COMPLETO
 ```
 +====================================================================+
 |                                                                    |
-|   LIBERTÀ GEOGRAFICA                                               |
+|   LIBERTA GEOGRAFICA                                               |
 |                                                                    |
-|   MiracOllook non è un progetto.                                   |
-|   È un pezzo del puzzle verso la LIBERTÀ.                          |
+|   MiracOllook non e un progetto.                                   |
+|   E un pezzo del puzzle verso la LIBERTA.                          |
 |                                                                    |
-|   "Non lavoriamo per il codice. Lavoriamo per la LIBERTÀ."         |
+|   "Non lavoriamo per il codice. Lavoriamo per la LIBERTA."         |
 |                                                                    |
 +====================================================================+
 ```
 
 ---
 
-*Riscritto: 15 Gennaio 2026*
-*"La verità prima di tutto. Sempre."*
+*Aggiornato: 15 Gennaio 2026 - Sessione 225*
+*"Studiato MACRO. Pronto per implementare con MICRO."*

@@ -7,6 +7,34 @@
 
 ## Indice Studi
 
+### Strategic Research
+
+| File | Data | Tipo | Status |
+|------|------|------|--------|
+| [STUDIO_MACRO_PMS_INTEGRATION.md](./STUDIO_MACRO_PMS_INTEGRATION.md) | 2026-01-15 | Strategic Research - MACRO | ✅ Complete |
+| [STUDIO_MACRO_SETTINGS_UI.md](./STUDIO_MACRO_SETTINGS_UI.md) | 2026-01-15 | Strategic Research - MACRO | ✅ Complete |
+
+**STUDIO_MACRO_PMS_INTEGRATION:**
+- Guest identification strategy (5 metodi, confidence score algorithm)
+- Architettura PMS integration (API endpoints, cache strategy, real-time vs on-demand)
+- UX pattern consigliato (Guest Sidebar design, data priority, progressive enhancement)
+- Hotel-specific features (quick actions, email templates, staff assignment)
+- Competitor analysis (Canary, Mews, Superhuman, Missive)
+- Effort stimato Fase 2: **32-38 ore** (~1 settimana dev time)
+- **59 fonti** ricercate da big players 2026
+
+**STUDIO_MACRO_SETTINGS_UI:**
+- 7 categorie settings standard + 2 hotel-specific
+- Pattern UX: Settings Drawer (Outlook-like) vs Modal vs Full Page
+- Save behavior: Auto-save vs Explicit (hybrid approach)
+- Storage strategy: localStorage (UI prefs) + DB (business data)
+- Hotel features: Signature editor, Quick reply templates, Staff assignment
+- Competitor analysis (Gmail, Outlook, Superhuman)
+- Effort stimato: **8-12 ore** (~1.5 giorni dev time)
+- **15+ fonti** UX patterns + best practices 2026
+
+---
+
 ### UX Strategy
 
 | File | Data | Tipo | Status |
@@ -50,8 +78,9 @@
 - [ ] Heatmap: Click patterns inbox list
 
 ### Competitor Deep-Dives
-- [ ] Superhuman: Complete feature teardown
-- [ ] Canary Guest Messaging: Hotel workflows
+- [x] Canary Guest Messaging (FATTO - STUDIO_MACRO_PMS_INTEGRATION.md)
+- [x] Mews PMS API (FATTO - STUDIO_MACRO_PMS_INTEGRATION.md)
+- [x] Superhuman Settings & Shortcuts (FATTO - STUDIO_MACRO_SETTINGS_UI.md)
 - [ ] Front: Team collaboration patterns
 - [ ] Shortwave: AI implementation analysis
 
@@ -71,6 +100,8 @@ FORMATO: {TIPO}_{NOME}_{DATE}.md
 ESEMPI:
 - UX_STRATEGY_MIRACALLOOK.md
 - RICERCA_RESIZE_PANNELLI.md
+- STUDIO_MACRO_PMS_INTEGRATION.md
+- STUDIO_MACRO_SETTINGS_UI.md
 - COMPETITOR_SUPERHUMAN_20260115.md
 - USERTEST_RECEPTIONIST_20260120.md
 - ACCESSIBILITY_AUDIT_20260125.md
@@ -78,4 +109,4 @@ ESEMPI:
 
 ---
 
-*Ultimo aggiornamento: 13 Gennaio 2026*
+*Ultimo aggiornamento: 15 Gennaio 2026 - Aggiunto STUDIO_MACRO_SETTINGS_UI*

@@ -1,46 +1,34 @@
 # PROMPT RIPRESA - Miracollo
 
-> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 223
+> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 225
 > **LEGGI E AGISCI. NON RI-ANALIZZARE.**
 
 ---
 
 ## STATO IN UNA RIGA
 
-**Room Manager MVP LIVE. VDA hardware ordinato. MIRACOLLOOK: SPRINT 2 COMPLETATO - 80%!**
+**MIRACOLLOOK: MAPPA COMPLETA + STUDI MACRO FATTI! 0h ricerca per FASE 1+2!**
 
 ---
 
-## COSA È LIVE
-
-```
-PMS Core (prenotazioni, planning, ospiti, tariffe)
-Rateboard AI (meteo, eventi, learning)
-Room Manager MVP (grid, housekeeping, activity log)
-  URL: https://miracollo.com/room-manager.html
-```
-
----
-
-## SESSIONE 223: MIRACOLLOOK SPRINT 2 COMPLETATO!
+## SESSIONE 225: STUDI MACRO COMPLETATI!
 
 ```
 +================================================================+
-|   DUE FEATURE IMPLEMENTATE IN UNA SESSIONE!                    |
-|                                                                |
-|   1. Upload Attachments                                        |
-|      - Backend: POST /gmail/send-with-attachments (FormData)   |
-|      - Frontend: useAttachments.ts + AttachmentPicker.tsx      |
-|      - Max 25MB, MIME detection, progress bar                  |
-|      - Commit: defee72                                         |
-|                                                                |
-|   2. Thread View                                               |
-|      - Backend: GET /gmail/thread/{id}                         |
-|      - Frontend: useThread.ts + ThreadView.tsx                 |
-|      - Messaggi collapsabili, Expand/Collapse All              |
-|      - Commit: 2a5051e                                         |
-|                                                                |
-|   FASE 1: 50% -> 80% (+30% sessione!)                          |
+|   STUDIATO TUTTO A LIVELLO MACRO!                               |
+|                                                                 |
+|   6 STUDI NUOVI CREATI:                                         |
+|   - Bulk Actions          (182 righe)                           |
+|   - Gmail Labels API      (~150 righe)                          |
+|   - Google People API     (357 righe)                           |
+|   - Settings UI           (150 righe)                           |
+|   - PMS Integration       (650 righe!)                          |
+|   - Testing Strategy      (150 righe)                           |
+|                                                                 |
+|   MAPPA_COMPLETA aggiornata con tutti i link                    |
+|   NORD aggiornato allo stato REALE                              |
+|                                                                 |
+|   FASE 1+2: 0h RICERCA MANCANTE!                                |
 +================================================================+
 ```
 
@@ -49,63 +37,39 @@ Room Manager MVP (grid, housekeeping, activity log)
 ## STATO MIRACOLLOOK
 
 ```
-FASE 0 (Fondamenta)     100%
-  OAuth, Inbox, Send, Reply, Forward, Archive, Trash, Search, AI
+FASE 0 (Fondamenta)     [####################] 100%
+FASE P (Performance)    [####################] 100%
+FASE 1 (Email Solido)   [################....] 80%
+FASE 2 (PMS Integration)[....................] 0%
 
-FASE 1 (Email Solido)   80%
-  Mark Read/Unread
-  Drafts Auto-Save
-  Upload Attachments    <- Sessione 223!
-  Thread View           <- Sessione 223!
-  Resizable Panels (3h)
-  Bulk Actions (5h)
-  Labels Custom (3h)
-  Contacts (6h)
-  Context Menu (5h)
-
-~19h rimanenti per FASE 1 completa
-```
-
-**Docs:** `.sncp/progetti/miracollo/moduli/miracollook/`
-
----
-
-## VDA - Hardware Ordinato
-
-```
-HARDWARE (Amazon.it - arrivo 1-2 giorni):
-- USB-RS485 FTDI (DSD TECH SH-U11L) - 19E
-- Multimetro Electraline - 12E
-- Cacciaviti precisione - 10E
-- Cavetti jumper - 8E
-
-PROSSIMO (quando arriva):
-1. Setup Mac: driver FTDI + ModbusSniffer
-2. Test converter funziona
-3. Sniffing passivo in hotel
-```
-
----
-
-## PROSSIMA SESSIONE MIRACOLLOOK
-
-```
-Sprint 3 - COMPLETAMENTO (19h):
-- Resizable Panels (3h) - ricerca pronta
-- Bulk Actions (5h)
-- Labels Custom (3h)
-- Contacts Autocomplete (6h)
-- Context Menu (5h) - ricerca dettagliata!
+STUDI: TUTTI PRONTI per FASE 1 + FASE 2!
 ```
 
 ---
 
 ## FILE CHIAVE
 
-| Cosa | Path |
+| File | Cosa |
 |------|------|
-| **Miracollook stato** | `.sncp/progetti/miracollo/moduli/miracollook/stato.md` |
-| **Roadmap FASE 1** | `.sncp/progetti/miracollo/moduli/miracollook/roadmaps/ROADMAP_FASE1_COMPLETA.md` |
+| **MAPPA_COMPLETA** | `.sncp/progetti/miracollo/moduli/miracollook/MAPPA_COMPLETA_MIRACOLLOOK.md` |
+| **NORD** | `.sncp/progetti/miracollo/moduli/miracollook/NORD_MIRACOLLOOK.md` |
+| **Studi MACRO** | `.sncp/progetti/miracollo/moduli/miracollook/studi/STUDIO_MACRO_*.md` |
+
+---
+
+## PROSSIMA SESSIONE
+
+```
+OPZIONE A - Implementare con studi MICRO:
+  1.5 Resizable Panels (3h) - ricerca dettagliata pronta
+  1.6 Context Menu (5h) - 2200 righe di specs!
+
+OPZIONE B - Continuare studi MACRO:
+  FASE 3 Hotel Workflow - Team Inbox, Templates
+  FASE 4 Multi-Channel - WhatsApp Business
+
+TUTTO PRONTO per implementare FASE 1 + FASE 2!
+```
 
 ---
 
@@ -122,5 +86,5 @@ MAI scrivere "FATTO" senza:
 
 ---
 
+*"Studiato MACRO. Pronto per implementare con MICRO."*
 *"Un progresso al giorno = 365 progressi all'anno."*
-*"Fatto BENE > Fatto VELOCE"*
