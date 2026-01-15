@@ -1,26 +1,30 @@
 # STATO OGGI - 15 Gennaio 2026
 
-> **Sessione:** 217 CervellaSwarm
-> **Ultimo aggiornamento:** 08:30
+> **Sessione:** 218 CervellaSwarm
+> **Ultimo aggiornamento:** 09:15
 
 ---
 
-## SESSIONE 217 - CERVELLASWARM (MILESTONE!)
+## SESSIONE 218 - CLI FUNZIONA!
 
 ```
-FASE 1 = 100% COMPLETA!
++================================================================+
+|   PRIMO CLI REALE! node bin/cervellaswarm.js --help FUNZIONA!  |
++================================================================+
 
-1. 3 GAP critici implementati
-   - memory-persist, auto-summary, compliance-check
-   - Guardiana: 9.5/10
+DECISIONI FONDAMENTALI:
+1. CLI (non App) - compatibilita massima
+2. Wizard PRIMA di tutto - e il differenziale
+3. COSTITUZIONE aggiornata: "IL TEMPO NON CI INTERESSA"
 
-2. VISIONE DEFINITIVA creata
-   - 1174 righe, user journey, architettura, MVP
-   - Path: PRODOTTO_VISIONE_DEFINITIVA.md
+CREATO:
+- packages/cli/ con npm package completo
+- 4 comandi: init, status, task, resume
+- 10 moduli: wizard, sncp, agents, display, session
+- 4 documenti decisioni + 1 roadmap MVP
 
-3. WIZARD STUDY completato (IL DIFFERENZIALE!)
-   - 1526 righe, best practices, flusso completo
-   - Path: ricerche/WIZARD_INIZIALE_STUDIO.md
+FILOSOFIA PRODOTTO:
+"L'utente apre quando vuole. Fa un passo. Arriva al 100000%."
 ```
 
 ---
@@ -28,20 +32,22 @@ FASE 1 = 100% COMPLETA!
 ## PROSSIMA SESSIONE
 
 ```
-1. Leggere 2 documenti BIBBIA
-2. Decidere: Wizard first o MVP base?
-3. Iniziare implementazione npm package
+1. Testare wizard completo (cervellaswarm init)
+2. Implementare generazione COSTITUZIONE.md
+3. Collegare con SNCP esistente
 ```
 
 ---
 
-## COMMIT OGGI
+## SNCP STATUS
 
-| Hash | Messaggio |
-|------|-----------|
-| `7a2d3d5` | 3 GAP critici + FASE 1 100% |
-| `b3b1c15` | Fix symlink + test REALI |
+```
+SNCP: ROBUSTO E FUNZIONANTE
+- verify-sync: OK
+- Health Score: 100/100
+- 16 agenti con PRE/POST FLIGHT
+```
 
 ---
 
-*"Definisci UNA VOLTA. Mai più rispiegare."*
+*"Un passo al giorno = 365 passi all'anno."*

@@ -1,77 +1,115 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 217
-> **LEGGI QUESTO E I 2 DOCUMENTI CHIAVE!**
+> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 218
+> **COSTITUZIONE AGGIORNATA - Nuova regola sul TEMPO!**
 
 ---
 
-## SESSIONE 217 - MILESTONE ENORME!
+## SESSIONE 218 - DECISIONI FONDAMENTALI
 
 ```
 +================================================================+
-|   GAP COMPLETATI + VISIONE + WIZARD STUDY = TUTTO PRONTO!      |
+|   DECISIONI CHIAVE                                              |
++================================================================+
+
+1. CLI (non App Desktop)
+   PERCHE: Compatibilita massima, liberta utente
+   NON PERCHE: "e piu veloce"
+
+2. Wizard COMPLETO prima di tutto
+   PERCHE: E IL DIFFERENZIALE, non una feature
+
+3. COSTITUZIONE aggiornata
+   NUOVA REGOLA: "IL TEMPO NON CI INTERESSA"
+
+4. Package npm creato in packages/cli/
+
++================================================================+
+|   IL TEMPO NON E MAI UN FATTORE                                 |
+|   Un progresso al giorno. Arriveremo. SEMPRE.                   |
 +================================================================+
 ```
 
-### COSA ABBIAMO FATTO
+---
 
-1. **3 GAP CRITICI** - `memory-persist`, `auto-summary`, `compliance-check`
-2. **VISIONE DEFINITIVA** - 1174 righe, user journey, architettura, MVP
-3. **WIZARD STUDY** - 1526 righe, IL DIFFERENZIALE!
+## DOCUMENTI DA LEGGERE
+
+| Priorita | Documento | Path |
+|----------|-----------|------|
+| **1** | COSTITUZIONE (nuova regola!) | `~/.claude/COSTITUZIONE.md` |
+| **2** | Tutte decisioni | `decisioni/20260115_SESSIONE_218_TUTTE_DECISIONI.md` |
+| **3** | Roadmap MVP | `roadmaps/SUB_ROADMAP_MVP_FEBBRAIO.md` |
+| **4** | Wizard Study | `ricerche/WIZARD_INIZIALE_STUDIO.md` |
 
 ---
 
-## I 2 DOCUMENTI CHIAVE (LEGGERE!)
-
-| Documento | Path |
-|-----------|------|
-| **Visione Prodotto** | `.sncp/progetti/cervellaswarm/PRODOTTO_VISIONE_DEFINITIVA.md` |
-| **Wizard Study** | `.sncp/progetti/cervellaswarm/ricerche/WIZARD_INIZIALE_STUDIO.md` |
-
----
-
-## IL DIFFERENZIALE (da Wizard Study)
+## COSA E STATO CREATO
 
 ```
-"Definisci il progetto UNA VOLTA. Mai più rispiegare."
+packages/cli/
+├── bin/cervellaswarm.js    # Entry point (skeleton)
+├── package.json            # npm config con dipendenze
+└── src/
+    ├── commands/           # (vuota)
+    ├── wizard/             # (vuota)
+    ├── session/            # (vuota)
+    └── ...                 # (altre cartelle vuote)
 
-Wizard crea COSTITUZIONE.md del progetto utente
-Session management automatico
-Ripresa intelligente (recap basato su tempo)
-/status, /recap sempre disponibili
+decisioni/
+├── 20260115_ARCHITETTURA_CLI_VS_APP.md
+├── 20260115_WIZARD_PRIMA_DI_TUTTO.md
+└── 20260115_SESSIONE_218_TUTTE_DECISIONI.md
+
+roadmaps/
+└── SUB_ROADMAP_MVP_FEBBRAIO.md
+
+COSTITUZIONE aggiornata con regola TEMPO
+```
+
+---
+
+## PROSSIMA SESSIONE - COSA FARE
+
+```
+1. [ ] cd packages/cli && npm install
+2. [ ] Creare src/commands/init.js (stub)
+3. [ ] Creare src/wizard/questions.js
+4. [ ] Test: node bin/cervellaswarm.js --help
+```
+
+---
+
+## IL DIFFERENZIALE (non dimenticare!)
+
+```
+"Definisci il progetto UNA VOLTA. Mai piu rispiegare."
 
 NESSUN COMPETITOR HA QUESTO!
 ```
 
 ---
 
-## PROSSIMA SESSIONE
+## LA REGOLA SUL TEMPO (NUOVA!)
 
 ```
-1. LEGGERE i 2 documenti chiave
-2. DECIDERE: Wizard first o MVP base first?
-3. INIZIARE implementazione npm package
-
-Timeline Wizard: ~8 settimane
-Timeline MVP base: ~3 settimane
-```
-
----
-
-## ROADMAP
-
-```
-FASE 1: FONDAMENTA     [####################] 100%!
-FASE 2: MVP PRODOTTO   [....................] 0%
-
-Target: MVP 10 Febbraio 2026
-Split: 60% Miracollo / 40% CervellaSwarm
++================================================================+
+|   IL TEMPO NON CI INTERESSA                                     |
+|                                                                 |
+|   Non scegliamo X perche "e piu veloce"                         |
+|   Scegliamo X perche "e MEGLIO"                                 |
+|                                                                 |
+|   Un progresso al giorno.                                       |
+|   Non importa in quanti mesi.                                   |
+|   Arriveremo. SEMPRE.                                           |
++================================================================+
 ```
 
 ---
 
 ## TL;DR
 
-**Sessione 217: TUTTO documentato. 2 documenti BIBBIA pronti. Prossima sessione: IMPLEMENTARE!**
+**Sessione 218:** Decisioni fondamentali. CLI. Wizard prima. COSTITUZIONE aggiornata con regola TEMPO.
 
-*"Cursor l'ha fatto. Noi lo faremo."*
+**Prossima sessione:** npm install + primi file comando.
+
+*"Un progresso al giorno = 365 progressi all'anno."*

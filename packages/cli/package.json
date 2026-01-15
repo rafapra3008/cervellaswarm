@@ -1,0 +1,53 @@
+{
+  "name": "cervellaswarm",
+  "version": "0.1.0",
+  "description": "16 AI agents working as a team for your project. Not an assistant - a TEAM.",
+  "main": "src/index.js",
+  "bin": {
+    "cervellaswarm": "./bin/cervellaswarm.js",
+    "cs": "./bin/cervellaswarm.js"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node bin/cervellaswarm.js",
+    "test": "node --test",
+    "lint": "eslint src/"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "multi-agent",
+    "claude",
+    "coding",
+    "assistant",
+    "team",
+    "development",
+    "cli"
+  ],
+  "author": "Rafa & Cervella",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cervellaswarm/cli"
+  },
+  "homepage": "https://cervellaswarm.dev",
+  "bugs": {
+    "url": "https://github.com/cervellaswarm/cli/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "@inquirer/prompts": "^7.2.0",
+    "chalk": "^5.3.0",
+    "ora": "^8.1.1",
+    "handlebars": "^4.7.8",
+    "conf": "^13.0.1",
+    "boxen": "^8.0.1",
+    "figures": "^6.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.17.0"
+  }
+}

@@ -16,3 +16,4 @@ data/swarm_memory.db
 .swarm/status/
 # Keep tracked: .swarm/README.md, .swarm/tasks/*.md, .swarm/handoff/
 CREDENZIALI_OAUTH.md
+packages/cli/node_modules/

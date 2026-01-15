@@ -1,19 +1,67 @@
 # Stato CervellaSwarm
-> Ultimo aggiornamento: 15 Gennaio 2026 - Sessione 214
+> Ultimo aggiornamento: 15 Gennaio 2026 - Sessione 218
 
 ---
 
 ## TL;DR
 
 ```
-SCORE ATTUALE: 9.5/10 REALE! (TARGET RAGGIUNTO!)
-TARGET: 9.5/10
-GAP: 0 punti
+SCORE ATTUALE: 9.5/10 REALE!
+CLI: FUNZIONA! (node bin/cervellaswarm.js --help)
+FASE 2: INIZIATA - MVP in costruzione
 
-SESSIONE 214: PRE-FLIGHT + POST-FLIGHT IMPLEMENTATI!
-- PRE-FLIGHT CHECK: 3 domande core + 1 random in tutti 16 agenti
-- POST-FLIGHT CHECK: COSTITUZIONE-APPLIED in tutti 16 agenti
-- Score Guardiana Qualita: 9.5/10 APPROVATO!
+SESSIONE 218: PRIMO CLI REALE + DECISIONI FONDAMENTALI!
+```
+
+---
+
+## SESSIONE 218 - CLI FUNZIONA! (15 Gennaio 2026)
+
+```
++================================================================+
+|   PRIMO CLI REALE! FASE 2 INIZIATA!                             |
++================================================================+
+
+DECISIONI FONDAMENTALI:
+-----------------------
+1. CLI (non App Desktop)
+   PERCHE: Compatibilita massima, liberta utente
+   NON PERCHE: "piu veloce"
+
+2. Wizard COMPLETO prima di tutto
+   PERCHE: E IL DIFFERENZIALE del prodotto
+
+3. COSTITUZIONE aggiornata
+   NUOVA REGOLA: "IL TEMPO NON CI INTERESSA"
+   Un passo al giorno. Arriveremo. SEMPRE.
+
+4. Filosofia Prodotto
+   "L'utente apre quando vuole. Fa un passo. Arriva al 100000%."
+
+CREATO:
+-------
+packages/cli/
+├── package.json (169 dipendenze installate)
+├── bin/cervellaswarm.js (entry point)
+└── src/
+    ├── commands/ (init, status, task, resume)
+    ├── wizard/questions.js (10 domande!)
+    ├── sncp/ (init, loader, writer)
+    ├── agents/ (router, spawner)
+    ├── display/ (status, recap)
+    └── session/ (manager)
+
+DOCUMENTI:
+----------
+- decisioni/20260115_ARCHITETTURA_CLI_VS_APP.md
+- decisioni/20260115_WIZARD_PRIMA_DI_TUTTO.md
+- decisioni/20260115_FILOSOFIA_TEMPO_PRODOTTO.md
+- decisioni/20260115_SESSIONE_218_TUTTE_DECISIONI.md
+- roadmaps/SUB_ROADMAP_MVP_FEBBRAIO.md
+
+TEST: node bin/cervellaswarm.js --help = FUNZIONA!
+
++================================================================+
 ```
 
 ---

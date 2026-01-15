@@ -1,0 +1,82 @@
+/**
+ * cervellaswarm resume
+ *
+ * Resume from last session.
+ * Shows recap based on time since last session.
+ * No judgment, no pressure - just helpful context.
+ *
+ * Philosophy: "Welcome back! Let's continue from where we were."
+ */
+
+import chalk from 'chalk';
+import { loadProjectContext } from '../sncp/loader.js';
+import { loadSessions, getLastSession } from '../session/manager.js';
+import { generateRecap } from '../display/recap.js';
+
+export async function resumeCommand(options) {
+  try {
+    // Load project context
+    const context = await loadProjectContext();
+
+    if (!context) {
+      console.log('');
+      console.log(chalk.yellow('  No CervellaSwarm project found.'));
+      console.log(chalk.white('  Run `cervellaswarm init` first.'));
+      console.log('');
+      return;
+    }
+
+    // List sessions if requested
+    if (options.list) {
+      const sessions = await loadSessions();
+      console.log('');
+      console.log(chalk.cyan.bold('  Recent Sessions:'));
+      sessions.slice(0, 10).forEach((session, i) => {
+        console.log(chalk.gray(`  ${i + 1}. ${session.date} - ${session.summary}`));
+      });
+      console.log('');
+      return;
+    }
+
+    // Get last session
+    const lastSession = options.session
+      ? await loadSession(options.session)
+      : await getLastSession();
+
+    if (!lastSession) {
+      console.log('');
+      console.log(chalk.cyan('  This is your first session!'));
+      console.log(chalk.white('  Run `cervellaswarm task "your task"` to start.'));
+      console.log('');
+      return;
+    }
+
+    // Calculate time since last session
+    const daysSince = calculateDaysSince(lastSession.date);
+
+    // Generate appropriate recap (based on time)
+    console.log('');
+    console.log(chalk.cyan.bold('  Welcome back!'));
+    console.log('');
+
+    // Show recap (level based on time, but NO judgment)
+    const recap = await generateRecap(context, lastSession, daysSince);
+    console.log(recap);
+
+    // Encouraging close (no time pressure!)
+    console.log('');
+    console.log(chalk.green('  Ready to take the next step?'));
+    console.log(chalk.gray('  Run `cervellaswarm task "..."` when you\'re ready.'));
+    console.log('');
+
+  } catch (error) {
+    console.error(chalk.red('  Error resuming session:'), error.message);
+  }
+}
+
+function calculateDaysSince(dateString) {
+  const lastDate = new Date(dateString);
+  const now = new Date();
+  const diffTime = Math.abs(now - lastDate);
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+}
