@@ -1,0 +1,126 @@
+# CI Workflow for CervellaSwarm CLI
+#
+# Runs on every push to main and on PRs.
+# Jobs: lint -> test (matrix) -> build-check
+#
+# "Fatto BENE > Fatto VELOCE"
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/cli/**'
+      - '.github/workflows/ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'packages/cli/**'
+
+# Cancel in-progress runs on same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: 'packages/cli/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: packages/cli
+
+      - name: Run ESLint
+        run: npm run lint
+        working-directory: packages/cli
+
+  test:
+    name: Test (Node ${{ matrix.node-version }})
+    needs: [lint]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: 'packages/cli/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: packages/cli
+
+      - name: Run tests
+        run: npm test
+        working-directory: packages/cli
+
+      - name: Generate coverage (Node 20 only)
+        if: matrix.node-version == '20.x'
+        run: npm run test:coverage
+        working-directory: packages/cli
+
+  build-check:
+    name: Build & Package Test
+    needs: [test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: 'packages/cli/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: packages/cli
+
+      - name: Test package build
+        run: npm pack
+        working-directory: packages/cli
+
+      - name: Install package globally
+        run: |
+          TARBALL=$(ls *.tgz)
+          npm install -g "$TARBALL"
+        working-directory: packages/cli
+
+      - name: Verify CLI works
+        run: |
+          cervellaswarm --version
+          cervellaswarm --help
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-package
+          path: packages/cli/*.tgz
+          retention-days: 90

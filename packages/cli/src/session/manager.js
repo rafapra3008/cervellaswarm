@@ -75,7 +75,7 @@ export async function loadSessions() {
 
     return sessions;
 
-  } catch (error) {
+  } catch (_error) {
     return [];
   }
 }

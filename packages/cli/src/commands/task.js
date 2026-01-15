@@ -18,7 +18,7 @@ import { routeTask } from '../agents/router.js';
 import { spawnAgent } from '../agents/spawner.js';
 import { saveTaskReport } from '../sncp/writer.js';
 import { createTaskSession } from '../session/manager.js';
-import { CervellaError, displayError, ExitCode } from '../utils/errors.js';
+import { CervellaError, displayError } from '../utils/errors.js';
 
 export async function taskCommand(description, options) {
   try {
@@ -65,7 +65,7 @@ export async function taskCommand(description, options) {
     console.log('');
     if (result.success) {
       console.log(chalk.green.bold('  Task completed!'));
-      console.log(chalk.gray(`  One more step forward.`));
+      console.log(chalk.gray('  One more step forward.'));
     } else {
       console.log(chalk.yellow.bold('  Task finished with issues.'));
       console.log(chalk.gray(`  ${result.error || 'Check the output above.'}`));

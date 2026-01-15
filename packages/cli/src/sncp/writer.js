@@ -202,7 +202,7 @@ export async function appendToDailyLog(message, type = 'info') {
     const { appendFileSync } = await import('fs');
     appendFileSync(logFile, logLine);
 
-  } catch (error) {
+  } catch (_error) {
     // Silent fail for logging
   }
 }

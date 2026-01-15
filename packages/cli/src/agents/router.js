@@ -9,7 +9,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 
-export async function routeTask(description, context) {
+export async function routeTask(description, _context) {
   // Simple keyword-based routing for now
   const desc = description.toLowerCase();
 

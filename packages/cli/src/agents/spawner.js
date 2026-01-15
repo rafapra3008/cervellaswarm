@@ -15,7 +15,7 @@ import Anthropic from '@anthropic-ai/sdk';
 
 // Default model - Sonnet for speed/cost, Opus for complex tasks
 const DEFAULT_MODEL = 'claude-sonnet-4-20250514';
-const OPUS_MODEL = 'claude-opus-4-5-20251101';
+const _OPUS_MODEL = 'claude-opus-4-5-20251101'; // Reserved for complex tasks
 
 // Retry configuration
 const MAX_RETRIES = 3;
@@ -115,7 +115,7 @@ function sleep(ms) {
 /**
  * Check if error is retryable
  */
-function isRetryableError(error) {
+function _isRetryableError(error) {
   // Rate limit or server errors are retryable
   return error.status === 429 || error.status === 500 || error.status === 503;
 }
@@ -343,7 +343,7 @@ function extractFilesFromOutput(output) {
 /**
  * Suggest next step based on agent and task
  */
-function suggestNextStep(agent, description) {
+function suggestNextStep(agent, _description) {
   const suggestions = {
     'cervella-backend': 'Review the code and run: npm test',
     'cervella-frontend': 'Preview in browser: npm run dev',
