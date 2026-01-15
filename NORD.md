@@ -110,11 +110,12 @@ SCORE ATTUALE: 9.5/10
 
 | Cosa | Dove |
 |------|------|
-| Roadmap completa | `.sncp/progetti/cervellaswarm/roadmaps/ROADMAP_2026_PRODOTTO.md` |
+| **MAPPA COMPLETA (BIBBIA!)** | `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_COMPLETA_STEP_BY_STEP.md` |
+| Roadmap visiva | `.sncp/progetti/cervellaswarm/roadmaps/ROADMAP_2026_PRODOTTO.md` |
 | Stato dettagliato | `.sncp/progetti/cervellaswarm/stato.md` |
 | Ricerche | `.sncp/progetti/cervellaswarm/ricerche/` |
-| Docs esterni | `docs/GETTING_STARTED.md` |
-| DNA Famiglia | `docs/DNA_FAMIGLIA.md` |
+| Ricerca Cursor | `.sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_CURSOR_BUSINESS_MODEL.md` |
+| DNA Famiglia (16 membri) | `docs/DNA_FAMIGLIA.md` |
 
 ---
 

@@ -15,7 +15,23 @@ cervellaswarm task "Add user authentication"
 
 ## Why CervellaSwarm?
 
-Traditional AI assistants are generalists. CervellaSwarm gives you **8 specialized agents**, each expert in their domain:
+Traditional AI assistants are generalists. CervellaSwarm gives you **16 specialized agents** organized in a hierarchy:
+
+### The Queen (Orchestrator)
+
+| Agent | Role |
+|-------|------|
+| `cervella-orchestrator` | Coordinates all agents, delegates tasks |
+
+### The Guardians (Quality Gates)
+
+| Agent | Specialty |
+|-------|-----------|
+| `cervella-guardiana-qualita` | Code quality, standards, reviews |
+| `cervella-guardiana-ops` | DevOps, infrastructure, deploy |
+| `cervella-guardiana-ricerca` | Research validation, fact-checking |
+
+### The Workers (Specialists)
 
 | Agent | Specialty |
 |-------|-----------|
@@ -27,6 +43,10 @@ Traditional AI assistants are generalists. CervellaSwarm gives you **8 specializ
 | `cervella-data` | SQL, Analytics, Database Design |
 | `cervella-security` | Security Audit, Vulnerabilities |
 | `cervella-researcher` | Research, Analysis, Best Practices |
+| `cervella-ingegnera` | Architecture, Refactoring, Tech Debt |
+| `cervella-marketing` | UX Strategy, Copywriting, Positioning |
+| `cervella-reviewer` | Code Review, Best Practices |
+| `cervella-scienziata` | Market Research, Competitor Analysis |
 
 ## Quick Start
 
@@ -35,6 +55,8 @@ Traditional AI assistants are generalists. CervellaSwarm gives you **8 specializ
 ```bash
 npm install -g cervellaswarm
 ```
+
+> **Note:** Package currently being prepared for public release. Coming soon!
 
 ### 2. Set your API key
 
@@ -61,7 +83,7 @@ cervellaswarm task "Create a REST API endpoint for user registration"
 
 ### `cervellaswarm init`
 
-Initialize CervellaSwarm in your project. Creates a `.sncp/` directory for session management.
+Initialize CervellaSwarm in your project. Creates a `.sncp/` directory for persistent memory.
 
 ### `cervellaswarm task <description>`
 
@@ -81,33 +103,60 @@ Show current project status and recent sessions.
 
 ### `cervellaswarm resume`
 
-Resume the last task session.
+Resume the last task session with context recap.
 
-## Features
+## Key Features
 
+- **16 Specialized Agents**: Not one generalist, a full team
 - **Smart Routing**: Automatically selects the best agent for your task
+- **Persistent Memory (SNCP)**: Never explain your project twice
 - **Session Management**: Track and resume tasks across sessions
+- **Quality Gates**: Guardian agents review before merge
 - **Retry Logic**: Automatic retries on rate limits or temporary errors
-- **Project Context**: Agents understand your project structure
+
+## Architecture
+
+```
+                    +-------------------+
+                    |     QUEEN         |
+                    | (Orchestrator)    |
+                    +--------+----------+
+                             |
+        +--------------------+--------------------+
+        |                    |                    |
++-------v-------+    +-------v-------+    +------v--------+
+|   GUARDIAN    |    |   GUARDIAN    |    |   GUARDIAN    |
+|   Qualita     |    |     Ops       |    |   Ricerca     |
++---------------+    +---------------+    +---------------+
+        |
+        +-- Reviews all worker output
+
++-----------------------------------------------+
+|                 12 WORKERS                    |
+|  backend, frontend, tester, docs, devops,    |
+|  data, security, researcher, ingegnera,      |
+|  marketing, reviewer, scienziata             |
++-----------------------------------------------+
+```
 
 ## Requirements
 
 - Node.js 18+
-- Anthropic API key
+- Anthropic API key (Claude Pro recommended)
 
 ## Configuration
 
-Set these environment variables:
-
 ```bash
 # Required
-ANTHROPIC_API_KEY=sk-ant-...
+export ANTHROPIC_API_KEY=sk-ant-...
 ```
 
 ## License
 
-MIT - [Rafa & Cervella](https://github.com/cervellaswarm)
+MIT
 
 ---
 
 *"16 agenti. 1 comando. Il tuo team AI."*
+
+*Built with love by Cervella & Rafa*

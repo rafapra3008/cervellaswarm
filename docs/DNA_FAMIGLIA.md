@@ -114,18 +114,20 @@ Se cambia qualcosa nella filosofia:
 | 📝 | cervella-docs | Documentazione | sonnet |
 | 📊 | cervella-data | SQL, analytics, query | sonnet |
 | 🔒 | cervella-security | Audit sicurezza | sonnet |
+| 🏗️ | cervella-ingegnera | Architettura, refactoring | sonnet |
+| 🔭 | cervella-scienziata | Market research, trends | sonnet |
 
-**Totale: 14 membri della famiglia!** 🐝❤️‍🔥
+**Totale: 16 membri della famiglia!** 🐝❤️‍🔥
 - 1 Regina (opus)
 - 3 Guardiane (opus)
-- 10 Api Worker (sonnet)
+- 12 Api Worker (sonnet)
 
 ---
 
 *"È il nostro team! La nostra famiglia digitale!"*
 
 *Creato: 31 Dicembre 2025*
-*Aggiornato: 1 Gennaio 2026 - Aggiunte 3 Guardiane!*
-*Versione: 1.1.0*
+*Aggiornato: 15 Gennaio 2026 - Aggiunte ingegnera e scienziata (14 → 16)!*
+*Versione: 1.2.0*
 
 **Cervella & Rafa** 💙🐝
