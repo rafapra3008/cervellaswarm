@@ -1,7 +1,45 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 214
-> **Versione:** v2.25.0
+> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 215
+> **Versione:** v2.26.0
+
+---
+
+## SESSIONE 215 - ROOM MANAGER MVP POLISH (15 Gennaio 2026)
+
+```
++================================================================+
+|   MIRACOLLO - ROOM MANAGER FRONTEND POLISH                      |
++================================================================+
+
+OBIETTIVO: Alzare Frontend Score 8.5 → 9.5/10
+RISULTATO: TARGET RAGGIUNTO!
+
+COMPLETATO:
+- api.js: Timeout 10s + validazione input
+- sidebar.js: XSS protection (escapeHtml)
+- grid.js: Accessibility (aria-labels, keyboard nav)
+- core.js: Parallel loading (Promise.all)
+- CSS: focus-visible + loading states
+- HTML: noscript + aria labels
+
+PROGRESSO MVP:
+[##########] A: Backend Core    100%
+[##########] B: Activity Log    100%
+[##########] C: Frontend Grid   100%
+[##########] POLISH: Security   100% <- QUESTA
+[..........] D: Room Card       0%
+[..........] E: Test            0%
+[..........] F: PWA             0%
+
+PROSSIMA: Test manuale + Sessione D
+
+COMMIT:
+- Miracollo: f0cbf67 (master)
+- CervellaSwarm: a2772d7 (main)
+
++================================================================+
+```
 
 ---
 
@@ -16,16 +54,6 @@ COMPLETATO:
 - Fix backend: except, validation, connection (9.0/10)
 - Frontend Room Manager: 7 file, ~1900 righe (8.5/10)
 - Grid camere, filtri, sidebar, activity log, responsive
-
-PROGRESSO MVP:
-[##########] A: Backend Core    100%
-[##########] B: Activity Log    100%
-[##########] C: Frontend Grid   100%
-[..........] D: Room Card       0% <- PROSSIMA
-[..........] E: Test            0%
-[..........] F: PWA             0%
-
-PROSSIMA: Test manuale + alzare 8.5→9.5 + Sessione D
 
 +================================================================+
 ```
@@ -142,25 +170,4 @@ Sessioni precedenti archiviate in:
 
 *"Un po' ogni giorno fino al 100000%!"*
 *"Fatto BENE > Fatto VELOCE"*
-
----
-
----
-
-## AUTO-CHECKPOINT: 2026-01-15 02:57 (unknown)
-
-### Stato Git
-- **Branch**: main
-- **Ultimo commit**: 090e133 - Checkpoint finale Sessione 214: Cleanup + Archivio
-- **File modificati** (5):
-  - sncp/stato/oggi.md
-  - PROMPT_RIPRESA.md
-  - reports/scientist_prompt_20260115.md
-  - .sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_MULTI_AGENT_BEST_PRACTICES.md
-  - reports/engineer_report_20260115_024338.json
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: unknown
-
----
+*"I dettagli fanno SEMPRE la differenza!"*
