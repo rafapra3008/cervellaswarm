@@ -8,7 +8,7 @@
 
 ## STATO IN UNA RIGA
 
-**Email client base funzionante. Mancano ~35h di lavoro per FASE 1 completa.**
+**Email client base funzionante. Mancano ~23h di lavoro per FASE 1 completa.**
 
 ---
 
@@ -17,42 +17,45 @@
 ### Backend (`miracallook/backend/`)
 
 ```
-gmail/api.py (990 righe) - UNICO FILE:
-├── /auth/login, /auth/callback    - OAuth Google ✅
-├── /gmail/inbox                   - Lista email ✅
-├── /gmail/message/{id}            - Dettaglio email ✅
-├── /gmail/send                    - Invio email ✅
-├── /gmail/reply                   - Reply + Reply All ✅
-├── /gmail/forward                 - Forward ✅
-├── /gmail/archive                 - Archivia ✅
-├── /gmail/trash                   - Cestina ✅
-├── /gmail/search                  - Ricerca ✅
-├── /gmail/message/{id}/summary    - AI Summary (Claude) ✅
-└── /gmail/labels                  - Lista labels ✅
+gmail/api.py (~1100 righe) - UNICO FILE:
+├── /auth/login, /auth/callback       - OAuth Google ✅
+├── /gmail/inbox                      - Lista email ✅
+├── /gmail/message/{id}               - Dettaglio email ✅
+├── /gmail/send                       - Invio email ✅
+├── /gmail/send-with-attachments      - Invio con allegati ✅ (Sessione 223!)
+├── /gmail/reply                      - Reply + Reply All ✅
+├── /gmail/forward                    - Forward ✅
+├── /gmail/archive                    - Archivia ✅
+├── /gmail/trash                      - Cestina ✅
+├── /gmail/mark-read, /mark-unread    - Mark Read/Unread ✅
+├── /gmail/search                     - Ricerca ✅
+├── /gmail/message/{id}/summary       - AI Summary (Claude) ✅
+├── /gmail/labels                     - Lista labels ✅
+└── /gmail/drafts/*                   - CRUD Drafts ✅
 
-NON ESISTONO (erano documentati come "fatti"):
-├── drafts.py                      - ❌ MAI CREATO
-├── threads.py                     - ❌ MAI CREATO
-├── actions.py (bulk)              - ❌ MAI CREATO
-└── labels.py (CRUD)               - ❌ MAI CREATO
+NON ESISTONO:
+├── threads.py                     - ❌ DA FARE
+├── actions.py (bulk)              - ❌ DA FARE
+└── labels.py (CRUD)               - ❌ DA FARE
 ```
 
 ### Frontend (`miracallook/frontend/src/`)
 
 ```
 hooks/:
-├── useEmails.ts (119 righe)       - Query inbox ✅
-└── useKeyboardShortcuts.ts        - Shortcuts ✅
+├── useEmails.ts                   - Query inbox + mutations ✅
+├── useKeyboardShortcuts.ts        - Shortcuts ✅
+├── useDraft.ts                    - Drafts auto-save ✅ (Sessione 222)
+└── useAttachments.ts              - Gestione allegati ✅ (Sessione 223!)
 
-NON ESISTONO (erano documentati come "fatti"):
-├── useDraft.ts                    - ❌ MAI CREATO
-├── useThreads.ts                  - ❌ MAI CREATO
-├── useSelection.ts                - ❌ MAI CREATO
-├── useLabels.ts                   - ❌ MAI CREATO
-└── useAttachments.ts              - ❌ MAI CREATO
+NON ESISTONO:
+├── useThreads.ts                  - ❌ DA FARE
+├── useSelection.ts                - ❌ DA FARE
+└── useLabels.ts                   - ❌ DA FARE
 
 components/:
-├── Compose/ComposeModal.tsx       - ✅ ESISTE
+├── Compose/ComposeModal.tsx       - ✅ ESISTE (con Attachments!)
+├── Compose/AttachmentPicker.tsx   - ✅ NUOVO (Sessione 223!)
 ├── Reply/ReplyModal.tsx           - ✅ ESISTE
 ├── Forward/ForwardModal.tsx       - ✅ ESISTE
 ├── EmailList/                     - ✅ ESISTE (base)
@@ -62,11 +65,10 @@ components/:
 ├── CommandPalette/                - ✅ ESISTE
 └── GuestSidebar/                  - ✅ ESISTE (mock)
 
-NON ESISTONO (erano documentati come "fatti"):
-├── ThreadList/                    - ❌ MAI CREATO
-├── BulkActionsToolbar.tsx         - ❌ MAI CREATO
-├── LabelPicker.tsx                - ❌ MAI CREATO
-└── AttachmentPicker.tsx           - ❌ MAI CREATO
+NON ESISTONO:
+├── ThreadList/                    - ❌ DA FARE
+├── BulkActionsToolbar.tsx         - ❌ DA FARE
+└── LabelPicker.tsx                - ❌ DA FARE
 ```
 
 ---
@@ -97,13 +99,13 @@ NON ESISTONO (erano documentati come "fatti"):
 |---------|-------------|--------|-------------|
 | Mark Read/Unread | Sessione 222 | ✅ IMPLEMENTATO | ~1h |
 | Drafts auto-save | Sessione 222 | ✅ IMPLEMENTATO | ~2h |
-| Bulk Actions | "Sessione 194" | ❌ ZERO CODICE | 5h |
-| Thread View | "Sessione 195" | ❌ ZERO CODICE | 4h |
-| Labels Custom | "Sessione 195" | ❌ ZERO CODICE | 3h |
-| Upload Attachments | "Sessione 202" | ❌ ZERO CODICE | 4h |
-| Contacts Autocomplete | - | ❌ ZERO CODICE | 6h |
-| Context Menu | "Ricerca 202" | ❌ ZERO CODICE | 5h |
-| **TOTALE** | | | **~35h** |
+| Upload Attachments | Sessione 223 | ✅ IMPLEMENTATO | ~4h |
+| Bulk Actions | "Sessione 194" | ❌ DA FARE | 5h |
+| Thread View | "Sessione 195" | ❌ DA FARE | 4h |
+| Labels Custom | "Sessione 195" | ❌ DA FARE | 3h |
+| Contacts Autocomplete | - | ❌ DA FARE | 6h |
+| Context Menu | "Ricerca 202" | ❌ DA FARE | 5h |
+| **TOTALE RIMANENTE** | | | **~23h** |
 
 ---
 
@@ -130,10 +132,11 @@ ricerche/COMPETITOR_*.md
 FASE 0 (Fondamenta)     [####################] 100% ✅
   OAuth, Inbox, Send, Reply, Forward, Archive, Trash, Search, AI
 
-FASE 1 (Email Solido)   [##########..........] 50%
+FASE 1 (Email Solido)   [##############......] 65%
   ✅ Mark Read/Unread (Sessione 222)
   ✅ Drafts Auto-Save (Sessione 222)
-  Manca: Bulk, Threads, Labels, Attachments, Contacts, Context Menu
+  ✅ Upload Attachments (Sessione 223!)
+  Manca: Bulk, Threads, Labels, Contacts, Context Menu (~23h)
 
 FASE 2 (PMS Integration)[....................] 0%
   Guest detection, Context sidebar
@@ -146,21 +149,22 @@ FASE 3+ (WhatsApp, etc) [....................]  0%
 ## PROSSIMI STEP (REALI)
 
 ```
-PER COMPLETARE FASE 1 (~27h rimanenti):
+PER COMPLETARE FASE 1 (~23h rimanenti):
 
-SPRINT 1 - CRITICI COMPLETATO! ✅
+SPRINT 1 - CRITICI ✅ COMPLETATO!
 [x] Mark Read/Unread         ✅ FATTO Sessione 222
 [x] Drafts auto-save         ✅ FATTO Sessione 222
 
-ALTI (12h):
-[ ] Bulk Actions             5h
-[ ] Thread View              4h
-[ ] Labels Custom            3h
+SPRINT 2 - ALTI ✅ PARZIALE
+[x] Upload Attachments       ✅ FATTO Sessione 223!
+[ ] Thread View              4h  - ricerca pronta
+[ ] Resizable Panels         3h  - ricerca pronta
 
-MEDI (15h):
-[ ] Upload Attachments       4h
+SPRINT 3 - COMPLETAMENTO (16h):
+[ ] Bulk Actions             5h
+[ ] Labels Custom            3h
 [ ] Contacts Autocomplete    6h
-[ ] Context Menu             5h
+[ ] Context Menu             5h  - ricerca dettagliata!
 ```
 
 ---
@@ -209,8 +213,9 @@ Backend:  http://localhost:8002
 
 ---
 
-*Ultimo aggiornamento: 15 Gennaio 2026 - Sessione 222*
-*SPRINT 1 COMPLETATO: Mark Read/Unread + Drafts Auto-Save*
-*Commits: 9d846a2, f60f6b8*
-*FASE 1: 35% → 50%*
-*"SU CARTA != REALE" - Codice VERO, commit FATTO!*
+*Ultimo aggiornamento: 15 Gennaio 2026 - Sessione 223*
+*UPLOAD ATTACHMENTS COMPLETATO!*
+*Backend: /gmail/send-with-attachments endpoint*
+*Frontend: useAttachments.ts + AttachmentPicker.tsx*
+*FASE 1: 50% → 65%*
+*"SU CARTA != REALE" - Codice VERO, build OK!*
