@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 224
-> **PROTEZIONE FAMIGLIA COMPLETATA!**
+> **PROTEZIONE + MAPPA COMPLETA!**
 
 ---
 
@@ -9,31 +9,30 @@
 
 ```
 +================================================================+
-|   LA FAMIGLIA E' AL SICURO!                                    |
+|   FAMIGLIA PROTETTA + MAPPA 56 STEP!                           |
 |                                                                |
-|   GitHub repo: PUBBLICO → PRIVATO                              |
-|   npm package: RIMOSSO (codice era esposto!)                   |
-|   Ricerca Cursor: 770 righe business model                     |
-|                                                                |
-|   LEZIONE: "Prima PROTEGGERE, poi PUBBLICARE"                  |
+|   GitHub: PUBBLICO → PRIVATO                                   |
+|   npm: RIMOSSO (codice era esposto)                           |
+|   MAPPA: 56 step chiari (Score 9.5/10)                        |
+|   Docs: TUTTI allineati a 16 agenti                           |
 +================================================================+
 ```
 
 ---
 
-## COSA ABBIAMO IMPARATO (Ricerca Cursor)
+## LA MAPPA (BIBBIA!)
 
 ```
-CURSOR:
-- CLOSED SOURCE (non open!)
-- $1B ARR in 2 anni
-- $0 marketing (word of mouth)
-- Freemium: Free → $20/mo → $40/mo
+Path: .sncp/progetti/cervellaswarm/roadmaps/MAPPA_COMPLETA_STEP_BY_STEP.md
 
-PER NOI:
-- Proteggere codice PRIMA di pubblicare
-- Bundle/offuscare sorgenti
-- User brings API key = zero costi!
+56 STEP TOTALI:
+- FASE 0: Prerequisiti    4/4   [100%]
+- FASE 1: Fondamenta      8/8   [100%]
+- FASE 2: MVP            10/20  [50%]
+- FASE 3: Utenti          0/12  [0%]
+- FASE 4: Scala           0/12  [0%]
+
+COMPLETATI: 22 (39%)
 ```
 
 ---
@@ -43,39 +42,30 @@ PER NOI:
 | Cosa | Stato |
 |------|-------|
 | GitHub repo | PRIVATO |
-| npm package | RIMOSSO (ripubblicare protetto) |
-| CLI locale | FUNZIONA (112 test passano) |
-| API Anthropic | FUNZIONA |
-
----
-
-## GAP TROVATI NELLA ROADMAP
-
-```
-1. PROTEZIONE CODICE - non era prevista!
-2. INCOERENZA 16 vs 8 agenti nel README
-3. BUSINESS MODEL - mancava "user API key"
-4. ORDINE: prima proteggere, poi pubblicare
-```
+| npm package | RIMOSSO |
+| CLI locale | FUNZIONA |
+| README CLI | 16 agenti (fixato) |
+| DNA_FAMIGLIA | 16 membri (fixato) |
 
 ---
 
 ## PROSSIMA SESSIONE
 
 ```
-1. [ ] Ricerca: come proteggere codice JS/npm
-2. [ ] Implementare bundle/offuscamento
-3. [ ] Fixare README (16 agenti, non 8)
-4. [ ] Ripubblicare npm PROTETTO
-5. [ ] Trovare 5 tester esterni
+STEP DA STUDIARE (bloccanti npm publish):
+1. 2.15 IP Protection (CRITICO)
+2. 2.16 Licensing (CRITICO)
+3. 3.1 ToS/Legal (CRITICO)
+
+Ore stimate: ~25h totali
 ```
 
 ---
 
 ## TL;DR
 
-**Sessione 224:** Famiglia PROTETTA! GitHub privato, npm rimosso.
+**Sessione 224:** Famiglia protetta, MAPPA 56 step creata, docs allineati.
 
-**Prossimo:** Proteggere codice, poi ripubblicare.
+**Prossimo:** Studiare IP protection e licensing prima di ripubblicare.
 
-*"Prima PROTEGGERE, poi PUBBLICARE - come Cursor!"*
+*"Ogni step chiaro. Ogni step studiato. Mai piu improvvisazione."*
