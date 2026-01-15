@@ -1,52 +1,49 @@
 # PROMPT RIPRESA - Miracollo
 
-> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 216
-> **Per SOLO questo progetto!**
+> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 217
+> **LEGGI E AGISCI. NON RI-ANALIZZARE.**
 
 ---
 
-## SESSIONE 216 - DEPLOY + FIX (15 Gennaio 2026)
+## STATO IN UNA RIGA
+
+**Room Manager MVP LIVE. Prossimo: VDA Integration (bloccato da docs MODBUS).**
+
+---
+
+## COSA È LIVE
 
 ```
-+================================================================+
-|   ROOM MANAGER MVP - LIVE IN PRODUZIONE!                        |
-+================================================================+
-
-1. SISTEMA DEPLOY ROBUSTO
-   - deploy.sh riscritto (GIT invece di rsync)
-   - Metodo: git push → git pull VM → docker restart
-   - Zero conflitti, mai più errori!
-   - Trigger per Rafa: "deploy miracollo"
-
-2. FIX PRODUZIONE
-   - Hotel code: NATURAE → NL (config.js)
-   - Migration 041 applicata al DB produzione
-   - Docker restart risolve cache backend
-
-3. ROOM MANAGER LIVE!
-   - URL: https://miracollo.com/room-manager.html
-   - 11 camere caricate
-   - API: /api/room-manager/NL/rooms OK
-
-COMMIT: 37c8992 (master)
-
-+================================================================+
+✅ PMS Core (prenotazioni, planning, ospiti, tariffe)
+✅ Rateboard AI (meteo, eventi, learning)
+✅ Room Manager MVP (grid, housekeeping, activity log)
+   URL: https://miracollo.com/room-manager.html
 ```
 
 ---
 
-## PROGRESSO MVP ROOM MANAGER
+## FOCUS ATTUALE
 
 ```
-[##########] A: Backend Core    100%
-[##########] B: Activity Log    100%
-[##########] C: Frontend Grid   100%
-[##########] POLISH: Security   100%
-[##########] DEPLOY: Live!      100%
-[..........] D: Room Card       0%   ← PROSSIMA
-[..........] E: Test            0%
-[..........] F: PWA             0%
+ROOM MANAGER AVANZATO - VDA Integration
+
+BLOCCATO DA: Documentazione MODBUS VDA
+AZIONE RAFA: Contattare VDA support per docs
+
+ROADMAP COMPLETA:
+.sncp/progetti/miracollo/moduli/room_manager/ROADMAP_ROOM_MANAGER_COMPLETA.md
 ```
+
+---
+
+## PROSSIMO STEP CONCRETO
+
+**SE docs VDA arrivate:**
+→ Inizia FASE 1 della roadmap (vda_service.py)
+
+**SE docs VDA NON arrivate:**
+→ Chiedi a Rafa stato contatto VDA
+→ Oppure lavora su PWA (FASE 5, parallela)
 
 ---
 
@@ -54,33 +51,18 @@ COMMIT: 37c8992 (master)
 
 | Cosa | Path |
 |------|------|
-| Roadmap MVP | `.sncp/progetti/miracollo/moduli/room_manager/SUB_ROADMAP_MVP_ROOM_MANAGER.md` |
-| Deploy Guide | `miracollogeminifocus/docs/DEPLOY_GUIDE.md` |
-| Stato | `.sncp/progetti/miracollo/stato.md` |
+| **NORD** | `miracollogeminifocus/NORD.md` |
+| **ROADMAP** | `.sncp/progetti/miracollo/moduli/room_manager/ROADMAP_ROOM_MANAGER_COMPLETA.md` |
+| Codice MVP | `miracollogeminifocus/backend/services/room_manager_service.py` |
 
 ---
 
-## DEPLOY - COME FUNZIONA
+## REGOLA
 
-```bash
-# Rafa dice: "deploy miracollo"
-# Cervella esegue:
-cd ~/Developer/miracollogeminifocus
-./deploy.sh
-
-# Lo script fa:
-# 1. Verifica git pulito
-# 2. Git push
-# 3. Git pull VM
-# 4. Docker restart
-# 5. Health check
 ```
-
----
-
-## TL;DR
-
-**Room Manager MVP LIVE! Deploy robusto. Prossima: Sessione D (Room Card).**
+NON ri-analizzare. NON ridiscutere architettura.
+LEGGI la roadmap. ESEGUI il prossimo step.
+```
 
 ---
 

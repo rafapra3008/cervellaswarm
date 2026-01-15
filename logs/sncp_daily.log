@@ -64,3 +64,26 @@
 [2026-01-15 01:34:16] 
 [2026-01-15 01:34:16] Manutenzione completata!
 [2026-01-15 01:34:16] ============================================
+[2026-01-15 05:30:36] 
+[2026-01-15 05:30:36] ============================================
+[2026-01-15 05:30:36] SNCP DAILY MAINTENANCE - 2026-01-15
+[2026-01-15 05:30:36] ============================================
+[2026-01-15 05:30:36] === SNCP Daily Health Check ===
+[2026-01-15 05:30:36] Health check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/health_2026-01-15.txt
+[2026-01-15 05:30:36] Warning: 2 issue trovati
+[2026-01-15 05:30:36] === Cleanup file temporanei ===
+[2026-01-15 05:30:36] Cleanup completato
+[2026-01-15 05:30:36] === Verifica dimensioni file ===
+[2026-01-15 05:30:36] WARNING: cervellaswarm/stato.md ha 388 righe (max 300)
+[2026-01-15 05:30:36] WARNING: miracollo/stato.md ha 712 righe (max 300)
+[2026-01-15 05:30:36] ATTENZIONE: 2 file troppo grandi - considera compattazione
+[2026-01-15 05:30:36] === Statistiche SNCP ===
+[2026-01-15 05:30:36]   cervellaswarm: 48 file
+[2026-01-15 05:30:36]   contabilita: 1 file
+[2026-01-15 05:30:36]   crypto-research: 16 file
+[2026-01-15 05:30:36]   menumaster: 3 file
+[2026-01-15 05:30:36]   miracollo: 251 file
+[2026-01-15 05:30:36]   Dimensione totale SNCP: 7.0M
+[2026-01-15 05:30:36] 
+[2026-01-15 05:30:36] Manutenzione completata!
+[2026-01-15 05:30:36] ============================================
