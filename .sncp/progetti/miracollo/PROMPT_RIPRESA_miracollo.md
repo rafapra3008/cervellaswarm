@@ -123,4 +123,23 @@ PRIORITA 3: Test completo Bulk Actions
 
 ---
 
+## LEZIONE AUDIT - DA MIGLIORARE
+
+```
+L'audit di questa sessione NON ha identificato:
+1. Bug react-resizable-panels (layout)
+2. Bug rendering email (HTML grezzo)
+
+PERCHE?
+- Audit ha controllato CODICE ma non ha TESTATO visualmente
+- Audit ha detto "OK" senza aprire nel browser
+
+MIGLIORAMENTO PER PROSSIMI AUDIT:
+- SEMPRE testare visualmente dopo modifiche frontend
+- Non fidarsi solo del "build OK"
+- Verificare che le feature FUNZIONANO, non solo che compilano
+```
+
+---
+
 *"Due bug trovati, capiti, documentati. Prossima sessione li risolviamo!"*
