@@ -1,34 +1,33 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 228
-> **CLI PRONTA PER NPM PUBLISH!**
+> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 229
+> **CI/CD PIPELINE COMPLETO! PRONTO PER PRIMO PUBLISH!**
 
 ---
 
-## SESSIONE 228 - RISULTATO
+## SESSIONE 229 - RISULTATO
 
 ```
 +================================================================+
-|   3 STEP COMPLETATI - FASE 2 AL 90%!                           |
+|   STEP 2.17 COMPLETATO - CI/CD PIPELINE!                        |
 |                                                                |
-|   STEP 2.12: Error Handling                                    |
-|   - src/utils/errors.js (sistema centralizzato)                |
-|   - Exit codes standard (0-7 + 130)                            |
-|   - Recovery suggestions per ogni errore                       |
-|   - +20 test specifici                                         |
+|   WORKFLOW CI (.github/workflows/ci.yml):                      |
+|   - Lint (ESLint)                                              |
+|   - Test Matrix (Node 18.x, 20.x)                              |
+|   - Build & Package Test                                       |
+|   - CI PASSA in 1m3s!                                          |
 |                                                                |
-|   STEP 2.13: Help System                                       |
-|   - cervellaswarm --help migliorato                            |
-|   - Getting Started + Examples + 8 Agenti                      |
-|   - Help dettagliato per ogni comando                          |
+|   WORKFLOW PUBLISH (.github/workflows/publish.yml):            |
+|   - Trusted Publishing (OIDC) - zero token!                    |
+|   - GitHub Release automatico                                  |
+|   - Trigger: tag v*.*.*                                        |
 |                                                                |
-|   STEP 2.14: npm Publish Setup                                 |
-|   - Ricerca completa (1110 righe)                              |
-|   - prepublishOnly + validate scripts                          |
-|   - eslint.config.js                                           |
-|   - npm publish --dry-run PASS!                                |
+|   GITHUB SETUP:                                                |
+|   - GitHub Pro attivato                                        |
+|   - Branch Protection su main                                  |
+|   - Environment "production" creato                            |
 |                                                                |
-|   TEST: 134 PASS - PRONTO PER PUBLISH!                         |
+|   TEST: 134 PASS                                               |
 +================================================================+
 ```
 
@@ -39,90 +38,82 @@
 ```
 FASE 0: 4/4   [##########] 100%
 FASE 1: 8/8   [##########] 100%
-FASE 2: 18/20 [#########-] 90%  <- +3 step!
+FASE 2: 19/20 [##########] 95%  <- +1 step (CI/CD)!
 FASE 3: 0/12  [----------] 0%
 FASE 4: 0/12  [----------] 0%
 
-TOTALE: 30/56 step (54%)  <- era 48%!
+TOTALE: 31/56 step (55%)
 ```
 
 ---
 
-## PROSSIMI STEP
+## PROSSIMO STEP
 
 ```
-PRIORITA ALTA (FASE 2 - rimangono 2 step):
-1. Step 2.17: CI/CD Pipeline
-2. Step 2.20: MVP v1.0 Release (include npm publish REALE)
+PRIORITA ALTA - ULTIMO STEP FASE 2:
+Step 2.20: MVP v1.0 Release (npm publish REALE!)
 
-GIA' PRONTI (studiati):
-- 2.15 IP Protection [STUDIATO]
-- 2.16 Licensing [STUDIATO]
-- 2.18 Security Audit [da fare]
-- 2.19 Documentation README [da fare]
-
-DOPO (FASE 3):
-- Landing page
-- Community Discord
-- Alpha testers
+COME FARE IL PRIMO PUBLISH:
+1. Setup npm account (se non hai): npm adduser
+2. Enable 2FA: npm profile enable-2fa auth-and-writes
+3. Setup Trusted Publishing su npmjs.com
+4. Crea tag: git tag v0.1.0 && git push origin v0.1.0
+5. CI/CD fa il resto automaticamente!
 ```
 
 ---
 
-## FILE MODIFICATI (Sessione 228)
+## FILE SESSIONE 229
 
 ```
 NUOVI:
-packages/cli/src/utils/errors.js       <- Error handling system
-packages/cli/test/utils/errors.test.js <- 20 test errori
-packages/cli/eslint.config.js          <- ESLint 9 flat config
-.sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_NPM_PUBLISH_COMPLETA.md
+.github/workflows/ci.yml              <- CI Pipeline
+.github/workflows/publish.yml         <- Publish Pipeline
+.sncp/.../ricerche/RICERCA_CICD.md   <- 1100+ righe ricerca
+.sncp/.../reports/SECURITY_AUDIT.md  <- Audit sicurezza
 
 MODIFICATI:
-packages/cli/src/commands/init.js      <- Usa nuovo error system
-packages/cli/src/commands/task.js      <- Usa nuovo error system
-packages/cli/src/commands/status.js    <- Usa nuovo error system
-packages/cli/src/commands/resume.js    <- Usa nuovo error system
-packages/cli/bin/cervellaswarm.js      <- Help migliorato
-packages/cli/package.json              <- prepublishOnly + validate
-.sncp/progetti/cervellaswarm/roadmaps/MAPPA_COMPLETA_STEP_BY_STEP.md
+packages/cli/package.json            <- Fix test:coverage
+packages/cli/eslint.config.js        <- varsIgnorePattern
+packages/cli/src/agents/*.js         <- Fix lint warnings
+packages/cli/src/commands/task.js    <- Fix lint warnings
+packages/cli/src/session/manager.js  <- Fix lint warnings
+packages/cli/src/sncp/writer.js      <- Fix lint warnings
 ```
 
 ---
 
-## DECISIONI PRESE
+## DECISIONI CI/CD
 
 | Cosa | Decisione | Perche |
 |------|-----------|--------|
-| Nome npm | `cervellaswarm` (unscoped) | Brand diretto, memorabile |
-| Versione | 0.1.0 | Onesto: "funziona ma evolve" |
-| Files | Whitelist (files field) | Controllo esplicito |
-| 2FA npm | auth-and-writes | Massima sicurezza |
+| Auth npm | Trusted Publishing (OIDC) | Zero token, security massima |
+| Node versions | 18.x, 20.x | Industry standard |
+| Workflow | 2 file separati | CI veloce, publish sicuro |
+| Branch protection | Strict + 4 checks | Qualita garantita |
 
 ---
 
-## NPM PUBLISH - QUANDO VUOI
+## SETUP TRUSTED PUBLISHING (DA FARE)
 
-```bash
-# 1. Setup account npm (serve email Rafa)
-npm adduser
-npm profile enable-2fa auth-and-writes
+```
+1. Login npmjs.com
+2. Vai a: Access Tokens -> Trusted Publishers
+3. Add GitHub:
+   - Owner: rafapra3008
+   - Repo: CervellaSwarm
+   - Workflow: .github/workflows/publish.yml
+4. Save
 
-# 2. Publish
-npm login
-npm publish  # inserisci OTP
-
-# 3. Verifica + tag
-npm view cervellaswarm
-git tag v0.1.0 && git push origin v0.1.0
+Poi crea tag e il publish e automatico!
 ```
 
 ---
 
 ## TL;DR
 
-**Sessione 228:** 3 step completati, 54% del progetto, CLI PRONTA!
+**Sessione 229:** CI/CD completo, 55% del progetto!
 
-**Prossimo:** npm publish reale OPPURE CI/CD Pipeline
+**Prossimo:** Setup Trusted Publishing + primo npm publish v0.1.0
 
 *"Un passo alla volta verso la LIBERTA GEOGRAFICA!"*

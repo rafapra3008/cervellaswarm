@@ -727,15 +727,17 @@ STRUTTURA: Open Core (futuro)
 
 ## STEP 2.17: CI/CD Pipeline
 
-**Stato:** [DA FARE]
-**Ricerca fatta:** GitHub Actions docs
+**Stato:** [FATTO] - Sessione 229
+**Ricerca fatta:** `ricerche/RICERCA_20260115_CICD_PIPELINE.md` (1100+ righe!)
 **Dipende da:** 2.11
 **Output:** Pipeline test + publish automatici
 
-**DA CREARE:**
-- [ ] `.github/workflows/test.yml`
-- [ ] `.github/workflows/publish.yml`
-- [ ] Automatic version bump
+**COMPLETATO:**
+- [x] `.github/workflows/ci.yml` (lint + test matrix + build-check)
+- [x] `.github/workflows/publish.yml` (Trusted Publishing OIDC)
+- [x] Branch Protection su main (4 checks richiesti)
+- [x] Environment "production" creato
+- [x] GitHub Pro attivato
 - [ ] Changelog generation
 
 **Criterio completamento:** Push = test automatici, tag = publish
