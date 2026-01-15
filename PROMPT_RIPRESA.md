@@ -1,11 +1,92 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 213 CervellaSwarm
-> **Versione:** v2.22.0 - REC-2 IMPLEMENTATO + SPLIT STATO!
+> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 213 Miracollo + CervellaSwarm
+> **Versione:** v2.23.0 - ROOM MANAGER MVP SESSIONE A!
 
 ---
 
-## SESSIONE 213 - REC-2 IMPLEMENTATO! (15 Gennaio 2026)
+## SESSIONE 213 - ROOM MANAGER MVP SESSIONE A! (15 Gennaio 2026 notte)
+
+```
++================================================================+
+|   MIRACOLLO - ROOM MANAGER MVP SESSIONE A                       |
+|   15 Gennaio 2026 (notte)                                        |
++================================================================+
+
+OBIETTIVO: Database + Backend Core per Room Manager
+
+COMPLETATO:
+-----------
+
+1. MIGRATION 041_room_manager.sql
+   - Nuovi campi rooms: status, temperature, door_status, presence, dnd, mur
+   - Tabella room_activity_log (audit trail)
+   - Tabella room_access_codes (PIN generation)
+   - View v_room_manager_overview
+   - 9 indici per performance
+   - APPLICATA AL DATABASE!
+
+2. room_manager_service.py (~350 righe)
+   - get_rooms, get_room, get_room_stats
+   - update_room_status, update_housekeeping_status
+   - log_activity, get_room_activity, get_global_activity
+
+3. routers/room_manager.py (~230 righe)
+   8 endpoint funzionanti:
+   - GET  /api/room-manager/{hotel_code}/rooms
+   - GET  /api/room-manager/rooms/{room_id}
+   - PUT  /api/room-manager/rooms/{room_id}/status
+   - PUT  /api/room-manager/rooms/{room_id}/housekeeping
+   - GET  /api/room-manager/rooms/{room_id}/activity
+   - GET  /api/room-manager/{hotel_code}/activity
+   - GET  /api/room-manager/{hotel_code}/stats
+   - GET  /api/room-manager/info
+
+4. models/room.py (5 nuovi modelli)
+   - RoomManagerStatusUpdate
+   - RoomManagerHousekeepingUpdate
+   - RoomManagerRoom
+   - RoomActivity
+   - RoomStats
+
+DECISIONI RAFA DOCUMENTATE:
+---------------------------
+- Mobile Housekeeping = PWA (no app store!)
+- Touchscreen in camera = idea futura
+- Nonius TV = studiare per sostituire
+
+FILE CREATI/MODIFICATI:
+-----------------------
+miracollogeminifocus/backend/
+├── database/migrations/041_room_manager.sql
+├── database/apply_041.py
+├── services/room_manager_service.py (NUOVO!)
+├── routers/room_manager.py (NUOVO!)
+├── routers/__init__.py (aggiornato)
+├── models/room.py (aggiornato)
+└── main.py (aggiornato)
+
+.sncp/progetti/miracollo/
+├── moduli/room_manager/SUB_ROADMAP_MVP_ROOM_MANAGER.md
+├── moduli/room_manager/DECISIONI_SESSIONE_213.md
+└── moduli/in_room_experience/IDEA_INIZIALE.md
+
+PROSSIME SESSIONI:
+------------------
+SESSIONE B: Activity Log Backend (trigger automatici)
+SESSIONE C: Frontend Room Grid
+SESSIONE D: Frontend Room Card + Activity
+SESSIONE E: Test + Affinamenti
+SESSIONE F: PWA Housekeeping
+
+"La semplicita di Mews + La domotica di Scidoo + L'hardware VDA = MIRACOLLO!"
+
++================================================================+
+```
+
+---
+
+## SESSIONE 213 (prima parte) - REC-2 IMPLEMENTATO! (15 Gennaio 2026)
 
 ```
 +================================================================+

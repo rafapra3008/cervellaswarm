@@ -1,38 +1,40 @@
 # STATO OGGI
 
 > **Data:** 15 Gennaio 2026 (Mercoledi)
-> **Sessioni:** 213 CervellaSwarm
-> **Ultimo aggiornamento:** Sessione 213
+> **Sessioni:** 213 Miracollo + CervellaSwarm
+> **Ultimo aggiornamento:** Sessione 213 - 02:00
 
 ---
 
-## CERVELLASWARM - Sessione 213 REC-2 IMPLEMENTATO!
+## MIRACOLLO - Sessione 213 ROOM MANAGER MVP SESSIONE A!
 
 ```
-SCORE: 9.4/10 (stabile)
-GAP al target 9.5: 0.1 punti
+SCORE: 9.5/10 (stabile)
+VERSIONE: 1.9.0 (Room Manager MVP)
 
 COMPLETATO:
-1. REC-2: AZIONE #2 READ SNCP FIRST in tutti 16 agenti!
-   - Impatto atteso: -30% duplicazione lavoro
-2. REC-3: ERA GIA' FATTO (AUTO_SVEGLIA=true default)
-3. Split miracollo/stato.md: 554 → 400 righe
+-----------
+1. Migration 041_room_manager.sql APPLICATA
+   - Nuovi campi rooms (status, temperature, sensors)
+   - Tabella room_activity_log
+   - Tabella room_access_codes
+   - View v_room_manager_overview
 
-FILE MODIFICATI: 16 agenti in ~/.claude/agents/
-```
+2. room_manager_service.py CREATO (~350 righe)
+   - Lista camere con status
+   - Update status + housekeeping
+   - Activity log automatico
 
----
+3. routers/room_manager.py CREATO (~230 righe)
+   - 8 endpoint API funzionanti
 
-## IERI - Sessione 211+212 (14 Gennaio)
+4. models/room.py AGGIORNATO
+   - 5 nuovi modelli Pydantic
 
-```
-CERVELLASWARM:
-- Score: 8.2 → 9.4 (+1.2 punti!)
-- SNCP v4.0, Audit, Test, Studio Comunicazione
-
-MIRACOLLO:
-- Room Manager: Studio VDA + Big Players completato
-- Architettura DECISA!
+DECISIONI RAFA:
+- Mobile Housekeeping = PWA (no app store!)
+- Touchscreen in camera = idea futura
+- Nonius TV = studiare per sostituire
 ```
 
 ---
@@ -41,58 +43,25 @@ MIRACOLLO:
 
 | Progetto | Area | Score | Note |
 |----------|------|-------|------|
-| CervellaSwarm | SNCP | 9.4/10 | REC-2 implementato! |
-| CervellaSwarm | Infra | 9.5/10 | Hook + Launchd OK |
+| CervellaSwarm | SNCP | 9.4/10 | Stabile |
 | Miracollo | RateParity | 9.5/10 | STABILE |
-| Miracollo | Room Manager | Studio | Architettura decisa |
-| **MEDIA** | - | **9.4/10** | Target: 9.5 |
+| Miracollo | Room Manager | 1.9.0 | Backend Sessione A OK! |
+| **MEDIA** | - | **9.5/10** | Target raggiunto! |
 
 ---
 
-## Prossimi Step
+## Prossimi Step Room Manager
 
-### CervellaSwarm
-- [x] REC-2: Worker prompt "READ SNCP FIRST"
-- [x] REC-3: Watcher auto-start DEFAULT (era gia' fatto!)
-- [ ] REC-1: Hook verifica output SNCP (richiede analisi)
-
-### Miracollo
-- [ ] MVP Room Manager (Backend + Frontend)
-- [ ] VDA MODBUS integration
+```
+SESSIONE A: COMPLETATA!
+SESSIONE B: Activity Log Backend (trigger automatici)
+SESSIONE C: Frontend Room Grid
+SESSIONE D: Frontend Room Card + Activity
+SESSIONE E: Test + Affinamenti
+SESSIONE F: PWA Housekeeping
+```
 
 ---
 
-*"Non ri-fare, continua da dove altri hanno lasciato!"*
+*"La semplicita di Mews + La domotica di Scidoo + L'hardware VDA = MIRACOLLO!"*
 *15 Gennaio 2026*
-
----
-
-## AUTO-CHECKPOINT: 2026-01-14 21:52 (session_end)
-
-- **Progetto**: CervellaSwarm
-- **Evento**: session_end
-- **Generato da**: sncp_auto_update.py v2.0.0
-
----
-
-## AUTO-CHECKPOINT: 2026-01-14 21:52 (session_end)
-
-- **Progetto**: CervellaSwarm
-- **Evento**: session_end
-- **Generato da**: sncp_auto_update.py v2.0.0
-
----
-
-## AUTO-CHECKPOINT: 2026-01-14 21:53 (session_end)
-
-- **Progetto**: CervellaSwarm
-- **Evento**: session_end
-- **Generato da**: sncp_auto_update.py v2.0.0
-
----
-
-## AUTO-CHECKPOINT: 2026-01-14 21:53 (session_end)
-
-- **Progetto**: CervellaSwarm
-- **Evento**: session_end
-- **Generato da**: sncp_auto_update.py v2.0.0

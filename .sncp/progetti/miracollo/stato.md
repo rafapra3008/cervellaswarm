@@ -1,8 +1,113 @@
 # STATO PROGETTO MIRACOLLO
 
-> **Data:** 2026-01-14 22:00 - Sessione 211 VDA STUDIO PARTE 2
+> **Data:** 2026-01-15 02:00 - Sessione 213 ROOM MANAGER MVP SESSIONE A
 > **Score:** 9.5/10 STABILE
-> **Versione:** 1.8.2
+> **Versione:** 1.9.0 (Room Manager MVP)
+
+---
+
+## SESSIONE 213 - ROOM MANAGER MVP SESSIONE A (15 Gennaio 2026 notte)
+
+```
++================================================================+
+|   ROOM MANAGER MVP - SESSIONE A COMPLETATA!                     |
+|   15 Gennaio 2026 (notte)                                        |
++================================================================+
+
+OBIETTIVO: Database + Backend Core per Room Manager
+
+COMPLETATO:
+-----------
+
+1. MIGRATION 041_room_manager.sql
+   - Nuovi campi rooms: status, temperature, door_status, presence, dnd, mur
+   - Tabella room_activity_log (audit trail completo)
+   - Tabella room_access_codes (PIN generation)
+   - View v_room_manager_overview
+   - 9 indici per performance
+   - APPLICATA AL DATABASE!
+
+2. ROOM_MANAGER_SERVICE.PY (~350 righe)
+   - get_rooms(hotel_id)
+   - get_rooms_by_hotel_code(hotel_code)
+   - get_room(room_id)
+   - get_room_stats(hotel_id)
+   - update_room_status(room_id, status, changed_by, source)
+   - update_housekeeping_status(room_id, status, changed_by, source)
+   - log_activity(hotel_id, room_id, event_type, ...)
+   - get_room_activity(room_id, limit, offset)
+   - get_global_activity(hotel_id, event_types, limit, offset)
+
+3. ROUTERS/ROOM_MANAGER.PY (~230 righe)
+   - GET  /api/room-manager/{hotel_code}/rooms
+   - GET  /api/room-manager/rooms/{room_id}
+   - PUT  /api/room-manager/rooms/{room_id}/status
+   - PUT  /api/room-manager/rooms/{room_id}/housekeeping
+   - GET  /api/room-manager/rooms/{room_id}/activity
+   - GET  /api/room-manager/{hotel_code}/activity
+   - GET  /api/room-manager/{hotel_code}/stats
+   - GET  /api/room-manager/info
+
+4. MODELS/ROOM.PY (nuovi modelli)
+   - RoomManagerStatusUpdate
+   - RoomManagerHousekeepingUpdate
+   - RoomManagerRoom (response completo)
+   - RoomActivity
+   - RoomStats
+
+5. REGISTRAZIONE
+   - Router in __init__.py
+   - Router in main.py
+
+DECISIONI RAFA DOCUMENTATE:
+---------------------------
+- Mobile Housekeeping = PWA (no app store!)
+- Touchscreen in camera = idea futura
+- Nonius TV = studiare per sostituire
+
+FILE CREATI:
+------------
+miracollogeminifocus/backend/
+├── database/
+│   ├── migrations/041_room_manager.sql
+│   └── apply_041.py
+├── services/
+│   └── room_manager_service.py (NUOVO!)
+├── routers/
+│   └── room_manager.py (NUOVO!)
+└── models/
+    └── room.py (AGGIORNATO)
+
+CervellaSwarm/.sncp/progetti/miracollo/
+├── moduli/room_manager/
+│   ├── SUB_ROADMAP_MVP_ROOM_MANAGER.md (NUOVO!)
+│   └── DECISIONI_SESSIONE_213.md (NUOVO!)
+└── moduli/in_room_experience/
+    └── IDEA_INIZIALE.md (NUOVO!)
+
+PROSSIME SESSIONI:
+------------------
+SESSIONE B: Activity Log Backend (trigger automatici)
+SESSIONE C: Frontend Room Grid
+SESSIONE D: Frontend Room Card + Activity
+SESSIONE E: Test + Affinamenti
+SESSIONE F: PWA Housekeeping
+
+"La semplicita di Mews + La domotica di Scidoo + L'hardware VDA = MIRACOLLO!"
+
++================================================================+
+```
+
+---
+
+## SESSIONE 212 - STUDIO ROOM MANAGER COMPLETATO (14 Gennaio 2026 sera)
+
+```
+(Vedi handoff precedente per dettagli)
+- VDA Etheos 26 screenshot analizzati
+- Big Players: Mews, Opera, Cloudbeds, Scidoo
+- Confronto definitivo + architettura decisa
+```
 
 ---
 
