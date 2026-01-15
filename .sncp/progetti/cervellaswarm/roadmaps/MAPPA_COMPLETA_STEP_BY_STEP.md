@@ -591,6 +591,48 @@ test/
 
 ---
 
+## STEP 2.14.5: Protezione Pre-Publish (BLOCCANTE!)
+
+**Stato:** [STUDIATO] ✅ - PRONTO PER IMPLEMENTARE!
+**Ricerca fatta:** `ricerche/RICERCA_20260115_PROTEZIONE_PRE_PUBLISH.md` (634 righe!)
+**Dipende da:** Nulla (può essere fatto ORA!)
+**Output:** Famiglia PROTETTA legalmente
+
+**RICERCA COMPLETATA (Sessione 225):**
+```
+SCOPERTE CHIAVE:
+- Copyright è AUTOMATICO in Italia/EU (non serve registrare!)
+- Git history = PROVA LEGALE di authorship
+- DMCA takedown = ~1 business day
+- Senza LICENSE = paradosso (pubblico ma unusable)
+- 32 minuti = 90% protezione
+```
+
+**FASE 1 - BLOCCANTE (32 min, €0):**
+- [ ] LICENSE file (Apache 2.0 verbatim) - 5 min
+- [ ] NOTICE file (copyright attribution) - 5 min
+- [ ] Copyright headers nei file core - 15 min
+- [ ] package.json license field - 2 min
+- [ ] Git commit + push (timestamp proof) - 5 min
+
+**FASE 2 - PRESTO (0-7 giorni):**
+- [ ] README license section - 10 min
+- [ ] CONTRIBUTING.md con license info - 15 min
+
+**FASE 3 - DOPO TRACTION (1000+ users):**
+- [ ] Trademark "CervellaSwarm" - €1000-3000
+- [ ] Copyright registration (opzionale) - €100-500
+
+**SE QUALCUNO COPIA:**
+```
+CON LICENSE + COPYRIGHT → DMCA Takedown → Rimosso in 1 day!
+SENZA → Non puoi fare enforcement
+```
+
+**Criterio completamento:** LICENSE + NOTICE + headers + package.json + git push
+
+---
+
 ## STEP 2.15: IP Protection
 
 **Stato:** [STUDIATO] ✅
@@ -1185,6 +1227,7 @@ COSTO: €200-1,200 setup, €5-6K/anno running
 | `RICERCA_20260115_LICENSING_COMPLETA.md` | Licensing Apache/MIT/BSL | 1876 | 10/10 |
 | `RICERCA_20260115_TOS_LEGAL_COMPLETA.md` | ToS + Privacy GDPR (Pt1) | 1237 | 10/10 |
 | `RICERCA_20260115_TOS_LEGAL_PARTE2.md` | ToS + Privacy GDPR (Pt2) | 1678 | 10/10 |
+| `RICERCA_20260115_PROTEZIONE_PRE_PUBLISH.md` | **Checklist protezione BLOCCANTE** | 634 | 10/10 |
 | `RICERCA_20260115_CURSOR_BUSINESS_MODEL.md` | Business model Cursor completo | 774 | 9/10 |
 | `WIZARD_INIZIALE_STUDIO.md` | Wizard design best practices | 1526 | 9/10 |
 | `RICERCA_20260115_GAP_ANALYSIS_COMPLETEZZA.md` | Gap analysis 10 aree | 1032 | 9/10 |
@@ -1194,7 +1237,7 @@ COSTO: €200-1,200 setup, €5-6K/anno running
 | `20260114_CURSOR_STORIA_LEZIONI.md` | Storia Cursor | 200+ | 8/10 |
 | `20260114_SNCP_ROBUSTO_PROPOSTA.md` | SNCP design | 300+ | 8.8/10 |
 
-**TOTALE RICERCHE SESSIONE 225:** ~6000 righe (IP + Licensing + ToS/Legal)
+**TOTALE RICERCHE SESSIONE 225:** ~6600 righe (IP + Licensing + ToS/Legal + Protezione Pre-Publish)
 
 ---
 
@@ -1203,6 +1246,7 @@ COSTO: €200-1,200 setup, €5-6K/anno running
 | Step | Topic | Urgenza | Stato |
 |------|-------|---------|-------|
 | 2.14 | npm publish setup | MEDIA | DA STUDIARE (4-6h) |
+| **2.14.5** | **Protezione Pre-Publish** | **CRITICA** | **✅ STUDIATO → IMPLEMENTARE ORA!** |
 | 2.15 | IP Protection | CRITICA | ✅ STUDIATO (Sessione 225) |
 | 2.16 | Licensing | CRITICA | ✅ STUDIATO (Sessione 225) |
 | 3.1 | ToS/Legal | CRITICA | ✅ STUDIATO (Sessione 225) |

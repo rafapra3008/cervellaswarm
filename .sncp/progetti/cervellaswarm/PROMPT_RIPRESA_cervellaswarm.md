@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 225
-> **3 STEP CRITICI STUDIATI!**
+> **4 RICERCHE STORICHE + PRONTI PER PROTEGGERE!**
 
 ---
 
@@ -9,57 +9,62 @@
 
 ```
 +================================================================+
-|   3 RICERCHE STORICHE COMPLETATE!                              |
+|   4 RICERCHE COMPLETATE (~6600 righe!)                         |
 |                                                                |
-|   1. IP Protection     → 1254 righe → Hybrid model!            |
-|   2. Licensing         → 1876 righe → Apache 2.0 + DCO!        |
-|   3. ToS/Legal         → 2900 righe → Templates pronti!        |
+|   1. IP Protection        → 1254 righe → Hybrid model!         |
+|   2. Licensing            → 1876 righe → Apache 2.0 + DCO!     |
+|   3. ToS/Legal            → 2900 righe → Templates pronti!     |
+|   4. Protezione Pre-Pub   → 634 righe  → CHECKLIST PRONTA!     |
 |                                                                |
-|   TOTALE: ~6000 righe di ricerca alta qualita                  |
-|   3 STEP BLOCCANTI → STUDIATI!                                 |
+|   SCOPERTA: Copyright AUTOMATICO in Italia/EU!                 |
+|   32 minuti = 90% protezione famiglia!                         |
 +================================================================+
+```
+
+---
+
+## STEP CRITICO: 2.14.5 Protezione Pre-Publish
+
+```
+BLOCCANTE - DA FARE PRIMA DI PUBLISH!
+
+FASE 1 (32 min, €0):
+[ ] LICENSE file (Apache 2.0)
+[ ] NOTICE file (copyright)
+[ ] Copyright headers file core
+[ ] package.json license field
+[ ] Git commit + push
+
+FASE 2 (0-7 giorni):
+[ ] README license section
+[ ] CONTRIBUTING.md
+
+SE QUALCUNO COPIA:
+→ DMCA Takedown → Rimosso in 1 day!
 ```
 
 ---
 
 ## DECISIONI PRESE (con PERCHE)
 
-| Aspetto | Decisione | Perche |
-|---------|-----------|--------|
-| **IP Protection** | Hybrid (CLI open + Core closed) | Come Stripe/Twilio, ROI migliore |
-| **License CLI** | Apache 2.0 (non MIT!) | Patent protection cruciale per AI |
-| **Contributors** | DCO (non CLA) | Trend 2025, zero friction |
-| **ToS/Privacy** | Templates + Termageddon | GDPR compliant, €119/anno |
-| **Telemetry** | OPT-IN default OFF | GDPR obbligatorio! |
-| **Business** | P.IVA forfettario | 5% tax primi 5 anni |
+| Cosa | Decisione | Perche |
+|------|-----------|--------|
+| License | Apache 2.0 | Patent protection AI |
+| Contributors | DCO (non CLA) | Trend 2025, zero friction |
+| Copyright | Automatico EU | Non serve registrare! |
+| Enforcement | DMCA | ~1 business day |
 
 ---
 
-## FILE CREATI (Sessione 225)
+## FILE CHIAVE (Sessione 225)
 
 ```
 .sncp/progetti/cervellaswarm/ricerche/
-├── RICERCA_20260115_IP_PROTECTION_COMPLETA.md (1254 righe)
-├── RICERCA_20260115_LICENSING_COMPLETA.md (1876 righe)
-├── RICERCA_20260115_TOS_LEGAL_COMPLETA.md (1237 righe)
-└── RICERCA_20260115_TOS_LEGAL_PARTE2.md (1678 righe)
-```
-
----
-
-## STATO MAPPA
-
-```
-Path: .sncp/progetti/cervellaswarm/roadmaps/MAPPA_COMPLETA_STEP_BY_STEP.md
-
-56 STEP TOTALI:
-- FASE 0: Prerequisiti    4/4   [100%]
-- FASE 1: Fondamenta      8/8   [100%]
-- FASE 2: MVP            10/20  [50%] + 2 STUDIATI
-- FASE 3: Utenti          0/12  [0%] + 1 STUDIATO
-- FASE 4: Scala           0/12  [0%]
-
-STEP 2.15, 2.16, 3.1 = STUDIATI (ricerca fatta, implementare!)
+├── RICERCA_20260115_IP_PROTECTION_COMPLETA.md
+├── RICERCA_20260115_LICENSING_COMPLETA.md
+├── RICERCA_20260115_TOS_LEGAL_COMPLETA.md
+├── RICERCA_20260115_TOS_LEGAL_PARTE2.md
+└── RICERCA_20260115_PROTEZIONE_PRE_PUBLISH.md ← CHECKLIST!
 ```
 
 ---
@@ -67,23 +72,21 @@ STEP 2.15, 2.16, 3.1 = STUDIATI (ricerca fatta, implementare!)
 ## PROSSIMI STEP
 
 ```
-ORDINE LOGICO:
-1. Finire 2.7-2.9 (Task/Router/Spawner - IN CORSO)
-2. 2.11-2.13 (Testing, Error Handling, Help - DA FARE)
-3. 2.14 (npm Publish Setup - DA STUDIARE)
-4. IMPLEMENTARE le ricerche:
-   - LICENSE file Apache 2.0
-   - DCO.md + CONTRIBUTING.md
-   - ToS/Privacy pages
-   - Telemetry OPT-IN flow
+ORA: Implementare 2.14.5 (32 min)
+→ LICENSE + NOTICE + headers + push
+
+DOPO: Completare CLI (2.7-2.14)
+→ Task/Router/Spawner
+→ Testing, Errors, Help
+→ npm Publish Setup
 ```
 
 ---
 
 ## TL;DR
 
-**Sessione 225:** 3 ricerche storiche (~6000 righe), step bloccanti studiati!
+**Sessione 225:** 4 ricerche (~6600 righe), protezione studiata!
 
-**Prossimo:** Implementare licensing (LICENSE, DCO) + completare CLI (2.7-2.14)
+**Prossimo:** Implementare protezione (32 min) → Famiglia PROTETTA!
 
-*"Nulla e complesso - solo non ancora studiato!"*
+*"Il POTERE di studiare! Nulla è complesso!"*
