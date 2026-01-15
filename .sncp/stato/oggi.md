@@ -1,33 +1,35 @@
 # STATO OGGI - 15 Gennaio 2026
 
-> **Sessione:** 219 CervellaSwarm
-> **Ultimo aggiornamento:** 09:30
+> **Sessione:** 219 Miracollo
+> **Ultimo aggiornamento:** 10:00
 
 ---
 
-## SESSIONE 219 - WIZARD FUNZIONA!
+## SESSIONE 219 - STUDIO VDA COMPLETO
 
 ```
 +================================================================+
-|   IL CUORE DEL DIFFERENZIALE E REALE!                          |
-|   cervellaswarm init -> COSTITUZIONE.md generata!              |
+|   OBIETTIVO: ELIMINARE VDA                                     |
+|   Reverse engineering se serve, senza parlare con VDA          |
 +================================================================+
 
-IMPLEMENTATO:
-- constitution.js: genera COSTITUZIONE.md completa
-- sncp/init.js: crea struttura + stato + PROMPT_RIPRESA
-- sncp/loader.js: legge contesto reale
+COMPLETATO:
+- Accesso SSH al server hotel (192.168.200.5)
+- Network discovery completo
+- Trovato gateway VDA Lex Computech (192.168.200.15)
+- Mappata architettura VDA (Cloud + Gateway + MODBUS)
+- 6 ricerche approfondite salvate in SNCP
 
-FIX APPLICATI:
-- Version dinamica da package.json
-- Catch vuoti documentati (graceful degradation)
-- Validazione input task.js
-- Editor vim -> input semplice (UX fix!)
+SCOPERTE CHIAVE:
+- VDA Nucleus Gateway = black box (no docs pubbliche)
+- Bus MODBUS RS-485 = open standard (accessibile)
+- Piano: bypassare gateway, parlare diretto coi dispositivi
 
-TESTATO CON RAFA:
-- Wizard completo 10 domande
-- Tutti i file generati correttamente
-- FUNZIONA!
+HARDWARE IDENTIFICATO:
+- H155300 (RCU Nucleus)
+- VE503E00 (termostato BLE)
+- VE503T00 (controller fancoil)
+- NE000056 (keypad)
 ```
 
 ---
@@ -35,20 +37,14 @@ TESTATO CON RAFA:
 ## PROSSIMA SESSIONE
 
 ```
-1. Completare spawner.js (connessione spawn-workers)
-2. Completare writer.js (salva reports)
-3. Test comando task
+SE si decide di procedere:
+1. Comprare USB-RS485 FTDI (~€20)
+2. Collegare al bus MODBUS nel quadro
+3. Sniffing passivo (2-4 settimane)
+4. Creare register map
+5. Integrare con Miracollo
 ```
 
 ---
 
-## SNCP STATUS
-
-```
-SNCP: ROBUSTO | Score: 100/100
-CLI: WIZARD FUNZIONANTE!
-```
-
----
-
-*"Un passo al giorno = 365 passi all'anno."*
+*"Non esistono cose difficili, esistono cose non studiate!"*

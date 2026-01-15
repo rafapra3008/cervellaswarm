@@ -1,13 +1,13 @@
 # PROMPT RIPRESA - Miracollo
 
-> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 217
+> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 219
 > **LEGGI E AGISCI. NON RI-ANALIZZARE.**
 
 ---
 
 ## STATO IN UNA RIGA
 
-**Room Manager MVP LIVE. Prossimo: VDA Integration (bloccato da docs MODBUS).**
+**Room Manager MVP LIVE. VDA: studiato, pronto per reverse engineering se Rafa decide.**
 
 ---
 
@@ -22,28 +22,45 @@
 
 ---
 
-## FOCUS ATTUALE
+## VDA - SESSIONE 219 (STUDIO COMPLETO)
 
 ```
-ROOM MANAGER AVANZATO - VDA Integration
+OBIETTIVO: ELIMINARE VDA (non integrare)
+APPROCCIO: Reverse engineering MODBUS, senza parlare con VDA
 
-BLOCCATO DA: Documentazione MODBUS VDA
-AZIONE RAFA: Contattare VDA support per docs
+ARCHITETTURA SCOPERTA:
+┌─────────────────────────────────────────┐
+│ [Cloud VDA] emc.rc-onair.com            │
+│      ↓                                  │
+│ [Gateway Lex] 192.168.200.15            │
+│      ↓ (VLAN VDA CAMERE 10.0.0.x)       │
+│ [RCU H155300] → Bus MODBUS RS-485       │
+│      ↓                                  │
+│ [Termostati, Keypad, Controller]        │
+└─────────────────────────────────────────┘
 
-ROADMAP COMPLETA:
-.sncp/progetti/miracollo/moduli/room_manager/ROADMAP_ROOM_MANAGER_COMPLETA.md
+PIANO: Bypassare gateway, collegare diretto al bus MODBUS
+
+HARDWARE DA COMPRARE (se si procede):
+- USB-RS485 FTDI (~€20) - Amazon.it
+
+RICERCHE SALVATE:
+.sncp/progetti/miracollo/idee/
+├── 20260115_VDA_MODBUS_REVERSE_ENGINEERING_PARTE1-3.md
+├── 20260115_VDA_VE503_TERMOSTATI_RESEARCH.md
+├── 20260115_VDA_H155300_RCU_RESEARCH.md
+├── 20260115_VDA_ARCHITETTURA_SISTEMA_RESEARCH.md
+├── 20260115_MODBUS_SNIFFING_GUIDA_PRATICA.md
+└── 20260115_LEX_COMPUTECH_GATEWAY_RESEARCH.md
 ```
 
 ---
 
-## PROSSIMO STEP CONCRETO
+## PROSSIMO STEP
 
-**SE docs VDA arrivate:**
-→ Inizia FASE 1 della roadmap (vda_service.py)
-
-**SE docs VDA NON arrivate:**
-→ Chiedi a Rafa stato contatto VDA
-→ Oppure lavora su PWA (FASE 5, parallela)
+**DECISIONE RAFA:**
+- GO → Compra USB-RS485, inizia sniffing (6-8 settimane totali)
+- NO-GO → Focus su altro, VDA resta com'è
 
 ---
 
@@ -53,17 +70,8 @@ ROADMAP COMPLETA:
 |------|------|
 | **NORD** | `miracollogeminifocus/NORD.md` |
 | **ROADMAP** | `.sncp/progetti/miracollo/moduli/room_manager/ROADMAP_ROOM_MANAGER_COMPLETA.md` |
-| Codice MVP | `miracollogeminifocus/backend/services/room_manager_service.py` |
+| **Server Hotel** | SSH rafael@192.168.200.5 |
 
 ---
 
-## REGOLA
-
-```
-NON ri-analizzare. NON ridiscutere architettura.
-LEGGI la roadmap. ESEGUI il prossimo step.
-```
-
----
-
-*"Fatto BENE > Fatto VELOCE"*
+*"Non esistono cose difficili, esistono cose non studiate!"*
