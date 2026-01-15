@@ -8,7 +8,7 @@
 
 ## STATO IN UNA RIGA
 
-**Email client base funzionante. Mancano ~23h di lavoro per FASE 1 completa.**
+**Email client base funzionante. Mancano ~19h di lavoro per FASE 1 completa.**
 
 ---
 
@@ -17,10 +17,11 @@
 ### Backend (`miracallook/backend/`)
 
 ```
-gmail/api.py (~1100 righe) - UNICO FILE:
+gmail/api.py (~1200 righe) - UNICO FILE:
 ├── /auth/login, /auth/callback       - OAuth Google ✅
 ├── /gmail/inbox                      - Lista email ✅
 ├── /gmail/message/{id}               - Dettaglio email ✅
+├── /gmail/thread/{id}                - Thread completo ✅ (Sessione 223!)
 ├── /gmail/send                       - Invio email ✅
 ├── /gmail/send-with-attachments      - Invio con allegati ✅ (Sessione 223!)
 ├── /gmail/reply                      - Reply + Reply All ✅
@@ -34,7 +35,6 @@ gmail/api.py (~1100 righe) - UNICO FILE:
 └── /gmail/drafts/*                   - CRUD Drafts ✅
 
 NON ESISTONO:
-├── threads.py                     - ❌ DA FARE
 ├── actions.py (bulk)              - ❌ DA FARE
 └── labels.py (CRUD)               - ❌ DA FARE
 ```
@@ -46,27 +46,27 @@ hooks/:
 ├── useEmails.ts                   - Query inbox + mutations ✅
 ├── useKeyboardShortcuts.ts        - Shortcuts ✅
 ├── useDraft.ts                    - Drafts auto-save ✅ (Sessione 222)
-└── useAttachments.ts              - Gestione allegati ✅ (Sessione 223!)
+├── useAttachments.ts              - Gestione allegati ✅ (Sessione 223!)
+└── useThread.ts                   - Thread view ✅ (Sessione 223!)
 
 NON ESISTONO:
-├── useThreads.ts                  - ❌ DA FARE
 ├── useSelection.ts                - ❌ DA FARE
 └── useLabels.ts                   - ❌ DA FARE
 
 components/:
 ├── Compose/ComposeModal.tsx       - ✅ ESISTE (con Attachments!)
 ├── Compose/AttachmentPicker.tsx   - ✅ NUOVO (Sessione 223!)
+├── Thread/ThreadView.tsx          - ✅ NUOVO (Sessione 223!)
 ├── Reply/ReplyModal.tsx           - ✅ ESISTE
 ├── Forward/ForwardModal.tsx       - ✅ ESISTE
 ├── EmailList/                     - ✅ ESISTE (base)
-├── EmailDetail/                   - ✅ ESISTE
+├── EmailDetail/                   - ✅ ESISTE (legacy, sostituito da ThreadView)
 ├── Sidebar/                       - ✅ ESISTE
 ├── Search/SearchBar.tsx           - ✅ ESISTE
 ├── CommandPalette/                - ✅ ESISTE
 └── GuestSidebar/                  - ✅ ESISTE (mock)
 
 NON ESISTONO:
-├── ThreadList/                    - ❌ DA FARE
 ├── BulkActionsToolbar.tsx         - ❌ DA FARE
 └── LabelPicker.tsx                - ❌ DA FARE
 ```
@@ -100,12 +100,12 @@ NON ESISTONO:
 | Mark Read/Unread | Sessione 222 | ✅ IMPLEMENTATO | ~1h |
 | Drafts auto-save | Sessione 222 | ✅ IMPLEMENTATO | ~2h |
 | Upload Attachments | Sessione 223 | ✅ IMPLEMENTATO | ~4h |
+| Thread View | Sessione 223 | ✅ IMPLEMENTATO | ~4h |
 | Bulk Actions | "Sessione 194" | ❌ DA FARE | 5h |
-| Thread View | "Sessione 195" | ❌ DA FARE | 4h |
 | Labels Custom | "Sessione 195" | ❌ DA FARE | 3h |
 | Contacts Autocomplete | - | ❌ DA FARE | 6h |
 | Context Menu | "Ricerca 202" | ❌ DA FARE | 5h |
-| **TOTALE RIMANENTE** | | | **~23h** |
+| **TOTALE RIMANENTE** | | | **~19h** |
 
 ---
 
@@ -132,11 +132,12 @@ ricerche/COMPETITOR_*.md
 FASE 0 (Fondamenta)     [####################] 100% ✅
   OAuth, Inbox, Send, Reply, Forward, Archive, Trash, Search, AI
 
-FASE 1 (Email Solido)   [##############......] 65%
+FASE 1 (Email Solido)   [################....] 80%
   ✅ Mark Read/Unread (Sessione 222)
   ✅ Drafts Auto-Save (Sessione 222)
   ✅ Upload Attachments (Sessione 223!)
-  Manca: Bulk, Threads, Labels, Contacts, Context Menu (~23h)
+  ✅ Thread View (Sessione 223!)
+  Manca: Bulk, Labels, Contacts, Context Menu (~19h)
 
 FASE 2 (PMS Integration)[....................] 0%
   Guest detection, Context sidebar
@@ -149,18 +150,18 @@ FASE 3+ (WhatsApp, etc) [....................]  0%
 ## PROSSIMI STEP (REALI)
 
 ```
-PER COMPLETARE FASE 1 (~23h rimanenti):
+PER COMPLETARE FASE 1 (~19h rimanenti):
 
 SPRINT 1 - CRITICI ✅ COMPLETATO!
 [x] Mark Read/Unread         ✅ FATTO Sessione 222
 [x] Drafts auto-save         ✅ FATTO Sessione 222
 
-SPRINT 2 - ALTI ✅ PARZIALE
+SPRINT 2 - ALTI ✅ COMPLETATO!
 [x] Upload Attachments       ✅ FATTO Sessione 223!
-[ ] Thread View              4h  - ricerca pronta
-[ ] Resizable Panels         3h  - ricerca pronta
+[x] Thread View              ✅ FATTO Sessione 223!
 
-SPRINT 3 - COMPLETAMENTO (16h):
+SPRINT 3 - COMPLETAMENTO (19h):
+[ ] Resizable Panels         3h  - ricerca pronta
 [ ] Bulk Actions             5h
 [ ] Labels Custom            3h
 [ ] Contacts Autocomplete    6h
@@ -214,8 +215,8 @@ Backend:  http://localhost:8002
 ---
 
 *Ultimo aggiornamento: 15 Gennaio 2026 - Sessione 223*
-*UPLOAD ATTACHMENTS COMPLETATO!*
-*Backend: /gmail/send-with-attachments endpoint*
-*Frontend: useAttachments.ts + AttachmentPicker.tsx*
-*FASE 1: 50% → 65%*
+*UPLOAD ATTACHMENTS + THREAD VIEW COMPLETATI!*
+*Backend: /gmail/send-with-attachments + /gmail/thread/{id}*
+*Frontend: useAttachments + AttachmentPicker + useThread + ThreadView*
+*FASE 1: 65% → 80%*
 *"SU CARTA != REALE" - Codice VERO, build OK!*
