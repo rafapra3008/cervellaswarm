@@ -1,62 +1,42 @@
 # STATO OGGI - 15 Gennaio 2026
 
-> **Sessione:** 221 Miracollook
-> **Ultimo aggiornamento:** 11:30
+> **Sessione:** 222 CervellaSwarm
+> **Ultimo aggiornamento:** 12:00
 
 ---
 
-## SESSIONE 221 - AUDIT VERITÀ MIRACOLLOOK
+## SESSIONE 222 - CLI FUNZIONA!
 
 ```
 +================================================================+
-|   SCOPERTA GRAVE: Documentazione FALSA!                         |
-|   Diceva "FATTO" per 20+ ore di lavoro MAI eseguito             |
-|   CORRETTO: stato.md, NORD, COSTITUZIONE riscritti              |
+|   CLI CON API ANTHROPIC REALE!                                 |
+|   - spawner.js riscritto con @anthropic-ai/sdk                 |
+|   - 112 test passano                                           |
+|   - Package npm ready                                          |
 +================================================================+
 ```
 
 ---
 
-## COSA È SUCCESSO
+## COSA ABBIAMO FATTO
 
-```
-PRIMA (documentazione):
-- FASE 1: 100% completa
-- Drafts, Bulk, Threads, Attachments: "FATTO"
-
-REALTÀ (verificata nel codice):
-- FASE 1: 30% completa
-- Tutto quello sopra: ZERO codice!
-
-CAUSA: Ricerche fatte, codice MAI scritto
-```
+| Task | Stato |
+|------|-------|
+| API Anthropic REALE | FATTO - Testato! |
+| Error handling + retry | FATTO |
+| npm publish prep | FATTO |
+| README per esterni | FATTO |
 
 ---
 
-## CORREZIONI FATTE
-
-| File | Azione |
-|------|--------|
-| stato.md | Riscritto con VERITÀ |
-| NORD_MIRACOLLOOK.md | Stato REALE |
-| COSTITUZIONE | Aggiunta REGOLA ANTI-BUGIE |
-| GUIDA_INIZIO_SESSIONE.md | NUOVA - 30 sec per iniziare |
-
----
-
-## REGOLA NUOVA
+## PROSSIMO
 
 ```
-MAI "FATTO" senza: codice + commit + test
-"SU CARTA != REALE"
+1. npm publish
+2. Test installazione globale
+3. Streaming output
 ```
 
 ---
 
-## VDA (dalla sessione 220)
-
-Hardware ordinato (~€50), arrivo 1-2 gg.
-
----
-
-*"La verità prima di tutto. Sempre."*
+*"Un progresso al giorno = 365 progressi all'anno."*

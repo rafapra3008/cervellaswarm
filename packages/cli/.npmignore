@@ -1,0 +1,35 @@
+# Test files
+test/
+*.test.js
+
+# Development files
+.eslintrc*
+.editorconfig
+.env
+.env.*
+!.env.example
+
+# Documentation (keep README)
+docs/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Debug
+*.log
+npm-debug.log*

@@ -4,16 +4,92 @@
  * Test per agents/spawner.js
  * Verifica: costruzione prompt, estrazione file, suggerimenti
  *
- * Nota: I test che richiedono mock di child_process sono skippati
- * perché mock.module non è disponibile in tutte le versioni Node.
+ * Nota: I test della chiamata API vera richiedono ANTHROPIC_API_KEY
+ * e sono eseguiti separatamente nei test di integrazione.
  *
  * "16 agenti. 1 comando. Il tuo team AI."
  */
 
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
+import { getAvailableAgents, isReady, spawnAgent } from '../../src/agents/spawner.js';
 
 describe('Agent Spawner', () => {
+
+  describe('Module exports', () => {
+    test('exports getAvailableAgents function', () => {
+      assert.equal(typeof getAvailableAgents, 'function');
+    });
+
+    test('exports isReady function', () => {
+      assert.equal(typeof isReady, 'function');
+    });
+
+    test('exports spawnAgent function', () => {
+      assert.equal(typeof spawnAgent, 'function');
+    });
+  });
+
+  describe('getAvailableAgents', () => {
+    test('returns array of 8 agents', () => {
+      const agents = getAvailableAgents();
+      assert.equal(agents.length, 8);
+    });
+
+    test('each agent has name and description', () => {
+      const agents = getAvailableAgents();
+      for (const agent of agents) {
+        assert.ok(agent.name, 'Agent should have name');
+        assert.ok(agent.description, 'Agent should have description');
+      }
+    });
+
+    test('includes all expected agents', () => {
+      const agents = getAvailableAgents();
+      const names = agents.map(a => a.name);
+
+      const expectedAgents = [
+        'cervella-backend',
+        'cervella-frontend',
+        'cervella-tester',
+        'cervella-docs',
+        'cervella-devops',
+        'cervella-data',
+        'cervella-security',
+        'cervella-researcher'
+      ];
+
+      for (const expected of expectedAgents) {
+        assert.ok(names.includes(expected), `Should include ${expected}`);
+      }
+    });
+  });
+
+  describe('isReady', () => {
+    test('returns boolean', () => {
+      const ready = isReady();
+      assert.equal(typeof ready, 'boolean');
+    });
+  });
+
+  describe('spawnAgent without API key', async () => {
+    test('returns error when no API key', async () => {
+      // Save original key
+      const originalKey = process.env.ANTHROPIC_API_KEY;
+      // Remove key
+      delete process.env.ANTHROPIC_API_KEY;
+
+      const result = await spawnAgent('cervella-backend', 'test task', {});
+
+      assert.equal(result.success, false);
+      assert.ok(result.error.includes('ANTHROPIC_API_KEY'));
+
+      // Restore original key
+      if (originalKey) {
+        process.env.ANTHROPIC_API_KEY = originalKey;
+      }
+    });
+  });
 
   describe('Agent prompts', () => {
     test('all agents have defined prompts', () => {

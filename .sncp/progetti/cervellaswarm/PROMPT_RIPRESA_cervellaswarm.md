@@ -1,58 +1,52 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 221
-> **HARDTESTS COMPLETI! 104 test passano!**
+> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 222
+> **CLI FUNZIONA CON API REALE! PRONTO PER npm publish!**
 
 ---
 
-## SESSIONE 221 - RISULTATO
+## SESSIONE 222 - RISULTATO
 
 ```
 +================================================================+
-|   HARDTESTS CREATI E FUNZIONANTI!                              |
+|   CLI COMPLETA CON API ANTHROPIC REALE!                        |
 |                                                                |
-|   - 104 test totali                                            |
-|   - npm test -> PASSA                                          |
-|   - Struttura test/ completa                                   |
-|   - CI/CD ready (run_hardtests.sh)                            |
+|   - 112 test passano (erano 104)                               |
+|   - API Anthropic funziona!                                    |
+|   - Retry logic + timeout                                      |
+|   - Package npm ready (17.8 kB)                                |
 |                                                                |
-|   CLI MVP PRONTO PER POLISH!                                   |
+|   CLI MVP PRONTO PER PUBBLICAZIONE!                            |
 +================================================================+
 ```
 
 ---
 
-## STRUTTURA TEST
+## COSA FUNZIONA
 
-```
-packages/cli/test/
-├── commands/           # 45 test
-│   ├── init.test.js
-│   ├── status.test.js
-│   ├── task.test.js
-│   └── resume.test.js
-├── agents/             # 37 test
-│   ├── router.test.js
-│   └── spawner.test.js
-├── helpers/            # Utility
-│   ├── mock-spawn.js
-│   ├── temp-dir.js
-│   └── console-capture.js
-├── integration/        # Test lenti
-│   └── wizard.test.js
-├── edge-cases.test.js  # 22 test
-└── run_hardtests.sh    # CI/CD
-```
+| Feature | Stato |
+|---------|-------|
+| `cervellaswarm init` | OK |
+| `cervellaswarm task` | OK - API REALE! |
+| `cervellaswarm status` | OK |
+| `cervellaswarm resume` | OK |
+| Routing automatico | OK |
+| Retry su rate limit | OK |
+| Timeout 2 min | OK |
 
 ---
 
-## COMANDI TEST
+## FILE CREATI/MODIFICATI
 
-```bash
-npm test              # 104 test
-npm run test:watch    # Watch mode
-npm run test:coverage # Coverage
-npm run hardtests     # Script bash
+```
+packages/cli/
+├── src/agents/spawner.js     # RISCRITTO - Usa @anthropic-ai/sdk
+├── package.json              # +@anthropic-ai/sdk, +files field
+├── .env.example              # NUOVO
+├── .npmignore                # NUOVO
+├── LICENSE                   # NUOVO
+├── README.md                 # NUOVO - Per npm
+└── test/agents/spawner.test.js  # Aggiornato
 ```
 
 ---
@@ -60,18 +54,18 @@ npm run hardtests     # Script bash
 ## PROSSIMA SESSIONE
 
 ```
-1. [ ] Test task REALE con esecuzione claude
-2. [ ] Error handling robusto
-3. [ ] npm publish preparation
-4. [ ] README per esterni
+1. [ ] Pubblicare su npm (npm publish)
+2. [ ] Testare installazione globale
+3. [ ] Aggiungere streaming output
+4. [ ] Documentazione avanzata
 ```
 
 ---
 
 ## TL;DR
 
-**Sessione 221:** HARDTESTS completi! 104 test passano, CI/CD ready.
+**Sessione 222:** API REALE funziona! CLI pronta per npm publish.
 
-**Prossimo:** Test reale + polish per npm publish.
+**Prossimo:** `npm publish` e test installazione globale.
 
 *"Un progresso al giorno = 365 progressi all'anno."*
