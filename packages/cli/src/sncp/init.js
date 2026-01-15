@@ -5,6 +5,10 @@
  * SNCP = Sistema Nervoso Centrale Progetti
  *
  * "MINIMO in memoria, MASSIMO su disco"
+ *
+ * Copyright 2026 Rafa & Cervella
+ * Licensed under the Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  */
 
 import { mkdir, writeFile } from 'fs/promises';

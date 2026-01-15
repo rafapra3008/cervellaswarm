@@ -4,6 +4,10 @@
  * Generates the project COSTITUZIONE.md from wizard answers.
  * The heart of CervellaSwarm's differentiator:
  * "Define once, never re-explain."
+ *
+ * Copyright 2026 Rafa & Cervella
+ * Licensed under the Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  */
 
 import { writeFile, readFile } from 'fs/promises';

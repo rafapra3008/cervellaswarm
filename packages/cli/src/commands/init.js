@@ -5,6 +5,10 @@
  * Creates project constitution through interactive wizard.
  *
  * Philosophy: "Define your project ONCE. Never re-explain."
+ *
+ * Copyright 2026 Rafa & Cervella
+ * Licensed under the Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  */
 
 import chalk from 'chalk';

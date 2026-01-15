@@ -5,6 +5,10 @@
  * No judgment, just helpful context.
  *
  * Philosophy: "Welcome back! Here's where we were."
+ *
+ * Copyright 2026 Rafa & Cervella
+ * Licensed under the Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  */
 
 import chalk from 'chalk';

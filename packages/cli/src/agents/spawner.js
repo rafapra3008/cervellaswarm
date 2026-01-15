@@ -5,6 +5,10 @@
  * Uses Anthropic API for REAL agent execution.
  *
  * "16 agenti. 1 comando. Il tuo team AI."
+ *
+ * Copyright 2026 Rafa & Cervella
+ * Licensed under the Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  */
 
 import Anthropic from '@anthropic-ai/sdk';

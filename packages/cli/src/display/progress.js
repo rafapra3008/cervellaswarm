@@ -3,6 +3,10 @@
  *
  * Utilities for showing progress during task execution.
  * Clean, minimal, informative.
+ *
+ * Copyright 2026 Rafa & Cervella
+ * Licensed under the Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  */
 
 import chalk from 'chalk';

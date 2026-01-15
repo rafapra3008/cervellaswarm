@@ -5,6 +5,10 @@
  * Routes to appropriate agent(s) based on task description.
  *
  * Philosophy: "One step at a time. The team is with you."
+ *
+ * Copyright 2026 Rafa & Cervella
+ * Licensed under the Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  */
 
 import chalk from 'chalk';

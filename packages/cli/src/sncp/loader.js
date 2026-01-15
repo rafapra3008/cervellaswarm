@@ -3,6 +3,10 @@
  *
  * Loads project context from .sncp folder.
  * Reads the project's constitution and state.
+ *
+ * Copyright 2026 Rafa & Cervella
+ * Licensed under the Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  */
 
 import { readFile, access, readdir } from 'fs/promises';
