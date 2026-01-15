@@ -1,55 +1,46 @@
 # STATO OGGI - 15 Gennaio 2026
 
-> **Sessione:** 228 - Miracallook Debug
-> **Ultimo aggiornamento:** 18:15
+> **Sessioni:** 228-229
+> **Ultimo aggiornamento:** 19:10
 
 ---
 
-## SESSIONE 228 - MIRACALLOOK DEBUG
+## MIRACALLOOK - 3 BUG FIXATI!
 
 ```
-+================================================================+
-|   PULIZIA + DEBUG LAYOUT                                        |
-|                                                                |
-|   FATTO:                                                        |
-|   - Docker azzerato (solo Miracallook)                          |
-|   - Porte unificate: Miracallook = 8002                         |
-|   - Fix Tailwind v4 (@import)                                   |
-|   - Debug react-resizable-panels                                |
-|                                                                |
-|   BUG APERTI:                                                   |
-|   1. react-resizable-panels calcola male                        |
-|   2. Email mostra HTML grezzo                                   |
-+================================================================+
+[x] Email HTML rendering (preferisce HTML, \n -> <br>)
+[x] Resize pannelli (CSS temporaneo)
+[x] Bulk Actions 422 error (embed=True)
+
+DA FARE:
+- Checkbox nei gruppi email aggregati
+- Background opaco barra bulk
+- Sistema cartelle smart
+- Drag handles custom
 ```
 
 ---
 
-## STATO PROGETTI
+## CERVELLASWARM - CI/CD PRONTO
 
-| Progetto | Stato |
-|----------|-------|
-| CervellaSwarm | FASE 2: 90% |
-| Miracollook | Debug in corso |
+```
+[x] ci.yml + publish.yml (Trusted Publishing)
+[x] Branch Protection + GitHub Pro
+[x] CI PASSA in 1m3s
+[x] MANIFESTO.md nato!
+
+FASE 2: 95% | Prossimo: npm publish
+```
 
 ---
 
 ## PROSSIMA SESSIONE
 
-```
-1. Fix rendering email
-2. Fix/sostituire resize pannelli
-3. Test Bulk Actions
-```
+| Progetto | Priorita |
+|----------|----------|
+| Miracallook | Checkbox gruppi, barra opaca |
+| CervellaSwarm | npm publish (dopo 24h cooldown) |
 
 ---
 
-*"Due bug trovati e documentati. Prossima sessione li risolviamo!"*
-
----
-
-## AUTO-CHECKPOINT: 2026-01-15 18:13 (session_end)
-
-- **Progetto**: CervellaSwarm
-- **Evento**: session_end
-- **Generato da**: sncp_auto_update.py v2.0.0
+*"3 bug fix Miracallook + CI/CD CervellaSwarm = giornata produttiva!"*
