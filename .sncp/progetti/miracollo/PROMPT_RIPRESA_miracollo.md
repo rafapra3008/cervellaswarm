@@ -1,13 +1,13 @@
 # PROMPT RIPRESA - Miracollo
 
-> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 219
+> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 220
 > **LEGGI E AGISCI. NON RI-ANALIZZARE.**
 
 ---
 
 ## STATO IN UNA RIGA
 
-**Room Manager MVP LIVE. VDA: studiato, pronto per reverse engineering se Rafa decide.**
+**Room Manager MVP LIVE. VDA: DECISIONE GO! Hardware ordinato, in attesa consegna.**
 
 ---
 
@@ -22,45 +22,36 @@
 
 ---
 
-## VDA - SESSIONE 219 (STUDIO COMPLETO)
+## VDA - SESSIONE 220: GO CONFERMATO!
 
 ```
-OBIETTIVO: ELIMINARE VDA (non integrare)
-APPROCCIO: Reverse engineering MODBUS, senza parlare con VDA
+DECISIONE: GO - ELIMINARE VDA via reverse engineering MODBUS
+DATA: 15 Gennaio 2026
 
-ARCHITETTURA SCOPERTA:
-┌─────────────────────────────────────────┐
-│ [Cloud VDA] emc.rc-onair.com            │
-│      ↓                                  │
-│ [Gateway Lex] 192.168.200.15            │
-│      ↓ (VLAN VDA CAMERE 10.0.0.x)       │
-│ [RCU H155300] → Bus MODBUS RS-485       │
-│      ↓                                  │
-│ [Termostati, Keypad, Controller]        │
-└─────────────────────────────────────────┘
+HARDWARE ORDINATO (Amazon.it):
+├── USB-RS485 FTDI (DSD TECH SH-U11L) - €19
+├── Multimetro Electraline - €12
+├── Cacciaviti precisione MAXWARE - €10
+└── Cavetti jumper ELEGOO 120pcs - €8
+TOTALE: ~€50 | Arrivo: 1-2 giorni
 
-PIANO: Bypassare gateway, collegare diretto al bus MODBUS
+ARCHITETTURA VDA (già mappata sessione 219):
+[Cloud VDA] → [Gateway Lex 192.168.200.15] → [RCU] → [Bus MODBUS RS-485]
 
-HARDWARE DA COMPRARE (se si procede):
-- USB-RS485 FTDI (~€20) - Amazon.it
-
-RICERCHE SALVATE:
-.sncp/progetti/miracollo/idee/
-├── 20260115_VDA_MODBUS_REVERSE_ENGINEERING_PARTE1-3.md
-├── 20260115_VDA_VE503_TERMOSTATI_RESEARCH.md
-├── 20260115_VDA_H155300_RCU_RESEARCH.md
-├── 20260115_VDA_ARCHITETTURA_SISTEMA_RESEARCH.md
-├── 20260115_MODBUS_SNIFFING_GUIDA_PRATICA.md
-└── 20260115_LEX_COMPUTECH_GATEWAY_RESEARCH.md
+RICERCHE SALVATE: .sncp/progetti/miracollo/idee/20260115_*.md
 ```
 
 ---
 
-## PROSSIMO STEP
+## PROSSIMO STEP (quando arriva hardware)
 
-**DECISIONE RAFA:**
-- GO → Compra USB-RS485, inizia sniffing (6-8 settimane totali)
-- NO-GO → Focus su altro, VDA resta com'è
+```
+1. Setup Mac: driver FTDI + ModbusSniffer
+2. Test converter funziona
+3. In hotel: trova punto tap sul bus RS-485
+4. Sniffing passivo (1-2 settimane)
+5. Costruisci register map VDA completa
+```
 
 ---
 
@@ -68,8 +59,8 @@ RICERCHE SALVATE:
 
 | Cosa | Path |
 |------|------|
-| **NORD** | `miracollogeminifocus/NORD.md` |
-| **ROADMAP** | `.sncp/progetti/miracollo/moduli/room_manager/ROADMAP_ROOM_MANAGER_COMPLETA.md` |
+| **Guida Sniffing** | `.sncp/progetti/miracollo/idee/20260115_MODBUS_SNIFFING_GUIDA_PRATICA.md` |
+| **Architettura VDA** | `.sncp/progetti/miracollo/idee/20260115_VDA_ARCHITETTURA_SISTEMA_RESEARCH.md` |
 | **Server Hotel** | SSH rafael@192.168.200.5 |
 
 ---

@@ -1,59 +1,43 @@
 # STATO OGGI - 15 Gennaio 2026
 
-> **Sessione:** 220 CervellaSwarm
-> **Ultimo aggiornamento:** 11:00
+> **Sessione:** 220 Miracollo
+> **Ultimo aggiornamento:** 10:30
 
 ---
 
-## SESSIONE 220 - CLI MVP QUASI PRONTO!
+## SESSIONE 220 - VDA REVERSE ENGINEERING: GO!
 
 ```
 +================================================================+
-|   CORE FUNZIONALITA COMPLETE!                                   |
-|                                                                |
-|   cervellaswarm init    -> OK (wizard 10 domande)              |
-|   cervellaswarm status  -> OK                                   |
-|   cervellaswarm task    -> OK (spawner + writer)               |
-|   cervellaswarm resume  -> OK (session manager)                |
-|                                                                |
+|   DECISIONE: GO per eliminare VDA                               |
+|   HARDWARE ORDINATO su Amazon.it                               |
 +================================================================+
 ```
 
 ---
 
-## FILE IMPLEMENTATI OGGI
+## ORDINI EFFETTUATI
+
+| Cosa | Prezzo | Status |
+|------|--------|--------|
+| USB-RS485 FTDI (DSD TECH SH-U11L) | €19 | Ordinato |
+| Multimetro Electraline | €12 | Ordinato |
+| Cacciaviti precisione MAXWARE | €10 | Ordinato |
+| Cavetti jumper ELEGOO 120pcs | €8 | Ordinato |
+| **TOTALE** | **~€50** | In arrivo 1-2 gg |
+
+---
+
+## PROSSIMO (quando arriva hardware)
 
 ```
-spawner.js   -> Lancia claude CLI con prompt agente
-writer.js    -> Salva reports in .sncp/reports/
-manager.js   -> Tracking sessioni per resume
-progress.js  -> Utility display
+1. Installa driver FTDI + ModbusSniffer su Mac
+2. Test converter funziona
+3. In hotel: identifica punto tap bus RS-485
+4. Sniffing passivo (1-2 settimane)
+5. Costruisci register map VDA
 ```
 
 ---
 
-## ROADMAP STATUS
-
-```
-Settimana 1: init     [####################] FATTO!
-Settimana 2: task     [####################] FATTO!
-Settimana 3: resume   [################....] 80%
-Settimana 4: polish   [....................] Da fare
-
-SIAMO 2 SETTIMANE AVANTI!
-```
-
----
-
-## PROSSIMO
-
-```
-1. Hardtests per simulare utenti reali
-2. Test task REALE
-3. README per esterni
-4. npm publish preparation
-```
-
----
-
-*"Un progresso al giorno = 365 progressi all'anno."*
+*"Non esistono cose difficili, esistono cose non studiate!"*

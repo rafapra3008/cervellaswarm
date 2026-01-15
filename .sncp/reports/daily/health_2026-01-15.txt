@@ -4,24 +4,24 @@
 [0;36m|   [0;35mSNCP HEALTH DASHBOARD[0;36m                                       |[0m
 [0;36m|   [0mSistema Nervoso Centrale Progetti[0;36m                            |[0m
 [0;36m|                                                                |[0m
-[0;36m|   Data: 2026-01-15 05:30                                       |[0m
+[0;36m|   Data: 2026-01-15 08:30                                       |[0m
 [0;36m+================================================================+[0m
 
 [0;34m--- STATISTICHE GLOBALI ---[0m
 
   [0;36mSNCP Root:[0m /Users/rafapra/Developer/CervellaSwarm/.sncp
-  [0;36mTotale file MD:[0m 509
+  [0;36mTotale file MD:[0m 530
   [0;36mFile obsoleti (>30gg):[0m 0
 
-  [0;36moggi.md:[0m 75 righe [[0;32mOK[0m] - ultimo update: 2026-01-15
+  [0;36moggi.md:[0m 47 righe [[0;32mOK[0m] - ultimo update: 2026-01-15
 
 [0;34m--- PROGETTI ---[0m
 
   Progetto        | Files    | stato.md         | Obsoleti
   ----------------|----------|------------------|----------
-  miracollo       | 234 files | stato: 712 righe [[0;31m!![0m] | obsoleti:  0 [[0;32mOK[0m]
-  cervellaswarm   |  48 files | stato: 388 righe [[0;31m!![0m] | obsoleti:  0 [[0;32mOK[0m]
-  contabilita     |   1 files | stato:  29 righe [[0;32mOK[0m] | obsoleti:  0 [[0;32mOK[0m]
+  miracollo       | 243 files | stato: 712 righe [[0;31m!![0m] | obsoleti:  0 [[0;32mOK[0m]
+  cervellaswarm   |  57 files | stato: 388 righe [[0;31m!![0m] | obsoleti:  0 [[0;32mOK[0m]
+  contabilita     |   2 files | stato:  29 righe [[0;32mOK[0m] | obsoleti:  0 [[0;32mOK[0m]
 
 [0;34m--- RACCOMANDAZIONI ---[0m
 
