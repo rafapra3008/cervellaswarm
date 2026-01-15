@@ -61,7 +61,11 @@ def main():
 
         # Carica file chiave progetto
         nord = load_file_summary(PROJECT_ROOT / "NORD.md", max_lines=60)
-        prompt_ripresa = load_file_summary(PROJECT_ROOT / "PROMPT_RIPRESA.md", max_lines=100)
+        # PROMPT_RIPRESA specifico per CervellaSwarm (Context Mesh pattern)
+        prompt_ripresa = load_file_summary(
+            PROJECT_ROOT / ".sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md",
+            max_lines=100
+        )
 
         # Check code review day
         is_review_day, day_name = check_if_review_day()

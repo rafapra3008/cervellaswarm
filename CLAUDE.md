@@ -27,13 +27,29 @@
 
 ```
 .sncp/progetti/{progetto}/
-├── stato.md          # Stato attuale (LEGGERE SEMPRE!)
+├── PROMPT_RIPRESA_{progetto}.md  # Stato sessione (LEGGERE INIZIO!)
+├── stato.md          # Stato attuale dettagliato
 ├── idee/             # Ricerche, idee, analisi
 ├── decisioni/        # Decisioni prese con PERCHE
 ├── reports/          # Audit, test, verifiche
 ├── roadmaps/         # Piani di lavoro
 ├── workflow/         # Protocolli specifici
+├── archivio/         # Sessioni archiviate
 └── sessioni_parallele/
+```
+
+### PROMPT_RIPRESA - Context Mesh (NUOVO!)
+
+```
+OGNI progetto ha il SUO PROMPT_RIPRESA!
+
+.sncp/PROMPT_RIPRESA_MASTER.md              ← Tabella ecosistema
+.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
+.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md
+.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md
+
+INIZIO SESSIONE: Leggi SOLO il file del tuo progetto!
+FINE SESSIONE: Aggiorna il file del tuo progetto!
 ```
 
 ### File Globali (non di progetto)
@@ -101,12 +117,12 @@ verify-sync [progetto]
 
 ```
 +----------------------------------------------------------------+
-|   PROMPT_RIPRESA.md: MAX 300 RIGHE                             |
-|   - Se > 300: ARCHIVIA sessioni vecchie!                       |
+|   PROMPT_RIPRESA_*.md: MAX 150 RIGHE (per file!)               |
+|   - Se > 150: ARCHIVIA sessioni vecchie!                       |
 |   - Archivio: .sncp/progetti/{progetto}/archivio/              |
 |                                                                |
 |   oggi.md: MAX 60 RIGHE                                        |
-|   - Solo stato OGGI, non storico                               |
+|   stato.md: MAX 500 RIGHE                                      |
 |                                                                |
 |   VIOLAZIONE = ERRORE GRAVE!                                   |
 +----------------------------------------------------------------+
@@ -116,8 +132,9 @@ verify-sync [progetto]
 
 | Momento | Hook | Cosa Fa |
 |---------|------|---------|
-| SessionStart | sncp_pre_session_hook.py | Check stato SNCP |
-| SessionEnd | sncp_verify_sync_hook.py | Verifica coerenza |
+| SessionStart | session_start_swarm.py | Carica COSTITUZIONE + PROMPT_RIPRESA |
+| SessionEnd | file_limits_guard.py | Verifica limiti file (150/60/500) |
+| Subagent | subagent_start_costituzione.py | Inietta COSTITUZIONE agli agenti |
 
 **Gli hook sono AUTOMATICI - tu segui le loro indicazioni!**
 
@@ -125,10 +142,11 @@ verify-sync [progetto]
 
 | File | Quando |
 |------|--------|
-| PROMPT_RIPRESA.md | Inizio sessione |
-| NORD.md | Direzione progetto |
-| `.sncp/progetti/miracollo/stato.md` | Stato Miracollo |
-| `.sncp/progetti/miracollo/roadmaps/` | Roadmap Revenue
+| `.sncp/PROMPT_RIPRESA_MASTER.md` | Panoramica tutti progetti |
+| `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | Inizio sessione CervellaSwarm |
+| `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | Inizio sessione Miracollo |
+| `NORD.md` | Direzione progetto |
+| `.sncp/progetti/*/stato.md` | Stato dettagliato progetto
 
 ## La Famiglia
 

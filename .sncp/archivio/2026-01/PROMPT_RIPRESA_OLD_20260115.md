@@ -193,15 +193,23 @@ Sessioni precedenti archiviate in:
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-15 03:05 (unknown)
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-01-15 05:31 (unknown)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 3e998b4 - Checkpoint Sessione 215: Room Manager Polish
-- **File modificati** (3):
-  - sncp/stato/oggi.md
-  - reports/engineer_report_20260115_030317.json
-  - reports/engineer_report_20260115_030413.json
+- **Ultimo commit**: 53a6706 - Checkpoint finale Sessione 215
+- **File modificati** (5):
+  - sncp/reports/daily/health_2026-01-15.txt
+  - .sncp/stato/oggi.md
+  - PROMPT_RIPRESA.md
+  - logs/launchd_daily.log
+  - logs/sncp_daily.log
 
 ### Note
 - Checkpoint automatico generato da hook

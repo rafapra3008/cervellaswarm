@@ -1,59 +1,55 @@
 # STATO OGGI - 15 Gennaio 2026
 
-> **Sessioni:** 213-215 - Room Manager MVP
-> **Ultimo:** 04:45
+> **Sessione attiva:** 216 - Context Mesh Implementation
+> **Ultimo aggiornamento:** 05:45
 
 ---
 
-## MIRACOLLO - Room Manager MVP
+## SESSIONE 216 - IN CORSO
 
 ```
-PROGRESSO:
-[##########] A: Backend Core    100%
-[##########] B: Activity Log    100%
-[##########] C: Frontend Grid   100%
-[##########] POLISH: Security   100% <- SESSIONE 215
-[..........] D: Room Card       0%
-[..........] E: Test            0%
-[..........] F: PWA             0%
+CONTEXT MESH IMPLEMENTATION - COMPLETATO!
 
-SCORE: Backend 9.0 | Frontend 9.5 (TARGET RAGGIUNTO!)
+Separati PROMPT_RIPRESA per progetto:
+- .sncp/PROMPT_RIPRESA_MASTER.md (tabella ecosistema)
+- .sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
+- .sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md
+- .sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md
+
+Hook aggiornati:
+- file_limits_guard.py (nuovo!)
+- session_start_swarm.py (aggiornato)
+- update_prompt_ripresa.py (aggiornato)
+
+CLAUDE.md aggiornati (locale + globale)
 ```
 
 ---
 
-## SESSIONE 215 - POLISH COMPLETATO
+## MIRACOLLO - Room Manager MVP (sessione parallela)
 
-- XSS protection (escapeHtml)
-- Timeout 10s su API
-- Accessibility (aria-labels, keyboard nav)
-- Loading states + focus-visible
-
----
-
-## PROSSIMA SESSIONE
-
-1. Test manuale `/room-manager.html`
-2. Sessione D: Room Card + Activity polish
-3. Deploy quando pronto
+```
+[##########] A-C + POLISH: 100%
+[..........] D: Room Card: 0%
+```
 
 ---
 
-## Commit
+## PROSSIMO
 
-| Repo | Hash | Branch |
-|------|------|--------|
-| Miracollo | `f0cbf67` | master |
-| CervellaSwarm | `a2772d7` | main |
+1. **CervellaSwarm:** Tornare al NORD - COSTRUIRE IL PRODOTTO
+2. **Miracollo:** Sessione D Room Card
 
 ---
 
-*"I dettagli fanno SEMPRE la differenza!"*
+## LINK RAPIDI
+
+| Cosa | Path |
+|------|------|
+| PROMPT CervellaSwarm | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` |
+| PROMPT Miracollo | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` |
+| NORD | `NORD.md` |
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-15 03:05 (session_end)
-
-- **Progetto**: CervellaSwarm
-- **Evento**: session_end
-- **Generato da**: sncp_auto_update.py v2.0.0
+*"Un po' ogni giorno fino al 100000%!"*

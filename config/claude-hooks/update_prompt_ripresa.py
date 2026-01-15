@@ -20,22 +20,22 @@ __version_date__ = "2026-01-01"
 
 # === CONFIGURAZIONE ===
 
+# NOTA: Context Mesh Pattern - ogni progetto ha il suo PROMPT_RIPRESA in .sncp/
+# Tutti i PROMPT_RIPRESA sono centralizzati in CervellaSwarm/.sncp/progetti/
+CERVELLASWARM_ROOT = Path.home() / "Developer/CervellaSwarm"
+
 KNOWN_PROJECTS = {
     "ContabilitaAntigravity": {
         "path": Path.home() / "Developer/ContabilitaAntigravity",
-        "prompt_ripresa": "PROMPT_RIPRESA.md"
+        "prompt_ripresa": CERVELLASWARM_ROOT / ".sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md"
     },
     "miracollogeminifocus": {
         "path": Path.home() / "Developer/miracollogeminifocus",
-        "prompt_ripresa": "PROMPT_RIPRESA.md"
-    },
-    "million-dollar-ideas": {
-        "path": Path.home() / "Developer/million-dollar-ideas",
-        "prompt_ripresa": "PROMPT_RIPRESA.md"
+        "prompt_ripresa": CERVELLASWARM_ROOT / ".sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md"
     },
     "CervellaSwarm": {
-        "path": Path.home() / "Developer/CervellaSwarm",
-        "prompt_ripresa": "PROMPT_RIPRESA.md"
+        "path": CERVELLASWARM_ROOT,
+        "prompt_ripresa": CERVELLASWARM_ROOT / ".sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md"
     }
 }
 
@@ -94,11 +94,12 @@ def get_git_status(cwd: str) -> str:
 
 
 def update_prompt_ripresa(project: dict, trigger: str, cwd: str) -> bool:
-    """Aggiorna PROMPT_RIPRESA.md con checkpoint automatico."""
+    """Aggiorna PROMPT_RIPRESA_{progetto}.md con checkpoint automatico."""
     if not project.get("known"):
         return False
 
-    prompt_file = project["path"] / project["prompt_ripresa"]
+    # prompt_ripresa ora è già un Path completo (Context Mesh)
+    prompt_file = project["prompt_ripresa"]
     if not prompt_file.exists():
         return False
 
@@ -179,7 +180,8 @@ def main():
     if project.get("known"):
         success = update_prompt_ripresa(project, trigger, cwd)
         if success:
-            send_notification(f"Checkpoint salvato in PROMPT_RIPRESA.md")
+            project_name = project["id"].replace("geminifocus", "").replace("Antigravity", "")
+            send_notification(f"Checkpoint: {project_name}")
 
     output = {"continue": True, "suppressOutput": True}
     print(json.dumps(output))
