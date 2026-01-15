@@ -1,29 +1,34 @@
 # PROMPT RIPRESA - Miracollo
 
-> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 215
+> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 216
 > **Per SOLO questo progetto!**
 
 ---
 
-## SESSIONE 215 - ROOM MANAGER MVP POLISH (15 Gennaio 2026)
+## SESSIONE 216 - DEPLOY + FIX (15 Gennaio 2026)
 
 ```
 +================================================================+
-|   FRONTEND POLISH - TARGET RAGGIUNTO!                           |
+|   ROOM MANAGER MVP - LIVE IN PRODUZIONE!                        |
 +================================================================+
 
-OBIETTIVO: Alzare Frontend Score 8.5 → 9.5/10
-RISULTATO: 9.5/10
+1. SISTEMA DEPLOY ROBUSTO
+   - deploy.sh riscritto (GIT invece di rsync)
+   - Metodo: git push → git pull VM → docker restart
+   - Zero conflitti, mai più errori!
+   - Trigger per Rafa: "deploy miracollo"
 
-COMPLETATO:
-- api.js: Timeout 10s + validazione input
-- sidebar.js: XSS protection (escapeHtml)
-- grid.js: Accessibility (aria-labels, keyboard nav)
-- core.js: Parallel loading (Promise.all)
-- CSS: focus-visible + loading states
-- HTML: noscript + aria labels
+2. FIX PRODUZIONE
+   - Hotel code: NATURAE → NL (config.js)
+   - Migration 041 applicata al DB produzione
+   - Docker restart risolve cache backend
 
-COMMIT: f0cbf67 (master)
+3. ROOM MANAGER LIVE!
+   - URL: https://miracollo.com/room-manager.html
+   - 11 camere caricate
+   - API: /api/room-manager/NL/rooms OK
+
+COMMIT: 37c8992 (master)
 
 +================================================================+
 ```
@@ -37,49 +42,10 @@ COMMIT: f0cbf67 (master)
 [##########] B: Activity Log    100%
 [##########] C: Frontend Grid   100%
 [##########] POLISH: Security   100%
+[##########] DEPLOY: Live!      100%
 [..........] D: Room Card       0%   ← PROSSIMA
 [..........] E: Test            0%
 [..........] F: PWA             0%
-```
-
----
-
-## SESSIONE 214 - MVP SESSIONE C (15 Gennaio 2026)
-
-```
-COMPLETATO:
-- Fix backend: except, validation, connection (9.0/10)
-- Frontend Room Manager: 7 file, ~1900 righe (8.5/10)
-- Grid camere, filtri, sidebar, activity log, responsive
-```
-
----
-
-## SESSIONE 213B - ACTIVITY LOG (15 Gennaio 2026)
-
-```
-COMPLETATO:
-- Trigger automatici in blocks.py, housekeeping.py
-- get_activity_stats() implementato
-- Endpoint /api/room-manager/{hotel}/activity-stats
-AUDIT: 8.5/10 APPROVATO
-```
-
----
-
-## SESSIONE 213 - BACKEND CORE (15 Gennaio 2026)
-
-```
-COMPLETATO:
-- Migration 041_room_manager.sql (applicata!)
-- room_manager_service.py (~350 righe)
-- routers/room_manager.py (8 endpoint)
-- models/room.py (5 modelli)
-
-DECISIONI:
-- Mobile Housekeeping = PWA (no app store)
-- Touchscreen camera = futuro
-- Nonius TV = studiare
 ```
 
 ---
@@ -88,16 +54,34 @@ DECISIONI:
 
 | Cosa | Path |
 |------|------|
-| Stato | `.sncp/progetti/miracollo/stato.md` |
 | Roadmap MVP | `.sncp/progetti/miracollo/moduli/room_manager/SUB_ROADMAP_MVP_ROOM_MANAGER.md` |
-| Archivio | `.sncp/progetti/miracollo/archivio/` |
+| Deploy Guide | `miracollogeminifocus/docs/DEPLOY_GUIDE.md` |
+| Stato | `.sncp/progetti/miracollo/stato.md` |
+
+---
+
+## DEPLOY - COME FUNZIONA
+
+```bash
+# Rafa dice: "deploy miracollo"
+# Cervella esegue:
+cd ~/Developer/miracollogeminifocus
+./deploy.sh
+
+# Lo script fa:
+# 1. Verifica git pulito
+# 2. Git push
+# 3. Git pull VM
+# 4. Docker restart
+# 5. Health check
+```
 
 ---
 
 ## TL;DR
 
-**Room Manager MVP: Backend 100%, Frontend 100%, Polish 100%. Prossima: Sessione D (Room Card).**
+**Room Manager MVP LIVE! Deploy robusto. Prossima: Sessione D (Room Card).**
 
 ---
 
-*"Un po' ogni giorno fino al 100000%!"*
+*"Fatto BENE > Fatto VELOCE"*

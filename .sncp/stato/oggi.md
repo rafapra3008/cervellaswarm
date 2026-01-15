@@ -1,44 +1,33 @@
 # STATO OGGI - 15 Gennaio 2026
 
-> **Sessione:** 216 - COMPLETATA
+> **Sessione:** 216
 > **Ultimo aggiornamento:** 06:15
 
 ---
 
-## SESSIONE 216 - RISULTATI
+## SESSIONE 216 - MIRACOLLO
 
 ```
 +================================================================+
-|   CONTEXT MESH + DOCUMENTAZIONE ESTERNI                         |
+|   ROOM MANAGER MVP - DEPLOY + FIX                               |
 +================================================================+
 
-1. CONTEXT MESH IMPLEMENTATO
-   - PROMPT_RIPRESA separati per progetto
-   - Hook aggiornati (file_limits_guard.py nuovo!)
-   - Audit Guardiana: 9.0/10
+1. SISTEMA DEPLOY ROBUSTO
+   - deploy.sh riscritto (GIT invece di rsync)
+   - Zero conflitti, GitHub = fonte verità
+   - Trigger: "deploy miracollo"
 
-2. DOCUMENTAZIONE PER ESTERNI
-   - README.md riscritto (153 righe)
-   - GETTING_STARTED.md creato
-   - AGENTS_REFERENCE.md creato
-   - LICENSE MIT aggiunta
-   - Score Guardiana: 8/10
+2. FIX PRODUZIONE
+   - Hotel code: NATURAE → NL
+   - Migration 041 applicata al DB
+   - Docker restart incluso nel deploy
+
+3. ROOM MANAGER LIVE!
+   - https://miracollo.com/room-manager.html
+   - 11 camere caricate
+   - API funzionanti
 
 +================================================================+
-```
-
----
-
-## ROADMAP FASE 1 - STATO
-
-```
-[##########] sncp-init.sh         100%
-[##########] verify-sync.sh       100%
-[##########] Hook automatici      100%
-[##########] Context Mesh         100%
-[##########] Docs per esterni     100%
-
-FASE 1: FONDAMENTA = 95% COMPLETA!
 ```
 
 ---
@@ -47,17 +36,18 @@ FASE 1: FONDAMENTA = 95% COMPLETA!
 
 | Hash | Messaggio |
 |------|-----------|
-| `ddaf64f` | Context Mesh - PROMPT_RIPRESA separati |
-| `64b23b9` | Checkpoint Context Mesh verificato |
-| `37f2ed5` | Documentazione per esterni |
+| `37c8992` | Fix hotel code NL |
+| `c3ae657` | Deploy script GIT-based |
+| `f02e6c7` | Sistema Deploy DEFINITIVO |
 
 ---
 
 ## PROSSIMA SESSIONE
 
-1. Completare FASE 1 (ultime sessioni giornaliere)
-2. Iniziare FASE 2: MVP packaging
+1. Test manuale Room Manager completo
+2. Sessione D: Room Card + Activity polish
+3. Deploy finale quando pronto
 
 ---
 
-*"Un po' ogni giorno fino al 100000%!"*
+*"Fatto BENE > Fatto VELOCE"*
