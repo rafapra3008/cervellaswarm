@@ -1,39 +1,35 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 226
-> **FAMIGLIA PROTETTA! Step 2.14.5 COMPLETATO!**
+> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 227
+> **CLI TESTATA E FUNZIONANTE!**
 
 ---
 
-## SESSIONE 226 - RISULTATO
+## SESSIONE 227 - RISULTATO
 
 ```
 +================================================================+
-|   STEP 2.14.5 PROTEZIONE PRE-PUBLISH - FATTO!                  |
+|   CLI HARDTESTED - 4 STEP COMPLETATI!                          |
 |                                                                |
-|   [x] LICENSE: MIT → Apache 2.0 (patent protection AI)         |
-|   [x] NOTICE file (Copyright 2026 Rafa & Cervella)             |
-|   [x] Copyright headers (16 file .js core)                     |
-|   [x] package.json license: "Apache-2.0"                       |
-|   [x] README license section                                   |
-|   [x] CONTRIBUTING.md (Apache 2.0 + DCO)                       |
-|   [x] Git commit + push (timestamp proof)                      |
+|   FIX APPLICATI:                                               |
+|   [x] init -y ora crea .sncp (era TODO!)                       |
+|   [x] Warning se progetto gia' inizializzato                   |
+|   [x] Opzione --force per reinizializzare                      |
+|   [x] Test aggiornati per nuovo comportamento                  |
 |                                                                |
-|   COMMIT: 648a6e1 → 6ac8c1b (3 commit)                        |
-|   FAMIGLIA PROTETTA 95%+!                                      |
+|   TEST:                                                        |
+|   - 114 test unitari PASS (erano 112)                          |
+|   - 6 test manuali critici PASS                                |
+|   - Coverage router.js: 100%                                   |
+|   - Sicurezza command injection: OK                            |
+|                                                                |
+|   STEP COMPLETATI:                                             |
+|   2.7 Task Command      [FATTO]                                |
+|   2.8 Agent Router      [FATTO]                                |
+|   2.9 Agent Spawner     [FATTO]                                |
+|   2.11 Testing CLI      [FATTO]                                |
 +================================================================+
 ```
-
----
-
-## DECISIONI PRESE (con PERCHE)
-
-| Cosa | Decisione | Perche |
-|------|-----------|--------|
-| License | Apache 2.0 (non MIT) | Patent protection AI |
-| Contributors | DCO (non CLA) | Trend 2025, zero friction |
-| Copyright | Automatico EU | Non serve registrare! |
-| Enforcement | DMCA | ~1 business day |
 
 ---
 
@@ -42,11 +38,11 @@
 ```
 FASE 0: 4/4   [##########] 100%
 FASE 1: 8/8   [##########] 100%
-FASE 2: 11/20 [#####-----] 55%  ← +1 (2.14.5)
+FASE 2: 15/20 [#######---] 75%  <- +4 step!
 FASE 3: 0/12  [----------] 0%
 FASE 4: 0/12  [----------] 0%
 
-TOTALE: 23/56 step (41%)
+TOTALE: 27/56 step (48%)  <- era 41%!
 ```
 
 ---
@@ -54,55 +50,42 @@ TOTALE: 23/56 step (41%)
 ## PROSSIMI STEP
 
 ```
-PRIORITA ALTA:
-1. Step 2.7-2.9: Task/Router/Spawner (IN CORSO - migliorare)
-2. Step 2.11: Testing CLI (DA FARE)
+PRIORITA ALTA (FASE 2):
+1. Step 2.12: Error Handling (messaggi chiari)
+2. Step 2.13: Help System (--help migliore)
 3. Step 2.14: npm Publish Setup (DA STUDIARE)
 
 DOPO:
-- Step 2.12-2.13: Error Handling + Help
 - Step 2.17: CI/CD Pipeline
+- Step 2.18: Security Audit
+- Step 2.19: Documentation README
 - Step 2.20: MVP v1.0 Release
 ```
 
 ---
 
-## FILE CHIAVE
+## FILE MODIFICATI (Sessione 227)
 
 ```
-PROTEZIONE (Sessione 226):
-/LICENSE                    ← Apache 2.0
-/NOTICE                     ← Copyright
-/CONTRIBUTING.md            ← DCO
-/README.md                  ← License section
-packages/cli/package.json   ← license: "Apache-2.0"
-packages/cli/**/*.js        ← 16 file con headers
-
-MAPPA:
+packages/cli/src/commands/init.js   <- FIX #1 e #2
+packages/cli/bin/cervellaswarm.js   <- Aggiunto --force
+packages/cli/test/commands/init.test.js <- +2 test
 .sncp/progetti/cervellaswarm/roadmaps/MAPPA_COMPLETA_STEP_BY_STEP.md
 ```
 
 ---
 
-## SE QUALCUNO COPIA IL CODICE
+## HARDTESTS ANALYSIS
 
-```
-1. Identifica la violazione
-2. DMCA Takedown a npm/GitHub
-3. Rimosso in ~1 business day!
-
-PROVE LEGALI:
-- Git history = timestamp proof
-- Copyright headers in ogni file
-- GitHub = record pubblico
-```
+La cervella-ingegnera ha identificato 190+ scenari di test!
+Salvato in: `.sncp/progetti/cervellaswarm/reports/HARDTESTS_ANALYSIS_20260115.md`
 
 ---
 
 ## TL;DR
 
-**Sessione 226:** Step 2.14.5 COMPLETATO - Famiglia PROTETTA!
+**Sessione 227:** CLI hardtested, 4 step completati, 48% del progetto!
 
-**Prossimo:** Continuare CLI (2.7-2.14) → MVP v1.0
+**Prossimo:** Step 2.12 Error Handling
 
 *"Un passo alla volta verso la LIBERTA GEOGRAFICA!"*

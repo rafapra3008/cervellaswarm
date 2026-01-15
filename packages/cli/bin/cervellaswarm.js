@@ -63,6 +63,7 @@ program
   .description('Initialize CervellaSwarm for your project')
   .option('-y, --yes', 'Skip wizard, use defaults')
   .option('-n, --name <name>', 'Project name')
+  .option('-f, --force', 'Reinitialize even if already initialized')
   .action(initCommand);
 
 program

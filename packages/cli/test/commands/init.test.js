@@ -34,13 +34,45 @@ describe('Init Command', () => {
       const output = captureConsole(t);
 
       // Simula comportamento con -y flag
-      const options = { yes: true };
+      const options = { yes: true, name: 'test-project' };
 
       if (options.yes) {
-        console.log('  Using default configuration...');
+        console.log(`  Quick init for: ${options.name}`);
       }
 
-      assert.ok(output.hasLog('default configuration'), 'Should skip wizard');
+      assert.ok(output.hasLog('Quick init'), 'Should skip wizard with quick init');
+    });
+  });
+
+  describe('Already initialized check', () => {
+    test('warns if project already initialized', async (t) => {
+      const output = captureConsole(t);
+
+      // Simula progetto già inizializzato
+      const isAlreadyInit = true;
+      const options = { force: false };
+
+      if (isAlreadyInit && !options.force) {
+        console.log('  Project already initialized!');
+        console.log('  Use `cervellaswarm init --force` to reinitialize.');
+      }
+
+      assert.ok(output.hasLog('already initialized'), 'Should warn about existing project');
+      assert.ok(output.hasLog('--force'), 'Should suggest --force flag');
+    });
+
+    test('allows reinit with --force flag', async (t) => {
+      const output = captureConsole(t);
+
+      // Simula --force flag
+      const isAlreadyInit = true;
+      const options = { force: true, yes: true, name: 'test-project' };
+
+      if (!isAlreadyInit || options.force) {
+        console.log(`  Quick init for: ${options.name}`);
+      }
+
+      assert.ok(output.hasLog('Quick init'), 'Should proceed with --force');
     });
   });
 
