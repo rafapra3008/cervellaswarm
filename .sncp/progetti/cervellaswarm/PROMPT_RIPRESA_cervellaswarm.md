@@ -1,115 +1,91 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 218
-> **COSTITUZIONE AGGIORNATA - Nuova regola sul TEMPO!**
+> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 219
+> **WIZARD TESTATO E FUNZIONANTE!**
 
 ---
 
-## SESSIONE 218 - DECISIONI FONDAMENTALI
+## SESSIONE 219 - RISULTATO
 
 ```
 +================================================================+
-|   DECISIONI CHIAVE                                              |
-+================================================================+
-
-1. CLI (non App Desktop)
-   PERCHE: Compatibilita massima, liberta utente
-   NON PERCHE: "e piu veloce"
-
-2. Wizard COMPLETO prima di tutto
-   PERCHE: E IL DIFFERENZIALE, non una feature
-
-3. COSTITUZIONE aggiornata
-   NUOVA REGOLA: "IL TEMPO NON CI INTERESSA"
-
-4. Package npm creato in packages/cli/
-
-+================================================================+
-|   IL TEMPO NON E MAI UN FATTORE                                 |
-|   Un progresso al giorno. Arriveremo. SEMPRE.                   |
+|   cervellaswarm init -> FUNZIONA!                               |
+|   TESTATO CON RAFA - COSTITUZIONE.md GENERATA!                  |
 +================================================================+
 ```
 
 ---
 
-## DOCUMENTI DA LEGGERE
-
-| Priorita | Documento | Path |
-|----------|-----------|------|
-| **1** | COSTITUZIONE (nuova regola!) | `~/.claude/COSTITUZIONE.md` |
-| **2** | Tutte decisioni | `decisioni/20260115_SESSIONE_218_TUTTE_DECISIONI.md` |
-| **3** | Roadmap MVP | `roadmaps/SUB_ROADMAP_MVP_FEBBRAIO.md` |
-| **4** | Wizard Study | `ricerche/WIZARD_INIZIALE_STUDIO.md` |
-
----
-
-## COSA E STATO CREATO
+## COSA FUNZIONA ORA
 
 ```
-packages/cli/
-├── bin/cervellaswarm.js    # Entry point (skeleton)
-├── package.json            # npm config con dipendenze
-└── src/
-    ├── commands/           # (vuota)
-    ├── wizard/             # (vuota)
-    ├── session/            # (vuota)
-    └── ...                 # (altre cartelle vuote)
-
-decisioni/
-├── 20260115_ARCHITETTURA_CLI_VS_APP.md
-├── 20260115_WIZARD_PRIMA_DI_TUTTO.md
-└── 20260115_SESSIONE_218_TUTTE_DECISIONI.md
-
-roadmaps/
-└── SUB_ROADMAP_MVP_FEBBRAIO.md
-
-COSTITUZIONE aggiornata con regola TEMPO
+cervellaswarm --help     OK
+cervellaswarm init       OK - Wizard 10 domande, genera tutto!
+cervellaswarm status     OK - Mostra progetto + progress
 ```
 
 ---
 
-## PROSSIMA SESSIONE - COSA FARE
+## FILE IMPLEMENTATI
+
+| File | Stato |
+|------|-------|
+| `constitution.js` | COMPLETO - Genera COSTITUZIONE.md |
+| `sncp/init.js` | COMPLETO - Crea struttura + stato + prompt |
+| `sncp/loader.js` | COMPLETO - Legge contesto reale |
+| `wizard/questions.js` | COMPLETO - 10 domande (fix vim!) |
+| `agents/router.js` | COMPLETO - Routing keyword |
+| `agents/spawner.js` | STUB - Da collegare spawn-workers |
+| `sncp/writer.js` | STUB - Da implementare |
+
+---
+
+## PROSSIMA SESSIONE
 
 ```
-1. [ ] cd packages/cli && npm install
-2. [ ] Creare src/commands/init.js (stub)
-3. [ ] Creare src/wizard/questions.js
-4. [ ] Test: node bin/cervellaswarm.js --help
+1. [ ] Completare spawner.js (connessione spawn-workers)
+2. [ ] Completare writer.js (salva reports task)
+3. [ ] Test comando: cervellaswarm task "descrizione"
 ```
 
 ---
 
-## IL DIFFERENZIALE (non dimenticare!)
+## IL DIFFERENZIALE
 
 ```
 "Definisci il progetto UNA VOLTA. Mai piu rispiegare."
+
+COSTITUZIONE.md generata include:
+- Nome, descrizione, tipo progetto
+- Goal principale
+- Criteri di successo
+- Stile di lavoro + tech stack
+- Filosofia CervellaSwarm
 
 NESSUN COMPETITOR HA QUESTO!
 ```
 
 ---
 
-## LA REGOLA SUL TEMPO (NUOVA!)
+## AUDIT GUARDIANE (Sessione 219)
 
 ```
-+================================================================+
-|   IL TEMPO NON CI INTERESSA                                     |
-|                                                                 |
-|   Non scegliamo X perche "e piu veloce"                         |
-|   Scegliamo X perche "e MEGLIO"                                 |
-|                                                                 |
-|   Un progresso al giorno.                                       |
-|   Non importa in quanti mesi.                                   |
-|   Arriveremo. SEMPRE.                                           |
-+================================================================+
+Guardiana Qualita: 8/10 - APPROVE
+Ingegnera: 8/10 - Architettura SOLIDA
+
+Issues fixati:
+- Version hardcoded -> dinamica
+- Catch vuoti -> documentati
+- Validazione input -> aggiunta
+- Editor vim -> input semplice
 ```
 
 ---
 
 ## TL;DR
 
-**Sessione 218:** Decisioni fondamentali. CLI. Wizard prima. COSTITUZIONE aggiornata con regola TEMPO.
+**Sessione 219:** Wizard FUNZIONA! Testato con Rafa. COSTITUZIONE.md generata.
 
-**Prossima sessione:** npm install + primi file comando.
+**Prossimo:** spawner.js + writer.js per comando task.
 
 *"Un progresso al giorno = 365 progressi all'anno."*

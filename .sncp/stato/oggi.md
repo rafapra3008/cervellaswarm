@@ -1,30 +1,33 @@
 # STATO OGGI - 15 Gennaio 2026
 
-> **Sessione:** 218 CervellaSwarm
-> **Ultimo aggiornamento:** 09:15
+> **Sessione:** 219 CervellaSwarm
+> **Ultimo aggiornamento:** 09:30
 
 ---
 
-## SESSIONE 218 - CLI FUNZIONA!
+## SESSIONE 219 - WIZARD FUNZIONA!
 
 ```
 +================================================================+
-|   PRIMO CLI REALE! node bin/cervellaswarm.js --help FUNZIONA!  |
+|   IL CUORE DEL DIFFERENZIALE E REALE!                          |
+|   cervellaswarm init -> COSTITUZIONE.md generata!              |
 +================================================================+
 
-DECISIONI FONDAMENTALI:
-1. CLI (non App) - compatibilita massima
-2. Wizard PRIMA di tutto - e il differenziale
-3. COSTITUZIONE aggiornata: "IL TEMPO NON CI INTERESSA"
+IMPLEMENTATO:
+- constitution.js: genera COSTITUZIONE.md completa
+- sncp/init.js: crea struttura + stato + PROMPT_RIPRESA
+- sncp/loader.js: legge contesto reale
 
-CREATO:
-- packages/cli/ con npm package completo
-- 4 comandi: init, status, task, resume
-- 10 moduli: wizard, sncp, agents, display, session
-- 4 documenti decisioni + 1 roadmap MVP
+FIX APPLICATI:
+- Version dinamica da package.json
+- Catch vuoti documentati (graceful degradation)
+- Validazione input task.js
+- Editor vim -> input semplice (UX fix!)
 
-FILOSOFIA PRODOTTO:
-"L'utente apre quando vuole. Fa un passo. Arriva al 100000%."
+TESTATO CON RAFA:
+- Wizard completo 10 domande
+- Tutti i file generati correttamente
+- FUNZIONA!
 ```
 
 ---
@@ -32,9 +35,9 @@ FILOSOFIA PRODOTTO:
 ## PROSSIMA SESSIONE
 
 ```
-1. Testare wizard completo (cervellaswarm init)
-2. Implementare generazione COSTITUZIONE.md
-3. Collegare con SNCP esistente
+1. Completare spawner.js (connessione spawn-workers)
+2. Completare writer.js (salva reports)
+3. Test comando task
 ```
 
 ---
@@ -42,10 +45,8 @@ FILOSOFIA PRODOTTO:
 ## SNCP STATUS
 
 ```
-SNCP: ROBUSTO E FUNZIONANTE
-- verify-sync: OK
-- Health Score: 100/100
-- 16 agenti con PRE/POST FLIGHT
+SNCP: ROBUSTO | Score: 100/100
+CLI: WIZARD FUNZIONANTE!
 ```
 
 ---

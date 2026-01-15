@@ -16,6 +16,15 @@ import { saveTaskReport } from '../sncp/writer.js';
 
 export async function taskCommand(description, options) {
   try {
+    // Validate description
+    if (!description || description.trim().length === 0) {
+      console.log('');
+      console.log(chalk.yellow('  Please provide a task description.'));
+      console.log(chalk.white('  Example: cervellaswarm task "add login page"'));
+      console.log('');
+      return;
+    }
+
     // Load project context
     const context = await loadProjectContext();
 
@@ -29,7 +38,7 @@ export async function taskCommand(description, options) {
 
     console.log('');
     console.log(chalk.cyan.bold('  Task received!'));
-    console.log(chalk.gray(`  "${description}"`));
+    console.log(chalk.gray(`  "${description.trim()}"`));
     console.log('');
 
     // Determine which agent to use

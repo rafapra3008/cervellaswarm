@@ -7,7 +7,7 @@
  * Philosophy: "Define once, never re-explain."
  */
 
-import { input, select, checkbox, confirm, editor } from '@inquirer/prompts';
+import { input, select, checkbox, confirm } from '@inquirer/prompts';
 import chalk from 'chalk';
 
 export async function runWizard() {
@@ -62,10 +62,9 @@ export async function runWizard() {
   console.log(chalk.gray('  What problem does this project solve?'));
   console.log(chalk.gray('  What\'s the end goal?'));
   console.log('');
-  answers.mainGoal = await editor({
-    message: 'Main goal (opens editor):',
-    default: '',
-    waitForUseInput: false
+  answers.mainGoal = await input({
+    message: 'Main goal:',
+    validate: (value) => value.length > 0 || 'Please describe your main goal'
   });
 
   // QUESTION 5: Success Criteria

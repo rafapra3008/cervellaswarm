@@ -1,0 +1,198 @@
+{
+  "report_type": "architecture_audit",
+  "project": "CervellaSwarm CLI",
+  "date": "2026-01-15",
+  "analyst": "cervella-ingegnera",
+  "version": "0.1.0",
+  "total_lines": 1089,
+  "total_files": 16,
+  
+  "architecture_score": 8,
+  
+  "structure": {
+    "entry_point": "bin/cervellaswarm.js",
+    "modules": {
+      "commands": ["init", "status", "task", "resume"],
+      "wizard": ["questions"],
+      "templates": ["constitution"],
+      "sncp": ["init", "loader", "writer"],
+      "agents": ["router", "spawner"],
+      "display": ["status", "recap"],
+      "session": ["manager"]
+    }
+  },
+  
+  "strengths": [
+    "Separazione responsabilita ben definita (commands/wizard/sncp/agents/display/session)",
+    "File piccoli e focalizzati (media ~68 righe/file)",
+    "Pattern consistente: ogni command segue lo stesso flow",
+    "Dependency injection chiara (context passato come parametro)",
+    "Template Handlebars per costituzione (separation of concerns)",
+    "Filosofia del prodotto integrata nel codice (no time pressure, encouraging messages)",
+    "Zero dipendenze circolari rilevate",
+    "Accoppiamento basso - moduli indipendenti"
+  ],
+  
+  "issues": {
+    "critical": [],
+    "high": [],
+    "medium": [
+      {
+        "type": "incomplete_implementation",
+        "description": "7 TODO trovati - funzionalita core non implementate",
+        "files": [
+          "session/manager.js (4 TODO - tutte funzioni vuote)",
+          "agents/spawner.js (integration con spawn-workers mancante)",
+          "sncp/writer.js (saveTaskReport stub)",
+          "commands/init.js (quick init -y flag non implementato)"
+        ],
+        "impact": "CLI funziona ma task routing e session management sono mock",
+        "effort": "2-3 giorni per completare"
+      },
+      {
+        "type": "missing_error_handling",
+        "description": "Error handling presente ma generico",
+        "files": [
+          "commands/*.js (try-catch ma errori solo console.error)",
+          "sncp/loader.js (silent failures con catch vuoto)"
+        ],
+        "suggestion": "Aggiungere error types specifici + logging strutturato",
+        "effort": "1 giorno"
+      }
+    ],
+    "low": [
+      {
+        "type": "hardcoded_values",
+        "description": "Alcune costanti hardcoded nei file",
+        "example": "router.js usa keyword matching semplice (non configurabile)",
+        "suggestion": "Spostare in config file se diventa complesso",
+        "effort": "0.5 giorni"
+      },
+      {
+        "type": "missing_tests",
+        "description": "package.json ha 'test' script ma nessun test trovato",
+        "impact": "Nessuna garanzia su refactoring futuro",
+        "effort": "2 giorni per test suite completa"
+      }
+    ]
+  },
+  
+  "dependencies_analysis": {
+    "circular_dependencies": "NESSUNA rilevata",
+    "coupling": "BASSO - buona separazione",
+    "dependency_graph": {
+      "commands": ["sncp/loader", "wizard", "templates", "agents", "display", "session"],
+      "wizard": ["@inquirer/prompts", "chalk"],
+      "templates": ["handlebars", "fs/promises"],
+      "sncp": ["fs/promises"],
+      "agents": [],
+      "display": ["chalk"],
+      "session": []
+    },
+    "external_deps": [
+      "commander (CLI framework)",
+      "@inquirer/prompts (interactive wizard)",
+      "chalk (colors)",
+      "ora (spinners)",
+      "handlebars (templating)",
+      "conf (config storage)",
+      "boxen (boxes)",
+      "figures (icons)"
+    ]
+  },
+  
+  "patterns_analysis": {
+    "consistent": [
+      "Ogni command: loadProjectContext() -> logic -> display",
+      "Import da external libs in alto, poi relative imports",
+      "Naming convention: verb-based per funzioni (loadX, generateX, formatX)",
+      "JSDoc headers in tutti i file",
+      "Filosofia messaggi: no time pressure, encouraging"
+    ],
+    "inconsistent": [
+      "Alcuni moduli export function, altri export const (minore)",
+      "Error handling: alcuni throw, altri return null (confusione)"
+    ]
+  },
+  
+  "scalability": {
+    "current_state": "Architettura supporta crescita bene",
+    "expansion_points": [
+      "agents/router.js - facilmente estendibile con nuove regole routing",
+      "commands/ - nuovi command si aggiungono facilmente",
+      "templates/ - spazio per nuovi template oltre constitution",
+      "display/ - formatter aggiuntivi per output diversi"
+    ],
+    "potential_bottlenecks": [
+      "router.js keyword matching - scalera male con molti agenti (soluzione: ML-based routing?)",
+      "sncp/loader.js - assume 1 progetto per .sncp (se multi-project?)"
+    ]
+  },
+  
+  "refactoring_suggestions": {
+    "now": [
+      "Completare i TODO in session/manager.js (4 funzioni stub)",
+      "Implementare agents/spawner.js integrazione con spawn-workers",
+      "Implementare sncp/writer.js saveTaskReport"
+    ],
+    "soon": [
+      "Aggiungere error types custom (SNCPError, AgentError, etc)",
+      "Creare config module per costanti hardcoded",
+      "Aggiungere test suite (almeno unit test per router/loader)"
+    ],
+    "later": [
+      "Considerare router piu sofisticato (ML? rule engine?)",
+      "Valutare multi-project support in sncp/loader",
+      "Logging strutturato (winston? pino?)"
+    ]
+  },
+  
+  "technical_debt": {
+    "score": "BASSO",
+    "items": [
+      "7 TODO funzionalita core",
+      "Nessun test",
+      "Error handling generico"
+    ],
+    "estimated_payoff_days": "4-5 giorni per azzerare debt esistente"
+  },
+  
+  "code_quality_metrics": {
+    "avg_file_size": 68,
+    "largest_file": "wizard/questions.js (156 righe)",
+    "complexity": "BASSA - funzioni piccole e focalizzate",
+    "duplication": "NESSUNA rilevata",
+    "comments": "OTTIMO - ogni file ha header JSDoc chiaro"
+  },
+  
+  "recommendations": {
+    "priority_1_critical": [],
+    "priority_2_high": [
+      "Completare TODO session/manager.js - core per 'resume' command",
+      "Implementare agents/spawner.js - core per 'task' command",
+      "Test suite almeno per routing e loader logic"
+    ],
+    "priority_3_medium": [
+      "Error handling piu robusto con types custom",
+      "Config module per evitare hardcoded values",
+      "Logging strutturato per debug produzione"
+    ],
+    "priority_4_low": [
+      "Multi-project support in SNCP loader",
+      "ML-based routing se keyword matching diventa limitante"
+    ]
+  },
+  
+  "final_assessment": {
+    "summary": "Architettura SOLIDA con separazione responsabilita eccellente. Codebase pulita, pattern consistenti, zero dipendenze circolari. Technical debt BASSO - principalmente funzionalita incomplete (TODO). Ottima base per espansione futura.",
+    "ready_for_production": "NO - troppi TODO core",
+    "ready_for_beta": "SI - con completamento TODO Priority 2",
+    "ready_for_alpha": "SI - gia utilizzabile per testing interno",
+    "next_steps": [
+      "Sprint 1: Completare session/manager.js",
+      "Sprint 2: Implementare agents/spawner.js integration",
+      "Sprint 3: Test suite per routing + loader",
+      "Sprint 4: Error handling robusto"
+    ]
+  }
+}
