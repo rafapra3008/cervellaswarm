@@ -1,0 +1,16 @@
+{
+  "project": "cervellaswarm",
+  "timestamp": "2026-01-15T06:30:05Z",
+  "timestamp_local": "2026-01-15 07:30:05",
+  "git": {
+    "commit": "20a6ffd",
+    "message": "Checkpoint Sessione 216: Room Manager MVP LIVE!"
+  },
+  "files_saved": {
+    "stato_md": "/Users/rafapra/Developer/CervellaSwarm/.sncp/progetti/cervellaswarm/stato.md",
+    "prompt_ripresa": "/Users/rafapra/Developer/CervellaSwarm/.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md"
+  },
+  "stato_summary": "# Stato CervellaSwarm\> Ultimo aggiornamento: 15 Gennaio 2026 - Sessione 214\\---\\## TL;DR\\```\SCORE ATTUALE: 9.5/10 REALE! (TARGET RAGGIUNTO!)\TARGET: 9.5/10\GAP: 0 punti\\SESSIONE 214: PRE-FLIGHT + POST-FLIGHT IMPLEMENTATI!\- PRE-FLIGHT CHECK: 3 domande core + 1 random in tutti 16 agenti\- POST-FLIGHT CHECK: COSTITUZIONE-APPLIED in tutti 16 agenti\- Score Guardiana Qualita: 9.5/10 APPROVATO!\```\\---\\## SESSIONE 214 - PRE-FLIGHT + POST-FLIGHT! (15 Gennaio 2026 notte)\\```\+=================",
+  "prompt_summary": "# PROMPT RIPRESA - CervellaSwarm\\> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 216\> **Per SOLO questo progetto!**\\---\\## SESSIONE 216 - COMPLETATA (15 Gennaio 2026)\\```\+================================================================+\|   CONTEXT MESH + DOCUMENTAZIONE ESTERNI                         |\+================================================================+\\PARTE 1 - CONTEXT MESH:\- PROMPT_RIPRESA separati per progetto (Context Mesh pattern)\- Nuovo file_limits_guard.py",
+  "recovery_instructions": "Per ripristinare: leggi questo file e stato.md del progetto"
+}

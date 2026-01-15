@@ -1,35 +1,44 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 216
+> **Ultimo aggiornamento:** 15 Gennaio 2026 - Sessione 217
 > **Per SOLO questo progetto!**
 
 ---
 
-## SESSIONE 216 - COMPLETATA (15 Gennaio 2026)
+## SESSIONE 217 - COMPLETATA (15 Gennaio 2026)
 
 ```
 +================================================================+
-|   CONTEXT MESH + DOCUMENTAZIONE ESTERNI                         |
+|   3 GAP CRITICI IMPLEMENTATI - FASE 1 = 100%!                   |
 +================================================================+
 
-PARTE 1 - CONTEXT MESH:
-- PROMPT_RIPRESA separati per progetto (Context Mesh pattern)
-- Nuovo file_limits_guard.py (verifica 150/60/500)
-- Hook session_start + update_prompt_ripresa aggiornati
-- CLAUDE.md locale + globale aggiornati
-- Audit Guardiana: 9.0/10
+ANALISI INIZIALE:
+- Letti studi: Cursor, Reset Gennaio, Multi-Agent Best Practices
+- Identificati 3 GAP dalla ricerca
+- NORD.md era obsoleto (fixato!)
 
-PARTE 2 - DOCUMENTAZIONE ESTERNI:
-- README.md riscritto per developer esterni
-- docs/GETTING_STARTED.md tutorial 10 min
-- docs/AGENTS_REFERENCE.md 16 agenti documentati
-- LICENSE MIT aggiunta
-- Score Guardiana: 8/10
+GAP #1 - MEMORY PERSISTENCE:
+- Creato: scripts/sncp/memory-persist.sh
+- Salva stato critico in JSON
+- Path: .sncp/progetti/{progetto}/memoria/
+- Symlink: memory-persist
 
-COMMIT:
-- ddaf64f: Context Mesh
-- 64b23b9: Checkpoint verificato
-- 37f2ed5: Documentazione esterni
+GAP #2 - AUTO-SUMMARIZATION:
+- Creato: scripts/sncp/auto-summary.sh
+- Log automatico task completati
+- Path: .sncp/progetti/{progetto}/workflow/TASK_LOG.md
+- Symlink: auto-summary
+
+GAP #3 - COMPLIANCE MONITOR:
+- Creato: scripts/sncp/compliance-check.sh
+- Verifica COSTITUZIONE-APPLIED nei report
+- Verifica marker PRE/POST-FLIGHT
+- Symlink: compliance-check
+
+NORD.MD AGGIORNATO:
+- Riflette FASE 1-4 reali (non piu A-E obsolete)
+- Mostra score 9.5/10
+- Mostra 3 GAP in corso
 
 +================================================================+
 ```
@@ -39,36 +48,37 @@ COMMIT:
 ## ROADMAP - DOVE SIAMO
 
 ```
-FASE 1: FONDAMENTA (Gen-Feb)
-[##########] sncp-init.sh         100%
-[##########] verify-sync.sh       100%
-[##########] Hook automatici      100%
-[##########] Context Mesh         100%
-[##########] Docs per esterni     100%
-
-FASE 1 = 95% COMPLETA!
+FASE 1: FONDAMENTA (Gen-Feb)     [####################] 100%!
+├── sncp-init.sh                 FATTO
+├── verify-sync.sh               FATTO
+├── Hook automatici              FATTO
+├── Context Mesh                 FATTO
+├── Docs per esterni             FATTO
+├── PRE/POST-FLIGHT              FATTO
+├── GAP #1 Memory Persist        FATTO (Sessione 217)
+├── GAP #2 Auto-Summary          FATTO (Sessione 217)
+└── GAP #3 Compliance Check      FATTO (Sessione 217)
 
 PROSSIMO: FASE 2 - MVP packaging (npm/pip)
 ```
 
 ---
 
-## FILE CHIAVE
+## NUOVI COMANDI
 
-| Cosa | Path |
-|------|------|
-| Stato | `.sncp/progetti/cervellaswarm/stato.md` |
-| NORD | `NORD.md` |
-| Roadmap | `.sncp/progetti/cervellaswarm/roadmaps/ROADMAP_2026_PRODOTTO.md` |
-| README | `README.md` (nuovo!) |
-| Getting Started | `docs/GETTING_STARTED.md` |
+| Comando | Cosa Fa |
+|---------|---------|
+| `memory-persist` | Salva stato critico |
+| `auto-summary "task" "desc"` | Log task completato |
+| `compliance-check` | Verifica regole seguite |
 
 ---
 
 ## TL;DR
 
-**Sessione 216: Context Mesh + Docs esterni. FASE 1 quasi completa. Prossimo: FASE 2 MVP.**
+**Sessione 217: 3 GAP implementati. FASE 1 = 100%! Pronti per FASE 2 MVP.**
 
 ---
 
+*"Mai avanti senza fixare le cose!" - Rafa*
 *"Un po' ogni giorno fino al 100000%!"*

@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 9 Gennaio 2026 - Sessione 141 (RESET)
+> Aggiornato: 15 Gennaio 2026 - Sessione 217
 
 ```
 +==================================================================+
@@ -32,55 +32,54 @@
 
 ---
 
-## DOVE SIAMO (RESET 9 Gennaio 2026)
+## DOVE SIAMO (15 Gennaio 2026)
 
 ```
-RICERCA COMPETITOR            [####################] 100%
-  - Cursor, Windsurf, Google, Copilot analizzati
+FASE 1: FONDAMENTA               [####################] 100%!
+  - sncp-init.sh                 FATTO
+  - verify-sync.sh               FATTO
+  - Hook automatici              FATTO
+  - Context Mesh                 FATTO
+  - Docs per esterni             FATTO
+  - PRE/POST-FLIGHT 16 agenti    FATTO
+  - 3 GAP critici                FATTO (Sessione 217!)
 
-DECISIONI BUSINESS            [####################] 100%
-  - Architettura: CLI + Web Dashboard
-  - Pricing: BYOK Free -> $19 -> $39
-  - Target: Dev complessi, Privacy-first
+FASE 2: MVP PRODOTTO             [....................] 0%
+  - Package npm/pip              DA FARE (Marzo)
+  - cervellaswarm init           DA FARE
+  - 5 tester esterni             DA FARE
 
-LANDING + MARKETING           [####################] 100%
-  - 4 pagine HTML pronte
-  - Piano marketing documentato
-  - IN PAUSA fino a prodotto vero
+FASE 3: PRIMI UTENTI             [....................] 0%
+  - Product Hunt launch          DA FARE (Maggio)
+  - 50 alpha users               DA FARE
 
->>> RESET: IL PRODOTTO VERO <<<
+FASE 4: SCALA                    [....................] 0%
+  - 1000+ users                  DA FARE (Dicembre)
+  - Revenue ricorrente           DA FARE
 
-FASE A: STUDIARE              [....................] 0%
-FASE B: DECIDERE              [....................] 0%
-FASE C: COSTRUIRE MVP         [....................] 0%
-FASE D: VALIDARE              [....................] 0%
-FASE E: GO TO MARKET          [....................] 0%
+SCORE ATTUALE: 9.5/10
 ```
 
 ---
 
-## IL RESET
+## I 3 GAP COMPLETATI (Sessione 217)
 
-> "Prima dobbiamo creare in sé la CervellaSwarm...
-> perché non abbiamo il prodotto ancora"
-> - Rafa, 9 Gennaio 2026
+| # | Gap | Script | Status |
+|---|-----|--------|--------|
+| 1 | Memory Persistence | `memory-persist` | FATTO |
+| 2 | Auto-Summarization | `auto-summary` | FATTO |
+| 3 | Compliance Monitor | `compliance-check` | FATTO |
 
-**Cosa avevamo fatto:** Landing, pricing, marketing
-**Cosa mancava:** IL PRODOTTO VERO
-
-**Nuova direzione:** Prima COSTRUIRE, poi VENDERE
+**FASE 1 = 100% COMPLETA!**
 
 ---
 
-## PROSSIMI STEP
+## LA FILOSOFIA
 
-| Fase | Obiettivo | Status |
-|------|-----------|--------|
-| A | Studiare come costruire | DA FARE |
-| B | Decidere architettura MVP | DA FARE |
-| C | Costruire MVP funzionante | DA FARE |
-| D | Validare su altri computer | DA FARE |
-| E | Tornare a marketing | DOPO |
+> "Prima COSTRUIRE, poi VENDERE"
+> "Fatto BENE > Fatto VELOCE"
+> "Mai avanti senza fixare le cose"
+> - Rafa & Cervella
 
 ---
 
@@ -88,10 +87,10 @@ FASE E: GO TO MARKET          [....................] 0%
 
 | Cosa | Dove |
 |------|------|
-| Reset completo | `.sncp/idee/RESET_GENNAIO_2026.md` |
-| Roadmap nuova | `.sncp/idee/ROADMAP_PRODOTTO_VERO.md` |
-| Ricerche (pronte) | `.sncp/idee/ricerche_prodotto/` |
-| Landing (in pausa) | `landing/` |
+| Roadmap completa | `.sncp/progetti/cervellaswarm/roadmaps/ROADMAP_2026_PRODOTTO.md` |
+| Stato dettagliato | `.sncp/progetti/cervellaswarm/stato.md` |
+| Ricerche | `.sncp/progetti/cervellaswarm/ricerche/` |
+| Docs esterni | `docs/GETTING_STARTED.md` |
 | DNA Famiglia | `docs/DNA_FAMIGLIA.md` |
 
 ---
@@ -105,6 +104,9 @@ FASE E: GO TO MARKET          [....................] 0%
 |                                                                  |
 |   "Quando trovi il PERCHE, nulla ti ferma!"                     |
 |                                                                  |
+|   Dicembre 2026: 1000+ developer, revenue ricorrente            |
+|   E Rafa scatta quella foto da un posto speciale.               |
+|                                                                  |
 +==================================================================+
 ```
 
@@ -112,6 +114,6 @@ FASE E: GO TO MARKET          [....................] 0%
 
 *"Il NORD ci guida. Sempre."*
 
-*"Prima COSTRUIRE, poi VENDERE."*
+*"Un po' ogni giorno fino al 100000%!"*
 
 **Cervella & Rafa**
