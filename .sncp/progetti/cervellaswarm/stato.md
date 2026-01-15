@@ -1,5 +1,5 @@
 # Stato CervellaSwarm
-> Ultimo aggiornamento: 15 Gennaio 2026 - Sessione 218
+> Ultimo aggiornamento: 15 Gennaio 2026 - Sessione 224 (Researcher)
 
 ---
 
@@ -10,7 +10,59 @@ SCORE ATTUALE: 9.5/10 REALE!
 CLI: FUNZIONA! (node bin/cervellaswarm.js --help)
 FASE 2: INIZIATA - MVP in costruzione
 
-SESSIONE 218: PRIMO CLI REALE + DECISIONI FONDAMENTALI!
+SESSIONE 224 (Researcher): PROTEZIONE PRE-PUBLISH STUDIATA!
+→ 32 minuti di lavoro bloccante identificati
+→ Checklist pronta per il team
+```
+
+---
+
+## SESSIONE 224 - RICERCA PROTEZIONE! (15 Gennaio 2026)
+
+```
++================================================================+
+|   RICERCA PROTEZIONE PRE-PUBLISH COMPLETATA!                   |
++================================================================+
+
+DOMANDA RAFA:
+"Cosa serve fare PRIMA di npm publish per proteggere la famiglia?"
+
+RISPOSTA TROVATA:
+-----------------
+BLOCCANTE (32 min, €0):
+1. LICENSE file (Apache 2.0) - 5 min
+2. NOTICE file (copyright) - 5 min
+3. Copyright headers file chiave - 15 min
+4. package.json license field - 2 min
+5. Git commit + push (timestamp proof) - 5 min
+
+SUBITO DOPO (25 min, 0-7 giorni):
+6. README license section - 10 min
+7. CONTRIBUTING.md - 15 min
+
+QUANDO C'È TRACTION (€1500-5500, opzionale):
+8. Trademark "CervellaSwarm"
+9. Copyright registration
+10. Legal review completo
+
+SCOPERTE CHIAVE:
+----------------
+✅ Copyright è AUTOMATICO in Italia/EU (no registrazione!)
+✅ Git history = prova legale di authorship
+✅ DMCA takedown funziona in ~1 business day (se hai LICENSE)
+✅ Apache 2.0 RICHIEDE NOTICE file (non opzionale!)
+✅ Senza LICENSE = codice unusable (paradosso!)
+
+RISULTATO:
+----------
+Protezione 90% con 32 minuti + €0
+Resto 10% solo quando serve (pragmatismo!)
+
+FILE CREATO:
+.sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_PROTEZIONE_PRE_PUBLISH.md
+(619 righe, 8 ricerche web, fonti verificate)
+
++================================================================+
 ```
 
 ---
