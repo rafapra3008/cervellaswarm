@@ -1,80 +1,78 @@
 # PROMPT RIPRESA - Miracollo
 
-> **Ultimo aggiornamento:** 16 Gennaio 2026 - Sessione 230
-> **STATO: 3 task fatti + SCOPERTA palette salutare non applicata!**
+> **Ultimo aggiornamento:** 16 Gennaio 2026 - Sessione 231
+> **NOVITA: Architettura 3 BRACCI definita e implementata!**
 
 ---
 
-## STATO IN UNA RIGA
-
-**MIRACALLOOK: Checkbox, bulk glass, folders OK. PROSSIMO: Applicare palette design salutare!**
-
----
-
-## SESSIONE 230: MIRACALLOOK - 3 TASK COMPLETATI
-
-### FATTO
-| # | Task | File Modificati |
-|---|------|-----------------|
-| 1 | Checkbox nei gruppi | BundleItem.tsx, EmailList.tsx |
-| 2 | Barra bulk opaca | BulkActionsBar.tsx (classe `.glass`) |
-| 3 | Sistema cartelle | 4 endpoint backend + Sidebar.tsx + App.tsx |
-
-### BUG FIX (undefined checks)
-- `categorize.ts:4` - `(email.from || '')`
-- `bundles.ts:24` - `(email.from || '')`
-- `guests.ts:94` - `if (!fromField) return null`
-
-### FOLDERS STATUS
-| Folder | Funziona |
-|--------|----------|
-| Inbox, Sent, Archive, Starred, Trash | YES |
-| **Drafts** | NO (500 error) |
-
----
-
-## SCOPERTA IMPORTANTE!
+## ARCHITETTURA ECOSISTEMA (NUOVO!)
 
 ```
-PALETTE DESIGN SALUTARE - DOCUMENTATA MA NON APPLICATA!
+MIRACOLLO ECOSISTEMA
+│
+├── PMS CORE (:8000)        → 85% - Stabile, produzione
+├── MIRACALLOOK (:8002)     → 60% - Email client, backlog presente
+└── ROOM HARDWARE (:8003)   → 10% - Ricerca OK, attesa hardware
+```
 
-FILE ESISTENTI (LEGGILI!):
-- .sncp/.../PALETTE_DESIGN_SALUTARE_VALIDATA.md
-- .sncp/.../studi/RICERCA_DESIGN_SALUTARE.md (930 righe!)
+### Dove Trovare Stato Dettagliato
 
-PROBLEMA: tailwind.config.js usa #0a0e1a (troppo scuro!)
-SOLUZIONE: Applicare palette Apple #1C1C1E (eye-friendly)
+| Braccio | File Stato |
+|---------|------------|
+| PMS Core | `bracci/pms-core/stato.md` |
+| Miracallook | `bracci/miracallook/stato.md` |
+| Room Hardware | `bracci/room-hardware/stato.md` |
+
+---
+
+## SESSIONE 231: ARCHITETTURA 3 BRACCI
+
+### Completato
+- Struttura `bracci/` creata in SNCP
+- Migrato `moduli/room_manager/` → `bracci/room-hardware/`
+- Creato `stato.md` per ogni braccio
+- Creato `room-hardware/` in miracollogeminifocus (skeleton)
+- Documento decisionale: `decisioni/20260116_ARCHITETTURA_3_BRACCI.md`
+
+### Struttura Codice
+
+```
+miracollogeminifocus/
+├── backend/          # PMS Core
+├── frontend/         # PMS Core UI
+├── miracallook/      # Braccio 2
+└── room-hardware/    # Braccio 3 (NUOVO!)
 ```
 
 ---
 
-## PROSSIMA SESSIONE - MAPPA
+## PRIORITA BRACCI
 
-| # | Task | Priorita |
-|---|------|----------|
-| **0** | **APPLICARE PALETTE SALUTARE** | **ALTA!** |
-| 4 | Drag handles custom | MEDIA |
-| 5 | Drafts folder fix | MEDIA |
-| 6 | Sanitizzazione HTML | FUTURO |
+| # | Braccio | Prossimo Task |
+|---|---------|---------------|
+| 1 | Miracallook | Applicare palette salutare |
+| 2 | Room Hardware | Setup quando arriva hardware |
+| 3 | PMS Core | Manutenzione al bisogno |
 
 ---
 
-## VDA ROSETTA STONE (parallelo)
+## ROOM HARDWARE - STATO
 
-- Hardware Amazon in arrivo (1-2 giorni)
-- Piano reverse engineering pronto
-- File: `.sncp/.../idee/20260116_VDA_ROSETTA_STONE_PIANO.md`
+- Hardware Amazon in arrivo (1-2 giorni dal 16 Gen)
+- Piano Rosetta Stone pronto
+- Studi: `bracci/room-hardware/studi/` (21 file!)
 
 ---
 
 ## MAPPA PORTE
 
-| Progetto | Backend | Frontend |
-|----------|---------|----------|
-| Miracollo PMS | 8001 | 80/443 |
+| Braccio | Backend | Frontend |
+|---------|---------|----------|
+| PMS Core | 8000 | 80/443 |
 | Miracallook | 8002 | 5173 |
+| Room Hardware | 8003 | - |
 
 ---
 
 *"I dettagli fanno SEMPRE la differenza!"*
-*"La salute degli utenti viene prima dell'estetica!"*
+*Architettura pulita = scalabilita futura!*
