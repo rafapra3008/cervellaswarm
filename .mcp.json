@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "cervellaswarm": {
+      "command": "node",
+      "args": [
+        "/Users/rafapra/Developer/CervellaSwarm/packages/mcp-server/dist/index.js"
+      ]
+    }
+  }
+}

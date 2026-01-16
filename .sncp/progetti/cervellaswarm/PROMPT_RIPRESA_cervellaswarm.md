@@ -1,42 +1,38 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 16 Gennaio 2026 - Sessione 235
-> **FASE ATTUALE:** MCP Server configurato per ENTRAMBE le versioni!
+> **Ultimo aggiornamento:** 16 Gennaio 2026 - Sessione 236
+> **FASE ATTUALE:** MCP Config CORRETTA - Test dopo riavvio!
 
 ---
 
-## AZIONE IMMEDIATA - TEST MCP
+## AZIONE IMMEDIATA
 
 ```
 +================================================================+
 |   RIAVVIA CLAUDE CODE E TESTA!                                 |
 |                                                                |
-|   Sessione 235 ha fixato il bug:                               |
-|   - Config era solo in ~/.claude/settings.json                 |
-|   - Ma usi Claude Code INSIDERS!                               |
-|   - Ora config anche in ~/.claude-insiders/settings.json       |
+|   Sessione 236 ha scoperto il VERO problema:                   |
+|   - settings.json NON è dove Claude legge MCP                  |
+|   - Claude legge da ~/.claude.json o .mcp.json                 |
+|   - Creato .mcp.json nel project root (fix corretto!)          |
 |                                                                |
-|   DOPO RIAVVIO, testa:                                         |
-|   > "usa check_status di cervellaswarm"                        |
-|   > "list_workers di cervellaswarm"                            |
+|   DOPO RIAVVIO:                                                |
+|   1. Terminale: claude mcp list                                |
+|      → Deve mostrare cervellaswarm connesso                    |
+|   2. In Claude: "usa check_status di cervellaswarm"            |
 +================================================================+
 ```
 
 ---
 
-## COSA È STATO FATTO (Sessione 235)
+## COSA È CAMBIATO (Sessione 235 → 236)
 
-| Cosa | Status |
-|------|--------|
-| Server MCP funziona | OK (testato via stdio) |
-| Protocollo MCP | OK (risponde a initialize + tools/list) |
-| 3 tools esposti | OK (spawn_worker, list_workers, check_status) |
-| Bug trovato | Config solo in ~/.claude/ non in ~/.claude-insiders/ |
-| Fix applicato | Aggiunta config a ~/.claude-insiders/settings.json |
+| Sessione | Cosa pensavamo | Realtà |
+|----------|----------------|--------|
+| 235 | Config in settings.json | NON letto per MCP |
+| 236 | Studiato docs ufficiali | MCP va in .mcp.json |
 
-**Files modificati:**
-- `~/.claude/settings.json` (Sessione 234)
-- `~/.claude-insiders/settings.json` (Sessione 235)
+**File creato:** `/Users/rafapra/Developer/CervellaSwarm/.mcp.json`
 
 ---
 
@@ -45,20 +41,27 @@
 ```
 FASE 0: Fondamenta           [####################] FATTO!
 FASE 1: POC MCP              [####################] FATTO!
-FASE 2: MCP Completo         [########............] IN CORSO
-  - settings.json normale    [####################] FATTO
-  - settings.json insiders   [####################] FATTO
-  - Test REALE post-restart  [....................] DA FARE
-  - Resources SNCP           [....................] PROSSIMO
+FASE 2: MCP Completo         [##########..........] IN CORSO
+  - Server funziona          [####################] OK
+  - Config .mcp.json         [####################] FATTO (Sessione 236!)
+  - Test REALE post-restart  [....................] PROSSIMO
+  - Resources SNCP           [....................] DOPO
 FASE 3: Polish & Launch      [....................]
 ```
 
 ---
 
+## CLEANUP PENDING
+
+Config in `settings.json` (normale + insiders) può restare o essere rimossa.
+Non interferisce, ma è inutile ora.
+
+---
+
 ## TL;DR
 
-**Sessione 235:** Fixato bug - config mancava per Claude Insiders.
+**Sessione 236:** Scoperto che MCP config va in `.mcp.json`, non in `settings.json`. Fix applicato.
 
-**ORA:** Riavvia Claude Code e testa `check_status`.
+**ORA:** Riavvia → `claude mcp list` → test tool.
 
-*"SU CARTA != REALE!"*
+*"Studiare = Risolvere!"*
