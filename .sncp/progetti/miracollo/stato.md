@@ -1,712 +1,135 @@
 # STATO PROGETTO MIRACOLLO
 
-> **Data:** 2026-01-15 04:30 - Sessione 215 ROOM MANAGER MVP POLISH
+> **Data:** 2026-01-16 - Sessione 232
 > **Score:** 9.5/10 STABILE
-> **Versione:** 1.9.3 (Room Manager MVP - Frontend Polish)
+> **Architettura:** 3 Bracci (PMS Core, Miracallook, Room Hardware)
 
 ---
 
-## SESSIONE 215 - ROOM MANAGER MVP POLISH (15 Gennaio 2026 notte)
+## ECOSISTEMA ATTUALE
 
 ```
-+================================================================+
-|   ROOM MANAGER MVP - SESSIONE POLISH COMPLETATA!               |
-|   15 Gennaio 2026 (notte)                                       |
-+================================================================+
-
-OBIETTIVO: Alzare Frontend Score da 8.5 a 9.5/10
-
-COMPLETATO:
------------
-
-1. API.JS - SECURITY + ROBUSTNESS (v1.1.0)
-   - fetchWithTimeout() helper con 10s timeout
-   - parseErrorResponse() safe error parsing
-   - Validazione input su tutte le funzioni
-   - AbortError handling per timeout
-   - Array.isArray() check su responses
-
-2. SIDEBAR.JS - XSS PROTECTION (v1.1.0)
-   - escapeHtml() helper per prevenire XSS
-   - Escape su old_value, new_value, changed_by
-   - Validazione timestamp in formatEventTime()
-   - Loading state su action buttons
-
-3. GRID.JS - ACCESSIBILITY (v1.1.0)
-   - role="button" + tabindex="0" su cards
-   - aria-label descrittivi per screen reader
-   - Keyboard navigation (Enter/Space)
-   - parseInt con radix 10
-   - Loading state (.updating) durante right-click
-
-4. CORE.JS - PERFORMANCE (v1.1.0)
-   - Promise.all per parallel loading
-   - try-catch su initRoomManager()
-   - Null check su icon elements
-
-5. CSS - ACCESSIBILITY (v1.1.0)
-   - :focus-visible su tutti elementi interattivi
-   - .updating class con spinner animato
-   - .loading class per buttons
-   - Fallback per :has() (Firefox)
-
-6. HTML - ACCESSIBILITY
-   - role="main" su container
-   - aria-label su tutti i filtri
-   - for="" su tutte le label
-   - aria-label su sidebar close
-   - noscript fallback
-   - role="alert" aria-live su toast
-
-AUDIT SCORE: 8.5 -> 9.5/10
---------------------------
-- Sicurezza: XSS protection
-- Accessibility: WCAG compliant
-- Performance: Parallel loading
-- Robustness: Input validation
-
-FILE AGGIORNATI:
-----------------
-miracollogeminifocus/frontend/
-├── room-manager.html (accessibility)
-├── css/room-manager.css (focus + loading)
-└── js/room-manager/
-    ├── config.js (v1.1.0)
-    ├── api.js (v1.1.0)
-    ├── grid.js (v1.1.0)
-    ├── sidebar.js (v1.1.0)
-    └── core.js (v1.1.0)
-
-PROSSIMA: TEST MANUALE + Deploy
-
-"I dettagli fanno SEMPRE la differenza!"
-
-+================================================================+
+MIRACOLLO
+├── PMS CORE (:8000)        85%  PRODUZIONE
+├── MIRACALLOOK (:8002)     60%  FUNZIONANTE
+└── ROOM HARDWARE (:8003)   10%  RICERCA OK
 ```
+
+| Braccio | Stato | Prossimo |
+|---------|-------|----------|
+| PMS Core | LIVE, stabile | Manutenzione |
+| Miracallook | Funzionante | Palette salutare |
+| Room Hardware | Ricerca completa | Setup hardware |
+
+**Dettagli:** Vedi `bracci/{braccio}/stato.md`
 
 ---
 
-## SESSIONE 214 - ROOM MANAGER MVP SESSIONE C (15 Gennaio 2026 notte)
-
-```
-+================================================================+
-|   ROOM MANAGER MVP - SESSIONE C COMPLETATA!                     |
-|   15 Gennaio 2026 (notte)                                        |
-+================================================================+
-
-OBIETTIVO: Frontend Room Grid + Fix Backend
-
-COMPLETATO:
------------
-
-1. FIX BACKEND (Score 8.5 -> 9.0)
-   - except generico -> except json.JSONDecodeError
-   - Validazione event_type in log_activity
-   - Gestione connessione con context manager
-
-2. FRONTEND ROOM MANAGER
-   - room-manager.html (pagina principale)
-   - js/room-manager/config.js (configurazione)
-   - js/room-manager/api.js (chiamate API)
-   - js/room-manager/grid.js (render grid)
-   - js/room-manager/sidebar.js (dettaglio + activity)
-   - js/room-manager/core.js (entry point)
-   - css/room-manager.css (styling completo)
-
-3. FEATURES FRONTEND
-   - Grid camere per piano
-   - Filtri: piano, status, housekeeping, occupazione
-   - Click camera -> sidebar dettaglio
-   - Right-click -> cicla housekeeping status
-   - Activity log per camera
-   - Bottoni azione housekeeping
-   - Responsive (1024px, 768px)
-   - Dark theme coerente con planning
-
-4. NAVIGATION
-   - Link Room Manager aggiunto in planning.html
-
-AUDIT GUARDIANA FRONTEND: 8.5/10 APPROVATO
-------------------------------------------
-- HTML: 9/10
-- config.js: 8/10
-- api.js: 9/10
-- grid.js: 8/10
-- sidebar.js: 8/10
-- core.js: 9/10
-- CSS: 9/10
-
-FILE CREATI:
-------------
-miracollogeminifocus/frontend/
-├── room-manager.html (NUOVO)
-├── css/room-manager.css (NUOVO)
-└── js/room-manager/
-    ├── config.js (NUOVO)
-    ├── api.js (NUOVO)
-    ├── grid.js (NUOVO)
-    ├── sidebar.js (NUOVO)
-    └── core.js (NUOVO)
-
-PROSSIMA: SESSIONE D (Room Card + Activity polish)
-
-"La semplicita di Mews + La domotica di Scidoo = MIRACOLLO!"
-
-+================================================================+
-```
-
----
-
-## SESSIONE 213B - ROOM MANAGER MVP SESSIONE B (15 Gennaio 2026 notte)
-
-```
-+================================================================+
-|   ROOM MANAGER MVP - SESSIONE B COMPLETATA!                     |
-|   15 Gennaio 2026 (notte)                                        |
-+================================================================+
-
-OBIETTIVO: Activity Log Backend con trigger automatici
-
-COMPLETATO:
------------
-
-1. TRIGGER AUTOMATICI ACTIVITY LOG
-   - blocks.py: log su create/delete block
-   - housekeeping.py: log su cambio housekeeping
-   - room_manager.py: già loggava (Sessione A)
-
-2. get_activity_stats() IMPLEMENTATO
-   - Statistiche per periodo (default 7 giorni)
-   - Eventi per tipo, per giorno, top camere
-   - Events last hour per real-time
-
-3. NUOVO ENDPOINT
-   - GET /api/room-manager/{hotel_code}/activity-stats
-
-4. FIX RICHIESTO GUARDIANA
-   - Export modelli in models/__init__.py
-
-AUDIT GUARDIANA: 8.5/10 APPROVATO
----------------------------------
-- Migration SQL: 9/10
-- Service Layer: 8/10
-- Router/API: 9/10
-- Models: 7/10 (fixato!)
-- Coerenza: 10/10
-
-FILE MODIFICATI:
-----------------
-miracollogeminifocus/backend/
-├── routers/blocks.py (trigger activity)
-├── routers/housekeeping.py (trigger activity)
-├── routers/room_manager.py (nuovo endpoint stats)
-├── services/room_manager_service.py (get_activity_stats)
-└── models/__init__.py (export fix)
-
-CervellaSwarm/.sncp/progetti/miracollo/moduli/room_manager/
-└── reports/AUDIT_SESSIONE_A_20260115.md (NUOVO)
-
-PROSSIMA: SESSIONE C (Frontend Room Grid)
-
-+================================================================+
-```
-
----
-
-## SESSIONE 213 - ROOM MANAGER MVP SESSIONE A (15 Gennaio 2026 notte)
-
-```
-+================================================================+
-|   ROOM MANAGER MVP - SESSIONE A COMPLETATA!                     |
-|   15 Gennaio 2026 (notte)                                        |
-+================================================================+
-
-OBIETTIVO: Database + Backend Core per Room Manager
-
-COMPLETATO:
------------
-
-1. MIGRATION 041_room_manager.sql
-   - Nuovi campi rooms: status, temperature, door_status, presence, dnd, mur
-   - Tabella room_activity_log (audit trail completo)
-   - Tabella room_access_codes (PIN generation)
-   - View v_room_manager_overview
-   - 9 indici per performance
-   - APPLICATA AL DATABASE!
-
-2. ROOM_MANAGER_SERVICE.PY (~350 righe)
-   - get_rooms(hotel_id)
-   - get_rooms_by_hotel_code(hotel_code)
-   - get_room(room_id)
-   - get_room_stats(hotel_id)
-   - update_room_status(room_id, status, changed_by, source)
-   - update_housekeeping_status(room_id, status, changed_by, source)
-   - log_activity(hotel_id, room_id, event_type, ...)
-   - get_room_activity(room_id, limit, offset)
-   - get_global_activity(hotel_id, event_types, limit, offset)
-
-3. ROUTERS/ROOM_MANAGER.PY (~230 righe)
-   - GET  /api/room-manager/{hotel_code}/rooms
-   - GET  /api/room-manager/rooms/{room_id}
-   - PUT  /api/room-manager/rooms/{room_id}/status
-   - PUT  /api/room-manager/rooms/{room_id}/housekeeping
-   - GET  /api/room-manager/rooms/{room_id}/activity
-   - GET  /api/room-manager/{hotel_code}/activity
-   - GET  /api/room-manager/{hotel_code}/stats
-   - GET  /api/room-manager/info
-
-4. MODELS/ROOM.PY (nuovi modelli)
-   - RoomManagerStatusUpdate
-   - RoomManagerHousekeepingUpdate
-   - RoomManagerRoom (response completo)
-   - RoomActivity
-   - RoomStats
-
-5. REGISTRAZIONE
-   - Router in __init__.py
-   - Router in main.py
-
-DECISIONI RAFA DOCUMENTATE:
----------------------------
-- Mobile Housekeeping = PWA (no app store!)
-- Touchscreen in camera = idea futura
-- Nonius TV = studiare per sostituire
-
-FILE CREATI:
-------------
-miracollogeminifocus/backend/
-├── database/
-│   ├── migrations/041_room_manager.sql
-│   └── apply_041.py
-├── services/
-│   └── room_manager_service.py (NUOVO!)
-├── routers/
-│   └── room_manager.py (NUOVO!)
-└── models/
-    └── room.py (AGGIORNATO)
-
-CervellaSwarm/.sncp/progetti/miracollo/
-├── moduli/room_manager/
-│   ├── SUB_ROADMAP_MVP_ROOM_MANAGER.md (NUOVO!)
-│   └── DECISIONI_SESSIONE_213.md (NUOVO!)
-└── moduli/in_room_experience/
-    └── IDEA_INIZIALE.md (NUOVO!)
-
-PROSSIME SESSIONI:
-------------------
-SESSIONE B: Activity Log Backend (trigger automatici)
-SESSIONE C: Frontend Room Grid
-SESSIONE D: Frontend Room Card + Activity
-SESSIONE E: Test + Affinamenti
-SESSIONE F: PWA Housekeeping
-
-"La semplicita di Mews + La domotica di Scidoo + L'hardware VDA = MIRACOLLO!"
-
-+================================================================+
-```
-
----
-
-## SESSIONE 212 - STUDIO ROOM MANAGER COMPLETATO (14 Gennaio 2026 sera)
-
-```
-(Vedi handoff precedente per dettagli)
-- VDA Etheos 26 screenshot analizzati
-- Big Players: Mews, Opera, Cloudbeds, Scidoo
-- Confronto definitivo + architettura decisa
-```
-
----
-
-## SESSIONE 211 - STUDIO VDA ETHEOS PARTE 2 (14 Gennaio 2026 sera)
-
-```
-+================================================================+
-|   STUDIO VDA ETHEOS - PARTE 2                                   |
-|   14 Gennaio 2026 (sera)                                        |
-+================================================================+
-
-CONTINUAZIONE STUDIO VDA!
--------------------------
-Analizzati 18 screenshot (4-21) in 3 blocchi:
-- BLOCCO 2: Screenshot 4-9 (Chiavi, DND, MUR)
-- BLOCCO 3: Screenshot 10-15 (HVAC, Room Control, Occupazione)
-- BLOCCO 4: Screenshot 16-21 (Staff, Dashboard, Device Manager)
-
-SCOPERTE CHIAVE:
-----------------
-SISTEMA CHIAVI:
-- BLE (badge) + CODICE (PIN) - due tipi
-- Chiavi OSPITI separate da STAFF
-- Staff ha RFID + CODE backup
-- Zone multiple per chiave (camera + aree)
-- Profili ospite configurabili
-
-HVAC/TEMPERATURA:
-- 2 termostati per camera (BAGNO + CAMERA)
-- Rilevamento FINESTRE APERTE!
-- Range 16-28°C configurabile
-- Comfort mode preset
-
-SENSORI REAL-TIME:
-- PRESENZA (occupazione vera, non check-in!)
-- PORTA (aperta/chiusa)
-- DND (Do Not Disturb)
-- MUR (Make Up Room - richiesta pulizia)
-
-HARDWARE:
-- Protocollo MODBUS (standard industriale!)
-- 4 dispositivi/camera: RCU, Keypad, BLE, CON4
-- 112 dispositivi totali, 100% online
-
-MODULI VDA (7 totali):
-1. Dashboard (KPI)
-2. Room Manager
-3. Device Manager
-4. Site Users
-5. Scheduler (automazioni!)
-6. Activity Log (audit!)
-7. Alarm Viewer
-
-FILE CREATO:
-- .sncp/progetti/miracollo/moduli/room_manager/studi/
-  20260114_ANALISI_VDA_ETHEOS_PARTE2.md
-
-PROSSIMA SESSIONE (PARTE 3):
-- Screenshot 22-26 (ultimi 5)
-- Studio big players (Mews, Opera)
-- Confronto e decisioni architettura
-
-"Non copiamo VDA - facciamo PIÙ SMART, FLUIDO, BELLO!"
-
-+================================================================+
-```
-
----
-
-## SESSIONE 210 - STUDIO VDA ETHEOS (14 Gennaio 2026 sera)
-
-```
-+================================================================+
-|   STUDIO VDA ETHEOS - PARTE 1                                   |
-|   14 Gennaio 2026 (sera)                                        |
-+================================================================+
-
-OBIETTIVO:
-----------
-Studiare sistema VDA installato a Naturae Lodge per:
-- Capire funzionalità esistenti
-- Progettare il NOSTRO Room Manager (più smart!)
-- Riutilizzare hardware esistente (112 dispositivi!)
-
-SCREENSHOT ANALIZZATI: 3 di 26
-------------------------------
-1. Check-in/Check-out - Grid 32 camere
-2. Ultimi Allarmi - Sistema SOS, SCATTO-TERMICO
-3. Sites - Menu principale (Dashboard, Room Manager, Alarm)
-
-INFORMAZIONI CHIAVE:
--------------------
-- Software: Etheos Room Manager v1.10.1
-- Hotel: Naturae Lodge (code: itblxalle00847)
-- Camere: 32 (piani 1-4 + aree comuni)
-- Dispositivi: 112 totali (~3.5/camera)
-- Stato: 100% online, 0 allarmi
-
-HARDWARE ESISTENTE:
-------------------
-- Sensori temperatura
-- Controllo termosifoni
-- Codici accesso
-- Tutto connesso e funzionante!
-
-FILE CREATO:
-- .sncp/progetti/miracollo/moduli/room_manager/studi/
-  20260114_ANALISI_VDA_ETHEOS_PARTE1.md
-
-PROSSIMA SESSIONE:
-- Continuare analisi screenshot 4-26
-- Documentare controllo temperatura
-- Documentare codici accesso
-- Studiare big players per confronto
-
-"Non copiamo VDA - facciamo PIÙ SMART, FLUIDO, BELLO!"
-
-+================================================================+
-```
-
----
-
-## SESSIONE 207 COMPLETA - 14 Gennaio 2026 sera
-
-```
-+================================================================+
-|   SESSIONE 207 COMPLETA - 14 Gennaio 2026 sera                 |
-+================================================================+
-
-PARTE 1: SUBSCRIPTION DEPLOY (PARCHEGGIATO)
--------------------------------------------
-✅ Migration 040_subscription_system.sql in produzione
-✅ 4 tabelle + 3 tier (FREE, PRO €29, ENT €79)
-✅ Naturae Lodge: FREE tier (trial 30gg)
-⏸️ PARCHEGGIATO - limiti log-only
-
-PARTE 2: COMPETITOR SCRAPING (PARCHEGGIATO)
--------------------------------------------
-✅ DB schema: GIA' ESISTEVA (migration 009)
-✅ Script: GIA' ESISTEVA (daily_competitor_scrape.py)
-✅ Fix Playwright default v1.1.0
-✅ 6 competitor Alleghe seedati
-❌ Parser Booking.com: selettori obsoleti
-⏸️ PARCHEGGIATO
-
-PARTE 3: IDEA MEMORIA SWARM
----------------------------
-Documentato problema docs vs codice.
-File: cervellaswarm/idee/20260114_PROBLEMA_MEMORIA_SWARM.md
-Potenziale feature CervellaSwarm!
-
-PARTE 4: ROOM MANAGER - PIANIFICAZIONE COMPLETA!
-------------------------------------------------
-✅ Guardiana Qualita: verifica 8/10 APPROVATO
-✅ Ingegnera: architettura + piano 6 fasi
-✅ Researcher: ricerca VDA + hardware
-✅ PIANO AZIONE REALE creato!
-✅ DECISIONI RAFA CONFERMATE:
-   - Opzione B: due campi (status + housekeeping_status)
-   - Frontend separati (planning + room-manager)
-
-PIANO ROOM MANAGER:
-  FASE 0: Decisioni ✅ FATTO
-  FASE 1: Consolidamento Backend (4-5h)
-  FASE 2: Services Layer (2-3h)
-  FASE 3: Trigger Automatici (2-3h)
-  FASE 4: Frontend Room-Manager (3-4h)
-  FASE 5: Test & Deploy (2-3h)
-  FASE 6: VDA Hardware (futuro)
-  TOTALE: 14-18 ore
-
-GIT SESSIONE 207:
-- Miracollo: 6d35243 (Playwright fix) - PUSHED!
-- CervellaSwarm: da committare
-
-+================================================================+
-```
-
----
-
-> **ARCHIVIO:** Sessioni 202-204 spostate in `archivio/SESSIONI_GENNAIO_2026.md`
+## SESSIONI RECENTI (Summary)
+
+| Sess | Data | Focus | Risultato |
+|------|------|-------|-----------|
+| 232 | 16 Gen | MAPPA ecosistema | NORD.md + Audit completo |
+| 231 | 16 Gen | Architettura 3 bracci | Struttura creata |
+| 230 | 16 Gen | Miracallook tasks | 3 feature complete |
+| 215 | 15 Gen | Room Manager polish | Score 9.5/10 |
+| 213-214 | 15 Gen | Room Manager MVP | Backend + Frontend |
+| 210-212 | 14 Gen | Studio VDA | 26 screenshot analizzati |
+| 207 | 14 Gen | Pianificazione RM | Piano 6 fasi |
+
+> **Archivio dettagli:** `archivio/SESSIONI_207_215.md`
 
 ---
 
 ## FASE 2: TRANSPARENT AI - COMPLETATA (100%)
 
-| Task | Status | Note |
-|------|--------|------|
-| Ricerca XAI | FATTO | 30+ fonti, TakeUp $11M |
-| Fix TD-001 dati reali | FATTO | Dati REALI nel confidence |
-| Confidence Breakdown UI | FATTO | 3 componenti |
-| Explanation Breakdown | FATTO | 11 tipi suggerimento |
-| Explanation UI | FATTO | Icona "?" con tooltip |
-| Demand Curve | FATTO | Chart.js |
-| Narrative AI | FATTO | Gemini-ready |
-| Analytics Tracking | FATTO | DB + API |
-
-### FASE 3: LEARNING FROM ACTIONS - COMPLETATA (100%)
-
-| Task | Status | Note |
-|------|--------|------|
-| Ricerca RLHF/ML | FATTO | 30+ fonti |
-| Migration DB | FATTO | 4 tabelle, 16 indici |
-| Backend API | FATTO | 4 endpoint |
-| FeedbackWidget UI | FATTO | Thumbs + comment |
-| Implicit Tracking | FATTO | time, hover, clicks |
-| Pattern Recognition | FATTO | 5 tipi pattern |
-| Dashboard Metriche | FATTO | KPI, charts, table |
-
-### FASE 4A: FESTIVITA - GIA FATTO!
-
-```
-FILE: backend/services/calendar_events.py
-
-IMPLEMENTATO:
-- Capodanno (40%), Epifania (25%), San Valentino (35%)
-- 25 Aprile (20%), 1 Maggio (20%), 2 Giugno (15%)
-- Ferragosto (45%), Ognissanti (15%), Immacolata (25%)
-- Natale (40%), Santo Stefano (35%), San Silvestro (50%)
-- Pasqua (35%) e Pasquetta (30%) - calcolate dinamicamente
-- Stagionalita (alta inverno/estate, media spalle, bassa maggio)
-- Weekend detection
-```
-
-### FASE 4B: METEO - BACKEND COMPLETATO!
-
-| Sub-Fase | Task | Status | Note |
-|----------|------|--------|------|
-| 1.1 | Setup WeatherAPI.com | **FATTO** | Sessione 188 |
-| 1.1 | Test API location | **FATTO** | Cortina OK! |
-| 1.1 | Verifica dati neve | **FATTO** | Snow metrics |
-| 1.1 | Setup cache | **FATTO** | In-memory 6h TTL |
-| 1.2 | WeatherService class | **FATTO** | 450+ righe |
-| 1.2 | Caching layer | **FATTO** | SimpleCache |
-| 1.2 | extract_snow_metrics() | **FATTO** | 7 metriche |
-| 1.2 | Error handling | **FATTO** | Graceful degradation |
-| 1.2 | Unit tests | TODO | pytest |
-| 1.3 | GET /api/weather/forecast | **FATTO** | 7 endpoint |
-| 1.3 | GET /api/weather/impact | **FATTO** | Con multiplier |
-| 1.3 | Documentazione API | TODO | Swagger auto |
-| 1.4 | Integrazione suggerimenti_engine | **FATTO** | Sessione 188 |
-| 1.4 | Tipo WEATHER_BOOST | **FATTO** | Sessione 188 |
-| 1.4 | Tipo WEATHER_PROMO | **FATTO** | Sessione 188 |
-| 1.4 | Tests integrazione | TODO | pytest |
-| 1.5 | WeatherWidget component | TODO | Frontend |
-| 1.5 | CSS styling | TODO | Frontend |
-| 1.5 | Integrazione Rateboard | TODO | Frontend |
-| 1.5 | Auto-refresh | TODO | Frontend |
-
-**Progress Meteo: 100% COMPLETATO!**
-- Backend: 100% (weather_service.py)
-- Integration: 100% (suggerimenti_engine.py)
-- Frontend: 100% (weather-widget.js + CSS)
-
-### FASE 4C: EVENTI LOCALI - ROADMAP PRONTA
-
-| Sub-Fase | Task | Status | Effort |
-|----------|------|--------|--------|
-| 2.1 | Design schema eventi | TODO | 2h |
-| 2.1 | Migration 039_local_events | TODO | 2h |
-| ... | (vedi ROADMAP_EXTERNAL_DATA.md) | ... | ... |
-
-**Effort Totale Eventi:** 3 settimane (40-60h)
-
-### FASE 5: COMPETITOR REAL-TIME - POC PRONTO (100%)
-
-| Task | Status | Note |
-|------|--------|------|
-| Ricerca competitor | FATTO | ScrapingBee vs Playwright |
-| playwright_scraping_client.py | FATTO | Client GRATIS! |
-| competitor_scraping_service.py | FATTO | v1.1.0 con factory |
-| Test Booking.com | FATTO | 7 prezzi estratti |
-| Test 6 competitor alleghe | **FATTO** | ✅ 32 prezzi, 100% success! |
-| Integrare Playwright nel POC | **FATTO** | Sessione 202 |
-| **PROSSIMO:** DB schema + scheduler | TODO | 1 settimana |
+| Task | Status |
+|------|--------|
+| Ricerca XAI | FATTO |
+| Confidence Breakdown UI | FATTO |
+| Explanation Breakdown | FATTO |
+| Demand Curve | FATTO |
+| Analytics Tracking | FATTO |
 
 ---
 
-## FILE CREATI/MODIFICATI SESSIONE 188
+## FASE 3: LEARNING FROM ACTIONS - COMPLETATA (100%)
 
-### In Miracollo (miracollogeminifocus/)
-
-```
-backend/
-├── core/
-│   └── config.py              (MODIFICATO - Weather settings)
-├── services/
-│   └── weather_service.py     (NUOVO - 450+ righe)
-├── routers/
-│   ├── __init__.py            (MODIFICATO - export)
-│   ├── weather.py             (NUOVO - 350+ righe)
-│   └── main.py                (MODIFICATO - mount router)
-```
-
-### In CervellaSwarm (.sncp/)
-
-```
-.sncp/progetti/miracollo/
-├── roadmaps/
-│   └── ROADMAP_EXTERNAL_DATA.md    (NUOVO! 800+ righe)
-├── idee/
-│   ├── 20260113_RICERCA_METEO_RMS.md (950+ righe)
-│   ├── 20260113_RICERCA_EVENTI_LOCALI_PARTE1.md
-│   ├── 20260113_RICERCA_EVENTI_LOCALI_PARTE2.md
-│   └── 20260113_RICERCA_EVENTI_LOCALI_PARTE3.md
-├── reports/
-│   └── 20260113_RICERCA_COMPLETA_TODO_MIRACOLLO.md
-└── stato.md (Aggiornato!)
-```
+| Task | Status |
+|------|--------|
+| Migration DB | FATTO |
+| FeedbackWidget UI | FATTO |
+| Implicit Tracking | FATTO |
+| Pattern Recognition | FATTO |
+| Dashboard Metriche | FATTO |
 
 ---
 
-## INFRASTRUTTURA & MONITORING
+## FASE 4: EXTERNAL DATA - COMPLETATA
 
-| Task | Status | Note |
-|------|--------|------|
-| UptimeRobot Setup Guide | **FATTO** | Guida completa in docs/UPTIME_MONITORING_GUIDE.md |
-| - Monitor #1 Health Check | Documentato | https://miracollo.com/api/health |
-| - Monitor #2 Health Detailed | Documentato | https://miracollo.com/api/health/detailed |
-| - Alert Email | Documentato | Setup con UptimeRobot |
-| - Alert Telegram | Documentato | Setup con bot @uptimerobot_bot |
+### 4A: Festivita
+- `backend/services/calendar_events.py` - 14 festivita + stagionalita
+
+### 4B: Meteo - 100%
+- WeatherAPI.com LIVE
+- weather_service.py (450+ righe)
+- Frontend widget completo
+
+### 4C: Eventi Locali - 100%
+- 8 API endpoints
+- 6 eventi seed (Olimpiadi, Coppa Mondo, etc.)
 
 ---
 
-## PROSSIMI STEP PRIORITIZZATI (Aggiornato Sessione 195)
+## FASE 5: COMPETITOR - POC PRONTO
 
-```
-+================================================================+
-|   INFRASTRUTTURA & OSSERVABILITA'                              |
-+================================================================+
+| Task | Status |
+|------|--------|
+| Playwright scraping | FATTO |
+| Test 6 competitor | 32 prezzi, 100% |
+| DB schema + scheduler | TODO |
 
-SPRINT MONITORING (NUOVI):
-├── 1. [x] UptimeRobot setup guide (FATTO Sessione 195)
-├── 2. [ ] Rafa setup UptimeRobot via browser
-├── 3. [ ] Primo test alert (simulare downtime)
-└── 4. [ ] Verificare alert email/Telegram funzionano
+---
 
-PROSSIMI (POST-MONITORING):
-├── [ ] ELK Stack per logs centrali (2-3 days)
-├── [ ] DataDog metrics & performance (1 day)
-└── [ ] Custom business metrics
-```
+## INFRASTRUTTURA
 
-**PRIORITÀ:** Monitoring → Feature Development
+| Componente | Status |
+|------------|--------|
+| VM Google Cloud | LIVE |
+| Nginx + SSL | LIVE |
+| PostgreSQL | 41 migrations |
+| UptimeRobot | Documentato |
 
 ---
 
 ## TL;DR
 
 ```
-RATEBOARD:          9.5/10 - TARGET RAGGIUNTO! 🎯
-FESTIVITA:          ✓ FATTO (calendar_events.py)
-METEO BACKEND:      ✓ FATTO (weather_service.py)
-METEO INTEGRATION:  ✓ FATTO (suggerimenti_engine.py)
-METEO FRONTEND:     ✓ FATTO (weather-widget.js + CSS)
-METEO DEPLOY:       ✓ FATTO (PRODUZIONE LIVE!)
-METEO LOCATION:     ✓ ALLEGHE (46.4068, 12.0217)
-FIX AUTOPILOT:      ✓ FATTO (CSS open state bug risolto)
-EVENTI LOCALI:      ✓ FATTO + DEPLOYED! (Sessione 192-193)
-  - 7 file creati (~1500 righe)
-  - 8 API endpoints funzionanti
-  - 6 eventi seed (Olimpiadi, Coppa Mondo, etc.)
-  - API LIVE: GET /api/events/ -> 200 OK
-COMPETITOR:         ✅ 100% PRONTO! (Sessione 202)
-  - Test 6 competitor alleghe: 32 prezzi estratti
-  - Booking.com parser: 100% success rate
-  - Scraping service: ready for production
-  - PROSSIMO: DB schema + scheduler
+PMS CORE:       85% - PRODUZIONE STABILE
+MIRACALLOOK:    60% - Email client funzionante
+ROOM HARDWARE:  10% - Ricerca completa, attesa hardware
 
->>> FASE 1 METEO 100% COMPLETATA! <<<
->>> FASE 2 EVENTI LOCALI 100% COMPLETATA! <<<
->>> FASE 5 COMPETITOR POC 100% COMPLETATA! <<<
->>> PROSSIMO: Decidere insieme a Rafa <<<
+RATEBOARD:      9.5/10 - TARGET RAGGIUNTO!
+METEO:          LIVE in produzione
+EVENTI:         LIVE in produzione
+COMPETITOR:     POC pronto
+
+PROSSIMO: Palette Miracallook o Setup Hardware
 ```
 
 ---
 
 ## I NOSTRI VANTAGGI UNICI
 
-| Feature | IDeaS/Duetto | Atomize | Miracollo |
-|---------|--------------|---------|-----------|
-| Native PMS | NO | NO | **YES** |
-| Transparent AI | Parziale | Basic | **YES** |
-| Learning from Actions | NO | NO | **YES** |
-| Meteo Integration | Enterprise only | NO | **DONE!** |
-| Eventi Locali | PredictHQ ($$$) | NO | **DONE! (GRATIS)** |
-| SMB-Friendly | NO | Parziale | **YES** |
+| Feature | IDeaS/Duetto | Miracollo |
+|---------|--------------|-----------|
+| Native PMS | NO | **YES** |
+| Transparent AI | Parziale | **YES** |
+| Meteo Integration | Enterprise | **GRATIS** |
+| Eventi Locali | PredictHQ ($$$) | **GRATIS** |
+| SMB-Friendly | NO | **YES** |
 
 ---
 
-*"L'AI che capisce il mondo - Meteo + Eventi LIVE in Produzione!"*
 *"Fatto BENE > Fatto VELOCE"*
-*"Una cosa alla volta, standard 100000%!"*
-
-*Aggiornato: 14 Gennaio 2026 - Sessione 194 (SNCP Audit + Sync dopo Eventi Locali Deploy)*
+*Aggiornato: 16 Gennaio 2026 - Sessione 232*

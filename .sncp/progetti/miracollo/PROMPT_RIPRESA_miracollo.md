@@ -1,11 +1,11 @@
 # PROMPT RIPRESA - Miracollo
 
-> **Ultimo aggiornamento:** 16 Gennaio 2026 - Sessione 231
-> **NOVITA: Architettura 3 BRACCI definita e implementata!**
+> **Ultimo aggiornamento:** 16 Gennaio 2026 - Sessione 232
+> **FATTO: MAPPA ECOSISTEMA + NORD.md + Cleanup documentazione**
 
 ---
 
-## ARCHITETTURA ECOSISTEMA (NUOVO!)
+## ARCHITETTURA ECOSISTEMA
 
 ```
 MIRACOLLO ECOSISTEMA
@@ -15,52 +15,59 @@ MIRACOLLO ECOSISTEMA
 └── ROOM HARDWARE (:8003)   → 10% - Ricerca OK, attesa hardware
 ```
 
-### Dove Trovare Stato Dettagliato
+---
 
-| Braccio | File Stato |
-|---------|------------|
-| PMS Core | `bracci/pms-core/stato.md` |
-| Miracallook | `bracci/miracallook/stato.md` |
-| Room Hardware | `bracci/room-hardware/stato.md` |
+## SESSIONE 232: MAPPA COMPLETATA
+
+### Cosa Abbiamo Fatto
+- 3 Audit paralleli (Researcher + Ingegnera + Guardiana)
+- **NORD.md CREATO** - Bussola strategica Miracollo
+- **stato.md RIDOTTO** - Da 712 a 136 righe
+- Archivio sessioni 207-215 creato
+
+### Report Creati
+| Report | Contenuto |
+|--------|-----------|
+| `reports/MAPPA_STORIA_COMPLETA_20260116.md` | 231+ sessioni, storia completa |
+| `reports/AUDIT_ARCHITETTURA_3_BRACCI_20260116.md` | 130k righe codice REALE |
+| `reports/AUDIT_QUALITA_DOCUMENTAZIONE_20260116.md` | Gap e fix |
 
 ---
 
-## SESSIONE 231: ARCHITETTURA 3 BRACCI
+## PROSSIMA SESSIONE - PMS CORE FOCUS
 
-### Completato
-- Struttura `bracci/` creata in SNCP
-- Migrato `moduli/room_manager/` → `bracci/room-hardware/`
-- Creato `stato.md` per ogni braccio
-- Creato `room-hardware/` in miracollogeminifocus (skeleton)
-- Documento decisionale: `decisioni/20260116_ARCHITETTURA_3_BRACCI.md`
-
-### Struttura Codice
-
+### Task 1: DISSEZIONARE PMS Core
 ```
-miracollogeminifocus/
-├── backend/          # PMS Core
-├── frontend/         # PMS Core UI
-├── miracallook/      # Braccio 2
-└── room-hardware/    # Braccio 3 (NUOVO!)
+Obiettivo: Vedere OGNI dettaglio di cosa esiste
+├── Audit moduli esistenti
+├── Studiare cosa manca
+├── Creare sub-mappa specifica per modulo
+└── Identificare studi necessari
 ```
 
+### Task 2: FOCUS FINANZIARIO
+```
+Il modulo fiscale (NON braccio separato!) include:
+├── Fatture (emissione, XML)
+├── Scontrini (RT)
+├── Registratore telematico
+├── Stampante fiscale (hardware)
+└── Export commercialista
+```
+
+**ORDINE CONSIGLIATO:**
+1. Prima DISSEZIONARE tutto PMS Core
+2. Poi focus specifico sul modulo fiscale
+
 ---
 
-## PRIORITA BRACCI
+## FILE CHIAVE
 
-| # | Braccio | Prossimo Task |
-|---|---------|---------------|
-| 1 | Miracallook | Applicare palette salutare |
-| 2 | Room Hardware | Setup quando arriva hardware |
-| 3 | PMS Core | Manutenzione al bisogno |
-
----
-
-## ROOM HARDWARE - STATO
-
-- Hardware Amazon in arrivo (1-2 giorni dal 16 Gen)
-- Piano Rosetta Stone pronto
-- Studi: `bracci/room-hardware/studi/` (21 file!)
+| Cosa | Path |
+|------|------|
+| NORD (bussola) | `NORD.md` |
+| Stato bracci | `bracci/{braccio}/stato.md` |
+| Storia completa | `reports/MAPPA_STORIA_COMPLETA_20260116.md` |
 
 ---
 
@@ -74,5 +81,5 @@ miracollogeminifocus/
 
 ---
 
+*"Una cosa alla volta, ben organizzati!"*
 *"I dettagli fanno SEMPRE la differenza!"*
-*Architettura pulita = scalabilita futura!*

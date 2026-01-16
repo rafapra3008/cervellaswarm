@@ -1,62 +1,47 @@
 # STATO OGGI - 16 Gennaio 2026
 
-> **Sessione:** 230
-> **Ultimo aggiornamento:** 10:30
+> **Sessione:** 232
+> **Progetto:** Miracollo
 
 ---
 
-## CERVELLASWARM - DECISIONE STRATEGICA!
+## SESSIONE 232 - MAPPA ECOSISTEMA MIRACOLLO
 
 ```
-+================================================================+
-|   SESSIONE 230: CAMBIO DIREZIONE STRATEGICO                    |
-|                                                                |
-|   DA: npm publish v0.1.0 (BYOK semplice)                       |
-|   A:  MCP Server + BYOK Premium (fatto BENE!)                  |
-|                                                                |
-|   "Chiudere il porto e sistemare la nave"                      |
-|   Score minimo: 9.5/10                                         |
-+================================================================+
-```
+COMPLETATO:
+├── 3 Audit paralleli (Researcher, Ingegnera, Guardiana)
+├── NORD.md creato (bussola strategica)
+├── stato.md ridotto da 712 a 136 righe
+└── Archivio sessioni 207-215
 
----
-
-## COSA ABBIAMO DECISO
-
-```
-CervellaSwarm sara:
-1. MCP SERVER - Integrabile con Claude Code
-2. CLI STANDALONE - Con opzione BYOK
-3. DUAL MODE - Entrambi funzionano
-
-CHI PAGA API: Sempre utente (BYOK!)
-MARGINI: 90%+ (profittabili DAY 1!)
+REPORT CREATI:
+├── MAPPA_STORIA_COMPLETA_20260116.md
+├── AUDIT_ARCHITETTURA_3_BRACCI_20260116.md
+└── AUDIT_QUALITA_DOCUMENTAZIONE_20260116.md
 ```
 
 ---
 
-## RICERCHE COMPLETATE (8 documenti!)
-
-- STUDIO_MCP_PROTOCOL_COMPLETO.md (1850+ righe)
-- ARCHITETTURA_MCP_CERVELLASWARM.md (2021 righe)
-- BUSINESS_MODEL_MCP_BYOK.md (1200+ righe)
-- + altri 5 documenti competitor/auth
-
-**MAPPA:** `.sncp/progetti/cervellaswarm/MAPPA_MCP_BYOK.md`
-
----
-
-## PROSSIMA SESSIONE
+## PROSSIMA SESSIONE - PMS CORE FOCUS
 
 ```
-FASE 0: Fondamenta
-[ ] Config manager con `conf`
-[ ] API key wizard in init
-[ ] API key validation
-[ ] `cervellaswarm doctor`
-[ ] README utente
+1. DISSEZIONARE PMS Core
+   └── Vedere ogni dettaglio di cosa esiste
+   └── Studiare cosa manca
+   └── Creare sub-mappa specifica
+
+2. FOCUS FINANZIARIO (modulo)
+   └── Fatture, scontrini, RT
+   └── Stampante fiscale
+   └── Export commercialista
 ```
 
 ---
 
-*"Fatto BENE > Fatto VELOCE"*
+## DECISIONE PRESA
+
+Finanziario = MODULO dentro PMS Core (NON braccio separato)
+
+---
+
+*"Una cosa alla volta, ben organizzati!"*
