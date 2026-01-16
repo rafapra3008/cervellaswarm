@@ -1,39 +1,47 @@
 # STATO OGGI - 16 Gennaio 2026
 
-> **Ultima Sessione:** 240
-> **Progetto:** Miracollo (poi CervellaSwarm)
+> **Sessione:** 241
+> **Focus:** Riorganizzazione SNCP Miracollo
 
 ---
 
-## SESSIONE 240 - MIRACOLLO
+## SESSIONE 241 - RIORGANIZZAZIONE SNCP
 
-### Deploy Fixato
-- `services/__init__.py` - 15 export aggiunti
-- Backend healthy, nginx healthy, v1.7.0
-- Commits: `55fee8d`, `12cdd40`
+### Lavoro Completato
+- Migrato Miracollook da `moduli/` a `bracci/` (86 file)
+- Eliminato duplicato `moduli/room_manager/`
+- Creato docs PMS-Core (COSTITUZIONE, NORD, PROMPT_RIPRESA)
+- Creato docs Room-Hardware (COSTITUZIONE, NORD)
+- Creato MAPPA_STRUTTURA_MIRACOLLO.md
 
-### Drag/Resize Iniziato
-- Consultata cervella-marketing (UX specs)
-- Creato `ThreePanelResizable.tsx` (DA COMPLETARE)
-- Specs: Sidebar 12%, List 28%, Detail 60%
+### Score
+- Guardiana Qualita: **9.4/10** APPROVATO
+
+### Commit
+- `cb2eee2` - 137 file modificati
 
 ---
 
-## PROSSIMA SESSIONE (241)
+## STRUTTURA FINALE MIRACOLLO
 
-**MIRACOLLO:**
 ```
-1. Verificare API react-resizable-panels v4
-2. Aggiornare index.css (handle sempre visibile)
-3. Migrare App.tsx
-4. Test + Guardiana Qualita (score 9.5+)
+bracci/
+├── pms-core/        4 file  - COMPLETO
+├── miracallook/     86 file - COMPLETO
+└── room-hardware/   40 file - COMPLETO
 ```
 
-**CERVELLASWARM (se tempo):**
-```
-- Sprint 3 Stripe continua
-- Deploy API su Fly.io
-```
+Ogni braccio ha: COSTITUZIONE, NORD, PROMPT_RIPRESA, stato.md
+
+---
+
+## PROSSIMA SESSIONE (242)
+
+**MIRACOLLOOK:**
+- Completare drag/resize (verificare API react-resizable-panels)
+
+**CERVELLASWARM:**
+- Sprint 3 Stripe (Dashboard + Deploy Fly.io)
 
 ---
 
