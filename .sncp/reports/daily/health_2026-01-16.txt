@@ -4,36 +4,35 @@
 [0;36m|   [0;35mSNCP HEALTH DASHBOARD[0;36m                                       |[0m
 [0;36m|   [0mSistema Nervoso Centrale Progetti[0;36m                            |[0m
 [0;36m|                                                                |[0m
-[0;36m|   Data: 2026-01-16 02:40                                       |[0m
+[0;36m|   Data: 2026-01-16 08:30                                       |[0m
 [0;36m+================================================================+[0m
 
 [0;34m--- STATISTICHE GLOBALI ---[0m
 
   [0;36mSNCP Root:[0m /Users/rafapra/Developer/CervellaSwarm/.sncp
-  [0;36mTotale file MD:[0m 590
+  [0;36mTotale file MD:[0m 600
   [0;36mFile obsoleti (>30gg):[0m 0
 
-  [0;36moggi.md:[0m 78 righe [[0;32mOK[0m] - ultimo update: 2026-01-15
+  [0;36moggi.md:[0m 65 righe [[0;32mOK[0m] - ultimo update: 2026-01-16
 
 [0;34m--- PROGETTI ---[0m
 
   Progetto        | Files    | stato.md         | Obsoleti
   ----------------|----------|------------------|----------
-  miracollo       | 268 files | stato: 712 righe [[0;31m!![0m] | obsoleti:  0 [[0;32mOK[0m]
+  miracollo       | 278 files | stato: 712 righe [[0;31m!![0m] | obsoleti:  0 [[0;32mOK[0m]
   cervellaswarm   |  71 files | stato: 556 righe [[0;31m!![0m] | obsoleti:  0 [[0;32mOK[0m]
   contabilita     |   6 files | stato:  29 righe [[0;32mOK[0m] | obsoleti:  0 [[0;32mOK[0m]
 
 [0;34m--- RACCOMANDAZIONI ---[0m
 
-  [1;33m[!][0m oggi.md non aggiornato oggi (ultimo: 2026-01-15)
   [1;33m[!][0m miracollo/stato.md ha 712 righe - considera split
   [1;33m[!][0m cervellaswarm/stato.md ha 556 righe - considera split
 
 [0;34m--- SCORE SNCP ---[0m
 
-  SNCP Health Score: [0;32m90/100[0m
+  SNCP Health Score: [0;32m100/100[0m
 
-  [###########################---]  90%
+  [##############################] 100%
 
 [0;36m+================================================================+[0m
 [0;36m|   [0m"Se documentiamo = facciamo!"[0;36m                               |[0m

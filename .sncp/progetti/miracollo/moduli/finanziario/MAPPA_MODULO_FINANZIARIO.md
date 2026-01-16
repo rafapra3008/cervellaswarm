@@ -107,6 +107,38 @@ export DYLD_LIBRARY_PATH="/opt/homebrew/lib:$DYLD_LIBRARY_PATH"
 
 **TODO futuro:** Adattare PDF a 1 pagina quando dati sono pochi
 
+### FASE 1B: CHECKOUT UI - COMPLETATA!
+**Completata: Sessione 239 (16 Gennaio 2026)**
+
+```
++====================================================================+
+|                    SPRINT 1B COMPLETATO!                           |
++====================================================================+
+
+DELIVERABLE - TUTTI COMPLETATI:
+[x] Bottone "Genera Ricevuta PDF" nel Tab Folio
+[x] Bottone "Invia via Email" con modal conferma
+[x] Funzione generateReceiptPDF() - apre PDF preview
+[x] Funzione showEmailReceiptModal() - modal inline
+[x] Funzione sendEmailReceipt() - POST endpoint
+[x] Stili inline responsive (flexbox)
+```
+
+**File modificati:**
+- `frontend/js/planning/reservation-tab-folio.js` - Due bottoni affiancati
+- `frontend/js/planning/receipts.js` - 4 nuove funzioni PDF/Email
+
+**UX Decision (cervella-marketing):**
+- Bottone primario (blu gradient): Genera PDF (azione checkout)
+- Bottone secondario (outline): Email (azione opzionale)
+- Perche: 2 click vs 3 (dropdown) = velocita checkout
+
+**WORKFLOW COMPLETO:**
+```
+Receptionist → Tab Folio → "Genera Ricevuta PDF" → PDF in nuova tab → Stampa
+                        → "Invia via Email" → Modal → Conferma → Email inviata
+```
+
 ---
 
 ### FASE 2: SCONTRINI RT (Registratore Telematico)
@@ -367,10 +399,10 @@ FASE 4 (Export):
 |------|-------|------|
 | Completezza requisiti | 9.5/10 | Copre tutto il workflow fiscale |
 | Chiarezza architettura | 9.5/10 | Plugin modulare, flessibile |
-| Fattibilita tecnica | 9.5/10 | **FASE 1 COMPLETATA con successo!** |
+| Fattibilita tecnica | 9.5/10 | **FASE 1 + 1B COMPLETATE!** |
 | Prioritizzazione | 10/10 | Dal semplice al complesso |
 | Rischi identificati | 9/10 | Mitigazioni concrete |
-| **TOTALE** | **9.6/10** | **FASE 1 DONE!** |
+| **TOTALE** | **9.7/10** | **SPRINT 1 END-TO-END!** |
 
 ---
 
@@ -378,11 +410,12 @@ FASE 4 (Export):
 
 | Data | Fase | Sessione |
 |------|------|----------|
-| 16/01/2026 | **FASE 1: Ricevute PDF** | **237** |
+| 16/01/2026 | **FASE 1: Ricevute PDF** (Backend) | **237** |
+| 16/01/2026 | **FASE 1B: Checkout UI** (Frontend) | **239** |
 
 ---
 
 *"Una cosa alla volta, ROBUSTO e COMPLETO"*
 *"Studiare i grossi, fare meglio per noi!"*
 
-**Sessione 237 - Cervella & Rafa**
+**Sessione 239 - Cervella & Rafa**
