@@ -1,49 +1,49 @@
 # STATO OGGI - 16 Gennaio 2026
 
 > **Sessione:** 230
-> **Ultimo aggiornamento:** 03:45
+> **Ultimo aggiornamento:** 04:00
 
 ---
 
-## MIRACOLLO - VDA ROSETTA STONE
+## MIRACALLOOK - 3 TASK COMPLETATI!
 
 ```
 SESSIONE 230:
-[x] Analizzato foto NUCLEUS H155300
-[x] Analizzato screenshot Room Manager VDA
-[x] Mappato ecosistema camera
-[x] Ricerca documentazione (NON ESISTE)
-[x] Decisione: NO contatto VDA, facciamo noi
-[x] Piano reverse engineering completo
+[x] #1 Checkbox nei gruppi email    - BundleItem.tsx + EmailList.tsx
+[x] #2 Barra bulk opaca (glass)     - BulkActionsBar.tsx
+[x] #3 Sistema cartelle smart       - 4 endpoint backend + Sidebar folders
+[x] Bug fix: categorize.ts, bundles.ts, guests.ts (undefined checks)
 
-FILE CREATI:
-- 20260116_MAPPA_ECOSISTEMA_CAMERA.md
-- 20260116_VDA_ROSETTA_STONE_PIANO.md
-
-ASPETTIAMO: Hardware Amazon (1-2 giorni)
+FOLDERS FUNZIONANTI: Inbox, Sent, Archive, Starred, Trash (5/6)
+FOLDERS DA FARE: Drafts (500 error)
 ```
 
 ---
 
-## MIRACALLOOK (da Sessione 229)
+## SCOPERTA IMPORTANTE!
 
 ```
-Bug da fare:
-- Checkbox nei gruppi email
-- Barra bulk opaca
-- Sistema cartelle
-- Drag handles custom
+PALETTE DESIGN SALUTARE - ESISTEVA MA NON APPLICATA!
+
+File trovati:
+- RICERCA_DESIGN_SALUTARE.md (930 righe di studio!)
+- PALETTE_DESIGN_SALUTARE_VALIDATA.md
+
+PROBLEMA: tailwind.config.js ha ancora vecchi colori (#0a0e1a)
+SOLUZIONE: Applicare palette Apple (#1C1C1E) = eye-friendly
 ```
 
 ---
 
-## PROSSIMA SESSIONE
+## PROSSIMA SESSIONE - MAPPA
 
-| Cosa | Quando |
-|------|--------|
-| VDA Sniffing | Quando arriva hardware |
-| Miracallook bug | Prossima sessione |
+| # | Task | Priorita |
+|---|------|----------|
+| 0 | **APPLICARE PALETTE SALUTARE** | ALTA! |
+| 4 | Drag handles custom | MEDIA |
+| 5 | Drafts folder fix | MEDIA |
+| 6 | Sanitizzazione HTML | FUTURO |
 
 ---
 
-*"Non esistono cose difficili, esistono cose non studiate!"*
+*"I dettagli fanno SEMPRE la differenza!"*
