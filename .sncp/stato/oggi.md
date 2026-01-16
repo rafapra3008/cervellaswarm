@@ -1,48 +1,38 @@
 # STATO OGGI - 16 Gennaio 2026
 
 > **Sessione:** 241
-> **Focus:** Riorganizzazione SNCP Miracollo
+> **Focus:** Sprint 3 Stripe - Deploy + Test
 
 ---
 
-## SESSIONE 241 - RIORGANIZZAZIONE SNCP
+## SESSIONE 241 - SPRINT 3 STRIPE
 
-### Lavoro Completato
-- Migrato Miracollook da `moduli/` a `bracci/` (86 file)
-- Eliminato duplicato `moduli/room_manager/`
-- Creato docs PMS-Core (COSTITUZIONE, NORD, PROMPT_RIPRESA)
-- Creato docs Room-Hardware (COSTITUZIONE, NORD)
-- Creato MAPPA_STRUTTURA_MIRACOLLO.md
+### Completato
+- Prodotti Stripe creati (Pro $20/m, Team $35/m)
+- Price IDs ottenuti
+- Fly.io account + CLI configurati
+- API deployata: https://cervellaswarm-api.fly.dev
+- Webhook Stripe configurato
+- Pagine /success e /cancel aggiunte
 
-### Score
-- Guardiana Qualita: **9.4/10** APPROVATO
+### Problema Aperto
+- Stripe Checkout page: errore "apiKey is not set"
+- Succede su tutti i browser (Chrome, Safari, Arc)
+- Researcher suggeriva URL inesistenti - FIXATO ma non risolve
+- Ipotesi: profilo Stripe Sandbox incompleto?
 
 ### Commit
-- `cb2eee2` - 137 file modificati
-
----
-
-## STRUTTURA FINALE MIRACOLLO
-
-```
-bracci/
-├── pms-core/        4 file  - COMPLETO
-├── miracallook/     86 file - COMPLETO
-└── room-hardware/   40 file - COMPLETO
-```
-
-Ogni braccio ha: COSTITUZIONE, NORD, PROMPT_RIPRESA, stato.md
+- Da fare
 
 ---
 
 ## PROSSIMA SESSIONE (242)
 
-**MIRACOLLOOK:**
-- Completare drag/resize (verificare API react-resizable-panels)
-
 **CERVELLASWARM:**
-- Sprint 3 Stripe (Dashboard + Deploy Fly.io)
+- Investigare errore Stripe Checkout
+- Completare profilo Stripe se necessario
+- Test e2e quando funziona
 
 ---
 
-*"Fatto BENE > Fatto VELOCE"*
+*"Non esistono cose difficili, esistono cose non studiate!"*

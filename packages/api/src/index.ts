@@ -55,6 +55,56 @@ app.get("/health", (_req: Request, res: Response) => {
   });
 });
 
+// Success page (after checkout)
+app.get("/success", (_req: Request, res: Response) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Payment Successful - CervellaSwarm</title>
+      <style>
+        body { font-family: system-ui; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #f0fdf4; }
+        .container { text-align: center; padding: 40px; background: white; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); }
+        h1 { color: #16a34a; }
+        p { color: #666; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>Payment Successful!</h1>
+        <p>Thank you for subscribing to CervellaSwarm.</p>
+        <p>You can close this window and return to the CLI.</p>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// Cancel page (checkout cancelled)
+app.get("/cancel", (_req: Request, res: Response) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Payment Cancelled - CervellaSwarm</title>
+      <style>
+        body { font-family: system-ui; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #fef2f2; }
+        .container { text-align: center; padding: 40px; background: white; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); }
+        h1 { color: #dc2626; }
+        p { color: #666; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>Payment Cancelled</h1>
+        <p>No charges were made.</p>
+        <p>You can close this window and try again from the CLI.</p>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
 // API routes
 app.use("/api", checkoutRoutes);
 app.use("/api", portalRoutes);

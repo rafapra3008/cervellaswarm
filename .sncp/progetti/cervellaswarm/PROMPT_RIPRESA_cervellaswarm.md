@@ -1,72 +1,76 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 16 Gennaio 2026 - Sessione 240
-> **FASE ATTUALE:** Sprint 3 Stripe IN CORSO (70% fatto!)
+> **Ultimo aggiornamento:** 16 Gennaio 2026 - Sessione 241
+> **FASE ATTUALE:** Sprint 3 Stripe - 90% fatto, 1 BUG DA RISOLVERE
 
 ---
 
-## SESSIONE 240 - SPRINT 3 STRIPE
+## SESSIONE 241 - COSA ABBIAMO FATTO
 
 ```
 +================================================================+
-|   COMPLETATO (70%)                                              |
+|   COMPLETATO OGGI                                               |
 |                                                                |
-|   packages/api/ (Backend Fly.io) - NUOVO!                      |
-|   ├── src/index.ts              Express server                 |
-|   ├── src/routes/checkout.ts    POST create-checkout-session   |
-|   ├── src/routes/portal.ts      POST create-portal-session     |
-|   ├── src/routes/subscription.ts GET subscription status       |
-|   ├── src/routes/webhooks.ts    5 webhook handlers             |
-|   ├── src/db/index.ts           JSON database (lowdb)          |
-|   ├── Dockerfile                Multi-stage build              |
-|   └── fly.toml                  Frankfurt region               |
+|   STRIPE DASHBOARD:                                            |
+|   ✓ Account Sandbox configurato                                |
+|   ✓ CervellaSwarm Pro - $20/month                              |
+|     price_1SqFAMDZxNZr9XOmOxLycWtz                             |
+|   ✓ CervellaSwarm Team - $35/month                             |
+|     price_1SqFBaDZxNZr9XOm6wL8h0ZJ                             |
+|   ✓ Webhook endpoint configurato                               |
+|     whsec_Viqt3MrOphKEQci7PhCvAa98iM1XAN5g                     |
 |                                                                |
-|   packages/cli/ (Comandi billing)                              |
-|   ├── src/commands/upgrade.js   cervellaswarm upgrade pro/team |
-|   ├── src/commands/billing.js   cervellaswarm billing          |
-|   └── src/config/manager.js     +tier, customerId, email       |
+|   FLY.IO:                                                      |
+|   ✓ Account creato (rafapra@gmail.com)                         |
+|   ✓ flyctl installato                                          |
+|   ✓ API deployata: https://cervellaswarm-api.fly.dev           |
+|   ✓ Secrets configurati (STRIPE_SECRET_KEY, PRICE_*, WEBHOOK)  |
+|   ✓ Pagine /success e /cancel aggiunte                         |
+|   ✓ Health check funziona                                      |
 |                                                                |
-|   BUILD: OK (api + cli)                                        |
+|   API STATUS: LIVE E FUNZIONANTE!                              |
 +================================================================+
 ```
 
 ---
 
-## DA FARE (30%) - Sessione 241
+## BUG DA RISOLVERE
 
 ```
-1. STRIPE DASHBOARD (con Rafa)
-   - Creare Product "CervellaSwarm Pro" → $20/month
-   - Creare Product "CervellaSwarm Team" → $35/month
-   - Copiare Price IDs (price_xxx)
-   - Rafa ha bisogno di aiuto!
+PROBLEMA: Stripe Checkout page non si apre
 
-2. DEPLOY FLY.IO
-   - fly auth login
-   - fly launch (nel folder packages/api)
-   - fly secrets set STRIPE_SECRET_KEY=sk_test_xxx
-   - fly secrets set STRIPE_WEBHOOK_SECRET=whsec_xxx
-   - fly secrets set STRIPE_PRICE_PRO=price_xxx
-   - fly secrets set STRIPE_PRICE_TEAM=price_xxx
+ERRORE: "CheckoutInitError: apiKey is not set"
+        "Something went wrong. The page could not be found."
 
-3. TEST END-TO-END
-   - cervellaswarm upgrade pro → apre checkout
-   - Pagamento test (4242 4242 4242 4242)
-   - Webhook ricevuto → tier aggiornato
+COSA ABBIAMO PROVATO:
+1. URL success/cancel puntavano a cervellaswarm.com (non esiste)
+   → FIXATO: ora puntano a cervellaswarm-api.fly.dev
+   → NON HA RISOLTO
+
+IPOTESI DA INVESTIGARE:
+- Profilo Stripe Sandbox incompleto (vedi Setup Guide)
+- Qualche configurazione mancante nell'account
+- Problema con i prodotti/prezzi creati?
+
+PROSSIMO STEP:
+1. Completare profilo Stripe (Setup Guide mostra step mancanti)
+2. Verificare account capabilities
+3. Se non funziona, contattare Stripe support
 ```
 
 ---
 
-## ROADMAP AGGIORNATA
+## CREDENZIALI (TEST MODE)
 
 ```
-Sprint 1: BYOK Polish              [COMPLETATO] Sessione 238
-Sprint 2: Metering & Limits        [COMPLETATO] Sessione 239
-Sprint 3: Stripe Integration       [70%] Sessione 240-241
-Sprint 4: Sampling Implementation  [PROSSIMO]
-Sprint 5: Polish
+STRIPE (Sandbox):
+- Secret Key: sk_test_51SqEoIDZxNZr9XOmK4Yx6AIN... (in Fly secrets)
+- Webhook Secret: whsec_Viqt3MrOphKEQci7PhCvAa98iM1XAN5g
 
-Score attuale: ~5/10 -> Target: 9.5/10
+FLY.IO:
+- App: cervellaswarm-api
+- URL: https://cervellaswarm-api.fly.dev
+- Region: Frankfurt (fra)
 ```
 
 ---
@@ -74,23 +78,41 @@ Score attuale: ~5/10 -> Target: 9.5/10
 ## MAPPA SESSIONI
 
 ```
-237: MCP funziona + Dual-Mode + Freemium
+237: MCP funziona + Dual-Mode
  |
-238: Sprint 1 BYOK Polish COMPLETATO
+238: Sprint 1 BYOK COMPLETATO
  |
-239: Sprint 2 Metering COMPLETATO + Context Guard discovery
+239: Sprint 2 Metering COMPLETATO
  |
-240: Sprint 3 Stripe IN CORSO (backend + CLI pronti)  <-- OGGI!
+240: Sprint 3 Stripe backend + CLI (70%)
  |
-241: Sprint 3 Stripe COMPLETAMENTO (Stripe Dashboard + Deploy)
+241: Sprint 3 Deploy OK, bug checkout  <-- OGGI
+ |
+242: Sprint 3 FIX bug + Test e2e
+```
+
+---
+
+## ROADMAP
+
+```
+Sprint 1: BYOK Polish              [COMPLETATO]
+Sprint 2: Metering & Limits        [COMPLETATO]
+Sprint 3: Stripe Integration       [90% - bug da fixare]
+Sprint 4: Sampling Implementation  [PROSSIMO]
+Sprint 5: Polish
 ```
 
 ---
 
 ## TL;DR
 
-**Sessione 240:** Backend API + CLI commands PRONTI. Manca solo Stripe Dashboard + Deploy.
+**Sessione 241:** Deploy su Fly.io FATTO. API funziona.
+Bug: Stripe Checkout page non si apre ("apiKey is not set").
 
-**Prossimo (241):** Aiutare Rafa con Stripe, Deploy Fly.io, Test e2e.
+**Prossimo (242):**
+1. Investigare/fixare bug Stripe
+2. Completare test e2e
+3. Sprint 3 COMPLETATO!
 
-*"Un progresso al giorno = 365 progressi all'anno!"*
+*"Non esistono cose difficili, esistono cose non studiate!"*

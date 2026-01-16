@@ -39,7 +39,8 @@ router.post("/create-checkout-session", async (req: Request, res: Response) => {
     }
 
     const priceId = getTierPriceId(tier);
-    const frontendUrl = process.env.FRONTEND_URL || "https://cervellaswarm.com";
+    // Use our API URL for success/cancel pages (they exist!)
+    const apiUrl = process.env.API_URL || "https://cervellaswarm-api.fly.dev";
 
     // Create Checkout Session
     const session = await stripe.checkout.sessions.create({
@@ -57,8 +58,8 @@ router.post("/create-checkout-session", async (req: Request, res: Response) => {
         tier, // Useful in webhook
         source: "cli",
       },
-      success_url: `${frontendUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${frontendUrl}/cancel`,
+      success_url: `${apiUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${apiUrl}/cancel`,
       // Automatic tax if configured
       // automatic_tax: { enabled: true },
     });
