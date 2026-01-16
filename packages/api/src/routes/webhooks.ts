@@ -72,6 +72,10 @@ router.post(
           await handlePaymentFailed(event.data.object as Stripe.Invoice);
           break;
 
+        case "customer.subscription.created":
+          await handleSubscriptionCreated(event.data.object as Stripe.Subscription);
+          break;
+
         case "customer.subscription.updated":
           await handleSubscriptionUpdated(event.data.object as Stripe.Subscription);
           break;
@@ -181,6 +185,50 @@ async function handlePaymentFailed(invoice: Stripe.Invoice): Promise<void> {
   console.log(`Payment failed for customer: ${customerId}`);
 
   // TODO: Send notification email to user
+}
+
+/**
+ * Handle customer.subscription.created
+ *
+ * New subscription created - save customer, tier, and email.
+ * This is triggered by Payment Links (instead of checkout.session.completed).
+ */
+async function handleSubscriptionCreated(subscription: Stripe.Subscription): Promise<void> {
+  console.log("Processing customer.subscription.created");
+
+  const customerId = subscription.customer as string;
+  const subscriptionId = subscription.id;
+
+  if (!customerId) {
+    console.error("Missing customerId in subscription");
+    return;
+  }
+
+  // Get customer email from Stripe
+  let email = "";
+  try {
+    const customer = await stripe.customers.retrieve(customerId);
+    if (customer && !customer.deleted && "email" in customer) {
+      email = customer.email || "";
+    }
+  } catch (error) {
+    console.error("Failed to fetch customer:", error);
+  }
+
+  // Get tier from price
+  const priceId = subscription.items.data[0]?.price?.id;
+  const tier = priceId ? mapPriceIdToTier(priceId) : "pro";
+
+  await saveSubscription({
+    customerId,
+    subscriptionId,
+    tier,
+    status: subscription.status,
+    email,
+    currentPeriodEnd: subscription.current_period_end,
+  });
+
+  console.log(`Subscription created: ${email} -> ${tier} (${customerId})`);
 }
 
 /**

@@ -1,38 +1,40 @@
 # STATO OGGI - 16 Gennaio 2026
 
-> **Sessione:** 243
-> **Focus:** MIRACOLLOOK - Design Salutare (inizio)
+> **Sessione:** 244
+> **Focus:** MIRACOLLOOK - Design Salutare COMPLETATO!
 
 ---
 
-## SESSIONE 243 - DESIGN SALUTARE
+## SESSIONE 244 - DESIGN SALUTARE COMPLETATO
 
 ### Completato
-- Testo: #FFFFFF -> #EBEBF5 (soft white, meno glow)
-- Colori calm aggiunti: #778DA9 (blue-gray), #E0DED0 (warm)
-- Labels "FOLDERS"/"CATEGORIES" -> calm-blue
-- Timestamps email -> calm-blue
-- Separatore sidebar -> calm-blue
-- Pannelli Allotment: FUNZIONANO (nessun blocco)
-
-### Non Completato
-- Differenza sfondo colonne (Rafa vuole vedere screenshot studio)
-- Design salutare completo richiede piu lavoro
+- DIFFERENZA SFONDO COLONNE applicata e VISIBILE!
+  - Sidebar: #1C1C1E (scuro)
+  - Email List: #3A3A3C (piu chiaro)
+  - Detail: #1C1C1E (scuro)
+- Drag/resize TESTATO e FUNZIONA
+- Commit + push fatto
 
 ### File Modificati
-- tailwind.config.js - colori calm aggiunti
-- index.css - classi CSS calm
-- Sidebar.tsx - labels calm-blue
-- EmailListItem.tsx - timestamps calm-blue
+- App.tsx - list wrapper bg-tertiary
+- EmailList.tsx - tutti bg-tertiary
+
+### Riferimenti Usati
+- Studio: studi/RICERCA_DESIGN_SALUTARE.md (900+ righe)
+- Palette: PALETTE_DESIGN_SALUTARE_VALIDATA.md
 
 ---
 
-## PROSSIMA SESSIONE (244)
+## STATO MIRACOLLOOK
 
-**MIRACOLLOOK:**
-- Rafa condivide screenshot studio design salutare
-- Applicare differenza sfondo colonne
-- Completare design salutare
+**FASE 1: 85%**
+
+```
+[x] Design Salutare COMPLETO
+[ ] Context Menu (ricerca pronta)
+[ ] Bulk Actions
+[ ] Labels Custom
+```
 
 ---
 

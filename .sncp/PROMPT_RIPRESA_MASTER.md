@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - MASTER (Globale)
 
-> **Ultimo aggiornamento:** 15 Gennaio 2026
+> **Ultimo aggiornamento:** 16 Gennaio 2026 - Sessione 244
 > **Tabella ecosistema condivisa - SOLO link ai file specifici**
 
 ---
@@ -9,8 +9,8 @@
 
 | Progetto | PROMPT_RIPRESA | Aggiornato | TL;DR |
 |----------|----------------|------------|-------|
-| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-01-15 | Cleanup fatto, ora COSTRUIRE |
-| **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-15 | Room Manager MVP: Sessione D prossima |
+| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-01-16 | Sprint 3 Stripe COMPLETATO |
+| **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-16 | Miracollook: Design Salutare COMPLETATO! |
 | **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-01-15 | In pausa |
 
 ---
