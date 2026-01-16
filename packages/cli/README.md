@@ -56,28 +56,35 @@ Traditional AI assistants are generalists. CervellaSwarm gives you **16 speciali
 npm install -g cervellaswarm
 ```
 
-> **Requires:** Node.js 18+ and an [Anthropic API key](https://console.anthropic.com/)
+> **Requires:** Node.js 18+
 
-### 2. Set your API key
-
-```bash
-export ANTHROPIC_API_KEY=sk-ant-...
-```
-
-Get your key at [console.anthropic.com](https://console.anthropic.com/)
-
-### 3. Initialize your project
+### 2. Initialize your project
 
 ```bash
 cd your-project
 cervellaswarm init
 ```
 
-### 4. Run your first task
+The wizard will:
+- **Ask for your API key** (get one at [console.anthropic.com](https://console.anthropic.com/))
+- Set up your project constitution (10 quick questions)
+- Create the `.sncp/` memory directory
+
+Your API key is saved securely - you only need to enter it once.
+
+### 3. Run your first task
 
 ```bash
 cervellaswarm task "Create a REST API endpoint for user registration"
 ```
+
+### 4. Check your setup
+
+```bash
+cervellaswarm doctor
+```
+
+Shows if everything is configured correctly.
 
 ## Commands
 
@@ -104,6 +111,16 @@ Show current project status and recent sessions.
 ### `cervellaswarm resume`
 
 Resume the last task session with context recap.
+
+### `cervellaswarm doctor`
+
+Diagnose your setup and fix issues.
+
+```bash
+cervellaswarm doctor            # Quick health check
+cervellaswarm doctor --validate # Test API key with actual call
+cervellaswarm doctor --config   # Show all configuration values
+```
 
 ## Key Features
 
@@ -142,13 +159,38 @@ Resume the last task session with context recap.
 ## Requirements
 
 - Node.js 18+
-- Anthropic API key (Claude Pro recommended)
+- Anthropic API key ([get one here](https://console.anthropic.com/))
 
 ## Configuration
 
+### API Key Setup
+
+CervellaSwarm supports two ways to configure your API key:
+
+**Option 1: Through the wizard (recommended)**
 ```bash
-# Required
+cervellaswarm init
+# The wizard will ask for your key and save it securely
+```
+
+**Option 2: Environment variable**
+```bash
 export ANTHROPIC_API_KEY=sk-ant-...
+```
+
+The environment variable takes priority if both are set.
+
+### Config Location
+
+Your configuration is stored at:
+- **macOS**: `~/Library/Preferences/cervellaswarm-nodejs/config.json`
+- **Linux**: `~/.config/cervellaswarm-nodejs/config.json`
+- **Windows**: `%APPDATA%\cervellaswarm-nodejs\Config\config.json`
+
+### View/Reset Configuration
+
+```bash
+cervellaswarm doctor --config    # View current config
 ```
 
 ## Our Promise

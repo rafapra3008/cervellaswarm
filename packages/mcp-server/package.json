@@ -1,0 +1,48 @@
+{
+  "name": "@cervellaswarm/mcp-server",
+  "version": "0.1.0",
+  "description": "CervellaSwarm MCP Server - 16 AI agents as MCP tools",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "cervellaswarm-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "inspect": "npx @modelcontextprotocol/inspector node dist/index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "conf": "^13.0.1",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "anthropic",
+    "ai-agents",
+    "cervellaswarm"
+  ],
+  "author": "Rafa & Cervella",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rafapra/cervellaswarm"
+  }
+}

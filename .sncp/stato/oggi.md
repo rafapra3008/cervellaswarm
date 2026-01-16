@@ -1,47 +1,61 @@
 # STATO OGGI - 16 Gennaio 2026
 
-> **Sessione:** 232
-> **Progetto:** Miracollo
+> **Sessione:** 233
+> **Progetto:** CervellaSwarm
 
 ---
 
-## SESSIONE 232 - MAPPA ECOSISTEMA MIRACOLLO
+## SESSIONE 233 - FASE 0 + FASE 1 MCP
 
 ```
 COMPLETATO:
-├── 3 Audit paralleli (Researcher, Ingegnera, Guardiana)
-├── NORD.md creato (bussola strategica)
-├── stato.md ridotto da 712 a 136 righe
-└── Archivio sessioni 207-215
-
-REPORT CREATI:
-├── MAPPA_STORIA_COMPLETA_20260116.md
-├── AUDIT_ARCHITETTURA_3_BRACCI_20260116.md
-└── AUDIT_QUALITA_DOCUMENTAZIONE_20260116.md
+├── FASE 0: Fondamenta CLI
+│   ├── Config manager con `conf`
+│   ├── API key wizard in init
+│   ├── Validazione API key (test call)
+│   ├── Comando `cervellaswarm doctor`
+│   └── README aggiornato
+│
+├── Studio Viabilità Claude-Exclusive
+│   ├── Ricerca 950+ righe
+│   ├── Validazione Guardiana 8/10
+│   └── Decisione documentata
+│
+└── FASE 1: POC MCP Server
+    ├── packages/mcp-server/ creato
+    ├── TypeScript + MCP SDK
+    ├── 3 tools funzionanti
+    └── Pronto per Claude Code
 ```
 
 ---
 
-## PROSSIMA SESSIONE - PMS CORE FOCUS
+## DECISIONE STRATEGICA
 
 ```
-1. DISSEZIONARE PMS Core
-   └── Vedere ogni dettaglio di cosa esiste
-   └── Studiare cosa manca
-   └── Creare sub-mappa specifica
+Claude-Exclusive + MCP + BYOK
+"Claude è la nostra casa. La casa della FAMIGLIA."
+```
 
-2. FOCUS FINANZIARIO (modulo)
-   └── Fatture, scontrini, RT
-   └── Stampante fiscale
-   └── Export commercialista
+Marketing angle: "Built WITH CervellaSwarm ON Claude"
+
+---
+
+## PROSSIMA SESSIONE
+
+```
+FASE 2: MCP Completo
+├── Tutti i tools MCP
+├── Resources SNCP
+└── Test end-to-end con Claude Code
 ```
 
 ---
 
-## DECISIONE PRESA
+## AUDIT
 
-Finanziario = MODULO dentro PMS Core (NON braccio separato)
+Guardiana Qualità: **8.7/10** - Approvato
 
 ---
 
-*"Una cosa alla volta, ben organizzati!"*
+*"Un passo alla volta verso la LIBERTÀ GEOGRAFICA!"*

@@ -12,26 +12,10 @@
  */
 
 import Anthropic from '@anthropic-ai/sdk';
+import * as config from '../config/manager.js';
 
-// Default model - Sonnet for speed/cost, Opus for complex tasks
-const DEFAULT_MODEL = 'claude-sonnet-4-20250514';
-const _OPUS_MODEL = 'claude-opus-4-5-20251101'; // Reserved for complex tasks
-
-// Retry configuration
-const MAX_RETRIES = 3;
-const RETRY_DELAYS = [1000, 3000, 5000]; // ms between retries
-const DEFAULT_TIMEOUT = 120000; // 2 minutes
-
-/**
- * Check if API key is available
- */
-function getApiKey() {
-  const key = process.env.ANTHROPIC_API_KEY;
-  if (!key) {
-    return null;
-  }
-  return key;
-}
+// Retry delays (ms between retries)
+const RETRY_DELAYS = [1000, 3000, 5000];
 
 /**
  * Get agent-specific system prompt
@@ -169,28 +153,35 @@ function getErrorInfo(error) {
  * Spawn an agent to execute a task via Anthropic API
  */
 export async function spawnAgent(agent, description, context, options = {}) {
-  const apiKey = getApiKey();
+  const apiKey = config.getApiKey();
 
   if (!apiKey) {
     console.log('');
-    console.log('  ANTHROPIC_API_KEY not found.');
+    console.log('  API key not configured.');
     console.log('');
-    console.log('  To use CervellaSwarm agents, you need an API key:');
-    console.log('  1. Get your key at: https://console.anthropic.com/');
-    console.log('  2. Set it: export ANTHROPIC_API_KEY=sk-ant-...');
+    console.log('  To use CervellaSwarm agents, you need an Anthropic API key:');
+    console.log('');
+    console.log('  Option 1: Run setup wizard');
+    console.log('    $ cervellaswarm init');
+    console.log('');
+    console.log('  Option 2: Set environment variable');
+    console.log('    $ export ANTHROPIC_API_KEY=sk-ant-...');
+    console.log('');
+    console.log('  Get your key at: https://console.anthropic.com/');
     console.log('');
     return {
       success: false,
-      error: 'ANTHROPIC_API_KEY not set',
+      error: 'API key not configured',
       filesModified: [],
-      nextStep: 'Set ANTHROPIC_API_KEY environment variable'
+      nextStep: 'Run cervellaswarm init or set ANTHROPIC_API_KEY'
     };
   }
 
   const systemPrompt = getAgentPrompt(agent, context);
-  const model = options.model || DEFAULT_MODEL;
+  const model = options.model || config.getDefaultModel();
   const maxTokens = options.maxTokens || 4096;
-  const timeout = options.timeout || DEFAULT_TIMEOUT;
+  const timeout = options.timeout || config.getTimeout();
+  const maxRetries = options.maxRetries || config.getMaxRetries();
 
   const startTime = Date.now();
   let lastError = null;
@@ -202,7 +193,7 @@ export async function spawnAgent(agent, description, context, options = {}) {
   console.log(`  Task: ${description}`);
   console.log('');
 
-  while (attempt < MAX_RETRIES) {
+  while (attempt < maxRetries) {
     attempt++;
 
     try {
@@ -271,7 +262,7 @@ export async function spawnAgent(agent, description, context, options = {}) {
       const errorInfo = getErrorInfo(error);
 
       // If not retryable or last attempt, return error
-      if (!errorInfo.retryable || attempt >= MAX_RETRIES) {
+      if (!errorInfo.retryable || attempt >= maxRetries) {
         const duration = Math.round((Date.now() - startTime) / 1000);
 
         console.log('');
@@ -378,5 +369,5 @@ export function getAvailableAgents() {
  * Check if spawner is ready (API key available)
  */
 export function isReady() {
-  return getApiKey() !== null;
+  return config.hasApiKey();
 }

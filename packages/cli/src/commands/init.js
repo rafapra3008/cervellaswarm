@@ -15,10 +15,86 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { existsSync, readdirSync } from 'fs';
 import { join } from 'path';
+import { input, confirm } from '@inquirer/prompts';
 import { runWizard } from '../wizard/questions.js';
 import { generateConstitution } from '../templates/constitution.js';
 import { initSNCP } from '../sncp/init.js';
 import { CervellaError, displayError, ExitCode } from '../utils/errors.js';
+import * as config from '../config/manager.js';
+
+/**
+ * Handle API key setup
+ * Returns true if key is configured, false if user skipped
+ */
+async function setupApiKey() {
+  // Check if already configured
+  if (config.hasApiKey()) {
+    const source = config.getApiKeySource();
+    console.log(chalk.green(`  ✓ API key configured (from ${source})`));
+    console.log('');
+    return true;
+  }
+
+  console.log(chalk.yellow('  ⚠ No API key configured'));
+  console.log('');
+  console.log(chalk.gray('  CervellaSwarm needs an Anthropic API key to run AI agents.'));
+  console.log(chalk.gray('  You only need to do this once - the key is stored securely.'));
+  console.log('');
+  console.log(chalk.cyan('  Get your key at: https://console.anthropic.com/'));
+  console.log('');
+
+  const wantSetup = await confirm({
+    message: 'Set up your API key now?',
+    default: true
+  });
+
+  if (!wantSetup) {
+    console.log('');
+    console.log(chalk.gray('  You can set it later with:'));
+    console.log(chalk.white('  export ANTHROPIC_API_KEY=sk-ant-...'));
+    console.log('');
+    return false;
+  }
+
+  // Ask for the key
+  console.log('');
+  const apiKey = await input({
+    message: 'Your Anthropic API key:',
+    validate: (value) => {
+      if (!value) return 'API key is required';
+      if (!value.startsWith('sk-ant-')) {
+        return 'Anthropic keys start with sk-ant-';
+      }
+      return true;
+    }
+  });
+
+  // Validate with a test call
+  console.log('');
+  const spinner = ora('Validating API key...').start();
+
+  const validation = await config.validateApiKey(apiKey);
+
+  if (!validation.valid) {
+    spinner.fail(`Invalid key: ${validation.error}`);
+    console.log('');
+    console.log(chalk.gray('  Please check your key and try again.'));
+    console.log(chalk.gray('  Run: cervellaswarm init'));
+    console.log('');
+    return false;
+  }
+
+  // Save the key
+  try {
+    config.setApiKey(apiKey);
+    spinner.succeed('API key validated and saved!');
+    console.log('');
+    return true;
+  } catch (error) {
+    spinner.fail(`Failed to save key: ${error.message}`);
+    return false;
+  }
+}
 
 /**
  * Check if project is already initialized
@@ -88,6 +164,17 @@ export async function initCommand(options) {
     return;
   }
 
+  // Step 1: API Key Setup
+  console.log(chalk.cyan.bold('  Step 1: API Key'));
+  console.log(chalk.gray('  ─────────────────────────────────────────'));
+  console.log('');
+
+  await setupApiKey();
+
+  // Step 2: Project Setup
+  console.log(chalk.cyan.bold('  Step 2: Project Constitution'));
+  console.log(chalk.gray('  ─────────────────────────────────────────'));
+  console.log('');
   console.log(chalk.white('  Let\'s create your project constitution.'));
   console.log(chalk.white('  This takes ~5 minutes and prevents you from'));
   console.log(chalk.white('  ever having to re-explain your project.'));

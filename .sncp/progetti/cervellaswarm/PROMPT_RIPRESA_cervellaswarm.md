@@ -1,106 +1,110 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 16 Gennaio 2026 - Sessione 230
-> **DECISIONE STRATEGICA: MCP Server + BYOK!**
+> **Ultimo aggiornamento:** 16 Gennaio 2026 - Sessione 233
+> **FASE ATTUALE:** MCP Server POC completato!
 
 ---
 
-## SESSIONE 230 - CAMBIO DIREZIONE!
+## DECISIONE STRATEGICA PRESA
 
 ```
 +================================================================+
-|   PRIMA di npm publish, SISTEMARE TUTTO!                       |
-|   "Chiudere il porto e sistemare la nave"                      |
+|   CLAUDE-EXCLUSIVE + MCP + BYOK                                |
+|   "Claude è la nostra casa. La casa della FAMIGLIA."           |
 |                                                                |
-|   DECISIONE: MCP Server + CLI Standalone + BYOK                |
-|   STANDARD: Score minimo 9.5/10                                |
-|   FILOSOFIA: "Fatto BENE > Fatto VELOCE"                       |
+|   Marketing: "Built WITH CervellaSwarm ON Claude"              |
+|   Proof: CervellaSwarm stesso è costruito con noi su Claude!   |
 +================================================================+
 ```
 
+**File decisione:** `.sncp/progetti/cervellaswarm/decisioni/DECISIONE_CLAUDE_EXCLUSIVE_233.md`
+
 ---
 
-## COSA ABBIAMO DECISO
+## COSA È STATO FATTO
+
+### FASE 0: Fondamenta CLI (COMPLETATA)
+
+| File | Cosa |
+|------|------|
+| `src/config/manager.js` | Config manager con `conf` |
+| `src/commands/doctor.js` | Comando diagnostico |
+| `src/commands/init.js` | API key wizard integrato |
+| `src/agents/spawner.js` | Usa config manager |
+| `README.md` | Documentazione aggiornata |
+
+### FASE 1: POC MCP Server (COMPLETATA)
 
 ```
-CervellaSwarm sara:
-1. MCP SERVER - Integrabile con Claude Code (subscription utente)
-2. CLI STANDALONE - Con opzione BYOK (API key utente)
-3. DUAL MODE - Entrambi funzionano
-
-CHI PAGA API: SEMPRE l'utente (BYOK!)
-NOI MONETIZZIAMO: Features CervellaSwarm
-MARGINI: 90%+ (zero costi variabili AI!)
+packages/mcp-server/
+├── package.json + tsconfig.json
+└── src/
+    ├── index.ts          # 3 tools MCP
+    ├── agents/spawner.ts # Port TypeScript
+    └── config/manager.ts # Condivide config con CLI
 ```
 
-**PERCHE MCP:** Anthropic ha bloccato subscription per terze parti.
-MCP e la via LEGITTIMA per integrarsi con Claude Code.
+**Tools MCP funzionanti:**
+- `spawn_worker` - Spawna worker specializzato
+- `list_workers` - Lista 8 workers
+- `check_status` - Verifica configurazione
+
+**Audit Guardiana:** 8.7/10 - Approvato
 
 ---
 
-## RICERCHE COMPLETATE (8 documenti!)
-
-| Documento | Righe | Score |
-|-----------|-------|-------|
-| STUDIO_MCP_PROTOCOL_COMPLETO.md | 1850+ | 9.3/10 |
-| ARCHITETTURA_MCP_CERVELLASWARM.md | 2021 | 8.5/10 |
-| BUSINESS_MODEL_MCP_BYOK.md | 1200+ | 8.5/10 |
-| RICERCA_TECNICA_CURSOR_AUTH.md | 760 | 9/10 |
-| STUDIO_STRATEGICO_AUTH_COMPETITOR.md | 860 | 9/10 |
-| + altri 3 documenti auth | - | - |
-
----
-
-## MAPPA APPROVATA
-
-**File:** `.sncp/progetti/cervellaswarm/MAPPA_MCP_BYOK.md`
-
-**Score attuale:** 6.4/10 (target 9.5)
-**Area critica:** Onboarding (0.6/10)
-
----
-
-## ROADMAP 4 FASI
+## ROADMAP AGGIORNATA
 
 ```
-FASE 0: Fondamenta (1-2 settimane)
-├── Config manager con `conf`
-├── API key wizard in init
-├── API key validation
-├── `cervellaswarm doctor`
-└── README utente
-
-FASE 1: POC MCP (2 settimane)
-├── packages/mcp-server setup
-├── Test con Claude Code
-└── Validare architettura
-
-FASE 2: MCP Completo (4 settimane)
-├── Tutti i tools MCP
-├── Resources SNCP
-└── Security audit
-
-FASE 3: Polish & Launch (2 settimane)
-├── Documentazione
-├── Score >= 9.5
-└── npm publish
+FASE 0: Fondamenta           [####################] FATTO!
+FASE 1: POC MCP              [####################] FATTO!
+FASE 2: MCP Completo         [....................] PROSSIMO
+FASE 3: Polish & Launch      [....................]
 ```
 
 ---
 
-## PROSSIMA SESSIONE - FASE 0
+## PROSSIMA SESSIONE - FASE 2
 
 ```
-[ ] Config manager con `conf` (gia installato!)
-[ ] API key wizard in init
-[ ] API key validation (test call)
-[ ] `cervellaswarm doctor`
-[ ] README utente dettagliato
+[ ] Test MCP con Claude Code (configura settings.json)
+[ ] Aggiungere Resources SNCP (stato.md, sessioni)
+[ ] Aggiungere più tools (coordinate_workers, etc)
+[ ] Unit test per spawner
+[ ] Test end-to-end completo
 ```
 
 ---
 
-## PRICING DECISO
+## RICERCHE COMPLETATE
+
+| Documento | Righe |
+|-----------|-------|
+| STUDIO_MCP_PROTOCOL_COMPLETO.md | 1850+ |
+| STUDIO_VIABILITA_CLAUDE_MCP.md | 950+ |
+| ARCHITETTURA_MCP_CERVELLASWARM.md | 2021 |
+| BUSINESS_MODEL_MCP_BYOK.md | 1200+ |
+
+---
+
+## CONFIG MCP PER CLAUDE CODE
+
+Aggiungi a `~/.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "cervellaswarm": {
+      "command": "node",
+      "args": ["/path/to/packages/mcp-server/dist/index.js"]
+    }
+  }
+}
+```
+
+---
+
+## PRICING CONFERMATO
 
 ```
 Free:  50 calls/mese, 3 progetti
@@ -112,8 +116,8 @@ Team:  $35/user/mo, 1K calls, shared SNCP
 
 ## TL;DR
 
-**Sessione 230:** Decisione strategica MCP + BYOK
+**Sessione 233:** FASE 0 + FASE 1 completate. MCP Server funzionante.
 
-**Prossimo:** FASE 0 - Fondamenta
+**Prossimo:** FASE 2 - Test con Claude Code + Resources SNCP
 
-*"Un passo alla volta verso la LIBERTA GEOGRAFICA!"*
+*"Un passo alla volta verso la LIBERTÀ GEOGRAFICA!"*

@@ -38,6 +38,7 @@ import { initCommand } from '../src/commands/init.js';
 import { statusCommand } from '../src/commands/status.js';
 import { taskCommand } from '../src/commands/task.js';
 import { resumeCommand } from '../src/commands/resume.js';
+import { doctorCommand } from '../src/commands/doctor.js';
 
 // ASCII Art Banner
 const banner = `
@@ -57,6 +58,7 @@ Getting Started:
   $ cervellaswarm task "..."    Execute a task with AI team
   $ cervellaswarm status        Check project progress
   $ cervellaswarm resume        Continue from last session
+  $ cervellaswarm doctor        Check setup and diagnose issues
 
 Examples:
   $ cervellaswarm init -y                    Quick init with defaults
@@ -174,6 +176,28 @@ The recap adapts to time since last session:
 No judgment, no pressure - just helpful context.
 `)
   .action(resumeCommand);
+
+program
+  .command('doctor')
+  .description('Check CervellaSwarm setup and diagnose issues')
+  .option('--validate', 'Test API key with actual call')
+  .option('--config', 'Show current configuration')
+  .option('--verbose', 'Show detailed information')
+  .option('--strict', 'Exit with error code if issues found')
+  .addHelpText('after', `
+Examples:
+  $ cervellaswarm doctor            Quick health check
+  $ cervellaswarm doctor --validate Test API key works
+  $ cervellaswarm doctor --config   Show all config values
+  $ cervellaswarm doctor --strict   For CI/scripts (exits 1 on issues)
+
+Checks:
+  - Node.js version (requires 18+)
+  - API key configured
+  - Project initialized
+  - Configuration valid
+`)
+  .action(doctorCommand);
 
 // Parse arguments
 program.parse();
