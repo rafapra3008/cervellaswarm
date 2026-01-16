@@ -1,47 +1,57 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 16 Gennaio 2026 - Sessione 242
-> **FASE ATTUALE:** Sprint 3 Stripe - BUG RISOLTO con Payment Links!
+> **Ultimo aggiornamento:** 16 Gennaio 2026 - Sessione 243
+> **FASE ATTUALE:** Sprint 3 Stripe - COMPLETATO!
 
 ---
 
-## SESSIONE 242 - BUG STRIPE RISOLTO
+## SESSIONE 243 - HARDTEST COMPLETATI + BUG CRITICO RISOLTO
 
 ```
 +================================================================+
-|   PROBLEMA IDENTIFICATO E RISOLTO                              |
+|   SPRINT 3 STRIPE: COMPLETATO AL 100%!                        |
 |                                                                |
-|   BUG: "CheckoutInitError: apiKey is not set"                  |
-|   CAUSA: Checkout Sessions (checkout.stripe.com) non funziona  |
-|          con questo tipo di account Stripe                     |
+|   BUG CRITICO TROVATO E RISOLTO:                              |
+|   - Webhook endpoint NON era registrato su Stripe!             |
+|   - Creato con: stripe webhook_endpoints create                |
+|   - Aggiornato secret su Fly.io                                |
 |                                                                |
-|   SOLUZIONE: Usare Payment Links API invece!                   |
-|   - Payment Links (buy.stripe.com) FUNZIONANO                  |
-|   - Cambiato codice da checkout.sessions.create()              |
-|     a paymentLinks.create()                                    |
-|                                                                |
-|   INOLTRE SCOPERTO:                                            |
-|   - Sandbox != Test Mode (sono diversi!)                       |
-|   - Migrato da Sandbox a Test Mode standard                    |
-|   - Ricreati prodotti in Test Mode                             |
+|   SENZA QUESTO FIX: Nessun pagamento sarebbe stato processato!|
 +================================================================+
 ```
 
 ---
 
-## CREDENZIALI AGGIORNATE (TEST MODE - NON Sandbox!)
+## TEST PASSATI (TUTTI!)
 
 ```
-STRIPE (Test Mode):
-- Account: acct_1SqEoCDcRzSMjFE4
-- Secret Key: sk_test_51SqEoCDcRzSMjFE4... (in Fly secrets)
-- Pro Price: price_1SqJ5FDcRzSMjFE4cyZcqWs4 ($20/month)
-- Team Price: price_1SqJ5nDcRzSMjFE4n6bK07k5 ($35/month)
+API TESTS:
+  [OK] Health check
+  [OK] Checkout Pro → Payment Link generato
+  [OK] Checkout Team → Payment Link generato
+  [OK] Validazione tier invalido → errore 400
+  [OK] Validazione email invalida → errore 400
 
-FLY.IO:
-- App: cervellaswarm-api
-- URL: https://cervellaswarm-api.fly.dev
-- Secrets AGGIORNATI con nuove chiavi Test Mode
+WEBHOOK TESTS:
+  [OK] checkout.session.completed → ricevuto e processato
+  [OK] invoice.paid → ricevuto e processato
+  [OK] customer.subscription.updated → ricevuto e processato
+
+CLI E2E TESTS:
+  [OK] cervellaswarm --help
+  [OK] cervellaswarm billing --status
+  [OK] cervellaswarm upgrade pro → flow completo
+```
+
+---
+
+## CONFIGURAZIONE STRIPE FINALE
+
+```
+Webhook Endpoint: we_1SqJag1D6xMMYFwJSWGrfYJJ
+URL: https://cervellaswarm-api.fly.dev/webhooks/stripe
+Secret: whsec_5PjZsC9EIrkdvEvU47Uuhxgz5B498xSm (su Fly.io)
+Eventi: * (tutti)
 ```
 
 ---
@@ -57,9 +67,11 @@ FLY.IO:
  |
 241: Sprint 3 Deploy OK, bug checkout
  |
-242: Sprint 3 BUG RISOLTO!  <-- OGGI
+242: Sprint 3 BUG Payment Links RISOLTO
  |
-243: Sprint 3 test e2e → COMPLETATO!
+243: Sprint 3 HARDTEST + BUG WEBHOOK RISOLTO  <-- OGGI
+ |
+244: Sprint 4 Sampling Implementation
 ```
 
 ---
@@ -69,29 +81,29 @@ FLY.IO:
 ```
 Sprint 1: BYOK Polish              [COMPLETATO]
 Sprint 2: Metering & Limits        [COMPLETATO]
-Sprint 3: Stripe Integration       [95% - test e2e da fare]
+Sprint 3: Stripe Integration       [COMPLETATO!]
 Sprint 4: Sampling Implementation  [PROSSIMO]
 Sprint 5: Polish
 ```
 
 ---
 
-## PROSSIMA SESSIONE (243)
+## PROSSIMA SESSIONE (244)
 
-1. Testare checkout completo (Pro e Team)
-2. Verificare webhook riceve eventi
-3. Test end-to-end da CLI
-4. Sprint 3 COMPLETATO!
+1. Opzionale: Test pagamento REALE con carta 4242...
+2. Iniziare Sprint 4: Sampling Implementation
+3. O altro che Rafa decide
 
 ---
 
 ## TL;DR
 
-**Sessione 242:** Bug "apiKey is not set" RISOLTO!
-- Causa: Checkout Sessions non compatibili con account
-- Fix: Usato Payment Links API (buy.stripe.com)
-- Migrato da Sandbox a Test Mode standard
+**Sessione 243:** Hardtest Stripe COMPLETATI!
+- Bug critico: webhook endpoint non registrato su Stripe
+- Fix: creato endpoint + aggiornato secret
+- Tutti i test passano: API, webhook, CLI
+- Sprint 3 Stripe: COMPLETATO AL 100%
 
-**Prossimo (243):** Test e2e, Sprint 3 completato!
+**Report completo:** `.sncp/progetti/cervellaswarm/reports/HARDTEST_STRIPE_20260116.md`
 
 *"Non esistono cose difficili, esistono cose non studiate!"*
