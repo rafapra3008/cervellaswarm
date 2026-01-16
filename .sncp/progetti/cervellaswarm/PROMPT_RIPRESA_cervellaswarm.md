@@ -1,46 +1,45 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 16 Gennaio 2026 - Sessione 243
-> **FASE ATTUALE:** Sprint 3 Stripe - COMPLETATO!
+> **FASE ATTUALE:** Sprint 3 Stripe - COMPLETATO AL 100%!
 
 ---
 
-## SESSIONE 243 - HARDTEST COMPLETATI + BUG CRITICO RISOLTO
+## SESSIONE 243 - TEST 360 COMPLETATO!
 
 ```
 +================================================================+
-|   SPRINT 3 STRIPE: COMPLETATO AL 100%!                        |
+|   SPRINT 3 STRIPE: TESTATO E FUNZIONANTE!                     |
 |                                                                |
-|   BUG CRITICO TROVATO E RISOLTO:                              |
-|   - Webhook endpoint NON era registrato su Stripe!             |
-|   - Creato con: stripe webhook_endpoints create                |
-|   - Aggiornato secret su Fly.io                                |
+|   PROBLEMI TROVATI E RISOLTI:                                  |
+|   1. Stripe CLI collegata ad account sbagliato                |
+|      → Rafa ha fatto stripe login su account CervellaSwarm    |
 |                                                                |
-|   SENZA QUESTO FIX: Nessun pagamento sarebbe stato processato!|
+|   2. Webhook endpoint non esisteva su account corretto        |
+|      → Creato: we_1SqJoTDcRzSMjFE4z2xxHy8M                    |
+|      → Secret aggiornato su Fly.io                            |
+|                                                                |
+|   3. Handler customer.subscription.created mancante           |
+|      → Aggiunto handler che recupera email da Stripe          |
+|      → Deploy eseguito                                         |
+|                                                                |
+|   TEST PAGAMENTO REALE: PASSATO!                              |
+|   - Rafa ha pagato $20 con carta test                         |
+|   - Webhook ricevuto e processato                              |
+|   - Subscription salvata: pro, active                          |
 +================================================================+
 ```
 
 ---
 
-## TEST PASSATI (TUTTI!)
+## PRIMO CLIENTE!
 
 ```
-API TESTS:
-  [OK] Health check
-  [OK] Checkout Pro → Payment Link generato
-  [OK] Checkout Team → Payment Link generato
-  [OK] Validazione tier invalido → errore 400
-  [OK] Validazione email invalida → errore 400
-
-WEBHOOK TESTS:
-  [OK] checkout.session.completed → ricevuto e processato
-  [OK] invoice.paid → ricevuto e processato
-  [OK] customer.subscription.updated → ricevuto e processato
-
-CLI E2E TESTS:
-  [OK] cervellaswarm --help
-  [OK] cervellaswarm billing --status
-  [OK] cervellaswarm upgrade pro → flow completo
+Customer: cus_TnvkMhima1FVHr
+Email: rafapra@gmail.com
+Tier: PRO
+Status: active
+Subscription: sub_1SqJt8DcRzSMjFE47Fggwys8
 ```
 
 ---
@@ -48,10 +47,17 @@ CLI E2E TESTS:
 ## CONFIGURAZIONE STRIPE FINALE
 
 ```
-Webhook Endpoint: we_1SqJag1D6xMMYFwJSWGrfYJJ
-URL: https://cervellaswarm-api.fly.dev/webhooks/stripe
-Secret: whsec_5PjZsC9EIrkdvEvU47Uuhxgz5B498xSm (su Fly.io)
-Eventi: * (tutti)
+Account: CervellaSwarm (acct_1SqEoCDcRzSMjFE4)
+
+Prodotti:
+  - CervellaSwarm Pro:  $20/month (price_1SqJ5FDcRzSMjFE4cyZcqWs4)
+  - CervellaSwarm Team: $35/month (price_1SqJ5nDcRzSMjFE4n6bK07k5)
+
+Webhook:
+  - ID: we_1SqJoTDcRzSMjFE4z2xxHy8M
+  - URL: https://cervellaswarm-api.fly.dev/webhooks/stripe
+  - Secret: whsec_iSGm5DCho75Y30ESa63GYG9nwmZAnLkc
+  - Eventi: * (tutti)
 ```
 
 ---
@@ -69,7 +75,7 @@ Eventi: * (tutti)
  |
 242: Sprint 3 BUG Payment Links RISOLTO
  |
-243: Sprint 3 HARDTEST + BUG WEBHOOK RISOLTO  <-- OGGI
+243: Sprint 3 TEST 360 COMPLETO!  <-- OGGI
  |
 244: Sprint 4 Sampling Implementation
 ```
@@ -90,20 +96,18 @@ Sprint 5: Polish
 
 ## PROSSIMA SESSIONE (244)
 
-1. Opzionale: Test pagamento REALE con carta 4242...
-2. Iniziare Sprint 4: Sampling Implementation
-3. O altro che Rafa decide
+1. Sprint 4: Sampling Implementation
+2. Oppure altro che Rafa decide
 
 ---
 
 ## TL;DR
 
-**Sessione 243:** Hardtest Stripe COMPLETATI!
-- Bug critico: webhook endpoint non registrato su Stripe
-- Fix: creato endpoint + aggiornato secret
-- Tutti i test passano: API, webhook, CLI
-- Sprint 3 Stripe: COMPLETATO AL 100%
+**Sessione 243:** Test 360 Stripe COMPLETATO!
+- Risolti 3 problemi di configurazione
+- Pagamento REALE testato e funzionante
+- Primo cliente: rafapra@gmail.com -> PRO
 
-**Report completo:** `.sncp/progetti/cervellaswarm/reports/HARDTEST_STRIPE_20260116.md`
+**Sprint 3 Stripe: FATTO AL 100%!**
 
 *"Non esistono cose difficili, esistono cose non studiate!"*
