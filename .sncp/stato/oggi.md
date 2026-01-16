@@ -1,61 +1,52 @@
 # STATO OGGI - 16 Gennaio 2026
 
-> **Sessione:** 233
+> **Sessione:** 234
 > **Progetto:** CervellaSwarm
 
 ---
 
-## SESSIONE 233 - FASE 0 + FASE 1 MCP
+## SESSIONE 234 - CONFIG MCP CLAUDE CODE
 
 ```
 COMPLETATO:
-├── FASE 0: Fondamenta CLI
-│   ├── Config manager con `conf`
-│   ├── API key wizard in init
-│   ├── Validazione API key (test call)
-│   ├── Comando `cervellaswarm doctor`
-│   └── README aggiornato
-│
-├── Studio Viabilità Claude-Exclusive
-│   ├── Ricerca 950+ righe
-│   ├── Validazione Guardiana 8/10
-│   └── Decisione documentata
-│
-└── FASE 1: POC MCP Server
-    ├── packages/mcp-server/ creato
-    ├── TypeScript + MCP SDK
-    ├── 3 tools funzionanti
-    └── Pronto per Claude Code
+├── Verifica MCP Server compilato (OK)
+├── Test avvio server (OK - v0.1.0)
+├── Config ~/.claude/settings.json
+│   ├── mcpServers.cervellaswarm aggiunto
+│   └── Permessi mcp__cervellaswarm__* aggiunti
+└── PROMPT_RIPRESA aggiornato
 ```
 
 ---
 
-## DECISIONE STRATEGICA
+## PROSSIMO STEP - CRITICO
 
 ```
-Claude-Exclusive + MCP + BYOK
-"Claude è la nostra casa. La casa della FAMIGLIA."
-```
+RIAVVIA CLAUDE CODE E TESTA:
+> "usa check_status di cervellaswarm"
+> "list_workers di cervellaswarm"
 
-Marketing angle: "Built WITH CervellaSwarm ON Claude"
-
----
-
-## PROSSIMA SESSIONE
-
-```
-FASE 2: MCP Completo
-├── Tutti i tools MCP
-├── Resources SNCP
-└── Test end-to-end con Claude Code
+Se funziona → continua FASE 2 (Resources SNCP)
+Se errore → debug con troubleshooting in PROMPT_RIPRESA
 ```
 
 ---
 
-## AUDIT
+## ROADMAP
 
-Guardiana Qualità: **8.7/10** - Approvato
+```
+FASE 0: Fondamenta    [####################] FATTO
+FASE 1: POC MCP       [####################] FATTO
+FASE 2: MCP Completo  [####................] IN CORSO
+FASE 3: Launch        [....................]
+```
 
 ---
 
-*"Un passo alla volta verso la LIBERTÀ GEOGRAFICA!"*
+## COMMIT
+
+`c49b1d0` - Sessione 234: Config MCP per Claude Code
+
+---
+
+*"SU CARTA != REALE - Testiamo!"*
