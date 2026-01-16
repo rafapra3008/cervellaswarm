@@ -96,8 +96,20 @@ Sprint 5: Polish
 
 ## PROSSIMA SESSIONE (244)
 
-1. Sprint 4: Sampling Implementation
-2. Oppure altro che Rafa decide
+### 1. TEST STRIPE FINALE (Rafa fa la prova)
+Rafa vuole fare LUI la prova del pagamento per verificare che arrivi tutto al 100%.
+Non toccare nulla - lasciare che Rafa testi da solo.
+
+### 2. RIFLESSIONE FAMIGLIA - Organizzazione Interna
+```
+PROBLEMA: Confusione con multi-progetti e cartelle
+DISCUSSIONE: Come separare meglio le cose?
+            Come migliorare regole interne?
+            Studiare insieme la struttura.
+```
+Questo è importante - fermarsi e parlare PRIMA di continuare a codificare.
+
+### 3. POI: Sprint 4 Sampling (se c'è tempo)
 
 ---
 
