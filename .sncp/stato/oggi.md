@@ -1,57 +1,62 @@
 # STATO OGGI - 16 Gennaio 2026
 
 > **Sessione:** 230
-> **Ultimo aggiornamento:** 04:00
+> **Ultimo aggiornamento:** 10:30
 
 ---
 
-## MIRACALLOOK - 3 TASK COMPLETATI!
+## CERVELLASWARM - DECISIONE STRATEGICA!
 
 ```
-SESSIONE 230:
-[x] #1 Checkbox nei gruppi email    - BundleItem.tsx + EmailList.tsx
-[x] #2 Barra bulk opaca (glass)     - BulkActionsBar.tsx
-[x] #3 Sistema cartelle smart       - 4 endpoint backend + Sidebar folders
-[x] Bug fix: categorize.ts, bundles.ts, guests.ts (undefined checks)
-
-FOLDERS FUNZIONANTI: Inbox, Sent, Archive, Starred, Trash (5/6)
-FOLDERS DA FARE: Drafts (500 error)
-```
-
----
-
-## SCOPERTA IMPORTANTE!
-
-```
-PALETTE DESIGN SALUTARE - ESISTEVA MA NON APPLICATA!
-
-File trovati:
-- RICERCA_DESIGN_SALUTARE.md (930 righe di studio!)
-- PALETTE_DESIGN_SALUTARE_VALIDATA.md
-
-PROBLEMA: tailwind.config.js ha ancora vecchi colori (#0a0e1a)
-SOLUZIONE: Applicare palette Apple (#1C1C1E) = eye-friendly
++================================================================+
+|   SESSIONE 230: CAMBIO DIREZIONE STRATEGICO                    |
+|                                                                |
+|   DA: npm publish v0.1.0 (BYOK semplice)                       |
+|   A:  MCP Server + BYOK Premium (fatto BENE!)                  |
+|                                                                |
+|   "Chiudere il porto e sistemare la nave"                      |
+|   Score minimo: 9.5/10                                         |
++================================================================+
 ```
 
 ---
 
-## PROSSIMA SESSIONE - MAPPA
+## COSA ABBIAMO DECISO
 
-| # | Task | Priorita |
-|---|------|----------|
-| 0 | **APPLICARE PALETTE SALUTARE** | ALTA! |
-| 4 | Drag handles custom | MEDIA |
-| 5 | Drafts folder fix | MEDIA |
-| 6 | Sanitizzazione HTML | FUTURO |
+```
+CervellaSwarm sara:
+1. MCP SERVER - Integrabile con Claude Code
+2. CLI STANDALONE - Con opzione BYOK
+3. DUAL MODE - Entrambi funzionano
+
+CHI PAGA API: Sempre utente (BYOK!)
+MARGINI: 90%+ (profittabili DAY 1!)
+```
 
 ---
 
-*"I dettagli fanno SEMPRE la differenza!"*
+## RICERCHE COMPLETATE (8 documenti!)
+
+- STUDIO_MCP_PROTOCOL_COMPLETO.md (1850+ righe)
+- ARCHITETTURA_MCP_CERVELLASWARM.md (2021 righe)
+- BUSINESS_MODEL_MCP_BYOK.md (1200+ righe)
+- + altri 5 documenti competitor/auth
+
+**MAPPA:** `.sncp/progetti/cervellaswarm/MAPPA_MCP_BYOK.md`
 
 ---
 
-## AUTO-CHECKPOINT: 2026-01-16 03:57 (session_end)
+## PROSSIMA SESSIONE
 
-- **Progetto**: CervellaSwarm
-- **Evento**: session_end
-- **Generato da**: sncp_auto_update.py v2.0.0
+```
+FASE 0: Fondamenta
+[ ] Config manager con `conf`
+[ ] API key wizard in init
+[ ] API key validation
+[ ] `cervellaswarm doctor`
+[ ] README utente
+```
+
+---
+
+*"Fatto BENE > Fatto VELOCE"*

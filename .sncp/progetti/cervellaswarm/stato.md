@@ -554,3 +554,61 @@ verify-sync miracollo --verbose   # Check singolo progetto
 
 *"Cursor l'ha fatto. Noi lo faremo."*
 *"Un po' ogni giorno fino al 100000%!"*
+
+---
+
+## ANALISI ARCHITETTURALE - 16 Gennaio 2026
+
+**Task:** Progettare architettura MCP Server per CervellaSwarm
+
+**Output:** `.sncp/progetti/cervellaswarm/idee/ARCHITETTURA_MCP_CERVELLASWARM.md`
+
+**Risultato:** ✅ ANALISI COMPLETA
+
+### Key Findings
+
+**Architettura Attuale (Score 10/10):**
+- 112 test passano
+- Modulare e pulita
+- SNCP funzionante
+- Gap: API key obbligatoria, no auth utente, `conf` installato ma NON usato
+
+**Trasformazione MCP (Score 8.5/10):**
+- **FATTIBILE** con dual-mode architecture
+- MCP mode: integrato in Claude Code (no API key utente)
+- CLI mode: standalone BYOK (manteniamo)
+- Effort: 3-4 mesi (fatto BENE)
+
+**Componenti Nuovi:**
+- `packages/core/` - shared logic (9.5 giorni)
+- `packages/mcp-server/` - MCP implementation (11.5 giorni)
+- Auth & Config layer (5 giorni)
+- Testing & Docs (10 giorni)
+
+**Gap Tecnici:**
+- CRITICI: TypeScript migration, MCP SDK learning, monorepo setup, dual auth
+- ALTI: Stdio debugging, concurrency, error propagation
+- MEDI: Cross-platform, session history size, key rotation
+
+**Security:**
+- API key: file-based (chmod 600) → keychain (opzionale)
+- Sandboxing: resource limits, whitelist paths
+- Audit logging: `.sncp/audit.log`
+
+**Raccomandazione:** ✅ GO - Procedere con POC spike (1 settimana)
+
+### Next Steps
+
+1. **POC MCP Server** (cervella-researcher + cervella-ingegnera)
+   - Studio MCP SDK (2 giorni)
+   - Spike: server minimal (2 giorni)
+   - Validazione unknowns
+
+2. **Decision Point** (fine settimana 2)
+   - POC OK → Fase 1: Core Refactor
+   - POC blocchi → Rivaluta
+
+**Confidenza:** 8.5/10
+
+**Filosofia:** "Un progresso al giorno. Fatto BENE > Fatto VELOCE."
+
