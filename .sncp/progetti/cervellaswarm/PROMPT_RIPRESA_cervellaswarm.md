@@ -1,79 +1,55 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 17 Gennaio 2026 - Sessione 251
-> **MILESTONE:** Decisione BYOK + Preparazione npm publish
+> **MILESTONE:** CLI PUBBLICATA SU NPM!
 
 ---
 
-## SESSIONE 251 - DECISIONI STRATEGICHE
+## SESSIONE 251 - SUCCESSO!
 
 ```
 +================================================================+
-|   DECISIONE: LANCIARE CON BYOK                                 |
-+================================================================+
-|                                                                |
-|   Sampling (abbonamento Claude): NON ESISTE in Claude Code    |
-|   Cursor perde soldi: -30% margine con subscription            |
-|   BYOK = margine 100%, zero rischio, GIA' PRONTO              |
-|                                                                |
-|   STRATEGIA:                                                   |
-|   - FASE 1 (ORA): BYOK only                                   |
-|   - FASE 2 (3-6 mesi): Hybrid (BYOK + Pro tier limitato)      |
-|                                                                |
+|   cervellaswarm@0.1.1 - LIVE SU NPM!                          |
+|   npm install -g cervellaswarm                                 |
 +================================================================+
 ```
 
-### Ricerche Completate Oggi
+### Decisioni Strategiche
 
-| Ricerca | File | Risultato |
-|---------|------|-----------|
-| MCP Sampling Status | `docs/studio/RICERCA_MCP_SAMPLING_STATUS_20260117.md` | NON SUPPORTATO |
-| Alternative Sampling | `.sncp/.../RICERCA_ALTERNATIVE_MCP_SAMPLING.md` | Nessuna alternativa |
-| Modello Cursor | `.sncp/.../STUDIO_VIABILITA_MODELLO_CURSOR_20260117.md` | Cursor perde soldi! |
+| Decisione | Risultato |
+|-----------|-----------|
+| BYOK vs Sampling | BYOK (Sampling non supportato) |
+| Modello Cursor | NON copiare (perde soldi!) |
+| npm token | Granular con bypass 2FA |
 
 ---
 
-## STATO REALE (Verificato Sessione 251)
+## STATO REALE
 
 ```
-+================================================================+
-|   COSA FUNZIONA ORA                                            |
-+================================================================+
+PUBBLICATO:
+  [x] CLI v0.1.1 su npm
 
-API FLY.IO:          ONLINE! (curl /health = 200 OK)
-STRIPE:              FUNZIONA! (Payment Link generato)
-CLI:                 FUNZIONA! (8 comandi, testata)
-MCP SERVER:          ATTIVO! (lo usiamo in questa chat)
-UPDATE NOTIFIER:     IMPLEMENTATO!
-BYOK:                PRONTO!
+IN PROGRESS:
+  [ ] MCP Server (serve org @cervellaswarm)
+  [ ] OIDC Trusted Publishing
 
-+================================================================+
-|   MANCA SOLO                                                   |
-+================================================================+
-
-npm publish CLI      (mai pubblicata)
-npm publish MCP      (mai pubblicato)
-
-+================================================================+
+FUNZIONA:
+  [x] API Fly.io - ONLINE
+  [x] Stripe - Payment Link OK
+  [x] BYOK - Pronto
 ```
 
 ---
 
-## PROSSIMI STEP
+## PROSSIMI STEP (Sessione 252)
 
 ```
-OGGI (Sessione 251):
-1. [x] Audit completo
-2. [x] Decisione BYOK
-3. [ ] npm publish CLI
-4. [ ] npm publish MCP
-5. [ ] Verificare end-to-end
-6. [ ] Checkpoint
-
-DOPO (Sessione 252+):
-- Marketing: dove lanciare, primi utenti
-- Product Hunt? HackerNews? Reddit?
-- Phrasebook P2
+1. Creare org @cervellaswarm su npm
+2. npm publish @cervellaswarm/mcp-server
+3. Configurare OIDC per publish automatico
+4. Test end-to-end installazione
+5. Marketing: dove lanciare
 ```
 
 ---
@@ -82,12 +58,10 @@ DOPO (Sessione 252+):
 
 | Cosa | Dove |
 |------|------|
-| NORD | `NORD.md` |
+| CLI npm | https://www.npmjs.com/package/cervellaswarm |
 | Studio Cursor | `.sncp/.../STUDIO_VIABILITA_MODELLO_CURSOR_20260117.md` |
-| MCP Sampling | `docs/studio/RICERCA_MCP_SAMPLING_STATUS_20260117.md` |
-| Hardtest Stripe | `.sncp/.../reports/HARDTEST_STRIPE_20260116.md` |
+| GitHub Actions | `.github/workflows/npm-publish.yml` |
 
 ---
 
-*"BYOK = sicuro, sostenibile, PRONTO ORA!"*
-*"Lavoriamo in pace! Senza casino! Dipende da noi!"*
+*"CLI PUBBLICATA! Da su carta a REALE!"*

@@ -1,60 +1,53 @@
 # STATO OGGI - 17 Gennaio 2026
 
 > **Sessione:** 251
-> **Focus:** Decisione BYOK + npm publish
+> **Focus:** npm publish + BYOK decision
 
 ---
 
-## SESSIONE 251 - DECISIONI STRATEGICHE
+## SESSIONE 251 - SUCCESSO!
 
-### Ricerche Completate
-
-| Ricerca | Risultato |
-|---------|-----------|
-| MCP Sampling | NON SUPPORTATO da Claude Code |
-| Modello Cursor | Perde soldi! (-30% margine) |
-| Alternative | Nessuna alternativa a BYOK |
-
-### Decisione Finale
+### CLI PUBBLICATA SU NPM!
 
 ```
 +================================================================+
-|   LANCIAMO CON BYOK                                            |
-+================================================================+
-|                                                                |
-|   FASE 1 (ORA): BYOK only - margine 100%, zero rischio        |
-|   FASE 2 (3-6 mesi): Hybrid (BYOK + Pro tier limitato)        |
-|                                                                |
+|   cervellaswarm@0.1.1 - LIVE SU NPM!                          |
+|   https://www.npmjs.com/package/cervellaswarm                  |
 +================================================================+
 ```
 
----
+### MCP Server - In Progress
 
-## STATO REALE (Verificato)
+- Serve creare org `@cervellaswarm` su npm
+- Oppure rinominare senza scope
 
-```
-FUNZIONA:
-  [x] API Fly.io - ONLINE (testata con curl)
-  [x] Stripe - Payment Link generato
-  [x] CLI - 8 comandi, 134 test passano
-  [x] MCP Server - Attivo e funzionante
-  [x] BYOK - Pronto!
+### Token npm creato
 
-MANCA:
-  [ ] npm publish CLI (token scaduto)
-  [ ] npm publish MCP
-```
+- Granular access token funziona
+- Configurato in ~/.npmrc
 
 ---
 
-## PROSSIMA SESSIONE (252)
+## DECISIONI PRESE
 
 ```
-1. npm login + publish (se non fatto oggi)
-2. Marketing: dove lanciare, primi utenti
-3. Phrasebook P2
+BYOK = Unica strada per MVP
+- Sampling NON supportato da Claude Code
+- Cursor perde soldi (-30% margine)
+- BYOK = margine 100%
 ```
 
 ---
 
-*"BYOK = sicuro, sostenibile, PRONTO ORA!"*
+## PROSSIMI STEP
+
+```
+1. Creare org @cervellaswarm su npm
+2. Pubblicare MCP Server
+3. Configurare OIDC Trusted Publishing
+4. Test end-to-end
+```
+
+---
+
+*"CLI PUBBLICATA! Un progresso REALE!"*
