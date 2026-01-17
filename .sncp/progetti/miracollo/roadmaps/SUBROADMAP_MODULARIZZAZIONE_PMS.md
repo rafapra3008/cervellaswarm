@@ -152,7 +152,7 @@ PRIORITA: ALTO
 ```
 
 **Checklist FASE 2:**
-- [ ] 2.1 suggerimenti/ modulo creato
+- [x] 2.1 suggerimenti/ modulo creato (Sessione 252 - 7 moduli!)
 - [ ] 2.2 planning/ modulo creato
 - [ ] 2.3 settings/ modulo creato
 - [ ] 2.4 email/ modulo creato

@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 17 Gennaio 2026 - Sessione 250
+> Aggiornato: 17 Gennaio 2026 - Sessione 253
 
 ```
 +==================================================================+
@@ -32,7 +32,7 @@
 
 ---
 
-## DOVE SIAMO (17 Gennaio 2026 - Sessione 252)
+## DOVE SIAMO (17 Gennaio 2026 - Sessione 253)
 
 ```
 +================================================================+
@@ -49,22 +49,26 @@ FASE 1: FONDAMENTA               [####################] 100%!
   - PRE/POST-FLIGHT 16 agenti    FATTO
   - 3 GAP critici                FATTO (Sessione 217!)
 
-FASE 2: MVP PRODOTTO             [############........] 60% REALE
+FASE 2: MVP PRODOTTO             [################....] 80% REALE
 
-  REALE (Sessione 252!):
+  REALE (Sessione 253!):
   ✓ CLI su npm                   cervellaswarm@0.1.1
-  ✓ MCP su npm                   @cervellaswarm/mcp-server@0.1.2
+  ✓ MCP su npm                   @cervellaswarm/mcp-server@0.2.0
+  ✓ FAMIGLIA COMPLETA            16 AGENTI! (da 8!)
   ✓ Test end-to-end              install, doctor, tools OK
   ✓ API Fly.io                   ONLINE
   ✓ Stripe                       Payment Link OK
   ✓ BYOK                         Pronto
+  ✓ Marketing Diamante           Ricerca + Subroadmap
 
   ANCORA DA FARE:
   ✗ OIDC Trusted Publishing      CI/CD automatico npm
-  ✗ Test API Stripe              Webhook, checkout flow
-  ✗ Database production          Ancora lowdb
+  ✗ Aggiornare descrizioni       README, npm pages
+  ✗ Assets lancio                Screenshot, GIF
 
-FASE 3: PRIMI UTENTI             [....................] 0%
+FASE 3: PRIMI UTENTI             [#...................] 5%
+  - Strategia lancio definita    FATTO
+  - Data target                  21 Gennaio 2026
 
 FASE 4: SCALA                    [....................] 0%
 
@@ -72,12 +76,13 @@ INIZIATIVE PARALLELE:
   - Casa Pulita                  100%! (Sessione 249)
   - Docs Sync System             Avviato (Sessione 250)
   - Phrasebook                   20%
-  - Famiglia Completa MCP        0% (8/16 agenti) - IL SEGRETO!
+  - Famiglia Completa MCP        100%! (16/16 agenti) - Sessione 253!
+  - Marketing Diamante           100%! (4 parti + subroadmap)
 
 PROSSIMI STEP CRITICI:
-  1. OIDC Trusted Publishing
-  2. Marketing: dove lanciare
-  3. Primi utenti beta
+  1. Aggiornare descrizioni ovunque
+  2. Preparare assets lancio
+  3. LANCIO: Martedi 21 Gennaio 2026
 ```
 
 ---
@@ -153,10 +158,13 @@ PROSSIMI STEP CRITICI:
 | Cosa | Dove |
 |------|------|
 | **MAPPA COMPLETA (BIBBIA!)** | `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_COMPLETA_STEP_BY_STEP.md` |
+| **MARKETING DIAMANTE** | `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_DIAMANTE_MARKETING_LANCIO.md` |
+| **MAPPA STUDI ORO** | `.sncp/progetti/cervellaswarm/MAPPA_STUDI_ORO.md` |
+| **MANIFESTO** | `.sncp/progetti/cervellaswarm/MANIFESTO.md` |
 | **SUBMAPPA DUAL-MODE** | `.sncp/progetti/cervellaswarm/roadmaps/SUBMAPPA_DUALMODE_MONETIZZAZIONE.md` |
 | **CASA PULITA (100%!)** | `.sncp/roadmaps/SUBROADMAP_CASA_PULITA.md` |
-| **PHRASEBOOK (NEW!)** | `.sncp/roadmaps/SUBROADMAP_PHRASEBOOK.md` |
-| **FAMIGLIA COMPLETA MCP** | `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_FAMIGLIA_COMPLETA_MCP.md` |
+| **PHRASEBOOK** | `.sncp/roadmaps/SUBROADMAP_PHRASEBOOK.md` |
+| **FAMIGLIA COMPLETA MCP (100%!)** | `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_FAMIGLIA_COMPLETA_MCP.md` |
 | Roadmap visiva | `.sncp/progetti/cervellaswarm/roadmaps/ROADMAP_2026_PRODOTTO.md` |
 | Stato dettagliato | `.sncp/progetti/cervellaswarm/stato.md` |
 | DNA Famiglia (16 membri) | `docs/DNA_FAMIGLIA.md` |
