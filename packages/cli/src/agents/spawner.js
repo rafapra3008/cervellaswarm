@@ -16,6 +16,7 @@ import * as config from '../config/manager.js';
 
 // Retry delays (ms between retries)
 const RETRY_DELAYS = [1000, 3000, 5000];
+const MAX_RETRIES = RETRY_DELAYS.length;
 
 /**
  * Get agent-specific system prompt

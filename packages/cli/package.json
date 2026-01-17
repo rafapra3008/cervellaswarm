@@ -1,6 +1,6 @@
 {
   "name": "cervellaswarm",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "16 AI agents working as a team for your project. Not an assistant - a TEAM.",
   "main": "src/index.js",
   "bin": {

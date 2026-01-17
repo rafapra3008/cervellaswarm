@@ -13,7 +13,6 @@
 import chalk from 'chalk';
 import {
   getBillingApiUrl,
-  getTier,
   getCustomerId,
   getEmail,
   getSubscriptionInfo,

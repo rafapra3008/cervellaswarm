@@ -1,0 +1,72 @@
+# Publish to npm when a new tag is pushed
+# Uses OIDC Trusted Publishing - NO TOKENS NEEDED!
+#
+# Usage: git tag v0.1.0 && git push --tags
+#
+# SETUP REQUIRED (one-time per package):
+# 1. Go to npmjs.com/package/cervellaswarm/access
+# 2. Add Trusted Publisher → GitHub Actions
+# 3. Owner: rafapra3008
+# 4. Repository: CervellaSwarm
+# 5. Workflow: npm-publish.yml
+# 6. Environment: (leave empty)
+
+name: Publish to npm
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish-cli:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write  # Required for OIDC trusted publishing
+    defaults:
+      run:
+        working-directory: packages/cli
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Publish CLI
+        run: npm publish --access public --provenance
+
+  publish-mcp:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write  # Required for OIDC trusted publishing
+    defaults:
+      run:
+        working-directory: packages/mcp-server
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish MCP Server
+        run: npm publish --access public --provenance
