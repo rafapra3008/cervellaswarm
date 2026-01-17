@@ -1,79 +1,79 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 17 Gennaio 2026 - Sessione 250
-> **MILESTONE:** Audit Critico + Docs Sync System
+> **Ultimo aggiornamento:** 17 Gennaio 2026 - Sessione 251
+> **MILESTONE:** Decisione BYOK + Preparazione npm publish
 
 ---
 
-## SESSIONE 250 - SCOPERTA IMPORTANTE!
+## SESSIONE 251 - DECISIONI STRATEGICHE
 
 ```
 +================================================================+
-|   "SU CARTA" != "REALE"                                        |
+|   DECISIONE: LANCIARE CON BYOK                                 |
 +================================================================+
 |                                                                |
-|   DOCUMENTI dicevano: Sprint 1-3 COMPLETATI (90%)              |
-|   REALTA' del codice: Scritto ma NON deployato (35%)           |
+|   Sampling (abbonamento Claude): NON ESISTE in Claude Code    |
+|   Cursor perde soldi: -30% margine con subscription            |
+|   BYOK = margine 100%, zero rischio, GIA' PRONTO              |
 |                                                                |
-|   - API su Fly.io: fly.toml esiste, deploy MAI fatto           |
-|   - CLI su npm: pronta ma MAI pubblicata                       |
-|   - Test API: ZERO (cartella vuota!)                           |
+|   STRATEGIA:                                                   |
+|   - FASE 1 (ORA): BYOK only                                   |
+|   - FASE 2 (3-6 mesi): Hybrid (BYOK + Pro tier limitato)      |
 |                                                                |
 +================================================================+
 ```
 
-### Azioni Correttive Fatte
+### Ricerche Completate Oggi
 
-| Cosa | File |
-|------|------|
-| NORD.md aggiornato | `NORD.md` |
-| SUBMAPPA corretta | `.sncp/.../SUBMAPPA_DUALMODE_MONETIZZAZIONE.md` |
-| Docs Sync System | `.sncp/roadmaps/SUBROADMAP_DOCS_SYNC.md` |
-| Pre-commit hook | `.git/hooks/pre-commit` |
-| Script helper | `scripts/update-docs-status.sh` |
+| Ricerca | File | Risultato |
+|---------|------|-----------|
+| MCP Sampling Status | `docs/studio/RICERCA_MCP_SAMPLING_STATUS_20260117.md` | NON SUPPORTATO |
+| Alternative Sampling | `.sncp/.../RICERCA_ALTERNATIVE_MCP_SAMPLING.md` | Nessuna alternativa |
+| Modello Cursor | `.sncp/.../STUDIO_VIABILITA_MODELLO_CURSOR_20260117.md` | Cursor perde soldi! |
 
 ---
 
-## MAPPA REALE (Verificata da Guardiana)
+## STATO REALE (Verificato Sessione 251)
 
 ```
-FASE 2 MVP: 35% REALE (codice 90%, deploy 0%)
++================================================================+
+|   COSA FUNZIONA ORA                                            |
++================================================================+
 
-CODICE FATTO:
-  [x] CLI completa (8 comandi, 137 test)
-  [x] API Stripe (webhooks, checkout)
-  [x] MCP Server (spawner, billing)
+API FLY.IO:          ONLINE! (curl /health = 200 OK)
+STRIPE:              FUNZIONA! (Payment Link generato)
+CLI:                 FUNZIONA! (8 comandi, testata)
+MCP SERVER:          ATTIVO! (lo usiamo in questa chat)
+UPDATE NOTIFIER:     IMPLEMENTATO!
+BYOK:                PRONTO!
 
-NON ANCORA REALE:
-  [ ] Deploy API Fly.io
-  [ ] npm publish CLI
-  [ ] npm publish MCP
-  [ ] Test API
-  [ ] Test e2e
-```
++================================================================+
+|   MANCA SOLO                                                   |
++================================================================+
 
----
+npm publish CLI      (mai pubblicata)
+npm publish MCP      (mai pubblicato)
 
-## DOCS SYNC SYSTEM (NUOVO!)
-
-```
-FASE 1: Quick Wins     [####################] 100%
-FASE 2: Automation     [....................] 0%
-FASE 3: Cultura        [....................] 0%
++================================================================+
 ```
 
 ---
 
-## PROSSIMA SESSIONE (251)
+## PROSSIMI STEP
 
 ```
-PRIORITA P0 - Sprint 3.5: Deploy & Test
+OGGI (Sessione 251):
+1. [x] Audit completo
+2. [x] Decisione BYOK
+3. [ ] npm publish CLI
+4. [ ] npm publish MCP
+5. [ ] Verificare end-to-end
+6. [ ] Checkpoint
 
-1. Test API (webhook, checkout)
-2. Deploy API su Fly.io + secrets
-3. npm publish CLI
-4. npm publish MCP
-5. Test end-to-end REALE
+DOPO (Sessione 252+):
+- Marketing: dove lanciare, primi utenti
+- Product Hunt? HackerNews? Reddit?
+- Phrasebook P2
 ```
 
 ---
@@ -83,11 +83,11 @@ PRIORITA P0 - Sprint 3.5: Deploy & Test
 | Cosa | Dove |
 |------|------|
 | NORD | `NORD.md` |
-| Docs Sync | `.sncp/roadmaps/SUBROADMAP_DOCS_SYNC.md` |
-| Dual-Mode | `.sncp/.../SUBMAPPA_DUALMODE_MONETIZZAZIONE.md` |
-| Audit ricerca | `.sncp/.../ricerche/RICERCA_20260117_DOCS_CODE_SYNC_SOLUTION.md` |
+| Studio Cursor | `.sncp/.../STUDIO_VIABILITA_MODELLO_CURSOR_20260117.md` |
+| MCP Sampling | `docs/studio/RICERCA_MCP_SAMPLING_STATUS_20260117.md` |
+| Hardtest Stripe | `.sncp/.../reports/HARDTEST_STRIPE_20260116.md` |
 
 ---
 
-*"Mai dire COMPLETATO se non e' REALE!"*
+*"BYOK = sicuro, sostenibile, PRONTO ORA!"*
 *"Lavoriamo in pace! Senza casino! Dipende da noi!"*
