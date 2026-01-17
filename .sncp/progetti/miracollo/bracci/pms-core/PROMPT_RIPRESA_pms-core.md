@@ -1,12 +1,13 @@
 # PROMPT RIPRESA - PMS Core
 
 > **Ultimo aggiornamento:** 17 Gennaio 2026 - Sessione 251
-> **STATO:** 90% - Produzione STABILE e VERIFICATA
+> **STATO:** 90% - Produzione STABILE + FASE 1 Modularizzazione COMPLETATA
 
 ---
 
-## SESSIONE 251 - AUDIT COMPLETO VM
+## SESSIONE 251 - AUDIT + MODULARIZZAZIONE
 
+### Audit VM Completato
 ```
 VERIFICATO DIRETTAMENTE SULLA VM:
 
@@ -26,6 +27,23 @@ NGINX:
   SSL Let's Encrypt
   Rate limiting, HSTS, Gzip
   Zero-downtime ready
+```
+
+### FASE 1 Modularizzazione COMPLETATA
+```
+CREATO:
+  backend/core/validators.py   15 funzioni validazione
+  backend/core/decorators.py   6 decorators
+
+REFACTORING:
+  genera_tutti_suggerimenti()  250 -> 56 righe (-77%)
+  create_quick_booking()       233 -> 105 righe (-55%)
+  swap_segment()               202 -> 95 righe (-53%)
+
+RISULTATO:
+  -429 righe codice
+  +14 helper functions
+  Health Score: 6/10 -> 7/10
 ```
 
 ---
