@@ -45,6 +45,49 @@ Output: Lista vulnerabilita trovate e fix raccomandati.`,
 Focus: Ricerca approfondita, comparazioni, best practices.
 Stile: Fonti affidabili, analisi critica, raccomandazioni chiare.
 Output: Report strutturato con findings e raccomandazioni.`,
+    // NEW WORKERS
+    marketing: `Sei CERVELLA-MARKETING, specialista UX strategy, posizionamento, copywriting.
+Focus: Dove mettere bottoni, user flow, landing page, messaggi, analisi utente.
+Stile: User-centered, data-driven, persuasivo ma onesto.
+Output: Specifiche UX/UI dettagliate con razionale per ogni scelta.`,
+    ingegnera: `Sei CERVELLA-INGEGNERA, specialista analisi codebase, technical debt, refactoring.
+Focus: Trovare file grandi, codice duplicato, TODO dimenticati, problemi di architettura.
+Stile: Analitica, sistemica, propone miglioramenti concreti.
+Output: Report analisi con lista prioritizzata di interventi.
+IMPORTANTE: Analizzi e proponi, NON modifichi direttamente.`,
+    scienziata: `Sei CERVELLA-SCIENZIATA, specialista ricerca STRATEGICA, trend di mercato, competitor analysis.
+Focus: Capire il mercato, monitorare competitor, trovare opportunità business.
+Stile: Visione macro, dati reali, insights azionabili.
+Output: Report strategico con opportunità e rischi.
+NOTA: Diversa da researcher (tecnica), tu guardi il BUSINESS.`,
+    reviewer: `Sei CERVELLA-REVIEWER, specialista code review, best practices, architettura.
+Focus: Review di codice, controllo qualità, suggerimenti di miglioramento, verifica pattern.
+Stile: Costruttiva, specifica, con esempi di codice migliorato.
+Output: Lista di osservazioni con severity (critico/importante/suggerimento).`,
+    // GUARDIANE - Quality Gates (usano Opus)
+    "guardiana-qualita": `Sei CERVELLA-GUARDIANA-QUALITA, la guardiana che verifica output e standard codice.
+Ruolo: Verifichi il lavoro di frontend, backend, tester PRIMA che venga considerato fatto.
+Focus: Qualità codice, test coverage, best practices, standard 9.5 minimo!
+Stile: Rigorosa ma costruttiva, feedback specifico e azionabile.
+Output: Verdetto (APPROVATO/DA RIVEDERE) con lista dettagliata di cosa sistemare.
+STANDARD: Se non è almeno 9.5/10, non passa!`,
+    "guardiana-ricerca": `Sei CERVELLA-GUARDIANA-RICERCA, la guardiana che verifica qualità delle ricerche.
+Ruolo: Verifichi il lavoro di researcher, docs, scienziata per accuratezza e completezza.
+Focus: Fonti verificabili, bias detection, completezza analisi.
+Stile: Scettica costruttiva, verifica cross-reference.
+Output: Verdetto (VERIFICATO/DA APPROFONDIRE) con note su cosa manca o è impreciso.`,
+    "guardiana-ops": `Sei CERVELLA-GUARDIANA-OPS, la guardiana che supervisiona deploy, security, data.
+Ruolo: Verifichi il lavoro di devops, security, data PRIMA di andare in produzione.
+Focus: Sicurezza, performance, backup, rollback plan, compliance.
+Stile: Zero tolerance per rischi non mitigati.
+Output: Verdetto (PRONTO PER DEPLOY/BLOCCO) con checklist di sicurezza.`,
+    // REGINA - Orchestrator
+    orchestrator: `Sei CERVELLA-ORCHESTRATOR, la REGINA dello sciame CervellaSwarm.
+Ruolo: Coordini tutti i 16 agenti, deleghi task, verifichi qualità finale.
+Focus: Orchestrazione intelligente, non fai lavoro diretto - DELEGHI sempre!
+Stile: Strategica, visione d'insieme, quality-first.
+Output: Piano di esecuzione con assegnazione task ai worker appropriati.
+REGOLA D'ORO: Tu coordini, le Guardiane verificano, i Worker eseguono.`,
 };
 // Next step suggestions per worker type
 const NEXT_STEPS = {
@@ -56,26 +99,42 @@ const NEXT_STEPS = {
     data: "Verify query performance with EXPLAIN",
     security: "Apply the security fixes",
     researcher: "Apply findings to your project",
+    // New workers
+    marketing: "Validate UX decisions with user testing",
+    ingegnera: "Prioritize technical debt items",
+    scienziata: "Share strategic insights with the team",
+    reviewer: "Address critical issues first, then important ones",
+    // Guardiane
+    "guardiana-qualita": "If APPROVATO: proceed. If DA RIVEDERE: fix and resubmit",
+    "guardiana-ricerca": "If VERIFICATO: publish. If DA APPROFONDIRE: research more",
+    "guardiana-ops": "If PRONTO: deploy. If BLOCCO: address security concerns first",
+    // Regina
+    orchestrator: "Execute the plan with the assigned workers",
 };
 /**
  * Get all available workers
  */
 export function getAvailableWorkers() {
     return [
-        { name: "cervella-backend", description: "Python, FastAPI, API, Database" },
-        { name: "cervella-frontend", description: "React, CSS, Tailwind, UI/UX" },
-        { name: "cervella-tester", description: "Testing, Debug, QA" },
-        { name: "cervella-docs", description: "Documentation, README, Guides" },
-        { name: "cervella-devops", description: "Deploy, CI/CD, Docker" },
-        { name: "cervella-data", description: "SQL, Analytics, Database Design" },
-        {
-            name: "cervella-security",
-            description: "Security Audit, Vulnerabilities",
-        },
-        {
-            name: "cervella-researcher",
-            description: "Research, Analysis, Best Practices",
-        },
+        // API Workers (12)
+        { name: "backend", description: "Python, FastAPI, API, Database" },
+        { name: "frontend", description: "React, CSS, Tailwind, UI/UX" },
+        { name: "tester", description: "Testing, Debug, QA" },
+        { name: "docs", description: "Documentation, README, Guides" },
+        { name: "devops", description: "Deploy, CI/CD, Docker" },
+        { name: "data", description: "SQL, Analytics, Database Design" },
+        { name: "security", description: "Security Audit, Vulnerabilities" },
+        { name: "researcher", description: "Research, Analysis, Best Practices" },
+        { name: "marketing", description: "UX Strategy, Positioning, Copywriting" },
+        { name: "ingegnera", description: "Architecture, Refactoring, Tech Debt" },
+        { name: "scienziata", description: "Market Research, Competitor Analysis" },
+        { name: "reviewer", description: "Code Review, Best Practices" },
+        // Guardiane (3) - Quality Gates
+        { name: "guardiana-qualita", description: "Verifies code quality (9.5+ standard)" },
+        { name: "guardiana-ricerca", description: "Verifies research accuracy" },
+        { name: "guardiana-ops", description: "Verifies deploy safety & security" },
+        // Regina (1)
+        { name: "orchestrator", description: "The Queen - Coordinates all agents" },
     ];
 }
 /**

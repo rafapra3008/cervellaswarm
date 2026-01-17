@@ -60,7 +60,9 @@ Restart Claude Code to load the MCP server. You'll have access to these tools:
 - **check_status**: Verify configuration and API key
 - **check_usage**: Check your usage quota
 
-## Available Workers
+## Available Agents (16)
+
+### Workers (12)
 
 | Worker | Specialty |
 |--------|-----------|
@@ -72,6 +74,24 @@ Restart Claude Code to load the MCP server. You'll have access to these tools:
 | data | SQL, Analytics, Database Design |
 | security | Security Audit, Vulnerabilities |
 | researcher | Research, Analysis, Best Practices |
+| marketing | UX Strategy, Positioning, Copywriting |
+| ingegnera | Architecture, Refactoring, Tech Debt |
+| scienziata | Market Research, Competitor Analysis |
+| reviewer | Code Review, Best Practices |
+
+### Guardiane (3) - Quality Gates
+
+| Guardiana | Role |
+|-----------|------|
+| guardiana-qualita | Verifies code quality (9.5+ standard) |
+| guardiana-ricerca | Verifies research accuracy |
+| guardiana-ops | Verifies deploy safety & security |
+
+### Regina (1)
+
+| Agent | Role |
+|-------|------|
+| orchestrator | The Queen - Coordinates all agents |
 
 ## Example Usage in Claude Code
 
