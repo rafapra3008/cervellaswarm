@@ -1,43 +1,51 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 17 Gennaio 2026 - Sessione 246
-> **FASE ATTUALE:** Casa Pulita - Fase 4 COMPLETATA!
+> **Ultimo aggiornamento:** 17 Gennaio 2026 - Sessione 247
+> **FASE ATTUALE:** Casa Pulita - Fase 5+7 COMPLETATE!
 
 ---
 
-## SESSIONE 246 - MEGA PROGRESSO!
+## SESSIONE 247 - MEGA SESSIONE!
 
-### Fase 3: Consolidare Docs - FATTO
+### Fase 5: Automazione - FATTO
 ```
-~/.claude-insiders/CLAUDE.md: 131 -> 10 righe (-92%)
-CervellaSwarm/CLAUDE.md: 171 -> 57 righe (-67%)
-SubagentStart hook: DISABILITATO
-Risparmio: ~4800 tokens/sessione
+- scripts/archive_old_reports.sh (13 file archiviati)
+- .git/hooks/pre-commit (limiti + naming)
 ```
 
-### Fase 4: DNA Agents Refactor - FATTO
+### Fase 7: Comunicazione Interna - FATTO
 ```
-Creato _SHARED_DNA.md (120 righe comuni)
-16 DNA agent refactorizzati: 6800 -> 1264 righe (-82%)
-Risparmio: ~7800 tokens/sessione (con 3 agent)
+- 3 Guardiane consultate in parallelo
+- compliance-check.sh aggiunto al daily
+- docs/decisioni/TEMPLATE.md + README
+- Hook pre-commit con compliance marker
+- docs/PATTERN_COMUNICAZIONE.md (6 pattern formalizzati)
 ```
 
-### TOTALE RISPARMIO OGGI: ~12600 tokens/sessione!
+### Pattern Formalizzati
+```
+1. Maker-Checker (Worker + Guardiana)
+2. Artifact System (output persistenti)
+3. Stigmergy (comunicazione via file)
+4. Memory Types (STM/MTM/LTM)
+5. Hierarchical + Peer Hybrid
+6. Deterministic Controls
+```
 
 ---
 
 ## Stato SUBROADMAP Casa Pulita
 
 ```
-FASE 1: Quick Win         [FATTO] (-3100 tokens)
-FASE 2: Pulizia SNCP      [FATTO] (-69% stato.md)
-FASE 3: Consolidare docs  [FATTO!] (-4800 tokens)
-FASE 4: DNA Agents        [FATTO!] (-7800 tokens)
-FASE 5: Automazione       [PROSSIMO]
-FASE 6: Studio Periodico  [DA FARE]
-
-Health Score: 5.8 -> ~8.5
-Target raggiunto: Context < 15k tokens!
+FASE 1: Quick Win              [FATTO] (-3100 tokens)
+FASE 2: Pulizia SNCP           [FATTO] (-69% stato.md)
+FASE 3: Consolidare docs       [FATTO] (-4800 tokens)
+FASE 4: DNA Agents             [FATTO] (-7800 tokens)
+FASE 5: Automazione            [FATTO] <- oggi!
+FASE 6: Studio Periodico       [DA FARE]
+FASE 7: Comunicazione Interna  [FATTO] <- oggi!
+FASE 8: Casa Pulita Clienti    [DA FARE]
+FASE 9: Sistema Aggiornamenti  [DA FARE]
 ```
 
 ---
@@ -51,11 +59,11 @@ Target raggiunto: Context < 15k tokens!
     |
   245: Fase 2
     |
-  246: Fase 3 + Fase 4  <-- OGGI (2 fasi!)
+  246: Fase 3 + Fase 4
     |
-  247: Fase 5 Automazione
+  247: Fase 5 Automazione  <-- OGGI
     |
-  248+: Sprint 4 Sampling
+  248: Fase 6-9 o Sprint 4
 ```
 
 ---
@@ -75,28 +83,32 @@ Sprint 5: Polish
 
 ---
 
-## PROSSIMA SESSIONE (247)
+## PROSSIMA SESSIONE (248)
 
-### CASA PULITA - Fase 5: Automazione
+### Opzioni:
 ```
-1. Script archivio automatico reports > 7 giorni
-2. Hook pre-commit verifica naming
-3. Hook che BLOCCA (non solo warning)
+A) Fase 6: Studio Manutenzione Periodica
+B) Fase 7: Comunicazione Interna Famiglia
+C) Fase 8: Casa Pulita per Clienti
+D) Fase 9: Sistema Aggiornamenti
+E) Sprint 4: Sampling Implementation
 ```
 
 ---
 
 ## FILE MODIFICATI OGGI
 
-**Fase 3:**
-- `~/.claude-insiders/CLAUDE.md`
-- `CervellaSwarm/CLAUDE.md`
-- `.claude/hooks/subagent_start_costituzione.py.DISABLED`
+**Fase 5:**
+- `scripts/archive_old_reports.sh` (NUOVO)
+- `.git/hooks/pre-commit` (NUOVO + aggiornato)
 
-**Fase 4:**
-- `~/.claude/agents/_SHARED_DNA.md` (NUOVO)
-- `~/.claude/agents/cervella-*.md` (tutti 16 refactorizzati!)
+**Fase 7:**
+- `scripts/cron/sncp_daily_maintenance.sh` (compliance-check aggiunto)
+- `docs/decisioni/TEMPLATE.md` (NUOVO)
+- `docs/decisioni/README.md` (NUOVO)
+- `docs/PATTERN_COMUNICAZIONE.md` (NUOVO)
+- Report: analisi + ricerca + 3 valutazioni Guardiane
 
 ---
 
-*"Due progressi oggi! La casa e quasi pronta!"*
+*"Due fasi in una sessione! La comunicazione e l'anima dello sciame!"*

@@ -22,6 +22,7 @@ SNCP_ROOT="/Users/rafapra/Developer/CervellaSwarm/.sncp"
 REPORTS_DIR="$SNCP_ROOT/reports/daily"
 LOG_FILE="/Users/rafapra/Developer/CervellaSwarm/logs/sncp_daily.log"
 HEALTH_CHECK="/Users/rafapra/Developer/CervellaSwarm/scripts/sncp/health-check.sh"
+COMPLIANCE_CHECK="/Users/rafapra/Developer/CervellaSwarm/scripts/sncp/compliance-check.sh"
 
 TODAY=$(date +%Y-%m-%d)
 TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
@@ -121,7 +122,34 @@ check_file_sizes() {
     fi
 }
 
-# === TASK 4: Statistiche ===
+# === TASK 4: Compliance Check ===
+
+run_compliance_check() {
+    log "=== Compliance Check ==="
+
+    if [ -x "$COMPLIANCE_CHECK" ]; then
+        local report_file="$REPORTS_DIR/compliance_$TODAY.txt"
+
+        # Esegui compliance check
+        TERM=dumb "$COMPLIANCE_CHECK" > "$report_file" 2>&1 || true
+
+        log "Compliance check salvato: $report_file"
+
+        # Conta violazioni
+        local violations=$(grep -c "FAIL\|ERRORE\|ERROR" "$report_file" 2>/dev/null | tr -d '[:space:]' || echo "0")
+
+        if [ "$violations" -gt 0 ]; then
+            log "ATTENZIONE: $violations violazioni trovate!"
+            osascript -e "display notification \"SNCP: $violations violazioni compliance\" with title \"Daily Maintenance\" sound name \"Basso\"" 2>/dev/null || true
+        else
+            log "Compliance OK!"
+        fi
+    else
+        log "WARNING: compliance-check.sh non trovato"
+    fi
+}
+
+# === TASK 5: Statistiche ===
 
 generate_stats() {
     log "=== Statistiche SNCP ==="
@@ -153,6 +181,7 @@ main() {
     run_health_check
     cleanup_temp_files
     check_file_sizes
+    run_compliance_check
     generate_stats
 
     log ""

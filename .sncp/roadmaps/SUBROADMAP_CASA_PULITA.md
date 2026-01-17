@@ -19,12 +19,15 @@ Sistemare l'organizzazione interna della famiglia:
 ## STATO FASI
 
 ```
-FASE 1: Quick Win         [COMPLETATO] Sessione 244
-FASE 2: Pulizia SNCP      [COMPLETATO] Sessione 245
-FASE 3: Consolidare docs  [COMPLETATO] Sessione 246
-FASE 4: DNA Agents        [COMPLETATO] Sessione 246
-FASE 5: Automazione       [PROSSIMO]
-FASE 6: Studio Periodico  [DA FARE]
+FASE 1: Quick Win              [COMPLETATO] Sessione 244
+FASE 2: Pulizia SNCP           [COMPLETATO] Sessione 245
+FASE 3: Consolidare docs       [COMPLETATO] Sessione 246
+FASE 4: DNA Agents             [COMPLETATO] Sessione 246
+FASE 5: Automazione            [COMPLETATO] Sessione 247
+FASE 6: Studio Periodico       [DA FARE]
+FASE 7: Comunicazione Interna  [COMPLETATO] Sessione 247
+FASE 8: Casa Pulita Clienti    [DA FARE]    (Sessione 247 - nuovo!)
+FASE 9: Sistema Aggiornamenti  [DA FARE]    (Sessione 247 - nuovo!)
 ```
 
 ---
@@ -64,15 +67,15 @@ FASE 6: Studio Periodico  [DA FARE]
 
 ---
 
-## FASE 5: AUTOMAZIONE
+## FASE 5: AUTOMAZIONE [COMPLETATO]
 
-**Chi:** Backend
+**Sessione 247**
 
-| # | Task | Valore |
-|---|------|--------|
-| 1 | Script archivio automatico reports > 7 giorni | Zero manutenzione |
-| 2 | Hook pre-commit: verifica naming | Compliance |
-| 3 | Hook che BLOCCA (non solo warning) | Enforcement |
+| # | Task | Stato |
+|---|------|-------|
+| 1 | `scripts/archive_old_reports.sh` | FATTO - 13 file archiviati |
+| 2 | `.git/hooks/pre-commit` - verifica naming | FATTO |
+| 3 | Hook BLOCCA se limite superato | FATTO |
 
 ---
 
@@ -139,10 +142,100 @@ FASE 6: Studio Periodico  [DA FARE]
 
 ---
 
+## FASE 7: COMUNICAZIONE INTERNA FAMIGLIA [COMPLETATO]
+
+**Sessione 247**
+
+### Analisi Fatta
+- 3 Guardiane consultate in parallelo
+- Gap identificati: enforcement debole, decisioni non strutturate
+- Scoperta: infrastruttura ESISTEVA gia, mancava ADOZIONE
+
+### Implementato
+
+| # | Task | Stato |
+|---|------|-------|
+| 1 | compliance-check.sh nel daily | FATTO |
+| 2 | docs/decisioni/TEMPLATE.md + README | FATTO |
+| 3 | Hook pre-commit con compliance marker | FATTO |
+| 4 | docs/PATTERN_COMUNICAZIONE.md | FATTO |
+
+### Pattern Formalizzati
+- Maker-Checker (Worker + Guardiana)
+- Artifact System (output persistenti)
+- Stigmergy (comunicazione via file)
+- Memory Types (STM/MTM/LTM)
+
+---
+
+## FASE 8: CASA PULITA PER CLIENTI [NUOVO]
+
+> **Richiesto da Rafa - Sessione 247**
+> "Come portare i miglioramenti Casa Pulita nel prodotto per i clienti"
+
+**Chi:** cervella-researcher + cervella-backend
+**Output:** Analisi + Roadmap implementazione
+
+### Domande da Rispondere
+
+```
+1. COSA PORTARE AI CLIENTI
+   - Context optimization (risparmio token)
+   - DNA agents pattern
+   - SNCP structure?
+   - Hook system?
+
+2. COME IMPLEMENTARE
+   - Feature nel CLI?
+   - Template iniziale?
+   - Best practices docs?
+
+3. VALORE PER CLIENTI
+   - Risparmio costi API
+   - Organizzazione migliore
+   - Manutenzione più facile
+```
+
+---
+
+## FASE 9: SISTEMA AGGIORNAMENTI PROGRAMMA [NUOVO]
+
+> **Richiesto da Rafa - Sessione 247**
+> "Come funzionano gli updates del programma? Come renderlo automatico?"
+
+**Chi:** cervella-researcher + cervella-devops
+**Output:** Studio + Implementazione
+
+### Domande da Rispondere
+
+```
+1. STATO ATTUALE
+   - Come si aggiorna CervellaSwarm oggi?
+   - npm update? pip install --upgrade?
+   - Manual download?
+
+2. BEST PRACTICES
+   - Come fanno CLI tool popolari? (gh, vercel, etc)
+   - Semantic versioning
+   - Changelog automatico
+   - Breaking changes handling
+
+3. IMPLEMENTAZIONE
+   - Check versione all'avvio
+   - Notifica update disponibili
+   - Auto-update opzionale?
+   - Migration scripts per breaking changes
+```
+
+---
+
 ## PROSSIMO STEP
 
-**Fase 5:** Automazione (script archivio, hook pre-commit)
+**Fase 5:** Automazione (OGGI - Sessione 247)
 **Fase 6:** Studio Manutenzione Periodica
+**Fase 7:** Comunicazione Interna Famiglia
+**Fase 8:** Casa Pulita per Clienti
+**Fase 9:** Sistema Aggiornamenti Programma
 
 ---
 
