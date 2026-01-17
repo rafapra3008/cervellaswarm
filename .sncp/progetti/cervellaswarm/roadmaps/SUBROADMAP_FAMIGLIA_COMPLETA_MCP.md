@@ -22,6 +22,49 @@
 
 ---
 
+## REGOLA D'ORO - COME USARE LE GUARDIANE
+
+```
++================================================================+
+|   QUANDO HAI DUBBI → CHIEDI ALLA GUARDIANA!                    |
++================================================================+
+|                                                                |
+|   Le Guardiane sbloccano SEMPRE:                               |
+|                                                                |
+|   - Confrontare codice       → "È fatto bene?"                 |
+|   - Verificare opinioni      → "È la scelta giusta?"           |
+|   - Validare idee            → "Ha senso?"                     |
+|   - Controllare qualità      → "Standard 9.5 minimo!"          |
+|                                                                |
+|   STANDARD ALTO = 9.5 MINIMO                                   |
+|                                                                |
++================================================================+
+```
+
+### Quando Usare Quale Guardiana
+
+| Situazione | Guardiana | Cosa Chiede |
+|------------|-----------|-------------|
+| Dubbi su codice/qualità | guardiana-qualita | "Verifica questo codice" |
+| Dubbi su ricerca/info | guardiana-ricerca | "Verifica questa ricerca" |
+| Dubbi su deploy/ops | guardiana-ops | "Verifica questo deploy" |
+
+### Esempio di Uso
+
+```
+PRIMA (senza Guardiana):
+  "Faccio questo codice... spero sia giusto"
+  → Errori, refactoring, tempo perso
+
+DOPO (con Guardiana):
+  "Guardiana, verifica questo approccio"
+  → Feedback, correzioni, fatto BENE la prima volta
+
+RISULTATO: Standard 9.5+ sempre!
+```
+
+---
+
 ## STATO ATTUALE
 
 ```
