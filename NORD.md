@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 17 Gennaio 2026 - Sessione 253
+> Aggiornato: 17 Gennaio 2026 - Sessione 254
 
 ```
 +==================================================================+
@@ -32,7 +32,7 @@
 
 ---
 
-## DOVE SIAMO (17 Gennaio 2026 - Sessione 253)
+## DOVE SIAMO (17 Gennaio 2026 - Sessione 254)
 
 ```
 +================================================================+
@@ -49,9 +49,9 @@ FASE 1: FONDAMENTA               [####################] 100%!
   - PRE/POST-FLIGHT 16 agenti    FATTO
   - 3 GAP critici                FATTO (Sessione 217!)
 
-FASE 2: MVP PRODOTTO             [################....] 80% REALE
+FASE 2: MVP PRODOTTO             [##################..] 90% REALE
 
-  REALE (Sessione 253!):
+  REALE (Sessione 254!):
   ✓ CLI su npm                   cervellaswarm@0.1.1
   ✓ MCP su npm                   @cervellaswarm/mcp-server@0.2.0
   ✓ FAMIGLIA COMPLETA            16 AGENTI! (da 8!)
@@ -60,14 +60,16 @@ FASE 2: MVP PRODOTTO             [################....] 80% REALE
   ✓ Stripe                       Payment Link OK
   ✓ BYOK                         Pronto
   ✓ Marketing Diamante           Ricerca + Subroadmap
+  ✓ ASSETS LANCIO                Hero image + GIF! (Sessione 254!)
+  ✓ README                       Aggiornato con visual
 
   ANCORA DA FARE:
   ✗ OIDC Trusted Publishing      CI/CD automatico npm
-  ✗ Aggiornare descrizioni       README, npm pages
-  ✗ Assets lancio                Screenshot, GIF
+  ✗ Bozza post Show HN           Prossima sessione
 
-FASE 3: PRIMI UTENTI             [#...................] 5%
+FASE 3: PRIMI UTENTI             [##..................] 10%
   - Strategia lancio definita    FATTO
+  - Assets demo                  FATTO (Sessione 254!)
   - Data target                  21 Gennaio 2026
 
 FASE 4: SCALA                    [....................] 0%
@@ -78,11 +80,11 @@ INIZIATIVE PARALLELE:
   - Phrasebook                   20%
   - Famiglia Completa MCP        100%! (16/16 agenti) - Sessione 253!
   - Marketing Diamante           100%! (4 parti + subroadmap)
+  - Demo Visual                  100%! (Sessione 254!)
 
 PROSSIMI STEP CRITICI:
-  1. Aggiornare descrizioni ovunque
-  2. Preparare assets lancio
-  3. LANCIO: Martedi 21 Gennaio 2026
+  1. Bozza post Show HN
+  2. LANCIO: Martedi 21 Gennaio 2026
 ```
 
 ---

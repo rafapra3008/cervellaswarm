@@ -1,46 +1,64 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 17 Gennaio 2026 - Sessione 253
-> **SCORE:** 9.5/10 (da 8.5 dopo fix!)
+> **Ultimo aggiornamento:** 17 Gennaio 2026 - Sessione 254
+> **SCORE:** 9.5/10
 
 ---
 
-## SESSIONE 253 - COMPLETATA!
+## SESSIONE 254 - DEMO VISUAL COMPLETATI!
 
 ```
 +================================================================+
-|   MCP SERVER v0.2.0 - 16 AGENTI LIVE!                          |
-|   MARKETING DIAMANTE - STRATEGIA PRONTA!                       |
-|   DESCRIZIONI ALLINEATE - SCORE 9.5!                           |
+|   HERO IMAGE: collaboration_flow.png                           |
+|   Mostra la MAGIA della collaborazione REALE                   |
+|   User -> Regina -> Workers -> Guardiana -> Result             |
 +================================================================+
 ```
 
 ### Cosa Abbiamo Fatto
 
-1. Da 8 a 16 agenti nel MCP Server (v0.2.0)
-2. Ricerca Marketing Diamante (4 parti)
-3. SUBROADMAP Marketing & Lancio
-4. MAPPA STUDI ORO
-5. Fix per 9.5: descrizioni allineate, README aggiornato
+1. **Ricerca best practices** screenshot/GIF per Show HN
+2. **Consulenza Marketing + Researcher** -> insight chiave
+3. **collaboration_flow.png** creato (285KB) - HERO!
+4. **4 GIF** create (hero, doctor, task, conversation)
+5. **README aggiornato** con visual + comandi CLI corretti
+6. **API key CLI** configurata (in ~/Library/Preferences/)
+7. **VHS + gifsicle** installati per demo future
+
+### Insight CRITICO (Marketing + Researcher)
+
+```
+"La MAGIA non e il comando CLI"
+"La MAGIA e la COLLABORAZIONE tra agenti"
+"Show conversation, not terminal commands"
+```
 
 ---
 
-## MESSAGGI CHIAVE
+## STATO ATTUALE
 
 ```
-"The only AI coding team that checks its own work"
-"Sometimes it feels like magic"
-"Rompere i paradigmi. Aprire la testa. Avere fiducia."
+DEMO ASSETS (docs/demo/):
+  - collaboration_flow.png   <- HERO nel README
+  - collaboration_flow.html  <- Sorgente
+  - cervellaswarm_hero.gif
+  - cervellaswarm_doctor.gif
+  - cervellaswarm_task.gif
+
+STUDI (docs/studio/):
+  - RICERCA_SCREENSHOT_GIF_BEST_PRACTICES.md
+  - RICERCA_DEMO_MULTIAGENT_PATTERNS.md
+  - RICERCA_GIF_CHAT_DEMO_TOOLS.md
 ```
 
 ---
 
-## PROSSIMA SESSIONE (254)
+## PROSSIMA SESSIONE (255)
 
 ```
-1. Creare screenshot/GIF demo
-2. Scrivere bozza post Show HN
-3. DATA LANCIO: Martedi 21 Gennaio 2026
+1. Bozza post Show HN
+2. (Opzionale) GIF animata chat-style
+3. LANCIO: Martedi 21 Gennaio 2026
 ```
 
 ---
@@ -49,10 +67,22 @@
 
 | Cosa | Dove |
 |------|------|
+| Hero Image | `docs/demo/collaboration_flow.png` |
+| README | Aggiornato con visual |
+| Ricerche | `docs/studio/RICERCA_*.md` |
 | SUBROADMAP Marketing | `roadmaps/SUBROADMAP_DIAMANTE_MARKETING_LANCIO.md` |
-| MAPPA STUDI ORO | `MAPPA_STUDI_ORO.md` |
-| MANIFESTO | `MANIFESTO.md` |
+| MAPPA STUDI | `MAPPA_STUDI_ORO.md` |
 
 ---
 
-*"Le Guardiane sono il nostro segreto!"*
+## MESSAGGI CHIAVE
+
+```
+"The only AI coding team that checks its own work"
+"Sometimes it feels like magic"
+"16 brains are better than one"
+```
+
+---
+
+*"Ultrapassar os proprios limites!"*

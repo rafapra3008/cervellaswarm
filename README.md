@@ -2,6 +2,10 @@
 
 > **16 AI Agents. 1 Command. Your AI Development Team.**
 
+<p align="center">
+  <img src="docs/demo/collaboration_flow.png" alt="CervellaSwarm - Real AI Team Collaboration" width="800">
+</p>
+
 A multi-agent orchestration system for Claude Code. Instead of one AI assistant, get a team of 16 specialized AI agents working together on your codebase.
 
 ## What Problem Does This Solve?
@@ -16,18 +20,21 @@ Single AI assistants forget context, lack specialization, and can't divide work.
 ## Quick Start
 
 ```bash
-# 1. Clone the repo
-git clone https://github.com/rafapra3008/CervellaSwarm.git
-cd CervellaSwarm
+# 1. Install globally
+npm install -g cervellaswarm
 
-# 2. Initialize your project's memory
-./scripts/sncp/sncp-init.sh your-project
+# 2. Initialize in your project
+cervellaswarm init
 
-# 3. Start working with agents
-spawn-workers --list        # See available agents
-spawn-workers --backend     # Launch backend specialist
-spawn-workers --frontend    # Launch frontend specialist
+# 3. Give tasks to your AI team
+cervellaswarm task "add login page"         # Auto-routes to frontend
+cervellaswarm task "create REST API"        # Auto-routes to backend
+cervellaswarm task "find security issues"   # Auto-routes to security
 ```
+
+<p align="center">
+  <img src="docs/demo/cervellaswarm_doctor.gif" alt="CervellaSwarm Doctor" width="800">
+</p>
 
 ## The Team (16 Agents)
 
@@ -81,24 +88,25 @@ Multiple agents working together:
 
 **1. Complex Feature Development**
 ```bash
-# Queen coordinates frontend + backend + tester
-spawn-workers --orchestrator
-> "Build user authentication with OAuth"
+cervellaswarm task "Build user authentication with OAuth"
+# Regina coordinates frontend + backend + tester automatically
 ```
 
 **2. Code Review & Refactoring**
 ```bash
-# Reviewer + Engineer analyze codebase
-spawn-workers --reviewer
-> "Review the authentication module"
+cervellaswarm task "Review the authentication module" -a reviewer
+# Reviewer analyzes code and suggests improvements
 ```
 
 **3. Research Before Implementation**
 ```bash
-# Researcher investigates best practices
-spawn-workers --researcher
-> "How do enterprise apps handle rate limiting?"
+cervellaswarm task "How do enterprise apps handle rate limiting?" -a researcher
+# Researcher investigates best practices before you code
 ```
+
+<p align="center">
+  <img src="docs/demo/cervellaswarm_task.gif" alt="CervellaSwarm Task" width="800">
+</p>
 
 ## Requirements
 

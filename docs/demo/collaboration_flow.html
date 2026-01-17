@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CervellaSwarm - Real Collaboration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 40px;
+            color: #fff;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 28px;
+            color: #f0f0f0;
+            margin-bottom: 8px;
+        }
+        .header .tagline {
+            font-size: 16px;
+            color: #8892b0;
+        }
+        .flow {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .message {
+            background: #1e2a4a;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #64ffda;
+            position: relative;
+        }
+        .message.user {
+            border-left-color: #ffd700;
+            background: #2a2a1e;
+        }
+        .message.regina {
+            border-left-color: #ff6b9d;
+            background: #2a1e2a;
+        }
+        .message.worker {
+            border-left-color: #64ffda;
+            background: #1e2a2a;
+        }
+        .message.guardiana {
+            border-left-color: #a78bfa;
+            background: #1e1e2a;
+        }
+        .role {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .role.user { color: #ffd700; }
+        .role.regina { color: #ff6b9d; }
+        .role.worker { color: #64ffda; }
+        .role.guardiana { color: #a78bfa; }
+        .content {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #ccd6f6;
+        }
+        .arrow {
+            text-align: center;
+            color: #64ffda;
+            font-size: 24px;
+            margin: -5px 0;
+        }
+        .annotation {
+            position: absolute;
+            right: -200px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(100, 255, 218, 0.1);
+            border: 1px solid #64ffda;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: #64ffda;
+            width: 180px;
+        }
+        .result {
+            background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .result h3 {
+            color: #34d399;
+            margin-bottom: 8px;
+        }
+        .result p {
+            color: #a7f3d0;
+            font-size: 14px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #2a3a5a;
+        }
+        .footer .quote {
+            font-style: italic;
+            color: #8892b0;
+            margin-bottom: 16px;
+        }
+        .footer code {
+            background: #2a3a5a;
+            padding: 8px 16px;
+            border-radius: 6px;
+            color: #64ffda;
+            font-family: 'Fira Code', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CervellaSwarm: Real Collaboration in Action</h1>
+            <p class="tagline">16 AI Agents. 1 Command. Your AI Development Team.</p>
+        </div>
+
+        <div class="flow">
+            <div class="message user">
+                <div class="role user">Rafa (User)</div>
+                <div class="content">"Create demo screenshots for Show HN launch"</div>
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <div class="message regina">
+                <div class="role regina">Regina (Queen)</div>
+                <div class="content">Analyzing task... This needs UX expertise AND research.<br>Let me consult the specialists.</div>
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <div class="message worker">
+                <div class="role worker">Researcher (Worker)</div>
+                <div class="content">Researching: How do Devin, CrewAI, and other multi-agent tools show their "magic"?<br><br>Found: Extended thinking visible, parallelism, checks & balances patterns work best.</div>
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <div class="message worker">
+                <div class="role worker">Marketing (Worker)</div>
+                <div class="content">UX Analysis: Technical GIFs don't communicate emotional value.<br><br>Recommendation: Show COLLABORATION, not commands. Screenshot real conversations.</div>
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <div class="message guardiana">
+                <div class="role guardiana">Guardiana Qualita</div>
+                <div class="content">Verifying recommendations...<br>
+                ✓ Research sources validated<br>
+                ✓ UX strategy aligned with best practices<br>
+                ✓ Actionable next steps provided</div>
+            </div>
+
+            <div class="result">
+                <h3>Result: Strategy Ready</h3>
+                <p>Demo format decided, assets defined, launch plan clear.<br>All verified by guardians before execution.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p class="quote">"The only AI coding team that checks its own work"</p>
+            <code>npm install -g cervellaswarm</code>
+        </div>
+    </div>
+</body>
+</html>

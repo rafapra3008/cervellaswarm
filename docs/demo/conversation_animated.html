@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CervellaSwarm - Live Collaboration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            padding: 30px;
+            color: #fff;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        .header h1 {
+            font-size: 22px;
+            color: #64ffda;
+            font-weight: 500;
+        }
+        .messages {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .message {
+            padding: 14px 18px;
+            border-radius: 8px;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .user {
+            background: rgba(255, 215, 0, 0.15);
+            border-left: 3px solid #ffd700;
+        }
+        .regina {
+            background: rgba(255, 107, 157, 0.15);
+            border-left: 3px solid #ff6b9d;
+        }
+        .worker {
+            background: rgba(100, 255, 218, 0.1);
+            border-left: 3px solid #64ffda;
+            margin-left: 30px;
+        }
+        .guardiana {
+            background: rgba(167, 139, 250, 0.15);
+            border-left: 3px solid #a78bfa;
+        }
+        .result {
+            background: linear-gradient(135deg, rgba(52, 211, 153, 0.2), rgba(16, 185, 129, 0.2));
+            border: 1px solid #34d399;
+            text-align: center;
+            padding: 20px;
+        }
+        .role {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        .user .role { color: #ffd700; }
+        .regina .role { color: #ff6b9d; }
+        .worker .role { color: #64ffda; }
+        .guardiana .role { color: #a78bfa; }
+        .result .role { color: #34d399; }
+        .content {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+        .content .typing {
+            border-right: 2px solid #64ffda;
+            animation: blink 0.7s infinite;
+        }
+        .checkmark {
+            color: #34d399;
+            margin-right: 6px;
+        }
+        .spawning {
+            color: #8892b0;
+            font-size: 12px;
+            font-style: italic;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            opacity: 0;
+        }
+        .footer .tagline {
+            color: #64ffda;
+            font-style: italic;
+            font-size: 14px;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        /* Animation delays for each message */
+        .m1 { animation: fadeIn 0.4s ease forwards 0.5s; }
+        .m2 { animation: fadeIn 0.4s ease forwards 1.5s; }
+        .m3 { animation: fadeIn 0.4s ease forwards 3s; }
+        .m4 { animation: fadeIn 0.4s ease forwards 4s; }
+        .m5 { animation: fadeIn 0.4s ease forwards 5.5s; }
+        .m6 { animation: fadeIn 0.4s ease forwards 7s; }
+        .m7 { animation: fadeIn 0.4s ease forwards 8.5s; }
+        .footer { animation: fadeIn 0.4s ease forwards 10s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CervellaSwarm Session</h1>
+        </div>
+
+        <div class="messages">
+            <div class="message user m1">
+                <div class="role">User</div>
+                <div class="content">Create demo screenshots for Show HN launch</div>
+            </div>
+
+            <div class="message regina m2">
+                <div class="role">Regina (Queen)</div>
+                <div class="content">
+                    Analyzing task... This needs UX expertise AND research.<br>
+                    Let me consult the specialists.
+                </div>
+            </div>
+
+            <div class="message worker m3">
+                <div class="role">Researcher</div>
+                <div class="content">
+                    <span class="spawning">[Researching multi-agent demo patterns...]</span><br><br>
+                    Found: Extended thinking visible, parallelism, checks & balances work best for showing AI collaboration.
+                </div>
+            </div>
+
+            <div class="message worker m4">
+                <div class="role">Marketing</div>
+                <div class="content">
+                    <span class="spawning">[Analyzing UX strategy...]</span><br><br>
+                    Technical GIFs don't communicate value.<br>
+                    <strong>Show COLLABORATION, not commands.</strong>
+                </div>
+            </div>
+
+            <div class="message guardiana m5">
+                <div class="role">Guardiana Qualita</div>
+                <div class="content">
+                    Verifying recommendations...<br>
+                    <span class="checkmark">✓</span> Research sources validated<br>
+                    <span class="checkmark">✓</span> UX strategy aligned<br>
+                    <span class="checkmark">✓</span> Actionable steps provided
+                </div>
+            </div>
+
+            <div class="message result m6">
+                <div class="role">Result</div>
+                <div class="content">
+                    <strong>Strategy ready.</strong><br>
+                    All verified by guardians before execution.
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p class="tagline">"The only AI coding team that checks its own work"</p>
+        </div>
+    </div>
+</body>
+</html>
