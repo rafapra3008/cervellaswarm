@@ -1,53 +1,48 @@
 # STATO OGGI - 17 Gennaio 2026
 
-> **Sessione:** 251
-> **Focus:** npm publish + BYOK decision
+> **Sessione:** 252
+> **Focus:** CervellaSwarm - npm publish COMPLETO!
 
 ---
 
-## SESSIONE 251 - SUCCESSO!
-
-### CLI PUBBLICATA SU NPM!
+## SESSIONE 252 - MILESTONE!
 
 ```
 +================================================================+
-|   cervellaswarm@0.1.1 - LIVE SU NPM!                          |
-|   https://www.npmjs.com/package/cervellaswarm                  |
+|   ENTRAMBI I PACCHETTI LIVE SU NPM!                            |
++================================================================+
+|   cervellaswarm@0.1.1                                          |
+|   @cervellaswarm/mcp-server@0.1.2                              |
 +================================================================+
 ```
 
-### MCP Server - In Progress
+### Completato Oggi
 
-- Serve creare org `@cervellaswarm` su npm
-- Oppure rinominare senza scope
+| Task | Status |
+|------|--------|
+| Org @cervellaswarm su npm | CREATA |
+| CLI pubblicata | v0.1.1 |
+| MCP Server pubblicato | v0.1.2 |
+| Test end-to-end | PASSATI |
+| README MCP fixato | FATTO |
 
-### Token npm creato
-
-- Granular access token funziona
-- Configurato in ~/.npmrc
-
----
-
-## DECISIONI PRESE
+### Test Verificati
 
 ```
-BYOK = Unica strada per MVP
-- Sampling NON supportato da Claude Code
-- Cursor perde soldi (-30% margine)
-- BYOK = margine 100%
+CLI:  install, version, doctor    OK
+MCP:  install, bin, 4 tools       OK
 ```
 
 ---
 
-## PROSSIMI STEP
+## PROSSIMI STEP (Sessione 253)
 
 ```
-1. Creare org @cervellaswarm su npm
-2. Pubblicare MCP Server
-3. Configurare OIDC Trusted Publishing
-4. Test end-to-end
+1. OIDC Trusted Publishing
+2. Marketing: dove lanciare
+3. Primi utenti beta
 ```
 
 ---
 
-*"CLI PUBBLICATA! Un progresso REALE!"*
+*"Da SU CARTA a REALE! CLI + MCP pubblicati!"*
