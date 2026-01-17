@@ -8,7 +8,8 @@
 # - Mantiene solo le righe recenti
 # - Aggiunge header con metadata
 #
-# Uso: ./compact-state.sh [file] [max_lines] [keep_lines]
+# Uso: ./compact-state.sh [--auto] [file] [max_lines] [keep_lines]
+#      --auto: esegue senza conferma (per automazione)
 #      file: path al file (default: .sncp/stato/oggi.md)
 #      max_lines: trigger compaction (default: 300)
 #      keep_lines: righe da mantenere (default: 200)
@@ -20,6 +21,13 @@ set -e
 SNCP_ROOT="${SNCP_ROOT:-/Users/rafapra/Developer/CervellaSwarm/.sncp}"
 NOW=$(date +"%Y-%m-%d %H:%M")
 TODAY=$(date +%Y-%m-%d)
+
+# Auto mode (no confirmation)
+AUTO_MODE=false
+if [ "$1" = "--auto" ]; then
+    AUTO_MODE=true
+    shift
+fi
 
 # Defaults
 FILE="${1:-$SNCP_ROOT/stato/oggi.md}"
@@ -157,13 +165,21 @@ print_status
 
 if needs_compaction; then
     echo ""
-    read -p "Eseguire compaction? [y/N] " -n 1 -r
-    echo ""
 
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
+    if [ "$AUTO_MODE" = true ]; then
+        # Auto mode: esegui senza conferma
+        echo -e "  ${BLUE}[AUTO]${NC} Esecuzione automatica..."
         run_compaction
     else
-        echo -e "  ${YELLOW}[SKIP]${NC} Compaction annullata"
+        # Interactive mode: chiedi conferma
+        read -p "Eseguire compaction? [y/N] " -n 1 -r
+        echo ""
+
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            run_compaction
+        else
+            echo -e "  ${YELLOW}[SKIP]${NC} Compaction annullata"
+        fi
     fi
 fi
 

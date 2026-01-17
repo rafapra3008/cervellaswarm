@@ -23,6 +23,11 @@ REPORTS_DIR="$SNCP_ROOT/reports/daily"
 LOG_FILE="/Users/rafapra/Developer/CervellaSwarm/logs/sncp_daily.log"
 HEALTH_CHECK="/Users/rafapra/Developer/CervellaSwarm/scripts/sncp/health-check.sh"
 COMPLIANCE_CHECK="/Users/rafapra/Developer/CervellaSwarm/scripts/sncp/compliance-check.sh"
+COMPACT_SCRIPT="/Users/rafapra/Developer/CervellaSwarm/scripts/sncp/compact-state.sh"
+
+# Limiti per auto-compaction
+AUTO_COMPACT_TRIGGER=400  # Compatta automaticamente se > 400 righe
+AUTO_COMPACT_KEEP=250     # Mantiene 250 righe dopo compaction
 
 TODAY=$(date +%Y-%m-%d)
 TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
@@ -97,8 +102,9 @@ check_file_sizes() {
     log "=== Verifica dimensioni file ==="
 
     local large_files=0
+    local compacted_files=0
 
-    # Trova file > 500 righe nei progetti
+    # Trova file troppo grandi nei progetti
     for project_dir in "$SNCP_ROOT/progetti"/*/; do
         if [ -d "$project_dir" ]; then
             local project_name=$(basename "$project_dir")
@@ -107,16 +113,59 @@ check_file_sizes() {
             local stato_file="$project_dir/stato.md"
             if [ -f "$stato_file" ]; then
                 local lines=$(wc -l < "$stato_file" | tr -d ' ')
-                if [ "$lines" -gt 300 ]; then
-                    log "WARNING: $project_name/stato.md ha $lines righe (max 300)"
+
+                # AUTO-COMPACT se > 400 righe
+                if [ "$lines" -gt "$AUTO_COMPACT_TRIGGER" ]; then
+                    log "AUTO-COMPACT: $project_name/stato.md ha $lines righe (> $AUTO_COMPACT_TRIGGER)"
+                    if [ -x "$COMPACT_SCRIPT" ]; then
+                        "$COMPACT_SCRIPT" --auto "$stato_file" "$AUTO_COMPACT_TRIGGER" "$AUTO_COMPACT_KEEP" >> "$LOG_FILE" 2>&1 || true
+                        ((compacted_files++))
+                        log "  -> Compattato automaticamente"
+                    fi
+                # WARNING se > 300 righe
+                elif [ "$lines" -gt 300 ]; then
+                    log "WARNING: $project_name/stato.md ha $lines righe (max 300, auto-compact a $AUTO_COMPACT_TRIGGER)"
+                    ((large_files++))
+                fi
+            fi
+
+            # Check PROMPT_RIPRESA
+            local pr_file="$project_dir/PROMPT_RIPRESA_${project_name}.md"
+            if [ -f "$pr_file" ]; then
+                local pr_lines=$(wc -l < "$pr_file" | tr -d ' ')
+                if [ "$pr_lines" -gt 150 ]; then
+                    log "WARNING: $project_name/PROMPT_RIPRESA ha $pr_lines righe (max 150)"
                     ((large_files++))
                 fi
             fi
         fi
     done
 
+    # Check oggi.md
+    local oggi_file="$SNCP_ROOT/stato/oggi.md"
+    if [ -f "$oggi_file" ]; then
+        local oggi_lines=$(wc -l < "$oggi_file" | tr -d ' ')
+        if [ "$oggi_lines" -gt "$AUTO_COMPACT_TRIGGER" ]; then
+            log "AUTO-COMPACT: oggi.md ha $oggi_lines righe (> $AUTO_COMPACT_TRIGGER)"
+            if [ -x "$COMPACT_SCRIPT" ]; then
+                "$COMPACT_SCRIPT" --auto "$oggi_file" "$AUTO_COMPACT_TRIGGER" "$AUTO_COMPACT_KEEP" >> "$LOG_FILE" 2>&1 || true
+                ((compacted_files++))
+                log "  -> Compattato automaticamente"
+            fi
+        elif [ "$oggi_lines" -gt 60 ]; then
+            log "WARNING: oggi.md ha $oggi_lines righe (max 60, auto-compact a $AUTO_COMPACT_TRIGGER)"
+            ((large_files++))
+        fi
+    fi
+
+    # Summary
+    if [ "$compacted_files" -gt 0 ]; then
+        log "AUTO-COMPACT: $compacted_files file compattati automaticamente"
+        osascript -e "display notification \"$compacted_files file compattati\" with title \"SNCP Auto-Compact\" sound name \"Glass\"" 2>/dev/null || true
+    fi
+
     if [ "$large_files" -gt 0 ]; then
-        log "ATTENZIONE: $large_files file troppo grandi - considera compattazione"
+        log "WARNING: $large_files file sopra limite (ma sotto auto-compact)"
     else
         log "Dimensioni file OK"
     fi

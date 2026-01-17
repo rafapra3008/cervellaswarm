@@ -1,6 +1,6 @@
 # SUBROADMAP - CASA PULITA
 
-> **Aggiornato:** 17 Gennaio 2026 - Sessione 246
+> **Aggiornato:** 17 Gennaio 2026 - Sessione 248
 > "Lavoriamo in pace! Senza casino! Dipende da noi!"
 
 ---
@@ -24,10 +24,10 @@ FASE 2: Pulizia SNCP           [COMPLETATO] Sessione 245
 FASE 3: Consolidare docs       [COMPLETATO] Sessione 246
 FASE 4: DNA Agents             [COMPLETATO] Sessione 246
 FASE 5: Automazione            [COMPLETATO] Sessione 247
-FASE 6: Studio Periodico       [DA FARE]
+FASE 6: Studio Periodico       [COMPLETATO] Sessione 248
 FASE 7: Comunicazione Interna  [COMPLETATO] Sessione 247
-FASE 8: Casa Pulita Clienti    [DA FARE]    (Sessione 247 - nuovo!)
-FASE 9: Sistema Aggiornamenti  [DA FARE]    (Sessione 247 - nuovo!)
+FASE 8: Casa Pulita Clienti    [COMPLETATO] Sessione 248 (Piano creato)
+FASE 9: Sistema Aggiornamenti  [DA FARE]
 ```
 
 ---
@@ -79,55 +79,42 @@ FASE 9: Sistema Aggiornamenti  [DA FARE]    (Sessione 247 - nuovo!)
 
 ---
 
-## FASE 6: STUDIO MANUTENZIONE PERIODICA [NUOVO]
+## FASE 6: STUDIO MANUTENZIONE PERIODICA [COMPLETATO]
 
-> **Richiesto da Rafa - Sessione 245**
-> "Vale la pena automatizzare Casa Pulita periodicamente?"
+**Sessione 248**
 
-**Chi:** cervella-ingegnera + cervella-researcher
-**Quando:** Sessione dedicata (puo essere background)
-**Output:** Report con raccomandazioni
+### Studio Completato
 
-### Domande da Rispondere
+| Domanda | Risposta |
+|---------|----------|
+| **Frequenza** | IBRIDO: Daily (8:30) + Weekly (Lunedi) + Trigger dimensione |
+| **Cosa automatizzare** | Health, cleanup, compliance + AUTO-COMPACT |
+| **Come** | launchd (già esistente) + trigger dimensione (nuovo) |
+| **Scope** | Multi-progetto GIA FUNZIONANTE (SNCP centralizzato) |
 
-```
-1. FREQUENZA
-   - Ogni 7 giorni? Ogni 3 giorni?
-   - Trigger su dimensione file? (es. stato.md > 400 righe)
-   - Trigger su numero file? (es. reports/ > 50)
+### Implementato
 
-2. COSA AUTOMATIZZARE
-   - Archivio automatico file vecchi
-   - Check duplicati
-   - Compattazione stato.md
-   - Verifica naming
-   - Health score check
+| # | Task | Stato |
+|---|------|-------|
+| 1 | Flag `--auto` in compact-state.sh | FATTO |
+| 2 | Trigger dimensione nel daily (>400 righe) | FATTO |
+| 3 | Check PROMPT_RIPRESA nel daily | FATTO |
+| 4 | Notifica macOS per auto-compact | FATTO |
 
-3. COME IMPLEMENTARE
-   - launchd job (come sncp_daily)
-   - Hook pre-sessione
-   - Script manuale con reminder
-   - Combinazione?
-
-4. SCOPE
-   - Solo CervellaSwarm?
-   - Tutti i progetti?
-   - Configurabile per progetto?
-
-5. EFFORT vs VALORE
-   - Quanto costa implementare?
-   - Quanto risparmia nel tempo?
-   - ROI positivo?
-```
-
-### Best Practices da Studiare
+### Best Practices Adottate (Ricerca 2026)
 
 ```
-- Come fanno grandi team multi-agent?
-- Pattern manutenzione codebase (git gc, etc)
-- Strategie archivio enterprise
-- Self-healing systems
+1. Approccio IBRIDO (time + trigger) - best practice 2026
+2. Stigmergy (comunicazione via file) - già in uso
+3. Self-healing con backup automatico
+4. Retention policy (hot/warm/cold)
+5. Hierarchical automation (daily/weekly layers)
 ```
+
+### File Modificati
+
+- `scripts/sncp/compact-state.sh` (flag --auto)
+- `scripts/cron/sncp_daily_maintenance.sh` (trigger >400 righe)
 
 ---
 
@@ -168,32 +155,42 @@ FASE 9: Sistema Aggiornamenti  [DA FARE]    (Sessione 247 - nuovo!)
 
 ---
 
-## FASE 8: CASA PULITA PER CLIENTI [NUOVO]
+## FASE 8: CASA PULITA PER CLIENTI [COMPLETATO]
 
-> **Richiesto da Rafa - Sessione 247**
-> "Come portare i miglioramenti Casa Pulita nel prodotto per i clienti"
+**Sessione 248**
 
-**Chi:** cervella-researcher + cervella-backend
-**Output:** Analisi + Roadmap implementazione
+### Studio Completato
 
-### Domande da Rispondere
+| Domanda | Risposta |
+|---------|----------|
+| **Cosa portare** | Limiti file, housekeeping command, best practices |
+| **Come** | Templates aggiornati + nuovo comando CLI |
+| **Valore** | Risparmio token, manutenzione facile |
+
+### Piano Creato
+
+**Roadmap completa:** `.sncp/roadmaps/ROADMAP_CASA_PULITA_CLIENTI.md`
+
+| Priorità | Feature | Chi |
+|----------|---------|-----|
+| P1 | Templates con limiti | cervella-backend |
+| P1 | Best practices docs | cervella-docs |
+| P2 | Comando housekeeping | cervella-backend |
+| P3 | Script auto-compact | cervella-devops |
+
+### Risorse Analizzate
+
+- CLI esistente: `packages/cli/src/`
+- Templates esistenti: `templates/`
+- Comando init: `commands/init.js`
+- SNCP init: `sncp/init.js`
+
+### Next Steps (Implementazione)
 
 ```
-1. COSA PORTARE AI CLIENTI
-   - Context optimization (risparmio token)
-   - DNA agents pattern
-   - SNCP structure?
-   - Hook system?
-
-2. COME IMPLEMENTARE
-   - Feature nel CLI?
-   - Template iniziale?
-   - Best practices docs?
-
-3. VALORE PER CLIENTI
-   - Risparmio costi API
-   - Organizzazione migliore
-   - Manutenzione più facile
+FASE 8.1: Templates + Docs (Quick Win)
+FASE 8.2: Comando housekeeping
+FASE 8.3: Auto-compact script (opzionale)
 ```
 
 ---
@@ -231,11 +228,9 @@ FASE 9: Sistema Aggiornamenti  [DA FARE]    (Sessione 247 - nuovo!)
 
 ## PROSSIMO STEP
 
-**Fase 5:** Automazione (OGGI - Sessione 247)
-**Fase 6:** Studio Manutenzione Periodica
-**Fase 7:** Comunicazione Interna Famiglia
-**Fase 8:** Casa Pulita per Clienti
 **Fase 9:** Sistema Aggiornamenti Programma
+
+*Fasi 1-8 completate! Manca solo 1 fase per COMPLETARE Casa Pulita!*
 
 ---
 

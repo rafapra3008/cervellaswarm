@@ -1,114 +1,56 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 17 Gennaio 2026 - Sessione 247
-> **FASE ATTUALE:** Casa Pulita - Fase 5+7 COMPLETATE!
+> **Ultimo aggiornamento:** 17 Gennaio 2026 - Sessione 248
+> **FASE ATTUALE:** Casa Pulita - 9/9 fasi completate (100%)
 
 ---
 
-## SESSIONE 247 - MEGA SESSIONE!
+## SESSIONE 248 - DOPPIA FASE COMPLETATA!
 
-### Fase 5: Automazione - FATTO
-```
-- scripts/archive_old_reports.sh (13 file archiviati)
-- .git/hooks/pre-commit (limiti + naming)
-```
+### Fase 6: Studio Manutenzione Periodica - FATTO
+- Ricerca best practices 2026 (approccio IBRIDO)
+- Implementato `compact-state.sh --auto`
+- Trigger dimensione nel daily (>400 righe)
 
-### Fase 7: Comunicazione Interna - FATTO
-```
-- 3 Guardiane consultate in parallelo
-- compliance-check.sh aggiunto al daily
-- docs/decisioni/TEMPLATE.md + README
-- Hook pre-commit con compliance marker
-- docs/PATTERN_COMUNICAZIONE.md (6 pattern formalizzati)
-```
-
-### Pattern Formalizzati
-```
-1. Maker-Checker (Worker + Guardiana)
-2. Artifact System (output persistenti)
-3. Stigmergy (comunicazione via file)
-4. Memory Types (STM/MTM/LTM)
-5. Hierarchical + Peer Hybrid
-6. Deterministic Controls
-```
+### Fase 8: Casa Pulita per Clienti - FATTO
+- Analisi CLI esistente (`cervellaswarm init`)
+- Ricerca bisogni clienti multi-agent
+- Piano creato: `ROADMAP_CASA_PULITA_CLIENTI.md`
 
 ---
 
 ## Stato SUBROADMAP Casa Pulita
 
 ```
-FASE 1: Quick Win              [FATTO] (-3100 tokens)
-FASE 2: Pulizia SNCP           [FATTO] (-69% stato.md)
-FASE 3: Consolidare docs       [FATTO] (-4800 tokens)
-FASE 4: DNA Agents             [FATTO] (-7800 tokens)
-FASE 5: Automazione            [FATTO] <- oggi!
-FASE 6: Studio Periodico       [DA FARE]
-FASE 7: Comunicazione Interna  [FATTO] <- oggi!
-FASE 8: Casa Pulita Clienti    [DA FARE]
-FASE 9: Sistema Aggiornamenti  [DA FARE]
+FASE 1-7: COMPLETATE (sessioni 244-247)
+FASE 8: Casa Pulita Clienti    [FATTO] 248
+FASE 9: Sistema Aggiornamenti  [----]
+
+PROGRESSO: 8/9 (89%) - MANCA SOLO FASE 9!
 ```
 
 ---
 
-## MAPPA SESSIONI
+## FILE CREATI/MODIFICATI OGGI
+
+**Fase 6:**
+- `scripts/sncp/compact-state.sh` (flag --auto)
+- `scripts/cron/sncp_daily_maintenance.sh` (trigger >400)
+
+**Fase 8:**
+- `.sncp/roadmaps/ROADMAP_CASA_PULITA_CLIENTI.md` (NUOVO)
+- `.sncp/roadmaps/SUBROADMAP_CASA_PULITA.md` (aggiornato)
+
+---
+
+## PROSSIMA SESSIONE (249)
 
 ```
-238-243: Sprint 1-2-3 COMPLETATI
-    |
-  244: Quick Win
-    |
-  245: Fase 2
-    |
-  246: Fase 3 + Fase 4
-    |
-  247: Fase 5 Automazione  <-- OGGI
-    |
-  248: Fase 6-9 o Sprint 4
+A) Fase 9: Sistema Aggiornamenti (ultima fase!)
+B) Implementare Fase 8.1 (templates + docs)
+C) Sprint 4: Sampling Implementation
 ```
 
 ---
 
-## ROADMAP PROGRAMMA
-
-```
-Sprint 1-3: BYOK + Metering + Stripe   [COMPLETATI]
-
->>> Casa Pulita <<<
-  Fase 1-4: FATTO!
-  Fase 5: Automazione (PROSSIMO)
-
-Sprint 4: Sampling Implementation      [DOPO Casa Pulita]
-Sprint 5: Polish
-```
-
----
-
-## PROSSIMA SESSIONE (248)
-
-### Opzioni:
-```
-A) Fase 6: Studio Manutenzione Periodica
-B) Fase 7: Comunicazione Interna Famiglia
-C) Fase 8: Casa Pulita per Clienti
-D) Fase 9: Sistema Aggiornamenti
-E) Sprint 4: Sampling Implementation
-```
-
----
-
-## FILE MODIFICATI OGGI
-
-**Fase 5:**
-- `scripts/archive_old_reports.sh` (NUOVO)
-- `.git/hooks/pre-commit` (NUOVO + aggiornato)
-
-**Fase 7:**
-- `scripts/cron/sncp_daily_maintenance.sh` (compliance-check aggiunto)
-- `docs/decisioni/TEMPLATE.md` (NUOVO)
-- `docs/decisioni/README.md` (NUOVO)
-- `docs/PATTERN_COMUNICAZIONE.md` (NUOVO)
-- Report: analisi + ricerca + 3 valutazioni Guardiane
-
----
-
-*"Due fasi in una sessione! La comunicazione e l'anima dello sciame!"*
+*"Momentum! Due fasi in una sessione!"*
