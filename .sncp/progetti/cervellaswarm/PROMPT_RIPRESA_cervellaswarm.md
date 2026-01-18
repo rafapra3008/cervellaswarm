@@ -1,44 +1,77 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 257
-> **SCORE:** 9.5/10 (DIAMANTE!) - LANCIO PRONTO!
+> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 258
+> **SCORE:** 9.5/10 (DIAMANTE!) - LANCIO IN CORSO!
 
 ---
 
-## SESSIONE 257 - TUTTO PRONTO PER IL LANCIO!
+## SESSIONE 258 - LANCIO SPRINT EPICO!
 
 ```
 +================================================================+
-|   LANCIO READY - Solo inviare email e GO!                      |
+|   4 CANALI OUTREACH ATTIVATI!                                  |
+|   LANDING PAGE MIGLIORATA!                                     |
+|   SHOW HN: 24-25 GENNAIO                                       |
 +================================================================+
 ```
 
-### Cosa Abbiamo Fatto
+### Outreach Completato
 
-1. **MCP Server v0.2.2** - Pubblicato su npm con LICENSE
-2. **Submit mcp.so** - Commento su Issue #1, listing entro 24h
-3. **Analisi Business Model** - Conferma CLOSED-SOURCE come Cursor
-4. **Email Anthropic** - Aggiornata e APPROVATA da Rafa
+| Canale | Status | Note |
+|--------|--------|------|
+| CFP MCP Dev Summit NYC | SUBMITTED! | Apr 2-3, 2026 - Notifica 17 Feb |
+| mcp-ai.org | SUBMITTED! | Registry MCP |
+| Email Anthropic | INVIATA! | sales@anthropic.com |
+| Discord Claude Developers | JOINED! | Server ufficiale |
 
-### Decisione Strategica Confermata
+### Landing Page Migliorata
 
 ```
-CLOSED-SOURCE (come Cursor):
-- npm packages: PUBBLICI (acquisizione utenti)
-- Codice sorgente: PRIVATO (protezione business)
-- SNCP: Trade secret (vantaggio competitivo)
-- NO repo pubblico - offriamo accesso su richiesta
+FASE 1 ✓: Quick Wins
+- Early bird banner rimosso
+- CTA: "Install CLI in 60 Seconds"
+- npm snippet visibile
+- Footer links funzionanti
+
+FASE 2 ✓: Contenuti
+- Tabella comparison aggiornata (dati 2026 onesti)
+- Hero con MCP, Guardians, SNCP
+
+FASE 3 [ ]: Demo GIF (prossimo)
+FASE 4 [ ]: Polish design
+FASE 6 [ ]: Deploy cervellaswarm.com
 ```
 
 ---
 
-## CHECKLIST LANCIO
+## STRATEGIA LANCIO
 
-- [x] npm publish MCP con annotations (v0.2.2)
-- [x] Submit mcp.so directory
-- [x] Email Anthropic PRONTA
-- [ ] **INVIARE Email** (3-4 giorni prima del lancio)
-- [ ] **LANCIO Show HN**
+```
+TIMELINE:
+19-22 Gen: Completare landing (FASE 3-4-6)
+23 Gen: Deploy cervellaswarm.com
+24-25 Gen: SHOW HN LAUNCH!
+
+STRATEGIA:
+- HN PRIMA → Twitter DOPO (solo se HN >30 upvotes)
+- Tag: @alexalbert__ @mcpsummit (se >50 upvotes)
+```
+
+---
+
+## CHECKLIST LANCIO (aggiornata)
+
+- [x] npm publish MCP v0.2.2
+- [x] CFP MCP Dev Summit - SUBMITTED!
+- [x] mcp-ai.org - SUBMITTED!
+- [x] Email Anthropic - INVIATA!
+- [x] Discord - JOINED!
+- [x] Landing Quick Wins
+- [x] Landing Contenuti
+- [ ] Landing Demo GIF
+- [ ] Landing Polish
+- [ ] Landing Deploy
+- [ ] **SHOW HN LAUNCH**
 
 ---
 
@@ -51,28 +84,26 @@ CLOSED-SOURCE (come Cursor):
 
 ---
 
-## PROSSIMA SESSIONE
-
-```
-1. Rafa invia email a sales@anthropic.com
-   (copy-paste da docs/BOZZA_EMAIL_ANTHROPIC.md)
-
-2. Aspettare 3-4 giorni
-
-3. LANCIO Show HN!
-   (bozza in docs/SHOW_HN_BOZZA.md)
-```
-
----
-
-## FILE CHIAVE
+## FILE CHIAVE SESSIONE 258
 
 | File | Cosa |
 |------|------|
-| `docs/BOZZA_EMAIL_ANTHROPIC.md` | Email pronta copy-paste |
-| `docs/SHOW_HN_BOZZA.md` | Post HN pronto |
-| `docs/PIANO_B_LANCIO.md` | Backup se HN non va |
-| `docs/GUIDA_STRIPE_LIVE.md` | Passaggio pagamenti reali |
+| `docs/CFP_MCP_DEV_SUMMIT_2026.md` | CFP submitted |
+| `docs/BOZZA_TWEET_LANCIO.md` | Tweet pronto |
+| `docs/CONTATTI_ANTHROPIC_MCP_LAUNCH.md` | 10 canali mappati |
+| `.sncp/roadmaps/SUBROADMAP_LANDING_PROFESSIONALE.md` | Piano landing |
+| `landing/index.html` | Landing migliorata |
+
+---
+
+## PROSSIMA SESSIONE
+
+```
+1. Landing FASE 3: Demo GIF
+2. Landing FASE 4: Polish design
+3. Landing FASE 6: Deploy
+4. SHOW HN: 24-25 Gennaio!
+```
 
 ---
 

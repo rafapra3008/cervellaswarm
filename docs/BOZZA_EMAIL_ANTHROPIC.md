@@ -1,6 +1,6 @@
 # Bozza Email Anthropic - CervellaSwarm
 
-> **Status:** PRONTA - Aggiornata Sessione 257
+> **Status:** PRONTA - Aggiornata Sessione 258 (con CFP + mcp-ai.org)
 > **Canali trovati:** sales@anthropic.com, MCP Contributors Discord, Developer Newsletter
 > **Nota:** Repo privato (closed-source come Cursor) - offriamo accesso su richiesta
 
@@ -39,7 +39,8 @@ It's not a demo - it's a real tool that works.
 NOW LIVE:
 - CLI: npm install -g cervellaswarm
 - MCP Server: npm install -g @cervellaswarm/mcp-server
-- Listed on mcp.so directory
+- Listed on mcp-ai.org registry
+- Talk submitted for MCP Dev Summit NYC (April 2-3, 2026)
 
 I'm preparing a Show HN launch and would love to know if Anthropic would be
 interested in:
@@ -62,7 +63,7 @@ Rafa
 
 npm CLI: https://www.npmjs.com/package/cervellaswarm
 npm MCP: https://www.npmjs.com/package/@cervellaswarm/mcp-server
-mcp.so: (listing pending approval)
+mcp-ai.org: https://mcp-ai.org (listing submitted)
 ```
 
 ---

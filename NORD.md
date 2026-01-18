@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 18 Gennaio 2026 - Sessione 256
+> Aggiornato: 18 Gennaio 2026 - Sessione 258
 
 ```
 +==================================================================+
@@ -32,7 +32,7 @@
 
 ---
 
-## DOVE SIAMO (18 Gennaio 2026 - Sessione 257)
+## DOVE SIAMO (18 Gennaio 2026 - Sessione 258)
 
 ```
 +================================================================+
@@ -59,47 +59,41 @@ FASE 2: MVP PRODOTTO             [####################] 100%! PRONTO!
   ✓ API Fly.io                   ONLINE
   ✓ Stripe                       Payment Link OK (Test Mode)
   ✓ BYOK                         Pronto
-  ✓ Marketing Diamante           Ricerca + Subroadmap
-  ✓ ASSETS LANCIO                GIF + PNG + Video Demo!
-  ✓ README                       Aggiornato con GIF animata
-  ✓ BOZZA SHOW HN                Post + primo commento PRONTI!
-  ✓ TEST NPM INSTALL             Verificato fresh install OK
 
-FASE 3: PRIMI UTENTI             [################....] 80%  ← LANCIO PRONTO!
-  - Strategia lancio definita    FATTO (9.5/10!)
-  - Assets demo                  FATTO (Sessione 254-255!)
-  - Bozza post                   FATTO (Sessione 255!)
-  - Video demo                   FATTO (Sessione 255!)
-  - Test install                 FATTO (Sessione 255!)
-  - docs/SNCP_GUIDE.md           FATTO (Sessione 256!)
-  - docs/ARCHITECTURE.md         FATTO (Sessione 256!)
-  - Email Anthropic pronta       FATTO (Sessione 256!)
-  - Tool annotations MCP         FATTO (Sessione 256!)
-  - Piano B lancio               FATTO (Sessione 256!)
-  - Guida Stripe Live            FATTO (Sessione 256!)
-  - npm publish MCP annotations  FATTO (Sessione 257!) v0.2.2
-  - Submit mcp.so directory      FATTO (Sessione 257!)
-  - Business Model confermato    FATTO (Sessione 257!) Closed-source!
-  - Email Anthropic              INVIARE (3-4 giorni prima)
-  - LANCIO Show HN               PROSSIMO!
+FASE 3: PRIMI UTENTI             [##################..] 90%  ← QUI!
+
+  SESSIONE 258 - LANCIO SPRINT:
+  ✓ CFP MCP Dev Summit NYC       SUBMITTED! (Apr 2-3, 2026)
+  ✓ mcp-ai.org registry          SUBMITTED!
+  ✓ Email Anthropic              INVIATA!
+  ✓ Discord Claude Developers    JOINED!
+  ✓ Landing Quick Wins           FATTO
+  ✓ Landing Contenuti            FATTO
+  ✓ Tweet bozza                  PRONTA
+  ✓ Show HN bozza                REVIEWED
+
+  DA FARE:
+  - Landing Demo GIF             PROSSIMO
+  - Landing Polish design        PROSSIMO
+  - Landing Deploy               PROSSIMO
+  - SHOW HN LAUNCH               24-25 GENNAIO!
 
 FASE 4: SCALA                    [....................] 0%
 
 INIZIATIVE PARALLELE:
   - Casa Pulita                  100%! (Sessione 249)
-  - Docs Sync System             Avviato (Sessione 250)
-  - Phrasebook                   20%
-  - Famiglia Completa MCP        100%! (16/16 agenti) - Sessione 253!
-  - Marketing Diamante           100%! (4 parti + subroadmap)
-  - Demo Visual                  100%! (Sessione 254-255!)
-  - Show HN Prep                 100%! (Sessione 255!)
-  - Piano Diamante               100%! (Sessione 256!) - 7 GAP colmati!
-  - Lancio Ready                 100%! (Sessione 257!)
+  - Famiglia Completa MCP        100%! (16/16 agenti)
+  - Marketing Diamante           100%!
+  - Demo Visual                  100%!
+  - Show HN Prep                 100%!
+  - Piano Diamante               100%!
+  - Lancio Sprint                IN CORSO! (Sessione 258)
 
 PROSSIMI STEP:
-  1. Rafa invia email a sales@anthropic.com
-  2. Aspettare 3-4 giorni
-  3. LANCIO Show HN!
+  1. Completare landing (GIF, polish, deploy)
+  2. Deploy cervellaswarm.com
+  3. SHOW HN LAUNCH (24-25 Gennaio)
+  4. Twitter (se HN >30 upvotes)
 ```
 
 ---

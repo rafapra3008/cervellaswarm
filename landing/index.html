@@ -29,12 +29,6 @@
     </style>
 </head>
 <body class="gradient-bg text-white">
-    <!-- Early Bird Banner -->
-    <div class="bg-primary text-secondary py-2 text-center font-semibold">
-        Early Bird: $99/year (57% off) - First 500 users only!
-        <a href="#pricing" class="underline ml-2">Claim Your Spot</a>
-    </div>
-
     <!-- Navigation -->
     <nav class="container mx-auto px-6 py-6 flex justify-between items-center">
         <div class="flex items-center space-x-2">
@@ -60,17 +54,22 @@
             <span class="text-primary">One Unstoppable Team.</span>
         </h1>
         <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-10">
-            CervellaSwarm coordinates 16 specialized AI agents - frontend, backend, tester, reviewer -
-            that work together with persistent memory and quality gates.
+            CervellaSwarm coordinates 16 specialized AI agents via MCP - frontend, backend, tester, security, and more.
+            3 Guardians verify every output. SNCP remembers your context across sessions.
             <span class="text-primary font-semibold">Your code stays local. Always.</span>
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
             <a href="#cta" class="bg-primary text-secondary px-8 py-4 rounded-lg text-xl font-bold hover:bg-yellow-400 transition glow">
-                Start Building Free
+                Install CLI in 60 Seconds
             </a>
             <a href="how-it-works.html" class="border-2 border-white px-8 py-4 rounded-lg text-xl font-semibold hover:bg-white hover:text-secondary transition">
                 See How It Works
             </a>
+        </div>
+
+        <!-- NPM Install Snippet -->
+        <div class="mt-8 bg-slate-900 rounded-lg p-4 max-w-md mx-auto">
+            <code class="text-primary">npm install -g @cervellaswarm/mcp-server</code>
         </div>
 
         <!-- Swarm Visual -->
@@ -157,32 +156,32 @@
                     </thead>
                     <tbody>
                         <tr class="border-b border-slate-800">
-                            <td class="py-4 px-4">AI Agents</td>
-                            <td class="py-4 px-4 text-primary font-semibold">16 specialized</td>
-                            <td class="py-4 px-4">1 general</td>
-                            <td class="py-4 px-4">4 generic</td>
+                            <td class="py-4 px-4">Specialized Agents</td>
+                            <td class="py-4 px-4 text-primary font-semibold">16 experts</td>
+                            <td class="py-4 px-4">Multi-agent</td>
+                            <td class="py-4 px-4">Agent Mode</td>
                         </tr>
                         <tr class="border-b border-slate-800">
-                            <td class="py-4 px-4">Memory</td>
-                            <td class="py-4 px-4 text-primary font-semibold">SNCP persistent</td>
-                            <td class="py-4 px-4">Session only</td>
-                            <td class="py-4 px-4">Limited</td>
+                            <td class="py-4 px-4">Built-in QA</td>
+                            <td class="py-4 px-4 text-primary font-semibold">3 Guardians (Opus)</td>
+                            <td class="py-4 px-4">None</td>
+                            <td class="py-4 px-4">None</td>
                         </tr>
                         <tr class="border-b border-slate-800">
-                            <td class="py-4 px-4">Quality Gates</td>
-                            <td class="py-4 px-4 text-primary font-semibold">3 Guardians</td>
-                            <td class="py-4 px-4">None</td>
-                            <td class="py-4 px-4">None</td>
+                            <td class="py-4 px-4">Memory System</td>
+                            <td class="py-4 px-4 text-primary font-semibold">SNCP (cross-project)</td>
+                            <td class="py-4 px-4">Rules (per-project)</td>
+                            <td class="py-4 px-4">Session-based</td>
                         </tr>
                         <tr class="border-b border-slate-800">
                             <td class="py-4 px-4">IDE Lock-in</td>
-                            <td class="py-4 px-4 text-primary font-semibold">Any editor</td>
+                            <td class="py-4 px-4 text-primary font-semibold">Any editor + MCP</td>
                             <td class="py-4 px-4">VSCode fork</td>
                             <td class="py-4 px-4">VSCode/JB</td>
                         </tr>
                         <tr>
-                            <td class="py-4 px-4">Price</td>
-                            <td class="py-4 px-4 text-primary font-semibold">$19/mo</td>
+                            <td class="py-4 px-4">Starting Price</td>
+                            <td class="py-4 px-4 text-primary font-semibold">Free (BYOK)</td>
                             <td class="py-4 px-4">$20/mo</td>
                             <td class="py-4 px-4">$10/mo</td>
                         </tr>
@@ -250,14 +249,6 @@
             </div>
         </div>
 
-        <!-- Early Bird -->
-        <div class="mt-12 text-center">
-            <div class="inline-block bg-gradient-to-r from-primary to-yellow-400 text-secondary px-8 py-4 rounded-xl">
-                <span class="font-bold text-lg">Early Bird Special:</span>
-                $99/year (save 57%) -
-                <span class="font-bold">First 500 users only!</span>
-            </div>
-        </div>
     </section>
 
     <!-- CTA Section -->
@@ -274,11 +265,11 @@
                     class="flex-1 px-6 py-4 rounded-lg bg-slate-900 border border-slate-700 focus:border-primary focus:outline-none"
                 >
                 <button type="submit" class="bg-primary text-secondary px-8 py-4 rounded-lg font-bold hover:bg-yellow-400 transition whitespace-nowrap">
-                    Get Early Access
+                    Get Install Link
                 </button>
             </form>
             <p class="text-gray-500 text-sm mt-4">
-                Free forever with BYOK. No credit card required.
+                No signup required. Works instantly.
             </p>
         </div>
     </section>
@@ -291,9 +282,9 @@
                 <span class="text-xl font-bold">CervellaSwarm</span>
             </div>
             <div class="flex space-x-8 text-gray-400">
-                <a href="#" class="hover:text-white transition">Docs</a>
-                <a href="#" class="hover:text-white transition">GitHub</a>
-                <a href="#" class="hover:text-white transition">Discord</a>
+                <a href="getting-started.html" class="hover:text-white transition">Docs</a>
+                <a href="https://www.npmjs.com/package/cervellaswarm" class="hover:text-white transition">npm</a>
+                <a href="https://discord.com/invite/6PPFFzqPDZ" class="hover:text-white transition">Discord</a>
                 <a href="mailto:hello@cervellaswarm.com" class="hover:text-white transition">Contact</a>
             </div>
         </div>
