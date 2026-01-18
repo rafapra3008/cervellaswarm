@@ -1,60 +1,56 @@
 # STATO OGGI - 18 Gennaio 2026
 
-> **Sessione:** 261
-> **Focus:** Miracollo - Test VCC Booking.com
+> **Sessione:** 262
+> **Focus:** Miracollo - Ricevute PDF REALI!
 
 ---
 
-## SESSIONE 261 - TEST VCC
-
-### Cosa Fatto
+## SESSIONE 262 - VITTORIA!
 
 ```
-1. STRIPE ABILITATO SULLA VM:
-   - Fix: docker compose down + up
-   - enabled: true
+RICEVUTE PDF: DA "SU CARTA" A "REALE"!
 
-2. FRONTEND VCC OK:
-   - Stripe Elements funziona
-   - Carta test riconosciuta come Visa
+Bug trovato e fixato:
+- get_conn() usava get_db().__enter__() male
+- Connessione chiusa prematuramente
+- Fix: sqlite3.connect() diretto
 
-3. BUG BACKEND TROVATO:
-   - Query cerca guest_name in bookings
-   - Ma nome e in tabella GUESTS!
-   - Serve JOIN
-```
-
-### Bug Fix (Prossima Sessione)
-
-```sql
--- Da fixare in payments.py:378
-SELECT ... FROM bookings b
-LEFT JOIN guests g ON b.guest_id = g.id
-LEFT JOIN channels c ON b.channel_id = c.id
+Test superato:
+- PDF 16KB generato
+- Screenshot conferma qualita professionale
 ```
 
 ---
 
-## MIRACOLLO VCC STATUS
+## FIX DEPLOYATI
+
+| File | Fix |
+|------|-----|
+| receipts.py | get_conn() database |
+| payments.py | JOIN guests+channels |
+| stripe_service.py | off_session rimosso |
+
+---
+
+## STATO MIRACOLLO
 
 ```
-Frontend:  OK (Stripe Elements)
-Backend:   BUG (query da fixare)
-Stripe:    ABILITATO
-Test:      IN CORSO
+FASE 1 Ricevute PDF:  REALE! (verificato)
+FASE 1B Checkout UI:  REALE! (verificato)
+FASE 2 Scontrini RT:  Blocker (info hardware)
+VCC Stripe:           Parziale (fix deployato)
 ```
 
 ---
 
-## PROSSIMA SESSIONE
+## INFRASTRUTTURA
 
 ```
-1. Fix query JOIN guests
-2. Deploy
-3. Test completo
-4. VCC FUNZIONANTE!
+VM: 34.27.179.164 (healthy)
+WeasyPrint: v67.0
+Stripe: enabled
 ```
 
 ---
 
-*"Fatto BENE > Fatto veloce"*
+*"Da SU CARTA a REALE!" - Sessione 262*

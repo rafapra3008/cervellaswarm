@@ -1,71 +1,43 @@
 # PROMPT RIPRESA - Miracollo
 
-> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 261
-> **Status:** PRODUZIONE STABILE - VCC in testing
+> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 262
+> **Status:** PRODUZIONE STABILE
 
 ---
 
-## SESSIONE 261: TEST VCC
+## SESSIONE 262: VITTORIE!
 
 ### Cosa Abbiamo Fatto
 
 ```
-1. STRIPE CONFIGURATO SULLA VM:
-   - Chiavi esistevano in .env ma container non le leggeva
-   - Fix: docker compose down + up (non solo restart!)
-   - /api/payments/stripe-config -> enabled: true
+1. FIX RICEVUTE PDF - ORA FUNZIONA!
+   - Bug: get_conn() usava get_db().__enter__() male
+   - Fix: Connessione diretta sqlite3.connect()
+   - TEST: PDF 16KB generato correttamente!
+   - REALE: Screenshot conferma qualità professionale
 
-2. TEST VCC INIZIATO:
-   - Frontend: Stripe Elements funziona
-   - Carta 4242 4242 4242 4242 riconosciuta come Visa
-   - Backend: trovato BUG nella query!
+2. FIX QUERY VCC:
+   - payments.py: JOIN guests + channels
+   - Deployato su VM
 
-3. BUG TROVATO (DA FIXARE):
-   - payments.py riga 378-383
-   - Query cerca b.guest_name ma tabella bookings non ce l'ha
-   - Nome ospite e in tabella GUESTS (JOIN necessario!)
-```
-
-### Fix Da Applicare (Prossima Sessione)
-
-```python
-# VECCHIO (SBAGLIATO):
-SELECT b.id, b.booking_number, b.total, b.amount_paid, b.hotel_id,
-       (b.first_name || ' ' || b.last_name) AS guest_name, b.source
-FROM bookings b WHERE b.id = ?
-
-# NUOVO (CORRETTO):
-SELECT b.id, b.booking_number, b.total, b.amount_paid, b.hotel_id,
-       (g.first_name || ' ' || g.last_name) AS guest_name,
-       c.name as source
-FROM bookings b
-LEFT JOIN guests g ON b.guest_id = g.id
-LEFT JOIN channels c ON b.channel_id = c.id
-WHERE b.id = ?
+3. FIX STRIPE off_session:
+   - stripe_service.py: rimosso off_session=True
+   - Deployato su VM
 ```
 
 ---
 
-## ARCHITETTURA DB (Riferimento)
+## STATO MODULO FINANZIARIO
 
 ```
-bookings: guest_id (FK) -> guests.id
-bookings: channel_id (FK) -> channels.id
-guests: first_name, last_name
+FASE 1: Ricevute PDF      [####################] 100% REALE!
+FASE 1B: Checkout UI      [####################] 100% REALE!
+FASE 2: Scontrini RT      [....................] 0% (blocker: info hardware)
+FASE 3: Fatture XML       [....................] 0%
+FASE 4: Export            [....................] 0%
 ```
 
----
-
-## STATO MODULO VCC
-
-```
-Backend endpoint:  /api/payments/charge-vcc
-Frontend UI:       Stripe Elements + "VCC Booking" button
-Stripe account:    acct_1Sqrxk7aXUHP1bna (Test Mode)
-Carta test:        4242 4242 4242 4242
-
-STATUS: Frontend OK, Backend BUG da fixare
-```
+**MAPPA COMPLETA:** `.sncp/progetti/miracollo/moduli/finanziario/MAPPA_MODULO_FINANZIARIO.md`
 
 ---
 
@@ -75,30 +47,31 @@ STATUS: Frontend OK, Backend BUG da fixare
 VM MIRACOLLO (34.27.179.164):
 - miracollo-backend-1 (healthy)
 - miracollo-nginx (healthy)
-- Stripe: ABILITATO (dopo down+up)
+- WeasyPrint: v67.0 installato
+- Stripe: ABILITATO
 ```
+
+---
+
+## FILE MODIFICATI SESSIONE 262
+
+| File | Modifica | Status |
+|------|----------|--------|
+| `backend/routers/receipts.py` | Fix get_conn() | DEPLOYATO |
+| `backend/routers/payments.py` | JOIN guests | DEPLOYATO |
+| `backend/services/stripe_service.py` | off_session | DEPLOYATO |
 
 ---
 
 ## PROSSIMI STEP
 
 ```
-1. Fix query VCC (JOIN guests + channels)
-2. Deploy fix
-3. Re-test VCC
-4. Documentare VCC funzionante
+OPZIONI:
+A) FASE 2 Scontrini RT (serve info hardware)
+B) FASE 3 Fatture XML
+C) Altro modulo PMS
 ```
 
 ---
 
-## FILE CHIAVE
-
-| File | Scopo |
-|------|-------|
-| `backend/routers/payments.py` | Endpoint VCC (riga 356-480) |
-| `frontend/js/planning/modal-payment.js` | UI Stripe Elements |
-| `backend/services/stripe_service.py` | Logica Stripe |
-
----
-
-*"Fatto BENE > Fatto veloce"*
+*"Da SU CARTA a REALE!" - Sessione 262*
