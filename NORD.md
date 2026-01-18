@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 18 Gennaio 2026 - Sessione 261
+> Aggiornato: 18 Gennaio 2026 - Sessione 262
 
 ```
 +==================================================================+
@@ -32,7 +32,7 @@
 
 ---
 
-## DOVE SIAMO (18 Gennaio 2026 - Sessione 261)
+## DOVE SIAMO (18 Gennaio 2026 - Sessione 262)
 
 ```
 +================================================================+
@@ -45,8 +45,8 @@ FASE 1: FONDAMENTA               [####################] 100%!
 FASE 2: MVP PRODOTTO             [####################] 100%! PRONTO!
 
   REALE:
-  ✓ CLI su npm                   cervellaswarm@0.1.1
-  ✓ MCP su npm                   @cervellaswarm/mcp-server@0.2.2
+  ✓ CLI su npm                   cervellaswarm@0.1.2  ← AGGIORNATO!
+  ✓ MCP su npm                   @cervellaswarm/mcp-server@0.2.3  ← AGGIORNATO!
   ✓ FAMIGLIA COMPLETA            16 AGENTI!
   ✓ API Fly.io                   ONLINE
   ✓ Stripe                       $20/$40 (Test Mode)
@@ -74,15 +74,23 @@ FASE 3: PRIMI UTENTI             [####################] 100%! ← FATTO!
   ✓ DNS + SSL                    Cloudflare (da Register.it)
   ✓ Show HN post                 PRONTO! (26 Gennaio)
 
-FASE 4: SCALA                    [....................] 0%
+  SESSIONE 262 - PRE-LAUNCH CHECK:
+  ✓ Pre-launch check             SCORE 9.5/10!
+  ✓ Fix link npm                 homepage + repo corretti
+  ✓ Fix comandi Show HN          npx cervellaswarm init/task
+  ✓ npm publish                  CLI 0.1.2, MCP 0.2.3
+  ✓ Organizzare la casa          51+ studi mappati!
+
+FASE 4: SCALA                    [#...................] 5%
   - SHOW HN LAUNCH               26 GENNAIO 13:00 ITALIA
 
-SCORE LANDING: 9.0/10 (target 9.5)
+SCORE PRE-LAUNCH: 9.5/10
 
 PROSSIMI STEP:
-  1. Pre-launch check (24-25 Gennaio)
-  2. SHOW HN (26 Gennaio 13:00 Italia)
-  3. Monitoring + risposte community
+  1. Creare post Reddit/Tweet/LinkedIn
+  2. Estendere FAQ a 10+
+  3. SHOW HN (26 Gennaio 13:00 Italia)
+  4. Monitoring + risposte community
 ```
 
 ---

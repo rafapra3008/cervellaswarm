@@ -1,67 +1,77 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 261
-> **SCORE Landing:** 9.0/10
+> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 262
+> **SCORE Pre-Launch:** 9.5/10
 
 ---
 
-## SESSIONE 261 - MOMENTO STORICO!
+## SESSIONE 262 - PRE-LAUNCH CHECK COMPLETATO!
 
 ```
 +================================================================+
 |                                                                |
-|   CERVELLASWARM.COM È LIVE!!!                                  |
+|   PRE-LAUNCH CHECK: SCORE 9.5/10                               |
 |                                                                |
-|   https://cervellaswarm.com                                    |
-|   https://cervellaswarm.pages.dev (backup)                     |
+|   npm publish: CLI 0.1.2, MCP 0.2.3                            |
+|   Show HN: PRONTO per 26 Gennaio!                              |
 |                                                                |
 +================================================================+
 ```
 
-### Cosa Abbiamo Fatto
+### Fix Applicati
 
-| Task | Status | Dettagli |
-|------|--------|----------|
-| Allineamento SNCP | DONE | Archiviati duplicati, CLAUDE.md aggiornato |
-| Cloudflare Pages | DONE | Progetto creato, landing deployata |
-| DNS Cloudflare | DONE | Nameserver cambiati su Register.it |
-| Custom domain | DONE | cervellaswarm.com collegato |
-| SSL | DONE | Automatico via Cloudflare |
+| Problema | Fix |
+|----------|-----|
+| CLI homepage .dev | → cervellaswarm.com |
+| CLI repo sbagliato | → rafapra3008/CervellaSwarm |
+| MCP repo sbagliato | → rafapra3008/CervellaSwarm |
+| Show HN comandi | → npx cervellaswarm init/task |
+| Show HN licenza | → Apache-2.0 (non MIT) |
+| README status | → PHASE 2: 100% |
 
-### Infrastruttura Live
+### Test Verificati
 
 ```
-Hosting:     Cloudflare Pages (FREE)
-Bandwidth:   ILLIMITATO
-CDN:         300+ edge locations
-SSL:         Automatico
-Costo:       $0/mese
+✓ npx cervellaswarm init -y → funziona
+✓ npm view → link corretti
+✓ cervellaswarm --help → Documentation: cervellaswarm.com
 ```
 
 ---
 
-## CHECKLIST LANCIO
+## VERSIONI ATTUALI
 
-- [x] npm MCP v0.2.2
-- [x] CFP MCP Dev Summit
-- [x] Landing FASE 1-2 (9.0/10)
-- [x] Deploy Cloudflare Pages
-- [x] Custom domain cervellaswarm.com
-- [ ] **SHOW HN: 24-25 Gennaio**
-
----
-
-## VERSIONI
-
-| Package | Versione | Link |
-|---------|----------|------|
-| CLI | 0.1.1 | npmjs.com/package/cervellaswarm |
-| MCP Server | 0.2.2 | npmjs.com/package/@cervellaswarm/mcp-server |
+| Package | Versione | Status |
+|---------|----------|--------|
+| CLI | 0.1.2 | LIVE su npm |
+| MCP Server | 0.2.3 | LIVE su npm |
 | Landing | LIVE | cervellaswarm.com |
 
 ---
 
-## SHOW HN - PRONTO!
+## MATERIALE GIÀ PRONTO
+
+```
+VIDEO/GIF: 10+ file in docs/demo/
+STUDI: 51+ documenti in MAPPA_STUDI_ORO.md
+STRATEGIA: SUBROADMAP_DIAMANTE_MARKETING_LANCIO.md
+SHOW HN: docs/SHOW_HN_POST_READY.md
+```
+
+---
+
+## COSA MANCA PER LANCIO
+
+```
+1. Post Reddit (da creare)
+2. Tweet thread (da creare)
+3. LinkedIn post (da creare)
+4. FAQ estese 10+ (attualmente 4)
+```
+
+---
+
+## SHOW HN
 
 ```
 TITOLO:
@@ -69,26 +79,41 @@ Show HN: CervellaSwarm – 16 AI agents + 3 quality guardians, coordinated via M
 
 DATA: Domenica 26 Gennaio 2026, 12:00 UTC (13:00 Italia)
 
-FILE: docs/SHOW_HN_POST_READY.md (titolo + commento + checklist)
+COMANDI (CORRETTI):
+npx cervellaswarm init
+npx cervellaswarm task "add login page"
 ```
+
+---
 
 ## PROSSIMI STEP
 
 ```
-1. Pre-launch check (24-25 Gennaio)
-2. SHOW HN (26 Gennaio 13:00 Italia)
-3. Monitoring e risposte community
-4. www.cervellaswarm.com redirect (opzionale)
+1. Creare post Reddit/Tweet/LinkedIn
+2. Estendere FAQ a 10+
+3. SHOW HN (26 Gennaio 13:00 Italia)
+4. Monitoring e risposte community
 ```
+
+---
+
+## FILE CHIAVE
+
+| File | Cosa Contiene |
+|------|---------------|
+| `docs/SHOW_HN_POST_READY.md` | Post + primo commento |
+| `.sncp/.../SUBROADMAP_DIAMANTE_MARKETING_LANCIO.md` | Piano completo |
+| `.sncp/.../MAPPA_STUDI_ORO.md` | Indice 51+ studi |
+| `.sncp/roadmaps/SUBROADMAP_PRELAUNCH_FIX.md` | Fix sessione 262 |
 
 ---
 
 ## ACCOUNT CONFIGURATI
 
+- **npm:** rafapra (CLI + MCP pubblicati)
 - **Cloudflare:** rafapra@gmail.com (Pages + DNS)
-- **Register.it:** DNS delegato a Cloudflare
-- **Wrangler CLI:** Autenticato (login OAuth)
+- **GitHub:** rafapra3008/CervellaSwarm
 
 ---
 
-*"Dogfooding: This entire site was built with CervellaSwarm"*
+*"Score 9.5/10 - Pronto per Show HN!"*
