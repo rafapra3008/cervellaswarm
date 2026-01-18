@@ -27,7 +27,7 @@ import { getUsageTracker, QuotaStatus } from "./billing/usage.js";
 
 // Server metadata
 const SERVER_NAME = "cervellaswarm";
-const SERVER_VERSION = "0.2.1";
+const SERVER_VERSION = "0.2.2";
 
 // Create MCP server instance
 const server = new McpServer({
