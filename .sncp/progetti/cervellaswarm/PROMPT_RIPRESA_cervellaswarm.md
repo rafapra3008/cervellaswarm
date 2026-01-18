@@ -1,77 +1,73 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 255
-> **SCORE:** 9.5/10
+> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 256
+> **SCORE:** 9.5/10 (DIAMANTE!)
 
 ---
 
-## SESSIONE 255 - SHOW HN LAUNCH READY!
+## SESSIONE 256 - PIANO DIAMANTE COMPLETATO!
 
 ```
 +================================================================+
-|   TUTTO PRONTO E VERIFICATO!                                   |
+|   7 GAP COLMATI - LANCIO PRONTO AL 100%!                       |
 +================================================================+
 ```
 
 ### Cosa Abbiamo Fatto
 
-1. **Ricerca Show HN** - Best practices, pattern vincenti
-2. **Bozza post** - Titolo + primo commento copy-paste ready
-3. **GIF collaborazione** - 836KB, VERIFICATA funzionante
-4. **Screenshot CLI EN** - 112KB, workflow completo
-5. **Video demo** - 382KB, 482 frame, comandi reali
-6. **Review team** - Marketing + Guardiana OK
-7. **Test npm install** - Fresh install PERFETTO
+1. **Review Esperte** - Marketing (8.5→9.5) + Guardiana Qualità (9/10)
+2. **docs/SNCP_GUIDE.md** - Guida memoria persistente per esterni
+3. **docs/ARCHITECTURE.md** - Architettura 16 agenti con diagrammi
+4. **docs/BOZZA_EMAIL_ANTHROPIC.md** - Email DevRel copy-paste
+5. **Tool annotations MCP** - readOnlyHint/destructiveHint su 4 tools
+6. **Fresh install test** - CLI + MCP server OK
+7. **docs/PIANO_B_LANCIO.md** - Backup strategy Reddit/PH
+8. **docs/GUIDA_STRIPE_LIVE.md** - Passaggio pagamenti reali
 
 ---
 
-## ASSETS PRONTI
+## FILE CREATI SESSIONE 256
 
-| File | Size | Status |
-|------|------|--------|
-| `docs/BOZZA_SHOW_HN.md` | Post | PRONTO |
-| `docs/demo/collaboration_flow.gif` | 836KB | VERIFICATO |
-| `docs/demo/cli_workflow_en.png` | 112KB | PRONTO |
-| `docs/demo/cervellaswarm_demo.gif` | 382KB | NUOVO |
+| File | Contenuto |
+|------|-----------|
+| `docs/SNCP_GUIDE.md` | Memoria per esterni (268 righe) |
+| `docs/ARCHITECTURE.md` | Architettura (246 righe) |
+| `docs/BOZZA_EMAIL_ANTHROPIC.md` | Email Anthropic DevRel |
+| `docs/GUIDA_SUBMIT_MCP_DIRECTORY.md` | Submit directory MCP |
+| `docs/PIANO_B_LANCIO.md` | Backup se HN non va |
+| `docs/GUIDA_STRIPE_LIVE.md` | Guida Live Mode |
 
 ---
 
-## CHECKLIST LANCIO
+## CHECKLIST LANCIO AGGIORNATA
 
 - [x] Bozza post Show HN
 - [x] Primo commento pronto
 - [x] GIF animata verificata
-- [x] Screenshot CLI inglese
 - [x] Video demo
-- [x] Review Marketing
-- [x] Review Guardiana
-- [x] Test npm install fresh
-- [ ] Account HN Rafa
-- [ ] 6 ore engagement
-
----
-
-## PUNTATORI
-
-| Cosa | Dove |
-|------|------|
-| Bozza post | `docs/BOZZA_SHOW_HN.md` |
-| GIF Hero | `docs/demo/collaboration_flow.gif` |
-| Video Demo | `docs/demo/cervellaswarm_demo.gif` |
-| CLI Screenshot | `docs/demo/cli_workflow_en.png` |
-| Ricerca | `docs/studio/RICERCA_SHOW_HN_BEST_PRACTICES.md` |
+- [x] SNCP_GUIDE.md (link README fixato)
+- [x] ARCHITECTURE.md (link README fixato)
+- [x] Email Anthropic pronta
+- [x] Tool annotations MCP
+- [x] Piano B pronto
+- [x] Guida Stripe Live
+- [ ] npm publish MCP con annotations
+- [ ] Submit mcp.so
+- [ ] Email Anthropic (3-4 giorni prima)
+- [ ] LANCIO Show HN
 
 ---
 
 ## PROSSIMA SESSIONE
 
 ```
-1. Review bozza insieme (se serve)
-2. Preparare Product Hunt (opzionale)
-3. LANCIO Show HN
+1. npm publish MCP server (con annotations)
+2. Submit mcp.so directory
+3. Email Anthropic DevRel
+4. LANCIO quando Rafa pronto
 ```
 
 ---
 
 *"The only AI coding team that checks its own work"*
-*"Ultrapassar os proprios limites!"*
+*"Ultrapassar os próprios limites!"*

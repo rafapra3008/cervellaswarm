@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 18 Gennaio 2026 - Sessione 255
+> Aggiornato: 18 Gennaio 2026 - Sessione 256
 
 ```
 +==================================================================+
@@ -32,7 +32,7 @@
 
 ---
 
-## DOVE SIAMO (18 Gennaio 2026 - Sessione 255)
+## DOVE SIAMO (18 Gennaio 2026 - Sessione 256)
 
 ```
 +================================================================+
@@ -51,13 +51,13 @@ FASE 1: FONDAMENTA               [####################] 100%!
 
 FASE 2: MVP PRODOTTO             [####################] 100%! PRONTO!
 
-  REALE (Sessione 255!):
+  REALE:
   ✓ CLI su npm                   cervellaswarm@0.1.1
   ✓ MCP su npm                   @cervellaswarm/mcp-server@0.2.0
   ✓ FAMIGLIA COMPLETA            16 AGENTI!
   ✓ Test end-to-end              install, doctor, tools OK
   ✓ API Fly.io                   ONLINE
-  ✓ Stripe                       Payment Link OK
+  ✓ Stripe                       Payment Link OK (Test Mode)
   ✓ BYOK                         Pronto
   ✓ Marketing Diamante           Ricerca + Subroadmap
   ✓ ASSETS LANCIO                GIF + PNG + Video Demo!
@@ -65,15 +65,21 @@ FASE 2: MVP PRODOTTO             [####################] 100%! PRONTO!
   ✓ BOZZA SHOW HN                Post + primo commento PRONTI!
   ✓ TEST NPM INSTALL             Verificato fresh install OK
 
-  OPZIONALE:
-  - OIDC Trusted Publishing      CI/CD automatico npm (nice to have)
-
-FASE 3: PRIMI UTENTI             [####................] 20%
-  - Strategia lancio definita    FATTO
+FASE 3: PRIMI UTENTI             [########............] 40%
+  - Strategia lancio definita    FATTO (9.5/10!)
   - Assets demo                  FATTO (Sessione 254-255!)
   - Bozza post                   FATTO (Sessione 255!)
   - Video demo                   FATTO (Sessione 255!)
   - Test install                 FATTO (Sessione 255!)
+  - docs/SNCP_GUIDE.md           FATTO (Sessione 256!)
+  - docs/ARCHITECTURE.md         FATTO (Sessione 256!)
+  - Email Anthropic pronta       FATTO (Sessione 256!)
+  - Tool annotations MCP         FATTO (Sessione 256!)
+  - Piano B lancio               FATTO (Sessione 256!)
+  - Guida Stripe Live            FATTO (Sessione 256!)
+  - npm publish MCP annotations  DA FARE
+  - Submit mcp.so directory      DA FARE
+  - Email Anthropic              DA FARE (3-4 giorni prima)
   - LANCIO Show HN               PROSSIMO!
 
 FASE 4: SCALA                    [....................] 0%
@@ -86,10 +92,13 @@ INIZIATIVE PARALLELE:
   - Marketing Diamante           100%! (4 parti + subroadmap)
   - Demo Visual                  100%! (Sessione 254-255!)
   - Show HN Prep                 100%! (Sessione 255!)
+  - Piano Diamante               100%! (Sessione 256!) - 7 GAP colmati!
 
 PROSSIMI STEP:
-  1. LANCIO Show HN
-  2. Product Hunt (opzionale)
+  1. npm publish MCP con annotations
+  2. Submit mcp.so directory
+  3. Email Anthropic DevRel
+  4. LANCIO Show HN
 ```
 
 ---

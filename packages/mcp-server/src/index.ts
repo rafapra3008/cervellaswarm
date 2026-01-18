@@ -67,6 +67,13 @@ server.tool(
       .optional()
       .describe("Additional context about the project or task"),
   },
+  {
+    title: "Spawn CervellaSwarm Worker",
+    readOnlyHint: false,
+    destructiveHint: false,
+    idempotentHint: false,
+    openWorldHint: true,
+  },
   async ({ worker, task, context }) => {
     // Check API key
     if (!hasApiKey()) {
@@ -167,6 +174,13 @@ server.tool(
   "list_workers",
   "List all available CervellaSwarm worker agents and their specialties.",
   {},
+  {
+    title: "List Available Workers",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: false,
+  },
   async () => {
     const workers = getAvailableWorkers();
 
@@ -203,6 +217,13 @@ server.tool(
       .optional()
       .default(false)
       .describe("If true, validates the API key with a test call to Anthropic"),
+  },
+  {
+    title: "Check Configuration Status",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
   },
   async ({ validate }) => {
     const hasKey = hasApiKey();
@@ -278,6 +299,13 @@ server.tool(
   "check_usage",
   "Check your current CervellaSwarm usage, remaining calls, and quota status.",
   {},
+  {
+    title: "Check Usage and Quota",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: false,
+  },
   async () => {
     const usageTracker = getUsageTracker(getConfigDir(), getTier);
     const message = await usageTracker.getUsageMessage();

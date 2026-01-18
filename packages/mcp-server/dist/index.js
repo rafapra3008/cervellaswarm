@@ -50,6 +50,12 @@ server.tool("spawn_worker", "Spawn a CervellaSwarm worker agent to execute a tas
         .string()
         .optional()
         .describe("Additional context about the project or task"),
+}, {
+    title: "Spawn CervellaSwarm Worker",
+    readOnlyHint: false,
+    destructiveHint: false,
+    idempotentHint: false,
+    openWorldHint: true,
 }, async ({ worker, task, context }) => {
     // Check API key
     if (!hasApiKey()) {
@@ -135,7 +141,13 @@ server.tool("spawn_worker", "Spawn a CervellaSwarm worker agent to execute a tas
  * Tool: list_workers
  * List all available CervellaSwarm workers
  */
-server.tool("list_workers", "List all available CervellaSwarm worker agents and their specialties.", {}, async () => {
+server.tool("list_workers", "List all available CervellaSwarm worker agents and their specialties.", {}, {
+    title: "List Available Workers",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: false,
+}, async () => {
     const workers = getAvailableWorkers();
     const list = workers
         .map((w) => `- **${w.name}**: ${w.description}`)
@@ -163,6 +175,12 @@ server.tool("check_status", "Check if CervellaSwarm is properly configured (API 
         .optional()
         .default(false)
         .describe("If true, validates the API key with a test call to Anthropic"),
+}, {
+    title: "Check Configuration Status",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
 }, async ({ validate }) => {
     const hasKey = hasApiKey();
     const apiKey = getApiKey();
@@ -226,7 +244,13 @@ server.tool("check_status", "Check if CervellaSwarm is properly configured (API 
  * Tool: check_usage
  * Check current usage and quota status
  */
-server.tool("check_usage", "Check your current CervellaSwarm usage, remaining calls, and quota status.", {}, async () => {
+server.tool("check_usage", "Check your current CervellaSwarm usage, remaining calls, and quota status.", {}, {
+    title: "Check Usage and Quota",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: false,
+}, async () => {
     const usageTracker = getUsageTracker(getConfigDir(), getTier);
     const message = await usageTracker.getUsageMessage();
     return {
