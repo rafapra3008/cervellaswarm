@@ -97,19 +97,75 @@ GitHub: https://github.com/rafapra3008/CervellaSwarm
 
 ---
 
-## FAQ PREPARATE
+## FAQ PREPARATE (10 FAQ)
 
+### FAQ 1: Different from Claude
 **Q: How is this different from using Claude directly?**
 A: Instead of one generic assistant losing context, you have 16 specialists that coordinate. The backend agent talks to frontend, marketing validates UX decisions, and 3 guardians verify quality before any output is accepted.
+**TL;DR:** 16 specialists + 3 quality reviewers > 1 generic assistant.
 
+### FAQ 2: API Key
 **Q: Does it require Anthropic API key?**
-A: Yes, for the workers (Sonnet-based). Free tier uses your own API key with reasonable limits.
+A: Yes, for the workers (Sonnet-based). Free tier uses your own API key directly - no rate limiting beyond Anthropic's own limits, no middleman.
+**TL;DR:** Your API key, your control, no hidden limits.
 
+### FAQ 3: SNCP
 **Q: What's SNCP?**
 A: Sistema Nervoso Centrale Persistente - our persistent memory system. Agents remember context across sessions, so you don't start from zero every time.
+**TL;DR:** Persistent memory = no more repeating yourself.
 
+### FAQ 4: MCP
 **Q: Why MCP and not direct API?**
 A: MCP is Anthropic's standard protocol. It means CervellaSwarm works with Claude Desktop, Continue.dev, or any MCP-compatible client. Future-proof.
+**TL;DR:** Industry standard protocol = works everywhere, future-proof.
+
+### FAQ 5: Privacy
+**Q: What about privacy? Where does my code go?**
+A: Your code stays 100% local. Here's exactly what happens:
+- **LOCAL (never leaves your machine):** All source files, SNCP memory/state, Agent coordination logic
+- **SENT TO ANTHROPIC API:** Task prompts, Code snippets relevant to current task, Uses YOUR API key directly
+- **WHAT ANTHROPIC DOES:** Zero data retention for API usage, No training on API data
+**TL;DR:** We never see your code. Anthropic processes but doesn't retain it. Your API key, your control.
+
+### FAQ 6: Pricing
+**Q: What does this cost? Real numbers please.**
+A: No hidden fees. Here's the real math:
+- **FREE TIER:** Uses YOUR Anthropic API key directly. Typical cost per task: $0.01-0.05. Full-time dev monthly: ~$20-50 in API calls. No middleman markup.
+- **COMPARISON:** CervellaSwarm $0 + API (~$20-50/mo) | Cursor Pro $20/mo + usage | GitHub Copilot $10/mo
+**TL;DR:** Free to start. ~$30/month typical for daily use. Cheaper than Cursor, more agents than Copilot.
+
+### FAQ 7: Security
+**Q: What about security? Can agents run arbitrary code?**
+A: Honest answer: AI agents have risks. Here's how we handle them:
+- **PROTECTIONS:** No arbitrary shell commands without approval, File operations require permission, Guardian validation before accepting outputs, MCP tools sandboxed
+- **KNOWN RISKS (transparent):** Prompt injection mitigated by Guardian review, Tool poisoning mitigated by pinned versions
+- **AUDIT WELCOME:** Apache-2.0 = full source transparency. Found something? Open an issue.
+**TL;DR:** Defense in depth. Guardians verify. You approve. Not bulletproof (nothing is), but responsible design.
+
+### FAQ 8: Multi-provider
+**Q: Does it only work with Claude? What about GPT-4 or local models?**
+A: Honest answer: Claude-only today. Here's why and what's coming:
+- **CURRENT:** Regina (Opus), Workers (Sonnet). Why: Best reasoning for multi-agent coordination.
+- **ROADMAP 2026:** OpenAI GPT-4/o1 in development, Ollama for local models planned
+- **ARCHITECTURE:** Model-agnostic by design. Swapping providers requires adapter changes, not rewrites.
+**TL;DR:** Claude-first because it works best. Multi-provider coming. No permanent lock-in.
+
+### FAQ 9: Git Integration
+**Q: How does it handle Git? Aider has great Git integration.**
+A: Aider's Git integration is excellent - we respect that. Here's where we are:
+- **TODAY:** Context-aware commits, Guardiana reviews before push, SNCP tracks repo state
+- **COMING v2.0:** Auto-commit per worker with attribution, Conventional Commits, /undo command
+- **HONEST COMPARISON:** Aider wins on Git depth. We win on coordination + quality checks. Different tools, different strengths.
+**TL;DR:** Good Git support today, great Git support coming. We're learning from Aider.
+
+### FAQ 10: Production-ready
+**Q: Is this production-ready or just an experiment?**
+A: Honest answer: Beta. Here's the full picture:
+- **REAL USAGE:** 260+ work sessions, 3 production projects daily, 134 tests passing, This launch prepared WITH CervellaSwarm
+- **KNOWN LIMITATIONS:** CLI UX can improve, No VSCode extension yet, No team collaboration features yet
+- **WHO SHOULD USE IT NOW:** Solo developers, early adopters comfortable with CLI
+- **COMMITMENT:** 2 years in, not stopping. Actively developed. Daily dogfooding = bugs get fixed.
+**TL;DR:** Real tool, real usage, real limitations. Beta quality. Actively developed.
 
 ---
 

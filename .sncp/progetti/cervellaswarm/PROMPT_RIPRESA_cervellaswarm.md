@@ -1,41 +1,43 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 262
+> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 264
 > **SCORE Pre-Launch:** 9.5/10
 
 ---
 
-## SESSIONE 262 - PRE-LAUNCH CHECK COMPLETATO!
+## SESSIONE 264 - FAQ 10+ COMPLETATE!
 
 ```
 +================================================================+
 |                                                                |
-|   PRE-LAUNCH CHECK: SCORE 9.5/10                               |
-|                                                                |
-|   npm publish: CLI 0.1.2, MCP 0.2.3                            |
-|   Show HN: PRONTO per 26 Gennaio!                              |
+|   10 FAQ PRONTE! Score 9.5/10                                  |
+|   RICERCA AIDER: 1129 righe di oro!                            |
+|   SUBROADMAP v2.0: Tree-sitter, Architect/Editor, Git flow     |
 |                                                                |
 +================================================================+
 ```
 
-### Fix Applicati
+### Cosa Abbiamo Fatto
 
-| Problema | Fix |
-|----------|-----|
-| CLI homepage .dev | → cervellaswarm.com |
-| CLI repo sbagliato | → rafapra3008/CervellaSwarm |
-| MCP repo sbagliato | → rafapra3008/CervellaSwarm |
-| Show HN comandi | → npx cervellaswarm init/task |
-| Show HN licenza | → Apache-2.0 (non MIT) |
-| README status | → PHASE 2: 100% |
+| Task | Status |
+|------|--------|
+| 10 FAQ per Show HN | FATTO - Score 9.5/10 |
+| Ricerca Aider approfondita | FATTO - 1129 righe |
+| Subroadmap CervellaSwarm 2.0 | FATTO - Post-launch |
+| MAPPA_LANCIO_DEFINITIVA | FATTO |
 
-### Test Verificati
+### Le 10 FAQ
 
-```
-✓ npx cervellaswarm init -y → funziona
-✓ npm view → link corretti
-✓ cervellaswarm --help → Documentation: cervellaswarm.com
-```
+1. Different from Claude (+ TL;DR)
+2. API Key (+ limiti chiari)
+3. SNCP (+ TL;DR)
+4. MCP (+ TL;DR)
+5. **Privacy** - NUOVA
+6. **Pricing** - NUOVA
+7. **Security** - NUOVA (10/10!)
+8. **Multi-provider** - NUOVA
+9. **Git Integration** - NUOVA (10/10!)
+10. **Production-ready** - NUOVA
 
 ---
 
@@ -49,71 +51,64 @@
 
 ---
 
-## MATERIALE GIÀ PRONTO
-
-```
-VIDEO/GIF: 10+ file in docs/demo/
-STUDI: 51+ documenti in MAPPA_STUDI_ORO.md
-STRATEGIA: SUBROADMAP_DIAMANTE_MARKETING_LANCIO.md
-SHOW HN: docs/SHOW_HN_POST_READY.md
-```
-
----
-
-## COSA MANCA PER LANCIO
-
-```
-1. Post Reddit (da creare)
-2. Tweet thread (da creare)
-3. LinkedIn post (da creare)
-4. FAQ estese 10+ (attualmente 4)
-```
-
----
-
 ## SHOW HN
 
 ```
-TITOLO:
-Show HN: CervellaSwarm – 16 AI agents + 3 quality guardians, coordinated via MCP
-
 DATA: Domenica 26 Gennaio 2026, 12:00 UTC (13:00 Italia)
-
-COMANDI (CORRETTI):
-npx cervellaswarm init
-npx cervellaswarm task "add login page"
+POST: docs/SHOW_HN_POST_READY.md
+FAQ: 10 pronte, Score 9.5/10
 ```
 
 ---
 
-## PROSSIMI STEP
+## PROSSIMA SESSIONE - IMPORTANTE!
 
 ```
-1. Creare post Reddit/Tweet/LinkedIn
-2. Estendere FAQ a 10+
-3. SHOW HN (26 Gennaio 13:00 Italia)
-4. Monitoring e risposte community
+DA VERIFICARE:
+1. docs/DIAMANTE_MARKETING_*.md (5 file)
+2. docs/demo/ (GIF e video)
+→ Controllare se manca qualcosa o utilizzabile
+
+OPZIONALE:
+- Post Reddit (draft)
+- Tweet thread (draft)
+- LinkedIn post (draft)
 ```
+
+---
+
+## CERVELLASWARM 2.0 - POST LAUNCH
+
+**Subroadmap:** `roadmaps/SUBROADMAP_CERVELLASWARM_2.0_AIDER_FEATURES.md`
+
+| Feature | Impact | Effort |
+|---------|--------|--------|
+| Git Flow + Attribution | Professional history | 1-2 giorni |
+| Tree-sitter Repo Mapping | -80% token usage | 1 settimana |
+| Architect/Editor Pattern | +15% accuracy | 1 settimana |
+
+**Timeline:** 3-4 settimane post-launch (Feb 2026)
 
 ---
 
 ## FILE CHIAVE
 
-| File | Cosa Contiene |
-|------|---------------|
-| `docs/SHOW_HN_POST_READY.md` | Post + primo commento |
-| `.sncp/.../SUBROADMAP_DIAMANTE_MARKETING_LANCIO.md` | Piano completo |
-| `.sncp/.../MAPPA_STUDI_ORO.md` | Indice 51+ studi |
-| `.sncp/roadmaps/SUBROADMAP_PRELAUNCH_FIX.md` | Fix sessione 262 |
+| File | Cosa |
+|------|------|
+| `docs/SHOW_HN_POST_READY.md` | Post + 10 FAQ |
+| `docs/studio/RICERCA_AIDER_APPROFONDITA.md` | Ricerca Aider (1129 righe) |
+| `SUBROADMAP_CERVELLASWARM_2.0_AIDER_FEATURES.md` | Piano v2.0 |
+| `MAPPA_LANCIO_DEFINITIVA.md` | Stato lancio completo |
+| `MAPPA_STUDI_ORO.md` | Indice 51+ studi |
 
 ---
 
-## ACCOUNT CONFIGURATI
+## ACCOUNT
 
-- **npm:** rafapra (CLI + MCP pubblicati)
-- **Cloudflare:** rafapra@gmail.com (Pages + DNS)
+- **npm:** rafapra (CLI + MCP)
+- **Cloudflare:** rafapra@gmail.com
 - **GitHub:** rafapra3008/CervellaSwarm
 
 ---
 
-*"Score 9.5/10 - Pronto per Show HN!"*
+*"10 FAQ pronte, v2.0 pianificata, pronti per Show HN!"*

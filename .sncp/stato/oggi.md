@@ -1,43 +1,54 @@
 # OGGI - 18 Gennaio 2026
 
 > **Sessione:** 264
-> **Progetto:** Miracollo PMS
-> **Focus:** Test Epson RT
+> **Progetto:** CervellaSwarm
+> **Focus:** FAQ 10+ per Show HN
 
 ---
 
-## RISULTATO STORICO
+## RISULTATO SESSIONE
 
 ```
 +================================================================+
 |                                                                |
-|   PRIMA STAMPA MIRACOLLO SU EPSON RT!                         |
-|                                                                |
-|   18-01-2026 15:51 - DOCUMENTO GESTIONALE                     |
-|   Stampante: TM-T800F @ 192.168.200.240 (Bar)                 |
+|   10 FAQ PRONTE! Score 9.5/10                                  |
+|   + RICERCA AIDER (1129 righe!)                                |
+|   + SUBROADMAP v2.0 CREATA                                     |
 |                                                                |
 +================================================================+
 ```
 
 ---
 
-## SCOPERTE SESSIONE 264
+## COSA ABBIAMO FATTO
 
-1. **Rete FUNZIONA** - VLAN routing OK, Mac raggiunge Epson
-2. **Endpoint** - `/cgi-bin/fpmate.cgi?devid=local_printer&timeout=10000`
-3. **Formato SOAP/XML** - non semplice XML
-4. **Codice da aggiornare** - Guardiana Score 6/10
-
----
-
-## PROSSIMI STEP
-
-```
-1. [ ] Trovare IP Reception (UniFi → "cassa1")
-2. [ ] Fix codice SOAP
-3. [ ] FASE 3 Fatture XML
-```
+1. **10 FAQ complete** - Privacy, Pricing, Security, Multi-provider, Git, Production
+2. **Ricerca Aider** - Tree-sitter, Architect/Editor, Git flow
+3. **Subroadmap v2.0** - Piano implementazione post-launch
+4. **Guardiana review** - Score 8.8 → 9.5 (5 fix applicati)
 
 ---
 
-*"Prima stampa - Momento storico!"*
+## FILE CREATI/AGGIORNATI
+
+| File | Cosa |
+|------|------|
+| `docs/SHOW_HN_POST_READY.md` | 10 FAQ integrate |
+| `docs/studio/RICERCA_AIDER_APPROFONDITA.md` | 1129 righe ricerca |
+| `SUBROADMAP_CERVELLASWARM_2.0_AIDER_FEATURES.md` | Piano v2.0 |
+| `MAPPA_LANCIO_DEFINITIVA.md` | Stato lancio |
+
+---
+
+## PROSSIMA SESSIONE - DA VERIFICARE
+
+```
+IMPORTANTE: Verificare materiale marketing esistente!
+- docs/DIAMANTE_MARKETING_*.md (5 file)
+- docs/demo/ (GIF e video)
+→ Controllare se manca qualcosa o se possiamo usare
+```
+
+---
+
+*"10 FAQ pronte, v2.0 pianificata!"*

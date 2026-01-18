@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 18 Gennaio 2026 - Sessione 262
+> Aggiornato: 18 Gennaio 2026 - Sessione 264
 
 ```
 +==================================================================+
@@ -32,7 +32,7 @@
 
 ---
 
-## DOVE SIAMO (18 Gennaio 2026 - Sessione 262)
+## DOVE SIAMO (18 Gennaio 2026 - Sessione 264)
 
 ```
 +================================================================+
@@ -86,11 +86,16 @@ FASE 4: SCALA                    [#...................] 5%
 
 SCORE PRE-LAUNCH: 9.5/10
 
+SESSIONE 264:
+  ✓ FAQ 10+ COMPLETATE              Score 9.5/10!
+  ✓ Ricerca Aider                   1129 righe di studio
+  ✓ Subroadmap v2.0                 Post-launch plan
+
 PROSSIMI STEP:
-  1. Creare post Reddit/Tweet/LinkedIn
-  2. Estendere FAQ a 10+
+  1. Verificare DIAMANTE_MARKETING docs + demo/
+  2. Creare post Reddit/Tweet/LinkedIn (opzionale)
   3. SHOW HN (26 Gennaio 13:00 Italia)
-  4. Monitoring + risposte community
+  4. Post-launch: CervellaSwarm 2.0 (Tree-sitter, Git flow)
 ```
 
 ---

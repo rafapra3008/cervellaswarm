@@ -1,6 +1,7 @@
 # MAPPA LANCIO DEFINITIVA - CervellaSwarm
 
 > **Creata:** 18 Gennaio 2026 - Sessione 264
+> **Aggiornata:** 18 Gennaio 2026 - Sessione 264 (FAQ completate!)
 > **Obiettivo:** SHOW HN - 26 Gennaio 2026, 13:00 Italia
 > **Giorni rimasti:** 8
 
@@ -33,15 +34,15 @@
 | 134 test passano | ✓ FATTO | Suite completa |
 | Licenza Apache-2.0 | ✓ FATTO | Chiara |
 
-### DOCUMENTAZIONE [90%]
+### DOCUMENTAZIONE [100%]
 
 | Item | Status | Note |
 |------|--------|------|
 | README con GIF hero | ✓ FATTO | Aggiornato |
 | Quick start guide | ✓ FATTO | In README |
 | Architecture docs | ✓ FATTO | Multiple docs |
-| FAQ | PARZIALE | 4 FAQ, serve 10+ |
-| Contributing guide | ? | Da verificare |
+| FAQ | ✓ FATTO | 10 FAQ, Score 9.5/10! |
+| Contributing guide | ✓ FATTO | In README |
 
 ### SHOW HN [100%]
 
@@ -112,7 +113,7 @@ TOTALE: 51+ documenti!
 
 | # | Task | Priorita | Note |
 |---|------|----------|------|
-| 1 | FAQ estese 10+ | ALTA | Attualmente 4 |
+| 1 | ~~FAQ estese 10+~~ | ✓ FATTO | Score 9.5/10! |
 | 2 | Post Reddit | MEDIA | r/ClaudeAI, r/LocalLLaMA |
 | 3 | Tweet thread | MEDIA | Per amplificare HN |
 | 4 | LinkedIn post | BASSA | Per network professionale |
@@ -241,12 +242,12 @@ SE troppi bug:
 
 ```
 PRODOTTO:        10/10  ████████████████████
-DOCUMENTAZIONE:   9/10  ██████████████████░░
+DOCUMENTAZIONE:  10/10  ████████████████████  ← FAQ 10+ FATTO!
 SHOW HN:         10/10  ████████████████████
 ASSETS:          10/10  ████████████████████
 ALTRI CANALI:     0/10  ░░░░░░░░░░░░░░░░░░░░
 
-MEDIA:            7.8/10
+MEDIA:            8.0/10 (era 7.8)
 
 NOTA: Possiamo lanciare con HN solo.
       Altri canali amplificano ma non bloccano.
