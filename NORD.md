@@ -32,7 +32,7 @@
 
 ---
 
-## DOVE SIAMO (18 Gennaio 2026 - Sessione 256)
+## DOVE SIAMO (18 Gennaio 2026 - Sessione 257)
 
 ```
 +================================================================+
@@ -53,7 +53,7 @@ FASE 2: MVP PRODOTTO             [####################] 100%! PRONTO!
 
   REALE:
   ✓ CLI su npm                   cervellaswarm@0.1.1
-  ✓ MCP su npm                   @cervellaswarm/mcp-server@0.2.0
+  ✓ MCP su npm                   @cervellaswarm/mcp-server@0.2.2
   ✓ FAMIGLIA COMPLETA            16 AGENTI!
   ✓ Test end-to-end              install, doctor, tools OK
   ✓ API Fly.io                   ONLINE
@@ -65,7 +65,7 @@ FASE 2: MVP PRODOTTO             [####################] 100%! PRONTO!
   ✓ BOZZA SHOW HN                Post + primo commento PRONTI!
   ✓ TEST NPM INSTALL             Verificato fresh install OK
 
-FASE 3: PRIMI UTENTI             [########............] 40%
+FASE 3: PRIMI UTENTI             [################....] 80%  ← LANCIO PRONTO!
   - Strategia lancio definita    FATTO (9.5/10!)
   - Assets demo                  FATTO (Sessione 254-255!)
   - Bozza post                   FATTO (Sessione 255!)
@@ -77,9 +77,10 @@ FASE 3: PRIMI UTENTI             [########............] 40%
   - Tool annotations MCP         FATTO (Sessione 256!)
   - Piano B lancio               FATTO (Sessione 256!)
   - Guida Stripe Live            FATTO (Sessione 256!)
-  - npm publish MCP annotations  DA FARE
-  - Submit mcp.so directory      DA FARE
-  - Email Anthropic              DA FARE (3-4 giorni prima)
+  - npm publish MCP annotations  FATTO (Sessione 257!) v0.2.2
+  - Submit mcp.so directory      FATTO (Sessione 257!)
+  - Business Model confermato    FATTO (Sessione 257!) Closed-source!
+  - Email Anthropic              INVIARE (3-4 giorni prima)
   - LANCIO Show HN               PROSSIMO!
 
 FASE 4: SCALA                    [....................] 0%
@@ -93,12 +94,12 @@ INIZIATIVE PARALLELE:
   - Demo Visual                  100%! (Sessione 254-255!)
   - Show HN Prep                 100%! (Sessione 255!)
   - Piano Diamante               100%! (Sessione 256!) - 7 GAP colmati!
+  - Lancio Ready                 100%! (Sessione 257!)
 
 PROSSIMI STEP:
-  1. npm publish MCP con annotations
-  2. Submit mcp.so directory
-  3. Email Anthropic DevRel
-  4. LANCIO Show HN
+  1. Rafa invia email a sales@anthropic.com
+  2. Aspettare 3-4 giorni
+  3. LANCIO Show HN!
 ```
 
 ---

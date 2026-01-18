@@ -1,71 +1,78 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 256
-> **SCORE:** 9.5/10 (DIAMANTE!)
+> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 257
+> **SCORE:** 9.5/10 (DIAMANTE!) - LANCIO PRONTO!
 
 ---
 
-## SESSIONE 256 - PIANO DIAMANTE COMPLETATO!
+## SESSIONE 257 - TUTTO PRONTO PER IL LANCIO!
 
 ```
 +================================================================+
-|   7 GAP COLMATI - LANCIO PRONTO AL 100%!                       |
+|   LANCIO READY - Solo inviare email e GO!                      |
 +================================================================+
 ```
 
 ### Cosa Abbiamo Fatto
 
-1. **Review Esperte** - Marketing (8.5→9.5) + Guardiana Qualità (9/10)
-2. **docs/SNCP_GUIDE.md** - Guida memoria persistente per esterni
-3. **docs/ARCHITECTURE.md** - Architettura 16 agenti con diagrammi
-4. **docs/BOZZA_EMAIL_ANTHROPIC.md** - Email DevRel copy-paste
-5. **Tool annotations MCP** - readOnlyHint/destructiveHint su 4 tools
-6. **Fresh install test** - CLI + MCP server OK
-7. **docs/PIANO_B_LANCIO.md** - Backup strategy Reddit/PH
-8. **docs/GUIDA_STRIPE_LIVE.md** - Passaggio pagamenti reali
+1. **MCP Server v0.2.2** - Pubblicato su npm con LICENSE
+2. **Submit mcp.so** - Commento su Issue #1, listing entro 24h
+3. **Analisi Business Model** - Conferma CLOSED-SOURCE come Cursor
+4. **Email Anthropic** - Aggiornata e APPROVATA da Rafa
+
+### Decisione Strategica Confermata
+
+```
+CLOSED-SOURCE (come Cursor):
+- npm packages: PUBBLICI (acquisizione utenti)
+- Codice sorgente: PRIVATO (protezione business)
+- SNCP: Trade secret (vantaggio competitivo)
+- NO repo pubblico - offriamo accesso su richiesta
+```
 
 ---
 
-## FILE CREATI SESSIONE 256
+## CHECKLIST LANCIO
 
-| File | Contenuto |
-|------|-----------|
-| `docs/SNCP_GUIDE.md` | Memoria per esterni (268 righe) |
-| `docs/ARCHITECTURE.md` | Architettura (246 righe) |
-| `docs/BOZZA_EMAIL_ANTHROPIC.md` | Email Anthropic DevRel |
-| `docs/GUIDA_SUBMIT_MCP_DIRECTORY.md` | Submit directory MCP |
-| `docs/PIANO_B_LANCIO.md` | Backup se HN non va |
-| `docs/GUIDA_STRIPE_LIVE.md` | Guida Live Mode |
+- [x] npm publish MCP con annotations (v0.2.2)
+- [x] Submit mcp.so directory
+- [x] Email Anthropic PRONTA
+- [ ] **INVIARE Email** (3-4 giorni prima del lancio)
+- [ ] **LANCIO Show HN**
 
 ---
 
-## CHECKLIST LANCIO AGGIORNATA
+## VERSIONI ATTUALI
 
-- [x] Bozza post Show HN
-- [x] Primo commento pronto
-- [x] GIF animata verificata
-- [x] Video demo
-- [x] SNCP_GUIDE.md (link README fixato)
-- [x] ARCHITECTURE.md (link README fixato)
-- [x] Email Anthropic pronta
-- [x] Tool annotations MCP
-- [x] Piano B pronto
-- [x] Guida Stripe Live
-- [ ] npm publish MCP con annotations
-- [ ] Submit mcp.so
-- [ ] Email Anthropic (3-4 giorni prima)
-- [ ] LANCIO Show HN
+| Package | Versione | npm |
+|---------|----------|-----|
+| CLI | 0.1.1 | cervellaswarm |
+| MCP Server | 0.2.2 | @cervellaswarm/mcp-server |
 
 ---
 
 ## PROSSIMA SESSIONE
 
 ```
-1. npm publish MCP server (con annotations)
-2. Submit mcp.so directory
-3. Email Anthropic DevRel
-4. LANCIO quando Rafa pronto
+1. Rafa invia email a sales@anthropic.com
+   (copy-paste da docs/BOZZA_EMAIL_ANTHROPIC.md)
+
+2. Aspettare 3-4 giorni
+
+3. LANCIO Show HN!
+   (bozza in docs/SHOW_HN_BOZZA.md)
 ```
+
+---
+
+## FILE CHIAVE
+
+| File | Cosa |
+|------|------|
+| `docs/BOZZA_EMAIL_ANTHROPIC.md` | Email pronta copy-paste |
+| `docs/SHOW_HN_BOZZA.md` | Post HN pronto |
+| `docs/PIANO_B_LANCIO.md` | Backup se HN non va |
+| `docs/GUIDA_STRIPE_LIVE.md` | Passaggio pagamenti reali |
 
 ---
 
