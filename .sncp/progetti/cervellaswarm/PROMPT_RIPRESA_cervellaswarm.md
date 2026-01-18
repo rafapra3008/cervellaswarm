@@ -1,18 +1,18 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 264
-> **SCORE Pre-Launch:** 9.5/10
+> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 265
+> **SCORE Pre-Launch:** 8.0/10
 
 ---
 
-## SESSIONE 264 - FAQ 10+ COMPLETATE!
+## SESSIONE 265 - VERIFICA GUARDIANE + FIX GIF!
 
 ```
 +================================================================+
 |                                                                |
-|   10 FAQ PRONTE! Score 9.5/10                                  |
-|   RICERCA AIDER: 1129 righe di oro!                            |
-|   SUBROADMAP v2.0: Tree-sitter, Architect/Editor, Git flow     |
+|   VERIFICA COMPLETATA CON GUARDIANE!                          |
+|   PROBLEMA GIF CRITICO → RISOLTO!                             |
+|   README ora usa cli_workflow_en.png (PERFETTA!)              |
 |                                                                |
 +================================================================+
 ```
@@ -21,23 +21,18 @@
 
 | Task | Status |
 |------|--------|
-| 10 FAQ per Show HN | FATTO - Score 9.5/10 |
-| Ricerca Aider approfondita | FATTO - 1129 righe |
-| Subroadmap CervellaSwarm 2.0 | FATTO - Post-launch |
-| MAPPA_LANCIO_DEFINITIVA | FATTO |
+| Guardiana Qualità review | FATTO - Score 7-8/10 |
+| Guardiana Marketing review | FATTO - Score 7.5/10 |
+| Verifica GIF (tutte scure!) | TROVATO PROBLEMA |
+| Fix README con PNG buona | FATTO! |
+| MAPPA_LANCIO aggiornata | FATTO |
 
-### Le 10 FAQ
+### Problema Trovato e Risolto
 
-1. Different from Claude (+ TL;DR)
-2. API Key (+ limiti chiari)
-3. SNCP (+ TL;DR)
-4. MCP (+ TL;DR)
-5. **Privacy** - NUOVA
-6. **Pricing** - NUOVA
-7. **Security** - NUOVA (10/10!)
-8. **Multi-provider** - NUOVA
-9. **Git Integration** - NUOVA (10/10!)
-10. **Production-ready** - NUOVA
+```
+PRIMA: 3 GIF nel README tutte scure/inutilizzabili
+DOPO:  1 PNG perfetta (cli_workflow_en.png) come hero
+```
 
 ---
 
@@ -55,39 +50,36 @@
 
 ```
 DATA: Domenica 26 Gennaio 2026, 12:00 UTC (13:00 Italia)
+GIORNI: 8
 POST: docs/SHOW_HN_POST_READY.md
 FAQ: 10 pronte, Score 9.5/10
+README: FIXED con PNG funzionante!
 ```
 
 ---
 
-## PROSSIMA SESSIONE - IMPORTANTE!
+## TIMELINE PROSSIMI GIORNI
 
-```
-DA VERIFICARE:
-1. docs/DIAMANTE_MARKETING_*.md (5 file)
-2. docs/demo/ (GIF e video)
-→ Controllare se manca qualcosa o utilizzabile
-
-OPZIONALE:
-- Post Reddit (draft)
-- Tweet thread (draft)
-- LinkedIn post (draft)
-```
+| Periodo | Task |
+|---------|------|
+| 18-20 Gen | Draft Reddit/Twitter (opzionale) |
+| 21-23 Gen | Polish finale, test altra macchina |
+| 24-25 Gen | Checklist pre-lancio, Rafa approva |
+| **26 Gen 13:00** | **SHOW HN!** |
 
 ---
 
-## CERVELLASWARM 2.0 - POST LAUNCH
+## COSA È PRONTO
 
-**Subroadmap:** `roadmaps/SUBROADMAP_CERVELLASWARM_2.0_AIDER_FEATURES.md`
-
-| Feature | Impact | Effort |
-|---------|--------|--------|
-| Git Flow + Attribution | Professional history | 1-2 giorni |
-| Tree-sitter Repo Mapping | -80% token usage | 1 settimana |
-| Architect/Editor Pattern | +15% accuracy | 1 settimana |
-
-**Timeline:** 3-4 settimane post-launch (Feb 2026)
+```
+✓ CLI + MCP su npm
+✓ Landing cervellaswarm.com
+✓ Show HN post + 10 FAQ
+✓ README con immagine FUNZIONANTE
+✓ MAPPA_LANCIO_DEFINITIVA aggiornata
+✓ 2,459 righe ricerca marketing (DIAMANTE)
+✓ Subroadmap v2.0 per post-launch
+```
 
 ---
 
@@ -96,10 +88,8 @@ OPZIONALE:
 | File | Cosa |
 |------|------|
 | `docs/SHOW_HN_POST_READY.md` | Post + 10 FAQ |
-| `docs/studio/RICERCA_AIDER_APPROFONDITA.md` | Ricerca Aider (1129 righe) |
-| `SUBROADMAP_CERVELLASWARM_2.0_AIDER_FEATURES.md` | Piano v2.0 |
-| `MAPPA_LANCIO_DEFINITIVA.md` | Stato lancio completo |
-| `MAPPA_STUDI_ORO.md` | Indice 51+ studi |
+| `MAPPA_LANCIO_DEFINITIVA.md` | Stato lancio |
+| `docs/demo/cli_workflow_en.png` | Hero image README |
 
 ---
 
@@ -111,4 +101,4 @@ OPZIONALE:
 
 ---
 
-*"10 FAQ pronte, v2.0 pianificata, pronti per Show HN!"*
+*"Verificato con Guardiane, problema risolto, pronti per Show HN!"*

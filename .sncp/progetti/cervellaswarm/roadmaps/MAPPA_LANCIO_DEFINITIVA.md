@@ -1,7 +1,7 @@
 # MAPPA LANCIO DEFINITIVA - CervellaSwarm
 
 > **Creata:** 18 Gennaio 2026 - Sessione 264
-> **Aggiornata:** 18 Gennaio 2026 - Sessione 264 (FAQ completate!)
+> **Aggiornata:** 18 Gennaio 2026 - Sessione 265 (Fix GIF README!)
 > **Obiettivo:** SHOW HN - 26 Gennaio 2026, 13:00 Italia
 > **Giorni rimasti:** 8
 
@@ -59,14 +59,11 @@
 
 | Item | Status | File |
 |------|--------|------|
-| Hero GIF | ✓ FATTO | `cervellaswarm_hero.gif` |
-| Demo GIF | ✓ FATTO | `cervellaswarm_demo.gif` |
-| Doctor GIF | ✓ FATTO | `cervellaswarm_doctor.gif` |
-| Task GIF | ✓ FATTO | `cervellaswarm_task.gif` |
+| Hero PNG (README) | ✓ FATTO | `cli_workflow_en.png` - PERFETTA! |
 | Architecture diagram | ✓ FATTO | `collaboration_flow.png` |
-| Conversation animated | ✓ FATTO | `conversation_animated.gif` |
 
-**Totale GIF/PNG:** 15+ file in `docs/demo/`
+**NOTA Sessione 265:** Verificate tutte le GIF - erano scure/inutilizzabili.
+Sostituita hero con `cli_workflow_en.png` che mostra workflow reale.
 
 ### ALTRI CANALI [0%]
 
@@ -244,13 +241,15 @@ SE troppi bug:
 PRODOTTO:        10/10  ████████████████████
 DOCUMENTAZIONE:  10/10  ████████████████████  ← FAQ 10+ FATTO!
 SHOW HN:         10/10  ████████████████████
-ASSETS:          10/10  ████████████████████
+ASSETS:          10/10  ████████████████████  ← FIX GIF Sessione 265!
 ALTRI CANALI:     0/10  ░░░░░░░░░░░░░░░░░░░░
 
-MEDIA:            8.0/10 (era 7.8)
+MEDIA:            8.0/10
 
 NOTA: Possiamo lanciare con HN solo.
       Altri canali amplificano ma non bloccano.
+
+SESSIONE 265: Verificato con Guardiane - problema GIF risolto!
 ```
 
 ---

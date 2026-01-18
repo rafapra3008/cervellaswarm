@@ -3,11 +3,11 @@
 > **16 AI Agents. 1 Command. Your AI Development Team.**
 
 <p align="center">
-  <img src="docs/demo/collaboration_flow.gif" alt="CervellaSwarm - Real AI Team Collaboration" width="800">
+  <img src="docs/demo/cli_workflow_en.png" alt="CervellaSwarm - AI Team Workflow" width="800">
 </p>
 
 <p align="center">
-  <em>Watch 16 AI agents collaborate: User asks, Regina coordinates, Workers execute, Guardians verify.</em>
+  <em>Regina coordinates, Workers execute, Guardians verify. The only AI coding team that checks its own work.</em>
 </p>
 
 A multi-agent orchestration system for Claude Code. Instead of one AI assistant, get a team of 16 specialized AI agents working together on your codebase.
@@ -36,9 +36,6 @@ cervellaswarm task "create REST API"        # Auto-routes to backend
 cervellaswarm task "find security issues"   # Auto-routes to security
 ```
 
-<p align="center">
-  <img src="docs/demo/cervellaswarm_doctor.gif" alt="CervellaSwarm Doctor" width="800">
-</p>
 
 ## The Team (16 Agents)
 
@@ -107,10 +104,6 @@ cervellaswarm task "Review the authentication module" -a reviewer
 cervellaswarm task "How do enterprise apps handle rate limiting?" -a researcher
 # Researcher investigates best practices before you code
 ```
-
-<p align="center">
-  <img src="docs/demo/cervellaswarm_task.gif" alt="CervellaSwarm Task" width="800">
-</p>
 
 ## Requirements
 

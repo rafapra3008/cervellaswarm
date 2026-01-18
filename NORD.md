@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 18 Gennaio 2026 - Sessione 264
+> Aggiornato: 18 Gennaio 2026 - Sessione 265
 
 ```
 +==================================================================+
@@ -32,7 +32,7 @@
 
 ---
 
-## DOVE SIAMO (18 Gennaio 2026 - Sessione 264)
+## DOVE SIAMO (18 Gennaio 2026 - Sessione 265)
 
 ```
 +================================================================+
@@ -91,11 +91,18 @@ SESSIONE 264:
   ✓ Ricerca Aider                   1129 righe di studio
   ✓ Subroadmap v2.0                 Post-launch plan
 
+SESSIONE 265:
+  ✓ Verifica Guardiane              Qualità + Marketing review
+  ✓ PROBLEMA GIF TROVATO            Tutte scure/inutilizzabili!
+  ✓ FIX README                      cli_workflow_en.png PERFETTA!
+  ✓ MAPPA_LANCIO aggiornata         Stato reale documentato
+
 PROSSIMI STEP:
-  1. Verificare DIAMANTE_MARKETING docs + demo/
-  2. Creare post Reddit/Tweet/LinkedIn (opzionale)
-  3. SHOW HN (26 Gennaio 13:00 Italia)
-  4. Post-launch: CervellaSwarm 2.0 (Tree-sitter, Git flow)
+  1. Draft Reddit/Tweet/LinkedIn (opzionale)
+  2. Polish finale (21-23 Gen)
+  3. Checklist pre-lancio (24-25 Gen)
+  4. SHOW HN (26 Gennaio 13:00 Italia)
+  5. Post-launch: CervellaSwarm 2.0 (Tree-sitter, Git flow)
 ```
 
 ---
