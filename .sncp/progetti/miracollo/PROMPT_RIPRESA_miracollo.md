@@ -1,43 +1,44 @@
 # PROMPT RIPRESA - Miracollo
 
-> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 258
-> **ATTENZIONE:** Deploy problema - leggere sezione URGENTE!
+> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 259
+> **Status:** PRODUZIONE STABILE - Planning funziona!
 
 ---
 
-## SESSIONE 258: VCC IMPLEMENTATO + PROBLEMA DEPLOY
+## SESSIONE 259: FIX DEPLOY + SUBROADMAP
 
 ### Cosa Abbiamo Fatto
 
 ```
-VCC BOOKING.COM - CODICE COMPLETO:
-- Backend: charge_vcc_payment() in stripe_service.py
-- Backend: POST /api/payments/charge-vcc
-- Backend: GET /api/payments/stripe-config
-- Frontend: Stripe Elements in modal-payment.js v2.0
-- Frontend: Bottone "VCC Booking" (blu) nel modal pagamento
+3 PROBLEMI RISOLTI:
 
-STRIPE SANDBOX MIRACOLLO:
-- Account creato: acct_1Sqrxk7aXUHP1bna
-- Chiavi configurate su VM (.env)
-- Test API: FUNZIONA (pagamento test OK)
+1. Planning 404
+   - Causa: Conflitto naming (planning.py vs planning/ cartella)
+   - Fix: planning.py → planning_core.py
+   - Commit: 7c2867f
+
+2. Prenotazioni appaiono/spariscono
+   - Causa: 2 container backend con stesso alias DNS "backend"
+   - Fix: Rimosso container rogue, aggiunto name:miracollo
+   - Commit: 2436923
+
+3. Migration DB mancante
+   - Causa: Colonna 'imported' non esisteva
+   - Fix: Eseguita migration 025 sulla VM
 ```
 
-### PROBLEMA URGENTE
+### Subroadmap DEPLOY_BLINDATO Creata
 
 ```
-+----------------------------------------------------------+
-|  DOPO DEPLOY IL PLANNING NON CARICA!                     |
-|                                                          |
-|  ERRORE TROVATO (dai logs):                              |
-|  sqlite3.OperationalError: no such column: imported      |
-|  File: cm_reservation.py:416                             |
-|                                                          |
-|  CAUSA: Colonna DB mancante (NON causato da VCC!)        |
-|                                                          |
-|  FIX: Aggiungere colonna 'imported' alla tabella         |
-|  O verificare se c'è una migration mancante              |
-+----------------------------------------------------------+
+Path: CervellaSwarm/.sncp/roadmaps/SUBROADMAP_DEPLOY_BLINDATO.md
+
+FASE 1: Fix immediato          ✓ COMPLETATA
+FASE 2: Guardrail tecnici      ← PROSSIMO (wrapper docker run)
+FASE 3: Un solo entry point    (4 comandi invece di 93 script)
+FASE 4: Wizard interattivo     (non puoi saltare step)
+FASE 5: Monitoraggio           (alert automatici)
+
+Principio: "PATH CORRETTO più FACILE del path sbagliato"
 ```
 
 ---
@@ -46,27 +47,26 @@ STRIPE SANDBOX MIRACOLLO:
 
 ```
 MIRACOLLO
-├── PMS CORE (:8001)        90% - PROBLEMA DEPLOY!
+├── PMS CORE (:8001)        90% - STABILE!
 ├── MIRACOLLOOK (:8002)     60% - Non toccato
 └── ROOM HARDWARE (:8003)   10% - Attesa hardware
 ```
 
 ---
 
-## MODULO VCC (NUOVO)
+## MODULO VCC (DA TESTARE)
 
 ```
-Flow completo:
-1. Staff apre prenotazione
-2. Clicca "Pagamento"
-3. Clicca "VCC Booking" (bottone blu)
-4. Appare Stripe Elements (stile Booking.com)
-5. Inserisce dati VCC da Extranet
-6. Clicca "Addebita VCC"
-7. Stripe tokenizza → Backend addebita → DB aggiornato
+IMPLEMENTATO nella sessione 258:
+- Backend: charge_vcc_payment() in stripe_service.py
+- Backend: POST /api/payments/charge-vcc
+- Frontend: Stripe Elements in modal-payment.js v2.0
+- Frontend: Bottone "VCC Booking" (blu)
 
-Zero PCI compliance: dati carta vanno direttamente a Stripe
-Commissioni: 1.4% + €0.25 per transazione
+Stripe Sandbox: acct_1Sqrxk7aXUHP1bna
+Carta test: 4242 4242 4242 4242
+
+STATUS: Codice completo, DA TESTARE nel browser!
 ```
 
 ---
@@ -74,14 +74,33 @@ Commissioni: 1.4% + €0.25 per transazione
 ## PROSSIMI STEP
 
 ```
-URGENTE:
-1. Fix 404 /api/planning/NL
-2. Verificare logs backend
-3. Rollback se serve (git revert cbf60c2)
+PRIORITÀ 1: Test VCC
+- Aprire prenotazione nel browser
+- Click "Pagamento" → "VCC Booking"
+- Testare con carta 4242 4242 4242 4242
 
-DOPO FIX:
-4. Test VCC frontend (carta: 4242 4242 4242 4242)
-5. Documentare VCC in docs/
+PRIORITÀ 2: FASE 2 subroadmap
+- Wrapper bash su VM che blocca "docker run"
+- 10 minuti di lavoro
+
+PRIORITÀ 3: Documentazione
+- Documentare VCC in docs/
+```
+
+---
+
+## STATO INFRASTRUTTURA
+
+```
+VM MIRACOLLO:
+- 1 container backend: miracollo-backend-1 (healthy)
+- 1 container nginx: miracollo-nginx (healthy)
+- DB: ~/app/backend/data/miracollo.db
+- docker-compose.yml ha name:miracollo (previene duplicati)
+
+LOCALE:
+- Container: miracollo-backend-local
+- Funziona correttamente
 ```
 
 ---
