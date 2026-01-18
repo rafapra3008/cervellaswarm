@@ -1,42 +1,41 @@
 # PROMPT RIPRESA - Miracollo (Generale)
 
-> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 256
+> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 257
 > **NOTA:** Questo file e panoramica. Ogni braccio ha il SUO PROMPT_RIPRESA!
 
 ---
 
-## SESSIONE 256: FIX DEPLOY DEFINITIVO
+## SESSIONE 257: FASE 3 CONSOLIDAMENTO COMPLETATA
 
-### Problema Risolto
-
-```
-ROOT CAUSE: Import assoluto negli SHIM files
-  - email_parser.py: "from services.email" (SBAGLIATO)
-  - Fixato: "from .email" (RELATIVO - funziona ovunque)
-
-PREVENZIONE:
-  - Test import aggiunto in GitHub Actions
-  - Verifica PRIMA di deployare
-```
-
-### Analisi MACRO con Guardiane
+### Cosa Abbiamo Fatto
 
 ```
-Consultate: Guardiana Qualità + Ops + Ingegnera
-Architettura: 8/10 - Solida
-Subroadmap creata: SUBROADMAP_DEPLOY_ROBUSTO.md
+3.2 SECURITY:
+  - license_check.py: import fixati (Optional, Tuple)
+  - TODO JWT → FUTURE con documentazione chiara
+  - 4 step documentati per quando serve JWT
+  - Versione: 1.0.0 → 1.1.0
+
+3.1 ROUTERS:
+  - Analisi: 52 file nel root, 6 subdirectory
+  - DECISIONE: SKIP (sistema live, rischio breakage)
+  - Guardiana Qualità approvato
+
+3.3 TEST:
+  - 24 file test, 8 > 500 righe
+  - Già organizzati per feature
+  - DECISIONE: No move (rischio pytest)
+
+3.4 DOCS:
+  - README.md aggiornato v1.8.0
+  - Project Structure con nuova modularizzazione
 ```
 
-### Deploy v4.1.0
+### Health Score
 
 ```
-1. Pull code
-2. Build Docker
-3. TEST IMPORT (nuovo!)
-4. Deploy backend + polling 120s
-5. Ricrea nginx
-6. Health check finale
-RISULTATO: SUCCESS!
+6/10 → 8/10 → 8.5/10
+OBIETTIVO 9.5: Da valutare prossime azioni
 ```
 
 ---
@@ -52,42 +51,34 @@ MIRACOLLO
 
 ---
 
-## STATO MODULARIZZAZIONE
+## MODULARIZZAZIONE COMPLETATA
 
 ```
-FASE 2: 100% COMPLETATA (Sessione 255)
-  [x] 2.1 suggerimenti_engine.py -> 7 moduli
-  [x] 2.2 planning_swap.py -> 5 moduli
-  [x] 2.3 settings.py -> 7 moduli
-  [x] 2.4 email_parser.py -> 6 moduli
-  [x] 2.5 confidence_scorer.py -> 5 moduli
+FASE 1: Quick Wins ✓
+FASE 2: Refactoring Critico ✓ (30+ moduli)
+FASE 3: Consolidamento ✓ (Security + Docs)
 
-Health Score: 6/10 → 8/10 (30+ moduli creati!)
+File modularizzati:
+- suggerimenti_engine.py → suggerimenti/ (7)
+- planning_swap.py → planning/ (5)
+- settings.py → settings/ (7)
+- email_parser.py → email/ (6)
+- confidence_scorer.py → confidence/ (5)
 ```
 
 ---
 
-## PROSSIMA SESSIONE (257)
-
-**FASE 3: CONSOLIDAMENTO** (quando torniamo a Miracollo)
-```
-- Organizza routers/ per domain
-- Security TODO (Twilio, JWT)
-- Test organization
-```
-
-**OPPURE:**
-- Continuare con CervellaSwarm Show HN
-- Dipende da priorità Rafa
-
----
-
-## ROADMAPS
+## PROSSIMI STEP
 
 ```
-.sncp/progetti/miracollo/roadmaps/
-├── SUBROADMAP_MODULARIZZAZIONE_PMS.md
-└── SUBROADMAP_DEPLOY_ROBUSTO.md (NUOVO!)
+PER SCORE 9.5/10:
+- Test coverage incrementale
+- Refactoring routers (con freeze deploy)
+- API documentation auto-generate
+
+OPPURE:
+- CervellaSwarm Show HN launch
+- Miracollook palette salutare
 ```
 
 ---
