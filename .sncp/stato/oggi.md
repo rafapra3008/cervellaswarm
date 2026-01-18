@@ -1,18 +1,17 @@
 # STATO OGGI - 18 Gennaio 2026
 
-> **Sessione:** 261
-> **Focus:** CervellaSwarm - LIVE + Show HN Ready!
+> **Sessione:** 263
+> **Focus:** Miracollo PMS - FASE 2 Scontrini RT
 
 ---
 
-## SESSIONE 261 - MOMENTO STORICO!
+## SESSIONE 263 - CODICE RT COMPLETO!
 
 ```
-CERVELLASWARM.COM È LIVE!
-SHOW HN POST PRONTO!
+FASE 2 SCONTRINI RT - CODICE PRONTO!
+Blocker: rete (VLAN diversa)
 
-Landing: https://cervellaswarm.com
-Backup:  https://cervellaswarm.pages.dev
+Epson TM-T800F @ 192.168.200.240
 ```
 
 ---
@@ -21,19 +20,26 @@ Backup:  https://cervellaswarm.pages.dev
 
 | Task | Status |
 |------|--------|
-| Allineamento SNCP | FATTO |
-| Cloudflare Pages | CONFIGURATO |
-| DNS + SSL | ATTIVO |
-| Show HN titolo | SCELTO |
-| Show HN commento | SCRITTO |
+| Studio hardware RT | FATTO - IP trovato in UniFi |
+| Migration 042_fiscal_rt.sql | FATTO |
+| Interfaccia base.py | FATTO |
+| MockAdapter | FATTO |
+| EpsonAdapter | FATTO |
+| API fiscal.py | FATTO - 9 endpoints |
+| Test connessione | BLOCKER - VLAN diversa |
 
 ---
 
-## SHOW HN
+## FILE CREATI
 
 ```
-DATA: Domenica 26 Gennaio, 13:00 Italia
-FILE: docs/SHOW_HN_POST_READY.md
+backend/database/migrations/042_fiscal_rt.sql
+backend/services/fiscal/__init__.py
+backend/services/fiscal/base.py
+backend/services/fiscal/mock_adapter.py
+backend/services/fiscal/epson_adapter.py
+backend/services/fiscal/test_connection.py
+backend/routers/fiscal.py
 ```
 
 ---
@@ -41,11 +47,10 @@ FILE: docs/SHOW_HN_POST_READY.md
 ## PROSSIMI STEP
 
 ```
-1. Pre-launch check (24-25 Gennaio)
-2. SHOW HN (26 Gennaio)
-3. Monitoring community
+A) Risolvere rete VLAN per test RT
+B) FASE 3 Fatture XML
 ```
 
 ---
 
-*"Il 100000%!" - Sessione 261*
+*"Codice pronto, attende la rete!" - Sessione 263*
