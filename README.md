@@ -3,7 +3,11 @@
 > **16 AI Agents. 1 Command. Your AI Development Team.**
 
 <p align="center">
-  <img src="docs/demo/collaboration_flow.png" alt="CervellaSwarm - Real AI Team Collaboration" width="800">
+  <img src="docs/demo/collaboration_flow.gif" alt="CervellaSwarm - Real AI Team Collaboration" width="800">
+</p>
+
+<p align="center">
+  <em>Watch 16 AI agents collaborate: User asks, Regina coordinates, Workers execute, Guardians verify.</em>
 </p>
 
 A multi-agent orchestration system for Claude Code. Instead of one AI assistant, get a team of 16 specialized AI agents working together on your codebase.

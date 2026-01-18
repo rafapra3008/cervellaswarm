@@ -1,65 +1,67 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 17 Gennaio 2026 - Sessione 254
+> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 255
 > **SCORE:** 9.5/10
 
 ---
 
-## SESSIONE 254 - DEMO VISUAL COMPLETATI!
+## SESSIONE 255 - LANCIO PRONTO!
 
 ```
 +================================================================+
-|   HERO IMAGE: collaboration_flow.png                           |
-|   Mostra la MAGIA della collaborazione REALE                   |
-|   User -> Regina -> Workers -> Guardiana -> Result             |
+|   TUTTO PRONTO PER SHOW HN!                                    |
+|   Martedì 21 Gennaio 2026 - 14:00-16:00 IT                     |
 +================================================================+
 ```
 
 ### Cosa Abbiamo Fatto
 
-1. **Ricerca best practices** screenshot/GIF per Show HN
-2. **Consulenza Marketing + Researcher** -> insight chiave
-3. **collaboration_flow.png** creato (285KB) - HERO!
-4. **4 GIF** create (hero, doctor, task, conversation)
-5. **README aggiornato** con visual + comandi CLI corretti
-6. **API key CLI** configurata (in ~/Library/Preferences/)
-7. **VHS + gifsicle** installati per demo future
+1. **Ricerca Show HN** (cervella-researcher)
+   - Best practices, pattern vincenti, errori da evitare
 
-### Insight CRITICO (Marketing + Researcher)
+2. **Bozza Post** (`docs/BOZZA_SHOW_HN.md`)
+   - Titolo: "Show HN: CervellaSwarm - 16 AI agents that check each other's work"
+   - Primo commento copy-paste ready
+   - Risposte FAQ pre-preparate
 
-```
-"La MAGIA non e il comando CLI"
-"La MAGIA e la COLLABORAZIONE tra agenti"
-"Show conversation, not terminal commands"
-```
+3. **GIF Animata** (`docs/demo/collaboration_flow.gif` - 836KB)
+   - Mostra flusso: User → Regina → Workers → Guardiana → Result
 
----
+4. **Screenshot CLI inglese** (`docs/demo/cli_workflow_en.png` - 112KB)
+   - Todo list, analisi file, Regina consulta Guardian
 
-## STATO ATTUALE
+5. **Test npm install** - TUTTO OK
+   - `cervellaswarm` v0.1.1 funziona
+   - doctor, help, version tutti OK
 
-```
-DEMO ASSETS (docs/demo/):
-  - collaboration_flow.png   <- HERO nel README
-  - collaboration_flow.html  <- Sorgente
-  - cervellaswarm_hero.gif
-  - cervellaswarm_doctor.gif
-  - cervellaswarm_task.gif
-
-STUDI (docs/studio/):
-  - RICERCA_SCREENSHOT_GIF_BEST_PRACTICES.md
-  - RICERCA_DEMO_MULTIAGENT_PATTERNS.md
-  - RICERCA_GIF_CHAT_DEMO_TOOLS.md
-```
+6. **Review Marketing + Guardiana Qualità**
+   - Visual collaboration = VINCITORE per HN
+   - Tutti i link e package verificati corretti
 
 ---
 
-## PROSSIMA SESSIONE (255)
+## ASSETS PRONTI
 
-```
-1. Bozza post Show HN
-2. (Opzionale) GIF animata chat-style
-3. LANCIO: Martedi 21 Gennaio 2026
-```
+| File | Size | Status |
+|------|------|--------|
+| `docs/BOZZA_SHOW_HN.md` | Post completo | PRONTO |
+| `docs/demo/collaboration_flow.gif` | 836KB | PRONTO |
+| `docs/demo/collaboration_flow.png` | 285KB | BACKUP |
+| `docs/demo/cli_workflow_en.png` | 112KB | PRONTO |
+| `README.md` | Con GIF | PRONTO |
+
+---
+
+## CHECKLIST LANCIO (21 Gennaio)
+
+- [x] Bozza post Show HN
+- [x] Primo commento pronto
+- [x] GIF animata
+- [x] Screenshot CLI inglese
+- [x] Test npm install
+- [x] Review Marketing + Guardiana
+- [ ] Account HN Rafa pronto
+- [ ] 6 ore libere per engagement
 
 ---
 
@@ -67,22 +69,12 @@ STUDI (docs/studio/):
 
 | Cosa | Dove |
 |------|------|
-| Hero Image | `docs/demo/collaboration_flow.png` |
-| README | Aggiornato con visual |
-| Ricerche | `docs/studio/RICERCA_*.md` |
-| SUBROADMAP Marketing | `roadmaps/SUBROADMAP_DIAMANTE_MARKETING_LANCIO.md` |
-| MAPPA STUDI | `MAPPA_STUDI_ORO.md` |
+| Bozza post | `docs/BOZZA_SHOW_HN.md` |
+| GIF Hero | `docs/demo/collaboration_flow.gif` |
+| CLI Screenshot | `docs/demo/cli_workflow_en.png` |
+| Ricerca HN | `docs/studio/RICERCA_SHOW_HN_BEST_PRACTICES.md` |
 
 ---
 
-## MESSAGGI CHIAVE
-
-```
-"The only AI coding team that checks its own work"
-"Sometimes it feels like magic"
-"16 brains are better than one"
-```
-
----
-
+*"The only AI coding team that checks its own work"*
 *"Ultrapassar os proprios limites!"*

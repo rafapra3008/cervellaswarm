@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CervellaSwarm CLI - Real Workflow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'SF Mono', 'Fira Code', 'Monaco', monospace;
+            background: #0d1117;
+            min-height: 100vh;
+            padding: 20px;
+            color: #c9d1d9;
+        }
+        .terminal {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #161b22;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        .terminal-header {
+            background: #21262d;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+        .terminal-title {
+            flex: 1;
+            text-align: center;
+            color: #8b949e;
+            font-size: 13px;
+        }
+        .terminal-body {
+            padding: 20px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .prompt {
+            color: #7ee787;
+        }
+        .command {
+            color: #79c0ff;
+        }
+        .bullet {
+            color: #f0883e;
+            margin-right: 8px;
+        }
+        .success {
+            color: #7ee787;
+        }
+        .info {
+            color: #79c0ff;
+        }
+        .warning {
+            color: #f0883e;
+        }
+        .dim {
+            color: #6e7681;
+        }
+        .highlight {
+            color: #d2a8ff;
+        }
+        .todo-box {
+            background: #0d1117;
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin: 12px 0;
+            border-left: 3px solid #238636;
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 4px 0;
+        }
+        .todo-check {
+            color: #7ee787;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .todo-progress {
+            color: #f0883e;
+            margin-right: 10px;
+        }
+        .todo-pending {
+            color: #6e7681;
+            margin-right: 10px;
+        }
+        .section {
+            margin: 16px 0;
+        }
+        .tree-line {
+            color: #6e7681;
+            margin-left: 16px;
+        }
+        .agent-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        .tag-regina {
+            background: rgba(255, 107, 157, 0.2);
+            color: #ff6b9d;
+        }
+        .tag-worker {
+            background: rgba(100, 255, 218, 0.15);
+            color: #64ffda;
+        }
+        .tag-guardian {
+            background: rgba(167, 139, 250, 0.2);
+            color: #a78bfa;
+        }
+        .status-bar {
+            background: #21262d;
+            padding: 8px 16px;
+            font-size: 11px;
+            color: #8b949e;
+            display: flex;
+            justify-content: space-between;
+        }
+        .tagline {
+            text-align: center;
+            padding: 16px;
+            color: #64ffda;
+            font-style: italic;
+            font-size: 14px;
+            background: #0d1117;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-dot dot-red"></div>
+            <div class="terminal-dot dot-yellow"></div>
+            <div class="terminal-dot dot-green"></div>
+            <div class="terminal-title">CervellaSwarm — zsh</div>
+        </div>
+
+        <div class="terminal-body">
+            <!-- Command -->
+            <div>
+                <span class="prompt">❯</span> <span class="command">cervellaswarm task "Refactor email parser into modules"</span>
+            </div>
+
+            <!-- Search results -->
+            <div class="section">
+                <span class="bullet">●</span> <span class="info">Search</span>(pattern: "**/*email*parser*.py")
+                <div class="tree-line">└─ Found <span class="success">2 files</span></div>
+            </div>
+
+            <div class="section">
+                <span class="bullet">●</span> <span class="info">Read</span>(~/project/services/email_parser.py)
+                <div class="tree-line">└─ Read <span class="highlight">830 lines</span></div>
+            </div>
+
+            <div class="section">
+                <span class="bullet">●</span> Analyzed file. <span class="highlight">830 lines</span> with clear structure.
+            </div>
+
+            <!-- File structure -->
+            <div class="section">
+                <div class="dim">───</div>
+                <div style="margin: 8px 0;"><strong>What I see:</strong></div>
+                <div style="margin-left: 16px; color: #8b949e;">
+                    EMAIL_PARSER.PY (830 lines)<br>
+                    <span class="tree-line">├─ Enums + Constants (lines 33-117)</span><br>
+                    <span class="tree-line">├─ Helpers (lines 65-350)</span><br>
+                    <span class="tree-line">├─ Detection (lines 122-208)</span><br>
+                    <span class="tree-line">├─ DataClasses (lines 213-244, 451-472)</span><br>
+                    <span class="tree-line">├─ Parsers (lines 353-633)</span><br>
+                    <span class="tree-line">└─ Master Parser (lines 773-829)</span>
+                </div>
+            </div>
+
+            <!-- Constitution quote -->
+            <div class="section">
+                <div class="dim">───</div>
+                <div class="highlight">As per CONSTITUTION: "THE QUEEN ORCHESTRATES - Consult expert before implementing!"</div>
+            </div>
+
+            <!-- Agent consultation -->
+            <div class="section">
+                <span class="agent-tag tag-regina">REGINA</span> Consulting Guardian Engineer for split plan validation.
+            </div>
+
+            <!-- Todo list -->
+            <div class="todo-box">
+                <div class="todo-item">
+                    <span class="todo-progress">◐</span>
+                    <span>Analyzing email_parser.py (829 lines)</span>
+                </div>
+                <div class="todo-item">
+                    <span class="todo-pending">○</span>
+                    <span class="dim">Consult Guardian Engineer for split plan</span>
+                </div>
+                <div class="todo-item">
+                    <span class="todo-pending">○</span>
+                    <span class="dim">Create services/email/ structure</span>
+                </div>
+                <div class="todo-item">
+                    <span class="todo-pending">○</span>
+                    <span class="dim">Split into modules (parser, extractors, patterns)</span>
+                </div>
+                <div class="todo-item">
+                    <span class="todo-pending">○</span>
+                    <span class="dim">Create SHIM for backward compatibility</span>
+                </div>
+                <div class="todo-item">
+                    <span class="todo-pending">○</span>
+                    <span class="dim">Quality Audit by Guardian</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="status-bar">
+            <span><span class="warning">*</span> Analyzing email_parser.py... (ctrl+c to interrupt)</span>
+            <span class="dim">59s · ↓ 2.5k tokens</span>
+        </div>
+    </div>
+
+    <div class="tagline">
+        "The only AI coding team that checks its own work"
+    </div>
+</body>
+</html>
