@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 17 Gennaio 2026 - Sessione 254
+> Aggiornato: 18 Gennaio 2026 - Sessione 255
 
 ```
 +==================================================================+
@@ -32,7 +32,7 @@
 
 ---
 
-## DOVE SIAMO (17 Gennaio 2026 - Sessione 254)
+## DOVE SIAMO (18 Gennaio 2026 - Sessione 255)
 
 ```
 +================================================================+
@@ -49,28 +49,32 @@ FASE 1: FONDAMENTA               [####################] 100%!
   - PRE/POST-FLIGHT 16 agenti    FATTO
   - 3 GAP critici                FATTO (Sessione 217!)
 
-FASE 2: MVP PRODOTTO             [##################..] 90% REALE
+FASE 2: MVP PRODOTTO             [####################] 100%! PRONTO!
 
-  REALE (Sessione 254!):
+  REALE (Sessione 255!):
   ✓ CLI su npm                   cervellaswarm@0.1.1
   ✓ MCP su npm                   @cervellaswarm/mcp-server@0.2.0
-  ✓ FAMIGLIA COMPLETA            16 AGENTI! (da 8!)
+  ✓ FAMIGLIA COMPLETA            16 AGENTI!
   ✓ Test end-to-end              install, doctor, tools OK
   ✓ API Fly.io                   ONLINE
   ✓ Stripe                       Payment Link OK
   ✓ BYOK                         Pronto
   ✓ Marketing Diamante           Ricerca + Subroadmap
-  ✓ ASSETS LANCIO                Hero image + GIF! (Sessione 254!)
-  ✓ README                       Aggiornato con visual
+  ✓ ASSETS LANCIO                GIF + PNG + Video Demo!
+  ✓ README                       Aggiornato con GIF animata
+  ✓ BOZZA SHOW HN                Post + primo commento PRONTI!
+  ✓ TEST NPM INSTALL             Verificato fresh install OK
 
-  ANCORA DA FARE:
-  ✗ OIDC Trusted Publishing      CI/CD automatico npm
-  ✗ Bozza post Show HN           Prossima sessione
+  OPZIONALE:
+  - OIDC Trusted Publishing      CI/CD automatico npm (nice to have)
 
-FASE 3: PRIMI UTENTI             [##..................] 10%
+FASE 3: PRIMI UTENTI             [####................] 20%
   - Strategia lancio definita    FATTO
-  - Assets demo                  FATTO (Sessione 254!)
-  - Data target                  21 Gennaio 2026
+  - Assets demo                  FATTO (Sessione 254-255!)
+  - Bozza post                   FATTO (Sessione 255!)
+  - Video demo                   FATTO (Sessione 255!)
+  - Test install                 FATTO (Sessione 255!)
+  - LANCIO Show HN               PROSSIMO!
 
 FASE 4: SCALA                    [....................] 0%
 
@@ -80,11 +84,12 @@ INIZIATIVE PARALLELE:
   - Phrasebook                   20%
   - Famiglia Completa MCP        100%! (16/16 agenti) - Sessione 253!
   - Marketing Diamante           100%! (4 parti + subroadmap)
-  - Demo Visual                  100%! (Sessione 254!)
+  - Demo Visual                  100%! (Sessione 254-255!)
+  - Show HN Prep                 100%! (Sessione 255!)
 
-PROSSIMI STEP CRITICI:
-  1. Bozza post Show HN
-  2. LANCIO: Martedi 21 Gennaio 2026
+PROSSIMI STEP:
+  1. LANCIO Show HN
+  2. Product Hunt (opzionale)
 ```
 
 ---
