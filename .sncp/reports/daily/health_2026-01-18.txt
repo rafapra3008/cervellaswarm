@@ -4,16 +4,16 @@
 [0;36m|   [0;35mSNCP HEALTH DASHBOARD[0;36m                                       |[0m
 [0;36m|   [0mSistema Nervoso Centrale Progetti[0;36m                            |[0m
 [0;36m|                                                                |[0m
-[0;36m|   Data: 2026-01-18 05:31                                       |[0m
+[0;36m|   Data: 2026-01-18 08:30                                       |[0m
 [0;36m+================================================================+[0m
 
 [0;34m--- STATISTICHE GLOBALI ---[0m
 
   [0;36mSNCP Root:[0m /Users/rafapra/Developer/CervellaSwarm/.sncp
-  [0;36mTotale file MD:[0m 707
+  [0;36mTotale file MD:[0m 709
   [0;36mFile obsoleti (>30gg):[0m 0
 
-  [0;36moggi.md:[0m 50 righe [[0;32mOK[0m] - ultimo update: 2026-01-17
+  [0;36moggi.md:[0m 56 righe [[0;32mOK[0m] - ultimo update: 2026-01-18
 
 [0;34m--- PROGETTI ---[0m
 
@@ -25,13 +25,13 @@
 
 [0;34m--- RACCOMANDAZIONI ---[0m
 
-  [1;33m[!][0m oggi.md non aggiornato oggi (ultimo: 2026-01-17)
+  [0;32mNessuna raccomandazione - SNCP in ottimo stato![0m
 
 [0;34m--- SCORE SNCP ---[0m
 
-  SNCP Health Score: [0;32m90/100[0m
+  SNCP Health Score: [0;32m100/100[0m
 
-  [###########################---]  90%
+  [##############################] 100%
 
 [0;36m+================================================================+[0m
 [0;36m|   [0m"Se documentiamo = facciamo!"[0;36m                               |[0m

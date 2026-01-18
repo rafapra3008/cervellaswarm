@@ -224,3 +224,27 @@ Compliance OK!
 
 Manutenzione completata!
 ============================================
+
+============================================
+SNCP DAILY MAINTENANCE - 2026-01-18
+============================================
+=== SNCP Daily Health Check ===
+Health check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/health_2026-01-18.txt
+Tutto OK!
+=== Cleanup file temporanei ===
+Cleanup completato
+=== Verifica dimensioni file ===
+Dimensioni file OK
+=== Compliance Check ===
+Compliance check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/compliance_2026-01-18.txt
+Compliance OK!
+=== Statistiche SNCP ===
+  cervellaswarm: 108 file
+  contabilita: 6 file
+  crypto-research: 16 file
+  menumaster: 3 file
+  miracollo: 335 file
+  Dimensione totale SNCP: 9.8M
+
+Manutenzione completata!
+============================================
