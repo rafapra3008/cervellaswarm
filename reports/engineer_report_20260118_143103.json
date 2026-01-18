@@ -1,0 +1,2702 @@
+{
+  "timestamp": "18/01/2026 14:31",
+  "project": "/Users/rafapra/Developer/CervellaSwarm",
+  "results": {
+    "large_files": [
+      {
+        "file": "landing/index.html",
+        "lines": 795,
+        "suggestion": "Considera splitting in file multipli"
+      },
+      {
+        "file": "docs/ARCHITECTURE.md",
+        "lines": 533,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/SWARM_RULES.md",
+        "lines": 736,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/FAQ_CERVELLASWARM_v124.md",
+        "lines": 558,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/ANALISI_BUSINESS_MODEL_OPENSOURCE.md",
+        "lines": 735,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/DIAMANTE_MARKETING_PARTE3_STRATEGIA_CERVELLASWARM.md",
+        "lines": 714,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/DIAMANTE_MARKETING_PARTE2_BEST_PRACTICES.md",
+        "lines": 565,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/DIAMANTE_MARKETING_PARTE4_RISORSE_FINALE.md",
+        "lines": 816,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "reports/engineer_report_20260116_audit_core_pms.md",
+        "lines": 598,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "reports/engineer_analysis_ai_suggestions_20260112.md",
+        "lines": 521,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "reports/MIRACOLLO_ML_ANALYSIS_20260111.md",
+        "lines": 521,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "reports/backend_exploration_miracollo_20260111.md",
+        "lines": 738,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "reports/engineer_report_20260116_124513.md",
+        "lines": 800,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "reports/engineer_report_miracollo_integrazioni_20260116.md",
+        "lines": 568,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".swarm/tasks/TASK_DESIGN_DASHBOARD_V2_output.md",
+        "lines": 1281,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".swarm/tasks/TASK_VALIDATION_PATTERNS_OUTPUT.md",
+        "lines": 504,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".swarm/handoff/HANDOFF_SESSIONE_125_FINAL.md",
+        "lines": 537,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".swarm/reports/report_2026-01-06_035029.md",
+        "lines": 1165,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "scripts/memory/README.md",
+        "lines": 667,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/guide/WORKFLOW_REGINA_QUOTIDIANO.md",
+        "lines": 1569,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/guide/GUIDA_COMUNICAZIONE.md",
+        "lines": 729,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/guide/GUIDA_BEST_PRACTICES_SWARM.md",
+        "lines": 1982,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/design/DESIGN_SCIAME_FAMIGLIA.md",
+        "lines": 567,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_CERVELLO_UMANO_VS_SWARM.md",
+        "lines": 611,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_DASHBOARD_ARCH.md",
+        "lines": 715,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/RICERCA_LEZIONI_SESSIONI_119_122.md",
+        "lines": 644,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_DASHBOARD_UX.md",
+        "lines": 625,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/RICERCA_STATO_FINANZIARIO_MIRACOLLO.md",
+        "lines": 1004,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_AGENT_HQ_INTEGRAZIONE.md",
+        "lines": 506,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_DASHBOARD_TECH.md",
+        "lines": 610,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/ANALISI_ARCHITETTURA_COMMERCIALE.md",
+        "lines": 614,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_COORDINAMENTO_CERVELLE.md",
+        "lines": 720,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_COMUNICAZIONE_DEFINITIVO.md",
+        "lines": 900,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/RICERCA_UNBUFFERED_OUTPUT.md",
+        "lines": 1046,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_APPLE_STYLE.md",
+        "lines": 615,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_POSITIONING_SALVARE_LAVORO.md",
+        "lines": 792,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/RICERCA_TECNICA_COMMERCIALE.md",
+        "lines": 519,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/RICERCA_SCREENSHOT_GIF_BEST_PRACTICES.md",
+        "lines": 514,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/RICERCA_DEPLOY_LANDING_CERVELLASWARM.md",
+        "lines": 563,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/RICERCA_DEPLOY_LANDING_CERVELLASWARM_PARTE2.md",
+        "lines": 814,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_MULTI_INSTANCE.md",
+        "lines": 516,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/PIANO_GOMARKET_DETTAGLIATO.md",
+        "lines": 571,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/PIANO_TECNICO_DETTAGLIATO.md",
+        "lines": 2101,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_COMUNICAZIONE_PROTOCOLLI.md",
+        "lines": 1386,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/PIANO_TECNICO_SUMMARY.md",
+        "lines": 527,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/STUDIO_SNCP.md",
+        "lines": 513,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/studio/RICERCA_BUSINESS_MODEL.md",
+        "lines": 729,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/architettura/ARCHITETTURA_V2.0.md",
+        "lines": 850,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/architettura/ARCHITETTURA_SNCP_INTERNO.md",
+        "lines": 971,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/roadmap/FASE_9_APPLE_STYLE.md",
+        "lines": 660,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/roadmap/FASE_7_LEARNING.md",
+        "lines": 858,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/roadmap/FASE_7.5_PARALLELIZZAZIONE.md",
+        "lines": 608,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/tests/HARDTESTS_SWARM_V3.md",
+        "lines": 1286,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/tests/HARDTESTS_APPLE_STYLE.md",
+        "lines": 617,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/tests/HARDTEST_LEZIONI_APPRESE_v123.md",
+        "lines": 546,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/analisi/ANALISI_PATTERN_REGINA_v124.md",
+        "lines": 1862,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/review/REVIEW_SPRINT3_DOCS_v124.md",
+        "lines": 1765,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/protocolli/PROTOCOLLI_COMUNICAZIONE.md",
+        "lines": 737,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/reviews/TECH_DEBT_ANALYSIS_2026_01_03.md",
+        "lines": 584,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/reviews/TECH_DEBT_ANALYSIS_2026_01_03_v2.md",
+        "lines": 718,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/strategia/MAPPA_CERVELLASWARM_IDE.md",
+        "lines": 687,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/patterns/validated/delega-gerarchica-pattern.md",
+        "lines": 628,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/idee/RICERCA_VASTAI_VS_RUNPOD_2026.md",
+        "lines": 711,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/idee/20260111_RICERCA_CONTEXT_CONTROL_CLAUDE.md",
+        "lines": 653,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/idee/RICERCA_SYSTEM_PROMPTS_LLM_2026.md",
+        "lines": 702,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/idee/20260111_RICERCA_CACHE_TRIGGER_REALE.md",
+        "lines": 649,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/idee/20260111_RICERCA_SNCP_AUTO_MANTENUTO.md",
+        "lines": 1150,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/idee/RICERCA_RAG_ARCHITECTURE_2026.md",
+        "lines": 1238,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/idee/20260111_RICERCA_QDRANT_OLLAMA.md",
+        "lines": 877,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/reports/analisi_ingegnera_organizzazione.md",
+        "lines": 680,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/stato_20260114_150043.md",
+        "lines": 577,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/idee_vecchie/RICERCA_PRICING_MODULARE.md",
+        "lines": 934,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/RICERCA_ROOM_TYPE_PRICING.md",
+        "lines": 532,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/coscienza/pensieri_regina.md",
+        "lines": 911,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/analisi/audit_sessioni_famiglia.md",
+        "lines": 788,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/analisi/frontend_miracollo_mapping.md",
+        "lines": 655,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/infra/RICERCA_DEPLOY_CLOUD_RUN.md",
+        "lines": 810,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/infra/RICERCA_DEPLOY_BEST_PRACTICES.md",
+        "lines": 1212,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/infra/RICERCA_INFRASTRUTTURA_DEFINITIVA_2026_PARTE4.md",
+        "lines": 975,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/infra/RICERCA_GOOGLE_COLAB_360.md",
+        "lines": 1113,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/infra/RICERCA_HARDWARE_AI_FISICO_2026.md",
+        "lines": 1671,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/infra/RICERCA_HETZNER_GPU_2026.md",
+        "lines": 634,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/infra/RICERCA_INFRASTRUTTURA_DEFINITIVA_2026_PARTE2.md",
+        "lines": 695,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/infra/RICERCA_DEPLOY_QWEN3_RUNPOD.md",
+        "lines": 776,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/infra/RICERCA_GOOGLE_CLOUD_GPU_2026.md",
+        "lines": 559,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/infra/RICERCA_ALTERNATIVE_RUNPOD_2026.md",
+        "lines": 902,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/04_LANDSCAPE_OPEN_SOURCE_2026.md",
+        "lines": 511,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/12_RAG_VS_FINETUNING.md",
+        "lines": 747,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/15_TIMELINE_E_RISCHI.md",
+        "lines": 2141,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/01_STORIA_LLM_E_MAESTRI.md",
+        "lines": 1100,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/16_GO_NO_GO_FRAMEWORK.md",
+        "lines": 1681,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/11_DATASET_PREPARATION.md",
+        "lines": 912,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/06_DEEP_DIVE_LLAMA.md",
+        "lines": 1220,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/07_DEEP_DIVE_MISTRAL.md",
+        "lines": 671,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/21_METRICHE_PERSONALITA.md",
+        "lines": 2297,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/10_FINE_TUNING_TECNICHE.md",
+        "lines": 906,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/13_TUTORIAL_PRATICI_QWEN.md",
+        "lines": 1473,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/RICERCA_CERVELLA_AI_PARTE2_DETTAGLI_TECNICI.md",
+        "lines": 804,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/18_COSTITUZIONE_COMPRESSION.md",
+        "lines": 1221,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/20_INTEGRAZIONE_INFRA.md",
+        "lines": 2598,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/14_COSTI_DETTAGLIATI.md",
+        "lines": 1750,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/17_TASK_BENCHMARK_CERVELLA.md",
+        "lines": 2515,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/08_DEEP_DIVE_QWEN_DEEPSEEK.md",
+        "lines": 739,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/RICERCA_CERVELLA_AI_PARTE3_IMPLEMENTAZIONE.md",
+        "lines": 776,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/02_ARCHITETTURA_TRANSFORMER.md",
+        "lines": 1006,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/19_SNCP_RAG_ARCHITECTURE.md",
+        "lines": 2884,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/03_EVOLUZIONE_LLM.md",
+        "lines": 1191,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/09_HOSTING_VM_GOOGLE.md",
+        "lines": 948,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/BUSINESS_PLAN_2026.md",
+        "lines": 1464,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/STRATEGIA_LANCIO_CERVELLASWARM.md",
+        "lines": 672,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/PRODOTTO_VISIONE_DEFINITIVA.md",
+        "lines": 1174,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/crypto-research/ricerche/RICERCA_PARTE3_20260114_COMPETITOR_DEEP_DIVE.md",
+        "lines": 937,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/crypto-research/ricerche/20260114_RESEARCHER_analisi_tecnica_crypto_PARTE4_DEFI_NFT.md",
+        "lines": 927,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/crypto-research/ricerche/20260114_RESEARCHER_analisi_tecnica_crypto_PARTE3_TAX.md",
+        "lines": 750,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/crypto-research/ricerche/20260114_SCIENZIATA_mercato_crypto.md",
+        "lines": 658,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/crypto-research/ricerche/20260114_RESEARCHER_analisi_tecnica_crypto_PARTE5_API_TECH.md",
+        "lines": 1082,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/crypto-research/ricerche/20260114_RESEARCHER_analisi_tecnica_crypto_PARTE6_GAP_STRATEGY.md",
+        "lines": 946,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/crypto-research/ricerche/RICERCA_PARTE2_20260114_COMPETITOR_DEEP_DIVE.md",
+        "lines": 650,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/crypto-research/ricerche/20260114_RESEARCHER_analisi_tecnica_crypto_PARTE2_PORTFOLIO.md",
+        "lines": 652,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260115_VDA_MODBUS_REVERSE_ENGINEERING_PARTE2.md",
+        "lines": 991,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/RICERCA_CHECKOUT_FISCALE_UX.md",
+        "lines": 1060,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260115_VDA_MODBUS_REVERSE_ENGINEERING_PARTE3.md",
+        "lines": 1042,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260115_VDA_H155300_RCU_RESEARCH.md",
+        "lines": 1228,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260115_VDA_VE503_TERMOSTATI_RESEARCH.md",
+        "lines": 740,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260114_AUDIT_DIRECT_BOOKING.md",
+        "lines": 536,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260112_STRUTTURA_BACKEND_VM.md",
+        "lines": 764,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260116_RICERCA_PMS_FISCALE_PARTE1.md",
+        "lines": 751,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/RICERCA_TRANSPARENT_AI_20260112.md",
+        "lines": 916,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260112_STRATEGIA_CONTAINER_MIRACOLLO.md",
+        "lines": 539,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260113_RICERCA_COMPETITOR_SCRAPING_PARTE3.md",
+        "lines": 752,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260116_RICERCA_RT_REGISTRATORE_TELEMATICO_PARTE2.md",
+        "lines": 613,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260116_RICERCA_PMS_FISCALE_PARTE2.md",
+        "lines": 1136,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260115_VDA_DOCUMENTAZIONE_UFFICIALE.md",
+        "lines": 629,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260114_LANDING_STRATEGY.md",
+        "lines": 1105,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260113_RICERCA_EVENTI_LOCALI_PARTE3.md",
+        "lines": 805,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260116_RICERCA_RT_REGISTRATORE_TELEMATICO_PARTE3.md",
+        "lines": 908,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260116_RICERCA_PMS_FISCALE_PARTE3.md",
+        "lines": 1441,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260113_RICERCA_EVENTI_LOCALI_PARTE2.md",
+        "lines": 522,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260113_RICERCA_METEO_RMS.md",
+        "lines": 1296,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260112_RICERCA_GAP3_GAP4_ML_WHATIF.md",
+        "lines": 2008,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260113_RICERCA_COMPETITOR_SCRAPING_PARTE2.md",
+        "lines": 557,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260113_RICERCA_COMPETITOR_RMS_PARTE4.md",
+        "lines": 557,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260115_VDA_ARCHITETTURA_SISTEMA_RESEARCH.md",
+        "lines": 1022,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/RICERCA_LEARNING_FROM_ACTIONS.md",
+        "lines": 842,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260115_VDA_MODBUS_REVERSE_ENGINEERING_PARTE1.md",
+        "lines": 643,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260115_LEX_COMPUTECH_GATEWAY_RESEARCH.md",
+        "lines": 825,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/STUDIO_DRAG_RESIZE_PROBLEMA_20260116.md",
+        "lines": 831,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260115_MODBUS_SNIFFING_GUIDA_PRATICA.md",
+        "lines": 910,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/RICERCA_FATTURAZIONE_ELETTRONICA_20260116.md",
+        "lines": 712,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/roadmaps/20260112_ROADMAP_REVENUE_7_TO_10.md",
+        "lines": 538,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/roadmaps/ROADMAP_EXTERNAL_DATA.md",
+        "lines": 1051,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/ricerca/RICERCA_WORKFLOW_MIRACOLLO_20260112.md",
+        "lines": 546,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/ricerche/VERIFICA_TRANSPARENT_AI_20260114.md",
+        "lines": 761,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/ricerche/20260113_RICERCA_SCRAPINGBEE.md",
+        "lines": 776,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/workflow/20260111_REGOLE_WORKFLOW_IBRIDO.md",
+        "lines": 532,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/workflow/20260111_RICERCA_WORKFLOW_IBRIDO_VM_LOCALE.md",
+        "lines": 854,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/archivio/SESSIONI_ARCHIVIATE_PRE_214.md",
+        "lines": 1204,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/reports/MAPPA_STORIA_COMPLETA_20260116.md",
+        "lines": 873,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/reports/AUTOPILOT_ANALYSIS_20260112.md",
+        "lines": 600,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/reports/INCIDENTE_PRODUZIONE_242.md",
+        "lines": 528,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/reports/20260115_INVESTIGAZIONE_SESSIONI_194_195_202.md",
+        "lines": 563,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/reports/20260113_RICERCA_COMPLETA_TODO_MIRACOLLO.md",
+        "lines": 668,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/reports/AUDIT_MIRACOLLO_VM_20260112.md",
+        "lines": 962,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/reports/AUDIT_ARCHITETTURA_3_BRACCI_20260116.md",
+        "lines": 677,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/reports/rateboard_audit_completo_20260112.md",
+        "lines": 996,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/reports/big_players_rms_research_20260112_PARTE3.md",
+        "lines": 1010,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/moduli/rateboard/studi/rateboard_audit_completo_20260112.md",
+        "lines": 996,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/moduli/rateboard/studi/big_players_rms_research_20260112_PARTE3.md",
+        "lines": 1010,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/EMAIL_LIST_SPECS_FINAL.md",
+        "lines": 562,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/QUICK_ACTIONS_SPECS_VALIDATED.md",
+        "lines": 708,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/SIDEBAR_DESIGN_SPECS.md",
+        "lines": 856,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/MAPPA_COMPLETA_MIRACOLLOOK.md",
+        "lines": 531,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/RECAP_STUDI_20260115.md",
+        "lines": 909,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/studi/20260114_RICERCA_MEWS.md",
+        "lines": 791,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/studi/20260115_RICERCA_ROOM_MANAGER_AVANZATO.md",
+        "lines": 1555,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/studi/big_players_research.md",
+        "lines": 1606,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/studi/20260115_VDA_VE503_TERMOSTATI_RESEARCH.md",
+        "lines": 740,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/studi/ANALISI_PMS_ESISTENTE.md",
+        "lines": 618,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/studi/20260114_RICERCA_CLOUDBEDS.md",
+        "lines": 709,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/studi/20260114_RICERCA_OPERA_CLOUD.md",
+        "lines": 1588,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/studi/20260114_RICERCA_VDA_HARDWARE.md",
+        "lines": 949,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/studi/20260114_RICERCA_SCIDOO.md",
+        "lines": 762,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/studi/20260114_CONFRONTO_DEFINITIVO.md",
+        "lines": 520,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/reports/20260114_INGEGNERA_ARCHITETTURA.md",
+        "lines": 886,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/ricerche/RICERCA_DRAFTS_20260114.md",
+        "lines": 513,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/ricerche/COMPETITOR_Shortwave.md",
+        "lines": 729,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/ricerche/BASELINE_Email_Features.md",
+        "lines": 616,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/ricerche/THREAD_VIEW_UX_Research.md",
+        "lines": 819,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/ricerche/20260114_ANALISI_Performance.md",
+        "lines": 644,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/ricerche/P2_ServiceWorker.md",
+        "lines": 709,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/ricerche/COMPETITOR_Callbell.md",
+        "lines": 980,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/ricerche/20260114_RICERCA_MarkRead.md",
+        "lines": 690,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/ricerche/20260114_Performance_Round2.md",
+        "lines": 836,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/ricerche/P2_useOptimistic.md",
+        "lines": 667,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/ricerche/20260114_THREAD_VIEW_API_Research.md",
+        "lines": 988,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/ricerche/P2_Prefetch.md",
+        "lines": 729,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/decisioni/THREAD_VIEW_DESIGN_SPECS.md",
+        "lines": 1219,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/ANALISI_CODEBASE_UI.md",
+        "lines": 530,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/RICERCA_GMAIL_ATTACHMENTS.md",
+        "lines": 1208,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/DESIGN_PATTERNS_EMAIL.md",
+        "lines": 1472,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/RICERCA_TAILWIND_V4_CUSTOM_COLORS.md",
+        "lines": 1107,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/RICERCA_CONTEXT_MENU_PARTE2.md",
+        "lines": 624,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/RICERCA_CONTEXT_MENU_PARTE3.md",
+        "lines": 971,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/RICERCA_UPLOAD_ATTACHMENTS.md",
+        "lines": 746,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/RICERCA_RESIZABLE_PANELS_V4.md",
+        "lines": 1359,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/CONTEXT_MENU_UX_STRATEGY.md",
+        "lines": 1315,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/BIG_PLAYERS_EMAIL_RESEARCH.md",
+        "lines": 2129,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/RICERCA_CONTEXT_MENU_PARTE4.md",
+        "lines": 1148,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/RICERCA_ATTACHMENTS_PERFORMANCE.md",
+        "lines": 1098,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/UX_STRATEGY_MIRACALLOOK.md",
+        "lines": 1049,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/RICERCA_EMAIL_LIST_DESIGN.md",
+        "lines": 817,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/STUDIO_MACRO_PMS_INTEGRATION.md",
+        "lines": 676,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/STUDIO_MACRO_TESTING_STRATEGY.md",
+        "lines": 513,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/STUDIO_MACRO_SETTINGS_UI.md",
+        "lines": 588,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/RICERCA_PERFORMANCE_EMAIL_CLIENTS.md",
+        "lines": 1700,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/RICERCA_QUICK_ACTIONS_KEYBOARD.md",
+        "lines": 805,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/RICERCA_RESIZE_PANNELLI.md",
+        "lines": 807,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/RICERCA_DESIGN_SALUTARE.md",
+        "lines": 930,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/archivio/MAPPA_MIRACALLOOK.md",
+        "lines": 521,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/idee/ARCHITETTURA_MCP_CERVELLASWARM.md",
+        "lines": 2022,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/idee/RICERCA_MCP_SAMPLING_DEEP_20260116.md",
+        "lines": 1738,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/idee/RICERCA_METERING_USAGE_TRACKING.md",
+        "lines": 731,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/idee/RICERCA_CONTEXT_TRACKING_CLAUDE_CODE.md",
+        "lines": 817,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/idee/RICERCA_INTEGRAZIONE_CLAUDE_CODE.md",
+        "lines": 697,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/idee/20260113_RICERCA_COMUNICAZIONE_INTER_AGENT.md",
+        "lines": 1022,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/idee/STUDIO_STRIPE_INTEGRATION_CLI.md",
+        "lines": 988,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/idee/RICERCA_ABBONAMENTO_ONLY_20260116.md",
+        "lines": 649,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/idee/ANALISI_AUTH_ATTUALE.md",
+        "lines": 512,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/idee/STUDIO_STRATEGICO_AUTH_COMPETITOR.md",
+        "lines": 860,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/idee/RICERCA_DOCKER_FASTAPI_REACT_2025.md",
+        "lines": 1073,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/idee/RICERCA_TECNICA_CURSOR_AUTH.md",
+        "lines": 763,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/idee/RICERCA_MONETIZZAZIONE_MCP_20260116.md",
+        "lines": 1490,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/idee/BUSINESS_MODEL_MCP_BYOK.md",
+        "lines": 1807,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/idee/STUDIO_MCP_PROTOCOL_COMPLETO.md",
+        "lines": 2046,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/idee/STUDIO_VIABILITA_CLAUDE_MCP.md",
+        "lines": 913,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/roadmaps/MAPPA_COMPLETA_STEP_BY_STEP.md",
+        "lines": 1347,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_PROTEZIONE_PRE_PUBLISH.md",
+        "lines": 634,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_TESTING_CLI_NODE.md",
+        "lines": 765,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_TOS_LEGAL_COMPLETA.md",
+        "lines": 1238,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_LETTURA_VERA_COSTITUZIONE.md",
+        "lines": 602,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/ricerche/RICERCA_20260117_DOCS_CODE_SYNC_SOLUTION.md",
+        "lines": 863,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_LICENSING_COMPLETA.md",
+        "lines": 1876,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_TOS_LEGAL_PARTE2.md",
+        "lines": 1678,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_IP_PROTECTION_COMPLETA.md",
+        "lines": 1254,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/ricerche/20260114_CURSOR_STORIA_LEZIONI.md",
+        "lines": 541,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_GAP_ANALYSIS_COMPLETEZZA.md",
+        "lines": 1032,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/ricerche/PHRASEBOOK_CERVELLASWARM.md",
+        "lines": 593,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_CURSOR_BUSINESS_MODEL.md",
+        "lines": 774,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_CICD_PIPELINE.md",
+        "lines": 1105,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_NPM_PUBLISH_COMPLETA.md",
+        "lines": 1112,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/ricerche/WIZARD_INIZIALE_STUDIO.md",
+        "lines": 1526,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/ricerche/STUDIO_VIABILITA_MODELLO_CURSOR_20260117.md",
+        "lines": 711,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/reports/STUDIO_AGENTI_9.5_PARTE2.md",
+        "lines": 1180,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/reports/STUDIO_LOGGING_9.5_PARTE2_BEST_PRACTICES.md",
+        "lines": 970,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/reports/STUDIO_SNCP_9.5.md",
+        "lines": 1038,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/reports/STUDIO_AGENTI_9.5_PARTE3.md",
+        "lines": 1077,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/reports/20260115_SECURITY_AUDIT_CICD.md",
+        "lines": 521,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/reports/STUDIO_LOGGING_9.5_PARTE3_ROADMAP.md",
+        "lines": 1328,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/reports/20260114_STUDIO_COMUNICAZIONE_INTERNA.md",
+        "lines": 610,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/reports/STUDIO_AGENTI_9.5_PARTE1.md",
+        "lines": 842,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/reports/20260114_AUDIT_SISTEMA_COMPLETO.md",
+        "lines": 558,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/contabilita/idee/20260115_analisi_valore_pricing.md",
+        "lines": 532,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/contabilita/idee/20260115_pricing_mensile_puro.md",
+        "lines": 788,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/contabilita/ricerche/RICERCA_20260115_subscription_model_b2b.md",
+        "lines": 783,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": ".sncp/progetti/contabilita/ricerche/RICERCA_20260115_modelli_vendita_software.md",
+        "lines": 640,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "packages/cli/src/config/manager.js",
+        "lines": 523,
+        "suggestion": "Considera splitting in file multipli"
+      },
+      {
+        "file": "cervella/agents/loader.py",
+        "lines": 526,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "scripts/swarm/dashboard.py",
+        "lines": 664,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "scripts/swarm/task_manager.py",
+        "lines": 512,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "scripts/memory/weekly_retro.py",
+        "lines": 695,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "scripts/memory/analytics.py",
+        "lines": 880,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "scripts/memory/load_context.py",
+        "lines": 523,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_miracollo_test_coverage/test_action_tracking.py",
+        "lines": 820,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_miracollo_test_coverage/test_confidence_scorer.py",
+        "lines": 656,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_miracollo_test_coverage/test_pricing_tracking.py",
+        "lines": 619,
+        "suggestion": "Split in moduli separati"
+      }
+    ],
+    "large_functions": [
+      {
+        "file": "test-orchestrazione/components/GreetingCard.jsx",
+        "line": 38,
+        "lines": 108,
+        "name": "function"
+      },
+      {
+        "file": "test-orchestrazione/components/CountdownCard.jsx",
+        "line": 36,
+        "lines": 97,
+        "name": "function"
+      },
+      {
+        "file": "dashboard/frontend/src/components/SessioneWidget.tsx",
+        "line": 27,
+        "lines": 80,
+        "name": "function"
+      },
+      {
+        "file": "dashboard/frontend/src/components/RoadmapWidget.tsx",
+        "line": 23,
+        "lines": 53,
+        "name": "function"
+      },
+      {
+        "file": "dashboard/frontend/src/components/swarm/SwarmWidget.tsx",
+        "line": 109,
+        "lines": 134,
+        "name": "function"
+      },
+      {
+        "file": "packages/api/test/helpers/mock-express.js",
+        "line": 32,
+        "lines": 51,
+        "name": "function"
+      },
+      {
+        "file": "packages/api/test/helpers/mock-stripe.js",
+        "line": 46,
+        "lines": 126,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/test/edge-cases.test.js",
+        "line": 55,
+        "lines": 107,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/test/edge-cases.test.js",
+        "line": 179,
+        "lines": 156,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/src/sncp/init.js",
+        "line": 16,
+        "lines": 111,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/src/sncp/writer.js",
+        "line": 63,
+        "lines": 102,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/src/sncp/loader.js",
+        "line": 14,
+        "lines": 60,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/src/wizard/questions.js",
+        "line": 21,
+        "lines": 138,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/src/agents/spawner.js",
+        "line": 24,
+        "lines": 72,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/src/agents/spawner.js",
+        "line": 156,
+        "lines": 152,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/src/commands/upgrade.js",
+        "line": 121,
+        "lines": 113,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/src/commands/task.js",
+        "line": 22,
+        "lines": 71,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/src/commands/billing.js",
+        "line": 113,
+        "lines": 81,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/src/commands/resume.js",
+        "line": 20,
+        "lines": 71,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/src/commands/init.js",
+        "line": 112,
+        "lines": 105,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/src/commands/status.js",
+        "line": 18,
+        "lines": 57,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/src/commands/doctor.js",
+        "line": 129,
+        "lines": 51,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/src/commands/housekeeping.js",
+        "line": 142,
+        "lines": 135,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/src/commands/housekeeping.js",
+        "line": 277,
+        "lines": 52,
+        "name": "function"
+      },
+      {
+        "file": "packages/cli/test/commands/resume.test.js",
+        "line": 136,
+        "lines": 118,
+        "name": "function"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_split_revenue_js/revenue-charts.js",
+        "line": 41,
+        "lines": 77,
+        "name": "function"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_split_revenue_js/revenue-charts.js",
+        "line": 118,
+        "lines": 80,
+        "name": "function"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_split_revenue_js/revenue-actions.js",
+        "line": 103,
+        "lines": 59,
+        "name": "function"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_split_revenue_js/revenue-actions.js",
+        "line": 162,
+        "lines": 71,
+        "name": "function"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_split_revenue_js/revenue-core.js",
+        "line": 73,
+        "lines": 56,
+        "name": "function"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_split_revenue_js/revenue-suggestions.js",
+        "line": 17,
+        "lines": 174,
+        "name": "function"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_split_revenue_js/revenue-suggestions.js",
+        "line": 201,
+        "lines": 112,
+        "name": "function"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_split_revenue_js/revenue-suggestions.js",
+        "line": 313,
+        "lines": 68,
+        "name": "function"
+      },
+      {
+        "file": "src/alerting/alert_system.py",
+        "line": 152,
+        "lines": 78,
+        "name": "check_recent_errors"
+      },
+      {
+        "file": "src/alerting/alert_system.py",
+        "line": 230,
+        "lines": 54,
+        "name": "check_stuck_tasks"
+      },
+      {
+        "file": "src/alerting/detectors.py",
+        "line": 70,
+        "lines": 51,
+        "name": "detect_critical_keywords"
+      },
+      {
+        "file": "src/alerting/detectors.py",
+        "line": 121,
+        "lines": 52,
+        "name": "detect_error_spikes"
+      },
+      {
+        "file": "src/patterns/structured_logging.py",
+        "line": 336,
+        "lines": 65,
+        "name": "read_logs"
+      },
+      {
+        "file": "src/patterns/structured_logging.py",
+        "line": 401,
+        "lines": 57,
+        "name": "get_trace"
+      },
+      {
+        "file": "src/patterns/example_usage.py",
+        "line": 137,
+        "lines": 53,
+        "name": "example_progress_bars"
+      },
+      {
+        "file": "src/patterns/circuit_breaker.py",
+        "line": 101,
+        "lines": 53,
+        "name": "call"
+      },
+      {
+        "file": "src/patterns/progress_bar.py",
+        "line": 349,
+        "lines": 55,
+        "name": "complete"
+      },
+      {
+        "file": "src/patterns/retry_backoff.py",
+        "line": 86,
+        "lines": 73,
+        "name": "wrapper"
+      },
+      {
+        "file": "src/alerting/notifiers/slack_notifier.py",
+        "line": 56,
+        "lines": 73,
+        "name": "send"
+      },
+      {
+        "file": "test-hardtests/src/api/cleanup.py",
+        "line": 133,
+        "lines": 192,
+        "name": "cleanup_old_records"
+      },
+      {
+        "file": "archived/docker/exporter/swarm_exporter.py",
+        "line": 126,
+        "lines": 93,
+        "name": "update_metrics"
+      },
+      {
+        "file": "archived/docker/exporter/test_exporter.py",
+        "line": 14,
+        "lines": 202,
+        "name": "create_test_db"
+      },
+      {
+        "file": "archived/docker/exporter/test_exporter.py",
+        "line": 216,
+        "lines": 74,
+        "name": "verify_exporter_metrics"
+      },
+      {
+        "file": "cervella/sncp/manager.py",
+        "line": 60,
+        "lines": 85,
+        "name": "initialize"
+      },
+      {
+        "file": "cervella/tests/test_structure.py",
+        "line": 90,
+        "lines": 52,
+        "name": "test_file_structure"
+      },
+      {
+        "file": "cervella/agents/runner.py",
+        "line": 125,
+        "lines": 63,
+        "name": "_execute_with_agent"
+      },
+      {
+        "file": "cervella/agents/loader.py",
+        "line": 26,
+        "lines": 416,
+        "name": "full_name"
+      },
+      {
+        "file": "cervella/tier/tier_manager.py",
+        "line": 39,
+        "lines": 89,
+        "name": "is_unlimited"
+      },
+      {
+        "file": "cervella/cli/commands/task.py",
+        "line": 37,
+        "lines": 95,
+        "name": "task"
+      },
+      {
+        "file": "cervella/cli/commands/checkpoint.py",
+        "line": 17,
+        "lines": 69,
+        "name": "checkpoint"
+      },
+      {
+        "file": "cervella/cli/commands/upgrade.py",
+        "line": 18,
+        "lines": 108,
+        "name": "upgrade"
+      },
+      {
+        "file": "cervella/cli/commands/status.py",
+        "line": 17,
+        "lines": 95,
+        "name": "status"
+      },
+      {
+        "file": "scripts/swarm/dashboard.py",
+        "line": 586,
+        "lines": 78,
+        "name": "main"
+      },
+      {
+        "file": "scripts/swarm/task_manager.py",
+        "line": 94,
+        "lines": 63,
+        "name": "create_task"
+      },
+      {
+        "file": "scripts/swarm/task_manager.py",
+        "line": 400,
+        "lines": 112,
+        "name": "cleanup_task"
+      },
+      {
+        "file": "scripts/parallel/prompt_builder.py",
+        "line": 55,
+        "lines": 72,
+        "name": "build_prompt"
+      },
+      {
+        "file": "scripts/parallel/prompt_builder.py",
+        "line": 144,
+        "lines": 52,
+        "name": "create_example"
+      },
+      {
+        "file": "scripts/parallel/suggest_pattern.py",
+        "line": 48,
+        "lines": 61,
+        "name": "suggest_pattern"
+      },
+      {
+        "file": "scripts/parallel/suggest_pattern.py",
+        "line": 194,
+        "lines": 86,
+        "name": "main"
+      },
+      {
+        "file": "scripts/tools/add_version_headers.py",
+        "line": 92,
+        "lines": 57,
+        "name": "update_agent_file"
+      },
+      {
+        "file": "scripts/tools/add_version_headers.py",
+        "line": 149,
+        "lines": 80,
+        "name": "main"
+      },
+      {
+        "file": "scripts/memory/lesson_formatter.py",
+        "line": 164,
+        "lines": 66,
+        "name": "main"
+      },
+      {
+        "file": "scripts/memory/suggestions.py",
+        "line": 70,
+        "lines": 110,
+        "name": "get_suggestions"
+      },
+      {
+        "file": "scripts/memory/suggestions.py",
+        "line": 283,
+        "lines": 51,
+        "name": "main"
+      },
+      {
+        "file": "scripts/memory/weekly_retro.py",
+        "line": 70,
+        "lines": 67,
+        "name": "suggest_new_lessons"
+      },
+      {
+        "file": "scripts/memory/weekly_retro.py",
+        "line": 164,
+        "lines": 450,
+        "name": "generate_retro"
+      },
+      {
+        "file": "scripts/memory/weekly_retro.py",
+        "line": 614,
+        "lines": 81,
+        "name": "main"
+      },
+      {
+        "file": "scripts/memory/pattern_detector.py",
+        "line": 166,
+        "lines": 70,
+        "name": "detect_error_patterns"
+      },
+      {
+        "file": "scripts/memory/pattern_detector.py",
+        "line": 236,
+        "lines": 81,
+        "name": "save_patterns_to_db"
+      },
+      {
+        "file": "scripts/memory/pattern_detector.py",
+        "line": 357,
+        "lines": 60,
+        "name": "main"
+      },
+      {
+        "file": "scripts/memory/context_scorer.py",
+        "line": 58,
+        "lines": 65,
+        "name": "score_lesson"
+      },
+      {
+        "file": "scripts/memory/context_scorer.py",
+        "line": 268,
+        "lines": 120,
+        "name": "main"
+      },
+      {
+        "file": "scripts/memory/analytics.py",
+        "line": 115,
+        "lines": 79,
+        "name": "cmd_summary"
+      },
+      {
+        "file": "scripts/memory/analytics.py",
+        "line": 294,
+        "lines": 64,
+        "name": "cmd_agents"
+      },
+      {
+        "file": "scripts/memory/analytics.py",
+        "line": 358,
+        "lines": 57,
+        "name": "cmd_patterns"
+      },
+      {
+        "file": "scripts/memory/analytics.py",
+        "line": 415,
+        "lines": 115,
+        "name": "cmd_dashboard"
+      },
+      {
+        "file": "scripts/memory/analytics.py",
+        "line": 530,
+        "lines": 93,
+        "name": "cmd_auto_detect"
+      },
+      {
+        "file": "scripts/memory/analytics.py",
+        "line": 623,
+        "lines": 184,
+        "name": "cmd_retro"
+      },
+      {
+        "file": "scripts/memory/analytics.py",
+        "line": 807,
+        "lines": 73,
+        "name": "main"
+      },
+      {
+        "file": "scripts/memory/log_event.py",
+        "line": 22,
+        "lines": 51,
+        "name": "extract_agent_info"
+      },
+      {
+        "file": "scripts/memory/log_event.py",
+        "line": 133,
+        "lines": 108,
+        "name": "log_event"
+      },
+      {
+        "file": "scripts/memory/query_events.py",
+        "line": 223,
+        "lines": 103,
+        "name": "main"
+      },
+      {
+        "file": "scripts/memory/migrate.py",
+        "line": 233,
+        "lines": 52,
+        "name": "rollback_last_migration"
+      },
+      {
+        "file": "scripts/memory/migrate.py",
+        "line": 285,
+        "lines": 59,
+        "name": "cmd_status"
+      },
+      {
+        "file": "scripts/memory/init_db.py",
+        "line": 22,
+        "lines": 93,
+        "name": "upgrade_schema"
+      },
+      {
+        "file": "scripts/memory/init_db.py",
+        "line": 115,
+        "lines": 124,
+        "name": "init_database"
+      },
+      {
+        "file": "scripts/memory/init_db.py",
+        "line": 239,
+        "lines": 51,
+        "name": "verify_schema"
+      },
+      {
+        "file": "scripts/memory/load_context.py",
+        "line": 153,
+        "lines": 107,
+        "name": "get_relevant_lessons"
+      },
+      {
+        "file": "scripts/memory/load_context.py",
+        "line": 260,
+        "lines": 73,
+        "name": "format_lessons_for_agent"
+      },
+      {
+        "file": "scripts/memory/load_context.py",
+        "line": 352,
+        "lines": 71,
+        "name": "format_context"
+      },
+      {
+        "file": "scripts/memory/load_context.py",
+        "line": 423,
+        "lines": 75,
+        "name": "load_context"
+      },
+      {
+        "file": "scripts/learning/test_db_save.py",
+        "line": 20,
+        "lines": 70,
+        "name": "test_db_save"
+      },
+      {
+        "file": "scripts/learning/wizard.py",
+        "line": 155,
+        "lines": 76,
+        "name": "run"
+      },
+      {
+        "file": "scripts/rag/test_rag.py",
+        "line": 37,
+        "lines": 125,
+        "name": "embed"
+      },
+      {
+        "file": "scripts/engineer/create_auto_pr.py",
+        "line": 253,
+        "lines": 104,
+        "name": "main"
+      },
+      {
+        "file": "scripts/engineer/analyze_codebase.py",
+        "line": 241,
+        "lines": 81,
+        "name": "generate_markdown"
+      },
+      {
+        "file": "scripts/engineer/analyze_codebase.py",
+        "line": 361,
+        "lines": 81,
+        "name": "main"
+      },
+      {
+        "file": "dashboard/api/routes/events.py",
+        "line": 21,
+        "lines": 70,
+        "name": "check_for_changes"
+      },
+      {
+        "file": ".claude/hooks/session_start_swarm.py",
+        "line": 54,
+        "lines": 92,
+        "name": "main"
+      },
+      {
+        "file": ".claude/hooks/subagent_stop.py",
+        "line": 25,
+        "lines": 94,
+        "name": "main"
+      },
+      {
+        "file": "config/claude-hooks/session_end_save.py",
+        "line": 79,
+        "lines": 55,
+        "name": "get_git_info"
+      },
+      {
+        "file": "config/claude-hooks/session_end_save.py",
+        "line": 175,
+        "lines": 52,
+        "name": "main"
+      },
+      {
+        "file": "config/claude-hooks/pre_compact_save.py",
+        "line": 89,
+        "lines": 58,
+        "name": "get_git_info"
+      },
+      {
+        "file": "config/claude-hooks/pre_compact_save.py",
+        "line": 229,
+        "lines": 77,
+        "name": "main"
+      },
+      {
+        "file": "config/claude-hooks/update_prompt_ripresa.py",
+        "line": 94,
+        "lines": 64,
+        "name": "update_prompt_ripresa"
+      },
+      {
+        "file": "test-orchestrazione/api/utils.py",
+        "line": 17,
+        "lines": 70,
+        "name": "format_date"
+      },
+      {
+        "file": "test-orchestrazione/api/utils.py",
+        "line": 87,
+        "lines": 54,
+        "name": "validate_email"
+      },
+      {
+        "file": "test-orchestrazione/api/countdown.py",
+        "line": 60,
+        "lines": 78,
+        "name": "handle_request"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/moduli/whatif/backend_properties_api.py",
+        "line": 115,
+        "lines": 87,
+        "name": "get_property_room_types"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/moduli/whatif/backend_properties_api.py",
+        "line": 202,
+        "lines": 68,
+        "name": "_validate_property_exists"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/moduli/whatif/services_what_if_calculator.py",
+        "line": 44,
+        "lines": 77,
+        "name": "calculate_impact"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/moduli/whatif/services_what_if_calculator.py",
+        "line": 121,
+        "lines": 54,
+        "name": "generate_price_curve"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/moduli/whatif/services_what_if_calculator.py",
+        "line": 175,
+        "lines": 57,
+        "name": "_get_current_price"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/moduli/whatif/services_what_if_calculator.py",
+        "line": 232,
+        "lines": 61,
+        "name": "_get_current_occupancy"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/moduli/whatif/services_what_if_calculator.py",
+        "line": 391,
+        "lines": 52,
+        "name": "_calculate_confidence"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/moduli/whatif/services_what_if_calculator.py",
+        "line": 443,
+        "lines": 53,
+        "name": "_generate_explanation"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/moduli/whatif/routers_what_if_api.py",
+        "line": 38,
+        "lines": 55,
+        "name": "simulate_price_impact"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/moduli/whatif/routers_what_if_api.py",
+        "line": 93,
+        "lines": 64,
+        "name": "get_price_curve"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_miracollo_test_coverage/test_action_tracking.py",
+        "line": 37,
+        "lines": 91,
+        "name": "mock_db"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_miracollo_test_coverage/test_action_tracking.py",
+        "line": 276,
+        "lines": 51,
+        "name": "test_apply_action_success"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_miracollo_test_coverage/test_confidence_scorer.py",
+        "line": 280,
+        "lines": 62,
+        "name": "test_acceptance_rate_by_hotel"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_miracollo_test_coverage/test_pricing_tracking.py",
+        "line": 38,
+        "lines": 65,
+        "name": "mock_db"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_miracollo_test_coverage/test_pricing_tracking.py",
+        "line": 531,
+        "lines": 61,
+        "name": "test_full_tracking_flow"
+      },
+      {
+        "file": "packages/api/src/routes/webhooks.ts",
+        "line": 115,
+        "lines": 177,
+        "name": "function"
+      },
+      {
+        "file": "packages/mcp-server/src/agents/spawner.ts",
+        "line": 235,
+        "lines": 72,
+        "name": "function"
+      },
+      {
+        "file": "packages/mcp-server/src/agents/spawner.ts",
+        "line": 307,
+        "lines": 59,
+        "name": "function"
+      },
+      {
+        "file": "dashboard/frontend/src/hooks/useDashboardData.ts",
+        "line": 135,
+        "lines": 60,
+        "name": "function"
+      },
+      {
+        "file": "dashboard/frontend/src/hooks/useSSE.ts",
+        "line": 19,
+        "lines": 88,
+        "name": "function"
+      },
+      {
+        "file": "cervellaswarm-extension/src/extension.ts",
+        "line": 8,
+        "lines": 144,
+        "name": "function"
+      }
+    ],
+    "todos": [
+      {
+        "file": ".swarm/REPORT_HARDTEST_20260110.md",
+        "line": 27,
+        "type": "BUG",
+        "content": "Fixati Durante Test"
+      },
+      {
+        "file": "reports/engineer_report_20260116_audit_core_pms.md",
+        "line": 556,
+        "type": "TODO",
+        "content": "/FIXME"
+      },
+      {
+        "file": "reports/MIRACOLLO_ML_ANALYSIS_20260111.md",
+        "line": 128,
+        "type": "BUG",
+        "content": "NOTO: /api/ml/retrain Response 500"
+      },
+      {
+        "file": "reports/MIRACOLLO_ML_ANALYSIS_20260111.md",
+        "line": 295,
+        "type": "TODO",
+        "content": "/FIXME Trovati"
+      },
+      {
+        "file": "reports/MIRACOLLO_ML_ANALYSIS_20260111.md",
+        "line": 304,
+        "type": "TODO",
+        "content": "store in DB se necessario"
+      },
+      {
+        "file": "reports/MIRACOLLO_ML_ANALYSIS_20260111.md",
+        "line": 462,
+        "type": "BUG",
+        "content": "NOTI \ud83d\udc1b"
+      },
+      {
+        "file": ".swarm/tasks/BUG_WATCHER_NON_NOTIFICA.md",
+        "line": 1,
+        "type": "BUG",
+        "content": "Watcher AUTO-SVEGLIA non notifica la Regina"
+      },
+      {
+        "file": ".swarm/handoff/HANDOFF_20260113_SESSION184.md",
+        "line": 27,
+        "type": "BUG",
+        "content": "CRITICO - TAILWIND V4"
+      },
+      {
+        "file": ".swarm/templates/TEMPLATE_TASK_BUG_FIX.md",
+        "line": 95,
+        "type": "BUG",
+        "content": "Report: [NOME]"
+      },
+      {
+        "file": ".swarm/templates/TEMPLATE_TASK_HARDTEST.md",
+        "line": 152,
+        "type": "BUG",
+        "content": "S FOUND"
+      },
+      {
+        "file": ".swarm/archive/sessioni_test_20260105/TASK_002_output.md",
+        "line": 184,
+        "type": "BUG",
+        "content": "TROVATI"
+      },
+      {
+        "file": "docs/guide/GUIDA_BEST_PRACTICES_SWARM.md",
+        "line": 409,
+        "type": "TODO",
+        "content": "List - Quando Usare"
+      },
+      {
+        "file": "docs/studio/RICERCA_SESSIONS_IMPLEMENTATION.md",
+        "line": 34,
+        "type": "TODO",
+        "content": "lists per session"
+      },
+      {
+        "file": "docs/studio/RICERCA_HOOKS_COMPLETA.md",
+        "line": 104,
+        "type": "BUG",
+        "content": "S CRITICI"
+      },
+      {
+        "file": "docs/studio/RICERCA_DEMO_MULTIAGENT_PATTERNS.md",
+        "line": 382,
+        "type": "HACK",
+        "content": "er News Success"
+      },
+      {
+        "file": ".sncp/idee/20260111_RICERCA_CONTROLLO_CACHE.md",
+        "line": 299,
+        "type": "BUG",
+        "content": "/clear (Issue #2538, #10035, #4629)"
+      },
+      {
+        "file": ".sncp/idee/20260111_RICERCA_CACHE_INVALIDATION.md",
+        "line": 95,
+        "type": "BUG",
+        "content": "RECENTE (Dicembre 2025)"
+      },
+      {
+        "file": ".sncp/handoff/20260114_menumaster_sessione1.md",
+        "line": 63,
+        "type": "BUG",
+        "content": "RISOLTI"
+      },
+      {
+        "file": ".sncp/handoff/HANDOFF_20260116_173500.md",
+        "line": 33,
+        "type": "BUG",
+        "content": "APERTO"
+      },
+      {
+        "file": ".sncp/handoff/HANDOFF_228.md",
+        "line": 29,
+        "type": "BUG",
+        "content": "APERTI"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/idee_vecchie/BUG_RESEARCHER_NO_BASH.md",
+        "line": 1,
+        "type": "BUG",
+        "content": "cervella-researcher cerca tool non disponibili"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/idee_vecchie/BUG_RESEARCHER_NO_WRITE.md",
+        "line": 1,
+        "type": "BUG",
+        "content": "cervella-researcher non ha Write/Bash"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/analisi/audit_sessioni_famiglia.md",
+        "line": 188,
+        "type": "BUG",
+        "content": "CRITICO #1: Researcher Non Salva File"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/analisi/audit_sessioni_famiglia.md",
+        "line": 236,
+        "type": "BUG",
+        "content": "CRITICO #2: Notifiche Overlap"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/analisi/audit_sessioni_famiglia.md",
+        "line": 273,
+        "type": "BUG",
+        "content": "CRITICO #3: Output Buffering"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/analisi/bug_fixes/20260110_reviewer_bash_error.md",
+        "line": 1,
+        "type": "BUG",
+        "content": "Fix: Reviewer DNA ha riferimenti Bash ma non ha tool Bash"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/prodotto/TODO_VSCODE_COPILOT_MULTIAGENT.md",
+        "line": 1,
+        "type": "TODO",
+        "content": "RICERCA: VSCode Copilot Multi-Agent"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/prodotto/CURSOR_ANALYSIS.md",
+        "line": 109,
+        "type": "BUG",
+        "content": "\"Zombie Revert\" (2025)"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/17_TASK_BENCHMARK_CERVELLA.md",
+        "line": 845,
+        "type": "BUG",
+        "content": "Analysis - Researcher File Save Failure"
+      },
+      {
+        "file": ".sncp/archivio/2026-01/ricerche/cervella_baby/RICERCA_CERVELLA_AI_PARTE3_IMPLEMENTAZIONE.md",
+        "line": 676,
+        "type": "TODO",
+        "content": "implement reindexing"
+      },
+      {
+        "file": ".sncp/memoria/decisioni/BUG_RESEARCHER_SAVE.md",
+        "line": 1,
+        "type": "BUG",
+        "content": "TROVATO: cervella-researcher non salva file"
+      },
+      {
+        "file": ".sncp/memoria/decisioni/BUG_RESEARCHER_SAVE.md",
+        "line": 61,
+        "type": "BUG",
+        "content": "CORRELATO: Hook PROMPT_RIPRESA timing"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/TODO_REVENUE_CANCELLA_AZIONE.md",
+        "line": 1,
+        "type": "TODO",
+        "content": "Cancellare Azione in Revenue Intelligence"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260114_AUDIT_DIRECT_BOOKING.md",
+        "line": 57,
+        "type": "TODO",
+        "content": "Trovati"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260114_AUDIT_DIRECT_BOOKING.md",
+        "line": 97,
+        "type": "TODO",
+        "content": "Trovati"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260114_AUDIT_DIRECT_BOOKING.md",
+        "line": 98,
+        "type": "TODO",
+        "content": "estrarre da prodotto se disponibile`"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260114_AUDIT_DIRECT_BOOKING.md",
+        "line": 162,
+        "type": "TODO",
+        "content": "Trovati"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260113_RICERCA_EVENTI_LOCALI_PARTE3.md",
+        "line": 407,
+        "type": "TODO",
+        "content": "Analizzare struttura HTML reale"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260113_RICERCA_EVENTI_LOCALI_PARTE3.md",
+        "line": 444,
+        "type": "TODO",
+        "content": "Implement"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260113_RICERCA_EVENTI_LOCALI_PARTE2.md",
+        "line": 456,
+        "type": "TODO",
+        "content": "Analyze HTML structure, find event containers"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260113_RICERCA_EVENTI_LOCALI_PARTE2.md",
+        "line": 478,
+        "type": "TODO",
+        "content": "Implement based on actual HTML"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/idee/20260113_RICERCA_EVENTI_LOCALI_PARTE2.md",
+        "line": 484,
+        "type": "TODO",
+        "content": "Implement"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/roadmaps/SUBROADMAP_9.5_TO_10.md",
+        "line": 157,
+        "type": "TODO",
+        "content": "Critici (12)"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/roadmaps/SUBROADMAP_9.5_TO_10.md",
+        "line": 164,
+        "type": "TODO",
+        "content": "Funzionali (8)"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/roadmaps/SUBROADMAP_9.5_TO_10.md",
+        "line": 171,
+        "type": "TODO",
+        "content": "Nice-to-have (8)"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/ricerche/RICERCA_20260115_resizable_panels.md",
+        "line": 34,
+        "type": "BUG",
+        "content": "Fix Cruciale - v4.3.1"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/workflow/20260111_RICERCA_WORKFLOW_IBRIDO_VM_LOCALE.md",
+        "line": 587,
+        "type": "BUG",
+        "content": "non critici"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/workflow/20260111_RICERCA_WORKFLOW_IBRIDO_VM_LOCALE.md",
+        "line": 588,
+        "type": "BUG",
+        "content": "produzione critici"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/reports/BACKEND_20260114_ml_fixes_session203.md",
+        "line": 30,
+        "type": "BUG",
+        "content": "1: Filename Mismatch"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/reports/BACKEND_20260114_ml_fixes_session203.md",
+        "line": 56,
+        "type": "BUG",
+        "content": "2: pickle vs joblib"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/reports/BACKEND_20260114_ml_fixes_session203.md",
+        "line": 140,
+        "type": "TODO",
+        "content": "Future"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/reports/hardtest_rateboard_20260112.md",
+        "line": 53,
+        "type": "BUG",
+        "content": "#1: Internal Server Error - Room Type Inesistente"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/reports/hardtest_rateboard_20260112.md",
+        "line": 71,
+        "type": "BUG",
+        "content": "#2: Internal Server Error - Data Invalida"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/reports/hardtest_rateboard_20260112.md",
+        "line": 89,
+        "type": "BUG",
+        "content": "#3: Nessuna Validazione Range Prezzi"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/reports/TEST_20260114_whatsapp_webhook.md",
+        "line": 64,
+        "type": "BUG",
+        "content": "Trovato"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/moduli/finanziario/MAPPA_MODULO_FINANZIARIO.md",
+        "line": 144,
+        "type": "BUG",
+        "content": "FIX SESSIONE 262 - CRITICO!"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/sessioni_parallele/20260112_split_revenue_js/LOG_COMPLETATO.md",
+        "line": 46,
+        "type": "BUG",
+        "content": "Fixato Durante Split"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/HANDOFF_SESSIONE_172.md",
+        "line": 102,
+        "type": "BUG",
+        "content": "Fixato"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/studi/20260115_RICERCA_ROOM_MANAGER_AVANZATO.md",
+        "line": 1133,
+        "type": "TODO",
+        "content": "Implementare quando abbiamo VDA lock register map"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/studi/20260115_RICERCA_ROOM_MANAGER_AVANZATO.md",
+        "line": 1167,
+        "type": "TODO",
+        "content": "Clear PIN registers"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/reports/20260114_GUARDIANA_QUALITA_VERIFICA.md",
+        "line": 71,
+        "type": "TODO",
+        "content": "Lookup hotel_id from hotel_code`"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/room-hardware/reports/ANALISI_BACKEND_FASE1.md",
+        "line": 116,
+        "type": "TODO",
+        "content": "Lookup hotel_id from hotel_code"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/ricerche/P2_useOptimistic.md",
+        "line": 161,
+        "type": "BUG",
+        "content": "Confermato"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/ricerche/P2_useOptimistic.md",
+        "line": 655,
+        "type": "BUG",
+        "content": "e Incompatibilit\u00e0"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/studi/INDEX.md",
+        "line": 72,
+        "type": "TODO",
+        "content": "- Studi Futuri"
+      },
+      {
+        "file": ".sncp/progetti/miracollo/bracci/miracallook/reports/TESTER_TAILWIND_FIX.md",
+        "line": 136,
+        "type": "BUG",
+        "content": "Bloccante: TypeScript"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/reports/HARDTEST_STRIPE_20260116.md",
+        "line": 7,
+        "type": "BUG",
+        "content": "CRITICO TROVATO E RISOLTO"
+      },
+      {
+        "file": ".sncp/progetti/cervellaswarm/reports/20260114_AUDIT_SISTEMA_COMPLETO.md",
+        "line": 288,
+        "type": "TODO",
+        "content": "/FIXME Trovati"
+      },
+      {
+        "file": "scripts/engineer/analyze_codebase.py",
+        "line": 298,
+        "type": "TODO",
+        "content": "/FIXME Trovati\\n\""
+      },
+      {
+        "file": ".sncp/progetti/miracollo/moduli/whatif/services_what_if_calculator.py",
+        "line": 189,
+        "type": "TODO",
+        "content": "Adattare alla struttura DB reale"
+      }
+    ],
+    "duplicates": [
+      {
+        "files": [
+          "reports/archive/2026-01/code_review_20260105_sessione94.md",
+          ".swarm/tasks/TASK_20260105_122004_code_review_settimanale_cervellaswarm_output.md"
+        ],
+        "count": 2
+      },
+      {
+        "files": [
+          ".swarm/feedback/QUESTION_TASK_COMUNICAZIONE_FASE4_SCRIPTS_1767768645.md",
+          ".swarm/feedback/QUESTION_TASK_COMUNICAZIONE_FASE4_SCRIPTS_1767768651.md"
+        ],
+        "count": 2
+      },
+      {
+        "files": [
+          "cervella/.pytest_cache/README.md",
+          "test-orchestrazione/.pytest_cache/README.md"
+        ],
+        "count": 2
+      },
+      {
+        "files": [
+          ".sncp/idee/20260111_AUDIT_PULIZIA.md",
+          ".sncp/archivio/2026-01/analisi/AUDIT_PULIZIA_20260111.md"
+        ],
+        "count": 2
+      },
+      {
+        "files": [
+          ".sncp/memoria/decisioni/MODO_HARD_TESTS.md",
+          ".sncp/progetti/miracollo/decisioni/MODO_HARD_TESTS.md"
+        ],
+        "count": 2
+      },
+      {
+        "files": [
+          ".sncp/progetti/miracollo/idee/20260116_VDA_ROSETTA_STONE_PIANO.md",
+          ".sncp/progetti/miracollo/bracci/room-hardware/studi/20260116_VDA_ROSETTA_STONE_PIANO.md"
+        ],
+        "count": 2
+      },
+      {
+        "files": [
+          ".sncp/progetti/miracollo/idee/20260115_VDA_VE503_TERMOSTATI_RESEARCH.md",
+          ".sncp/progetti/miracollo/bracci/room-hardware/studi/20260115_VDA_VE503_TERMOSTATI_RESEARCH.md"
+        ],
+        "count": 2
+      },
+      {
+        "files": [
+          ".sncp/progetti/miracollo/reports/big_players_rms_research_20260112_PARTE1.md",
+          ".sncp/progetti/miracollo/moduli/rateboard/studi/big_players_rms_research_20260112_PARTE1.md"
+        ],
+        "count": 2
+      },
+      {
+        "files": [
+          ".sncp/progetti/miracollo/reports/big_players_rms_research_20260112_INDEX.md",
+          ".sncp/progetti/miracollo/moduli/rateboard/studi/big_players_rms_research_20260112_INDEX.md"
+        ],
+        "count": 2
+      },
+      {
+        "files": [
+          ".sncp/progetti/miracollo/reports/big_players_rms_research_20260112_PARTE2.md",
+          ".sncp/progetti/miracollo/moduli/rateboard/studi/big_players_rms_research_20260112_PARTE2.md"
+        ],
+        "count": 2
+      },
+      {
+        "files": [
+          ".sncp/progetti/miracollo/reports/rateboard_audit_completo_20260112.md",
+          ".sncp/progetti/miracollo/moduli/rateboard/studi/rateboard_audit_completo_20260112.md"
+        ],
+        "count": 2
+      },
+      {
+        "files": [
+          ".sncp/progetti/miracollo/reports/big_players_rms_research_20260112_PARTE3.md",
+          ".sncp/progetti/miracollo/moduli/rateboard/studi/big_players_rms_research_20260112_PARTE3.md"
+        ],
+        "count": 2
+      }
+    ],
+    "stats": {
+      "total_files": 1664,
+      "total_lines": 482065,
+      "total_issues": 491
+    }
+  }
+}

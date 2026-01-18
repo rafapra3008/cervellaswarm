@@ -77,12 +77,12 @@
 
 ## FASI DI SVILUPPO
 
-### FASE 1: RICEVUTE PDF - COMPLETATA!
-**Completata: Sessione 237 (16 Gennaio 2026)**
+### FASE 1: RICEVUTE PDF - REALE!
+**Completata: Sessione 237 | Verificata REALE: Sessione 262 (18 Gennaio 2026)**
 
 ```
 +====================================================================+
-|                    SPRINT 1 COMPLETATO!                            |
+|                    SPRINT 1 - VERIFICATO REALE!                    |
 +====================================================================+
 
 DELIVERABLE - TUTTI COMPLETATI:
@@ -139,6 +139,38 @@ DELIVERABLE - TUTTI COMPLETATI:
 ```
 Receptionist → Tab Folio → "Genera Ricevuta PDF" → PDF in nuova tab → Stampa
                         → "Invia via Email" → Modal → Conferma → Email inviata
+```
+
+### BUG FIX SESSIONE 262 - CRITICO!
+**Data: 18 Gennaio 2026**
+
+```
+PROBLEMA TROVATO:
+- receipts.py usava get_conn() che chiamava get_db().__enter__()
+- get_db() è un generatore Python (usa yield)
+- Il generatore veniva garbage collected → connessione chiusa!
+- Errore: "sqlite3.ProgrammingError: Cannot operate on a closed database"
+
+FIX APPLICATO:
+- Rimosso uso errato del context manager
+- Connessione diretta: sqlite3.connect(DB_PATH)
+
+CODICE:
+# PRIMA (BUG):
+def get_conn():
+    return get_db().__enter__()  # SBAGLIATO!
+
+# DOPO (FIX):
+def get_conn():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA foreign_keys = ON")
+    return conn
+
+LEZIONE IMPARATA:
+- "SU CARTA" != "REALE" - testare SEMPRE!
+- I context manager Python vanno usati correttamente
+- Guardiana ha trovato il bug analizzando i logs
 ```
 
 ---
