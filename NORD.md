@@ -32,7 +32,7 @@
 
 ---
 
-## DOVE SIAMO (18 Gennaio 2026 - Sessione 259)
+## DOVE SIAMO (18 Gennaio 2026 - Sessione 260)
 
 ```
 +================================================================+
@@ -51,7 +51,7 @@ FASE 2: MVP PRODOTTO             [####################] 100%! PRONTO!
   ✓ API Fly.io                   ONLINE
   ✓ Stripe                       $20/$40 (Test Mode)
 
-FASE 3: PRIMI UTENTI             [###################.] 95%  ← QUI!
+FASE 3: PRIMI UTENTI             [###################.] 98%  ← QUI!
 
   SESSIONE 258 - OUTREACH:
   ✓ CFP MCP Dev Summit NYC       SUBMITTED!
@@ -61,25 +61,25 @@ FASE 3: PRIMI UTENTI             [###################.] 95%  ← QUI!
 
   SESSIONE 259 - LANDING 7.5→8.5:
   ✓ Terminale animato            Typewriter + comandi REALI
-  ✓ Lucide icons                 Professionale
-  ✓ Dual CTA                     npm + Get Started + GitHub
   ✓ Focus states                 WCAG 2.4.7
-  ✓ OG + Twitter tags            Social sharing ready
   ✓ Badge dogfooding             "Built with CervellaSwarm"
-  ✓ Prezzi Stripe                $20/$40 allineati
+
+  SESSIONE 260 - LANDING 8.5→9.0:
+  ✓ OG Image                     1200x630px, 58KB
+  ✓ Mobile hamburger menu        Slide-in, accessibilità WCAG
+  ✓ Studio Deploy                Cloudflare Pages scelto!
 
   DA FARE:
-  - Landing FASE 2               OG Image + Mobile Menu
-  - Landing Deploy               cervellaswarm.com
+  - Deploy Cloudflare Pages      cervellaswarm.com
   - SHOW HN LAUNCH               24-25 GENNAIO!
 
 FASE 4: SCALA                    [....................] 0%
 
-SCORE LANDING: 8.5/10 (target 9.5)
+SCORE LANDING: 9.0/10 (target 9.5)
 
 PROSSIMI STEP:
-  1. FASE 2: OG Image + Mobile Menu
-  2. Deploy cervellaswarm.com
+  1. Setup Cloudflare Pages (40 min)
+  2. Custom domain cervellaswarm.com
   3. SHOW HN LAUNCH (24-25 Gennaio)
 ```
 

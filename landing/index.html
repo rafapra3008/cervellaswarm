@@ -146,6 +146,103 @@
             outline: 2px solid #F59E0B;
             outline-offset: 2px;
         }
+
+        /* Mobile Menu Styles */
+        .hamburger {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: white;
+            transition: all 250ms ease-out;
+            display: block;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .mobile-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 250ms ease-out;
+            z-index: 40;
+        }
+
+        .mobile-backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 75%;
+            max-width: 320px;
+            height: 100vh;
+            background: #1E293B;
+            transform: translateX(100%);
+            transition: transform 250ms ease-out;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav a {
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: color 200ms ease;
+        }
+
+        .mobile-nav a:hover {
+            color: #F59E0B;
+        }
+
+        .mobile-nav a.cta {
+            margin-top: 24px;
+            border: none;
+            background: #F59E0B;
+            color: #1E293B;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .mobile-nav a.cta:hover {
+            background: #FBBF24;
+            color: #1E293B;
+        }
     </style>
 </head>
 <body class="gradient-bg text-white">
@@ -155,6 +252,8 @@
             <span class="text-3xl">👸</span>
             <span class="text-2xl font-bold">CervellaSwarm</span>
         </div>
+
+        <!-- Desktop Menu -->
         <div class="hidden md:flex space-x-8">
             <a href="#features" class="hover:text-primary transition">Features</a>
             <a href="#pricing" class="hover:text-primary transition">Pricing</a>
@@ -162,8 +261,37 @@
             <a href="faq.html" class="hover:text-primary transition">FAQ</a>
             <a href="getting-started.html" class="hover:text-primary transition">Get Started</a>
         </div>
-        <a href="getting-started.html" class="bg-primary text-secondary px-6 py-2 rounded-lg font-semibold hover:bg-yellow-400 btn-hover">
+
+        <!-- Desktop CTA -->
+        <a href="getting-started.html" class="hidden md:block bg-primary text-secondary px-6 py-2 rounded-lg font-semibold hover:bg-yellow-400 btn-hover">
             Start Free
+        </a>
+
+        <!-- Mobile Hamburger -->
+        <button
+            id="hamburger-btn"
+            class="hamburger md:hidden"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+            aria-controls="mobile-nav">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Backdrop -->
+    <div id="mobile-backdrop" class="mobile-backdrop" aria-hidden="true"></div>
+
+    <!-- Mobile Navigation -->
+    <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation">
+        <a href="getting-started.html" class="cta">Getting Started</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="faq.html">FAQ</a>
+        <a href="https://github.com/rafapra3008/CervellaSwarm" class="flex items-center gap-2">
+            <i data-lucide="github" class="w-5 h-5"></i>
+            GitHub
         </a>
     </nav>
 
@@ -430,6 +558,100 @@
             <p class="text-sm mt-2">2026 CervellaSwarm. Made with love by the swarm.</p>
         </div>
     </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        (function() {
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const mobileNav = document.getElementById('mobile-nav');
+            const backdrop = document.getElementById('mobile-backdrop');
+            let isOpen = false;
+            let focusedElementBeforeOpen = null;
+
+            // Focusable elements in the menu
+            const getFocusableElements = () => {
+                return mobileNav.querySelectorAll('a, button');
+            };
+
+            // Toggle menu
+            function toggleMenu() {
+                isOpen = !isOpen;
+
+                hamburgerBtn.classList.toggle('active', isOpen);
+                mobileNav.classList.toggle('active', isOpen);
+                backdrop.classList.toggle('active', isOpen);
+                hamburgerBtn.setAttribute('aria-expanded', isOpen);
+                backdrop.setAttribute('aria-hidden', !isOpen);
+
+                if (isOpen) {
+                    focusedElementBeforeOpen = document.activeElement;
+                    document.body.style.overflow = 'hidden';
+
+                    // Focus first menu item
+                    setTimeout(() => {
+                        const firstFocusable = getFocusableElements()[0];
+                        if (firstFocusable) firstFocusable.focus();
+                    }, 250);
+                } else {
+                    document.body.style.overflow = '';
+
+                    // Return focus to hamburger button
+                    if (focusedElementBeforeOpen) {
+                        focusedElementBeforeOpen.focus();
+                    }
+                }
+            }
+
+            // Close menu
+            function closeMenu() {
+                if (isOpen) {
+                    toggleMenu();
+                }
+            }
+
+            // Focus trap
+            function trapFocus(e) {
+                if (!isOpen) return;
+
+                const focusableElements = getFocusableElements();
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+
+                if (e.key === 'Tab') {
+                    if (e.shiftKey) {
+                        // Shift + Tab
+                        if (document.activeElement === firstElement) {
+                            e.preventDefault();
+                            lastElement.focus();
+                        }
+                    } else {
+                        // Tab
+                        if (document.activeElement === lastElement) {
+                            e.preventDefault();
+                            firstElement.focus();
+                        }
+                    }
+                }
+            }
+
+            // Event listeners
+            hamburgerBtn.addEventListener('click', toggleMenu);
+            backdrop.addEventListener('click', closeMenu);
+
+            // Close on menu item click
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+
+            // Escape key closes menu
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && isOpen) {
+                    closeMenu();
+                }
+                trapFocus(e);
+            });
+        })();
+    </script>
 
     <!-- Copy NPM Script -->
     <script>

@@ -1,37 +1,62 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 259
-> **SCORE Landing:** 8.5/10 (target 9.5)
+> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 260
+> **SCORE Landing:** 9.0/10 (target 9.5)
 
 ---
 
-## SESSIONE 259 - FASE 1 COMPLETATA
+## SESSIONE 260 - FASE 2 COMPLETATA!
 
 ```
 +================================================================+
-|   LANDING 7.5 → 8.5                                            |
-|   FASE 1 MUST: COMPLETATA!                                     |
-|   PROSSIMO: FASE 2 (OG Image + Mobile Menu)                    |
+|   LANDING 8.5 → 9.0                                            |
+|   FASE 2 SHOULD: COMPLETATA!                                   |
+|   PROSSIMO: Deploy Cloudflare Pages                            |
 +================================================================+
 ```
 
-### Fix Applicati
+### Implementato Sessione 260
 
-| Fix | Descrizione |
-|-----|-------------|
-| Dual CTA | Form rimosso → npm + Get Started + GitHub |
-| Focus States | WCAG 2.4.7 accessibilità keyboard |
-| OG Tags | Open Graph + Twitter Card |
-| Prezzi | Allineati Stripe ($20/$40) |
-| Dogfooding | Badge footer con link commits |
-| Consistenza | npm command unificato |
-| Aria-labels | Accessibilità copy buttons |
+| Task | Status | Dettagli |
+|------|--------|----------|
+| OG Image | DONE | 1200x630px, 58KB, in `landing/og-image.jpg` |
+| Mobile Menu | DONE | Hamburger slide-in, accessibilità WCAG |
+| Studio Deploy | DONE | 9 opzioni → Cloudflare Pages |
 
-### Roadmap Landing 9.5
+### File Creati
 
 ```
-FASE 1: MUST      [####################] 100% ✓ (8.5)
-FASE 2: SHOULD    [....................] 0%   (→9.0)
+landing/
+├── og-image.jpg        # OG image per social
+├── og-template.html    # Template per rigenerare
+└── index.html          # Mobile menu aggiunto
+
+docs/studio/
+├── RICERCA_DEPLOY_LANDING_CERVELLASWARM.md
+└── RICERCA_DEPLOY_LANDING_CERVELLASWARM_PARTE2.md
+```
+
+---
+
+## DECISIONE: CLOUDFLARE PAGES
+
+**Perché:** $0/mese, UNLIMITED bandwidth, 300+ edge, setup 10 min
+
+```
+Alternative scartate:
+- Vercel: 100GB limite, upgrade forzato
+- Netlify: Account pause se superi limiti
+- AWS: Troppo complesso per static
+- Fly.io: Overkill, costa $2-5/mese
+```
+
+---
+
+## ROADMAP LANDING
+
+```
+FASE 1: MUST      [####################] 100% (8.5)
+FASE 2: SHOULD    [####################] 100% (9.0)
 FASE 3: NICE      [....................] 0%   (→9.5)
 ```
 
@@ -41,13 +66,10 @@ FASE 3: NICE      [....................] 0%   (→9.5)
 
 - [x] npm MCP v0.2.2
 - [x] CFP MCP Dev Summit
-- [x] mcp-ai.org registry
-- [x] Email Anthropic
-- [x] Discord Claude Devs
-- [x] Landing FASE 1-4 (terminale + polish)
-- [x] Landing 7.5→8.5 (FASE 1 roadmap 9.5)
-- [ ] **Landing FASE 2** (OG Image + Mobile)
-- [ ] **Landing Deploy**
+- [x] Landing FASE 1-2
+- [x] Studio deploy completato
+- [ ] **Deploy Cloudflare Pages**
+- [ ] **Custom domain cervellaswarm.com**
 - [ ] **SHOW HN: 24-25 Gennaio**
 
 ---
@@ -64,12 +86,11 @@ FASE 3: NICE      [....................] 0%   (→9.5)
 ## PROSSIMA SESSIONE
 
 ```
-FASE 2:
-1. OG Image 1200x630px
-2. Mobile hamburger menu
-
-Poi: Deploy cervellaswarm.com
-Poi: SHOW HN!
+1. Setup Cloudflare Pages (15 min)
+2. Custom domain cervellaswarm.com (10 min)
+3. Test push → deploy workflow
+4. Analytics Cloudflare (5 min)
+5. PRONTO per SHOW HN!
 ```
 
 ---
