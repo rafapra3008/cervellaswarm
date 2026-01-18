@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 18 Gennaio 2026 - Sessione 258
+> Aggiornato: 18 Gennaio 2026 - Sessione 261
 
 ```
 +==================================================================+
@@ -32,7 +32,7 @@
 
 ---
 
-## DOVE SIAMO (18 Gennaio 2026 - Sessione 260)
+## DOVE SIAMO (18 Gennaio 2026 - Sessione 261)
 
 ```
 +================================================================+
@@ -51,7 +51,7 @@ FASE 2: MVP PRODOTTO             [####################] 100%! PRONTO!
   ✓ API Fly.io                   ONLINE
   ✓ Stripe                       $20/$40 (Test Mode)
 
-FASE 3: PRIMI UTENTI             [###################.] 98%  ← QUI!
+FASE 3: PRIMI UTENTI             [####################] 100%! ← FATTO!
 
   SESSIONE 258 - OUTREACH:
   ✓ CFP MCP Dev Summit NYC       SUBMITTED!
@@ -69,18 +69,20 @@ FASE 3: PRIMI UTENTI             [###################.] 98%  ← QUI!
   ✓ Mobile hamburger menu        Slide-in, accessibilità WCAG
   ✓ Studio Deploy                Cloudflare Pages scelto!
 
-  DA FARE:
-  - Deploy Cloudflare Pages      cervellaswarm.com
-  - SHOW HN LAUNCH               24-25 GENNAIO!
+  SESSIONE 261 - LIVE! + SHOW HN READY:
+  ✓ cervellaswarm.com            LIVE! Cloudflare Pages
+  ✓ DNS + SSL                    Cloudflare (da Register.it)
+  ✓ Show HN post                 PRONTO! (26 Gennaio)
 
 FASE 4: SCALA                    [....................] 0%
+  - SHOW HN LAUNCH               26 GENNAIO 13:00 ITALIA
 
 SCORE LANDING: 9.0/10 (target 9.5)
 
 PROSSIMI STEP:
-  1. Setup Cloudflare Pages (40 min)
-  2. Custom domain cervellaswarm.com
-  3. SHOW HN LAUNCH (24-25 Gennaio)
+  1. Pre-launch check (24-25 Gennaio)
+  2. SHOW HN (26 Gennaio 13:00 Italia)
+  3. Monitoring + risposte community
 ```
 
 ---

@@ -1,56 +1,51 @@
 # STATO OGGI - 18 Gennaio 2026
 
-> **Sessione:** 262
-> **Focus:** Miracollo - Ricevute PDF REALI!
+> **Sessione:** 261
+> **Focus:** CervellaSwarm - LIVE + Show HN Ready!
 
 ---
 
-## SESSIONE 262 - VITTORIA!
+## SESSIONE 261 - MOMENTO STORICO!
 
 ```
-RICEVUTE PDF: DA "SU CARTA" A "REALE"!
+CERVELLASWARM.COM È LIVE!
+SHOW HN POST PRONTO!
 
-Bug trovato e fixato:
-- get_conn() usava get_db().__enter__() male
-- Connessione chiusa prematuramente
-- Fix: sqlite3.connect() diretto
-
-Test superato:
-- PDF 16KB generato
-- Screenshot conferma qualita professionale
+Landing: https://cervellaswarm.com
+Backup:  https://cervellaswarm.pages.dev
 ```
 
 ---
 
-## FIX DEPLOYATI
+## COMPLETATO OGGI
 
-| File | Fix |
-|------|-----|
-| receipts.py | get_conn() database |
-| payments.py | JOIN guests+channels |
-| stripe_service.py | off_session rimosso |
-
----
-
-## STATO MIRACOLLO
-
-```
-FASE 1 Ricevute PDF:  REALE! (verificato)
-FASE 1B Checkout UI:  REALE! (verificato)
-FASE 2 Scontrini RT:  Blocker (info hardware)
-VCC Stripe:           Parziale (fix deployato)
-```
+| Task | Status |
+|------|--------|
+| Allineamento SNCP | FATTO |
+| Cloudflare Pages | CONFIGURATO |
+| DNS + SSL | ATTIVO |
+| Show HN titolo | SCELTO |
+| Show HN commento | SCRITTO |
 
 ---
 
-## INFRASTRUTTURA
+## SHOW HN
 
 ```
-VM: 34.27.179.164 (healthy)
-WeasyPrint: v67.0
-Stripe: enabled
+DATA: Domenica 26 Gennaio, 13:00 Italia
+FILE: docs/SHOW_HN_POST_READY.md
 ```
 
 ---
 
-*"Da SU CARTA a REALE!" - Sessione 262*
+## PROSSIMI STEP
+
+```
+1. Pre-launch check (24-25 Gennaio)
+2. SHOW HN (26 Gennaio)
+3. Monitoring community
+```
+
+---
+
+*"Il 100000%!" - Sessione 261*
