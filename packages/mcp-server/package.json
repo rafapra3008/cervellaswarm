@@ -1,6 +1,6 @@
 {
   "name": "@cervellaswarm/mcp-server",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "16 AI agents with quality guardians - the only team that checks its own work",
   "type": "module",
   "main": "dist/index.js",
@@ -43,6 +43,10 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rafapra/cervellaswarm"
+    "url": "git+https://github.com/rafapra3008/CervellaSwarm.git"
+  },
+  "homepage": "https://cervellaswarm.com",
+  "bugs": {
+    "url": "https://github.com/rafapra3008/CervellaSwarm/issues"
   }
 }

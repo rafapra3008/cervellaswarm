@@ -1,6 +1,6 @@
 {
   "name": "cervellaswarm",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "16 AI agents working as a team for your project. Not an assistant - a TEAM.",
   "main": "src/index.js",
   "bin": {
@@ -38,11 +38,11 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cervellaswarm/cli.git"
+    "url": "git+https://github.com/rafapra3008/CervellaSwarm.git"
   },
-  "homepage": "https://cervellaswarm.dev",
+  "homepage": "https://cervellaswarm.com",
   "bugs": {
-    "url": "https://github.com/cervellaswarm/cli/issues"
+    "url": "https://github.com/rafapra3008/CervellaSwarm/issues"
   },
   "engines": {
     "node": ">=18.0.0"

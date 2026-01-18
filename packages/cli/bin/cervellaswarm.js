@@ -87,7 +87,7 @@ Essential Phrases:
   volete decidere      Let the team choose the approach
   chiudiamo            End session cleanly
 
-Documentation: https://cervellaswarm.dev
+Documentation: https://cervellaswarm.com
 `;
 
 // Setup program

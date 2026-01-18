@@ -131,12 +131,12 @@ cervellaswarm task "How do enterprise apps handle rate limiting?" -a researcher
 
 ```
 PHASE 1: Foundation     [##########] 100%
-PHASE 2: MVP            [########..] 80%
-PHASE 3: Alpha Users    [#.........] 5%
+PHASE 2: MVP            [##########] 100%
+PHASE 3: Alpha Users    [##........] 20%
 PHASE 4: Scale          [..........] 0%
 ```
 
-CLI and MCP Server live on npm. Preparing for public launch.
+CLI and MCP Server live on npm. Public launch January 2026.
 
 ## Philosophy
 

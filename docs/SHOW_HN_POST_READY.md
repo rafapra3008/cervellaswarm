@@ -48,11 +48,11 @@ So I built CervellaSwarm. 260+ work sessions later, it's real.
 
 **Try it:**
 ```
-npx @cervellaswarm/cli init
-npx @cervellaswarm/cli spawn --frontend
+npx cervellaswarm init
+npx cervellaswarm task "add login page"
 ```
 
-Free tier available. MIT licensed.
+Free tier available. Apache-2.0 licensed.
 
 **What I need from you:**
 - Does this solve a real problem for you?
@@ -80,9 +80,9 @@ GitHub: https://github.com/rafapra3008/CervellaSwarm
 ## CHECKLIST PRE-LANCIO
 
 ### 48h Prima (24-25 Gennaio)
-- [ ] Test `npx @cervellaswarm/cli init` su macchina pulita
-- [ ] Verificare README GitHub sia chiaro
-- [ ] Preparare risposte FAQ comuni
+- [x] Test `npx cervellaswarm init` su macchina pulita (Sessione 262)
+- [x] Verificare README GitHub sia chiaro (Sessione 262)
+- [x] Preparare risposte FAQ comuni
 
 ### 24h Prima (25 Gennaio)
 - [ ] Rileggere titolo e commento
