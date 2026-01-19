@@ -1,0 +1,100 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "description": "Worker to attribution mapping for CervellaSwarm Git Flow",
+    "email": "noreply@cervellaswarm.com",
+    "created": "2026-01-19",
+    "format": "Co-authored-by: CervellaSwarm ({role}/{model}) <{email}>"
+  },
+  "workers": {
+    "backend": {
+      "role": "backend-worker",
+      "model": "claude-sonnet-4-5",
+      "specialization": "Python, FastAPI, Database, API REST"
+    },
+    "frontend": {
+      "role": "frontend-worker",
+      "model": "claude-sonnet-4-5",
+      "specialization": "React, CSS, Tailwind, UI/UX"
+    },
+    "tester": {
+      "role": "tester-worker",
+      "model": "claude-sonnet-4-5",
+      "specialization": "Testing, Debug, QA"
+    },
+    "docs": {
+      "role": "docs-worker",
+      "model": "claude-sonnet-4-5",
+      "specialization": "Documentation, README, guides"
+    },
+    "reviewer": {
+      "role": "reviewer-worker",
+      "model": "claude-sonnet-4-5",
+      "specialization": "Code review, best practices"
+    },
+    "devops": {
+      "role": "devops-worker",
+      "model": "claude-sonnet-4-5",
+      "specialization": "Deploy, CI/CD, Docker"
+    },
+    "researcher": {
+      "role": "researcher-worker",
+      "model": "claude-sonnet-4-5",
+      "specialization": "Technical research, analysis"
+    },
+    "data": {
+      "role": "data-worker",
+      "model": "claude-sonnet-4-5",
+      "specialization": "SQL, analytics, database design"
+    },
+    "security": {
+      "role": "security-worker",
+      "model": "claude-sonnet-4-5",
+      "specialization": "Security audit, vulnerabilities"
+    },
+    "scienziata": {
+      "role": "scienziata-worker",
+      "model": "claude-sonnet-4-5",
+      "specialization": "Strategic research, market trends"
+    },
+    "ingegnera": {
+      "role": "ingegnera-worker",
+      "model": "claude-sonnet-4-5",
+      "specialization": "Codebase analysis, refactoring"
+    },
+    "marketing": {
+      "role": "marketing-worker",
+      "model": "claude-sonnet-4-5",
+      "specialization": "UX strategy, positioning, copywriting"
+    }
+  },
+  "guardiane": {
+    "guardiana-qualita": {
+      "role": "guardiana-qualita",
+      "model": "claude-opus-4-5",
+      "specialization": "Quality verification, code standards"
+    },
+    "guardiana-ops": {
+      "role": "guardiana-ops",
+      "model": "claude-opus-4-5",
+      "specialization": "Security, performance, infrastructure"
+    },
+    "guardiana-ricerca": {
+      "role": "guardiana-ricerca",
+      "model": "claude-opus-4-5",
+      "specialization": "Research quality verification"
+    }
+  },
+  "special": {
+    "regina": {
+      "role": "regina",
+      "model": "claude-opus-4-5",
+      "specialization": "Orchestration, coordination"
+    },
+    "auto-save": {
+      "role": "auto-save",
+      "model": "system",
+      "specialization": "Save user work before worker edit"
+    }
+  }
+}
