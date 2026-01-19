@@ -13,8 +13,13 @@
 #   - CLAUDE.md (con riferimenti swarm)
 #   - .swarm/ directory structure
 #
-# Versione: 1.0.0
-# Data: 2026-01-06
+# Versione: 1.1.0
+# Data: 2026-01-19
+#
+# CHANGELOG:
+# v1.1.0: Aggiunto .swarm/plans/ per Architect PLAN.md
+# v1.0.0: Versione iniziale
+#
 # Cervella & Rafa
 
 set -e
@@ -78,6 +83,7 @@ mkdir -p "$TARGET_DIR/.swarm/logs"
 mkdir -p "$TARGET_DIR/.swarm/handoff"
 mkdir -p "$TARGET_DIR/.swarm/prompts"
 mkdir -p "$TARGET_DIR/.swarm/runners"
+mkdir -p "$TARGET_DIR/.swarm/plans"
 echo -e "${GREEN}[OK]${NC} .swarm/ struttura creata"
 
 # Crea NORD.md
@@ -412,6 +418,7 @@ echo "      ├── tasks/"
 echo "      ├── status/"
 echo "      ├── logs/"
 echo "      ├── handoff/"
+echo "      ├── plans/      (Architect PLAN.md)"
 echo "      └── .gitignore"
 echo ""
 echo -e "${BLUE}Prossimi step:${NC}"

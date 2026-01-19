@@ -12,12 +12,16 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 3.7.0
+# Versione: 3.8.0
 # Data: 2026-01-19
 # Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
 # v2.0.0: Config centralizzata ~/.swarm/config
 #
 # CHANGELOG:
+# v3.8.0: ARCHITECT MODE! --architect "task" spawna cervella-architect per creare PLAN.md
+#         Architect analizza codebase e produce piano in .swarm/plans/
+#         + timeout 30m (graceful shutdown) per evitare loop infiniti
+#         + --allowedTools pre-approva Read,Grep,Glob,WebSearch,WebFetch (no prompt interattivo)
 # v3.7.0: AUTO-CONTEXT! Contesto intelligente codebase (tree-sitter + PageRank)
 #         --with-context abilita, --context-budget N per token budget (default 1500)
 #         Worker ricevono mappa repository per capire struttura progetto!
@@ -88,6 +92,11 @@ AUTO_COMMIT=false
 # ============================================================================
 AUTO_CONTEXT=false
 CONTEXT_BUDGET=1500
+
+# ============================================================================
+# ARCHITECT MODE (v3.8.0) - Spawna architect per creare PLAN.md
+# ============================================================================
+ARCHITECT_TASK=""
 
 # ============================================================================
 # OUTPUT UNBUFFERED (v3.2.0) - Output realtime dai worker!
@@ -218,6 +227,9 @@ COMMON_WORKERS="backend frontend tester"
 
 # Lista tutti i worker disponibili
 ALL_WORKERS="backend frontend tester docs reviewer devops researcher data security scienziata ingegnera"
+
+# Architect (speciale - NON cerca task, riceve prompt diretto)
+ARCHITECT_WORKER="architect"
 
 # Lista Guardiane (Opus - supervisione)
 ALL_GUARDIANS="guardiana-qualita guardiana-ops guardiana-ricerca"
@@ -394,6 +406,43 @@ Analizzi e proponi, NON modifichi direttamente.
 ${base_prompt}
 
 FOCUS: Cerca task per 'cervella-ingegnera' in .swarm/tasks/"
+            ;;
+        architect)
+            # SPECIALE: Architect NON usa base_prompt (non cerca task!)
+            echo "Sei CERVELLA-ARCHITECT.
+Ruolo: Pianificatore strategico dello sciame CervellaSwarm.
+
+REGOLA FONDAMENTALE:
+- IO NON SCRIVO CODICE!
+- ARCHITECT = COSA + PERCHE + ORDINE
+- WORKER = COME (implementazione)
+
+Tool PERMESSI: Read, Glob, Grep, WebSearch, WebFetch
+Tool VIETATI: Write, Edit, Bash
+
+COME LAVORO (4 Fasi):
+1. Understanding - Analizzo codebase con Glob/Grep/Read
+2. Design - Definisco approccio, listo file critici, stimo rischi
+3. Review - Valido assumptions, identifico rischi
+4. Final Plan - Ordine esecuzione, success criteria
+
+OUTPUT OBBLIGATORIO:
+Salva SEMPRE in: .swarm/plans/PLAN_{nome_task}.md
+
+Il plan deve contenere:
+- Phase 1: Understanding (cosa vuole utente, codebase analysis)
+- Phase 2: Design (approach, critical files, implementation steps, risks)
+- Phase 3: Review (assumptions, questions)
+- Phase 4: Final Plan (execution order, success criteria)
+
+WORKFLOW:
+1. Ricevi il task da pianificare
+2. Analizza codebase
+3. Crea PLAN.md
+4. Termina con report
+
+MANTRA: 'Piano prima, codice dopo.'
+"
             ;;
         guardiana-qualita)
             echo "Sei CERVELLA-GUARDIANA-QUALITA (Opus).
@@ -813,10 +862,103 @@ spawn_worker_headless() {
     fi
 }
 
+# ============================================================================
+# ARCHITECT MODE (v3.8.0) - Spawn architect per creare PLAN.md
+# ============================================================================
+spawn_architect_headless() {
+    local task_description="$1"
+
+    print_info "Spawning cervella-architect per: \"${task_description}\""
+
+    # Crea directory plans se non esiste
+    mkdir -p "${SWARM_DIR}/plans"
+
+    # Prompt specifico per architect
+    local prompt
+    prompt=$(get_worker_prompt "architect")
+
+    # Salva prompt in file temporaneo
+    local prompt_file="${SWARM_DIR}/prompts/worker_architect.txt"
+    mkdir -p "${SWARM_DIR}/prompts"
+    printf '%s' "$prompt" > "$prompt_file"
+
+    # Nome sessione tmux univoco
+    local session_name="swarm_architect_$(date +%s)"
+
+    # Trova claude
+    local claude_path
+    claude_path=$(get_claude_bin)
+    if [[ -z "$claude_path" ]]; then
+        print_error "Claude CLI non trovato!"
+        return 1
+    fi
+
+    # Crea directories
+    mkdir -p "${SWARM_DIR}/status"
+    mkdir -p "${SWARM_DIR}/logs"
+
+    # Log file
+    local log_file="${SWARM_DIR}/logs/architect_$(date +%Y%m%d_%H%M%S).log"
+
+    # Salva session name per tracking
+    echo "$session_name" > "${SWARM_DIR}/status/worker_architect.session"
+
+    # Salva timestamp start
+    date +%s > "${SWARM_DIR}/status/worker_architect.start"
+
+    # Prompt iniziale con il task da pianificare
+    local initial_prompt="TASK DA PIANIFICARE: ${task_description}
+
+Analizza questo task e crea un PLAN.md completo in .swarm/plans/.
+Segui le 4 fasi: Understanding, Design, Review, Final Plan.
+Quando hai finito, termina con il report finale."
+
+    # Architect timeout (30 minuti max, kill dopo 30s se non risponde)
+    local ARCHITECT_TIMEOUT="30m"
+    local ARCHITECT_KILL_AFTER="30s"
+
+    # Allowed tools per architect (pre-approvati, no prompt interattivo)
+    # Architect NON deve avere Write/Edit/Bash - solo analisi!
+    local ARCHITECT_TOOLS="Read,Grep,Glob,WebSearch,WebFetch"
+
+    # Spawn in tmux detached con timeout e allowedTools
+    tmux new-session -d -s "$session_name" \
+        "cd ${PROJECT_ROOT} && \
+         export CERVELLASWARM_WORKER=1 && \
+         unset ANTHROPIC_API_KEY && \
+         timeout -k ${ARCHITECT_KILL_AFTER} ${ARCHITECT_TIMEOUT} \
+           ${STDBUF_CMD} ${claude_path} -p \
+           --allowedTools \"${ARCHITECT_TOOLS}\" \
+           --append-system-prompt \"\$(cat ${prompt_file})\" \
+           \"${initial_prompt}\" 2>&1 | tee \"${log_file}\"; \
+         exit_code=\$?; \
+         if [ \$exit_code -eq 124 ]; then \
+           echo 'ARCHITECT_TIMEOUT (30m limit reached)' >> \"${log_file}\"; \
+         else \
+           echo 'ARCHITECT_DONE' >> \"${log_file}\"; \
+         fi"
+
+    # Imposta remain-on-exit per catturare output dopo fine
+    tmux set-option -t "$session_name" remain-on-exit on 2>/dev/null
+
+    if tmux has-session -t "$session_name" 2>/dev/null; then
+        print_success "cervella-architect spawned! Session: ${session_name}"
+        print_info "Task: \"${task_description}\""
+        print_info "Timeout: ${ARCHITECT_TIMEOUT} | Tools: ${ARCHITECT_TOOLS}"
+        print_info "Plan verra salvato in: .swarm/plans/"
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - SPAWNED: cervella-architect [${session_name}] Task: ${task_description} Timeout: ${ARCHITECT_TIMEOUT}" >> "${SWARM_DIR}/logs/spawn.log"
+        return 0
+    else
+        print_error "Errore spawn cervella-architect"
+        return 1
+    fi
+}
+
 show_usage() {
     echo "Uso: $0 [opzioni]"
     echo ""
     echo "Opzioni:"
+    echo "  --architect \"TASK\"     Spawna cervella-architect per pianificare TASK (Opus)"
     echo "  --backend              Spawna cervella-backend"
     echo "  --frontend             Spawna cervella-frontend"
     echo "  --tester               Spawna cervella-tester"
@@ -850,6 +992,7 @@ show_usage() {
     echo "  AUTO-CONTEXT e' DISATTIVO di default. Usa --with-context per abilitarlo."
     echo ""
     echo "Esempi:"
+    echo "  $0 --architect \"Refactor AuthService\"  # Architect crea plan (Opus)"
     echo "  $0 --backend               # Spawna backend (AUTO-SVEGLIA attivo!)"
     echo "  $0 --all                   # Spawna tutti i worker comuni"
     echo "  $0 --guardiane             # Spawna tutte le guardiane (Opus)"
@@ -906,6 +1049,16 @@ main() {
 
     while [ $# -gt 0 ]; do
         case "$1" in
+            --architect)
+                shift
+                if [[ -n "$1" && ! "$1" =~ ^-- ]]; then
+                    ARCHITECT_TASK="$1"
+                else
+                    print_error "--architect richiede un task da pianificare!"
+                    print_info "Esempio: --architect \"Refactor AuthService\""
+                    exit 1
+                fi
+                ;;
             --backend)
                 workers_to_spawn="${workers_to_spawn} backend"
                 ;;
@@ -1019,6 +1172,18 @@ main() {
 
     # Trim e verifica
     workers_to_spawn=$(echo "$workers_to_spawn" | xargs)
+
+    # ARCHITECT MODE (v3.8.0) - Se --architect specificato, spawna architect e esci
+    if [ -n "$ARCHITECT_TASK" ]; then
+        if spawn_architect_headless "$ARCHITECT_TASK"; then
+            echo ""
+            print_success "Architect spawned! Monitora con: tmux attach -t swarm_architect_*"
+            print_info "Plan sara in: .swarm/plans/"
+            exit 0
+        else
+            exit 1
+        fi
+    fi
 
     if [ -z "$workers_to_spawn" ]; then
         print_warning "Nessun worker specificato!"
