@@ -1,42 +1,28 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 269
-> **SCORE Pre-Launch:** 10/10 ✅
+> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 270
+> **SCORE:** 10/10 VERDE - LANCIAMO!
 
 ---
 
-## SESSIONE 269 - REDDIT KARMA BUILDING
+## SESSIONE 270 - SHOW HN ANTICIPATO!
 
 ```
 +================================================================+
-|   3 COMMENTI AUTENTICI SU r/ClaudeAI                           |
+|   GUARDIANE: VERDE! LANCIAMO OGGI!                             |
 +================================================================+
 
-POST 1: "prompt-only agents struggle" → orchestrator experience
-POST 2: "25 Claude Code Tips"         → context separation tip
-POST 3: "Does Claude Babysits you"    → practical workarounds
+GUARDIANA OPS:      VERDE - Infra pronta!
+GUARDIANA RICERCA:  VERDE - Timing perfetto (domenica!)
+GUARDIANA QUALITA:  VERDE - Test REALE passato!
 
-STRATEGIA CONFERMATA:
-- Show HN: 26 Gennaio ✅ (pronto, zero requisiti)
-- Reddit: karma building ora → post Fine Febbraio
-```
+TEST REALE (Sessione 270):
+  npx cervellaswarm doctor  ✅ PASS
+  cervellaswarm.com         ✅ 200 OK
+  GitHub pubblico           ✅ 200 OK
 
----
-
-## SESSIONE 268 - TEST REALE PASSATO!
-
-```
-+================================================================+
-|   ✅ TEST REALE COMPLETATO - PRODOTTO FUNZIONA!                 |
-+================================================================+
-
-npx cervellaswarm init   ✅ PASS (crea struttura .sncp/)
-npx cervellaswarm task   ✅ PASS (Regina assegna, agente lavora)
-npx cervellaswarm status ✅ PASS (mostra stato progetto)
-npx cervellaswarm doctor ✅ PASS (verifica configurazione)
-
-Testato su: directory pulita /tmp/
-Versione: cervellaswarm@0.1.2 da npm
+DECISIONE: SHOW HN ANTICIPATO da 26 Gen → 19 Gen (OGGI!)
+ORARIO: 13:00 Italia (12:00 UTC)
 ```
 
 ---
@@ -48,43 +34,33 @@ Versione: cervellaswarm@0.1.2 da npm
 | CLI | 0.1.2 | LIVE su npm |
 | MCP Server | 0.2.3 | LIVE su npm |
 | Landing | LIVE | cervellaswarm.com |
-| **GitHub** | **PUBBLICO** | **✅ FATTO!** |
+| GitHub | PUBBLICO | rafapra3008/cervellaswarm |
 
 ---
 
-## SHOW HN
+## PIANO GIORNATA 19 GENNAIO
 
 ```
-DATA: Domenica 26 Gennaio 2026, 12:00 UTC (13:00 Italia)
-GIORNI: 7
-POST: docs/SHOW_HN_POST_READY.md
-SOCIAL: 3 draft pronti!
-REPO: ✅ PUBBLICO!
-```
+ORA (07:30):   ✅ Test REALE completato
+              ✅ Guardiane consultate
+              ✅ Subroadmap aggiornata
 
----
-
-## SCORE ATTUALE
-
-```
-PRODOTTO:        10/10
-DOCUMENTAZIONE:  10/10
-SHOW HN:         10/10
-ASSETS:          10/10
-ALTRI CANALI:    10/10  ← DRAFT + REPO PUBBLICO!
-
-MEDIA:           10/10 ✅
+12:45:        Preparazione finale
+13:00:        POST su Hacker News!
+13:05:        Primo commento
+13:00-15:00:  Monitoring ogni 30 min
+DOPO:         Rispondere commenti
 ```
 
 ---
 
-## PROSSIMI STEP
+## POST-LAUNCH: CERVELLASWARM 2.0
 
 ```
-1. [FATTO] Test npm su macchina pulita ✅ Sessione 268
-2. [OPZIONALE] Verificare account Reddit karma
-3. [OPZIONALE] Carousel PDF per LinkedIn
-4. [26 GEN] SHOW HN LAUNCH!
+W1 (20-26 Gen): Git Flow + Attribution
+W2 (27 Gen-2 Feb): Tree-sitter Repo Mapping
+W3 (3-9 Feb): Architect/Editor Pattern
+W4 (10-16 Feb): Polish + v2.0-beta
 ```
 
 ---
@@ -93,11 +69,9 @@ MEDIA:           10/10 ✅
 
 - **npm:** rafapra (CLI + MCP)
 - **GitHub PUBBLICO:** rafapra3008/cervellaswarm
-- **GitHub PRIVATO:** rafapra3008/cervellaswarm-archive
 - **Locale privato:** ~/Developer/CervellaSwarm
-- **Locale pubblico:** ~/Developer/cervellaswarm-public
 - **Cloudflare:** rafapra@gmail.com
 
 ---
 
-*"Test REALE passato! Score 10/10! 7 giorni al lancio!"*
+*"Guardiane: VERDE! Il tempo non ci interessa - siamo PRONTI!"*

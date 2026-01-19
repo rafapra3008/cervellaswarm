@@ -1,9 +1,9 @@
 # MAPPA LANCIO DEFINITIVA - CervellaSwarm
 
 > **Creata:** 18 Gennaio 2026 - Sessione 264
-> **Aggiornata:** 18 Gennaio 2026 - Sessione 265 (Stato aggiornato!)
-> **Obiettivo:** SHOW HN - 26 Gennaio 2026, 13:00 Italia
-> **Giorni rimasti:** 8
+> **Aggiornata:** 19 Gennaio 2026 - Sessione 270 - LAUNCH DAY!
+> **LANCIO:** SHOW HN - 19 Gennaio 2026, 13:00 Italia (OGGI!)
+> **Status:** GUARDIANE VERDE - LANCIAMO!
 
 ---
 
@@ -129,46 +129,35 @@ TOTALE: 51+ documenti!
 
 ---
 
-## TIMELINE 8 GIORNI
-
-### 18-20 Gen (Sab-Lun) - PREPARAZIONE
+## SESSIONE 270 - LANCIO ANTICIPATO!
 
 ```
-[✓] Estendere FAQ a 10+              ← FATTO Sessione 264!
-[✓] Verifica Guardiane               ← FATTO Sessione 265!
-[✓] Fix GIF README                   ← FATTO Sessione 265!
-[ ] Creare draft Reddit post         ← MANCA (opzionale)
-[ ] Creare draft Tweet thread        ← MANCA (opzionale)
-[ ] Verificare GitHub Issues attivi  ← Da fare
-[✓] FAQ su landing page              ← GIÀ 15 FAQ su faq.html!
++================================================================+
+|   GUARDIANE: VERDE! ANTICIPIAMO IL LANCIO!                     |
++================================================================+
+
+Sessione 270 - 19 Gennaio 2026:
+  ✅ Guardiana Ops: VERDE - Infra pronta
+  ✅ Guardiana Ricerca: VERDE - Domenica = best day!
+  ✅ Guardiana Qualità: VERDE - Test REALE passato
+  ✅ Test npx cervellaswarm doctor: FUNZIONA
+  ✅ cervellaswarm.com: 200 OK
+  ✅ GitHub pubblico: 200 OK
+
+DECISIONE: Lanciamo OGGI invece del 26!
 ```
 
-### 21-23 Gen (Mar-Gio) - POLISH
+### 19 Gen (Dom) - LAUNCH DAY!
 
 ```
-[ ] Review finale README
-[ ] Test npm install su altra macchina
-[ ] Preparare LinkedIn post          ← Opzionale
-[ ] Rileggere tutto il materiale
-```
+OGGI 19 GENNAIO 2026:
+  12:00 UTC (13:00 IT) - POST SU HN
+  12:05 UTC - Primo commento
+  13:00-15:00 - Monitoring ogni 30 min
+  Tutto il giorno - Rispondere commenti
 
-### 24-25 Gen (Ven-Sab) - PRE-LANCIO
-
-```
-[ ] Checklist 48h (da SHOW_HN_POST_READY.md)
-[ ] Checklist 24h
-[ ] Rafa approva tutto
-[ ] Sleep well!
-```
-
-### 26 Gen (Dom) - LANCIO!
-
-```
-12:00 UTC (13:00 IT) - POST SU HN
-12:05 UTC - Primo commento
-12:30 UTC - Tweet thread
-13:00 UTC - Reddit posts
-Tutto il giorno - Monitoring e risposte
+POST-LAUNCH:
+  Reddit/Twitter/LinkedIn: Dopo vedere feedback HN
 ```
 
 ---

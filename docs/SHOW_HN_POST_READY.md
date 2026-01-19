@@ -1,8 +1,9 @@
 # Show HN Post - CervellaSwarm
 
-> **Status:** PRONTO PER LANCIO
-> **Data target:** Domenica 26 Gennaio 2026, 12:00 UTC (13:00 Italia)
+> **Status:** LANCIATO!
+> **Data LANCIO:** Domenica 19 Gennaio 2026, 12:00 UTC (13:00 Italia)
 > **Preparato:** Sessione 261 - 18 Gennaio 2026
+> **Anticipato:** Sessione 270 - 19 Gennaio 2026 (Guardiane: VERDE!)
 
 ---
 

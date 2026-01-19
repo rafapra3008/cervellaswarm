@@ -4,7 +4,8 @@
 > **Fonte:** docs/studio/RICERCA_AIDER_APPROFONDITA.md (1129 righe)
 
 **Creata:** 18 Gennaio 2026
-**Post-Launch:** Da avviare dopo Show HN (26 Gennaio 2026)
+**Aggiornata:** 19 Gennaio 2026 - SHOW HN ANTICIPATO!
+**Post-Launch:** Da avviare dopo Show HN (19 Gennaio 2026)
 **Duration:** 3-4 settimane totali
 
 ---
@@ -178,7 +179,7 @@ DOMANI (da studiare):
 ## TIMELINE POST-LAUNCH
 
 ```
-SHOW HN (26 Gen)
+SHOW HN (19 Gen) ← ANTICIPATO!
        |
        v
 +------+------+------+------+
@@ -193,22 +194,22 @@ SHOW HN (26 Gen)
     v2.0-alpha    v2.0-beta
 ```
 
-### Settimana 1 (27 Gen - 2 Feb): Git Flow
+### Settimana 1 (20 Gen - 26 Gen): Git Flow
 - Day 1-2: `git_worker_commit.sh`
 - Day 3: Template commit message
 - Day 4-5: Test + integrazione
 
-### Settimana 2 (3-9 Feb): Tree-sitter
+### Settimana 2 (27 Gen - 2 Feb): Tree-sitter
 - Day 1-2: Setup py-tree-sitter
 - Day 3-4: `repo_mapper.py`
 - Day 5-7: Test + integrazione spawn-workers
 
-### Settimana 3 (10-16 Feb): Architect/Editor
+### Settimana 3 (3-9 Feb): Architect/Editor
 - Day 1-2: Agent `cervella-architect`
 - Day 3-4: Flow orchestration
 - Day 5-7: Benchmark + tuning
 
-### Settimana 4 (17-23 Feb): Polish
+### Settimana 4 (10-16 Feb): Polish
 - Test end-to-end
 - Documentation complete
 - Release v2.0-beta
