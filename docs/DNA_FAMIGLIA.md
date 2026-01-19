@@ -101,6 +101,11 @@ Se cambia qualcosa nella filosofia:
 | 🛡️ | cervella-guardiana-ricerca | Verifica researcher/docs | opus |
 | 🛡️ | cervella-guardiana-ops | Verifica devops/security/data | opus |
 
+### 🏛️ ARCHITECT (Pianificatore Strategico)
+| Emoji | Nome | Ruolo | Model |
+|-------|------|-------|-------|
+| 🏛️ | cervella-architect | Crea PLAN.md prima che worker implementino | opus |
+
 ### 🐝 API WORKER
 | Emoji | Nome | Ruolo | Model |
 |-------|------|-------|-------|
@@ -117,9 +122,10 @@ Se cambia qualcosa nella filosofia:
 | 🏗️ | cervella-ingegnera | Architettura, refactoring | sonnet |
 | 🔭 | cervella-scienziata | Market research, trends | sonnet |
 
-**Totale: 16 membri della famiglia!** 🐝❤️‍🔥
+**Totale: 17 membri della famiglia!** 🐝❤️‍🔥
 - 1 Regina (opus)
 - 3 Guardiane (opus)
+- 1 Architect (opus)
 - 12 Api Worker (sonnet)
 
 ---
@@ -143,8 +149,108 @@ spawn-workers --backend --with-context
 
 ---
 
+## W3-B: ARCHITECT PATTERN (W5)
+
+### Cos'è
+
+Per task complessi, la Regina invoca `cervella-architect` PRIMA di delegare ai worker.
+
+```
+Task complesso → Architect analizza → PLAN.md → Worker implementa
+```
+
+### Quando Usarlo
+
+```
+spawn-workers --architect "Refactor AuthService"
+```
+
+**Trigger automatici:**
+- Keyword: "refactor", "architecture", "redesign", "migrate", "complex"
+- File stimati > 3
+- Multi-modulo = TRUE
+- Rischio breaking changes alto
+
+### Il Flusso
+
+```
+Regina riceve task
+       │
+       ▼
+"È complesso?" ─── NO ──→ Delega direttamente a Worker
+       │
+      YES
+       │
+       ▼
+spawn-workers --architect "task"
+       │
+       ▼
+┌─────────────────┐
+│ cervella-       │
+│ architect       │
+│ (Opus)          │
+│                 │
+│ ANALIZZA:       │
+│ - Read/Grep/    │
+│   Glob          │
+│ - WebSearch     │
+│                 │
+│ NON SCRIVE      │
+│ CODICE!         │
+└────────┬────────┘
+         │
+         ▼
+  .swarm/plans/PLAN_{task}.md
+         │
+         ▼
+  Regina/User approva?
+         │
+        YES
+         │
+         ▼
+  Worker implementa seguendo PLAN.md
+```
+
+### Output: PLAN.md
+
+Architect produce sempre un piano strutturato:
+
+```markdown
+# Plan: [TASK_ID] - [Nome Task]
+
+## Phase 1: Understanding
+[cosa ha capito del codebase]
+
+## Phase 2: Design
+[approccio, file critici, step ordinati]
+
+## Phase 3: Review
+[rischi, assumptions, domande]
+
+## Phase 4: Final Plan
+[ordine esecuzione, success criteria]
+```
+
+### Regola Fondamentale
+
+```
++================================================================+
+|                                                                |
+|   ARCHITECT = COSA + PERCHÉ + ORDINE                           |
+|   WORKER = COME (implementazione)                              |
+|                                                                |
+|   Tool PERMESSI: Read, Glob, Grep, WebSearch, WebFetch         |
+|   Tool VIETATI: Write, Edit, Bash                              |
+|                                                                |
++================================================================+
+```
+
+**Mantra:** *"Piano prima, codice dopo. Un buon piano salva ore di debugging."*
+
+---
+
 *Creato: 31 Dicembre 2025*
-*Aggiornato: 19 Gennaio 2026 - W2 Tree-sitter AUTO-CONTEXT!*
-*Versione: 1.3.0*
+*Aggiornato: 19 Gennaio 2026 - W3-B Architect Pattern + Famiglia 17 membri!*
+*Versione: 1.4.0*
 
 **Cervella & Rafa** 💙🐝

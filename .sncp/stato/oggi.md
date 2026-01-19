@@ -1,6 +1,6 @@
 # OGGI - 19 Gennaio 2026
 
-> **Sessione:** 287 | **Progetto:** CervellaSwarm | **Focus:** W4 COMPLETATO + W5 PRONTO!
+> **Sessione:** 289 | **Progetto:** CervellaSwarm | **Focus:** W5 Day 2 COMPLETATO!
 
 ---
 
@@ -8,8 +8,9 @@
 
 ```
 +================================================================+
-|   SESSIONE 287 - STORICA!                                      |
-|   v2.0.0-beta RELEASED + ANNOUNCED + W5 PIANIFICATO           |
+|   SESSIONE 289 - W5 DAY 2 DONE!                                |
+|   Architect docs + Hardtest + Bug fix                          |
+|   SCORE: 9.5/10 - TARGET RAGGIUNTO!                            |
 +================================================================+
 ```
 
@@ -17,17 +18,15 @@
 
 ## COSA FATTO
 
-| Task | Status |
-|------|--------|
-| npm publish CLI | DONE - cervellaswarm@2.0.0-beta |
-| npm publish MCP | DONE - @cervellaswarm/mcp-server@2.0.0-beta |
-| Git tag v2.0.0-beta | DONE - origin + public |
-| GitHub Release | DONE |
-| Show HN | POSTED |
-| Twitter thread | POSTED |
-| Discord | POSTED |
-| Analisi dogfooding | DONE - Gap trovato! |
-| SUBROADMAP W5 | DONE - 9.5/10 |
+| Task | Status | Score |
+|------|--------|-------|
+| Documentare --architect in CLAUDE.md | DONE | 9/10 |
+| W3-B Pattern in DNA_FAMIGLIA.md | DONE | 9.5/10 |
+| Hardtest E2E con tester | DONE | 9.5/10 |
+| Fix BUG-2 (task vuoto) | DONE | - |
+| Fix tools coerenza (AskUserQuestion) | DONE | - |
+| spawn-workers.sh v3.8.1 | DONE | - |
+| Famiglia 17 membri | DONE | - |
 
 ---
 
@@ -35,16 +34,18 @@
 
 ```
 W1-W4: 100% DONE!
-W5: Dogfooding [READY] Piano approvato
+W5: Dogfooding [████________] 40% (Day 1-2 DONE!)
 ```
 
 ---
 
 ## PROSSIMA SESSIONE
 
-W5 Day 1: Architect Integration
-- spawn-workers --architect
-- .swarm/plans/ directory
-- Orchestrator regola
+W5 Day 3: Semantic CLI wrapper
+- semantic_search.py CLI
+- Test su codebase reale
+- Documentazione comandi
 
-*"287 sessioni! v2.0.0-beta NEL MONDO!"*
+---
+
+*"289 sessioni! 9.5/10 - Il nostro standard!"*

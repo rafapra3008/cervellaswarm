@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 19 Gennaio 2026 - Sessione 288 - W5 Day 1 COMPLETATO!
+> Aggiornato: 19 Gennaio 2026 - Sessione 289 - W5 Day 2 COMPLETATO!
 
 ```
 +==================================================================+
@@ -23,7 +23,7 @@
 |                                                                  |
 |   CERVELLASWARM = AI TEAM per Dev Professionali                 |
 |                                                                  |
-|   1 Regina + 16 Agenti Specializzati                            |
+|   1 Regina + 16 Agenti Specializzati (17 totali!)               |
 |   Multi-Instance = Moltiplicazione REALE                        |
 |   SNCP = Memoria Esterna (trade secret!)                        |
 |                                                                  |
@@ -280,7 +280,7 @@ SESSIONE 287: 🎉 STORICA! v2.0.0-beta RELEASED + ANNOUNCED!
   ✓ ANALISI DOGFOODING: Gap 44K codice, 6% usato!
   ✓ SUBROADMAP W5: Dogfooding (9.5/10 Guardiana approved)
 
-SESSIONE 288: 🐝 W5 DAY 1 - ARCHITECT INTEGRATION! ← OGGI!
+SESSIONE 288: 🐝 W5 DAY 1 - ARCHITECT INTEGRATION!
   ✓ spawn-workers.sh v3.8.0: --architect flag
     - spawn_architect_headless() completa
     - timeout 30m (graceful shutdown)
@@ -291,6 +291,17 @@ SESSIONE 288: 🐝 W5 DAY 1 - ARCHITECT INTEGRATION! ← OGGI!
   ✓ Guardiana Qualità: 10/10 APPROVED
   ✓ Tester: 5/5 PASS
   → W5 DAY 1 COMPLETATO!
+
+SESSIONE 289: 🐝 W5 DAY 2 - ARCHITECT DOCS + HARDTEST! ← OGGI!
+  ✓ Documentare --architect in CLAUDE.md (9/10)
+  ✓ W3-B Architect Pattern in DNA_FAMIGLIA.md (9.5/10)
+  ✓ Hardtest E2E con cervella-tester
+  ✓ FIX BUG-2: validazione task vuoto
+  ✓ FIX tools coerenza: AskUserQuestion in tutti i file
+  ✓ spawn-workers.sh v3.8.1: Fix + AskUserQuestion
+  ✓ DNA_FAMIGLIA.md v1.4.0: Famiglia 17 membri!
+  ✓ SCORE FINALE: 9.5/10 - TARGET RAGGIUNTO!
+  → W5 DAY 2 COMPLETATO!
 
 SCORE: 100/100 ✅ W4 COMPLETATO! W5 IN CORSO!
 
@@ -304,10 +315,10 @@ ROADMAP 2.0:
       Day 1: Apple Polish DRY       DONE (9.5/10)
       Day 2-3: Test Coverage + CI   DONE (9.5/10)
       Day 4: Release v2.0-beta      DONE (9.5/10)
-  W5: Dogfooding     ████________________ 20% IN CORSO!
-      Day 1: Architect Integration  DONE (10/10) ← OGGI!
-      Day 2: Architect docs + test  [NEXT]
-      Day 3: Semantic Search CLI    [TODO]
+  W5: Dogfooding     ████████____________ 40% IN CORSO!
+      Day 1: Architect Integration  DONE (10/10)
+      Day 2: Architect docs + test  DONE (9.5/10) ← OGGI!
+      Day 3: Semantic Search CLI    [NEXT]
       Day 4: Impact Analyzer CLI    [TODO]
       Day 5: Worker DNA + test      [TODO]
 ```
@@ -401,7 +412,7 @@ ROADMAP 2.0:
 | **FAMIGLIA COMPLETA MCP (100%!)** | `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_FAMIGLIA_COMPLETA_MCP.md` |
 | Roadmap visiva | `.sncp/progetti/cervellaswarm/roadmaps/ROADMAP_2026_PRODOTTO.md` |
 | Stato dettagliato | `.sncp/progetti/cervellaswarm/stato.md` |
-| DNA Famiglia (16 membri) | `docs/DNA_FAMIGLIA.md` |
+| DNA Famiglia (17 membri!) | `docs/DNA_FAMIGLIA.md` |
 
 ---
 

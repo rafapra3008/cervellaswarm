@@ -12,12 +12,15 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 3.8.0
+# Versione: 3.8.1
 # Data: 2026-01-19
 # Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
 # v2.0.0: Config centralizzata ~/.swarm/config
 #
 # CHANGELOG:
+# v3.8.1: Fix validazione task vuoto + AskUserQuestion per architect (W5 Day 2)
+#         + Validazione: task non può essere vuoto o solo spazi
+#         + AskUserQuestion aggiunto a allowedTools (Phase 3: Review)
 # v3.8.0: ARCHITECT MODE! --architect "task" spawna cervella-architect per creare PLAN.md
 #         Architect analizza codebase e produce piano in .swarm/plans/
 #         + timeout 30m (graceful shutdown) per evitare loop infiniti
@@ -868,6 +871,12 @@ spawn_worker_headless() {
 spawn_architect_headless() {
     local task_description="$1"
 
+    # Validazione difensiva: task non può essere vuoto
+    if [[ -z "$task_description" || ! "$task_description" =~ [^[:space:]] ]]; then
+        print_error "Task description vuota o invalida!"
+        return 1
+    fi
+
     print_info "Spawning cervella-architect per: \"${task_description}\""
 
     # Crea directory plans se non esiste
@@ -919,7 +928,8 @@ Quando hai finito, termina con il report finale."
 
     # Allowed tools per architect (pre-approvati, no prompt interattivo)
     # Architect NON deve avere Write/Edit/Bash - solo analisi!
-    local ARCHITECT_TOOLS="Read,Grep,Glob,WebSearch,WebFetch"
+    # AskUserQuestion per validare assumptions (Phase 3: Review)
+    local ARCHITECT_TOOLS="Read,Grep,Glob,WebSearch,WebFetch,AskUserQuestion"
 
     # Spawn in tmux detached con timeout e allowedTools
     tmux new-session -d -s "$session_name" \
@@ -1051,11 +1061,13 @@ main() {
         case "$1" in
             --architect)
                 shift
-                if [[ -n "$1" && ! "$1" =~ ^-- ]]; then
+                # Validazione: task deve esistere, non essere flag, e non essere vuoto/solo spazi
+                if [[ -n "$1" && ! "$1" =~ ^-- && "$1" =~ [^[:space:]] ]]; then
                     ARCHITECT_TASK="$1"
                 else
                     print_error "--architect richiede un task da pianificare!"
                     print_info "Esempio: --architect \"Refactor AuthService\""
+                    print_info "Il task non può essere vuoto o contenere solo spazi."
                     exit 1
                 fi
                 ;;
