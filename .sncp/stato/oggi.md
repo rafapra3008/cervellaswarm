@@ -1,6 +1,6 @@
 # OGGI - 19 Gennaio 2026
 
-> **Sessione:** 284 | **Progetto:** CervellaSwarm | **Focus:** W4 Day 1
+> **Sessione:** 287 | **Progetto:** CervellaSwarm | **Focus:** W4 COMPLETATO + W5 PRONTO!
 
 ---
 
@@ -8,8 +8,8 @@
 
 ```
 +================================================================+
-|   W4 DAY 1 - APPLE POLISH DRY COMPLETATO!                     |
-|   Score Guardiana: 9.5/10 APPROVED                            |
+|   SESSIONE 287 - STORICA!                                      |
+|   v2.0.0-beta RELEASED + ANNOUNCED + W5 PIANIFICATO           |
 +================================================================+
 ```
 
@@ -17,43 +17,34 @@
 
 ## COSA FATTO
 
-| Task | Status | Score |
-|------|--------|-------|
-| SUBROADMAP_W4 creata | DONE | 9.6/10 |
-| common/db.py | DONE | 9/10 |
-| common/colors.py | DONE | 9/10 |
-| common/config.py | DONE | 9/10 |
-| 6 file migrati a import | DONE | 9.5/10 |
-| Reports cleanup 318->11 | DONE | - |
+| Task | Status |
+|------|--------|
+| npm publish CLI | DONE - cervellaswarm@2.0.0-beta |
+| npm publish MCP | DONE - @cervellaswarm/mcp-server@2.0.0-beta |
+| Git tag v2.0.0-beta | DONE - origin + public |
+| GitHub Release | DONE |
+| Show HN | POSTED |
+| Twitter thread | POSTED |
+| Discord | POSTED |
+| Analisi dogfooding | DONE - Gap trovato! |
+| SUBROADMAP W5 | DONE - 9.5/10 |
 
 ---
 
-## W4 PROGRESS
+## ROADMAP STATUS
 
 ```
-W4 Day 1: Apple Polish DRY  100% DONE 9.5/10
-W4 Day 2-3: Test Coverage   NEXT
-W4 Day 4: Release v2.0      PENDING
-```
-
----
-
-## ROADMAP
-
-```
-W1: Git Flow       100% DONE
-W2: Tree-sitter    100% DONE
-W3: Architect      100% DONE (9.75/10)
-W4: Polish         Day 1 DONE (9.5/10)
+W1-W4: 100% DONE!
+W5: Dogfooding [READY] Piano approvato
 ```
 
 ---
 
 ## PROSSIMA SESSIONE
 
-W4 Day 2-3: Test Coverage + CI Python
-- pytest-cov setup
-- GitHub Actions Python
-- Coverage baseline 60%+
+W5 Day 1: Architect Integration
+- spawn-workers --architect
+- .swarm/plans/ directory
+- Orchestrator regola
 
-*"284 sessioni. W4 iniziato forte!"*
+*"287 sessioni! v2.0.0-beta NEL MONDO!"*

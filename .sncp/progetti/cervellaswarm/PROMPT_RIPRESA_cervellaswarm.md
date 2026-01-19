@@ -1,75 +1,86 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 287
-> **STATUS:** W4 COMPLETATO! v2.0.0-beta RELEASED!
+> **STATUS:** W4 COMPLETATO! v2.0.0-beta RELEASED + ANNOUNCED!
 
 ---
 
-## SESSIONE 287 - W4 DAY 4 COMPLETATO!
+## SESSIONE 287 - STORICA!
 
 ```
 +================================================================+
-|   W4 DAY 4 - RELEASE v2.0.0-beta - 100% DONE!                  |
-|   Score: 10/10 | PUBBLICATO SU NPM + TAG GITHUB               |
+|   SESSIONE 287 - DOPPIA VITTORIA!                              |
+|                                                                |
+|   1. v2.0.0-beta RELEASED + ANNOUNCED                         |
+|   2. W5 DOGFOODING pianificato (9.5/10)                       |
 +================================================================+
 ```
 
-**FATTO in Sessione 287:**
+### RELEASE v2.0.0-beta
 
-| Task | Status | Dettaglio |
-|------|--------|-----------|
-| npm publish CLI | DONE | `cervellaswarm@2.0.0-beta` (134 test passed) |
-| npm publish MCP | DONE | `@cervellaswarm/mcp-server@2.0.0-beta` |
-| Git tag v2.0.0-beta | DONE | Pushato a origin + public |
+| Cosa | Link |
+|------|------|
+| CLI npm | `cervellaswarm@2.0.0-beta` |
+| MCP npm | `@cervellaswarm/mcp-server@2.0.0-beta` |
+| GitHub Release | github.com/rafapra3008/CervellaSwarm/releases/tag/v2.0.0-beta |
+
+### ANNOUNCEMENT
+
+| Canale | Status |
+|--------|--------|
+| Show HN | POSTED |
+| Twitter | POSTED (6 tweet thread) |
+| Discord | POSTED (Claude Developers) |
+
+### ANALISI DOGFOODING
+
+**Domanda Rafa:** "Le feature W1-W4 le usiamo NOI?"
+
+**Risposta:** GAP SIGNIFICATIVO!
+- 44K codice creato, solo 6% usato
+- Health: 6/10
+- Adoption: 38%
+
+**Soluzione:** SUBROADMAP W5 DOGFOODING
 
 ---
 
-## W4 PROGRESS - COMPLETATO!
+## W5 - PROSSIMA SETTIMANA
 
-| Day | Task | Status | Score |
-|-----|------|--------|-------|
-| 1 | Apple Polish DRY | DONE | 9.5/10 |
-| 2-3 | Test Coverage + CI | DONE | 9.5/10 |
-| 4 | Release v2.0-beta | DONE | 10/10 |
+```
+W5 Day 1: Architect Integration - routing
+W5 Day 2: Architect Integration - docs + test
+W5 Day 3: Semantic Search CLI wrapper
+W5 Day 4: Impact Analyzer CLI + Architect tools
+W5 Day 5: Worker DNA + consolidamento
+
+File: .sncp/roadmaps/SUBROADMAP_W5_DOGFOODING.md
+Score: 9.5/10 (Guardiana approved)
+```
 
 ---
 
-## ROADMAP 2.0 - COMPLETATA!
+## ROADMAP STATUS
 
 ```
 W1: Git Flow       [DONE] 100%
 W2: Tree-sitter    [DONE] 100%
 W3: Architect      [DONE] 100% (9.75/10)
-W4: Polish + v2.0  [DONE] 100%
+W4: Polish + v2.0  [DONE] 100% (9.5/10)
+W5: Dogfooding     [READY] Piano approvato!
 ```
 
 ---
 
-## RELEASE v2.0.0-beta - DETTAGLI
+## LEZIONE SESSIONE 287
 
-```
-npm: cervellaswarm@2.0.0-beta
-npm: @cervellaswarm/mcp-server@2.0.0-beta
-git: v2.0.0-beta (origin + public)
-```
-
-**Features incluse:**
-- 16 specialized AI agents (1 Queen + 3 Guardians + 12 Workers)
-- Git-aware operations (tree-sitter, smart diff)
-- Architect agent for planning
-- CI/CD with 241 tests (40% coverage)
+> **"SU CARTA" != "REALE"**
+>
+> Abbiamo creato 44K righe di codice ma ne usiamo solo il 6%!
+> W5 serve per MANGIARE LA NOSTRA CUCINA.
 
 ---
 
-## PROSSIMA SESSIONE
-
-**Possibili task:**
-1. Announcement (Show HN, Twitter) - REQ-15
-2. Iniziare nuova roadmap/feature
-3. Raccogliere feedback utenti
-
----
-
-*"287 sessioni! W4 COMPLETATO! v2.0.0-beta RELEASED!"*
+*"287 sessioni! v2.0.0-beta NEL MONDO!"*
 *"Ultrapassar os proprios limites!"*
 *Sessione 287 - Cervella & Rafa*
