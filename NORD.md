@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 19 Gennaio 2026 - Sessione 286 - W4 Day 4 al 80%! (npm publish rimasto)
+> Aggiornato: 19 Gennaio 2026 - Sessione 287 - v2.0.0-beta RELEASED + ANNOUNCED!
 
 ```
 +==================================================================+
@@ -45,8 +45,8 @@ FASE 1: FONDAMENTA               [####################] 100%!
 FASE 2: MVP PRODOTTO             [####################] 100%! PRONTO!
 
   REALE:
-  ✓ CLI su npm                   cervellaswarm@0.1.2  ← AGGIORNATO!
-  ✓ MCP su npm                   @cervellaswarm/mcp-server@0.2.3  ← AGGIORNATO!
+  ✓ CLI su npm                   cervellaswarm@2.0.0-beta  ← v2.0.0-beta!
+  ✓ MCP su npm                   @cervellaswarm/mcp-server@2.0.0-beta  ← v2.0.0-beta!
   ✓ FAMIGLIA COMPLETA            16 AGENTI!
   ✓ API Fly.io                   ONLINE
   ✓ Stripe                       $20/$40 (Test Mode)
@@ -266,17 +266,21 @@ SESSIONE 285: 🧪 W4 DAY 2-3 COMPLETATO!
   ✓ 241 test passing, coverage 41%
   ✓ AUDIT GUARDIANA: 9.5/10 APPROVED!
 
-SESSIONE 286: 🚀 W4 DAY 4 - RELEASE 80%! ← OGGI!
+SESSIONE 286: 🚀 W4 DAY 4 - RELEASE 80%!
   ✓ CHANGELOG.md completo (W1-W4 documentato)
   ✓ Version bump: CLI + MCP → 2.0.0-beta
   ✓ LEZIONE DUAL-REPO: Script + docs DEFINITIVI!
-    - scripts/git/sync-to-public.sh (300+ righe)
-    - docs/DUAL_REPO_STRATEGY.md
-    - CLAUDE.md REGOLA SACRA aggiunta
-  ✓ Sync public repo: 31 file, ZERO sensibili
-  → MANCA: npm publish + git tag + announcement
 
-SCORE: 100/100 ✅ W3 COMPLETATO! W4 AL 80%!
+SESSIONE 287: 🎉 STORICA! v2.0.0-beta RELEASED + ANNOUNCED! ← OGGI!
+  ✓ npm publish CLI: cervellaswarm@2.0.0-beta (134 test)
+  ✓ npm publish MCP: @cervellaswarm/mcp-server@2.0.0-beta
+  ✓ Git tag v2.0.0-beta (origin + public)
+  ✓ GitHub Release LIVE!
+  ✓ ANNOUNCEMENT: Show HN + Twitter + Discord
+  ✓ ANALISI DOGFOODING: Gap 44K codice, 6% usato!
+  ✓ SUBROADMAP W5: Dogfooding (9.5/10 Guardiana approved)
+
+SCORE: 100/100 ✅ W4 COMPLETATO! W5 PRONTO!
 
 ROADMAP 2.0:
   W1: Git Flow       ████████████████████ 100% ✅
@@ -284,10 +288,16 @@ ROADMAP 2.0:
   W3: Architect/Editor
       W3-A: Semantic Search         DONE (10/10)
       W3-B: Architect Pattern       DONE (9.5/10)
-  W4: Polish + v2.0-beta ← 80% DONE!
+  W4: Polish + v2.0-beta ████████████████████ 100% ✅
       Day 1: Apple Polish DRY       DONE (9.5/10)
       Day 2-3: Test Coverage + CI   DONE (9.5/10)
-      Day 4: Release v2.0-beta      80% ← SESSIONE 286!
+      Day 4: Release v2.0-beta      DONE (9.5/10)
+  W5: Dogfooding     [READY] Piano approvato!
+      Day 1: Architect Integration
+      Day 2: Architect docs + test
+      Day 3: Semantic Search CLI
+      Day 4: Impact Analyzer CLI
+      Day 5: Worker DNA + consolidamento
 ```
 
 ---
@@ -374,6 +384,7 @@ ROADMAP 2.0:
 | **MANIFESTO** | `.sncp/progetti/cervellaswarm/MANIFESTO.md` |
 | **SUBMAPPA DUAL-MODE** | `.sncp/progetti/cervellaswarm/roadmaps/SUBMAPPA_DUALMODE_MONETIZZAZIONE.md` |
 | **CASA PULITA (100%!)** | `.sncp/roadmaps/SUBROADMAP_CASA_PULITA.md` |
+| **W5 DOGFOODING (9.5/10!)** | `.sncp/roadmaps/SUBROADMAP_W5_DOGFOODING.md` |
 | **PHRASEBOOK** | `.sncp/roadmaps/SUBROADMAP_PHRASEBOOK.md` |
 | **FAMIGLIA COMPLETA MCP (100%!)** | `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_FAMIGLIA_COMPLETA_MCP.md` |
 | Roadmap visiva | `.sncp/progetti/cervellaswarm/roadmaps/ROADMAP_2026_PRODOTTO.md` |
