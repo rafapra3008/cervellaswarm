@@ -1,8 +1,8 @@
 # MAPPA MODULO FINANZIARIO - MIRACOLLO
 
 > **QUESTO FILE E LA BUSSOLA DEL MODULO FINANZIARIO**
-> **Score: 9.8/10 | Ultimo aggiornamento: 18 Gennaio 2026 - Sessione 264**
-> **FASE 1 REALE! | FASE 2 TEST FUNZIONANTE!**
+> **Score: 9.8/10 | Ultimo aggiornamento: 19 Gennaio 2026 - Sessione 271**
+> **FASE 1 REALE! | FASE 2 SOAP OK! | FASE 3 TEST SPRING OK!**
 
 ---
 
@@ -269,34 +269,40 @@ backend/routers/
 ---
 
 ### FASE 3: FATTURE ELETTRONICHE XML
-**Priorita: MEDIA | Complessita: MEDIA | Tempo: 2-3 settimane**
+**Priorita: PARCHEGGIATA | Status: TEST SPRING OK! (Sessione 271)**
 
 ```
-OBIETTIVO: Generare fatture XML per SCP Spring
++====================================================================+
+|                    FASE 3 - TEST SPRING SUPERATO!                  |
++====================================================================+
 
-NORMATIVA:
-- Fattura solo su RICHIESTA cliente (B2C) o sempre per P.IVA (B2B)
-- IVA: 10% pernottamenti, 22% servizi extra
-- Formato: XML FatturaPA v1.2.3
-- Numerazione progressiva annuale
+SESSIONE 271 (19 Gennaio 2026):
+[x] Studio formato XML FatturaPA - FATTO
+[x] Guida completa con dati fiscali hotel - FATTO
+[x] XML test 200/NL (semplice 10%) - VALIDATO
+[x] XML test 201/NL (completo 10%+22%+N1) - VALIDATO
+[x] Validazione schema FatturaPA v1.2 - OK
+[x] Test import SPRING - OK (PDF generato!)
 
-WORKFLOW SEMPLIFICATO:
-1. Operatore clicca "Emetti Fattura" su prenotazione
-2. Miracollo genera XML FatturaPA
-3. XML salvato in cartella Spring (es: /fatture/2026/)
-4. Spring importa e gestisce invio SDI
-5. Miracollo traccia stato (emessa, in Spring)
+FILE TEST:
+~/Desktop/fatture_xml_test/
+├── IT00658350251_00200.xml   ← Fattura semplice
+├── IT00658350251_00201.xml   ← Fattura completa
+├── IT00658350251_00201.PDF   ← Output SPRING
+└── Schema_FatturaPA_v1.2.xsd ← Schema ufficiale
 
-DELIVERABLE:
-[ ] Studio formato XML FatturaPA
-[ ] Configurazione cartella Spring (settings hotel)
-[ ] Numerazione progressiva (tabella invoices)
-[ ] Generazione XML con python-a38
+DECISIONE: Implementazione PARCHEGGIATA
+- Test OK, sappiamo che funziona
+- Implementare quando serve realmente
+- Solo 10-15 fatture/mese = gestibile manuale
+
+GUIDA: .sncp/progetti/miracollo/guide/GUIDA_FATTURE_XML_MIRACOLLO.md
+
+DELIVERABLE FUTURI (quando serve):
+[ ] Migration DB (campo vat_number, tabella invoices)
+[ ] InvoiceXMLService completo
 [ ] Endpoint POST /api/invoices/booking/{id}/generate
-[ ] Salvataggio XML in cartella Spring
-[ ] Registro fatture emesse
-[ ] Note di credito
-[ ] Test con Spring reale
+[ ] UI fatturazione (form P.IVA, bottone genera)
 ```
 
 **File da creare:**
