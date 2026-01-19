@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - Miracollook
 
-> **Ultimo aggiornamento:** 19 Gennaio 2026 - Verifica Codice REALE
-> **STATO:** FASE 1 = 92% (verificato dal codice!)
+> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 267
+> **STATO:** FASE 1 = 98% (Bulk Actions + Labels CRUD!)
 
 ---
 
@@ -12,22 +12,18 @@ Porta :8002 dentro ecosistema Miracollo.
 
 ---
 
-## SESSIONE 266 - VERIFICA CODICE REALE!
+## SESSIONE 267 - DUE API COMPLETATE!
 
 ```
 +================================================================+
-|   VERIFICA 19 GENNAIO 2026                                      |
+|   1. BULK ACTIONS API - FATTO + TESTATO!                       |
+|      POST /gmail/batch-modify (archive, trash, mark_read/unread)|
 |                                                                 |
-|   Analizzato codice frontend + backend con 3 Cervelle!         |
-|   Frontend: 8.5/10 | ~4,600 righe | 40 file                    |
-|   Backend:  8/10   | ~2,600 righe | 27 endpoint                |
-|                                                                 |
-|   SCOPERTA: Context Menu e Resizable GIA IMPLEMENTATI!         |
-|   I docs dicevano "DA FARE" ma il CODICE dice FATTO!           |
+|   2. LABELS CRUD API - FATTO + TESTATO!                        |
+|      GET/POST/PUT/DELETE /gmail/labels                         |
+|      POST /gmail/messages/{id}/modify-labels                   |
 +================================================================+
 ```
-
-### Verifica MAPPA_VERITA_20260119.md per dettagli completi
 
 ---
 
@@ -46,21 +42,20 @@ npm run dev
 
 ---
 
-## STATO FASE 1 (92% - VERIFICATO!)
+## STATO FASE 1 (98%)
 
 ```
-FATTO (dal codice):
+FATTO:
 [x] OAuth, Inbox, Send, Reply, Forward, Archive, Trash
 [x] Search, AI Summary, Keyboard Shortcuts, Command Palette
 [x] Mark Read/Unread, Drafts Auto-Save
 [x] Upload Attachments, Thread View
-[x] Resizable Panels - ThreePanelResizable.tsx (131L)
-[x] Context Menu - EmailContextMenu.tsx (280L) COMPLETO!
-[x] Design Salutare - colori corretti nel CSS
+[x] Resizable Panels, Context Menu, Design Salutare
+[x] Bulk Actions API - Sessione 267
+[x] Labels CRUD API - Sessione 267
 
-DA FARE:
-[ ] Bulk Actions API backend (UI frontend pronta!)
-[ ] Labels CRUD API backend (UI disabled)
+DA FARE (UI integration):
+[ ] Abilitare "Add Label" nel context menu
 [ ] Contacts Autocomplete
 [ ] Settings Page
 ```
@@ -69,12 +64,10 @@ DA FARE:
 
 ## PROSSIMI STEP
 
-1. **Bulk Actions API** - Backend manca, frontend pronto (4h)
-2. **Labels CRUD API** - Backend solo list, serve CRUD (3h)
-3. Contacts Autocomplete (6h)
-4. Settings Page (8h)
+1. Abilitare "Add Label" nel context menu (UI già pronta!)
+2. Contacts Autocomplete
+3. Settings Page
 
 ---
 
 *"Non e un email client. E l'Outlook che CONOSCE il tuo hotel."*
-*"La VERITA dal codice, non dai documenti."*

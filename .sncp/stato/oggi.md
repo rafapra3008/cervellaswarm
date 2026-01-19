@@ -1,6 +1,6 @@
 # OGGI - 19 Gennaio 2026
 
-> **Sessione:** 266 | **Progetto:** Miracollo | **Focus:** Fix SOAP + FASE 3 Fatture
+> **Sessione:** 267 | **Progetto:** Miracollook | **Focus:** Bulk Actions + Labels CRUD
 
 ---
 
@@ -8,8 +8,9 @@
 
 ```
 +================================================================+
-|   FIX SOAP ADAPTER + FASE 3 FATTURE STUDIATA!                  |
-|   Flusso chiarito: Miracollo → XML → SPRING → SDI              |
+|   MIRACOLLOOK 92% → 98%                                        |
+|   Due API complete: Bulk Actions + Labels CRUD                 |
+|   Backend + Frontend + Test = REALE!                           |
 +================================================================+
 ```
 
@@ -17,41 +18,42 @@
 
 ## COSA FATTO
 
-1. **Fix SOAP Adapter Epson** (4 fix)
-   - URL con query params
-   - Content-Type: text/xml
-   - SOAP Envelope wrapper
-   - _parse_response naviga soap:Body
+1. **Bulk Actions API** (backend + frontend)
+   - POST /gmail/batch-modify
+   - Azioni: archive, trash, mark_read, mark_unread
+   - Gmail batchModify nativo (1 chiamata per N email!)
+   - useBulkActions.ts refactor completo
 
-2. **Ricerca FASE 3 Fatture**
-   - FatturaPA per hotel
-   - Import XML in SPRING
-   - Flusso Ericsoft (come era prima)
+2. **Labels CRUD API** (backend + frontend)
+   - GET/POST/PUT/DELETE /gmail/labels
+   - POST /gmail/messages/{id}/modify-labels
+   - labels.py nuovo modulo (300+ righe)
+   - api.ts +80 righe (6 metodi + Label type)
 
-3. **SUBROADMAP FASE 3 creata**
-   - Piano 5 step
-   - Libreria: python-a38
-   - Zero costi extra (usa SPRING!)
+3. **Test completi**
+   - Bulk: mark_read, mark_unread, archive ✓
+   - Labels: list, create, update, assign, delete ✓
 
 ---
 
-## FLUSSO FATTURE CHIARITO
+## FILE MODIFICATI
 
-```
-Miracollo → XML FatturaPA → Cartella → SPRING → SDI
-
-- Solo 10-15 fatture/mese
-- SPRING già gestisce SDI
-- Come faceva Ericsoft!
-```
+| File | Cosa |
+|------|------|
+| backend/gmail/actions.py | +125L batch endpoint |
+| backend/gmail/labels.py | NUOVO 300L |
+| backend/gmail/api.py | +router labels |
+| frontend/src/services/api.ts | +98L |
+| frontend/src/hooks/useBulkActions.ts | refactor |
 
 ---
 
 ## PROSSIMA SESSIONE
 
-- Parlare con contabilista (path cartella, dati cedente)
-- Test su stampante Epson Bar (quando in hotel)
+- Guardiana Qualita: review codice
+- Abilitare "Add Label" nel context menu
+- Arrivare al 100% FASE 1
 
 ---
 
-*"Non reinventiamo la ruota - usiamo lo standard!"*
+*"Fatto BENE > Fatto VELOCE"*

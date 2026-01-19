@@ -11,10 +11,10 @@
 ```
 +================================================================+
 |                                                                |
-|   FASE 1 (Email Solido): 92% REALE                            |
+|   FASE 1 (Email Solido): 98% REALE (Sessione 267!)            |
 |                                                                |
-|   Frontend: 8.5/10 | ~4,600 righe | 40 file                   |
-|   Backend:  8/10   | ~2,600 righe | 27 endpoint               |
+|   Frontend: 8.5/10 | ~4,700 righe | 40 file                   |
+|   Backend:  8.5/10 | ~3,000 righe | 34 endpoint (+labels!)    |
 |                                                                |
 +================================================================+
 ```
@@ -39,19 +39,18 @@
 | **Command Palette** | CommandPalette | - | CMDK v1.1.1 |
 | **Design Salutare** | CSS con colori corretti | - | #778DA9, #E0DED0, #EBEBF5 |
 
-### PARZIALMENTE IMPLEMENTATE
+### IMPLEMENTATE (Sessione 267)
 
-| Feature | Frontend | Backend | Problema |
-|---------|----------|---------|----------|
-| **Bulk Actions** | BulkActionsBar.tsx (89L) | MANCA API | Backend non ha endpoint batch |
-| **Labels Custom** | Codice presente | GET /labels solo | UI disabled, API solo list |
+| Feature | Frontend | Backend | Note |
+|---------|----------|---------|------|
+| **Bulk Actions** | useBulkActions.ts | POST /batch-modify | Gmail batchModify nativo! |
+| **Labels CRUD** | api.ts (6 metodi) | labels.py (6 endpoint) | CRUD completo + assign! |
 
-### DA IMPLEMENTARE
+### DA IMPLEMENTARE (UI Integration)
 
 | Feature | Effort Stimato | Note |
 |---------|----------------|------|
-| Bulk Actions API | 4h backend | POST /batch-modify |
-| Labels CRUD API | 3h backend | POST/PUT/DELETE /labels |
+| Abilitare Add Label UI | 2h frontend | Backend pronto, UI disabled |
 | Contacts Autocomplete | 6h full | Google People API |
 | Settings Page | 8h full | Preferenze utente |
 
@@ -141,10 +140,10 @@ miracallook/backend/
 ## PROSSIMI STEP REALI
 
 ```
-PRIORITA 1 - Completare FASE 1 (92% -> 100%):
-[ ] Bulk Actions API backend (4h)
-[ ] Labels CRUD API backend (3h)
-[ ] Abilitare Labels UI frontend (1h)
+PRIORITA 1 - Completare FASE 1 (98% -> 100%):
+[x] Bulk Actions API - FATTO + TESTATO Sessione 267!
+[x] Labels CRUD API - FATTO + TESTATO Sessione 267!
+[ ] Abilitare Add Label UI (context menu) (2h)
 
 PRIORITA 2 - FASE 2 PMS Integration:
 [ ] Guest Identification (8h)
