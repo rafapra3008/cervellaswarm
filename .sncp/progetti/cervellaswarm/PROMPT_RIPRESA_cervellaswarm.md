@@ -1,94 +1,75 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 286
-> **STATUS:** W4 Day 4 IN PROGRESS - Manca solo npm publish!
+> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 287
+> **STATUS:** W4 COMPLETATO! v2.0.0-beta RELEASED!
 
 ---
 
-## SESSIONE 286 - W4 DAY 4 QUASI COMPLETO!
+## SESSIONE 287 - W4 DAY 4 COMPLETATO!
 
 ```
 +================================================================+
-|   W4 DAY 4 - RELEASE v2.0.0-beta                               |
-|   Status: 80% | Manca: npm publish + tag + announcement        |
+|   W4 DAY 4 - RELEASE v2.0.0-beta - 100% DONE!                  |
+|   Score: 10/10 | PUBBLICATO SU NPM + TAG GITHUB               |
 +================================================================+
 ```
 
-**FATTO in Sessione 286:**
+**FATTO in Sessione 287:**
 
-| Task | Status | Note |
-|------|--------|------|
-| CHANGELOG.md | DONE | W1-W4 documentato, Guardiana 9/10 |
-| Version bump | DONE | CLI 0.1.2->2.0.0-beta, MCP 0.2.3->2.0.0-beta |
-| Dual-repo LEZIONE | DONE | Script + docs + CLAUDE.md aggiornato |
-| Sync public repo | DONE | 31 file pushati, no sensibili |
-| npm publish | PENDING | Prossima sessione! |
-| Git tag | PENDING | Dopo npm publish |
-| Announcement | PENDING | Show HN, Twitter |
-
-**LEZIONE IMPORTANTE (Sessione 286):**
-- Terza volta problema dual-repo sync!
-- Creato `scripts/git/sync-to-public.sh` DEFINITIVO
-- Documentato in `docs/DUAL_REPO_STRATEGY.md`
-- Aggiunto REGOLA SACRA in CLAUDE.md
+| Task | Status | Dettaglio |
+|------|--------|-----------|
+| npm publish CLI | DONE | `cervellaswarm@2.0.0-beta` (134 test passed) |
+| npm publish MCP | DONE | `@cervellaswarm/mcp-server@2.0.0-beta` |
+| Git tag v2.0.0-beta | DONE | Pushato a origin + public |
 
 ---
 
-## PROSSIMA SESSIONE - FINIRE W4 DAY 4
-
-**Rimasti 3 task:**
-```bash
-# 1. npm publish CLI
-cd packages/cli && npm publish
-
-# 2. npm publish MCP
-cd packages/mcp-server && npm publish
-
-# 3. Git tag
-git tag v2.0.0-beta
-git push origin v2.0.0-beta
-git push public v2.0.0-beta
-```
-
-**Opzionale:** Announcement draft (REQ-15)
-
----
-
-## W4 PROGRESS
+## W4 PROGRESS - COMPLETATO!
 
 | Day | Task | Status | Score |
 |-----|------|--------|-------|
 | 1 | Apple Polish DRY | DONE | 9.5/10 |
 | 2-3 | Test Coverage + CI | DONE | 9.5/10 |
-| 4 | Release v2.0-beta | 80% | - |
+| 4 | Release v2.0-beta | DONE | 10/10 |
 
 ---
 
-## ROADMAP 2.0
+## ROADMAP 2.0 - COMPLETATA!
 
 ```
 W1: Git Flow       [DONE] 100%
 W2: Tree-sitter    [DONE] 100%
 W3: Architect      [DONE] 100% (9.75/10)
-W4: Polish + v2.0  [IN PROGRESS] Day 4 quasi done!
+W4: Polish + v2.0  [DONE] 100%
 ```
 
 ---
 
-## FILE CREATI/MODIFICATI SESSIONE 286
+## RELEASE v2.0.0-beta - DETTAGLI
 
-| File | Azione |
-|------|--------|
-| `CHANGELOG.md` | Riscritto per v2.0.0-beta |
-| `packages/cli/package.json` | version 2.0.0-beta |
-| `packages/mcp-server/package.json` | version 2.0.0-beta |
-| `scripts/git/sync-to-public.sh` | NUOVO - sync sicuro |
-| `docs/DUAL_REPO_STRATEGY.md` | NUOVO - documentazione |
-| `CLAUDE.md` | Aggiunto REGOLA SACRA dual-repo |
-| `.gitignore` | Aggiunto .sncp/, NORD.md, docs/studio/ |
+```
+npm: cervellaswarm@2.0.0-beta
+npm: @cervellaswarm/mcp-server@2.0.0-beta
+git: v2.0.0-beta (origin + public)
+```
+
+**Features incluse:**
+- 16 specialized AI agents (1 Queen + 3 Guardians + 12 Workers)
+- Git-aware operations (tree-sitter, smart diff)
+- Architect agent for planning
+- CI/CD with 241 tests (40% coverage)
 
 ---
 
-*"286 sessioni! Quasi al traguardo v2.0!"*
+## PROSSIMA SESSIONE
+
+**Possibili task:**
+1. Announcement (Show HN, Twitter) - REQ-15
+2. Iniziare nuova roadmap/feature
+3. Raccogliere feedback utenti
+
+---
+
+*"287 sessioni! W4 COMPLETATO! v2.0.0-beta RELEASED!"*
 *"Ultrapassar os proprios limites!"*
-*Sessione 286 - Cervella & Rafa*
+*Sessione 287 - Cervella & Rafa*

@@ -107,7 +107,7 @@ Claude Code will call the `spawn_worker` tool with `worker: "backend"` automatic
 
 ```bash
 # Clone and install
-git clone https://github.com/rafapra/cervellaswarm
+git clone https://github.com/rafapra3008/CervellaSwarm
 cd cervellaswarm/packages/mcp-server
 npm install
 
@@ -162,7 +162,7 @@ Not promising perfection. Promising honesty and continuous improvement.
 ## Links
 
 - CLI: [cervellaswarm on npm](https://www.npmjs.com/package/cervellaswarm)
-- GitHub: [rafapra/cervellaswarm](https://github.com/rafapra/cervellaswarm)
+- GitHub: [rafapra3008/CervellaSwarm](https://github.com/rafapra3008/CervellaSwarm)
 
 ---
 
