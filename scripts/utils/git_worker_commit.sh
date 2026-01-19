@@ -9,10 +9,21 @@
 #   ./git_worker_commit.sh --worker frontend --type fix --message "Fix button alignment"
 #   ./git_worker_commit.sh --save-user-work   # Salva dirty files prima di edit Worker
 #   ./git_worker_commit.sh --check-dirty      # Verifica se ci sono uncommitted changes
+#   ./git_worker_commit.sh --dry-run ...      # Mostra commit senza eseguirlo
 #
-# Versione: 1.0.0
+# Versione: 1.1.0
 # Data: 2026-01-19
 # Basato su: Studio Aider Git Integration (docs/studio/STUDIO_GIT_FLOW_AI_AGENTS.md)
+#
+# CHANGELOG:
+# v1.1.0: Fix audit Guardiana Qualita (9.5 target)
+#   - Single source of truth: legge attribution da JSON con jq
+#   - Aggiunto --allow-hooks per eseguire pre-commit hooks
+#   - Aggiunto --staged-only per committare solo staged files
+#   - Aggiunto --dry-run per preview commit
+#   - Validazione worker name con warning
+#   - Allineato header a 50 chars (best practice)
+# v1.0.0: Initial release
 #
 # Cervella & Rafa - CervellaSwarm 2.0
 
@@ -24,6 +35,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
+ATTRIBUTION_JSON="${SCRIPT_DIR}/worker_attribution.json"
 
 # Colori
 RED='\033[0;31m'
@@ -36,72 +48,68 @@ NC='\033[0m'
 # Attribution email
 CERVELLASWARM_EMAIL="noreply@cervellaswarm.com"
 
+# Flags globali
+ALLOW_HOOKS=false
+STAGED_ONLY=false
+DRY_RUN=false
+
 # ============================================================================
-# WORKER ATTRIBUTION MAPPING
+# WORKER ATTRIBUTION - SINGLE SOURCE OF TRUTH (JSON)
 # ============================================================================
 
-# Mappa worker_name -> attribution_string
-# Format: "role/model"
+# Lista worker validi (per validazione)
+VALID_WORKERS="backend frontend tester docs reviewer devops researcher data security scienziata ingegnera marketing guardiana-qualita guardiana-ops guardiana-ricerca regina orchestrator"
+
+# Verifica se worker e' valido
+is_valid_worker() {
+    local worker_name="$1"
+    echo "$VALID_WORKERS" | grep -qw "$worker_name"
+}
+
+# Legge attribution dal JSON (single source of truth)
 get_worker_attribution() {
     local worker_name="$1"
 
-    case "$worker_name" in
-        # Worker Sonnet (specializzati)
-        backend)
-            echo "backend-worker/claude-sonnet-4-5"
-            ;;
-        frontend)
-            echo "frontend-worker/claude-sonnet-4-5"
-            ;;
-        tester)
-            echo "tester-worker/claude-sonnet-4-5"
-            ;;
-        docs)
-            echo "docs-worker/claude-sonnet-4-5"
-            ;;
-        reviewer)
-            echo "reviewer-worker/claude-sonnet-4-5"
-            ;;
-        devops)
-            echo "devops-worker/claude-sonnet-4-5"
-            ;;
-        researcher)
-            echo "researcher-worker/claude-sonnet-4-5"
-            ;;
-        data)
-            echo "data-worker/claude-sonnet-4-5"
-            ;;
-        security)
-            echo "security-worker/claude-sonnet-4-5"
-            ;;
-        scienziata)
-            echo "scienziata-worker/claude-sonnet-4-5"
-            ;;
-        ingegnera)
-            echo "ingegnera-worker/claude-sonnet-4-5"
-            ;;
-        marketing)
-            echo "marketing-worker/claude-sonnet-4-5"
-            ;;
-        # Guardiane Opus (supervisione)
-        guardiana-qualita)
-            echo "guardiana-qualita/claude-opus-4-5"
-            ;;
-        guardiana-ops)
-            echo "guardiana-ops/claude-opus-4-5"
-            ;;
-        guardiana-ricerca)
-            echo "guardiana-ricerca/claude-opus-4-5"
-            ;;
-        # Regina (orchestrazione)
-        regina|orchestrator)
-            echo "regina/claude-opus-4-5"
-            ;;
-        # Default
-        *)
-            echo "worker/claude-sonnet-4-5"
-            ;;
-    esac
+    # Verifica che jq sia disponibile
+    if ! command -v jq &>/dev/null; then
+        # Fallback se jq non disponibile
+        print_warning "jq non installato - usando fallback attribution"
+        echo "worker/claude-sonnet-4-5"
+        return
+    fi
+
+    # Verifica che il JSON esista
+    if [ ! -f "$ATTRIBUTION_JSON" ]; then
+        print_warning "Attribution JSON non trovato: $ATTRIBUTION_JSON"
+        echo "worker/claude-sonnet-4-5"
+        return
+    fi
+
+    local role=""
+    local model=""
+
+    # Cerca nei workers
+    role=$(jq -r ".workers[\"$worker_name\"].role // empty" "$ATTRIBUTION_JSON" 2>/dev/null)
+    model=$(jq -r ".workers[\"$worker_name\"].model // empty" "$ATTRIBUTION_JSON" 2>/dev/null)
+
+    # Se non trovato, cerca nelle guardiane
+    if [ -z "$role" ]; then
+        role=$(jq -r ".guardiane[\"$worker_name\"].role // empty" "$ATTRIBUTION_JSON" 2>/dev/null)
+        model=$(jq -r ".guardiane[\"$worker_name\"].model // empty" "$ATTRIBUTION_JSON" 2>/dev/null)
+    fi
+
+    # Se non trovato, cerca negli special
+    if [ -z "$role" ]; then
+        role=$(jq -r ".special[\"$worker_name\"].role // empty" "$ATTRIBUTION_JSON" 2>/dev/null)
+        model=$(jq -r ".special[\"$worker_name\"].model // empty" "$ATTRIBUTION_JSON" 2>/dev/null)
+    fi
+
+    # Se ancora non trovato, usa default
+    if [ -z "$role" ] || [ -z "$model" ]; then
+        echo "worker/claude-sonnet-4-5"
+    else
+        echo "${role}/${model}"
+    fi
 }
 
 # ============================================================================
@@ -111,7 +119,12 @@ get_worker_attribution() {
 # Detecta scope automaticamente dai file modificati
 auto_detect_scope() {
     local changed_files
-    changed_files=$(git diff --cached --name-only 2>/dev/null || git diff --name-only 2>/dev/null)
+
+    if [ "$STAGED_ONLY" = true ]; then
+        changed_files=$(git diff --cached --name-only 2>/dev/null)
+    else
+        changed_files=$(git diff --cached --name-only 2>/dev/null || git diff --name-only 2>/dev/null)
+    fi
 
     if [ -z "$changed_files" ]; then
         echo ""
@@ -235,10 +248,16 @@ do_commit() {
     local message="$4"
     local body="$5"
 
-    # Validazione
+    # Validazione worker name
     if [ -z "$worker_name" ]; then
         print_error "Worker name richiesto! Usa --worker <name>"
         exit 1
+    fi
+
+    # Validazione worker name (warning se sconosciuto)
+    if ! is_valid_worker "$worker_name"; then
+        print_warning "Worker '$worker_name' non riconosciuto - usando attribution generica"
+        print_info "Worker validi: $VALID_WORKERS"
     fi
 
     if [ -z "$commit_type" ]; then
@@ -270,14 +289,14 @@ do_commit() {
         commit_header="${commit_type}: ${message}"
     fi
 
-    # Verifica lunghezza header (max 72 chars)
-    if [ ${#commit_header} -gt 72 ]; then
-        print_warning "Header commit troppo lungo (${#commit_header} chars, max 72)"
+    # Verifica lunghezza header (max 50 chars - best practice)
+    if [ ${#commit_header} -gt 50 ]; then
+        print_warning "Header commit troppo lungo (${#commit_header} chars, max 50)"
         print_warning "Troncando..."
-        commit_header="${commit_header:0:69}..."
+        commit_header="${commit_header:0:47}..."
     fi
 
-    # Attribution
+    # Attribution (legge da JSON - single source of truth)
     local attribution
     attribution=$(get_worker_attribution "$worker_name")
 
@@ -294,8 +313,33 @@ ${body}"
 
 Co-authored-by: CervellaSwarm (${attribution}) <${CERVELLASWARM_EMAIL}>"
 
-    # Stage all changes
-    git add -A
+    # DRY RUN - mostra senza eseguire
+    if [ "$DRY_RUN" = true ]; then
+        echo ""
+        echo -e "${PURPLE}=== DRY RUN - Commit Preview ===${NC}"
+        echo ""
+        echo -e "${BLUE}Files da committare:${NC}"
+        if [ "$STAGED_ONLY" = true ]; then
+            git diff --cached --name-only
+        else
+            git status --short
+        fi
+        echo ""
+        echo -e "${PURPLE}--- Commit Message ---${NC}"
+        echo "$full_message"
+        echo -e "${PURPLE}----------------------${NC}"
+        echo ""
+        echo -e "${YELLOW}Hooks: $([ "$ALLOW_HOOKS" = true ] && echo "ABILITATI" || echo "DISABILITATI")${NC}"
+        echo -e "${YELLOW}Staged only: $([ "$STAGED_ONLY" = true ] && echo "SI" || echo "NO (add -A)")${NC}"
+        echo ""
+        print_info "Usa senza --dry-run per eseguire il commit"
+        return 0
+    fi
+
+    # Stage changes
+    if [ "$STAGED_ONLY" = false ]; then
+        git add -A
+    fi
 
     # Verifica che ci sia qualcosa da committare
     if git diff --cached --quiet; then
@@ -303,8 +347,13 @@ Co-authored-by: CervellaSwarm (${attribution}) <${CERVELLASWARM_EMAIL}>"
         return 0
     fi
 
-    # Commit con --no-verify per skippa pre-commit hooks (pattern Aider)
-    git commit --no-verify -m "$full_message"
+    # Commit
+    local commit_flags=""
+    if [ "$ALLOW_HOOKS" = false ]; then
+        commit_flags="--no-verify"
+    fi
+
+    git commit $commit_flags -m "$full_message"
 
     print_success "Commit creato!"
     echo ""
@@ -361,7 +410,7 @@ show_usage() {
     echo "git_worker_commit.sh - CervellaSwarm 2.0 Git Flow"
     echo ""
     echo "Uso:"
-    echo "  $0 --worker <name> --type <type> [--scope <scope>] --message \"msg\" [--body \"body\"]"
+    echo "  $0 --worker <name> --type <type> [--scope <scope>] --message \"msg\" [opzioni]"
     echo "  $0 --save-user-work"
     echo "  $0 --check-dirty"
     echo "  $0 --undo"
@@ -370,8 +419,13 @@ show_usage() {
     echo "  --worker <name>     Nome worker (backend, frontend, tester, ...)"
     echo "  --type <type>       Tipo commit (feat, fix, docs, refactor, chore, test, ...)"
     echo "  --scope <scope>     Scope opzionale (cli, mcp, api, ui, ...) - auto-detected se omesso"
-    echo "  --message \"msg\"     Descrizione breve del commit"
+    echo "  --message \"msg\"     Descrizione breve del commit (max 50 chars)"
     echo "  --body \"body\"       Corpo opzionale con dettagli"
+    echo ""
+    echo "Opzioni avanzate:"
+    echo "  --dry-run           Mostra preview commit senza eseguirlo"
+    echo "  --staged-only       Committa solo file staged (non fa git add -A)"
+    echo "  --allow-hooks       Esegue pre-commit hooks (default: skippati)"
     echo ""
     echo "Altre opzioni:"
     echo "  --save-user-work    Salva dirty files prima di edit Worker"
@@ -379,9 +433,13 @@ show_usage() {
     echo "  --undo              Annulla ultimo commit (solo se CervellaSwarm)"
     echo "  --help              Mostra questo help"
     echo ""
+    echo "Worker validi:"
+    echo "  $VALID_WORKERS"
+    echo ""
     echo "Esempi:"
-    echo "  $0 --worker backend --type feat --scope api --message \"Add login endpoint\""
-    echo "  $0 --worker frontend --type fix --message \"Fix button alignment\""
+    echo "  $0 --worker backend --type feat --scope api --message \"Add login\""
+    echo "  $0 --worker frontend --type fix --message \"Fix button\" --dry-run"
+    echo "  $0 --worker tester --type test --staged-only --allow-hooks"
     echo "  $0 --save-user-work"
     echo "  $0 --undo"
     echo ""
@@ -444,6 +502,15 @@ main() {
             --body)
                 shift
                 body="$1"
+                ;;
+            --dry-run)
+                DRY_RUN=true
+                ;;
+            --staged-only)
+                STAGED_ONLY=true
+                ;;
+            --allow-hooks)
+                ALLOW_HOOKS=true
                 ;;
             --save-user-work)
                 save_user_work

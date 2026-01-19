@@ -36,7 +36,7 @@ Analyze the provided diff and task description, then generate a commit message f
 
 ## RULES
 
-1. Subject line MUST be under 50 characters
+1. Subject line MUST be under 50 characters total (including type and scope)
 2. Use imperative mood ("Add" not "Added" or "Adds")
 3. No period at end of subject
 4. Body explains WHAT and WHY (not HOW)
