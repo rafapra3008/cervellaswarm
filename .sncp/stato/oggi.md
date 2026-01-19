@@ -1,6 +1,6 @@
 # OGGI - 19 Gennaio 2026
 
-> **Sessione:** 280 | **Progetto:** CervellaSwarm | **Focus:** W2.5-D Audit Finale
+> **Sessione:** 281 | **Progetto:** CervellaSwarm | **Focus:** W3-A Semantic Search
 
 ---
 
@@ -8,7 +8,7 @@
 
 ```
 +================================================================+
-|   W2.5 COMPLETATO! 9.6/10 | W2 TREE-SITTER 100% DONE!          |
+|   W3-A COMPLETATO! 10/10 | SEMANTIC SEARCH DONE!               |
 +================================================================+
 ```
 
@@ -16,24 +16,23 @@
 
 ## COSA FATTO
 
-| Task | Status |
-|------|--------|
-| AC1-AC6 verificati | PASS |
-| Test CervellaSwarm | 927 refs, 14.81ms |
-| Test Miracollo | Python + TS OK |
-| Guardiana Audit | 9.6/10 APPROVED |
+| Task | Status | Score |
+|------|--------|-------|
+| SUBROADMAP_W3 creata | DONE | - |
+| semantic_search.py | DONE | 9.5/10 |
+| impact_analyzer.py | DONE | 10/10 |
+| Test suite 25/25 | PASS | - |
+| BUG FIX exclude dirs | DONE | - |
+| SEMANTIC_SEARCH.md | DONE | - |
+| Audit finale | APPROVED | 10/10 |
 
 ---
 
-## W2.5 COMPLETATO
+## W3 PROGRESS
 
 ```
-W2.5-A Python      9.2/10
-W2.5-B TypeScript  9/10
-W2.5-C Integration 9.5/10
-W2.5-D Audit       9.6/10 ← OGGI
-
-MEDIA: 9.33/10 | W2 100% DONE!
+W3-A: Semantic Search   10/10 DONE ← OGGI!
+W3-B: Architect Pattern NEXT (3 giorni)
 ```
 
 ---
@@ -42,8 +41,10 @@ MEDIA: 9.33/10 | W2 100% DONE!
 
 ```
 W1: Git Flow       100% DONE
-W2: Tree-sitter    100% DONE ← OGGI!
-W3: Architect/Editor   NEXT
+W2: Tree-sitter    100% DONE
+W3: Architect/Editor
+    W3-A Semantic  100% DONE ← OGGI!
+    W3-B Architect NEXT
 W4: Polish + v2.0-beta
 ```
 
@@ -51,7 +52,9 @@ W4: Polish + v2.0-beta
 
 ## PROSSIMA SESSIONE
 
-W3: Architect/Editor - da pianificare
+W3-B: Architect Pattern
+- Day 5: cervella-architect.md prompt
+- Day 6: Flow integration
+- Day 7: Benchmark + Audit
 
----
-*"280 sessioni. W2 completato!"*
+*"281 sessioni. W3-A completato!"*
