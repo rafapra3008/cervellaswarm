@@ -12,12 +12,15 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 3.6.0
+# Versione: 3.7.0
 # Data: 2026-01-19
 # Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
 # v2.0.0: Config centralizzata ~/.swarm/config
 #
 # CHANGELOG:
+# v3.7.0: AUTO-CONTEXT! Contesto intelligente codebase (tree-sitter + PageRank)
+#         --with-context abilita, --context-budget N per token budget (default 1500)
+#         Worker ricevono mappa repository per capire struttura progetto!
 # v3.6.0: AUTO-COMMIT! Git commit automatico dopo worker task (Sessione 272)
 #         --auto-commit per abilitare, default OFF per sicurezza rollout
 #         Usa git_worker_commit.sh con attribution automatica
@@ -78,6 +81,13 @@ HEADLESS_MODE=true
 # AUTO-COMMIT (v3.6.0) - Git commit automatico dopo worker task
 # ============================================================================
 AUTO_COMMIT=false
+
+# ============================================================================
+# AUTO-CONTEXT (v3.7.0) - Contesto intelligente codebase per worker!
+# Usa repo_mapper tree-sitter per dare ai worker comprensione del progetto
+# ============================================================================
+AUTO_CONTEXT=false
+CONTEXT_BUDGET=1500
 
 # ============================================================================
 # OUTPUT UNBUFFERED (v3.2.0) - Output realtime dai worker!
@@ -482,6 +492,31 @@ list_workers() {
     echo ""
 }
 
+# ============================================================================
+# AUTO-CONTEXT (v3.7.0) - Genera contesto codebase con tree-sitter + PageRank
+# ============================================================================
+generate_codebase_context() {
+    local budget="${1:-$CONTEXT_BUDGET}"
+
+    # Cerca lo script generate_worker_context.py
+    local context_script=""
+    if [[ -f "${PROJECT_ROOT}/scripts/utils/generate_worker_context.py" ]]; then
+        context_script="${PROJECT_ROOT}/scripts/utils/generate_worker_context.py"
+    elif [[ -f "${SCRIPT_DIR}/../utils/generate_worker_context.py" ]]; then
+        context_script="${SCRIPT_DIR}/../utils/generate_worker_context.py"
+    fi
+
+    if [[ -z "$context_script" ]]; then
+        echo "[WARN] generate_worker_context.py not found - skipping context"
+        return 1
+    fi
+
+    # Genera contesto (quiet mode, stderr to log for debug)
+    local context_log="${SWARM_DIR}/logs/context_generation.log"
+    mkdir -p "${SWARM_DIR}/logs"
+    python3 "$context_script" --repo-path "${PROJECT_ROOT}" --budget "$budget" --quiet 2>>"$context_log"
+}
+
 spawn_worker() {
     local worker_name="$1"
     local prompt
@@ -698,7 +733,24 @@ spawn_worker_headless() {
     # Salva prompt in file temporaneo
     local prompt_file="${SWARM_DIR}/prompts/worker_${worker_name}.txt"
     mkdir -p "${SWARM_DIR}/prompts"
-    printf '%s' "$prompt" > "$prompt_file"
+
+    # v3.7.0: AUTO-CONTEXT - Aggiungi contesto codebase se abilitato
+    if [ "$AUTO_CONTEXT" = true ]; then
+        print_info "Generating codebase context (budget: ${CONTEXT_BUDGET} tokens)..."
+        local context
+        context=$(generate_codebase_context "$CONTEXT_BUDGET")
+        if [[ -n "$context" && ! "$context" =~ ^\[WARN\] ]]; then
+            # Prepend context al prompt
+            printf '%s\n\n---\n\n%s' "$context" "$prompt" > "$prompt_file"
+            print_success "Context injected!"
+        else
+            # Fallback: solo prompt senza contesto
+            printf '%s' "$prompt" > "$prompt_file"
+            print_warning "Context generation failed - using prompt without context"
+        fi
+    else
+        printf '%s' "$prompt" > "$prompt_file"
+    fi
 
     # Nome sessione tmux univoco
     local session_name="swarm_${worker_name}_$(date +%s)"
@@ -788,10 +840,14 @@ show_usage() {
     echo "  --window               Apre finestra Terminal (vecchio comportamento)"
     echo "  --auto-commit          Abilita git commit automatico dopo task"
     echo "  --no-auto-commit       Disabilita auto-commit (DEFAULT)"
+    echo "  --with-context         Abilita contesto intelligente codebase (tree-sitter)"
+    echo "  --no-context           Disabilita contesto (DEFAULT)"
+    echo "  --context-budget N     Token budget per contesto (default: 1500, implica --with-context)"
     echo "  --help                 Mostra questo help"
     echo ""
     echo "  AUTO-SVEGLIA e' ATTIVO di default! La Regina viene svegliata automaticamente."
     echo "  AUTO-COMMIT e' DISATTIVO di default. Usa --auto-commit per abilitarlo."
+    echo "  AUTO-CONTEXT e' DISATTIVO di default. Usa --with-context per abilitarlo."
     echo ""
     echo "Esempi:"
     echo "  $0 --backend               # Spawna backend (AUTO-SVEGLIA attivo!)"
@@ -800,6 +856,8 @@ show_usage() {
     echo "  $0 --docs --no-auto-sveglia  # Docs senza svegliare la Regina"
     echo "  $0 --headless --backend    # Backend in tmux (no finestre!)"
     echo "  $0 --backend --auto-commit # Backend con git commit automatico!"
+    echo "  $0 --backend --with-context  # Backend con contesto codebase intelligente!"
+    echo "  $0 --backend --context-budget 2000  # Backend con contesto 2000 token"
     echo ""
 }
 
@@ -933,6 +991,22 @@ main() {
                 ;;
             --no-auto-commit)
                 AUTO_COMMIT=false
+                ;;
+            --with-context)
+                AUTO_CONTEXT=true
+                ;;
+            --no-context)
+                AUTO_CONTEXT=false
+                ;;
+            --context-budget)
+                shift
+                if [[ -n "$1" && "$1" =~ ^[0-9]+$ ]]; then
+                    CONTEXT_BUDGET="$1"
+                    AUTO_CONTEXT=true  # Implicito: se specifichi budget, vuoi il contesto
+                else
+                    print_error "--context-budget richiede un numero!"
+                    exit 1
+                fi
                 ;;
             *)
                 print_error "Opzione sconosciuta: $1"

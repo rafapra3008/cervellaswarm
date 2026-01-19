@@ -15,3 +15,12 @@ pytest-cov>=4.0.0
 # Ruff - Fast Python linter
 # Usato per: code quality checks
 ruff>=0.1.0
+
+# Tree-sitter - AST parsing multi-linguaggio
+# Usato da: treesitter_parser.py, symbol_extractor.py
+tree-sitter>=0.20.0
+tree-sitter-language-pack>=0.1.0
+
+# NetworkX - Graph analysis per dependency ranking
+# Usato da: dependency_graph.py (PageRank)
+networkx>=3.0

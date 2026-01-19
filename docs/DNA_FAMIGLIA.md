@@ -126,8 +126,25 @@ Se cambia qualcosa nella filosofia:
 
 *"È il nostro team! La nostra famiglia digitale!"*
 
+---
+
+## NUOVE CAPACITÀ (W2 Tree-sitter)
+
+### Contesto Intelligente (v3.7.0)
+
+I worker ora possono ricevere una **mappa intelligente del codebase**!
+
+```bash
+# Worker con contesto (capisce il progetto prima di lavorare)
+spawn-workers --backend --with-context
+```
+
+**Documentazione completa:** `docs/REPO_MAPPING.md`
+
+---
+
 *Creato: 31 Dicembre 2025*
-*Aggiornato: 15 Gennaio 2026 - Aggiunte ingegnera e scienziata (14 → 16)!*
-*Versione: 1.2.0*
+*Aggiornato: 19 Gennaio 2026 - W2 Tree-sitter AUTO-CONTEXT!*
+*Versione: 1.3.0*
 
 **Cervella & Rafa** 💙🐝
