@@ -1,115 +1,74 @@
-# PROMPT RIPRESA - Miracollo
+<!-- DISCRIMINATORE: ECOSISTEMA MIRACOLLO - PANORAMA -->
+<!-- QUESTO FILE: Overview dei 3 bracci, NON dettagli specifici -->
+<!-- Per dettagli: vai in bracci/{nome}/PROMPT_RIPRESA_{nome}.md -->
+
+# PROMPT RIPRESA - Ecosistema Miracollo
 
 > **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 270
-> **Status:** Miracollook Security COMPLETATA! | Robustezza 6.5 → 7.5/10
+> **Status:** 3 bracci attivi, Miracollook robustezza +2.0!
 
 ---
 
-## STATO MODULO FINANZIARIO
-
-```
-FASE 1: Ricevute PDF      [####################] 100% REALE!
-FASE 1B: Checkout UI      [####################] 100% REALE!
-FASE 2: Scontrini RT      [##################..] 90% ADAPTER FIXATO!
-FASE 3: Fatture XML       [########............] 40% GUIDA COMPLETA!
-FASE 4: Export            [....................] 0%
-
-TOTALE MODULO: 75%
-```
-
----
-
-## SESSIONE 270: MIRACOLLOOK SECURITY
+## I 3 BRACCI
 
 ```
 +================================================================+
-|   ✅ FASE 1 SECURITY COMPLETATA - TUTTI I TEST PASSATI!         |
-|                                                                  |
-|   Robustezza: 6.5/10 → 7.5/10 (+1.0!)                           |
+|   ECOSISTEMA MIRACOLLO = 3 BRACCI INDIPENDENTI                 |
 +================================================================+
-```
 
-### Cosa Fatto
-
-| Task | Risultato |
-|------|-----------|
-| pip-audit | 3 CVE risolte (fastapi 0.125.0, starlette 0.50.0) |
-| Token Encryption | Fernet AES-128 - DB ora criptato! |
-| Gitignore | .env e *.db protetti da git |
-| ANTHROPIC_API_KEY | Chiave reale inserita |
-| CORS configurabile | Legge da .env |
-
-### Test Passati
-
-```
-✅ Backend avvio         OK
-✅ Health check          OK
-✅ Auth status           rafapra@gmail.com (decrypt OK!)
-✅ Gmail Inbox           3 email recuperate
-✅ AI Summary            Claude Haiku funziona! ($0.000246)
-```
-
-### File Creati/Modificati
-
-```
-NUOVI:
-  miracallook/backend/db/crypto.py           # Encryption module
-  miracallook/backend/scripts/migrate_*.py   # Migrazione token
-  miracallook/.gitignore                     # Protezione file
-
-MODIFICATI:
-  miracallook/backend/requirements.txt       # +cryptography
-  miracallook/backend/db/__init__.py         # Export crypto
-  miracallook/backend/auth/google.py         # Encrypt/decrypt
-  miracallook/backend/main.py                # CORS da env
-  miracallook/.env                           # +ENCRYPTION_KEY, +CORS
+├── PMS CORE (:8001)        Sistema alberghiero     90% LIVE
+├── MIRACOLLOOK (:8002)     Email client AI         8.5/10
+└── ROOM HARDWARE (:8003)   Domotica                10% (attesa HW)
 ```
 
 ---
 
-## PROSSIMI STEP MIRACOLLOOK
+## STATO RAPIDO
 
-```
-FASE 2 - ROBUSTEZZA LOCALE:
-[ ] Auto-start launchd
-[ ] Backup automatico
-[ ] Health check
-
-FASE 3 - RATE/RETRY:
-[ ] Rate limiting backend
-[ ] Retry logic Gmail
-
-FASE 4 - TESTING:
-[ ] Setup pytest
-[ ] Unit tests
-```
-
-**File:** `docs/roadmap/SUBROADMAP_MIRACOLLOOK_ROBUSTEZZA.md`
+| Braccio | Porta | Score | Focus Attuale |
+|---------|-------|-------|---------------|
+| **PMS Core** | 8001 | 90% LIVE | Modulo Finanziario (75%) |
+| **Miracollook** | 8002 | 8.5/10 | FASE 4-6 robustezza |
+| **Room Hardware** | 8003 | 10% | Attesa hardware Amazon |
 
 ---
 
-## SESSIONE 268: FATTURE XML (Referenza)
+## PROMPT_RIPRESA PER BRACCIO
+
+| Braccio | File |
+|---------|------|
+| PMS Core | `bracci/pms-core/PROMPT_RIPRESA_pms-core.md` |
+| Miracollook | `bracci/miracallook/PROMPT_RIPRESA_miracollook.md` |
+| Room Hardware | `bracci/room-hardware/PROMPT_RIPRESA_room_hardware.md` |
+
+---
+
+## SESSIONE 270 - MIRACOLLOOK ROBUSTEZZA
 
 ```
-GUIDA COMPLETA CREATA - 3 Guardiane verificate
-P.IVA: 00658350251 | Regime: RF01 | SPRING: 3.5.02A
+Miracollook: 6.5 → 8.5/10 (+2.0!)
+FASE 0-3 completate:
+- Security audit (6 CVE → 0)
+- Token encryption (Fernet)
+- LaunchAgents (auto-start, backup, healthcheck)
+- Rate limiting + retry logic
+```
 
-Prossimi Step:
-1. [ ] Generare XML test 200/NL
-2. [ ] Validare con tool online
-3. [ ] Test import SPRING
+**Prossimo:** FASE 4-6 per arrivare a 9.5/10
+
+---
+
+## REGOLA DISAMBIGUAZIONE
+
+```
+Se Rafa dice "Miracollo" senza specificare → CHIEDI quale braccio!
+
+Keywords:
+- "PMS", "prenotazioni", "fatture" → PMS Core (8001)
+- "email", "Gmail", "Look" → Miracollook (8002)
+- "room", "domotica", "sensori" → Room Hardware (8003)
 ```
 
 ---
 
-## FILE CHIAVE
-
-| File | Contenuto |
-|------|-----------|
-| `docs/roadmap/SUBROADMAP_MIRACOLLOOK_ROBUSTEZZA.md` | Piano robustezza |
-| `miracallook/backend/db/crypto.py` | Encryption module |
-| `.sncp/guide/GUIDA_FATTURE_XML_MIRACOLLO.md` | Guida fatture |
-
----
-
-*"Security first! Token criptati, test passati!" - Sessione 270*
+*Questo file è PANORAMA. Per dettagli vai nei PROMPT_RIPRESA dei bracci!*

@@ -1,28 +1,62 @@
+<!-- DISCRIMINATORE: MIRACOLLOOK EMAIL CLIENT -->
+<!-- PORTA: 8002 | TIPO: Email client AI per hotel -->
+<!-- PATH: ~/Developer/miracollogeminifocus/miracallook/ -->
+<!-- NON CONFONDERE CON: PMS Core (8001), Room Hardware (8003) -->
+
 # PROMPT RIPRESA - Miracollook
 
-> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 267
-> **STATO:** FASE 1 = 98% (Bulk Actions + Labels CRUD!)
+> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 270
+> **ROBUSTEZZA:** 6.5 → 8.5/10 (+2.0!) | FASE 0-3 COMPLETATE!
 
 ---
 
-## COS'E MIRACOLLOOK
-
-Email client per hotel che CONOSCE i tuoi ospiti.
-Porta :8002 dentro ecosistema Miracollo.
-
----
-
-## SESSIONE 267 - DUE API COMPLETATE!
+## SESSIONE 270 - ROBUSTEZZA +2.0!
 
 ```
 +================================================================+
-|   1. BULK ACTIONS API - FATTO + TESTATO!                       |
-|      POST /gmail/batch-modify (archive, trash, mark_read/unread)|
-|                                                                 |
-|   2. LABELS CRUD API - FATTO + TESTATO!                        |
-|      GET/POST/PUT/DELETE /gmail/labels                         |
-|      POST /gmail/messages/{id}/modify-labels                   |
+|   SCORE: 6.5/10 → 8.5/10 (+2.0!)                               |
+|   11 TASK COMPLETATI - FASE 0, 1, 2, 3!                        |
 +================================================================+
+```
+
+### Cosa Fatto
+
+| Fase | Contenuto |
+|------|-----------|
+| 0.1 | pip-audit: 6 CVE → 0 (fastapi, starlette, cryptography, pyasn1) |
+| 1.1-1.4 | Token encryption Fernet, gitignore, API key, CORS |
+| 2.1-2.3 | LaunchAgents: backend, backup 02:00, health 5min |
+| 3.1-3.2 | Rate limiting (slowapi), retry logic (tenacity) |
+
+### LaunchAgents Attivi
+
+```
+com.miracollook.backend     - PID attivo, KeepAlive
+com.miracollook.backup      - Backup DB ore 02:00 (7 giorni)
+com.miracollook.healthcheck - Check ogni 5 min + notifica macOS
+```
+
+### Packages Aggiornati
+
+```
+fastapi>=0.128.0, cryptography>=46.0.3, slowapi>=0.1.9, tenacity>=8.2.0
+```
+
+---
+
+## PROSSIMI STEP (FASE 4-6 → 9.5/10)
+
+```
+FASE 4 - TESTING:      8.5 → 9.0
+[ ] Setup pytest
+[ ] Unit tests backend
+
+FASE 5 - MONITORING:   9.0 → 9.3
+[ ] Structured logging JSON
+
+FASE 6 - FRONTEND:     9.3 → 9.5
+[ ] Environment variables
+[ ] Error boundaries
 ```
 
 ---
@@ -30,10 +64,12 @@ Porta :8002 dentro ecosistema Miracollo.
 ## COMANDI
 
 ```bash
-# Backend
+# Backend (ora gestito da launchd!)
+launchctl list | grep miracollook
+
+# Manuale se serve
 cd ~/Developer/miracollogeminifocus/miracallook/backend
-source venv/bin/activate
-uvicorn main:app --port 8002 --reload
+source venv/bin/activate && uvicorn main:app --port 8002
 
 # Frontend
 cd ~/Developer/miracollogeminifocus/miracallook/frontend
@@ -42,32 +78,15 @@ npm run dev
 
 ---
 
-## STATO FASE 1 (98%)
+## FILE CHIAVE
 
-```
-FATTO:
-[x] OAuth, Inbox, Send, Reply, Forward, Archive, Trash
-[x] Search, AI Summary, Keyboard Shortcuts, Command Palette
-[x] Mark Read/Unread, Drafts Auto-Save
-[x] Upload Attachments, Thread View
-[x] Resizable Panels, Context Menu, Design Salutare
-[x] Bulk Actions API - Sessione 267
-[x] Labels CRUD API - Sessione 267
-
-DA FARE (UI integration):
-[ ] Abilitare "Add Label" nel context menu
-[ ] Contacts Autocomplete
-[ ] Settings Page
-```
+| File | Contenuto |
+|------|-----------|
+| `~/Library/LaunchAgents/com.miracollook.*.plist` | LaunchAgents |
+| `miracallook/scripts/backup.sh` | Script backup |
+| `miracallook/scripts/healthcheck.sh` | Script health |
+| `docs/roadmap/SUBROADMAP_MIRACOLLOOK_ROBUSTEZZA.md` | Piano completo |
 
 ---
 
-## PROSSIMI STEP
-
-1. Abilitare "Add Label" nel context menu (UI già pronta!)
-2. Contacts Autocomplete
-3. Settings Page
-
----
-
-*"Non e un email client. E l'Outlook che CONOSCE il tuo hotel."*
+*"6.5 → 8.5 in una sessione! Un progresso alla volta." - Sessione 270*

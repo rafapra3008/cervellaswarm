@@ -1,6 +1,6 @@
 # OGGI - 19 Gennaio 2026
 
-> **Sessione:** 270 | **Progetto:** Miracollo | **Focus:** Miracollook Security
+> **Sessione:** 270 | **Progetto:** Miracollo | **Focus:** Miracollook Robustezza
 
 ---
 
@@ -8,8 +8,8 @@
 
 ```
 +================================================================+
-|   ✅ FASE 1 SECURITY COMPLETATA - TUTTI I TEST PASSATI!         |
-|   Miracollook Robustezza: 6.5/10 → 7.5/10 (+1.0!)               |
+|   MIRACOLLOOK: 6.5/10 → 8.5/10 (+2.0!)                         |
+|   FASE 0-3 COMPLETATE + DISAMBIGUAZIONE IMPLEMENTATA!          |
 +================================================================+
 ```
 
@@ -17,30 +17,24 @@
 
 ## COSA FATTO
 
-**SECURITY FIX:**
-- pip-audit: 3 CVE risolte (fastapi 0.125.0, starlette 0.50.0)
-- Token Encryption: Fernet AES-128 (DB ora criptato!)
-- Gitignore + ANTHROPIC_API_KEY + CORS da .env
+| Fase | Contenuto | Status |
+|------|-----------|--------|
+| 0.1 | pip-audit (6 CVE → 0) | ✅ |
+| 0.2 | api.py split (già fatto) | ✅ |
+| 1.1-1.4 | Security (encryption, CORS) | ✅ |
+| 2.1-2.3 | LaunchAgents (backend, backup, health) | ✅ |
+| 3.1-3.2 | Rate limiting + retry logic | ✅ |
 
-**TEST PASSATI:**
-- Backend avvio, Auth status, Gmail Inbox, AI Summary: TUTTI OK!
-
----
-
-## FILE CHIAVE
-
-```
-miracallook/backend/db/crypto.py   # Encryption module
-miracallook/.gitignore             # Git protection
-```
+**BONUS:** Disambiguazione Miracollo/Miracollook in CLAUDE.md
 
 ---
 
-## STATO MIRACOLLOOK
+## LAUNCHAGENTS ATTIVI
 
 ```
-CODICE:      100% | ROBUSTEZZA: 7.5/10 | SECURITY: ✅ COMPLETATA
-PROSSIMO: FASE 2 (auto-start, backup, health check)
+com.miracollook.backend     - Auto-start + KeepAlive
+com.miracollook.backup      - Backup DB ore 02:00
+com.miracollook.healthcheck - Check ogni 5 min
 ```
 
 ---
@@ -48,9 +42,10 @@ PROSSIMO: FASE 2 (auto-start, backup, health check)
 ## PROSSIMA SESSIONE
 
 ```
-1. FASE 2 Robustezza (launchd, backup)
-2. Oppure: FASE 3 Fatture XML (test 200/NL)
-3. Show HN: 26 Gennaio (CervellaSwarm)
+MIRACOLLOOK: FASE 4-6 (testing, monitoring, frontend) → 9.5/10
+OPPURE: PMS Core - FASE 3 Fatture XML (test 200/NL)
 ```
 
-*"Security first! Token criptati, test passati!"*
+---
+
+*"Un progresso alla volta - oggi ne abbiamo fatti 11!" - Sessione 270*

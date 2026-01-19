@@ -1,3 +1,8 @@
+<!-- DISCRIMINATORE: MIRACOLLO PMS CORE -->
+<!-- PORTA: 8001 | TIPO: Sistema alberghiero principale -->
+<!-- PATH: ~/Developer/miracollogeminifocus/ (backend principale) -->
+<!-- NON CONFONDERE CON: Miracollook (8002), Room Hardware (8003) -->
+
 # PROMPT RIPRESA - PMS Core
 
 > **Ultimo aggiornamento:** 17 Gennaio 2026 - Sessione 251
