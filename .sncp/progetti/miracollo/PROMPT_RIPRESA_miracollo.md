@@ -1,51 +1,42 @@
 # PROMPT RIPRESA - Miracollo
 
-> **Ultimo aggiornamento:** 18 Gennaio 2026 - Sessione 264
-> **Status:** PRODUZIONE STABILE | TEST RT FUNZIONANTE!
+> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 266
+> **Status:** PRODUZIONE STABILE | ADAPTER SOAP FIXATO!
 
 ---
 
-## SESSIONE 264: PRIMA STAMPA EPSON RT!
+## SESSIONE 266: FIX SOAP ADAPTER EPSON
 
 ```
 +================================================================+
 |                                                                |
-|   MIRACOLLO HA STAMPATO SU EPSON RT!                          |
+|   FIX EPSON ADAPTER COMPLETATO!                               |
 |                                                                |
-|   Data: 18-01-2026 15:51                                      |
-|   Tipo: DOCUMENTO GESTIONALE (non fiscale, sicuro)            |
-|   Risultato: SUCCESSO!                                        |
+|   epson_adapter.py ora usa SOAP correttamente                 |
+|   Pronto per test su stampante reale                          |
 |                                                                |
 +================================================================+
 ```
 
-### Scoperte Tecniche
+### Fix Applicati (Sessione 266)
 
 ```
-1. RETE FUNZIONA!
-   - Mac (192.168.201.25) → Epson (192.168.200.240) = OK
-   - VLAN routing attivo
-
-2. ENDPOINT CORRETTO:
-   URL: /cgi-bin/fpmate.cgi?devid=local_printer&timeout=10000
-   Content-Type: text/xml
-   Formato: SOAP/XML (non semplice XML!)
-
-3. STAMPANTE TESTATA:
-   IP: 192.168.200.240 = BAR (Cassa 2)
-   Reception = DA TROVARE (cercare "cassa1" in UniFi)
+✅ 1. URL: ?devid=local_printer&timeout=10000
+✅ 2. Content-Type: text/xml
+✅ 3. SOAP Envelope: _wrap_soap() wrappa tutti gli XML
+✅ 4. _parse_response(): naviga dentro soap:Body
+✅ 5. Docstring aggiornato con scoperte
 ```
 
-### Modifiche Codice Necessarie
+### Rete e Stampanti
 
 ```
-epson_adapter.py - Guardiana Score: 6/10
+TESTATO (Sessione 264):
+- Mac (192.168.201.25) → Epson (192.168.200.240) = OK
+- IP 192.168.200.240 = BAR (Cassa 2)
 
-FIX RICHIESTI:
-1. URL: aggiungere ?devid=local_printer&timeout=10000
-2. Content-Type: text/xml (non application/xml)
-3. SOAP Envelope: wrappare TUTTI gli XML
-4. _parse_response(): navigare dentro soap:Body
+PARCHEGGIATO:
+- Reception = DA TROVARE (cercare "cassa1" in UniFi)
 ```
 
 ---
@@ -55,7 +46,7 @@ FIX RICHIESTI:
 ```
 FASE 1: Ricevute PDF      [####################] 100% REALE!
 FASE 1B: Checkout UI      [####################] 100% REALE!
-FASE 2: Scontrini RT      [###################.] 95% TEST OK!
+FASE 2: Scontrini RT      [##################..] 90% ADAPTER FIXATO!
 FASE 3: Fatture XML       [....................] 0%
 FASE 4: Export            [....................] 0%
 ```
@@ -65,22 +56,21 @@ FASE 4: Export            [....................] 0%
 ## PROSSIMI STEP
 
 ```
-1. [ ] Trovare IP stampante Reception (UniFi → "cassa1")
-2. [ ] Applicare fix codice (SOAP wrapper)
-3. [ ] Test su stampante Reception
-4. [ ] Contattare Epson per Training Mode (test fiscali sicuri)
+1. [x] Applicare fix codice (SOAP wrapper) ← FATTO Sessione 266!
+2. [ ] Test adapter su stampante Bar (quando in hotel)
+3. [ ] Trovare IP Reception (parcheggiato)
+4. [ ] Contattare Epson per Training Mode
 ```
 
 ---
 
-## FILE SESSIONE 264
+## FILE CHIAVE
 
 | File | Contenuto |
 |------|-----------|
-| `sessioni/SESSIONE_264_EPSON_TEST.md` | Documentazione completa |
-| `RICERCA_EPSON_RT_TRAININGMODE_20260118.md` | Ricerca Training Mode |
-| `~/Desktop/test_epson_nonfiscale.sh` | Script test |
+| `backend/services/fiscal/epson_adapter.py` | Adapter SOAP fixato |
+| `sessioni/SESSIONE_264_EPSON_TEST.md` | Test manuale documentato |
 
 ---
 
-*"Prima stampa Miracollo - Momento storico!" - Sessione 264*
+*"Mai andare avanti con cose da fixare!" - Sessione 266*
