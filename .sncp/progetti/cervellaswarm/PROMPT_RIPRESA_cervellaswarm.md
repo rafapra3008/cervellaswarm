@@ -89,8 +89,14 @@ W4: Polish + v2.0-beta
 
 ## PROSSIMA SESSIONE
 
-1. **Test su Miracollo** - spawn-workers --with-context su progetto reale
-2. **Test su Contabilita** - verifica funziona su altri progetti
+**PRIMA DI TUTTO:** Double check con Guardiane!
+- Recap completo Sessione 275
+- Verifica qualita codice con Guardiana Qualita
+- Review decisioni architetturali
+
+**POI:**
+1. Test su Miracollo - spawn-workers --with-context su progetto reale
+2. Test su Contabilita - verifica funziona su altri progetti
 3. Performance check - tempo generazione contesto
 4. Considerare MCP integration (spawner.ts)
 
