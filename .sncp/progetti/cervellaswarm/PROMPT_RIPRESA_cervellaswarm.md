@@ -1,33 +1,31 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 284
-> **STATUS:** W4 Day 1 COMPLETATO! Prossimo Day 2-3
+> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 285
+> **STATUS:** W4 Day 2-3 COMPLETATO! Prossimo Day 4 Release
 
 ---
 
-## SESSIONE 284 - W4 DAY 1 COMPLETATO!
+## SESSIONE 285 - W4 DAY 2-3 COMPLETATO!
 
 ```
 +================================================================+
-|   W4 DAY 1 - APPLE POLISH DRY                                 |
-|   Score: 9.5/10 | SUBROADMAP creata | 6 file migrati          |
+|   W4 DAY 2-3 - TEST COVERAGE + CI                              |
+|   Score: 9.5/10 | CI attivo | 241 test passing                 |
 +================================================================+
 ```
 
-**FATTO in Sessione 284:**
+**FATTO in Sessione 285:**
 
-**Planning:**
-- Ricerca W4 con cervella-researcher
-- Consultate Ingegnera + Guardiana Qualita
-- SUBROADMAP_W4_POLISH_RELEASE.md creata (9.6/10)
+- `cervella/pyproject.toml`: +52 righe (pytest + coverage config)
+- `.github/workflows/test-python.yml`: NUOVO (99 righe)
+- `.gitignore`: +7 righe (coverage files)
+- Ricerca: `docs/studio/RICERCA_PYTEST_COV_SETUP_2026.md`
 
-**Day 1 - DRY Centralization:**
-- `scripts/common/db.py` (94 righe) - connect_db() centralizzata
-- `scripts/common/colors.py` (150 righe) - ANSI colors + helpers
-- `scripts/common/config.py` (101 righe) - constants centralizzate
-- 6 file migrati: analytics, weekly_retro, pattern_detector, suggestions, dashboard, swarm-global-status
-- Reports cleanup: 318 -> 11 (-96%)
-- Audit finale: 9.5/10 APPROVED
+**Metriche:**
+- Test: 241 passed, 1 skipped
+- Coverage baseline: 41%
+- Threshold: 40% (roadmap: 40 -> 50 -> 60)
+- Matrix CI: Python 3.10, 3.11, 3.12
 
 ---
 
@@ -36,8 +34,8 @@
 | Day | Task | Status | Score |
 |-----|------|--------|-------|
 | 1 | Apple Polish DRY | DONE | 9.5/10 |
-| 2-3 | Test Coverage + CI | NEXT | - |
-| 4 | Release v2.0-beta | PENDING | - |
+| 2-3 | Test Coverage + CI | DONE | 9.5/10 |
+| 4 | Release v2.0-beta | NEXT | - |
 
 ---
 
@@ -47,71 +45,41 @@
 W1: Git Flow       [DONE] 100%
 W2: Tree-sitter    [DONE] 100%
 W3: Architect      [DONE] 100% (9.75/10)
-W4: Polish + v2.0  [IN PROGRESS] Day 1 done
+W4: Polish + v2.0  [IN PROGRESS] Day 2-3 done
     Day 1: DRY     [DONE] 9.5/10
-    Day 2-3: Test  [NEXT]
-    Day 4: Release [PENDING]
+    Day 2-3: Test  [DONE] 9.5/10
+    Day 4: Release [NEXT]
 ```
 
 ---
 
-## FILE CREATI SESSIONE 284
+## PROSSIMA SESSIONE - W4 DAY 4
 
-| File | Righe | Scopo |
-|------|-------|-------|
-| common/db.py | 94 | connect_db() centralizzata |
-| common/colors.py | 150 | ANSI colors + helpers |
-| common/config.py | 101 | Constants centralizzate |
-| SUBROADMAP_W4_POLISH_RELEASE.md | 400+ | Piano W4 completo |
-
----
-
-## PROSSIMA SESSIONE - W4 DAY 2-3
-
-**Task:**
-1. Setup pytest-cov (requirements-dev.txt, pyproject.toml)
-2. Baseline coverage report
-3. GitHub Actions Python CI (.github/workflows/test-python.yml)
-4. Coverage threshold 60%
-5. Fix test failures se presenti
-
-**File da creare:**
-- `requirements-dev.txt`
-- `.github/workflows/test-python.yml`
+**Task: Release v2.0-beta**
+1. Version bump (package.json, pyproject.toml)
+2. CHANGELOG.md update
+3. npm publish cervellaswarm@2.0.0-beta
+4. npm publish @cervellaswarm/mcp-server@2.0.0-beta
+5. GitHub Release con note
 
 **Vedi:** `.sncp/roadmaps/SUBROADMAP_W4_POLISH_RELEASE.md`
 
 ---
 
-## STRATEGIA VINCENTE - OBBLIGATORIA!
+## STRATEGIA VINCENTE
 
 ```
-+================================================================+
-|   DOPO OGNI PARTE FATTA -> GUARDIANA QUALITA AUDIT!           |
-+================================================================+
-
 1. Ricerca PRIMA (cervella-researcher)
 2. Implementa task
-3. GUARDIANA AUDIT (target 9.5+) <- SEMPRE!
+3. GUARDIANA AUDIT (target 9.5+)
 4. Fix issues se < 9.5
 5. Avanti al prossimo
 
-FUNZIONA! W3: 9.75/10, W4 Day 1: 9.5/10!
+W3: 9.75/10 | W4 Day 1: 9.5/10 | W4 Day 2-3: 9.5/10
 ```
 
 ---
 
-## METRICHE DRY RAGGIUNTE
-
-| Prima | Dopo |
-|-------|------|
-| connect_db() x4 file | x1 file (common/db.py) |
-| class Colors x4 file | x1 file (common/colors.py) |
-| 0.7 hardcoded x4 | SIMILARITY_THRESHOLD |
-| Reports 318 | Reports 11 |
-
----
-
-*"W4 iniziato forte! 284 sessioni insieme!"*
+*"285 sessioni! W4 quasi completo!"*
 *"Ultrapassar os proprios limites!"*
-*Sessione 284 - Cervella & Rafa*
+*Sessione 285 - Cervella & Rafa*
