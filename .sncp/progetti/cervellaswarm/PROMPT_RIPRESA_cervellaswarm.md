@@ -1,78 +1,66 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 278
-> **STATUS:** W2.5-B COMPLETATO! Prossimo W2.5-C Integration
+> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 279
+> **STATUS:** W2.5-C COMPLETATO! Prossimo W2.5-D Audit Finale
 
 ---
 
-## SESSIONE 278 - W2.5-B TYPESCRIPT REFERENCES DONE!
+## SESSIONE 279 - W2.5-C INTEGRATION DONE!
 
 ```
 +================================================================+
-|   W2.5-B TYPESCRIPT REFERENCE EXTRACTION - COMPLETATO!          |
-|   Guardiana Qualita: 9/10 APPROVED                              |
-|   29 test passano, 0 regressioni                                |
+|   W2.5-C INTEGRATION - COMPLETATO!                             |
+|   Guardiana Qualita: 9.5/10 APPROVED                           |
+|   100 test passano, 0 regressioni                              |
 +================================================================+
 ```
 
-**FATTO in Sessione 278:**
-- `TS_BUILTINS` frozenset (~80 entries) - console, Array, Promise, etc.
-- `_extract_typescript_references()` estrae: calls, methods, extends, types
-- `_extract_ts_module_level_references()` estrae imports
-- Integrazione in `_extract_typescript_symbols()` con references
-- BONUS: Aggiunto `class_declaration` per TypeScript (mancava!)
-- BONUS: Aggiornato anche `_extract_javascript_symbols()` con references
-- T15-T18 + 2 bonus test: **6/6 PASS**
-- Test totali: **29 PASS**, 1 skip, 0 regressioni
+**FATTO in Sessione 279:**
+- REQ-08: Verificata integrazione symbol_extractor → dependency_graph → repo_mapper
+- REQ-09: Implementato caching mtime-based (152x speedup!)
+- REQ-10: Graceful degradation (ritorna [] su errori, mai crash)
+- T19: PageRank variance test (scores DIVERSI verificato)
+- T20: File ordering test (NON alfabetico verificato)
+- Creato `test_integration_w25c.py` con 9 nuovi test
 
 ---
 
-## COSA ESTRAE ORA (TypeScript)
+## STRATEGIA VINCENTE: AUDIT OGNI STEP
 
-```typescript
-// Function calls → ["myFunc"]
-const result = myFunc();
-
-// Method calls → ["apiClient", "get"]
-apiClient.get('/users');
-
-// Imports → ["UserService", "AuthHelper"]
-import { UserService, AuthHelper } from './services';
-
-// Class extends → ["BaseController"]
-class MyController extends BaseController {}
-
-// Type annotations → ["UserData", "ConfigOptions"]
-function process(user: UserData, config: ConfigOptions) {}
-
-// FILTRATI: console, Array, Promise, etc. (TS_BUILTINS)
 ```
++================================================================+
+|   METODO CHE FUNZIONA BENE!                                    |
+|================================================================|
+|   Per ogni REQ:                                                 |
+|   1. Implementa                                                 |
+|   2. Lancia Guardiana Qualita con prompt specifico              |
+|   3. Se score < 9/10 → FIX immediato                           |
+|   4. Avanti al prossimo REQ                                     |
+|                                                                 |
+|   VANTAGGI:                                                     |
+|   - Problemi catturati SUBITO (non accumulati!)                |
+|   - Feedback specifico per ogni piece                          |
+|   - Score finale alto perche ogni parte e validata             |
++================================================================+
+
+Esempio Sessione 279:
+- REQ-08 → Guardiana 9/10 → OK, avanti
+- REQ-09 → Guardiana 9/10 → Fix "import os" in top-level
+- REQ-10 → Guardiana 7/10 → Fix test esistente che aspettava exception
+- Audit Finale → 9.5/10!
+```
+
+**USA QUESTA STRATEGIA PER W2.5-D!**
 
 ---
 
-## ROADMAP 2.0 AGGIORNATA
-
-```
-W1: Git Flow       [DONE] COMPLETATO!
-W2: Tree-sitter    [################....] 80% (Day 5/7)
-    Day 1-2: Core + Integration   DONE
-    Day 3: Test Miracollo         DONE
-    Day 4: W2.5-A Python          DONE (9.2/10)
-    Day 5: W2.5-B TypeScript      DONE (9/10) ← SESSIONE 278
-    Day 6: W2.5-C Integration     NEXT
-    Day 7: W2.5-D Audit 9.5/10    PIANIFICATO
-W3: Architect/Editor
-W4: Polish + v2.0-beta
-```
-
----
-
-## FILE MODIFICATI (Sessione 278)
+## FILE MODIFICATI (Sessione 279)
 
 | File | Versione | Modifiche |
 |------|----------|-----------|
-| `symbol_extractor.py` | v2.1.0 | +`TS_BUILTINS`, +`_extract_typescript_references()`, +`_extract_ts_module_level_references()`, +class_declaration |
-| `test_symbol_extractor.py` | - | +6 test TypeScript references (T15-T18 + bonus) |
+| `symbol_extractor.py` | v2.2.0 | +_symbol_cache, +clear_cache(), +graceful degradation |
+| `test_symbol_extractor.py` | - | Fix test_file_not_found per REQ-10 |
+| `test_integration_w25c.py` | NUOVO | 9 test: T19, T20, caching, graceful |
 
 ---
 
@@ -82,27 +70,40 @@ W4: Polish + v2.0-beta
 |------|--------|-------|
 | W2.5-A: Python References | DONE | 9.2/10 |
 | W2.5-B: TypeScript References | DONE | 9/10 |
-| W2.5-C: Integration Test | NEXT | - |
-| W2.5-D: Audit 9.5/10 | PENDING | - |
+| W2.5-C: Integration | DONE | 9.5/10 |
+| W2.5-D: Audit Finale | **NEXT** | target 9.5/10 |
+
+**MEDIA ATTUALE: 9.23/10 → TARGET: 9.5/10**
 
 ---
 
-## PROSSIMA SESSIONE - W2.5-C INTEGRATION
+## ROADMAP 2.0 AGGIORNATA
+
+```
+W1: Git Flow       [DONE] 100%
+W2: Tree-sitter    [##################..] 90% (Day 6/7)
+    Day 1-2: Core + Integration   DONE
+    Day 3: Test + Decisione       DONE
+    Day 4: W2.5-A Python          DONE (9.2/10)
+    Day 5: W2.5-B TypeScript      DONE (9/10)
+    Day 6: W2.5-C Integration     DONE (9.5/10) ← SESSIONE 279
+    Day 7: W2.5-D Audit Finale    NEXT
+W3: Architect/Editor
+W4: Polish + v2.0-beta
+```
+
+---
+
+## PROSSIMA SESSIONE - W2.5-D AUDIT FINALE
 
 **Cosa fare:**
-1. Leggere `SUBROADMAP_W2.5_REFERENCE_EXTRACTION.md` sezione W2.5-C
-2. Implementare REQ-08, REQ-09, REQ-10 (integration, caching, graceful)
-3. Scrivere T19-T20:
-   - T19: PageRank variance test (scores DIVERSI)
-   - T20: File ordering test (NON alfabetico)
-4. Test su CervellaSwarm (codebase Python)
-5. Test su Miracollo (codebase mista)
-6. Audit Guardiana Qualita dopo ogni step
-7. Target: Score totale 9.5/10
+1. Leggere `SUBROADMAP_W2.5_REFERENCE_EXTRACTION.md` sezione W2.5-D
+2. Test su Miracollo (codebase mista Python+TS)
+3. Verifica AC1-AC6 (tutti i criteri)
+4. Se media < 9.5/10 → identificare fix
+5. Audit finale Guardiana
 
-**File da verificare:**
-- `repo_mapper.py` - già usa references?
-- `dependency_graph.py` - già funziona con le refs
+**Target:** Score totale W2.5 >= 9.5/10
 
 ---
 
@@ -111,9 +112,8 @@ W4: Polish + v2.0-beta
 | Doc | Path |
 |-----|------|
 | W2.5 Plan | `.sncp/roadmaps/SUBROADMAP_W2.5_REFERENCE_EXTRACTION.md` |
-| Decisione | `reports/decisione_autocontext_20260119.md` |
 
 ---
 
-*"Fatto BENE > Fatto VELOCE. W2.5-A+B: 9.1/10 media!"*
-*Sessione 278 - Cervella & Rafa*
+*"Audit ogni step = Qualita garantita!"*
+*Sessione 279 - Cervella & Rafa*

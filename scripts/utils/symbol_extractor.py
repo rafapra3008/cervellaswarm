@@ -21,13 +21,18 @@ Supported Languages:
     - JavaScript/JSX: functions, classes
 
 Author: Cervella Backend
-Version: 2.1.0 (W2.5-B TypeScript Reference Extraction)
+Version: 2.2.0 (W2.5-C Caching)
 Date: 2026-01-19
 """
 
-__version__ = "2.1.0"
+__version__ = "2.2.0"
 __version_date__ = "2026-01-19"
 __changelog__ = """
+v2.2.0 (2026-01-19) - W2.5-C Caching
+    - Added _symbol_cache for mtime-based symbol caching (REQ-09)
+    - Added clear_cache(), invalidate_cache(), get_cache_stats() methods
+    - extract_symbols() now uses cache for repeated calls
+
 v2.1.0 (2026-01-19) - W2.5-B TypeScript Reference Extraction
     - Added TS_BUILTINS frozenset for TypeScript/JavaScript builtins filtering
     - Added _extract_typescript_references() for TS/JS code analysis
@@ -46,9 +51,10 @@ v2.0.0 (2026-01-19) - W2.5-A Python Reference Extraction
 """
 
 import logging
+import os
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from tree_sitter import Node
 from treesitter_parser import TreesitterParser
@@ -182,8 +188,13 @@ class SymbolExtractor:
 
         Args:
             parser: TreesitterParser instance to use for parsing
+
+        Attributes:
+            parser: TreesitterParser instance for parsing files
+            _symbol_cache: Cache of extracted symbols keyed by (file_path, mtime)
         """
         self.parser = parser
+        self._symbol_cache: Dict[str, tuple] = {}  # {path: (mtime, symbols)}
         logger.debug("SymbolExtractor initialized")
 
     def _extract_python_references(self, node: Node) -> List[str]:
@@ -562,20 +573,52 @@ class SymbolExtractor:
     def extract_symbols(self, file_path: str) -> List[Symbol]:
         """Extract all symbols from a file.
 
+        Uses caching to avoid re-extraction if file hasn't changed (REQ-09).
+        Cache key is (absolute_path, mtime).
+
+        Graceful degradation (REQ-10): Returns empty list on any failure
+        (file not found, parse error, unsupported language) instead of
+        raising exceptions.
+
         Args:
             file_path: Path to source file
 
         Returns:
-            List of Symbol objects found in the file
+            List of Symbol objects found in the file.
+            Returns [] if file doesn't exist, can't be parsed, or
+            language is unsupported.
 
         Example:
             >>> extractor = SymbolExtractor(parser)
             >>> symbols = extractor.extract_symbols("app/auth.py")
             >>> print([s.name for s in symbols])
             ['login', 'logout', 'verify_credentials']
+            >>> extractor.extract_symbols("/nonexistent.py")  # Returns []
+            []
         """
-        # Parse file
-        tree = self.parser.parse_file(file_path)
+        # REQ-09: Check cache first
+        abs_path = str(Path(file_path).resolve())
+        try:
+            current_mtime = os.path.getmtime(abs_path)
+        except OSError:
+            current_mtime = 0.0
+
+        if abs_path in self._symbol_cache:
+            cached_mtime, cached_symbols = self._symbol_cache[abs_path]
+            if cached_mtime == current_mtime:
+                logger.debug(f"Using cached symbols for: {file_path}")
+                return cached_symbols
+
+        # REQ-10: Graceful degradation - handle parse failures
+        try:
+            tree = self.parser.parse_file(file_path)
+        except FileNotFoundError:
+            logger.warning(f"File not found: {file_path}, no symbols extracted")
+            return []
+        except Exception as e:
+            logger.warning(f"Failed to parse {file_path}: {e}, no symbols extracted")
+            return []
+
         if tree is None:
             logger.warning(f"Failed to parse {file_path}, no symbols extracted")
             return []
@@ -589,14 +632,21 @@ class SymbolExtractor:
 
         # Extract symbols based on language
         if language == "python":
-            return self._extract_python_symbols(tree, file_path)
+            symbols = self._extract_python_symbols(tree, file_path)
         elif language in ["typescript", "tsx"]:
-            return self._extract_typescript_symbols(tree, file_path)
+            symbols = self._extract_typescript_symbols(tree, file_path)
         elif language in ["javascript", "jsx"]:
-            return self._extract_javascript_symbols(tree, file_path)
+            symbols = self._extract_javascript_symbols(tree, file_path)
         else:
             logger.warning(f"Symbol extraction not implemented for: {language}")
-            return []
+            symbols = []
+
+        # REQ-09: Store in cache
+        if current_mtime > 0:
+            self._symbol_cache[abs_path] = (current_mtime, symbols)
+            logger.debug(f"Cached {len(symbols)} symbols for: {file_path}")
+
+        return symbols
 
     def _extract_python_symbols(self, tree, file_path: str) -> List[Symbol]:
         """Extract symbols from Python AST using direct traversal.
@@ -979,6 +1029,54 @@ class SymbolExtractor:
         """
         # W2.5: References are now extracted during symbol creation
         return symbol.references
+
+    def clear_cache(self) -> None:
+        """Clear all cached symbols.
+
+        Call this to free memory or when you want to force re-extraction
+        of all files.
+
+        Example:
+            >>> extractor.clear_cache()
+        """
+        self._symbol_cache.clear()
+        logger.debug("Symbol cache cleared")
+
+    def invalidate_cache(self, file_path: str) -> None:
+        """Invalidate cache for a specific file.
+
+        Call this when you know a file has changed and want to force
+        re-extraction on next extract_symbols() call.
+
+        Args:
+            file_path: Path to the file to invalidate
+
+        Example:
+            >>> extractor.invalidate_cache("app.py")
+        """
+        abs_path = str(Path(file_path).resolve())
+        if abs_path in self._symbol_cache:
+            del self._symbol_cache[abs_path]
+            logger.debug(f"Invalidated cache for: {file_path}")
+
+    def get_cache_stats(self) -> Dict[str, int]:
+        """Get statistics about cache usage.
+
+        Returns:
+            Dictionary with cache statistics:
+            - cached_files: Number of files with cached symbols
+            - cached_symbols: Total number of cached symbols
+
+        Example:
+            >>> stats = extractor.get_cache_stats()
+            >>> print(stats)
+            {'cached_files': 10, 'cached_symbols': 156}
+        """
+        total_symbols = sum(len(symbols) for _, symbols in self._symbol_cache.values())
+        return {
+            'cached_files': len(self._symbol_cache),
+            'cached_symbols': total_symbols,
+        }
 
 
 # Convenience function for simple usage

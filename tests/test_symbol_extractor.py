@@ -367,9 +367,10 @@ def incomplete_function(
             Path(unsupported_file).unlink()
 
     def test_file_not_found(self, extractor):
-        """Test error handling for non-existent file."""
-        with pytest.raises(FileNotFoundError):
-            extractor.extract_symbols("/nonexistent/file.py")
+        """Test graceful degradation for non-existent file (REQ-10)."""
+        # REQ-10: Should return [] instead of raising exception
+        result = extractor.extract_symbols("/nonexistent/file.py")
+        assert result == []
 
     def test_nested_classes_and_functions(self, extractor):
         """Test extracting nested symbols."""
