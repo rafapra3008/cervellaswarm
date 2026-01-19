@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 19 Gennaio 2026 - Sessione 277 - W2.5-A Python References DONE!
+> Aggiornato: 19 Gennaio 2026 - Sessione 278 - W2.5-B TypeScript References DONE!
 
 ```
 +==================================================================+
@@ -179,7 +179,7 @@ SESSIONE 276: 🌳 W2 TREE-SITTER DAY 3!
   ✓ SUBROADMAP W2.5 CREATA!
   → W2 DAY 3 COMPLETATO!
 
-SESSIONE 277: 🎯 W2.5-A PYTHON REFERENCES! ← OGGI!
+SESSIONE 277: 🎯 W2.5-A PYTHON REFERENCES!
   ✓ REQ-01 to REQ-06 IMPLEMENTATI!
     - _extract_python_references() NUOVO
     - _extract_module_level_references() NUOVO
@@ -193,16 +193,29 @@ SESSIONE 277: 🎯 W2.5-A PYTHON REFERENCES! ← OGGI!
   ✓ AUDIT GUARDIANA QUALITA: 9.2/10 APPROVED!
   → W2.5-A COMPLETATO!
 
-SCORE: 92/100 ✅ W2.5-A - PYTHON REFERENCES DONE!
+SESSIONE 278: 🎯 W2.5-B TYPESCRIPT REFERENCES! ← OGGI!
+  ✓ REQ-07 IMPLEMENTATO!
+    - TS_BUILTINS frozenset (~80 entries)
+    - _extract_typescript_references() NUOVO
+    - _extract_ts_module_level_references() NUOVO
+    - class_declaration per TypeScript (mancava!)
+    - JavaScript symbols aggiornati (bonus)
+  ✓ T15-T18 + 2 BONUS: 6/6 PASS!
+  ✓ TEST TOTALI: 29 PASS (no regressioni)!
+  ✓ AUDIT GUARDIANA QUALITA: 9/10 APPROVED!
+  → W2.5-B COMPLETATO!
+
+SCORE: 90/100 ✅ W2.5-B - TYPESCRIPT REFERENCES DONE!
 
 ROADMAP 2.0:
   W1: Git Flow       ████████████████████ 100% ✅
-  W2: Tree-sitter    ██████████████░░░░░░ 70% (Day 4/7)
+  W2: Tree-sitter    ████████████████░░░░ 80% (Day 5/7)
       Day 1-2: Core + Integration   DONE
       Day 3: Test + Decisione       DONE
-      Day 4: W2.5-A Python          DONE! ← SESSIONE 277
-      Day 5: W2.5-B TypeScript      NEXT
-      Day 6-7: Polish + 9.5/10
+      Day 4: W2.5-A Python          DONE (9.2/10)
+      Day 5: W2.5-B TypeScript      DONE (9/10) ← SESSIONE 278
+      Day 6: W2.5-C Integration     NEXT
+      Day 7: W2.5-D Audit 9.5/10
   W3: Architect/Editor
   W4: Polish + v2.0-beta
 ```

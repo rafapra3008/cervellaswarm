@@ -501,5 +501,162 @@ class TestRealFiles:
         assert "TreesitterParser" in names
 
 
+class TestTypeScriptReferenceExtraction:
+    """Test suite for TypeScript reference extraction (W2.5-B T15-T18)."""
+
+    def test_ts_function_call_reference(self, extractor):
+        """T15: Test extracting function call references from TypeScript."""
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.ts', delete=False) as f:
+            f.write("""
+function processData(data: string): void {
+    const result = transformData(data);
+    validateResult(result);
+}
+""")
+            ts_file = f.name
+
+        try:
+            symbols = extractor.extract_symbols(ts_file)
+
+            assert len(symbols) == 1
+            assert symbols[0].name == "processData"
+            # Should reference transformData and validateResult
+            refs = symbols[0].references
+            assert "transformData" in refs
+            assert "validateResult" in refs
+        finally:
+            Path(ts_file).unlink()
+
+    def test_ts_import_reference(self, extractor):
+        """T16: Test extracting import references from TypeScript."""
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.ts', delete=False) as f:
+            f.write("""
+import { UserService, AuthHelper } from './services';
+import DataProcessor from './utils';
+
+function handleUser(): void {
+    const service = new UserService();
+}
+""")
+            ts_file = f.name
+
+        try:
+            symbols = extractor.extract_symbols(ts_file)
+
+            assert len(symbols) == 1
+            assert symbols[0].name == "handleUser"
+            refs = symbols[0].references
+            # Should include imports
+            assert "UserService" in refs
+            assert "AuthHelper" in refs
+            assert "DataProcessor" in refs
+        finally:
+            Path(ts_file).unlink()
+
+    def test_ts_class_extends_reference(self, extractor):
+        """T17: Test extracting class extends references from TypeScript."""
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.ts', delete=False) as f:
+            f.write("""
+import { BaseController } from './base';
+
+class UserController extends BaseController {
+    handleRequest(): void {
+        this.process();
+    }
+}
+""")
+            ts_file = f.name
+
+        try:
+            symbols = extractor.extract_symbols(ts_file)
+
+            # Should find the class
+            class_symbols = [s for s in symbols if s.type == "class"]
+            assert len(class_symbols) == 1
+            assert class_symbols[0].name == "UserController"
+            refs = class_symbols[0].references
+            # Should reference BaseController from extends
+            assert "BaseController" in refs
+        finally:
+            Path(ts_file).unlink()
+
+    def test_ts_type_annotation_reference(self, extractor):
+        """T18: Test extracting type annotation references from TypeScript."""
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.ts', delete=False) as f:
+            f.write("""
+import { UserData, ConfigOptions } from './types';
+
+function processUser(user: UserData, config: ConfigOptions): ProcessResult {
+    return new ProcessResult();
+}
+""")
+            ts_file = f.name
+
+        try:
+            symbols = extractor.extract_symbols(ts_file)
+
+            assert len(symbols) == 1
+            assert symbols[0].name == "processUser"
+            refs = symbols[0].references
+            # Should reference types from annotations
+            assert "UserData" in refs
+            assert "ConfigOptions" in refs
+            assert "ProcessResult" in refs
+        finally:
+            Path(ts_file).unlink()
+
+    def test_ts_builtin_filtered(self, extractor):
+        """Test that TypeScript builtins are filtered out."""
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.ts', delete=False) as f:
+            f.write("""
+function logData(data: string): void {
+    console.log(data);
+    const arr = new Array<number>();
+    const promise = new Promise(() => {});
+    customFunction(data);
+}
+""")
+            ts_file = f.name
+
+        try:
+            symbols = extractor.extract_symbols(ts_file)
+
+            assert len(symbols) == 1
+            refs = symbols[0].references
+            # Builtins should NOT be in references
+            assert "console" not in refs
+            assert "Array" not in refs
+            assert "Promise" not in refs
+            # But custom function should be
+            assert "customFunction" in refs
+        finally:
+            Path(ts_file).unlink()
+
+    def test_ts_method_call_reference(self, extractor):
+        """Test extracting method call references from TypeScript."""
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.ts', delete=False) as f:
+            f.write("""
+import { apiClient } from './api';
+
+function fetchData(): void {
+    apiClient.get('/users');
+    apiClient.post('/data', {});
+}
+""")
+            ts_file = f.name
+
+        try:
+            symbols = extractor.extract_symbols(ts_file)
+
+            assert len(symbols) == 1
+            refs = symbols[0].references
+            # Should reference apiClient and methods
+            assert "apiClient" in refs
+            assert "get" in refs
+            assert "post" in refs
+        finally:
+            Path(ts_file).unlink()
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

@@ -1,6 +1,6 @@
 # OGGI - 19 Gennaio 2026
 
-> **Sessione:** 277 | **Progetto:** CervellaSwarm | **Focus:** W2.5-A Python References
+> **Sessione:** 278 | **Progetto:** CervellaSwarm | **Focus:** W2.5-B TypeScript References
 
 ---
 
@@ -8,9 +8,9 @@
 
 ```
 +================================================================+
-|   W2.5-A PYTHON REFERENCE EXTRACTION - COMPLETATO!              |
-|   PageRank FUNZIONA! Ordine per IMPORTANZA!                     |
-|   Guardiana Qualita: 9.2/10 APPROVED                            |
+|   W2.5-B TYPESCRIPT REFERENCE EXTRACTION - COMPLETATO!          |
+|   Guardiana Qualita: 9/10 APPROVED                              |
+|   29 test passano, 0 regressioni                                |
 +================================================================+
 ```
 
@@ -20,15 +20,13 @@
 
 | Task | Status |
 |------|--------|
-| REQ-01: Signature extract_references | DONE |
-| REQ-02: Python function calls | DONE |
-| REQ-03: Python method calls | DONE |
-| REQ-04: Python imports | DONE |
-| REQ-05: Python class inheritance | DONE |
-| REQ-06: Python type annotations | DONE |
-| T01-T14: 14/14 test | PASS |
-| Test esistenti: 52 test | PASS |
-| Audit Guardiana Qualita | 9.2/10 |
+| TS_BUILTINS frozenset (~80 entries) | DONE |
+| _extract_typescript_references() | DONE |
+| _extract_ts_module_level_references() | DONE |
+| Integrazione in _extract_typescript_symbols() | DONE |
+| Aggiunto class_declaration TS (mancava!) | DONE |
+| Test T15-T18 + 2 bonus | 6/6 PASS |
+| Audit Guardiana dopo ogni step | 9/10 |
 
 ---
 
@@ -36,25 +34,27 @@
 
 | File | Modifica |
 |------|----------|
-| symbol_extractor.py | v2.0.0 - `_extract_python_references()` |
-| dependency_graph.py | `add_reference()` name resolution |
+| symbol_extractor.py | v2.1.0 - +170 righe TS references |
+| test_symbol_extractor.py | +6 nuovi test TypeScript |
 
 ---
 
-## PAGERANK ORA FUNZIONA
+## W2.5 PROGRESS AGGIORNATO
 
 ```
-PRIMA:  Ordine ALFABETICO (tutti score uguali)
-DOPO:   Ordine per IMPORTANZA (Symbol = 0.0158, top!)
+W2.5-A: Python References     DONE (9.2/10) - Sessione 277
+W2.5-B: TypeScript References DONE (9/10)  - Sessione 278
+W2.5-C: Integration Test      NEXT
+W2.5-D: Audit 9.5/10          PENDING
 ```
 
 ---
 
 ## PROSSIMA SESSIONE
 
-W2.5-B: TypeScript Reference Extraction (REQ-07)
-+ Audit Guardiana dopo ogni step
+W2.5-C: Integration Test (PageRank + File Ordering)
++ T19-T20 (variance test, ordering test)
++ Test su CervellaSwarm + Miracollo
 
 ---
-
-*"277 sessioni. W2.5-A fatto BENE. 9.2/10!"*
+*"278 sessioni. W2.5-B fatto BENE. 9/10!"*
