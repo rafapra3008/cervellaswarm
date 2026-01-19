@@ -1,7 +1,7 @@
 # GUIDA SESSIONE - Miracollook
 
 > **Come iniziare ogni sessione su Miracollook**
-> Creata: 13 Gennaio 2026 - Sessione 191
+> **Aggiornato: 19 Gennaio 2026**
 
 ---
 
@@ -13,20 +13,20 @@
 INIZIA SESSIONE -> Miracollook
 ```
 
-### 2. Claude legge automaticamente:
+### 2. Claude legge:
 
 | Ordine | File | Cosa contiene |
 |--------|------|---------------|
-| 1 | `COSTITUZIONE_MIRACOLLOOK.md` | Le REGOLE sacre |
-| 2 | `stato.md` | Dove siamo ORA |
-| 3 | `NORD_MIRACOLLOOK.md` | La VISIONE (se serve) |
+| 1 | `INDICE.md` | Come navigare |
+| 2 | `stato.md` | Stato REALE dal codice |
+| 3 | `PROMPT_RIPRESA_miracollook.md` | Ultime sessioni |
 
 ### 3. Claude conferma:
 
 ```
-- Versione attuale: 2.0.0
-- Fase corrente: FASE 1 (75%)
-- Prossimo step: [da stato.md]
+- Fase corrente: FASE 1 (92%)
+- Feature FATTE: Resizable, Context Menu, Thread, Drafts, etc
+- Manca: Bulk API, Labels CRUD, Contacts, Settings
 - Pronta per lavorare!
 ```
 
@@ -35,28 +35,33 @@ INIZIA SESSIONE -> Miracollook
 ## STRUTTURA DOCUMENTAZIONE
 
 ```
-CervellaSwarm/.sncp/progetti/miracollo/moduli/miracallook/
+CervellaSwarm/.sncp/progetti/miracollo/bracci/miracallook/
 |
-+-- DOCUMENTI PRINCIPALI (sempre aggiornati)
-|   +-- COSTITUZIONE_MIRACOLLOOK.md    # Le regole
-|   +-- NORD_MIRACOLLOOK.md            # La visione
-|   +-- stato.md                       # Stato attuale
-|   +-- MAPPA_FUNZIONI.md              # Have vs Need
-|   +-- ROADMAP_MIRACOLLOOK_MASTER.md  # Piano lavori
-|   +-- GUIDA_SESSIONE.md              # Come iniziare
++-- CORE (sempre aggiornati)
+|   +-- INDICE.md                     # Come navigare
+|   +-- NORD_MIRACOLLOOK.md           # Visione e direzione
+|   +-- stato.md                      # Stato REALE dal codice
+|   +-- PROMPT_RIPRESA_miracollook.md # Checkpoint sessioni
+|   +-- MAPPA_VERITA_20260119.md      # Analisi codice
 |
-+-- CARTELLE SPECIFICHE
-|   +-- ricerche/         # Analisi competitor
-|   +-- studi/            # Ricerche tecniche
-|   +-- decisioni/        # Decisioni con PERCHE
-|   +-- reports/          # Validazioni Guardiane
-|   +-- archivio/         # Documenti vecchi
++-- PRINCIPI
+|   +-- COSTITUZIONE_MIRACOLLOOK.md   # Le regole sacre
+|   +-- GUIDA_SESSIONE.md             # Questo file
 |
-+-- REPO MIRACOLLOOK
-    ~/Developer/miracollook/
-    +-- CLAUDE.md         # Istruzioni per Claude
-    +-- backend/          # FastAPI Python
-    +-- frontend/         # React TypeScript
++-- ROADMAPS
+|   +-- ROADMAP_MIRACOLLOOK_MASTER.md # Piano lavori
+|
++-- CARTELLE
+|   +-- studi/            # Ricerche tecniche (DIAMANTE!)
+|   +-- decisioni/        # Specs approvate
+|   +-- ricerche/         # Competitor analysis
+|   +-- reports/          # Audit storici
+|   +-- archivio/         # File vecchi
+
+REPO MIRACOLLOOK:
+~/Developer/miracollogeminifocus/miracallook/
++-- backend/          # FastAPI Python (:8002)
++-- frontend/         # React TypeScript (:5173)
 ```
 
 ---
@@ -64,114 +69,69 @@ CervellaSwarm/.sncp/progetti/miracollo/moduli/miracallook/
 ## FILE DA LEGGERE
 
 ### Sempre (inizio sessione)
-1. **COSTITUZIONE_MIRACOLLOOK.md** - I 5 principi sacri
-2. **stato.md** - Dove siamo, cosa fare
+1. **stato.md** - Stato REALE dal codice
+2. **PROMPT_RIPRESA_miracollook.md** - Ultime sessioni
 
 ### Quando serve
 | Situazione | File |
 |------------|------|
 | Perso sulla direzione | NORD_MIRACOLLOOK.md |
-| Cosa implementare | MAPPA_FUNZIONI.md |
+| Reference tecnico | MAPPA_VERITA_20260119.md |
 | Piano dettagliato | ROADMAP_MIRACOLLOOK_MASTER.md |
-| Decisione da prendere | decisioni/*.md |
-| Ricerca fatta | studi/*.md o ricerche/*.md |
+| Principi | COSTITUZIONE_MIRACOLLOOK.md |
+| Prima di implementare | studi/*.md |
 
 ---
 
-## STATO ATTUALE (13 Gennaio 2026)
+## STATO ATTUALE (19 Gennaio 2026)
 
 ```
 +================================================================+
 |                                                                |
-|   MIRACOLLOOK v2.0.0                                           |
+|   MIRACOLLOOK - FASE 1: 92%                                    |
 |                                                                |
-|   FASE 0: Fondamenta      [####################] 100%          |
-|   FASE P1: Performance    [####################] 100%          |
-|   FASE P2: Offline/PWA    [####################] 100%          |
-|   FASE 1: Email Solido    [###############.....] 75%           |
+|   Frontend: 8.5/10 | ~4,600 righe | 40 file                   |
+|   Backend:  8/10   | ~2,600 righe | 27 endpoint               |
 |                                                                |
-|   PROSSIMO: Funzioni BASE mancanti (~40h)                      |
-|   - Mark Read/Unread, Drafts, Bulk, Labels, Contacts           |
+|   FATTO:                                                       |
+|   - Resizable Panels, Context Menu, Thread View                |
+|   - Drafts, Attachments, Mark Read/Unread                      |
+|   - Design Salutare, Search, AI Summary                        |
+|                                                                |
+|   MANCA (~21h):                                                |
+|   - Bulk Actions API (4h) - UI frontend pronta!                |
+|   - Labels CRUD API (3h)                                       |
+|   - Contacts (6h), Settings (8h)                               |
 |                                                                |
 +================================================================+
 ```
 
 ---
 
-## COME AVVIARE L'APP
+## COMANDI
 
 ```bash
-# Con Docker (raccomandato)
-cd ~/Developer/miracollook
-docker compose up
+# Backend
+cd ~/Developer/miracollogeminifocus/miracallook/backend
+source venv/bin/activate
+uvicorn main:app --port 8002 --reload
 
-# Frontend: http://localhost:5173
-# Backend:  http://localhost:8002
+# Frontend
+cd ~/Developer/miracollogeminifocus/miracallook/frontend
+npm run dev
 ```
 
 ---
 
-## REGOLE IMPORTANTI
+## FINE SESSIONE
 
-### 1. Una cosa alla volta
 ```
-Finisci una feature PRIMA di iniziare un'altra
-```
-
-### 2. Test REALE
-```
-"Su carta" != "Reale"
-Testa SEMPRE prima di dire "fatto"
-```
-
-### 3. Consulta le esperte
-```
-UI/UX       -> cervella-marketing
-Database    -> cervella-data
-Sicurezza   -> cervella-security
-Deploy      -> cervella-devops
-Architettura -> cervella-ingegnera
-Ricerca     -> cervella-researcher
-```
-
-### 4. Checkpoint
-```
-Ogni 30-45 minuti: aggiorna stato.md
-Fine sessione: git commit + push
+1. Aggiorna stato.md se cambiato qualcosa
+2. Aggiorna PROMPT_RIPRESA_miracollook.md
+3. Git commit + push
+4. Handoff chiaro per prossima sessione
 ```
 
 ---
 
-## CHECKLIST FINE SESSIONE
-
-```
-[ ] Aggiornare stato.md
-[ ] Aggiornare NORD se serve
-[ ] Git commit con messaggio chiaro
-[ ] Git push
-[ ] Handoff chiaro per prossima sessione
-```
-
----
-
-## PROSSIMI STEP (da implementare)
-
-### CRITICI (fare prima)
-- [ ] Mark as Read/Unread (2h)
-- [ ] Drafts auto-save (6h)
-
-### ALTI
-- [ ] Bulk Actions (5h)
-- [ ] Thread View (4h)
-- [ ] Labels Custom (3h)
-- [ ] Upload Attachments (4h)
-
-### MEDI
-- [ ] Contacts Autocomplete (6h)
-- [ ] Settings Page (8h)
-- [ ] Firma email (2h)
-
----
-
-*"Lavoriamo in pace! Senza casino! Dipende da noi!"*
-*"Il Centro Comunicazioni dell'Hotel Intelligente"*
+*"Non e un email client. E l'Outlook che CONOSCE il tuo hotel."*

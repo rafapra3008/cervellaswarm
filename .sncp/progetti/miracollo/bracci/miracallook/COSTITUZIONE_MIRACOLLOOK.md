@@ -12,7 +12,7 @@
 ```
 
 > Creato: 13 Gennaio 2026 - Sessione 181
-> **AGGIORNATO: 15 Gennaio 2026 - Dopo AUDIT VERITÀ**
+> **AGGIORNATO: 19 Gennaio 2026 - Verifica Codice REALE**
 > Autori: Rafa & Cervella
 
 ---
@@ -91,16 +91,18 @@ MAI dire "e fatto" se non e REALE!
 
 ---
 
-## LE 6 FASI (STATO REALE - 15 Gennaio 2026)
+## LE 6 FASI (STATO REALE - 19 Gennaio 2026 - Verificato dal CODICE!)
 
 ```
 FASE 0: FONDAMENTA         [####################] 100% COMPLETA!
         OAuth + Inbox + Send + Reply + Archive + Search + AI
 
-FASE 1: EMAIL SOLIDO       [######..............] 30%  ← CORRETTO!
-        Sostituire Outlook per uso quotidiano
-        PROSSIMO STEP: Funzioni base mancanti
-        (Mark Read, Drafts, Bulk, Labels, Contacts)
+FASE P: PERFORMANCE        [####################] 100% COMPLETA!
+        IndexedDB + Batch API + Skeleton + Prefetch + PWA
+
+FASE 1: EMAIL SOLIDO       [##################..] 92%  ← VERIFICATO!
+        Resizable, Context Menu, Thread, Drafts, Attachments FATTI!
+        MANCA: Bulk Actions API, Labels CRUD, Contacts, Settings
 
 FASE 2: PMS INTEGRATION    [....................] 0%
         LA MAGIA! Guest detection, context sidebar
@@ -254,10 +256,10 @@ FRONTEND:
 ### Repository
 
 ```
-Path: ~/Developer/miracollook
-GitHub: https://github.com/rafapra3008/miracollook
+Path: ~/Developer/miracollogeminifocus/miracallook
+(Miracollook e dentro il monorepo Miracollo)
 
-SNCP: ~/Developer/CervellaSwarm/.sncp/progetti/miracollo/moduli/miracallook/
+SNCP: ~/Developer/CervellaSwarm/.sncp/progetti/miracollo/bracci/miracallook/
 ```
 
 ---
@@ -266,11 +268,12 @@ SNCP: ~/Developer/CervellaSwarm/.sncp/progetti/miracollo/moduli/miracallook/
 
 | File | Cosa contiene | Quando leggerlo |
 |------|---------------|-----------------|
+| INDICE.md | Come navigare questa cartella | Prima di cercare |
 | COSTITUZIONE_MIRACOLLOOK.md | Questo file - le REGOLE | Inizio OGNI sessione |
-| NORD_MIRACOLLOOK.md | La VISIONE e le 6 FASI | Quando perso |
-| stato.md | Stato ATTUALE | Inizio + fine sessione |
-| MAPPA_MIRACOLLOOK_VERA.md | Dettaglio tecnico P0-P3 | Quando implementi |
-| AUDIT_REALE_12GEN.md | Cosa funziona DAVVERO | Per verifica |
+| NORD_MIRACOLLOOK.md | La VISIONE e prossimi step | Quando perso |
+| stato.md | Stato REALE dal codice | Inizio + fine sessione |
+| MAPPA_VERITA_20260119.md | Analisi codice completa | Reference tecnico |
+| PROMPT_RIPRESA_miracollook.md | Checkpoint sessioni | Riprendere lavoro |
 
 ---
 
@@ -334,31 +337,27 @@ PERCHE: No feature creep, focus su una cosa
 
 ---
 
-## PROSSIMO STEP (Sessione 191+)
+## PROSSIMO STEP (19 Gennaio 2026)
 
 ```
 +====================================================================+
 |                                                                    |
-|   COMPLETARE FASE 1 - EMAIL SOLIDO!                                |
+|   COMPLETARE FASE 1 (92% -> 100%)                                  |
 |                                                                    |
-|   FUNZIONI BASE MANCANTI (dall'analisi Ingegnera):                 |
+|   GIA FATTO (verificato nel codice):                               |
+|   [x] Mark Read/Unread - useEmailHandlers.ts + API                 |
+|   [x] Drafts - useDraft.ts (212L) + 6 endpoint                     |
+|   [x] Thread View - ThreadView.tsx (299L)                          |
+|   [x] Upload Attachments - AttachmentPicker.tsx + API              |
+|   [x] Resizable Panels - ThreePanelResizable.tsx                   |
+|   [x] Context Menu - EmailContextMenu.tsx (280L)                   |
+|   [x] Design Salutare - colori corretti                            |
 |                                                                    |
-|   CRITICHE:                                                        |
-|   [ ] Mark as Read/Unread                    (2h)                  |
-|   [ ] Drafts (bozze auto-save)               (6h)                  |
-|                                                                    |
-|   ALTE:                                                            |
-|   [ ] Bulk Actions (selezione multipla)      (5h)                  |
-|   [ ] Thread View (conversazioni)            (4h)                  |
-|   [ ] Labels Custom (crea cartelle)          (3h)                  |
-|   [ ] Upload Attachments                     (4h)                  |
-|                                                                    |
-|   MEDIE:                                                           |
-|   [ ] Contatti Autocomplete                  (6h)                  |
-|   [ ] Settings Page                          (8h)                  |
-|   [ ] Firma email                            (2h)                  |
-|                                                                    |
-|   TOTALE: ~40h per email client completo                           |
+|   DA FARE (~21h):                                                  |
+|   [ ] Bulk Actions API backend       (4h) - UI frontend pronta!    |
+|   [ ] Labels CRUD API backend        (3h) - UI disabled            |
+|   [ ] Contacts Autocomplete          (6h)                          |
+|   [ ] Settings Page                  (8h)                          |
 |                                                                    |
 |   Quando FASE 1 = 100% → inizia FASE 2 (PMS = LA MAGIA!)          |
 |                                                                    |
