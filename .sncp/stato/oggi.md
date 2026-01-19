@@ -1,6 +1,6 @@
 # OGGI - 19 Gennaio 2026
 
-> **Sessione:** 268 | **Progetto:** Miracollo | **Focus:** Fatture XML + Miracollook
+> **Sessione:** 269 | **Progetto:** CervellaSwarm | **Focus:** Reddit Karma Building
 
 ---
 
@@ -8,41 +8,41 @@
 
 ```
 +================================================================+
-|   FASE 3 FATTURE: GUIDA COMPLETA (10% → 40%)                    |
-|   MIRACOLLOOK: Robustezza 6.5/10 → piano 9.5                    |
-|   3 Guardiane consultate - tutto verificato!                    |
+|   REDDIT WARMUP COMPLETATO - 3 COMMENTI AUTENTICI!             |
 +================================================================+
+
+Account: Spiritual_Bunch334 (2 anni)
+Subreddit: r/ClaudeAI
+Obiettivo: Build karma per post Fine Febbraio
 ```
 
 ---
 
 ## COSA FATTO
 
-**FATTURE XML:**
-- Studiati 4 XML reali (Lodge + SHE)
-- Estratti dati fiscali hotel (P.IVA, regime, aliquote)
-- Ricerca numerazione fatture (sezionali, best practices)
-- Consultate 3 Guardiane (Qualita, Ops, Data)
-- Creata guida completa
-- Creata cartella test `~/Desktop/fatture_xml_test/`
+**RICERCA:**
+- Requisiti Reddit per postare (karma, eta account)
+- Best practices karma building (80/20 rule)
+- Timing ottimale (Lun/Dom 6-10 AM EST)
 
-**MIRACOLLOOK:**
-- Add Label implementato
-- Analisi robustezza (score 6.5/10)
-- SUBROADMAP creata (17 task)
+**DECISIONE STRATEGICA:**
+- Piano A confermato: HN 26 Gen + Reddit Fine Feb
+- Due momenti di visibilita > uno solo rischiato
+
+**3 COMMENTI AUTENTICI:**
+1. "prompt-only agents" → orchestrator + context isolation
+2. "25 Claude Code Tips" → context separation tip
+3. "Does Claude Babysits" → practical workarounds
 
 ---
 
-## STATO MODULO FINANZIARIO
+## STATO LANCIO
 
 ```
-FASE 1:  Ricevute PDF   [####################] 100% REALE!
-FASE 1B: Checkout UI    [####################] 100% REALE!
-FASE 2:  Scontrini RT   [##################..] 90% ADAPTER!
-FASE 3:  Fatture XML    [########............] 40% GUIDA!
-FASE 4:  Export         [....................] 0%
-
-TOTALE: 75%
+SHOW HN:     26 Gennaio 13:00 Italia  [PRONTO!]
+REDDIT:      Fine Febbraio            [KARMA BUILDING]
+PRODOTTO:    10/10 ✅
+REPO:        PUBBLICO ✅
 ```
 
 ---
@@ -50,10 +50,10 @@ TOTALE: 75%
 ## PROSSIMA SESSIONE
 
 ```
-FATTURE: Generare XML test 200/NL, validare, test SPRING
-MIRACOLLOOK: FASE 0.1 Dependency Audit, FASE 1.1 Token encryption
+1. Continuare karma building (1-2 commenti/giorno)
+2. Polish finale (21-23 Gen)
+3. Checklist pre-lancio (24-25 Gen)
+4. SHOW HN LAUNCH! (26 Gen)
 ```
 
----
-
-*"Non reinventiamo la ruota - usiamo lo standard!"*
+*"Fatto BENE > Fatto VELOCE - Due lanci > Uno rischiato!"*

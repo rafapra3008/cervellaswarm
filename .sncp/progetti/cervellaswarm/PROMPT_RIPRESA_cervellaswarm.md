@@ -1,7 +1,25 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 268
+> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 269
 > **SCORE Pre-Launch:** 10/10 ✅
+
+---
+
+## SESSIONE 269 - REDDIT KARMA BUILDING
+
+```
++================================================================+
+|   3 COMMENTI AUTENTICI SU r/ClaudeAI                           |
++================================================================+
+
+POST 1: "prompt-only agents struggle" → orchestrator experience
+POST 2: "25 Claude Code Tips"         → context separation tip
+POST 3: "Does Claude Babysits you"    → practical workarounds
+
+STRATEGIA CONFERMATA:
+- Show HN: 26 Gennaio ✅ (pronto, zero requisiti)
+- Reddit: karma building ora → post Fine Febbraio
+```
 
 ---
 
@@ -19,55 +37,6 @@ npx cervellaswarm doctor ✅ PASS (verifica configurazione)
 
 Testato su: directory pulita /tmp/
 Versione: cervellaswarm@0.1.2 da npm
-```
-
----
-
-## SESSIONE 267 - REPO PUBBLICO CREATO!
-
-```
-+================================================================+
-|                                                                |
-|   ✅ BLOCCO CRITICO RISOLTO!                                    |
-|                                                                |
-|   GitHub repo ORA è PUBBLICO!                                  |
-|   https://github.com/rafapra3008/cervellaswarm                 |
-|                                                                |
-+================================================================+
-```
-
-### Cosa Abbiamo Fatto
-
-| Task | Status |
-|------|--------|
-| Analisi file sensibili | FATTO - Consultata Guardiana |
-| Decisione open/closed source | FATTO - HYBRID MODEL |
-| Creazione repo pubblico pulito | FATTO - 72 file |
-| Sanitizzazione (no miracollo/contabilita) | FATTO |
-| Backup repo privato | FATTO - cervellaswarm-archive |
-| Push codice pubblico | FATTO |
-
-### Decisione Architettura
-
-```
-HYBRID MODEL (consultate Security + Guardiana Ops + Guardiana Qualità):
-
-PUBBLICO (github.com/rafapra3008/cervellaswarm):
-- packages/cli/
-- packages/mcp-server/
-- README, LICENSE, docs pubblici
-- History PULITA (1 commit)
-
-PRIVATO (locale ~/Developer/CervellaSwarm):
-- .sncp/ (strategie, ricerche, handoff)
-- NORD.md (direzione interna)
-- docs/studio/ (business model)
-- Riferimenti altri progetti
-
-BACKUP (github.com/rafapra3008/cervellaswarm-archive):
-- Repo vecchio rinominato
-- PRIVATO
-- Tutta la history originale
 ```
 
 ---
