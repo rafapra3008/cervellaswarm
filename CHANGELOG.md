@@ -1,64 +1,113 @@
 # CHANGELOG - CervellaSwarm
 
-Tutti i cambiamenti notevoli al sistema di memoria collettiva.
+All notable changes to CervellaSwarm.
 
-Il formato si basa su [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-e questo progetto aderisce a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
----
-
-## [Unreleased]
-
-### Planned
-- Email notifications per report settimanali
-- Dashboard web per visualizzare metriche
-- Export report in PDF
+Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+adhering to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
-## [2.0.0] - 2026-01-01
+## [2.0.0-beta] - 2026-01-19
 
-### Added - weekly_retro.py
-- **Lesson Suggestions**: Suggerisce automaticamente nuove lezioni basandosi su:
-  - Pattern errori con count >= 3 senza lezione associata
-  - Agenti con success rate < 80%
-- **Save to File**: Salva report in markdown (`data/retro/YYYY-MM-DD.md`)
-- **Quiet Mode**: Output minimale per cron jobs (`--quiet`)
-- **Custom Output Directory**: Opzione `--output` per directory custom
-- Nuova sezione "🎯 LEZIONI SUGGERITE" nel report
-- File `scripts/cron/weekly_retro.cron` con configurazione cron
-- File `scripts/cron/README.md` con guida setup
+Major release with semantic code understanding, intelligent planning, and improved reliability.
 
-### Changed - weekly_retro.py
-- CLI estesa con opzioni: `--save`, `--quiet`, `--output`
-- Documentazione aggiornata con esempi v2.0.0
-- `generate_retro()` ora supporta modalità file/quiet
+### Added
+
+**W1: Git Flow 2.0** - Worker Attribution System
+- `git_worker_commit.sh` v1.2.2 (720 lines) - Automated commit attribution
+- Worker attribution for all 16 agents with signature tracking
+- Auto-commit support in spawn-workers.sh v3.6.0
+- `auto_detect_type()` - Intelligent commit type suggestion from file changes
+- 13 scope patterns for conventional commits
+- Dual remote setup (private development + public releases)
+- `docs/GIT_ATTRIBUTION.md` - Complete documentation
+
+**W2: Tree-sitter Integration** - AST-based Code Understanding
+- `treesitter_parser.py` (365 lines) - Multi-language AST parsing
+- `symbol_extractor.py` (486 lines) - Symbol extraction with type info
+- `dependency_graph.py` (451 lines) - PageRank-based importance ranking
+- `repo_mapper.py` (571 lines) - Repository-wide mapping
+- `generate_worker_context.py` (147 lines) - Smart context generation
+- Reference extraction for Python and TypeScript
+- spawn-workers.sh v3.7.0 with `--with-context` flag
+- 142 tests in test suite for tree-sitter components
+
+**W3-A: Semantic Search API** - Intelligent Code Navigation
+- `semantic_search.py` - Core semantic API with:
+  - `find_symbol(name)` - Locate symbol definitions
+  - `find_callers(symbol)` - Find all callers of a function/class
+  - `find_callees(symbol)` - Find all functions called by a symbol
+  - `find_references(symbol)` - Find all usages
+- `impact_analyzer.py` - Risk assessment with:
+  - `estimate_impact(symbol)` - Risk score for modifications
+  - `find_dependencies(file)` - File dependency tracking
+  - `find_dependents(file)` - Reverse dependency tracking
+- 25 semantic search tests passing
+- `docs/SEMANTIC_SEARCH.md` (778 lines) - Complete API documentation
+
+**W3-B: Architect Pattern** - AI Planning Before Implementation
+- `cervella-architect.md` (259 lines) - Opus-powered planning agent
+- `PLAN_TEMPLATE.md` (150 lines) - Structured 4-phase planning template
+- `task_classifier.py` (280 lines) - Intelligent task complexity detection
+- `architect_flow.py` (525 lines) - Planning workflow orchestration
+- Automatic routing: complex tasks -> architect, simple tasks -> direct
+- Fallback logic after 2 rejected plans
+- 85 hardtests passing
+- `docs/ARCHITECT_PATTERN.md` (282 lines) - Pattern documentation
+
+**W4: Polish & Reliability**
+- Centralized database connection (`scripts/common/db.py`)
+- Centralized ANSI colors (`scripts/common/colors.py`)
+- Centralized config constants (`scripts/common/config.py`)
+- pytest-cov integration with 41% baseline coverage
+- GitHub Actions CI for Python (matrix: 3.10, 3.11, 3.12)
+- 241 tests passing across the codebase
+
+### Breaking Changes
+
+- `spawn-workers.sh` API changed: new `--with-context` flag required for auto-context
+- Git commit workflow now requires `worker_attribution.json` configuration
+- Minimum Node.js version: 18.0.0
+
+### Changed
+
+- spawn-workers.sh upgraded to v3.7.0 with auto-context
+- Worker prompts updated with semantic search commands
+- Test infrastructure migrated to pytest with coverage reporting
+- Code deduplication: connect_db() centralized (was in 4 files)
+- ANSI color definitions centralized (was in 3 files)
+
+### Fixed
+
+- PageRank now orders files by actual importance (was alphabetical)
+- Reference extraction for Python builtins filtering
+- Staged changes preservation in git operations (--soft vs --hard)
 
 ### Technical
-- Nuova funzione `suggest_new_lessons()`: analizza pattern e agenti
-- Nuova funzione `save_report()`: salvataggio file markdown
-- Dual output: Rich console + plain text markdown
-- Type hints aggiunti per `Optional[Path]` e `List[Tuple]`
+
+- Tree-sitter queries for 5 languages (Python, TypeScript, JavaScript, Go, Rust)
+- 152x speedup with reference caching
+- Risk score algorithm based on dependent count and change frequency
 
 ---
 
-## [1.0.0] - 2026-01-01
+## [0.2.3] - 2026-01-19
 
-### Added - Sistema Base
-- Script `weekly_retro.py` con report settimanale
-- Metriche chiave (eventi totali, success rate, errori)
-- Top 3 pattern errori attivi
-- Lezioni apprese nel periodo
-- Breakdown per agente (top 5)
-- Raccomandazioni automatiche
-- Prossimi passi suggeriti
-- Output colorato con Rich library
+### Fixed
+- npm package homepage and repository URLs corrected
+- Show HN commands verified (`npx cervellaswarm init/task`)
 
-### Features
-- Analisi periodo configurabile (`--days`)
-- Connessione database `swarm_memory.db`
-- Gestione errori graceful
-- Version flag (`--version`)
+---
+
+## [0.1.2] - 2026-01-18
+
+### Added
+- Initial public release on npm
+- CLI: `cervellaswarm` and `cs` commands
+- MCP Server: `@cervellaswarm/mcp-server`
+- 16 specialized AI agents
+- spawn-workers command
+- swarm-status health checks
 
 ---
 
@@ -67,23 +116,23 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/spec/v2.0.
 ```
 MAJOR.MINOR.PATCH
 
-MAJOR: Breaking changes (es. schema database cambiato)
-MINOR: Nuove funzionalità backward-compatible (es. nuove opzioni CLI)
-PATCH: Bug fixes backward-compatible
+MAJOR: Breaking changes (e.g., API changes)
+MINOR: New backward-compatible features
+PATCH: Backward-compatible bug fixes
 ```
 
 ---
 
 **Legend:**
-- `Added`: Nuove funzionalità
-- `Changed`: Modifiche a funzionalità esistenti
-- `Deprecated`: Funzionalità deprecate (saranno rimosse)
-- `Removed`: Funzionalità rimosse
+- `Added`: New features
+- `Changed`: Changes to existing features
+- `Deprecated`: Features to be removed
+- `Removed`: Removed features
 - `Fixed`: Bug fixes
-- `Security`: Fix di sicurezza
-- `Technical`: Dettagli tecnici implementazione
+- `Security`: Security fixes
+- `Technical`: Implementation details
 
 ---
 
-*Ultimo aggiornamento: 2026-01-01*
-*Formato: Keep a Changelog 1.0.0*
+*Last updated: 2026-01-19*
+*Format: Keep a Changelog 1.0.0*

@@ -7,7 +7,7 @@
 # 1. Go to npmjs.com/package/cervellaswarm/access
 # 2. Add Trusted Publisher → GitHub Actions
 # 3. Owner: rafapra3008
-# 4. Repository: cervellaswarm
+# 4. Repository: CervellaSwarm
 # 5. Workflow: npm-publish.yml
 # 6. Environment: (leave empty)
 

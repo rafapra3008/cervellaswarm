@@ -83,7 +83,7 @@ By making a contribution to this project, I certify that:
 
 ## Questions?
 
-Open an issue on [GitHub Issues](https://github.com/rafapra3008/cervellaswarm/issues).
+Open an issue on [GitHub Issues](https://github.com/rafapra3008/CervellaSwarm/issues).
 
 ---
 

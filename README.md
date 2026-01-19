@@ -153,7 +153,7 @@ Interested in contributing? See [CONTRIBUTING.md](CONTRIBUTING.md) (coming soon)
 
 ## Support
 
-- Issues: [GitHub Issues](https://github.com/rafapra3008/cervellaswarm/issues)
+- Issues: [GitHub Issues](https://github.com/rafapra3008/CervellaSwarm/issues)
 - Discussions: Coming soon
 
 ## License

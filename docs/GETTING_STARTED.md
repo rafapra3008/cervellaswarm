@@ -31,7 +31,7 @@ echo $HOME
 
 ```bash
 cd ~/Developer  # or your preferred directory
-git clone https://github.com/rafapra3008/cervellaswarm.git
+git clone https://github.com/rafapra3008/CervellaSwarm.git
 cd CervellaSwarm
 ```
 
@@ -215,7 +215,7 @@ Check your Claude API quota. Pro subscription is recommended for heavy usage.
 
 ## Need Help?
 
-- **Issues:** [GitHub Issues](https://github.com/rafapra3008/cervellaswarm/issues)
+- **Issues:** [GitHub Issues](https://github.com/rafapra3008/CervellaSwarm/issues)
 - **Documentation:** Check the `docs/` folder
 
 ---
