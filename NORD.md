@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 18 Gennaio 2026 - Sessione 265
+> Aggiornato: 19 Gennaio 2026 - Sessione 267
 
 ```
 +==================================================================+
@@ -32,7 +32,7 @@
 
 ---
 
-## DOVE SIAMO (18 Gennaio 2026 - Sessione 265)
+## DOVE SIAMO (19 Gennaio 2026 - Sessione 267)
 
 ```
 +================================================================+
@@ -97,12 +97,27 @@ SESSIONE 265:
   ✓ FIX README                      cli_workflow_en.png PERFETTA!
   ✓ MAPPA_LANCIO aggiornata         Stato reale documentato
 
+SESSIONE 266:
+  ✓ Draft Reddit                    r/ClaudeAI + r/LocalLLaMA
+  ✓ Draft Twitter                   Thread 10 tweet
+  ✓ Draft LinkedIn                  Post professionale
+  ✓ Verifica Guardiana              Score 9.33/10
+
+SESSIONE 267: ⭐ BLOCCO CRITICO RISOLTO!
+  ✓ REPO GITHUB PUBBLICO!           github.com/rafapra3008/cervellaswarm
+  ✓ Hybrid Model deciso             Pubblico (codice) + Privato (.sncp, studi)
+  ✓ Backup creato                   cervellaswarm-archive (privato)
+  ✓ Consultate 3 Guardiane          Security + Ops + Qualità
+
+SCORE PRE-LAUNCH: 10/10 ✅
+
 PROSSIMI STEP:
-  1. Draft Reddit/Tweet/LinkedIn (opzionale)
-  2. Polish finale (21-23 Gen)
-  3. Checklist pre-lancio (24-25 Gen)
-  4. SHOW HN (26 Gennaio 13:00 Italia)
-  5. Post-launch: CervellaSwarm 2.0 (Tree-sitter, Git flow)
+  1. Test npx cervellaswarm init (macchina pulita)
+  2. Verificare account Reddit (karma)
+  3. Polish finale (21-23 Gen)
+  4. Checklist pre-lancio (24-25 Gen)
+  5. SHOW HN (26 Gennaio 13:00 Italia)
+  6. Post-launch: CervellaSwarm 2.0 (Tree-sitter, Git flow)
 ```
 
 ---
@@ -132,20 +147,26 @@ PROSSIMI STEP:
 
 ---
 
-## SESSIONE 224 - PROTEZIONE FAMIGLIA!
+## SESSIONE 224→267 - PROTEZIONE + HYBRID MODEL!
 
 ```
 +==================================================================+
 |                                                                  |
-|   LA FAMIGLIA E' PROTETTA!                                       |
+|   LA FAMIGLIA E' PROTETTA CON HYBRID MODEL!                     |
 |                                                                  |
-|   - GitHub repo: PRIVATO (era pubblico!)                         |
-|   - npm package: RIMOSSO (codice era esposto!)                   |
-|   - Ricerca Cursor: 770 righe di business intelligence           |
+|   SESSIONE 224: Tutto privato (pausa per proteggere)             |
+|   SESSIONE 267: HYBRID MODEL (pubblico + privato)                |
 |                                                                  |
-|   LEZIONE APPRESA:                                               |
-|   "Prima PROTEGGERE, poi PUBBLICARE"                             |
-|   (Come Cursor: CLOSED SOURCE!)                                  |
+|   PUBBLICO (github.com/rafapra3008/cervellaswarm):              |
+|   - packages/cli, packages/mcp-server                            |
+|   - README, LICENSE, docs pubblici                               |
+|                                                                  |
+|   PRIVATO (locale + cervellaswarm-archive):                      |
+|   - .sncp/ (strategie, studi, handoff)                           |
+|   - NORD.md, docs/studio/                                        |
+|   - Riferimenti altri progetti                                   |
+|                                                                  |
+|   LEZIONE: "Codice open = trust. Strategie private = protezione" |
 |                                                                  |
 +==================================================================+
 ```

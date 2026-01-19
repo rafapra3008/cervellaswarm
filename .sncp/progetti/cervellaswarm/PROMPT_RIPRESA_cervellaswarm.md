@@ -1,18 +1,19 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 266
-> **SCORE Pre-Launch:** 9.6/10
+> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 267
+> **SCORE Pre-Launch:** 10/10 ✅
 
 ---
 
-## SESSIONE 266 - DRAFT SOCIAL COMPLETATI!
+## SESSIONE 267 - REPO PUBBLICO CREATO!
 
 ```
 +================================================================+
 |                                                                |
-|   DRAFT REDDIT/TWITTER/LINKEDIN PRONTI!                        |
-|   Verificati da Guardiana - Score 9.33/10                      |
-|   BLOCCO TROVATO: Repo GitHub e PRIVATO!                       |
+|   ✅ BLOCCO CRITICO RISOLTO!                                    |
+|                                                                |
+|   GitHub repo ORA è PUBBLICO!                                  |
+|   https://github.com/rafapra3008/cervellaswarm                 |
 |                                                                |
 +================================================================+
 ```
@@ -21,32 +22,34 @@
 
 | Task | Status |
 |------|--------|
-| Ricerca best practices social | FATTO - 761 righe! |
-| Draft Reddit (r/ClaudeAI + r/LocalLLaMA) | FATTO |
-| Draft Twitter thread (10 tweet) | FATTO |
-| Draft LinkedIn post | FATTO |
-| Verifica Guardiana | FATTO - Score 9.33/10 |
-| Fix suggeriti | FATTO |
+| Analisi file sensibili | FATTO - Consultata Guardiana |
+| Decisione open/closed source | FATTO - HYBRID MODEL |
+| Creazione repo pubblico pulito | FATTO - 72 file |
+| Sanitizzazione (no miracollo/contabilita) | FATTO |
+| Backup repo privato | FATTO - cervellaswarm-archive |
+| Push codice pubblico | FATTO |
 
-### File Creati Sessione 266
-
-| File | Cosa |
-|------|------|
-| `.sncp/ricerca/RICERCA_LANCIO_SOCIAL_MEDIA.md` | 761 righe best practices |
-| `docs/DRAFT_REDDIT_POST.md` | Post r/ClaudeAI + r/LocalLLaMA |
-| `docs/DRAFT_TWITTER_THREAD.md` | 10 tweet thread |
-| `docs/DRAFT_LINKEDIN_POST.md` | Post professionale |
-
----
-
-## BLOCCO CRITICO!
+### Decisione Architettura
 
 ```
-+================================================================+
-|   GitHub repo e PRIVATO - ritorna 404!                         |
-|   DEVE diventare PUBBLICO prima del 26 Gen                     |
-|   GitHub → Settings → Danger Zone → Change visibility          |
-+================================================================+
+HYBRID MODEL (consultate Security + Guardiana Ops + Guardiana Qualità):
+
+PUBBLICO (github.com/rafapra3008/cervellaswarm):
+- packages/cli/
+- packages/mcp-server/
+- README, LICENSE, docs pubblici
+- History PULITA (1 commit)
+
+PRIVATO (locale ~/Developer/CervellaSwarm):
+- .sncp/ (strategie, ricerche, handoff)
+- NORD.md (direzione interna)
+- docs/studio/ (business model)
+- Riferimenti altri progetti
+
+BACKUP (github.com/rafapra3008/cervellaswarm-archive):
+- Repo vecchio rinominato
+- PRIVATO
+- Tutta la history originale
 ```
 
 ---
@@ -58,7 +61,7 @@
 | CLI | 0.1.2 | LIVE su npm |
 | MCP Server | 0.2.3 | LIVE su npm |
 | Landing | LIVE | cervellaswarm.com |
-| **GitHub** | **PRIVATO** | **BLOCCO!** |
+| **GitHub** | **PUBBLICO** | **✅ FATTO!** |
 
 ---
 
@@ -69,7 +72,7 @@ DATA: Domenica 26 Gennaio 2026, 12:00 UTC (13:00 Italia)
 GIORNI: 7
 POST: docs/SHOW_HN_POST_READY.md
 SOCIAL: 3 draft pronti!
-BLOCCO: Repo deve diventare pubblico
+REPO: ✅ PUBBLICO!
 ```
 
 ---
@@ -81,9 +84,9 @@ PRODOTTO:        10/10
 DOCUMENTAZIONE:  10/10
 SHOW HN:         10/10
 ASSETS:          10/10
-ALTRI CANALI:     8/10  ← DRAFT PRONTI!
+ALTRI CANALI:    10/10  ← DRAFT + REPO PUBBLICO!
 
-MEDIA:            9.6/10
+MEDIA:           10/10 ✅
 ```
 
 ---
@@ -91,20 +94,23 @@ MEDIA:            9.6/10
 ## PROSSIMI STEP
 
 ```
-1. [CRITICO] Rendere repo GitHub PUBBLICO
-2. [OPZIONALE] Verificare account Reddit karma
-3. [OPZIONALE] Test npm su altra macchina
-4. [OPZIONALE] Carousel PDF per LinkedIn
+1. [OPZIONALE] Verificare account Reddit karma
+2. [OPZIONALE] Test npm su altra macchina
+3. [OPZIONALE] Carousel PDF per LinkedIn
+4. [26 GEN] SHOW HN LAUNCH!
 ```
 
 ---
 
-## ACCOUNT
+## ACCOUNT E REPO
 
 - **npm:** rafapra (CLI + MCP)
-- **GitHub:** rafapra3008/CervellaSwarm (PRIVATO!)
+- **GitHub PUBBLICO:** rafapra3008/cervellaswarm
+- **GitHub PRIVATO:** rafapra3008/cervellaswarm-archive
+- **Locale privato:** ~/Developer/CervellaSwarm
+- **Locale pubblico:** ~/Developer/cervellaswarm-public
 - **Cloudflare:** rafapra@gmail.com
 
 ---
 
-*"Draft pronti, score 9.6, serve solo repo pubblico!"*
+*"Repo pubblico! Score 10/10! Pronti per Show HN!"*
