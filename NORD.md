@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 19 Gennaio 2026 - Sessione 281 - W3-A COMPLETATO! (10/10)
+> Aggiornato: 19 Gennaio 2026 - Sessione 282 - W3-B Day 5-6 DONE! (9.5/10)
 
 ```
 +==================================================================+
@@ -221,25 +221,41 @@ SESSIONE 280: 🎯 W2.5-D AUDIT FINALE!
   ✓ AUDIT GUARDIANA QUALITA: 9.6/10 APPROVED!
   → W2.5-D COMPLETATO! W2.5 FINITO!
 
-SESSIONE 281: 🚀 W3-A SEMANTIC SEARCH! ← OGGI!
+SESSIONE 281: 🚀 W3-A SEMANTIC SEARCH!
   ✓ SUBROADMAP_W3 creata con AC chiari
   ✓ Day 1: semantic_search.py (9.5/10)
-    - find_symbol(), find_callers(), find_callees(), find_references()
   ✓ Day 2: impact_analyzer.py (10/10)
-    - estimate_impact(), find_dependencies(), find_dependents()
-  ✓ Day 3: Test suite 25/25 PASS + BUG FIX exclude dirs
+  ✓ Day 3: Test suite 25/25 PASS
   ✓ Day 4: docs/SEMANTIC_SEARCH.md (778 righe)
-  ✓ AUDIT FINALE GUARDIANA QUALITA: 10/10 APPROVED!
-  → W3-A COMPLETATO! Semantic Search DONE!
+  ✓ AUDIT FINALE: 10/10 APPROVED!
+  → W3-A COMPLETATO!
 
-SCORE: 100/100 ✅ W3-A SEMANTIC SEARCH DONE!
+SESSIONE 282: 🏗️ W3-B ARCHITECT PATTERN DAY 5-6! ← OGGI!
+  ✓ RICERCA: Claude Code, Cursor, Aider patterns
+  ✓ Day 5: Architect Agent (9.0/10)
+    - cervella-architect.md (259 righe) - Opus planning
+    - PLAN_TEMPLATE.md (150 righe) - 4-phase template
+    - task_classifier.py (280 righe) - Trigger logic
+    - 29 hardtests PASS
+  ✓ Day 6: Flow Integration (10.0/10)
+    - architect_flow.py (525 righe)
+    - REQ-15: route_task() - Regina routing
+    - REQ-16: validate_plan() - Plan validation
+    - REQ-17: handle_plan_rejection() - Fallback 2x
+    - 26 hardtests PASS
+  → W3-B 66% COMPLETATO! Day 7 per finire!
+
+SCORE: 100/100 ✅ W3-B DAY 5-6 DONE!
 
 ROADMAP 2.0:
   W1: Git Flow       ████████████████████ 100% ✅
   W2: Tree-sitter    ████████████████████ 100% ✅
   W3: Architect/Editor
-      W3-A: Semantic Search         DONE (10/10) ← SESSIONE 281!
-      W3-B: Architect Pattern       NEXT (3 giorni)
+      W3-A: Semantic Search         DONE (10/10)
+      W3-B: Architect Pattern       66% (9.5/10) ← SESSIONE 282!
+        - Day 5: Agent             DONE 9/10
+        - Day 6: Flow              DONE 10/10
+        - Day 7: Benchmark         NEXT
   W4: Polish + v2.0-beta
 ```
 
