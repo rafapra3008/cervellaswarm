@@ -1,7 +1,7 @@
 # MAPPA VERITA - MIRACOLLOOK
 
 > **QUESTO FILE RIFLETTE IL CODICE REALE**
-> **Generato: 19 Gennaio 2026 - Analisi diretta del codice**
+> **Aggiornato: 19 Gennaio 2026 - Sessione 268**
 > **"SU CARTA" != "REALE" - Questo file e REALE**
 
 ---
@@ -11,10 +11,10 @@
 ```
 +================================================================+
 |                                                                |
-|   FASE 1 (Email Solido): 98% REALE (Sessione 267!)            |
+|   CODICE: 100% | ROBUSTEZZA: 6.5/10 → 9.5                      |
 |                                                                |
-|   Frontend: 8.5/10 | ~4,700 righe | 40 file                   |
-|   Backend:  8.5/10 | ~3,000 righe | 34 endpoint (+labels!)    |
+|   Frontend: 8.5/10 | ~4,800 righe | 41 file (+LabelPicker)    |
+|   Backend:  8.5/10 | ~3,100 righe | 34 endpoint               |
 |                                                                |
 +================================================================+
 ```
@@ -39,18 +39,31 @@
 | **Command Palette** | CommandPalette | - | CMDK v1.1.1 |
 | **Design Salutare** | CSS con colori corretti | - | #778DA9, #E0DED0, #EBEBF5 |
 
-### IMPLEMENTATE (Sessione 267)
+### IMPLEMENTATE (Sessione 267-268)
 
 | Feature | Frontend | Backend | Note |
 |---------|----------|---------|------|
 | **Bulk Actions** | useBulkActions.ts | POST /batch-modify | Gmail batchModify nativo! |
 | **Labels CRUD** | api.ts (6 metodi) | labels.py (6 endpoint) | CRUD completo + assign! |
+| **Add Label UI** | LabelPicker.tsx + BulkActionsBar | +add_label/remove_label | Sessione 268! |
 
-### DA IMPLEMENTARE (UI Integration)
+### DA IMPLEMENTARE (Robustezza - SUBROADMAP)
+
+| Fase | Feature | Effort | Score |
+|------|---------|--------|-------|
+| 0 | Dependency audit + Split api.py | 2h | prep |
+| 1 | Token encryption + Gitignore | 3-4h | 7.5/10 |
+| 2 | Auto-start + Backup + Health | 1-2h | 8.0/10 |
+| 3 | Rate limiting + Retry | 2-3h | 8.5/10 |
+| 4 | Testing pytest 80% | 4-5 giorni | 9.0/10 |
+| 5-6 | Monitoring + Frontend env | 8-10h | 9.5/10 |
+
+**SUBROADMAP:** `docs/roadmap/SUBROADMAP_MIRACOLLOOK_ROBUSTEZZA.md`
+
+### DA IMPLEMENTARE (Post-Robustezza)
 
 | Feature | Effort Stimato | Note |
 |---------|----------------|------|
-| Abilitare Add Label UI | 2h frontend | Backend pronto, UI disabled |
 | Contacts Autocomplete | 6h full | Google People API |
 | Settings Page | 8h full | Preferenze utente |
 
@@ -140,20 +153,24 @@ miracallook/backend/
 ## PROSSIMI STEP REALI
 
 ```
-PRIORITA 1 - Completare FASE 1 (98% -> 100%):
-[x] Bulk Actions API - FATTO + TESTATO Sessione 267!
-[x] Labels CRUD API - FATTO + TESTATO Sessione 267!
-[ ] Abilitare Add Label UI (context menu) (2h)
+PRIORITA 1 - ROBUSTEZZA (da SUBROADMAP):
+[ ] FASE 0.1: Dependency audit (pip-audit)
+[ ] FASE 0.2: Split api.py (1391 righe!)
+[ ] FASE 1.1: Token encryption
+[ ] FASE 1.2: Gitignore root
 
-PRIORITA 2 - FASE 2 PMS Integration:
-[ ] Guest Identification (8h)
-[ ] GuestSidebar reale con dati PMS (6h)
-[ ] Booking Context (4h)
+PRIORITA 2 - Continuare SUBROADMAP:
+[ ] FASE 2: Auto-start + Backup + Health
+[ ] FASE 3: Rate limiting + Retry
+[ ] FASE 4: Testing 80%+
 
-PRIORITA 3 - Polish:
-[ ] Contacts Autocomplete (6h)
-[ ] Settings Page (8h)
+PRIORITA 3 - Post-Robustezza:
+[ ] PMS Integration (Guest Identification)
+[ ] Contacts Autocomplete
+[ ] Settings Page
 ```
+
+**CODICE FEATURE COMPLETE!** Ora focus su ROBUSTEZZA.
 
 ---
 

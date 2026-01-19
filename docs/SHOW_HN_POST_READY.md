@@ -52,7 +52,7 @@ npx cervellaswarm init
 npx cervellaswarm task "add login page"
 ```
 
-Free tier available. Apache-2.0 licensed.
+Apache-2.0 licensed. Uses your own Anthropic API key.
 
 **What I need from you:**
 - Does this solve a real problem for you?
@@ -62,6 +62,7 @@ Free tier available. Apache-2.0 licensed.
 I don't know where all this energy and knowledge came from. What we're doing with AI feels "incredible, real, and magical at the same time." But it works. And I'd love your honest feedback.
 
 GitHub: https://github.com/rafapra3008/CervellaSwarm
+npm: https://www.npmjs.com/package/cervellaswarm
 ```
 
 ---

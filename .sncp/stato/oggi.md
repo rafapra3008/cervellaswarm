@@ -1,6 +1,6 @@
 # OGGI - 19 Gennaio 2026
 
-> **Sessione:** 267 | **Progetto:** CervellaSwarm | **Focus:** REPO PUBBLICO!
+> **Sessione:** 268 | **Progetto:** Miracollo | **Focus:** Miracollook Robustezza
 
 ---
 
@@ -8,9 +8,9 @@
 
 ```
 +================================================================+
-|   BLOCCO CRITICO RISOLTO!                                      |
-|   GitHub repo ORA è PUBBLICO                                   |
-|   SCORE: 10/10 - Pronti per Show HN!                           |
+|   MIRACOLLOOK: Codice 100% | Robustezza 6.5/10 → 9.5          |
+|   SUBROADMAP creata e reviewata (Guardiana 10/10)              |
+|   Casa organizzata, pronti per implementare                    |
 +================================================================+
 ```
 
@@ -18,40 +18,35 @@
 
 ## COSA FATTO
 
-1. **Analisi file sensibili**
-   - Consultate 3 Guardiane (Security, Ops, Qualità)
-   - Decisione: HYBRID MODEL
+1. **Add Label implementato**
+   - Backend batch-modify +add_label/remove_label
+   - Frontend LabelPicker dropdown
+   - Build verificato OK
 
-2. **Creazione repo pubblico**
-   - 72 file puliti
-   - Nessun file sensibile (.sncp, NORD, studi)
-   - History pulita (1 commit)
+2. **Analisi completa (3 Cervelle)**
+   - Researcher: zero conflitti, OAuth OK
+   - Ingegnera: score 6.5/10
+   - DevOps: raccomanda locale + robustezza
 
-3. **Protezione famiglia**
-   - Repo vecchio → cervellaswarm-archive (privato)
-   - Locale completo resta in ~/Developer/CervellaSwarm
+3. **SUBROADMAP creata**
+   - 7 fasi, 17 task dettagliati
+   - Review Guardiana Qualita (8.5 → 10/10)
+   - Metriche di verifica per ogni fase
 
----
-
-## ARCHITETTURA DECISA
-
-```
-PUBBLICO: github.com/rafapra3008/cervellaswarm
-- packages/cli, packages/mcp-server
-- README, LICENSE, docs pubblici
-
-PRIVATO: locale + cervellaswarm-archive
-- .sncp/, NORD.md, studi business
-```
+4. **Documentazione aggiornata**
+   - NORD.md con stato REALE
+   - PROMPT_RIPRESA sessione 268
 
 ---
 
 ## PROSSIMA SESSIONE
 
-- Test `npx cervellaswarm init` macchina pulita
-- Verificare account Reddit (karma)
-- 26 Gen = SHOW HN LAUNCH!
+```
+FASE 0.1: Dependency Audit (pip-audit)     15-30 min
+FASE 0.2: Split api.py (1391 righe!)       1-2h
+FASE 1.1: Token encryption                 2-3h
+```
 
 ---
 
-*"Repo pubblico! Score 10/10! Pronti per Show HN!"*
+*"Fatto BENE > Fatto VELOCE" - Casa organizzata!*

@@ -1,8 +1,7 @@
 # STATO PROGETTO MIRACOLLO
 
-> **Data:** 2026-01-16 - Sessione 232
-> **Score:** 9.5/10 STABILE
-> **Architettura:** 3 Bracci (PMS Core, Miracallook, Room Hardware)
+> **Data:** 2026-01-19 - Sessione 268
+> **Architettura:** 3 Bracci (PMS Core, Miracollook, Room Hardware)
 
 ---
 
@@ -10,84 +9,76 @@
 
 ```
 MIRACOLLO
-├── PMS CORE (:8000)        85%  PRODUZIONE
-├── MIRACALLOOK (:8002)     60%  FUNZIONANTE
-└── ROOM HARDWARE (:8003)   10%  RICERCA OK
+├── PMS CORE (:8001)        90%  PRODUZIONE STABILE
+├── MIRACOLLOOK (:8002)     Codice 100% | Robustezza 6.5/10
+└── ROOM HARDWARE (:8003)   10%  Attesa hardware
 ```
 
-| Braccio | Stato | Prossimo |
-|---------|-------|----------|
-| PMS Core | LIVE, stabile | Manutenzione |
-| Miracallook | Funzionante | Palette salutare |
-| Room Hardware | Ricerca completa | Setup hardware |
-
-**Dettagli:** Vedi `bracci/{braccio}/stato.md`
+| Braccio | Stato | Score | Prossimo |
+|---------|-------|-------|----------|
+| PMS Core | LIVE, stabile | 90% | Modulo Finanziario |
+| Miracollook | Codice OK | 6.5→9.5 | SUBROADMAP Robustezza |
+| Room Hardware | Ricerca OK | 10% | Setup hardware |
 
 ---
 
-## SESSIONI RECENTI (Summary)
+## MIRACOLLOOK - STATO DETTAGLIATO
+
+```
+CODICE FEATURE:             [####################] 100%
+├── Inbox + Thread view     ✅ FATTO
+├── Compose/Reply/Forward   ✅ FATTO
+├── Bulk Actions (batch)    ✅ FATTO (Sessione 267)
+├── Labels CRUD             ✅ FATTO (Sessione 267)
+└── Add Label to emails     ✅ FATTO (Sessione 268)
+
+ROBUSTEZZA:                 [#############.......] 6.5/10
+├── Security (token crypt)  ❌ DA FARE (FASE 1)
+├── Auto-start (launchd)    ❌ DA FARE (FASE 2)
+├── Rate limiting           ❌ DA FARE (FASE 3)
+├── Testing (pytest)        ❌ DA FARE (FASE 4)
+└── Monitoring              ❌ DA FARE (FASE 5)
+```
+
+**SUBROADMAP:** `docs/roadmap/SUBROADMAP_MIRACOLLOOK_ROBUSTEZZA.md`
+
+---
+
+## PMS CORE - MODULO FINANZIARIO
+
+```
+FASE 1: Ricevute PDF        [####################] 100% REALE!
+FASE 1B: Checkout UI        [####################] 100% REALE!
+FASE 2: Scontrini RT        [##################..] 90% Adapter SOAP OK
+FASE 3: Fatture XML         [##..................] 10% Studiato
+FASE 4: Export              [....................] 0%
+```
+
+**Prossimo:** Test stampante Bar + Parlare contabilista
+
+---
+
+## RATEBOARD (AI PRICING)
+
+```
+STATUS:                     [####################] 100% LIVE!
+├── Transparent AI          ✅ LIVE
+├── Learning from Actions   ✅ LIVE
+├── Meteo Integration       ✅ LIVE
+├── Eventi Locali           ✅ LIVE
+└── Competitor (POC)        ⏸️ Parcheggiato
+```
+
+---
+
+## SESSIONI RECENTI
 
 | Sess | Data | Focus | Risultato |
 |------|------|-------|-----------|
-| 232 | 16 Gen | MAPPA ecosistema | NORD.md + Audit completo |
-| 231 | 16 Gen | Architettura 3 bracci | Struttura creata |
-| 230 | 16 Gen | Miracallook tasks | 3 feature complete |
-| 215 | 15 Gen | Room Manager polish | Score 9.5/10 |
-| 213-214 | 15 Gen | Room Manager MVP | Backend + Frontend |
-| 210-212 | 14 Gen | Studio VDA | 26 screenshot analizzati |
-| 207 | 14 Gen | Pianificazione RM | Piano 6 fasi |
-
-> **Archivio dettagli:** `archivio/SESSIONI_207_215.md`
-
----
-
-## FASE 2: TRANSPARENT AI - COMPLETATA (100%)
-
-| Task | Status |
-|------|--------|
-| Ricerca XAI | FATTO |
-| Confidence Breakdown UI | FATTO |
-| Explanation Breakdown | FATTO |
-| Demand Curve | FATTO |
-| Analytics Tracking | FATTO |
-
----
-
-## FASE 3: LEARNING FROM ACTIONS - COMPLETATA (100%)
-
-| Task | Status |
-|------|--------|
-| Migration DB | FATTO |
-| FeedbackWidget UI | FATTO |
-| Implicit Tracking | FATTO |
-| Pattern Recognition | FATTO |
-| Dashboard Metriche | FATTO |
-
----
-
-## FASE 4: EXTERNAL DATA - COMPLETATA
-
-### 4A: Festivita
-- `backend/services/calendar_events.py` - 14 festivita + stagionalita
-
-### 4B: Meteo - 100%
-- WeatherAPI.com LIVE
-- weather_service.py (450+ righe)
-- Frontend widget completo
-
-### 4C: Eventi Locali - 100%
-- 8 API endpoints
-- 6 eventi seed (Olimpiadi, Coppa Mondo, etc.)
-
----
-
-## FASE 5: COMPETITOR - POC PRONTO
-
-| Task | Status |
-|------|--------|
-| Playwright scraping | FATTO |
-| Test 6 competitor | 32 prezzi, 100% |
-| DB schema + scheduler | TODO |
+| 268 | 19 Gen | Miracollook Robustezza | SUBROADMAP 7 fasi |
+| 267 | 19 Gen | Miracollook Bulk+Labels | Codice 100%! |
+| 266 | 19 Gen | SOAP Adapter Epson | Fix completo |
+| 262-263 | 18 Gen | Receipt PDF + Checkout | REALE! |
 
 ---
 
@@ -95,41 +86,23 @@ MIRACOLLO
 
 | Componente | Status |
 |------------|--------|
-| VM Google Cloud | LIVE |
-| Nginx + SSL | LIVE |
-| SQLite | 80+ tabelle, 3.8MB |
-| UptimeRobot | Documentato |
+| PMS Core VM (GCP) | LIVE |
+| Miracollook | Locale Mac |
+| SQLite PMS | 80+ tabelle |
+| SQLite Look | Token storage |
 
 ---
 
-## TL;DR
+## PUNTATORI
 
-```
-PMS CORE:       85% - PRODUZIONE STABILE
-MIRACALLOOK:    60% - Email client funzionante
-ROOM HARDWARE:  10% - Ricerca completa, attesa hardware
-
-RATEBOARD:      9.5/10 - TARGET RAGGIUNTO!
-METEO:          LIVE in produzione
-EVENTI:         LIVE in produzione
-COMPETITOR:     POC pronto
-
-PROSSIMO: Palette Miracallook o Setup Hardware
-```
-
----
-
-## I NOSTRI VANTAGGI UNICI
-
-| Feature | IDeaS/Duetto | Miracollo |
-|---------|--------------|-----------|
-| Native PMS | NO | **YES** |
-| Transparent AI | Parziale | **YES** |
-| Meteo Integration | Enterprise | **GRATIS** |
-| Eventi Locali | PredictHQ ($$$) | **GRATIS** |
-| SMB-Friendly | NO | **YES** |
+| Cosa | Dove |
+|------|------|
+| NORD.md | `miracollogeminifocus/NORD.md` |
+| SUBROADMAP Robustezza | `docs/roadmap/SUBROADMAP_MIRACOLLOOK_ROBUSTEZZA.md` |
+| SUBROADMAP Fatture | `docs/roadmap/SUBROADMAP_FASE3_FATTURE_XML.md` |
+| MAPPA Finanziario | `.sncp/.../finanziario/MAPPA_MODULO_FINANZIARIO.md` |
 
 ---
 
 *"Fatto BENE > Fatto VELOCE"*
-*Aggiornato: 16 Gennaio 2026 - Sessione 232*
+*Aggiornato: 19 Gennaio 2026 - Sessione 268*
