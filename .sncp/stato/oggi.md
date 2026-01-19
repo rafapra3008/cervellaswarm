@@ -1,6 +1,6 @@
 # OGGI - 19 Gennaio 2026
 
-> **Sessione:** 266 | **Progetto:** Contabilita | **Focus:** Landing Sprint 2+3
+> **Sessione:** 266 | **Progetto:** Miracollo | **Focus:** Fix SOAP + FASE 3 Fatture
 
 ---
 
@@ -8,8 +8,8 @@
 
 ```
 +================================================================+
-|   LANDING PAGE IMPLEMENTATA! Sprint 2+3 COMPLETATI!            |
-|   1.781 righe codice | 7 sezioni | Review 9/10                 |
+|   FIX SOAP ADAPTER + FASE 3 FATTURE STUDIATA!                  |
+|   Flusso chiarito: Miracollo → XML → SPRING → SDI              |
 +================================================================+
 ```
 
@@ -17,41 +17,41 @@
 
 ## COSA FATTO
 
-1. **Guardiana Qualita** - Analisi contenuti (9/10)
-2. **Cervella Marketing** - Mockup design (1.477 righe)
-3. **Cervella Frontend** - Implementazione HTML/CSS/JS
-4. **Review Finale** - Guardiana 9/10 + Scienziata 8.5/10
+1. **Fix SOAP Adapter Epson** (4 fix)
+   - URL con query params
+   - Content-Type: text/xml
+   - SOAP Envelope wrapper
+   - _parse_response naviga soap:Body
+
+2. **Ricerca FASE 3 Fatture**
+   - FatturaPA per hotel
+   - Import XML in SPRING
+   - Flusso Ericsoft (come era prima)
+
+3. **SUBROADMAP FASE 3 creata**
+   - Piano 5 step
+   - Libreria: python-a38
+   - Zero costi extra (usa SPRING!)
 
 ---
 
-## FILE CREATI
+## FLUSSO FATTURE CHIARITO
 
 ```
-ContabilitaAntigravity/landing/
-├── index.html    363 righe
-├── styles.css  1.077 righe
-├── scripts.js    341 righe
-└── README.md
+Miracollo → XML FatturaPA → Cartella → SPRING → SDI
 
-docs/landing/MOCKUP_DESIGN.md  1.477 righe
+- Solo 10-15 fatture/mese
+- SPRING già gestisce SDI
+- Come faceva Ericsoft!
 ```
-
----
-
-## FIX PRE-DEPLOY
-
-| Issue | Fix |
-|-------|-----|
-| console.log | Rimuovere 4 log in scripts.js |
-| Numeri | 150+ ore → 180+ |
-| Quote finale | Verificare grammatica |
 
 ---
 
 ## PROSSIMA SESSIONE
 
-- Fix minori + Decidere hosting + **DEPLOY!**
+- Parlare con contabilista (path cartella, dati cedente)
+- Test su stampante Epson Bar (quando in hotel)
 
 ---
 
-*"Il nostro primo capolavoro ha la sua presentazione!"*
+*"Non reinventiamo la ruota - usiamo lo standard!"*
