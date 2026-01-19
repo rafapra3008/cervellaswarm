@@ -11,11 +11,26 @@
 #   ./git_worker_commit.sh --check-dirty      # Verifica se ci sono uncommitted changes
 #   ./git_worker_commit.sh --dry-run ...      # Mostra commit senza eseguirlo
 #
-# Versione: 1.1.0
+# Versione: 1.2.2
 # Data: 2026-01-19
 # Basato su: Studio Aider Git Integration (docs/studio/STUDIO_GIT_FLOW_AI_AGENTS.md)
 #
 # CHANGELOG:
+# v1.2.2: Day 2 Audit Completo - Sessione 272
+#   - FIX CRITICO: undo --hard → --soft (preserva modifiche staged!)
+#   - FIX: orchestrator aggiunto a worker_attribution.json (16/16)
+# v1.2.1: Day 2 Fix - Audit Guardiana 9.5+ (Sessione 272)
+#   - FIX: doppio fallback || → check esplicito stringa vuota
+#   - FIX: concatenazione newline → printf leggibile
+#   - FIX: grep -c . → logica semplificata (no count needed)
+#   - NUOVO: pattern src/* per scope detection (13 patterns totali)
+#   - DOCS: scope patterns documentati in --help
+# v1.2.0: Day 2 - Type & Scope Auto-Detection (Sessione 272)
+#   - NUOVO: auto_detect_type() - suggerisce tipo commit dai file
+#   - NUOVO: --auto flag per auto-detect completo
+#   - MIGLIORATO: scope detection con 12 patterns (+4 nuovi: sncp, reports, config, db)
+#   - Pattern migliorati per: docs, scripts, api, ui, test
+#   - Info feedback quando tipo/scope auto-detectati
 # v1.1.0: Fix audit Guardiana Qualita (9.5 target)
 #   - Single source of truth: legge attribution da JSON con jq
 #   - Aggiunto --allow-hooks per eseguire pre-commit hooks
@@ -52,6 +67,7 @@ CERVELLASWARM_EMAIL="noreply@cervellaswarm.com"
 ALLOW_HOOKS=false
 STAGED_ONLY=false
 DRY_RUN=false
+AUTO_DETECT=false
 
 # ============================================================================
 # WORKER ATTRIBUTION - SINGLE SOURCE OF TRUTH (JSON)
@@ -113,17 +129,125 @@ get_worker_attribution() {
 }
 
 # ============================================================================
-# SCOPE AUTO-DETECTION
+# TYPE AUTO-DETECTION (Day 2 Feature)
+# ============================================================================
+
+# Detecta tipo commit automaticamente dai file modificati
+auto_detect_type() {
+    local changed_files
+    local new_files
+    local modified_files
+
+    if [ "$STAGED_ONLY" = true ]; then
+        changed_files=$(git diff --cached --name-only 2>/dev/null)
+        new_files=$(git diff --cached --name-only --diff-filter=A 2>/dev/null)
+        modified_files=$(git diff --cached --name-only --diff-filter=M 2>/dev/null)
+    else
+        # Fix: check empty string, not exit code (git returns 0 even with empty output)
+        changed_files=$(git diff --cached --name-only 2>/dev/null)
+        if [ -z "$changed_files" ]; then
+            changed_files=$(git diff --name-only 2>/dev/null)
+        fi
+        new_files=$(git status --porcelain | grep "^??" | cut -c4-)
+        modified_files=$(git status --porcelain | grep "^ M\|^M " | cut -c4-)
+    fi
+
+    if [ -z "$changed_files" ] && [ -z "$new_files" ]; then
+        echo "chore"
+        return
+    fi
+
+    # Conta pattern per tipo
+    local docs_count=0
+    local test_count=0
+    local feat_count=0
+    local config_count=0
+    local style_count=0
+
+    # Analizza file modificati/nuovi (Fix: readable concatenation)
+    local all_files
+    all_files=$(printf '%s\n%s' "$changed_files" "$new_files")
+
+    while IFS= read -r file; do
+        [ -z "$file" ] && continue
+        case "$file" in
+            # Documentazione
+            *.md|docs/*|*.txt|*.rst) docs_count=$((docs_count + 1)) ;;
+            # Test
+            *test*|*spec*|__tests__/*|tests/*) test_count=$((test_count + 1)) ;;
+            # Config/Chore
+            package.json|tsconfig.json|*.config.js|*.config.ts|.eslintrc*|.prettierrc*|Makefile|Dockerfile)
+                config_count=$((config_count + 1)) ;;
+            # Style (CSS, formatting)
+            *.css|*.scss|*.sass|*.less) style_count=$((style_count + 1)) ;;
+            # Codice (potenziale feature)
+            *.ts|*.tsx|*.js|*.jsx|*.py|*.sh|*.go|*.rs)
+                feat_count=$((feat_count + 1)) ;;
+        esac
+    done <<< "$all_files"
+
+    # Logica decisionale
+    local total=$((docs_count + test_count + feat_count + config_count + style_count))
+
+    # Se SOLO docs → docs
+    if [ $docs_count -gt 0 ] && [ $docs_count -eq $total ]; then
+        echo "docs"
+        return
+    fi
+
+    # Se SOLO test → test
+    if [ $test_count -gt 0 ] && [ $test_count -eq $total ]; then
+        echo "test"
+        return
+    fi
+
+    # Se SOLO style → style
+    if [ $style_count -gt 0 ] && [ $style_count -eq $total ]; then
+        echo "style"
+        return
+    fi
+
+    # Se SOLO config → chore
+    if [ $config_count -gt 0 ] && [ $config_count -eq $total ]; then
+        echo "chore"
+        return
+    fi
+
+    # Se ci sono file nuovi → feat (nuova feature)
+    # Fix: simplified logic - if new_files is non-empty, there are new files
+    if [ -n "$new_files" ]; then
+        echo "feat"
+        return
+    fi
+
+    # Default: feat per codice, chore per altro
+    if [ $feat_count -gt 0 ]; then
+        echo "feat"
+    else
+        echo "chore"
+    fi
+}
+
+# ============================================================================
+# SCOPE AUTO-DETECTION (Day 2 Enhanced)
 # ============================================================================
 
 # Detecta scope automaticamente dai file modificati
 auto_detect_scope() {
     local changed_files
+    local untracked_files
 
     if [ "$STAGED_ONLY" = true ]; then
         changed_files=$(git diff --cached --name-only 2>/dev/null)
     else
-        changed_files=$(git diff --cached --name-only 2>/dev/null || git diff --name-only 2>/dev/null)
+        # Include sia file staged/modified che untracked
+        changed_files=$(git diff --cached --name-only 2>/dev/null)
+        [ -z "$changed_files" ] && changed_files=$(git diff --name-only 2>/dev/null)
+        untracked_files=$(git status --porcelain | grep "^??" | cut -c4-)
+        if [ -n "$untracked_files" ]; then
+            changed_files="${changed_files}
+${untracked_files}"
+        fi
     fi
 
     if [ -z "$changed_files" ]; then
@@ -131,7 +255,7 @@ auto_detect_scope() {
         return
     fi
 
-    # Conta file per directory
+    # Conta file per directory (Day 2 Enhanced - more patterns)
     local cli_count=0
     local mcp_count=0
     local docs_count=0
@@ -140,37 +264,64 @@ auto_detect_scope() {
     local ui_count=0
     local test_count=0
     local hooks_count=0
+    local src_count=0
+    local sncp_count=0
+    local reports_count=0
+    local config_count=0
+    local db_count=0
 
     while IFS= read -r file; do
+        [ -z "$file" ] && continue
         case "$file" in
+            # CervellaSwarm specific
             packages/cli/*) cli_count=$((cli_count + 1)) ;;
             packages/mcp-server/*) mcp_count=$((mcp_count + 1)) ;;
-            docs/*) docs_count=$((docs_count + 1)) ;;
-            scripts/*) scripts_count=$((scripts_count + 1)) ;;
-            *api*|*endpoint*|*route*) api_count=$((api_count + 1)) ;;
-            *component*|*.tsx|*.jsx|*.css) ui_count=$((ui_count + 1)) ;;
-            *test*|*spec*) test_count=$((test_count + 1)) ;;
+            # Common src directory (many projects use this)
+            src/*) src_count=$((src_count + 1)) ;;
+            # SNCP (memoria esterna)
+            .sncp/*) sncp_count=$((sncp_count + 1)) ;;
+            # Reports
+            reports/*) reports_count=$((reports_count + 1)) ;;
+            # Documentation
+            docs/*|*.md) docs_count=$((docs_count + 1)) ;;
+            # Scripts
+            scripts/*|*.sh) scripts_count=$((scripts_count + 1)) ;;
+            # API/Backend
+            *api*|*endpoint*|*route*|*handler*|*controller*) api_count=$((api_count + 1)) ;;
+            # UI/Frontend
+            *component*|*.tsx|*.jsx|*.css|*.scss|*page*|*view*) ui_count=$((ui_count + 1)) ;;
+            # Test
+            *test*|*spec*|__tests__/*|tests/*) test_count=$((test_count + 1)) ;;
+            # Hooks/Config Claude
             .claude/*|hooks/*) hooks_count=$((hooks_count + 1)) ;;
+            # Config files
+            package.json|tsconfig.json|*.config.*|.eslintrc*|.prettierrc*|Makefile|Dockerfile)
+                config_count=$((config_count + 1)) ;;
+            # Database
+            *migration*|*schema*|*.sql|*model*) db_count=$((db_count + 1)) ;;
         esac
     done <<< "$changed_files"
 
-    # Trova il maggiore
-    local max=$cli_count
-    local scope="cli"
+    # Trova il maggiore (Day 2 Enhanced - priority order)
+    local max=0
+    local scope=""
 
+    # Priority: specific > generic
+    if [ $cli_count -gt $max ]; then max=$cli_count; scope="cli"; fi
     if [ $mcp_count -gt $max ]; then max=$mcp_count; scope="mcp"; fi
-    if [ $docs_count -gt $max ]; then max=$docs_count; scope="docs"; fi
-    if [ $scripts_count -gt $max ]; then max=$scripts_count; scope="scripts"; fi
+    if [ $src_count -gt $max ]; then max=$src_count; scope="src"; fi
+    if [ $sncp_count -gt $max ]; then max=$sncp_count; scope="sncp"; fi
+    if [ $reports_count -gt $max ]; then max=$reports_count; scope="reports"; fi
     if [ $api_count -gt $max ]; then max=$api_count; scope="api"; fi
     if [ $ui_count -gt $max ]; then max=$ui_count; scope="ui"; fi
+    if [ $db_count -gt $max ]; then max=$db_count; scope="db"; fi
     if [ $test_count -gt $max ]; then max=$test_count; scope="test"; fi
+    if [ $scripts_count -gt $max ]; then max=$scripts_count; scope="scripts"; fi
     if [ $hooks_count -gt $max ]; then max=$hooks_count; scope="hooks"; fi
+    if [ $config_count -gt $max ]; then max=$config_count; scope="config"; fi
+    if [ $docs_count -gt $max ]; then max=$docs_count; scope="docs"; fi
 
-    if [ $max -eq 0 ]; then
-        echo ""
-    else
-        echo "$scope"
-    fi
+    echo "$scope"
 }
 
 # ============================================================================
@@ -260,8 +411,20 @@ do_commit() {
         print_info "Worker validi: $VALID_WORKERS"
     fi
 
+    # Auto-detect type se non fornito o se --auto attivo
+    if [ -z "$commit_type" ] || [ "$AUTO_DETECT" = true ]; then
+        local detected_type
+        detected_type=$(auto_detect_type)
+        if [ -z "$commit_type" ]; then
+            commit_type="$detected_type"
+            print_info "Tipo auto-detectato: $commit_type"
+        elif [ "$AUTO_DETECT" = true ] && [ "$commit_type" != "$detected_type" ]; then
+            print_info "Tipo fornito: $commit_type (suggerito: $detected_type)"
+        fi
+    fi
+
     if [ -z "$commit_type" ]; then
-        print_error "Commit type richiesto! Usa --type <feat|fix|docs|...>"
+        print_error "Commit type richiesto! Usa --type <feat|fix|docs|...> o --auto"
         exit 1
     fi
 
@@ -279,6 +442,9 @@ do_commit() {
     # Auto-detect scope se non fornito
     if [ -z "$scope" ]; then
         scope=$(auto_detect_scope)
+        if [ -n "$scope" ]; then
+            print_info "Scope auto-detectato: $scope"
+        fi
     fi
 
     # Costruisci header commit
@@ -394,11 +560,11 @@ undo_last_commit() {
     print_warning "Stai per annullare: $last_commit"
     echo ""
 
-    # Esegui undo
-    git reset --hard HEAD^
+    # Esegui undo (--soft preserva le modifiche staged, come da spec)
+    git reset --soft HEAD^
 
     print_success "Commit annullato!"
-    print_info "Stato attuale:"
+    print_info "Le modifiche sono ora staged (pronte per nuovo commit):"
     git status --short
 }
 
@@ -423,6 +589,7 @@ show_usage() {
     echo "  --body \"body\"       Corpo opzionale con dettagli"
     echo ""
     echo "Opzioni avanzate:"
+    echo "  --auto              Auto-detect tipo e scope dai file (Day 2 feature)"
     echo "  --dry-run           Mostra preview commit senza eseguirlo"
     echo "  --staged-only       Committa solo file staged (non fa git add -A)"
     echo "  --allow-hooks       Esegue pre-commit hooks (default: skippati)"
@@ -439,6 +606,7 @@ show_usage() {
     echo "Esempi:"
     echo "  $0 --worker backend --type feat --scope api --message \"Add login\""
     echo "  $0 --worker frontend --type fix --message \"Fix button\" --dry-run"
+    echo "  $0 --worker backend --auto --message \"Update feature\" --dry-run  # auto-detect tipo+scope"
     echo "  $0 --worker tester --type test --staged-only --allow-hooks"
     echo "  $0 --save-user-work"
     echo "  $0 --undo"
@@ -454,6 +622,21 @@ show_usage() {
     echo "  perf     Performance"
     echo "  ci       CI/CD"
     echo "  build    Build system"
+    echo ""
+    echo "Scope Auto-Detection (priority order, most files wins):"
+    echo "  cli      packages/cli/*"
+    echo "  mcp      packages/mcp-server/*"
+    echo "  src      src/*"
+    echo "  sncp     .sncp/*"
+    echo "  reports  reports/*"
+    echo "  api      *api*, *endpoint*, *route*, *handler*, *controller*"
+    echo "  ui       *component*, *.tsx, *.jsx, *.css, *page*, *view*"
+    echo "  db       *migration*, *schema*, *.sql, *model*"
+    echo "  test     *test*, *spec*, __tests__/*, tests/*"
+    echo "  scripts  scripts/*, *.sh"
+    echo "  hooks    .claude/*, hooks/*"
+    echo "  config   package.json, tsconfig.json, *.config.*, Dockerfile"
+    echo "  docs     docs/*, *.md"
     echo ""
 }
 
@@ -505,6 +688,9 @@ main() {
                 ;;
             --dry-run)
                 DRY_RUN=true
+                ;;
+            --auto)
+                AUTO_DETECT=true
                 ;;
             --staged-only)
                 STAGED_ONLY=true

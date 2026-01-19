@@ -1,7 +1,23 @@
 # PROMPT RIPRESA - Contabilita
 
-> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 266
+> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 272
 > **Per SOLO questo progetto!**
+
+---
+
+## SESSIONE 272 - ANALISI BUG PARSER (NON URGENTE)
+
+**PDF analizzato:** `mcnl02012026.pdf` (Desktop)
+
+**Bug identificato:** Numero documento < 10 cifre non riconosciuto
+- Caso: `Gasparotti Fabio - [5900]` con `CAPARRA 4`
+- Parser cerca `\d{3,5}` (3-5 cifre) → non cattura `4` (1 cifra)
+- Fallback prende `2026` (l'anno) come numero documento
+- **Impatto:** Solo numero sbagliato, transazione estratta OK
+
+**Decisione:** Monitorare, non fixare ora. Rafa osserva casi simili.
+
+**Riferimento:** `pdf_parser.py:586` - pattern `Caparra\s+(\d{3,5})`
 
 ---
 

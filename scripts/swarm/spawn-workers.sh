@@ -12,12 +12,15 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 3.5.0
-# Data: 2026-01-10
+# Versione: 3.6.0
+# Data: 2026-01-19
 # Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
 # v2.0.0: Config centralizzata ~/.swarm/config
 #
 # CHANGELOG:
+# v3.6.0: AUTO-COMMIT! Git commit automatico dopo worker task (Sessione 272)
+#         --auto-commit per abilitare, default OFF per sicurezza rollout
+#         Usa git_worker_commit.sh con attribution automatica
 # v3.5.0: CLAUDE MAX! Unset ANTHROPIC_API_KEY per usare account Claude Max invece di API credits.
 # v3.4.0: COMMON LIBRARY! Source common.sh per funzioni condivise (DRY). Backward compatible.
 # v3.3.0: VALIDAZIONE PROGETTO! Non crea piu .swarm/ nel posto sbagliato. Richiede progetto valido.
@@ -70,6 +73,11 @@ MAX_WORKERS=5
 # HEADLESS MODE (v3.1.0) - tmux invece di Terminal.app (DEFAULT!)
 # ============================================================================
 HEADLESS_MODE=true
+
+# ============================================================================
+# AUTO-COMMIT (v3.6.0) - Git commit automatico dopo worker task
+# ============================================================================
+AUTO_COMMIT=false
 
 # ============================================================================
 # OUTPUT UNBUFFERED (v3.2.0) - Output realtime dai worker!
@@ -722,11 +730,22 @@ spawn_worker_headless() {
     # Spawn in tmux detached (NESSUNA FINESTRA!)
     # v3.2.0: Aggiunto STDBUF_CMD per output realtime
     # v3.5.0: Unset ANTHROPIC_API_KEY per usare account Claude Max invece di API
+    # v3.6.0: AUTO_COMMIT - git commit automatico dopo task (se abilitato)
     tmux new-session -d -s "$session_name" \
         "cd ${PROJECT_ROOT} && \
          export CERVELLASWARM_WORKER=1 && \
          unset ANTHROPIC_API_KEY && \
          ${STDBUF_CMD} ${claude_path} -p --append-system-prompt \"\$(cat ${prompt_file})\" \"${initial_prompt}\" 2>&1 | tee \"${log_file}\"; \
+         if [ \"${AUTO_COMMIT}\" = true ]; then \
+             echo '' >> \"${log_file}\"; \
+             echo '[CervellaSwarm] Auto-commit: checking for changes...' >> \"${log_file}\"; \
+             if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null; then \
+                 echo '[CervellaSwarm] Changes detected - creating commit...' >> \"${log_file}\"; \
+                 ${PROJECT_ROOT}/scripts/utils/git_worker_commit.sh --worker ${worker_name} --auto --message 'Complete worker task' >> \"${log_file}\" 2>&1 || echo '[CervellaSwarm] ERROR: Commit failed!' >> \"${log_file}\"; \
+             else \
+                 echo '[CervellaSwarm] No changes to commit.' >> \"${log_file}\"; \
+             fi; \
+         fi; \
          echo 'WORKER_DONE' >> \"${log_file}\""
 
     # Imposta remain-on-exit per catturare output dopo fine
@@ -767,9 +786,12 @@ show_usage() {
     echo "  --no-auto-sveglia      Disabilita AUTO-SVEGLIA (default: attivo!)"
     echo "  --headless             Usa tmux headless (DEFAULT)"
     echo "  --window               Apre finestra Terminal (vecchio comportamento)"
+    echo "  --auto-commit          Abilita git commit automatico dopo task"
+    echo "  --no-auto-commit       Disabilita auto-commit (DEFAULT)"
     echo "  --help                 Mostra questo help"
     echo ""
     echo "  AUTO-SVEGLIA e' ATTIVO di default! La Regina viene svegliata automaticamente."
+    echo "  AUTO-COMMIT e' DISATTIVO di default. Usa --auto-commit per abilitarlo."
     echo ""
     echo "Esempi:"
     echo "  $0 --backend               # Spawna backend (AUTO-SVEGLIA attivo!)"
@@ -777,6 +799,7 @@ show_usage() {
     echo "  $0 --guardiane             # Spawna tutte le guardiane (Opus)"
     echo "  $0 --docs --no-auto-sveglia  # Docs senza svegliare la Regina"
     echo "  $0 --headless --backend    # Backend in tmux (no finestre!)"
+    echo "  $0 --backend --auto-commit # Backend con git commit automatico!"
     echo ""
 }
 
@@ -904,6 +927,12 @@ main() {
                 ;;
             --window)
                 HEADLESS_MODE=false
+                ;;
+            --auto-commit)
+                AUTO_COMMIT=true
+                ;;
+            --no-auto-commit)
+                AUTO_COMMIT=false
                 ;;
             *)
                 print_error "Opzione sconosciuta: $1"

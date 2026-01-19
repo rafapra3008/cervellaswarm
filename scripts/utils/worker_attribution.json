@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Worker to attribution mapping for CervellaSwarm Git Flow",
     "email": "noreply@cervellaswarm.com",
     "created": "2026-01-19",
@@ -90,6 +90,11 @@
       "role": "regina",
       "model": "claude-opus-4-5",
       "specialization": "Orchestration, coordination"
+    },
+    "orchestrator": {
+      "role": "orchestrator",
+      "model": "claude-opus-4-5",
+      "specialization": "Orchestration, coordination (alias regina)"
     },
     "auto-save": {
       "role": "auto-save",

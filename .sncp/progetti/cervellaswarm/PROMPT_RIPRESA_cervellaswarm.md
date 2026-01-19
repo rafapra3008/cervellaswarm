@@ -1,89 +1,90 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 271
-> **STATUS:** W1 Git Flow IN CORSO - Day 1 Completato!
+> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 272
+> **STATUS:** W1 Git Flow - Day 1-5 DONE! Solo Day 6-7 (docs) rimasti
 
 ---
 
-## SESSIONE 271 - GIT FLOW DAY 1 FATTO!
+## SESSIONE 272 - QUALITA CERTIFICATA!
 
 ```
 +================================================================+
-|                                                                |
-|   GIT FLOW v1.1.0 - QUALITY CERTIFIED 9.5/10!                 |
-|                                                                |
-|   Script: scripts/utils/git_worker_commit.sh                  |
-|   Audit: Guardiana Qualita APPROVED                           |
-|                                                                |
+|   GIT FLOW v1.2.2 - CERTIFIED 9.7/10!                         |
+|   SPAWN-WORKERS v3.6.0 - AUTO-COMMIT 9/10!                    |
+|   W1: 5/7 days COMPLETATI!                                    |
 +================================================================+
 ```
 
-**CREATO:**
-- `scripts/utils/git_worker_commit.sh` - Auto-commit + Attribution (550 righe)
-- `scripts/utils/worker_attribution.json` - Mapping 16 agenti
-- `.sncp/templates/commit_message_prompt.txt` - Template AI
+**FATTO:**
+- Day 2: `auto_detect_type()`, 13 scope patterns, `--auto` flag
+- Day 4: `--auto-commit` in spawn-workers (integrazione completa!)
+- Fix: undo --hard→--soft, orchestrator JSON (16/16)
+- 3 audit Guardiana APPROVED
 
-**FUNZIONALITA:**
-- Conventional Commits (feat/fix/docs/...)
-- Co-authored-by con worker/model
-- --dry-run, --staged-only, --allow-hooks
-- --undo (solo commit CervellaSwarm)
+---
+
+## STATO W1 GIT FLOW
+
+| Day | Task | Stato | Score |
+|-----|------|-------|-------|
+| 1 | Setup + Script | ✅ | 9.5 |
+| 2 | Conventional Commits | ✅ | 9.7 |
+| 3 | Attribution | ✅ | - |
+| 4 | Integrazione CLI | ✅ | 9.0 |
+| 5 | Undo | ✅ | - |
+| 6-7 | Docs + Polish | ❌ | TODO |
+
+---
+
+## FILE CHIAVE
+
+| File | Versione |
+|------|----------|
+| `scripts/utils/git_worker_commit.sh` | v1.2.2 |
+| `scripts/utils/worker_attribution.json` | v1.1.0 (16/16) |
+| `scripts/swarm/spawn-workers.sh` | v3.6.0 |
+
+---
+
+## COME USARE AUTO-COMMIT
+
+```bash
+# Default (no auto-commit)
+spawn-workers --backend
+
+# Con auto-commit
+spawn-workers --backend --auto-commit
+```
 
 ---
 
 ## VERSIONI LIVE
 
-| Package | Versione | Link |
-|---------|----------|------|
-| CLI | 0.1.2 | npmjs.com/package/cervellaswarm |
-| MCP Server | 0.2.3 | npmjs.com/package/@cervellaswarm/mcp-server |
-| Landing | LIVE | cervellaswarm.com |
-| **SHOW HN** | **LIVE** | news.ycombinator.com/item?id=42754705 |
+| Package | Versione |
+|---------|----------|
+| CLI | 0.1.2 |
+| MCP Server | 0.2.3 |
+| Show HN | LIVE |
 
 ---
 
 ## ROADMAP 2.0
 
 ```
-W1 (20-26 Gen): Git Flow + Attribution ← IN CORSO (Day 1 OK!)
-W2 (27 Gen-2 Feb): Tree-sitter Repo Mapping
-W3 (3-9 Feb): Architect/Editor Pattern
+W1 (20-26 Gen): Git Flow ← 5/7 DONE!
+W2 (27 Gen-2 Feb): Tree-sitter
+W3 (3-9 Feb): Architect/Editor
 W4 (10-16 Feb): Polish + v2.0-beta
 ```
 
-**PROSSIMA SESSIONE - W1 Day 2:**
-```
-- Parser tipo commit avanzato
-- Scope auto-detect migliorato
-- Test su 5 commit diversi
-```
+---
 
-**Subroadmap:** `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_CERVELLASWARM_2.0_AIDER_FEATURES.md`
-**Task W1:** `.sncp/progetti/cervellaswarm/roadmaps/TASK_BREAKDOWN_2.0_W1_GIT_FLOW.md`
+## PROSSIMA SESSIONE
+
+1. Day 6-7: Documentazione (docs/GIT_ATTRIBUTION.md)
+2. Test reali con worker + auto-commit
+3. README aggiornato
 
 ---
 
-## METODO SESSIONE 271
-
-```
-1. Creo script
-2. Guardiana verifica (8.7/10)
-3. Fix problemi
-4. Re-audit (9.5/10)
-5. APPROVED!
-
-Questo e il METODO per qualita certificata!
-```
-
----
-
-## ACCOUNT E REPO
-
-- **npm:** rafapra
-- **GitHub PUBBLICO:** rafapra3008/cervellaswarm
-- **HN:** rafapra
-- **Cloudflare:** rafapra@gmail.com
-
----
-
-*"271 sessioni. Audit Guardiana = Qualita certificata!"*
+*"272 sessioni. Verificare PRIMA di assumere!"*

@@ -1,0 +1,2790 @@
+{
+  "timestamp": "19/01/2026 10:05",
+  "project": "/Users/rafapra/Developer/miracollogeminifocus/backend",
+  "results": {
+    "large_files": [
+      {
+        "file": "PATTERN_RECOGNITION_IMPLEMENTATION.md",
+        "lines": 527,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "routers/TEST_E2E_GUEST_CHECKIN.md",
+        "lines": 928,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "docs/COMPETITOR_SCRAPING_POC.md",
+        "lines": 547,
+        "suggestion": "Split in sezioni separate"
+      },
+      {
+        "file": "routers/rateboard.py",
+        "lines": 580,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/ml_api.py",
+        "lines": 705,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/autopilot.py",
+        "lines": 680,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/receipts.py",
+        "lines": 505,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/whatsapp.py",
+        "lines": 527,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/planning_ops.py",
+        "lines": 651,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/bookings.py",
+        "lines": 522,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/subscriptions.py",
+        "lines": 540,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/groups.py",
+        "lines": 616,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/planning_core.py",
+        "lines": 746,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/dashboard.py",
+        "lines": 518,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/guest_auth.py",
+        "lines": 541,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/competitor_scraping.py",
+        "lines": 510,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/fiscal.py",
+        "lines": 662,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/action_tracking_service.py",
+        "lines": 517,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/city_tax.py",
+        "lines": 721,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/local_events.py",
+        "lines": 511,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/what_if_api.py",
+        "lines": 534,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/ab_testing_api.py",
+        "lines": 768,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/cm_reservation.py",
+        "lines": 737,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "tests/test_action_tracking.py",
+        "lines": 820,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "tests/test_whatsapp_rate_limiter.py",
+        "lines": 677,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "tests/test_confidence_scorer.py",
+        "lines": 656,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "tests/test_whatsapp_webhook.py",
+        "lines": 859,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "tests/test_pricing_tracking.py",
+        "lines": 619,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "tests/test_revenue_intelligence.py",
+        "lines": 670,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "tests/test_autopilot.py",
+        "lines": 515,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "ml/model_trainer.py",
+        "lines": 734,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "ml/ml_scheduler.py",
+        "lines": 688,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "services/night_audit_service.py",
+        "lines": 595,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "services/competitor_scraping_service.py",
+        "lines": 663,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "services/subscription_service.py",
+        "lines": 612,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "services/event_service.py",
+        "lines": 661,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "services/document_scanner.py",
+        "lines": 651,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "services/weather_service.py",
+        "lines": 539,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "services/email_poller.py",
+        "lines": 525,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "services/pricing_tracking_service.py",
+        "lines": 588,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "services/notification_worker.py",
+        "lines": 593,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "services/cm_import_service.py",
+        "lines": 762,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "services/room_manager_service.py",
+        "lines": 542,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "services/pattern_analyzer.py",
+        "lines": 670,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "services/pagonline/client.py",
+        "lines": 555,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "services/email/sender.py",
+        "lines": 519,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "services/document_intelligence/parsers/italian_document_parser.py",
+        "lines": 639,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "services/document_intelligence/unit_tests/test_document_intelligence.py",
+        "lines": 835,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/guest_checkin/steps.py",
+        "lines": 527,
+        "suggestion": "Split in moduli separati"
+      },
+      {
+        "file": "routers/email/automation.py",
+        "lines": 591,
+        "suggestion": "Split in moduli separati"
+      }
+    ],
+    "large_functions": [
+      {
+        "file": "test_cm_simple.py",
+        "line": 24,
+        "lines": 65,
+        "name": "normalize_phone"
+      },
+      {
+        "file": "test_subscription_api.py",
+        "line": 19,
+        "lines": 127,
+        "name": "test_subscription_system"
+      },
+      {
+        "file": "test_city_tax_config.py",
+        "line": 15,
+        "lines": 115,
+        "name": "test_city_tax_config"
+      },
+      {
+        "file": "seed_tariffe.py",
+        "line": 13,
+        "lines": 110,
+        "name": "seed_tariffe"
+      },
+      {
+        "file": "main.py",
+        "line": 250,
+        "lines": 80,
+        "name": "startup"
+      },
+      {
+        "file": "main.py",
+        "line": 330,
+        "lines": 58,
+        "name": "shutdown"
+      },
+      {
+        "file": "seed_data.py",
+        "line": 5,
+        "lines": 73,
+        "name": "seed"
+      },
+      {
+        "file": "test_competitor_scraping.py",
+        "line": 133,
+        "lines": 70,
+        "name": "parse_booking_prices"
+      },
+      {
+        "file": "test_competitor_scraping.py",
+        "line": 203,
+        "lines": 96,
+        "name": "test_single_competitor"
+      },
+      {
+        "file": "test_competitor_scraping.py",
+        "line": 299,
+        "lines": 96,
+        "name": "test_all_competitors"
+      },
+      {
+        "file": "routers/guests.py",
+        "line": 123,
+        "lines": 57,
+        "name": "update_guest"
+      },
+      {
+        "file": "routers/rateboard.py",
+        "line": 84,
+        "lines": 111,
+        "name": "get_rates_matrix_monthly"
+      },
+      {
+        "file": "routers/rateboard.py",
+        "line": 195,
+        "lines": 90,
+        "name": "bulk_update_rates"
+      },
+      {
+        "file": "routers/rateboard.py",
+        "line": 285,
+        "lines": 74,
+        "name": "get_ai_suggestions"
+      },
+      {
+        "file": "routers/rateboard.py",
+        "line": 471,
+        "lines": 109,
+        "name": "get_competitors"
+      },
+      {
+        "file": "routers/ml_api.py",
+        "line": 70,
+        "lines": 54,
+        "name": "to_variation_dict"
+      },
+      {
+        "file": "routers/ml_api.py",
+        "line": 124,
+        "lines": 78,
+        "name": "get_model_info"
+      },
+      {
+        "file": "routers/ml_api.py",
+        "line": 249,
+        "lines": 67,
+        "name": "retrain_model"
+      },
+      {
+        "file": "routers/ml_api.py",
+        "line": 349,
+        "lines": 67,
+        "name": "calculate_suggestion_confidence"
+      },
+      {
+        "file": "routers/ml_api.py",
+        "line": 416,
+        "lines": 89,
+        "name": "get_suggestion_confidence_breakdown"
+      },
+      {
+        "file": "routers/ml_api.py",
+        "line": 505,
+        "lines": 175,
+        "name": "what_if_simulation"
+      },
+      {
+        "file": "routers/autopilot.py",
+        "line": 180,
+        "lines": 84,
+        "name": "get_log"
+      },
+      {
+        "file": "routers/autopilot.py",
+        "line": 264,
+        "lines": 135,
+        "name": "run_autopilot"
+      },
+      {
+        "file": "routers/autopilot.py",
+        "line": 399,
+        "lines": 67,
+        "name": "_apply_suggestion"
+      },
+      {
+        "file": "routers/autopilot.py",
+        "line": 492,
+        "lines": 62,
+        "name": "rollback_action"
+      },
+      {
+        "file": "routers/autopilot.py",
+        "line": 554,
+        "lines": 63,
+        "name": "rollback_run"
+      },
+      {
+        "file": "routers/autopilot.py",
+        "line": 617,
+        "lines": 63,
+        "name": "get_status"
+      },
+      {
+        "file": "routers/payments.py",
+        "line": 94,
+        "lines": 55,
+        "name": "create_payment"
+      },
+      {
+        "file": "routers/payments.py",
+        "line": 149,
+        "lines": 99,
+        "name": "update_payment"
+      },
+      {
+        "file": "routers/payments.py",
+        "line": 248,
+        "lines": 70,
+        "name": "delete_payment"
+      },
+      {
+        "file": "routers/payments.py",
+        "line": 357,
+        "lines": 126,
+        "name": "charge_vcc"
+      },
+      {
+        "file": "routers/receipts.py",
+        "line": 62,
+        "lines": 236,
+        "name": "get_receipt_preview"
+      },
+      {
+        "file": "routers/receipts.py",
+        "line": 325,
+        "lines": 54,
+        "name": "download_receipt_pdf"
+      },
+      {
+        "file": "routers/receipts.py",
+        "line": 417,
+        "lines": 88,
+        "name": "send_receipt_via_email"
+      },
+      {
+        "file": "routers/booking_detail.py",
+        "line": 17,
+        "lines": 268,
+        "name": "get_booking_full_details"
+      },
+      {
+        "file": "routers/whatsapp.py",
+        "line": 167,
+        "lines": 101,
+        "name": "_handle_auto_reply"
+      },
+      {
+        "file": "routers/whatsapp.py",
+        "line": 286,
+        "lines": 125,
+        "name": "webhook_receive"
+      },
+      {
+        "file": "routers/action_tracking_rollback.py",
+        "line": 31,
+        "lines": 116,
+        "name": "restore_previous_prices"
+      },
+      {
+        "file": "routers/action_tracking_rollback.py",
+        "line": 279,
+        "lines": 92,
+        "name": "perform_rollback"
+      },
+      {
+        "file": "routers/ollama_api.py",
+        "line": 92,
+        "lines": 58,
+        "name": "chat"
+      },
+      {
+        "file": "routers/revenue_bucchi.py",
+        "line": 115,
+        "lines": 91,
+        "name": "get_occupancy_forecast"
+      },
+      {
+        "file": "routers/compliance.py",
+        "line": 82,
+        "lines": 108,
+        "name": "generate_alloggiati_file"
+      },
+      {
+        "file": "routers/compliance.py",
+        "line": 190,
+        "lines": 60,
+        "name": "preview_alloggiati"
+      },
+      {
+        "file": "routers/compliance.py",
+        "line": 250,
+        "lines": 79,
+        "name": "preview_istat"
+      },
+      {
+        "file": "routers/compliance.py",
+        "line": 329,
+        "lines": 117,
+        "name": "generate_istat_file"
+      },
+      {
+        "file": "routers/revenue_suggestions.py",
+        "line": 51,
+        "lines": 91,
+        "name": "get_suggestions"
+      },
+      {
+        "file": "routers/revenue_suggestions.py",
+        "line": 142,
+        "lines": 201,
+        "name": "suggestion_action"
+      },
+      {
+        "file": "routers/planning_ops.py",
+        "line": 151,
+        "lines": 85,
+        "name": "cancel_booking"
+      },
+      {
+        "file": "routers/planning_ops.py",
+        "line": 236,
+        "lines": 85,
+        "name": "delete_booking"
+      },
+      {
+        "file": "routers/planning_ops.py",
+        "line": 387,
+        "lines": 62,
+        "name": "update_booking_room"
+      },
+      {
+        "file": "routers/planning_ops.py",
+        "line": 449,
+        "lines": 105,
+        "name": "get_today_arrivals"
+      },
+      {
+        "file": "routers/planning_ops.py",
+        "line": 554,
+        "lines": 97,
+        "name": "get_today_departures"
+      },
+      {
+        "file": "routers/health.py",
+        "line": 46,
+        "lines": 83,
+        "name": "health_detailed"
+      },
+      {
+        "file": "routers/bookings.py",
+        "line": 61,
+        "lines": 108,
+        "name": "search_bookings"
+      },
+      {
+        "file": "routers/bookings.py",
+        "line": 169,
+        "lines": 67,
+        "name": "update_booking"
+      },
+      {
+        "file": "routers/bookings.py",
+        "line": 236,
+        "lines": 62,
+        "name": "get_booking_guests"
+      },
+      {
+        "file": "routers/bookings.py",
+        "line": 459,
+        "lines": 63,
+        "name": "get_available_rooms_for_booking"
+      },
+      {
+        "file": "routers/pricing_tracking.py",
+        "line": 74,
+        "lines": 101,
+        "name": "get_pricing_history"
+      },
+      {
+        "file": "routers/pricing_tracking.py",
+        "line": 224,
+        "lines": 86,
+        "name": "get_suggestion_performance"
+      },
+      {
+        "file": "routers/pricing_tracking.py",
+        "line": 310,
+        "lines": 122,
+        "name": "get_ai_health"
+      },
+      {
+        "file": "routers/documents.py",
+        "line": 67,
+        "lines": 61,
+        "name": "scan_document_endpoint"
+      },
+      {
+        "file": "routers/subscriptions.py",
+        "line": 462,
+        "lines": 78,
+        "name": "health_check"
+      },
+      {
+        "file": "routers/gdpr.py",
+        "line": 52,
+        "lines": 99,
+        "name": "update_guest_consent"
+      },
+      {
+        "file": "routers/gdpr.py",
+        "line": 151,
+        "lines": 85,
+        "name": "anonymize_guest"
+      },
+      {
+        "file": "routers/gdpr.py",
+        "line": 236,
+        "lines": 62,
+        "name": "export_guest_data"
+      },
+      {
+        "file": "routers/weather.py",
+        "line": 124,
+        "lines": 61,
+        "name": "get_weather_forecast"
+      },
+      {
+        "file": "routers/weather.py",
+        "line": 235,
+        "lines": 69,
+        "name": "get_weather_impact"
+      },
+      {
+        "file": "routers/weather.py",
+        "line": 304,
+        "lines": 101,
+        "name": "get_weather_impact_range"
+      },
+      {
+        "file": "routers/groups.py",
+        "line": 82,
+        "lines": 70,
+        "name": "get_group_detail"
+      },
+      {
+        "file": "routers/groups.py",
+        "line": 181,
+        "lines": 158,
+        "name": "create_group_batch_bookings"
+      },
+      {
+        "file": "routers/groups.py",
+        "line": 339,
+        "lines": 121,
+        "name": "check_batch_availability"
+      },
+      {
+        "file": "routers/groups.py",
+        "line": 460,
+        "lines": 118,
+        "name": "import_rooming_list"
+      },
+      {
+        "file": "routers/planning_core.py",
+        "line": 60,
+        "lines": 147,
+        "name": "get_planning"
+      },
+      {
+        "file": "routers/planning_core.py",
+        "line": 232,
+        "lines": 102,
+        "name": "get_available_rooms"
+      },
+      {
+        "file": "routers/planning_core.py",
+        "line": 353,
+        "lines": 67,
+        "name": "_calculate_smart_pricing"
+      },
+      {
+        "file": "routers/planning_core.py",
+        "line": 420,
+        "lines": 68,
+        "name": "_validate_room_availability"
+      },
+      {
+        "file": "routers/planning_core.py",
+        "line": 488,
+        "lines": 107,
+        "name": "create_quick_booking"
+      },
+      {
+        "file": "routers/planning_core.py",
+        "line": 595,
+        "lines": 151,
+        "name": "update_booking_dates"
+      },
+      {
+        "file": "routers/dashboard.py",
+        "line": 67,
+        "lines": 69,
+        "name": "get_dashboard"
+      },
+      {
+        "file": "routers/dashboard.py",
+        "line": 152,
+        "lines": 59,
+        "name": "_get_kpis_for_date"
+      },
+      {
+        "file": "routers/dashboard.py",
+        "line": 211,
+        "lines": 149,
+        "name": "get_dashboard_kpis"
+      },
+      {
+        "file": "routers/dashboard.py",
+        "line": 360,
+        "lines": 158,
+        "name": "get_today_dashboard"
+      },
+      {
+        "file": "routers/guest_auth.py",
+        "line": 171,
+        "lines": 71,
+        "name": "generate_magic_link_endpoint"
+      },
+      {
+        "file": "routers/guest_auth.py",
+        "line": 242,
+        "lines": 149,
+        "name": "verify_magic_link_endpoint"
+      },
+      {
+        "file": "routers/guest_auth.py",
+        "line": 391,
+        "lines": 106,
+        "name": "get_session_info"
+      },
+      {
+        "file": "routers/housekeeping.py",
+        "line": 21,
+        "lines": 61,
+        "name": "update_room_status"
+      },
+      {
+        "file": "routers/night_audit.py",
+        "line": 142,
+        "lines": 60,
+        "name": "execute_night_audit"
+      },
+      {
+        "file": "routers/night_audit.py",
+        "line": 303,
+        "lines": 71,
+        "name": "update_config"
+      },
+      {
+        "file": "routers/competitor_scraping.py",
+        "line": 92,
+        "lines": 52,
+        "name": "trigger_scraping"
+      },
+      {
+        "file": "routers/competitor_scraping.py",
+        "line": 183,
+        "lines": 87,
+        "name": "get_competitor_prices"
+      },
+      {
+        "file": "routers/competitor_scraping.py",
+        "line": 270,
+        "lines": 132,
+        "name": "get_price_comparison"
+      },
+      {
+        "file": "routers/competitor_scraping.py",
+        "line": 402,
+        "lines": 60,
+        "name": "get_scraping_status"
+      },
+      {
+        "file": "routers/reports.py",
+        "line": 27,
+        "lines": 115,
+        "name": "istat_export"
+      },
+      {
+        "file": "routers/reports.py",
+        "line": 142,
+        "lines": 82,
+        "name": "istat_stats"
+      },
+      {
+        "file": "routers/fiscal.py",
+        "line": 245,
+        "lines": 75,
+        "name": "test_printer"
+      },
+      {
+        "file": "routers/fiscal.py",
+        "line": 359,
+        "lines": 94,
+        "name": "print_receipt"
+      },
+      {
+        "file": "routers/fiscal.py",
+        "line": 453,
+        "lines": 53,
+        "name": "print_from_payment"
+      },
+      {
+        "file": "routers/fiscal.py",
+        "line": 506,
+        "lines": 60,
+        "name": "daily_closure"
+      },
+      {
+        "file": "routers/fiscal.py",
+        "line": 566,
+        "lines": 56,
+        "name": "list_receipts"
+      },
+      {
+        "file": "routers/action_tracking_service.py",
+        "line": 34,
+        "lines": 79,
+        "name": "get_snapshot_before"
+      },
+      {
+        "file": "routers/action_tracking_service.py",
+        "line": 194,
+        "lines": 52,
+        "name": "create_suggestion_application"
+      },
+      {
+        "file": "routers/action_tracking_service.py",
+        "line": 246,
+        "lines": 97,
+        "name": "get_application_list"
+      },
+      {
+        "file": "routers/action_tracking_service.py",
+        "line": 372,
+        "lines": 83,
+        "name": "get_monitoring_data"
+      },
+      {
+        "file": "routers/action_tracking_service.py",
+        "line": 455,
+        "lines": 62,
+        "name": "get_export_report"
+      },
+      {
+        "file": "routers/action_tracking_api.py",
+        "line": 99,
+        "lines": 72,
+        "name": "apply_suggestion"
+      },
+      {
+        "file": "routers/action_tracking_api.py",
+        "line": 354,
+        "lines": 52,
+        "name": "delete_application"
+      },
+      {
+        "file": "routers/notifications_api.py",
+        "line": 88,
+        "lines": 71,
+        "name": "get_notifications"
+      },
+      {
+        "file": "routers/notifications_api.py",
+        "line": 184,
+        "lines": 55,
+        "name": "mark_notification_read"
+      },
+      {
+        "file": "routers/city_tax.py",
+        "line": 255,
+        "lines": 132,
+        "name": "calculate_city_tax"
+      },
+      {
+        "file": "routers/city_tax.py",
+        "line": 387,
+        "lines": 51,
+        "name": "apply_city_tax"
+      },
+      {
+        "file": "routers/city_tax.py",
+        "line": 539,
+        "lines": 70,
+        "name": "get_report_summary"
+      },
+      {
+        "file": "routers/city_tax.py",
+        "line": 609,
+        "lines": 67,
+        "name": "export_report"
+      },
+      {
+        "file": "routers/ai_transparency.py",
+        "line": 157,
+        "lines": 173,
+        "name": "get_transparency_report"
+      },
+      {
+        "file": "routers/ai_transparency.py",
+        "line": 330,
+        "lines": 58,
+        "name": "generate_insights"
+      },
+      {
+        "file": "routers/analytics.py",
+        "line": 127,
+        "lines": 52,
+        "name": "get_recent_actions"
+      },
+      {
+        "file": "routers/revenue_research.py",
+        "line": 56,
+        "lines": 63,
+        "name": "trigger_research"
+      },
+      {
+        "file": "routers/blocks.py",
+        "line": 36,
+        "lines": 86,
+        "name": "create_room_block"
+      },
+      {
+        "file": "routers/bookings_legacy.py",
+        "line": 14,
+        "lines": 67,
+        "name": "get_booking_by_number"
+      },
+      {
+        "file": "routers/local_events.py",
+        "line": 399,
+        "lines": 112,
+        "name": "seed_events"
+      },
+      {
+        "file": "routers/what_if_api.py",
+        "line": 124,
+        "lines": 58,
+        "name": "calculate_impact"
+      },
+      {
+        "file": "routers/what_if_api.py",
+        "line": 304,
+        "lines": 90,
+        "name": "_generate_explanation"
+      },
+      {
+        "file": "routers/what_if_api.py",
+        "line": 440,
+        "lines": 86,
+        "name": "apply_price_what_if"
+      },
+      {
+        "file": "routers/ab_testing_api.py",
+        "line": 162,
+        "lines": 83,
+        "name": "create_ab_test"
+      },
+      {
+        "file": "routers/ab_testing_api.py",
+        "line": 294,
+        "lines": 51,
+        "name": "get_ab_test_detail"
+      },
+      {
+        "file": "routers/ab_testing_api.py",
+        "line": 345,
+        "lines": 54,
+        "name": "update_test_status"
+      },
+      {
+        "file": "routers/ab_testing_api.py",
+        "line": 593,
+        "lines": 51,
+        "name": "_get_aggregated_metrics"
+      },
+      {
+        "file": "routers/ab_testing_api.py",
+        "line": 644,
+        "lines": 124,
+        "name": "_calculate_winner_logic"
+      },
+      {
+        "file": "routers/learning_feedback.py",
+        "line": 137,
+        "lines": 53,
+        "name": "save_suggestion_feedback"
+      },
+      {
+        "file": "routers/learning_feedback.py",
+        "line": 260,
+        "lines": 51,
+        "name": "get_recent_feedback"
+      },
+      {
+        "file": "routers/learning_feedback.py",
+        "line": 311,
+        "lines": 61,
+        "name": "analyze_patterns"
+      },
+      {
+        "file": "routers/vouchers.py",
+        "line": 138,
+        "lines": 70,
+        "name": "use_voucher"
+      },
+      {
+        "file": "routers/rates.py",
+        "line": 131,
+        "lines": 52,
+        "name": "bulk_update_rates"
+      },
+      {
+        "file": "routers/rates.py",
+        "line": 183,
+        "lines": 60,
+        "name": "generate_rates_from_season"
+      },
+      {
+        "file": "routers/cm_reservation.py",
+        "line": 50,
+        "lines": 182,
+        "name": "create_reservation"
+      },
+      {
+        "file": "routers/cm_reservation.py",
+        "line": 442,
+        "lines": 173,
+        "name": "import_cm_to_planning"
+      },
+      {
+        "file": "routers/cm_reservation.py",
+        "line": 615,
+        "lines": 94,
+        "name": "get_cm_reservation_available_rooms"
+      },
+      {
+        "file": "middleware/license_check.py",
+        "line": 53,
+        "lines": 86,
+        "name": "dispatch"
+      },
+      {
+        "file": "middleware/license_check.py",
+        "line": 286,
+        "lines": 57,
+        "name": "generate"
+      },
+      {
+        "file": "database/apply_migration_safe.py",
+        "line": 37,
+        "lines": 55,
+        "name": "apply_migration_safe"
+      },
+      {
+        "file": "database/apply_013.py",
+        "line": 15,
+        "lines": 114,
+        "name": "apply_migration"
+      },
+      {
+        "file": "database/apply_007.py",
+        "line": 13,
+        "lines": 86,
+        "name": "apply_migration"
+      },
+      {
+        "file": "database/apply_017.py",
+        "line": 24,
+        "lines": 92,
+        "name": "apply_migration"
+      },
+      {
+        "file": "database/apply_016.py",
+        "line": 16,
+        "lines": 55,
+        "name": "apply_migration"
+      },
+      {
+        "file": "database/apply_012.py",
+        "line": 15,
+        "lines": 110,
+        "name": "apply_migration"
+      },
+      {
+        "file": "database/apply_009.py",
+        "line": 13,
+        "lines": 90,
+        "name": "apply_migration"
+      },
+      {
+        "file": "database/test_migrations_idempotency.py",
+        "line": 69,
+        "lines": 65,
+        "name": "main"
+      },
+      {
+        "file": "database/apply_038.py",
+        "line": 19,
+        "lines": 56,
+        "name": "apply_migration"
+      },
+      {
+        "file": "database/apply_008.py",
+        "line": 13,
+        "lines": 98,
+        "name": "apply_migration"
+      },
+      {
+        "file": "database/apply_015.py",
+        "line": 16,
+        "lines": 56,
+        "name": "apply_migration"
+      },
+      {
+        "file": "database/apply_011.py",
+        "line": 15,
+        "lines": 113,
+        "name": "apply_migration"
+      },
+      {
+        "file": "database/apply_040.py",
+        "line": 25,
+        "lines": 94,
+        "name": "apply_migration"
+      },
+      {
+        "file": "database/apply_010.py",
+        "line": 13,
+        "lines": 94,
+        "name": "apply_migration"
+      },
+      {
+        "file": "database/apply_041.py",
+        "line": 25,
+        "lines": 206,
+        "name": "apply_migration"
+      },
+      {
+        "file": "database/apply_014.py",
+        "line": 22,
+        "lines": 111,
+        "name": "apply_migration"
+      },
+      {
+        "file": "core/validators.py",
+        "line": 51,
+        "lines": 51,
+        "name": "validate_date_range"
+      },
+      {
+        "file": "core/database.py",
+        "line": 95,
+        "lines": 108,
+        "name": "sanity_check_database"
+      },
+      {
+        "file": "config/scraping_config.py",
+        "line": 67,
+        "lines": 87,
+        "name": "to_params"
+      },
+      {
+        "file": "tests/stress_test_tetris.py",
+        "line": 57,
+        "lines": 191,
+        "name": "main"
+      },
+      {
+        "file": "tests/test_action_tracking.py",
+        "line": 37,
+        "lines": 91,
+        "name": "mock_db"
+      },
+      {
+        "file": "tests/test_action_tracking.py",
+        "line": 276,
+        "lines": 51,
+        "name": "test_apply_action_success"
+      },
+      {
+        "file": "tests/hard_test_controlled.py",
+        "line": 68,
+        "lines": 78,
+        "name": "setup_clean_test_data"
+      },
+      {
+        "file": "tests/test_payment_flow_sprint2_3.py",
+        "line": 14,
+        "lines": 141,
+        "name": "test_payment_flow"
+      },
+      {
+        "file": "tests/hard_test_phase5.py",
+        "line": 124,
+        "lines": 52,
+        "name": "test_1_resize_beyond_60_days"
+      },
+      {
+        "file": "tests/hard_test_phase5.py",
+        "line": 248,
+        "lines": 75,
+        "name": "test_3_swap_with_blocked_room"
+      },
+      {
+        "file": "tests/hard_test_phase5.py",
+        "line": 323,
+        "lines": 52,
+        "name": "main"
+      },
+      {
+        "file": "tests/test_ai_transparency.py",
+        "line": 137,
+        "lines": 67,
+        "name": "test_transparency_report_with_data"
+      },
+      {
+        "file": "tests/test_ai_transparency.py",
+        "line": 204,
+        "lines": 52,
+        "name": "test_transparency_report_insights_positive"
+      },
+      {
+        "file": "tests/test_confidence_scorer.py",
+        "line": 280,
+        "lines": 62,
+        "name": "test_acceptance_rate_by_hotel"
+      },
+      {
+        "file": "tests/test_whatsapp_webhook.py",
+        "line": 208,
+        "lines": 51,
+        "name": "test_webhook_rate_limit_ip"
+      },
+      {
+        "file": "tests/test_whatsapp_webhook.py",
+        "line": 798,
+        "lines": 61,
+        "name": "test_send_message_empty_content"
+      },
+      {
+        "file": "tests/stress_test_swap_avanzato.py",
+        "line": 404,
+        "lines": 53,
+        "name": "main"
+      },
+      {
+        "file": "tests/test_pricing_tracking.py",
+        "line": 38,
+        "lines": 65,
+        "name": "mock_db"
+      },
+      {
+        "file": "tests/test_pricing_tracking.py",
+        "line": 531,
+        "lines": 61,
+        "name": "test_full_tracking_flow"
+      },
+      {
+        "file": "tests/test_revenue_intelligence.py",
+        "line": 422,
+        "lines": 54,
+        "name": "setup_method"
+      },
+      {
+        "file": "tests/stress_test_extreme.py",
+        "line": 345,
+        "lines": 75,
+        "name": "test_9_segment_boomerang"
+      },
+      {
+        "file": "tests/test_room_assignments_conflict.py",
+        "line": 61,
+        "lines": 79,
+        "name": "setup_test_scenario"
+      },
+      {
+        "file": "tests/test_room_assignments_conflict.py",
+        "line": 140,
+        "lines": 85,
+        "name": "test_create_booking_conflicts"
+      },
+      {
+        "file": "tests/test_room_assignments_conflict.py",
+        "line": 225,
+        "lines": 58,
+        "name": "test_drag_drop_conflicts"
+      },
+      {
+        "file": "tests/test_room_assignments_conflict.py",
+        "line": 283,
+        "lines": 66,
+        "name": "test_change_room_conflicts"
+      },
+      {
+        "file": "models/subscription.py",
+        "line": 108,
+        "lines": 73,
+        "name": "has_limits"
+      },
+      {
+        "file": "models/subscription.py",
+        "line": 198,
+        "lines": 209,
+        "name": "is_paid_subscription"
+      },
+      {
+        "file": "compliance/istat.py",
+        "line": 146,
+        "lines": 134,
+        "name": "generate_xml"
+      },
+      {
+        "file": "compliance/alloggiati.py",
+        "line": 75,
+        "lines": 90,
+        "name": "_format_record"
+      },
+      {
+        "file": "ml/feature_engineering.py",
+        "line": 59,
+        "lines": 89,
+        "name": "prepare_features"
+      },
+      {
+        "file": "ml/feature_engineering.py",
+        "line": 240,
+        "lines": 57,
+        "name": "encode_categorical"
+      },
+      {
+        "file": "ml/feature_engineering.py",
+        "line": 297,
+        "lines": 56,
+        "name": "handle_missing_values"
+      },
+      {
+        "file": "ml/feature_engineering.py",
+        "line": 353,
+        "lines": 69,
+        "name": "get_feature_matrix"
+      },
+      {
+        "file": "ml/feature_engineering.py",
+        "line": 441,
+        "lines": 56,
+        "name": "validate_features"
+      },
+      {
+        "file": "ml/model_trainer.py",
+        "line": 62,
+        "lines": 212,
+        "name": "train_model"
+      },
+      {
+        "file": "ml/model_trainer.py",
+        "line": 382,
+        "lines": 110,
+        "name": "predict_performance"
+      },
+      {
+        "file": "ml/model_trainer.py",
+        "line": 525,
+        "lines": 209,
+        "name": "predict_scenario"
+      },
+      {
+        "file": "ml/data_preparation.py",
+        "line": 60,
+        "lines": 129,
+        "name": "collect_training_data"
+      },
+      {
+        "file": "ml/data_preparation.py",
+        "line": 189,
+        "lines": 65,
+        "name": "collect_acceptance_data"
+      },
+      {
+        "file": "ml/data_preparation.py",
+        "line": 254,
+        "lines": 130,
+        "name": "get_training_stats"
+      },
+      {
+        "file": "ml/data_preparation.py",
+        "line": 384,
+        "lines": 112,
+        "name": "export_training_csv"
+      },
+      {
+        "file": "ml/ml_scheduler.py",
+        "line": 32,
+        "lines": 65,
+        "name": "start_ml_scheduler"
+      },
+      {
+        "file": "ml/ml_scheduler.py",
+        "line": 116,
+        "lines": 105,
+        "name": "weekly_retrain_job"
+      },
+      {
+        "file": "ml/ml_scheduler.py",
+        "line": 283,
+        "lines": 146,
+        "name": "update_ai_model_health"
+      },
+      {
+        "file": "ml/ml_scheduler.py",
+        "line": 461,
+        "lines": 98,
+        "name": "trigger_retrain"
+      },
+      {
+        "file": "ml/ml_scheduler.py",
+        "line": 559,
+        "lines": 129,
+        "name": "get_scheduler_status"
+      },
+      {
+        "file": "scripts/daily_pattern_analysis.py",
+        "line": 36,
+        "lines": 72,
+        "name": "analyze_hotel"
+      },
+      {
+        "file": "scripts/daily_pattern_analysis.py",
+        "line": 108,
+        "lines": 71,
+        "name": "run_analysis"
+      },
+      {
+        "file": "scripts/daily_competitor_scrape.py",
+        "line": 45,
+        "lines": 136,
+        "name": "scrape_all_hotels"
+      },
+      {
+        "file": "scripts/daily_competitor_scrape.py",
+        "line": 181,
+        "lines": 55,
+        "name": "_save_scraping_log"
+      },
+      {
+        "file": "scripts/daily_competitor_scrape.py",
+        "line": 260,
+        "lines": 103,
+        "name": "main"
+      },
+      {
+        "file": "scripts/seed_competitors_alleghe.py",
+        "line": 66,
+        "lines": 78,
+        "name": "seed_competitors"
+      },
+      {
+        "file": "services/night_audit_service.py",
+        "line": 88,
+        "lines": 53,
+        "name": "run_automatic_night_audit"
+      },
+      {
+        "file": "services/night_audit_service.py",
+        "line": 141,
+        "lines": 146,
+        "name": "run_night_audit"
+      },
+      {
+        "file": "services/night_audit_service.py",
+        "line": 287,
+        "lines": 56,
+        "name": "_calculate_daily_stats"
+      },
+      {
+        "file": "services/night_audit_service.py",
+        "line": 343,
+        "lines": 57,
+        "name": "_detect_no_shows"
+      },
+      {
+        "file": "services/night_audit_service.py",
+        "line": 424,
+        "lines": 85,
+        "name": "preview_night_audit"
+      },
+      {
+        "file": "services/stripe_service.py",
+        "line": 33,
+        "lines": 113,
+        "name": "create_checkout_session"
+      },
+      {
+        "file": "services/stripe_service.py",
+        "line": 207,
+        "lines": 92,
+        "name": "charge_vcc_payment"
+      },
+      {
+        "file": "services/learning_service.py",
+        "line": 26,
+        "lines": 126,
+        "name": "save_feedback"
+      },
+      {
+        "file": "services/learning_service.py",
+        "line": 152,
+        "lines": 104,
+        "name": "get_metrics"
+      },
+      {
+        "file": "services/learning_service.py",
+        "line": 301,
+        "lines": 89,
+        "name": "update_daily_metrics"
+      },
+      {
+        "file": "services/competitor_scraping_service.py",
+        "line": 73,
+        "lines": 58,
+        "name": "scrape_url"
+      },
+      {
+        "file": "services/competitor_scraping_service.py",
+        "line": 232,
+        "lines": 107,
+        "name": "parse_prices"
+      },
+      {
+        "file": "services/competitor_scraping_service.py",
+        "line": 374,
+        "lines": 117,
+        "name": "scrape_competitor"
+      },
+      {
+        "file": "services/competitor_scraping_service.py",
+        "line": 491,
+        "lines": 82,
+        "name": "_save_prices"
+      },
+      {
+        "file": "services/competitor_scraping_service.py",
+        "line": 573,
+        "lines": 65,
+        "name": "scrape_all_for_hotel"
+      },
+      {
+        "file": "services/subscription_service.py",
+        "line": 84,
+        "lines": 51,
+        "name": "get_hotel_subscription"
+      },
+      {
+        "file": "services/subscription_service.py",
+        "line": 248,
+        "lines": 61,
+        "name": "check_usage_limit"
+      },
+      {
+        "file": "services/subscription_service.py",
+        "line": 427,
+        "lines": 56,
+        "name": "increment_usage"
+      },
+      {
+        "file": "services/subscription_service.py",
+        "line": 483,
+        "lines": 71,
+        "name": "assign_tier_to_hotel"
+      },
+      {
+        "file": "services/subscription_service.py",
+        "line": 554,
+        "lines": 58,
+        "name": "cancel_subscription"
+      },
+      {
+        "file": "services/event_service.py",
+        "line": 67,
+        "lines": 62,
+        "name": "create_event"
+      },
+      {
+        "file": "services/event_service.py",
+        "line": 152,
+        "lines": 98,
+        "name": "get_events"
+      },
+      {
+        "file": "services/event_service.py",
+        "line": 365,
+        "lines": 71,
+        "name": "_calculate_impacts_for_event"
+      },
+      {
+        "file": "services/event_service.py",
+        "line": 436,
+        "lines": 56,
+        "name": "override_impact"
+      },
+      {
+        "file": "services/event_service.py",
+        "line": 492,
+        "lines": 82,
+        "name": "get_event_suggestions"
+      },
+      {
+        "file": "services/event_service.py",
+        "line": 574,
+        "lines": 74,
+        "name": "get_event_stats"
+      },
+      {
+        "file": "services/test_bucchi_performance.py",
+        "line": 15,
+        "lines": 76,
+        "name": "test_batch_consistency"
+      },
+      {
+        "file": "services/pricing_performance_scheduler.py",
+        "line": 87,
+        "lines": 82,
+        "name": "process_pending_evaluations"
+      },
+      {
+        "file": "services/document_scanner.py",
+        "line": 261,
+        "lines": 64,
+        "name": "_parse_mrz_manual"
+      },
+      {
+        "file": "services/document_scanner.py",
+        "line": 436,
+        "lines": 113,
+        "name": "scan_document"
+      },
+      {
+        "file": "services/suggerimenti_actions.py",
+        "line": 31,
+        "lines": 318,
+        "name": "apply_price_suggestion"
+      },
+      {
+        "file": "services/suggerimenti_actions.py",
+        "line": 435,
+        "lines": 55,
+        "name": "execute_suggestion_action"
+      },
+      {
+        "file": "services/swap_validation.py",
+        "line": 77,
+        "lines": 68,
+        "name": "check_room_availability"
+      },
+      {
+        "file": "services/weather_service.py",
+        "line": 174,
+        "lines": 77,
+        "name": "get_forecast"
+      },
+      {
+        "file": "services/weather_service.py",
+        "line": 262,
+        "lines": 63,
+        "name": "extract_snow_metrics"
+      },
+      {
+        "file": "services/weather_service.py",
+        "line": 325,
+        "lines": 83,
+        "name": "calculate_weather_impact"
+      },
+      {
+        "file": "services/weather_service.py",
+        "line": 480,
+        "lines": 59,
+        "name": "test_weather_api_connection"
+      },
+      {
+        "file": "services/email_poller.py",
+        "line": 390,
+        "lines": 51,
+        "name": "process_email"
+      },
+      {
+        "file": "services/impact_calculator.py",
+        "line": 184,
+        "lines": 74,
+        "name": "calculate_event_impact"
+      },
+      {
+        "file": "services/pricing_tracking_service.py",
+        "line": 28,
+        "lines": 74,
+        "name": "log_price_change"
+      },
+      {
+        "file": "services/pricing_tracking_service.py",
+        "line": 102,
+        "lines": 70,
+        "name": "start_performance_evaluation"
+      },
+      {
+        "file": "services/pricing_tracking_service.py",
+        "line": 172,
+        "lines": 62,
+        "name": "calculate_evaluation_window"
+      },
+      {
+        "file": "services/pricing_tracking_service.py",
+        "line": 234,
+        "lines": 125,
+        "name": "complete_evaluation"
+      },
+      {
+        "file": "services/pricing_tracking_service.py",
+        "line": 359,
+        "lines": 86,
+        "name": "calculate_performance_score"
+      },
+      {
+        "file": "services/test_narrative_generation.py",
+        "line": 88,
+        "lines": 56,
+        "name": "test_batch_enrichment"
+      },
+      {
+        "file": "services/direct_scraping_client.py",
+        "line": 101,
+        "lines": 64,
+        "name": "scrape_url"
+      },
+      {
+        "file": "services/direct_scraping_client.py",
+        "line": 169,
+        "lines": 80,
+        "name": "test_direct_scraping"
+      },
+      {
+        "file": "services/notification_worker.py",
+        "line": 72,
+        "lines": 72,
+        "name": "create_notification"
+      },
+      {
+        "file": "services/notification_worker.py",
+        "line": 244,
+        "lines": 52,
+        "name": "generate_day_7_notification"
+      },
+      {
+        "file": "services/notification_worker.py",
+        "line": 439,
+        "lines": 154,
+        "name": "check_and_send_notifications"
+      },
+      {
+        "file": "services/rateboard_analytics.py",
+        "line": 15,
+        "lines": 101,
+        "name": "analyze_historical_patterns"
+      },
+      {
+        "file": "services/rateboard_analytics.py",
+        "line": 116,
+        "lines": 63,
+        "name": "get_yoy_delta_for_period"
+      },
+      {
+        "file": "services/cm_room_mapping.py",
+        "line": 14,
+        "lines": 59,
+        "name": "resolve_room_type_id"
+      },
+      {
+        "file": "services/booking_utils.py",
+        "line": 15,
+        "lines": 63,
+        "name": "generate_booking_number"
+      },
+      {
+        "file": "services/cm_import_service.py",
+        "line": 131,
+        "lines": 86,
+        "name": "find_or_create_guest"
+      },
+      {
+        "file": "services/cm_import_service.py",
+        "line": 217,
+        "lines": 74,
+        "name": "generate_booking_number"
+      },
+      {
+        "file": "services/cm_import_service.py",
+        "line": 291,
+        "lines": 88,
+        "name": "create_booking_from_cm"
+      },
+      {
+        "file": "services/cm_import_service.py",
+        "line": 379,
+        "lines": 127,
+        "name": "create_booking_room"
+      },
+      {
+        "file": "services/cm_import_service.py",
+        "line": 506,
+        "lines": 77,
+        "name": "get_available_rooms"
+      },
+      {
+        "file": "services/cm_import_service.py",
+        "line": 615,
+        "lines": 147,
+        "name": "auto_import_reservation"
+      },
+      {
+        "file": "services/cm_notification.py",
+        "line": 50,
+        "lines": 76,
+        "name": "format_email_html"
+      },
+      {
+        "file": "services/booking_conflicts.py",
+        "line": 99,
+        "lines": 72,
+        "name": "validate_room_move"
+      },
+      {
+        "file": "services/email_scheduler.py",
+        "line": 100,
+        "lines": 122,
+        "name": "process_scheduled_emails"
+      },
+      {
+        "file": "services/narrative_generator.py",
+        "line": 41,
+        "lines": 59,
+        "name": "configure_gemini"
+      },
+      {
+        "file": "services/narrative_generator.py",
+        "line": 100,
+        "lines": 79,
+        "name": "generate_suggestion_narrative"
+      },
+      {
+        "file": "services/narrative_generator.py",
+        "line": 179,
+        "lines": 63,
+        "name": "extract_factors_from_suggestion"
+      },
+      {
+        "file": "services/narrative_generator.py",
+        "line": 242,
+        "lines": 55,
+        "name": "enrich_suggestions_with_narratives"
+      },
+      {
+        "file": "services/checkin_service.py",
+        "line": 17,
+        "lines": 74,
+        "name": "perform_checkin"
+      },
+      {
+        "file": "services/checkin_service.py",
+        "line": 91,
+        "lines": 96,
+        "name": "perform_checkout"
+      },
+      {
+        "file": "services/room_manager_service.py",
+        "line": 155,
+        "lines": 66,
+        "name": "update_room_status"
+      },
+      {
+        "file": "services/room_manager_service.py",
+        "line": 221,
+        "lines": 74,
+        "name": "update_housekeeping_status"
+      },
+      {
+        "file": "services/room_manager_service.py",
+        "line": 295,
+        "lines": 63,
+        "name": "log_activity"
+      },
+      {
+        "file": "services/room_manager_service.py",
+        "line": 404,
+        "lines": 60,
+        "name": "get_global_activity"
+      },
+      {
+        "file": "services/room_manager_service.py",
+        "line": 464,
+        "lines": 78,
+        "name": "get_activity_stats"
+      },
+      {
+        "file": "services/bucchi_engine.py",
+        "line": 78,
+        "lines": 94,
+        "name": "calcola_occupancy_batch"
+      },
+      {
+        "file": "services/bucchi_engine.py",
+        "line": 172,
+        "lines": 72,
+        "name": "calcola_occupancy_prevista"
+      },
+      {
+        "file": "services/bucchi_engine.py",
+        "line": 322,
+        "lines": 57,
+        "name": "crea_bucco"
+      },
+      {
+        "file": "services/bucchi_engine.py",
+        "line": 414,
+        "lines": 66,
+        "name": "trova_bucchi"
+      },
+      {
+        "file": "services/research_orchestrator.py",
+        "line": 156,
+        "lines": 66,
+        "name": "get_booking_pace"
+      },
+      {
+        "file": "services/research_orchestrator.py",
+        "line": 222,
+        "lines": 100,
+        "name": "esegui_ricerca"
+      },
+      {
+        "file": "services/pattern_analyzer.py",
+        "line": 115,
+        "lines": 64,
+        "name": "analyze_discount_threshold"
+      },
+      {
+        "file": "services/pattern_analyzer.py",
+        "line": 179,
+        "lines": 62,
+        "name": "analyze_price_range"
+      },
+      {
+        "file": "services/pattern_analyzer.py",
+        "line": 241,
+        "lines": 58,
+        "name": "analyze_type_preference"
+      },
+      {
+        "file": "services/pattern_analyzer.py",
+        "line": 299,
+        "lines": 60,
+        "name": "analyze_time_sensitivity"
+      },
+      {
+        "file": "services/pattern_analyzer.py",
+        "line": 359,
+        "lines": 66,
+        "name": "analyze_modification_pattern"
+      },
+      {
+        "file": "services/pattern_analyzer.py",
+        "line": 425,
+        "lines": 108,
+        "name": "save_patterns"
+      },
+      {
+        "file": "services/playwright_scraping_client.py",
+        "line": 93,
+        "lines": 61,
+        "name": "scrape_url"
+      },
+      {
+        "file": "services/metrics_calculator.py",
+        "line": 24,
+        "lines": 140,
+        "name": "calcola_metriche_performance"
+      },
+      {
+        "file": "services/autopilot_scheduler.py",
+        "line": 87,
+        "lines": 61,
+        "name": "check_and_update_jobs"
+      },
+      {
+        "file": "services/autopilot_scheduler.py",
+        "line": 183,
+        "lines": 57,
+        "name": "_send_notification"
+      },
+      {
+        "file": "services/guest_validation.py",
+        "line": 15,
+        "lines": 79,
+        "name": "get_all_booking_guests"
+      },
+      {
+        "file": "services/guest_validation.py",
+        "line": 149,
+        "lines": 73,
+        "name": "validate_guest_compliance"
+      },
+      {
+        "file": "services/guest_validation.py",
+        "line": 222,
+        "lines": 53,
+        "name": "validate_booking_capacity"
+      },
+      {
+        "file": "services/rateboard_ai.py",
+        "line": 18,
+        "lines": 300,
+        "name": "generate_ai_suggestions"
+      },
+      {
+        "file": "services/document_intelligence/example_integration.py",
+        "line": 24,
+        "lines": 63,
+        "name": "validate_document_for_booking"
+      },
+      {
+        "file": "services/document_intelligence/example_integration.py",
+        "line": 99,
+        "lines": 66,
+        "name": "validate_document"
+      },
+      {
+        "file": "services/document_intelligence/example_integration.py",
+        "line": 165,
+        "lines": 61,
+        "name": "batch_validate_documents"
+      },
+      {
+        "file": "services/document_intelligence/scanner.py",
+        "line": 52,
+        "lines": 59,
+        "name": "scan"
+      },
+      {
+        "file": "services/document_intelligence/comparator.py",
+        "line": 78,
+        "lines": 111,
+        "name": "compare"
+      },
+      {
+        "file": "services/document_intelligence/comparator.py",
+        "line": 189,
+        "lines": 68,
+        "name": "_compare_field"
+      },
+      {
+        "file": "services/suggerimenti/confidence.py",
+        "line": 48,
+        "lines": 152,
+        "name": "estrai_dati_reali_per_confidence"
+      },
+      {
+        "file": "services/suggerimenti/confidence.py",
+        "line": 200,
+        "lines": 69,
+        "name": "apply_confidence_scoring"
+      },
+      {
+        "file": "services/suggerimenti/creators.py",
+        "line": 48,
+        "lines": 59,
+        "name": "crea_suggerimento_base"
+      },
+      {
+        "file": "services/suggerimenti/creators.py",
+        "line": 107,
+        "lines": 54,
+        "name": "crea_suggerimento_prezzo"
+      },
+      {
+        "file": "services/suggerimenti/creators.py",
+        "line": 441,
+        "lines": 51,
+        "name": "crea_suggerimento_event_driven"
+      },
+      {
+        "file": "services/suggerimenti/orchestrator.py",
+        "line": 116,
+        "lines": 83,
+        "name": "genera_suggerimenti_per_bucco"
+      },
+      {
+        "file": "services/suggerimenti/orchestrator.py",
+        "line": 199,
+        "lines": 68,
+        "name": "genera_tutti_suggerimenti"
+      },
+      {
+        "file": "services/suggerimenti/integrations.py",
+        "line": 48,
+        "lines": 63,
+        "name": "fetch_weather_impacts"
+      },
+      {
+        "file": "services/fiscal/epson_adapter.py",
+        "line": 141,
+        "lines": 79,
+        "name": "_parse_response"
+      },
+      {
+        "file": "services/fiscal/epson_adapter.py",
+        "line": 286,
+        "lines": 60,
+        "name": "get_status"
+      },
+      {
+        "file": "services/fiscal/test_connection.py",
+        "line": 22,
+        "lines": 74,
+        "name": "test_epson"
+      },
+      {
+        "file": "services/fiscal/test_connection.py",
+        "line": 96,
+        "lines": 57,
+        "name": "test_mock"
+      },
+      {
+        "file": "services/fiscal/mock_adapter.py",
+        "line": 72,
+        "lines": 57,
+        "name": "print_receipt"
+      },
+      {
+        "file": "services/pagonline/client.py",
+        "line": 234,
+        "lines": 61,
+        "name": "_parse_response"
+      },
+      {
+        "file": "services/pagonline/client.py",
+        "line": 295,
+        "lines": 60,
+        "name": "_post"
+      },
+      {
+        "file": "services/pagonline/client.py",
+        "line": 355,
+        "lines": 120,
+        "name": "authorize"
+      },
+      {
+        "file": "services/pagonline/signature.py",
+        "line": 75,
+        "lines": 70,
+        "name": "calculate_signature"
+      },
+      {
+        "file": "services/ollama/client.py",
+        "line": 60,
+        "lines": 80,
+        "name": "chat"
+      },
+      {
+        "file": "services/email/bookingengine.py",
+        "line": 26,
+        "lines": 69,
+        "name": "parse_bookingengine_new"
+      },
+      {
+        "file": "services/email/bookingengine.py",
+        "line": 95,
+        "lines": 51,
+        "name": "parse_bookingengine_cancellation"
+      },
+      {
+        "file": "services/email/sender.py",
+        "line": 30,
+        "lines": 79,
+        "name": "send_email"
+      },
+      {
+        "file": "services/email/sender.py",
+        "line": 181,
+        "lines": 73,
+        "name": "build_alerts_table"
+      },
+      {
+        "file": "services/email/sender.py",
+        "line": 296,
+        "lines": 56,
+        "name": "send_competitor_alert_email"
+      },
+      {
+        "file": "services/email/sender.py",
+        "line": 352,
+        "lines": 93,
+        "name": "send_email_with_attachment"
+      },
+      {
+        "file": "services/email/sender.py",
+        "line": 445,
+        "lines": 74,
+        "name": "send_receipt_email"
+      },
+      {
+        "file": "services/email/besync.py",
+        "line": 29,
+        "lines": 74,
+        "name": "parse_besync_email"
+      },
+      {
+        "file": "services/email/besync.py",
+        "line": 103,
+        "lines": 52,
+        "name": "parse_besync_cancellation"
+      },
+      {
+        "file": "services/email/besync.py",
+        "line": 155,
+        "lines": 70,
+        "name": "parse_besync_modification"
+      },
+      {
+        "file": "services/email/merge.py",
+        "line": 172,
+        "lines": 96,
+        "name": "format_currency"
+      },
+      {
+        "file": "services/email/__init__.py",
+        "line": 89,
+        "lines": 129,
+        "name": "parse_email"
+      },
+      {
+        "file": "services/email/scheduler.py",
+        "line": 30,
+        "lines": 248,
+        "name": "send_scheduled_email"
+      },
+      {
+        "file": "services/email/scheduler.py",
+        "line": 278,
+        "lines": 94,
+        "name": "get_pending_scheduled_emails"
+      },
+      {
+        "file": "services/email/scheduler.py",
+        "line": 372,
+        "lines": 59,
+        "name": "send_immediate_email"
+      },
+      {
+        "file": "services/document_intelligence/parsers/italian_document_parser.py",
+        "line": 141,
+        "lines": 58,
+        "name": "detect_document_type"
+      },
+      {
+        "file": "services/document_intelligence/parsers/italian_document_parser.py",
+        "line": 283,
+        "lines": 53,
+        "name": "parse_cie"
+      },
+      {
+        "file": "services/document_intelligence/parsers/italian_document_parser.py",
+        "line": 336,
+        "lines": 72,
+        "name": "parse_driving_license"
+      },
+      {
+        "file": "services/document_intelligence/parsers/test_italian_parser.py",
+        "line": 21,
+        "lines": 55,
+        "name": "test_carta_identita"
+      },
+      {
+        "file": "services/document_intelligence/parsers/mrz_parser.py",
+        "line": 126,
+        "lines": 85,
+        "name": "parse_td3"
+      },
+      {
+        "file": "services/document_intelligence/parsers/mrz_parser.py",
+        "line": 211,
+        "lines": 88,
+        "name": "parse_td1"
+      },
+      {
+        "file": "services/document_intelligence/parsers/driving_license_parser.py",
+        "line": 100,
+        "lines": 88,
+        "name": "parse"
+      },
+      {
+        "file": "services/document_intelligence/validators/mrz_validator.py",
+        "line": 147,
+        "lines": 87,
+        "name": "validate_mrz_td3"
+      },
+      {
+        "file": "services/document_intelligence/validators/mrz_validator.py",
+        "line": 234,
+        "lines": 93,
+        "name": "validate_mrz_td1"
+      },
+      {
+        "file": "services/document_intelligence/validators/mrz_validator.py",
+        "line": 327,
+        "lines": 51,
+        "name": "validate_dates"
+      },
+      {
+        "file": "ml/confidence/model_utils.py",
+        "line": 85,
+        "lines": 96,
+        "name": "_build_feature_array"
+      },
+      {
+        "file": "ml/confidence/model_utils.py",
+        "line": 181,
+        "lines": 83,
+        "name": "get_model_variance_confidence"
+      },
+      {
+        "file": "ml/confidence/model_utils.py",
+        "line": 264,
+        "lines": 55,
+        "name": "get_prediction_confidence"
+      },
+      {
+        "file": "ml/confidence/components.py",
+        "line": 22,
+        "lines": 62,
+        "name": "get_acceptance_rate"
+      },
+      {
+        "file": "ml/confidence/components.py",
+        "line": 84,
+        "lines": 57,
+        "name": "get_data_quality_score"
+      },
+      {
+        "file": "ml/confidence/scorer.py",
+        "line": 34,
+        "lines": 72,
+        "name": "calculate_confidence"
+      },
+      {
+        "file": "ml/confidence/scorer.py",
+        "line": 106,
+        "lines": 82,
+        "name": "get_confidence_breakdown"
+      },
+      {
+        "file": "routers/guest_checkin/steps.py",
+        "line": 40,
+        "lines": 90,
+        "name": "save_personal_data"
+      },
+      {
+        "file": "routers/guest_checkin/steps.py",
+        "line": 130,
+        "lines": 109,
+        "name": "save_document_data"
+      },
+      {
+        "file": "routers/guest_checkin/steps.py",
+        "line": 239,
+        "lines": 82,
+        "name": "ocr_document"
+      },
+      {
+        "file": "routers/guest_checkin/steps.py",
+        "line": 321,
+        "lines": 94,
+        "name": "save_consents"
+      },
+      {
+        "file": "routers/guest_checkin/steps.py",
+        "line": 415,
+        "lines": 112,
+        "name": "save_signature"
+      },
+      {
+        "file": "routers/guest_checkin/auth.py",
+        "line": 44,
+        "lines": 58,
+        "name": "get_booking_from_session"
+      },
+      {
+        "file": "routers/guest_checkin/notifications.py",
+        "line": 27,
+        "lines": 72,
+        "name": "get_notifications"
+      },
+      {
+        "file": "routers/guest_checkin/complete.py",
+        "line": 33,
+        "lines": 278,
+        "name": "complete_checkin"
+      },
+      {
+        "file": "routers/guest_checkin/complete.py",
+        "line": 311,
+        "lines": 51,
+        "name": "get_checkin_status"
+      },
+      {
+        "file": "routers/planning/room_change.py",
+        "line": 16,
+        "lines": 142,
+        "name": "change_room_during_stay"
+      },
+      {
+        "file": "routers/planning/swap.py",
+        "line": 34,
+        "lines": 120,
+        "name": "swap_rooms"
+      },
+      {
+        "file": "routers/planning/swap.py",
+        "line": 154,
+        "lines": 142,
+        "name": "multi_swap_rooms"
+      },
+      {
+        "file": "routers/planning/assignments.py",
+        "line": 43,
+        "lines": 160,
+        "name": "move_segment"
+      },
+      {
+        "file": "routers/planning/segment_swap.py",
+        "line": 48,
+        "lines": 61,
+        "name": "_get_target_overlap_dates"
+      },
+      {
+        "file": "routers/planning/segment_swap.py",
+        "line": 145,
+        "lines": 55,
+        "name": "_execute_segment_swap"
+      },
+      {
+        "file": "routers/planning/segment_swap.py",
+        "line": 200,
+        "lines": 104,
+        "name": "swap_segment"
+      },
+      {
+        "file": "routers/public/models.py",
+        "line": 145,
+        "lines": 55,
+        "name": "validate_email"
+      },
+      {
+        "file": "routers/public/booking.py",
+        "line": 51,
+        "lines": 259,
+        "name": "create_booking"
+      },
+      {
+        "file": "routers/public/booking.py",
+        "line": 310,
+        "lines": 65,
+        "name": "get_booking_status"
+      },
+      {
+        "file": "routers/public/webhooks.py",
+        "line": 33,
+        "lines": 123,
+        "name": "stripe_webhook"
+      },
+      {
+        "file": "routers/public/availability.py",
+        "line": 36,
+        "lines": 97,
+        "name": "get_availability"
+      },
+      {
+        "file": "routers/public/availability.py",
+        "line": 133,
+        "lines": 64,
+        "name": "get_rooms"
+      },
+      {
+        "file": "routers/public/availability.py",
+        "line": 197,
+        "lines": 64,
+        "name": "get_extras"
+      },
+      {
+        "file": "routers/public/helpers.py",
+        "line": 72,
+        "lines": 159,
+        "name": "get_room_availability"
+      },
+      {
+        "file": "routers/email/automation.py",
+        "line": 50,
+        "lines": 69,
+        "name": "get_email_preview"
+      },
+      {
+        "file": "routers/email/automation.py",
+        "line": 119,
+        "lines": 66,
+        "name": "send_booking_email"
+      },
+      {
+        "file": "routers/email/automation.py",
+        "line": 207,
+        "lines": 150,
+        "name": "preview_template"
+      },
+      {
+        "file": "routers/email/automation.py",
+        "line": 456,
+        "lines": 135,
+        "name": "get_email_activity"
+      },
+      {
+        "file": "routers/email/templates.py",
+        "line": 41,
+        "lines": 61,
+        "name": "create_template"
+      },
+      {
+        "file": "routers/email/templates.py",
+        "line": 102,
+        "lines": 61,
+        "name": "update_template"
+      },
+      {
+        "file": "routers/email/schedules.py",
+        "line": 92,
+        "lines": 94,
+        "name": "create_schedule"
+      },
+      {
+        "file": "routers/email/schedules.py",
+        "line": 186,
+        "lines": 91,
+        "name": "update_schedule"
+      },
+      {
+        "file": "routers/competitors/alerts.py",
+        "line": 37,
+        "lines": 68,
+        "name": "get_price_alerts"
+      },
+      {
+        "file": "routers/competitors/alerts.py",
+        "line": 105,
+        "lines": 51,
+        "name": "send_alerts_email"
+      },
+      {
+        "file": "routers/competitors/categories.py",
+        "line": 97,
+        "lines": 51,
+        "name": "update_competitor_category"
+      },
+      {
+        "file": "routers/competitors/analytics.py",
+        "line": 45,
+        "lines": 135,
+        "name": "get_competitor_matrix_for_date"
+      },
+      {
+        "file": "routers/competitors/analytics.py",
+        "line": 180,
+        "lines": 111,
+        "name": "import_prices_csv"
+      },
+      {
+        "file": "routers/competitors/analytics.py",
+        "line": 291,
+        "lines": 64,
+        "name": "export_prices_csv"
+      },
+      {
+        "file": "routers/competitors/analytics.py",
+        "line": 355,
+        "lines": 117,
+        "name": "get_price_trend"
+      },
+      {
+        "file": "routers/competitors/prices.py",
+        "line": 34,
+        "lines": 58,
+        "name": "get_competitor_prices"
+      },
+      {
+        "file": "routers/competitors/base.py",
+        "line": 40,
+        "lines": 65,
+        "name": "get_competitors"
+      },
+      {
+        "file": "routers/competitors/base.py",
+        "line": 105,
+        "lines": 66,
+        "name": "get_competitors_summary"
+      },
+      {
+        "file": "routers/competitors/base.py",
+        "line": 171,
+        "lines": 73,
+        "name": "get_competitor"
+      },
+      {
+        "file": "routers/competitors/base.py",
+        "line": 275,
+        "lines": 66,
+        "name": "update_competitor"
+      }
+    ],
+    "todos": [
+      {
+        "file": "routers/TEST_ACTION_TRACKING.md",
+        "line": 379,
+        "type": "TODO",
+        "content": "- Implementazione Reale"
+      },
+      {
+        "file": "routers/ml_api.py",
+        "line": 447,
+        "type": "TODO",
+        "content": "Recuperare suggestion_data dal DB usando suggestion_id"
+      },
+      {
+        "file": "routers/subscriptions.py",
+        "line": 352,
+        "type": "TODO",
+        "content": "\"trial\" se tier paid e non ha pagato"
+      },
+      {
+        "file": "routers/weather.py",
+        "line": 91,
+        "type": "TODO",
+        "content": "Query database per location hotel"
+      },
+      {
+        "file": "routers/weather.py",
+        "line": 103,
+        "type": "TODO",
+        "content": "Query database per tipo hotel"
+      },
+      {
+        "file": "routers/cm_reservation.py",
+        "line": 224,
+        "type": "TODO",
+        "content": "Rimuovere questo blocco quando pronti per produzione"
+      },
+      {
+        "file": "routers/cm_reservation.py",
+        "line": 544,
+        "type": "TODO",
+        "content": "detect if matched or created"
+      },
+      {
+        "file": "middleware/license_check.py",
+        "line": 87,
+        "type": "TODO",
+        "content": "ATTIVARE BLOCCO"
+      },
+      {
+        "file": "middleware/license_check.py",
+        "line": 96,
+        "type": "TODO",
+        "content": "ATTIVARE BLOCCO"
+      },
+      {
+        "file": "middleware/license_check.py",
+        "line": 109,
+        "type": "TODO",
+        "content": "ATTIVARE BLOCCO"
+      },
+      {
+        "file": "ml/ml_scheduler.py",
+        "line": 616,
+        "type": "TODO",
+        "content": "store in DB se necessario"
+      },
+      {
+        "file": "services/subscription_service.py",
+        "line": 224,
+        "type": "TODO",
+        "content": "ATTIVARE QUANDO RAFA DECIDE!"
+      },
+      {
+        "file": "services/subscription_service.py",
+        "line": 272,
+        "type": "TODO",
+        "content": "ATTIVARE QUANDO RAFA DECIDE!"
+      },
+      {
+        "file": "services/pagonline/client.py",
+        "line": 486,
+        "type": "TODO",
+        "content": "Implementare in FASE successiva"
+      },
+      {
+        "file": "services/email/bookingengine.py",
+        "line": 87,
+        "type": "TODO",
+        "content": "estrarre da prodotto se disponibile"
+      },
+      {
+        "file": "routers/settings/rooms.py",
+        "line": 154,
+        "type": "TODO",
+        "content": "Verificare che non ci siano prenotazioni future attive"
+      },
+      {
+        "file": "routers/public/availability.py",
+        "line": 174,
+        "type": "TODO",
+        "content": "aggiungere campo"
+      },
+      {
+        "file": "routers/public/availability.py",
+        "line": 176,
+        "type": "TODO",
+        "content": "aggiungere gestione foto"
+      },
+      {
+        "file": "routers/public/helpers.py",
+        "line": 220,
+        "type": "TODO",
+        "content": "aggiungere gestione foto"
+      }
+    ],
+    "duplicates": [
+      {
+        "files": [
+          "compliance/__init__.py",
+          "ml/__init__.py"
+        ],
+        "count": 2
+      }
+    ],
+    "stats": {
+      "total_files": 336,
+      "total_lines": 88086,
+      "total_issues": 470
+    }
+  }
+}
