@@ -5,36 +5,58 @@
 
 # PROMPT RIPRESA - PMS Core
 
-> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 271
-> **STATO:** 90% LIVE + Modulo Finanziario 75%
+> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 272
+> **STATO:** 90% LIVE | Health 6.5/10 (in miglioramento)
 
 ---
 
-## SESSIONE 271 - FATTURE XML TEST OK!
+## SESSIONE 272 - PULIZIA CASA PMS
 
 ```
 +================================================================+
 |                                                                |
-|   TEST SPRING: SUPERATO!                                       |
+|   PULIZIA CASA COMPLETATA!                                     |
 |                                                                |
-|   - 2 XML generati (200/NL semplice, 201/NL completo)         |
-|   - Validati contro schema FatturaPA v1.2                      |
-|   - Import SPRING: OK (PDF generato)                           |
-|                                                                |
-|   DECISIONE: Implementazione PARCHEGGIATA                      |
-|   Motivo: Test OK, implementare quando serve realmente         |
+|   - Audit tecnico: Health 6.5/10 mappato                       |
+|   - Modulo subscription organizzato                            |
+|   - 4 TODO tecnici fixati                                      |
+|   - SUBROADMAP split file creata                               |
 |                                                                |
 +================================================================+
 ```
 
-### File Test
-```
-~/Desktop/fatture_xml_test/
-├── IT00658350251_00200.xml   ← Fattura semplice
-├── IT00658350251_00201.xml   ← Fattura completa (10%+22%+N1)
-├── IT00658350251_00201.PDF   ← Output SPRING
-└── Schema_FatturaPA_v1.2.xsd ← Schema ufficiale
-```
+### Fix Applicati (Sessione 272)
+
+| File | Fix |
+|------|-----|
+| `routers/settings/rooms.py` | Check prenotazioni prima delete |
+| `services/email/bookingengine.py` | num_guests da email |
+| `routers/weather.py` | Location/type da database |
+| `routers/ml_api.py` | TODO obsoleto rimosso |
+
+### File Creati
+
+| File | Scopo |
+|------|-------|
+| `modules/subscription/` | Modulo parcheggiato (README incluso) |
+| `core/encryption.py` | TokenEncryptor Fernet per Twilio |
+
+---
+
+## MAPPA SPLIT FILE GIGANTI
+
+**SUBROADMAP:** `.sncp/progetti/miracollo/roadmaps/SUBROADMAP_SPLIT_FILE_GIGANTI.md`
+
+| # | File | Righe | Rischio | Sessioni |
+|---|------|-------|---------|----------|
+| 1 | test_action_tracking.py | 820 | Basso | 1 |
+| 2 | ml_api.py | 705 | Basso | 1 |
+| 3 | cm_import_service.py | 762 | Medio | 1.5 |
+| 4 | planning_core.py | 746 | ALTO | 2 |
+| 5 | ab_testing_api.py | 768 | Medio | 1.5 |
+| 6 | city_tax.py | 721 | Medio | 1.5 |
+
+**Totale:** 8-9 sessioni
 
 ---
 
@@ -45,31 +67,33 @@
 | 1 | Ricevute PDF | 100% REALE |
 | 1B | Checkout UI | 100% REALE |
 | 2 | Scontrini RT | 90% - test stampante DA FARE |
-| 3 | Fatture XML | 60% - TEST OK, impl. PARCHEGGIATA |
+| 3 | Fatture XML | 60% - PARCHEGGIATO |
 | 4 | Export | 0% - PARCHEGGIATO |
 
 ---
 
-## PROSSIMO STEP CONCRETO
+## PROSSIMO STEP
 
 ```
-QUANDO IN HOTEL:
-  1. Test adapter Scontrini RT su stampante Bar
-  2. Se OK: UI integrazione checkout
-  3. Se OK: Chiusura automatica 23:55
+OPZIONE A - Split File (consigliato):
+  1. test_action_tracking.py (warm-up, zero rischio)
+  2. ml_api.py (basso rischio)
+  3. ... seguire SUBROADMAP
 
-TUTTO RESTO: PARCHEGGIATO
+OPZIONE B - Test Scontrini RT:
+  Quando in hotel: test stampante Bar
 ```
 
 ---
 
-## PARCHEGGIATI (19 Gen 2026)
+## PARCHEGGIATI
 
 | Cosa | Motivo |
 |------|--------|
-| Fatture XML impl. | Test SPRING OK, impl. quando serve |
-| Export commercialista | 10-15 fatt/mese = gestibile manuale |
-| Modularizzazione FASE 2-3 | Codice funziona |
+| Subscription system | In `modules/`, pronto quando serve |
+| Fatture XML impl. | Test SPRING OK |
+| Export commercialista | Manuale OK per 10-15 fatt/mese |
+| Notifiche CM | Modulo futuro |
 
 ---
 
@@ -87,10 +111,10 @@ PATH: /home/rafapra/app/
 
 | File | Scopo |
 |------|-------|
-| GUIDA_FATTURE_XML_MIRACOLLO.md | Tutto su fatture XML |
+| SUBROADMAP_SPLIT_FILE_GIGANTI.md | Piano split 6 file |
+| GUIDA_FATTURE_XML_MIRACOLLO.md | Fatture XML |
 | MAPPA_MODULO_FINANZIARIO.md | Stato modulo completo |
-| STATO_REALE_PMS.md | Verifica infrastruttura |
 
 ---
 
-*"Test SPRING OK! Sappiamo che funziona. Implementiamo quando serve."*
+*"Pulizia casa prima di costruire nuovo!" - Sessione 272*

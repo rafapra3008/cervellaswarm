@@ -1,6 +1,6 @@
 # OGGI - 19 Gennaio 2026
 
-> **Sessione:** 272 | **Progetto:** CervellaSwarm | **Focus:** W1 Git Flow Day 2-4
+> **Sessione:** 272 | **Progetto:** Miracollo PMS | **Focus:** Pulizia Casa
 
 ---
 
@@ -8,9 +8,9 @@
 
 ```
 +================================================================+
-|   GIT FLOW v1.2.2 - CERTIFIED 9.7/10!                         |
-|   SPAWN-WORKERS v3.6.0 - AUTO-COMMIT INTEGRATO! 9/10          |
-|   W1 Day 2,3,4,5 COMPLETATI! Solo Day 6-7 (docs) rimasti      |
+|   PULIZIA CASA PMS - SESSIONE 272                              |
+|   Health: 6.5/10 -> In miglioramento                           |
+|   9 task completati + SUBROADMAP creata                        |
 +================================================================+
 ```
 
@@ -18,41 +18,38 @@
 
 ## COSA FATTO
 
-| Task | Status | Score |
-|------|--------|-------|
-| Day 2: auto_detect_type() | FATTO | 9.7/10 |
-| Day 2: 13 scope patterns | FATTO | - |
-| Day 2: --auto flag | FATTO | - |
-| Fix BUG: undo --hard→--soft | FATTO | - |
-| Fix: orchestrator JSON (16/16) | FATTO | - |
-| Day 4: --auto-commit spawn-workers | FATTO | 9/10 |
-| TASK_BREAKDOWN aggiornato | FATTO | - |
-| Audit Guardiana x3 | APPROVATO | - |
+| Task | Status |
+|------|--------|
+| Audit tecnico PMS | Mappato 6.5/10 |
+| Modulo subscription separato | `modules/subscription/` |
+| Encryption WhatsApp infrastruttura | `core/encryption.py` |
+| Fix rooms.py (check prenotazioni) | FATTO |
+| Fix bookingengine.py (num_guests) | FATTO |
+| Fix weather.py (location da DB) | FATTO |
+| Fix ml_api.py (TODO obsoleto) | FATTO |
+| SUBROADMAP split file giganti | CREATA |
 
 ---
 
-## STATO W1 GIT FLOW
+## FILE CREATI
 
-| Day | Task | Stato |
-|-----|------|-------|
-| 1 | Setup + Script | ✅ |
-| 2 | Conventional Commits | ✅ 9.7! |
-| 3 | Attribution | ✅ |
-| 4 | Integrazione CLI | ✅ 9/10! |
-| 5 | Undo | ✅ |
-| 6-7 | Docs | ❌ TODO |
+| File | Scopo |
+|------|-------|
+| `backend/modules/subscription/` | Modulo parcheggiato organizzato |
+| `backend/core/encryption.py` | TokenEncryptor per Twilio |
+| `SUBROADMAP_SPLIT_FILE_GIGANTI.md` | Piano split 6 file >700 righe |
 
 ---
 
 ## PROSSIMA SESSIONE
 
 ```
-W1 Day 6-7:
-[ ] docs/GIT_ATTRIBUTION.md
-[ ] Test reali con worker
-[ ] README aggiornato
+SPLIT FILE GIGANTI (8-9 sessioni totali):
+1. test_action_tracking.py (820 righe) - Warm-up
+2. ml_api.py (705 righe) - Basso rischio
+... poi file critici
 ```
 
 ---
 
-*"272 sessioni. Verificare PRIMA di assumere!" - Sessione 272*
+*"Pulizia casa prima di costruire nuovo!" - Sessione 272*

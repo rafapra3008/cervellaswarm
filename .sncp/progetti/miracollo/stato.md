@@ -1,6 +1,6 @@
 # STATO PROGETTO MIRACOLLO
 
-> **Data:** 2026-01-19 - Sessione 271
+> **Data:** 2026-01-19 - Sessione 272
 > **Architettura:** 3 Bracci (PMS Core, Miracollook, Room Hardware)
 
 ---
@@ -9,16 +9,37 @@
 
 ```
 MIRACOLLO
-├── PMS CORE (:8001)        90%  PRODUZIONE STABILE
-├── MIRACOLLOOK (:8002)     Codice 100% | Robustezza 8.5/10
+├── PMS CORE (:8001)        90%  PRODUZIONE STABILE | Health 6.5/10
+├── MIRACOLLOOK (:8002)     Codice 100% | Robustezza 9.2/10
 └── ROOM HARDWARE (:8003)   10%  Attesa hardware
 ```
 
 | Braccio | Stato | Score | Prossimo |
 |---------|-------|-------|----------|
-| PMS Core | LIVE, stabile | 90% | Test scontrini RT |
-| Miracollook | Robustezza OK | 8.5/10 | Prod quando serve |
+| PMS Core | LIVE, pulizia casa | 6.5/10 | Split file giganti |
+| Miracollook | Robustezza OK | 9.2/10 | Prod quando serve |
 | Room Hardware | Ricerca OK | 10% | Setup hardware |
+
+---
+
+## PMS CORE - SESSIONE 272 (PULIZIA CASA)
+
+### Fix Applicati
+
+| File | Fix |
+|------|-----|
+| `routers/settings/rooms.py` | Check prenotazioni prima delete |
+| `services/email/bookingengine.py` | num_guests estratto da email |
+| `routers/weather.py` | Location/type da database |
+| `routers/ml_api.py` | TODO obsoleto rimosso |
+
+### File Creati
+
+| File | Scopo |
+|------|-------|
+| `backend/modules/subscription/` | Modulo subscription organizzato |
+| `backend/core/encryption.py` | TokenEncryptor Fernet per Twilio |
+| `SUBROADMAP_SPLIT_FILE_GIGANTI.md` | Piano split 6 file >700 righe |
 
 ---
 
@@ -28,7 +49,7 @@ MIRACOLLO
 FASE 1: Ricevute PDF        [####################] 100% REALE!
 FASE 1B: Checkout UI        [####################] 100% REALE!
 FASE 2: Scontrini RT        [##################..] 90% Test stampante DA FARE
-FASE 3: Fatture XML         [############........] 60% TEST SPRING OK!
+FASE 3: Fatture XML         [############........] 60% PARCHEGGIATO
 FASE 4: Export              [....................] 0% PARCHEGGIATO
 ```
 
@@ -36,17 +57,20 @@ FASE 4: Export              [....................] 0% PARCHEGGIATO
 
 ---
 
-## MIRACOLLOOK - STATO DETTAGLIATO
+## MAPPA SPLIT FILE GIGANTI
 
-```
-CODICE FEATURE:             [####################] 100%
-ROBUSTEZZA:                 [#################...] 8.5/10
-├── FASE 0: Prerequisiti    ✅ COMPLETATA (270)
-├── FASE 1: Security        ✅ COMPLETATA (270)
-├── FASE 2: Auto-start      ✅ COMPLETATA (270)
-├── FASE 3: Rate limiting   ✅ COMPLETATA (270)
-├── FASE 4-5: Test/Monitor  ❌ DA FARE (bassa prio)
-```
+**SUBROADMAP:** `roadmaps/SUBROADMAP_SPLIT_FILE_GIGANTI.md`
+
+| # | File | Righe | Rischio | Sessioni |
+|---|------|-------|---------|----------|
+| 1 | test_action_tracking.py | 820 | Basso | 1 |
+| 2 | ml_api.py | 705 | Basso | 1 |
+| 3 | cm_import_service.py | 762 | Medio | 1.5 |
+| 4 | planning_core.py | 746 | ALTO | 2 |
+| 5 | ab_testing_api.py | 768 | Medio | 1.5 |
+| 6 | city_tax.py | 721 | Medio | 1.5 |
+
+**Totale stimato:** 8-9 sessioni
 
 ---
 
@@ -54,10 +78,12 @@ ROBUSTEZZA:                 [#################...] 8.5/10
 
 | Cosa | Motivo | Risveglio |
 |------|--------|-----------|
+| Subscription system | In `modules/` organizzato | Quando vendita B2B |
 | Fatture XML impl. | Test SPRING OK | Quando serve |
 | Export commerc. | 10-15 fatt/mese | Mai (manuale OK) |
-| Miracollook FASE 4-5 | 8.5 sufficiente | Dopo prod |
+| Miracollook FASE 4-5 | 9.2 sufficiente | Dopo prod |
 | Room Hardware | Attesa hardware | Quando arriva |
+| Notifiche CM | Modulo futuro | Q2 2026? |
 
 ---
 
@@ -65,8 +91,9 @@ ROBUSTEZZA:                 [#################...] 8.5/10
 
 | Sess | Data | Focus | Risultato |
 |------|------|-------|-----------|
-| **271** | **19 Gen** | **Fatture XML Test** | **TEST SPRING OK!** |
-| 270 | 19 Gen | Miracollook Robustezza | 6.5→8.5/10 |
+| **272** | **19 Gen** | **Pulizia Casa PMS** | **9 task + SUBROADMAP** |
+| 271 | 19 Gen | Fatture XML Test | TEST SPRING OK! |
+| 270 | 19 Gen | Miracollook Robustezza | 6.5->9.2/10 |
 | 268 | 19 Gen | Labels + SUBROADMAP | Codice 100% |
 | 266 | 19 Gen | SOAP Adapter Epson | Fix completo |
 
@@ -77,10 +104,11 @@ ROBUSTEZZA:                 [#################...] 8.5/10
 | Cosa | Dove |
 |------|------|
 | NORD.md | `miracollogeminifocus/NORD.md` |
-| Guida Fatture XML | `.sncp/.../guide/GUIDA_FATTURE_XML_MIRACOLLO.md` |
-| MAPPA Finanziario | `.sncp/.../finanziario/MAPPA_MODULO_FINANZIARIO.md` |
+| SUBROADMAP Split | `roadmaps/SUBROADMAP_SPLIT_FILE_GIGANTI.md` |
+| Guida Fatture XML | `guide/GUIDA_FATTURE_XML_MIRACOLLO.md` |
+| MAPPA Finanziario | `moduli/finanziario/MAPPA_MODULO_FINANZIARIO.md` |
 
 ---
 
-*"Test SPRING OK! Sappiamo che funziona."*
-*Aggiornato: 19 Gennaio 2026 - Sessione 271*
+*"Pulizia casa prima di costruire nuovo!"*
+*Aggiornato: 19 Gennaio 2026 - Sessione 272*

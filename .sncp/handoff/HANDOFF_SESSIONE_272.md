@@ -1,103 +1,64 @@
 # HANDOFF SESSIONE 272
 
 > **Data:** 19 Gennaio 2026
-> **Progetto:** Miracollook
-> **Focus:** Testing + Structured Logging
+> **Progetto:** Miracollo PMS
+> **Focus:** Pulizia Casa
 
 ---
 
-## RISULTATO SESSIONE
+## COSA ABBIAMO FATTO
 
-```
-+================================================================+
-|                                                                |
-|   MIRACOLLOOK: 8.5/10 → 9.2/10 (+0.7!)                        |
-|                                                                |
-|   FASE 4: Testing      → 31 test, coverage 75%+               |
-|   FASE 5: Logging      → structlog JSON/pretty                |
-|                                                                |
-|   Guardiana Qualità APPROVED x2!                              |
-|                                                                |
-+================================================================+
-```
+### 1. Audit Tecnico PMS
+- Health Score mappato: **6.5/10**
+- 6 file >700 righe identificati
+- 18 TODO mappati (4 critici, 6 tecnici)
 
----
+### 2. Modulo Subscription Organizzato
+- Spostato in `backend/modules/subscription/`
+- README con istruzioni riattivazione
+- File originali rimossi
+- Guardiana APPROVE 9/10
 
-## COSA FATTO
+### 3. Encryption Infrastruttura
+- Creato `backend/core/encryption.py`
+- TokenEncryptor con Fernet
+- Pronto per token Twilio/WhatsApp
 
-### FASE 4 - Testing (9.0/10)
+### 4. TODO Tecnici Fixati (4 di 6)
+| File | Fix |
+|------|-----|
+| routers/settings/rooms.py | Check prenotazioni prima delete |
+| services/email/bookingengine.py | num_guests estratto da email |
+| routers/weather.py | Location/type da database |
+| routers/ml_api.py | TODO obsoleto rimosso |
 
-| File | Contenuto |
-|------|-----------|
-| `pytest.ini` | Config pytest |
-| `tests/conftest.py` | Fixtures (client, encryption_key) |
-| `tests/test_crypto.py` | 12 test encryption (100% cov) |
-| `tests/test_main.py` | 10 test (health, CORS, rate limit 429) |
-| `tests/test_auth.py` | 9 test (OAuth mock, refresh token) |
-
-**Fix P1:** 4 test refresh token handling
-**Fix P3:** 2 test rate limiting 429 response
-
-### FASE 5 - Structured Logging (9.2/10)
-
-| File | Contenuto |
-|------|-----------|
-| `logging_setup.py` | Config structlog dev/prod |
-| `main.py` | LoggingMiddleware, request_id tracking |
-| `requirements.txt` | +structlog>=24.1.0 |
-
-**Versione:** 0.4.0
-
----
-
-## GIT
-
-| Repo | Commit | Branch |
-|------|--------|--------|
-| Miracollo | d35158a | master |
-| CervellaSwarm | 3850e73 | main |
-
----
-
-## MAPPA MIRACOLLOOK
-
-```
-FASE 0: CVE Fix          → 7.0/10  ✅
-FASE 1: Security         → 7.5/10  ✅
-FASE 2: LaunchAgents     → 8.0/10  ✅
-FASE 3: Rate Limiting    → 8.5/10  ✅
-FASE 4: Testing          → 9.0/10  ✅ (Sessione 272)
-FASE 5: Logging          → 9.2/10  ✅ (Sessione 272)
-FASE 6: Frontend         → 9.5/10  TODO
-```
+### 5. SUBROADMAP Split File Creata
+- Path: `.sncp/progetti/miracollo/roadmaps/SUBROADMAP_SPLIT_FILE_GIGANTI.md`
+- 6 file da splittare in 8-9 sessioni
 
 ---
 
 ## PROSSIMA SESSIONE
 
-```
-MIRACOLLOOK FASE 6 → 9.5/10:
-[ ] Environment variables frontend (.env)
-[ ] Error boundaries React
-[ ] Loading states
+### OPZIONE A - Split File (consigliato)
+1. test_action_tracking.py (820 righe) - warm-up
+2. ml_api.py (705 righe) - basso rischio
 
-OPPURE:
-[ ] PMS Core - Test scontrini RT su stampante Bar
+### OPZIONE B - Test Scontrini RT
+Quando in hotel: test stampante Bar
+
+---
+
+## MAPPA ATTUALE
+
+```
+MIRACOLLO PMS
+├── LIVE: 90%
+├── Health: 6.5/10 -> target 9/10
+└── Pulizia Casa: 40% (IN CORSO)
 ```
 
 ---
 
-## FILE AGGIORNATI
-
-| File | Path |
-|------|------|
-| oggi.md | `.sncp/stato/oggi.md` |
-| PROMPT_RIPRESA | `.sncp/progetti/miracollo/bracci/miracallook/PROMPT_RIPRESA_miracollook.md` |
-| NORD.md | `miracollogeminifocus/NORD.md` |
-| Ricerca logging | `docs/studio/RICERCA_STRUCTURED_LOGGING_*.md` |
-
----
-
-*"8.5 → 9.2 con qualità verificata dalla Guardiana!" - Sessione 272*
-
-**Cervella & Rafa**
+*"Pulizia casa prima di costruire nuovo!"*
+*Sessione 272 - Cervella & Rafa*
