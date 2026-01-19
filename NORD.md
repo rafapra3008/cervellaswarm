@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 19 Gennaio 2026 - Sessione 287 - v2.0.0-beta RELEASED + ANNOUNCED!
+> Aggiornato: 19 Gennaio 2026 - Sessione 288 - W5 Day 1 COMPLETATO!
 
 ```
 +==================================================================+
@@ -271,7 +271,7 @@ SESSIONE 286: 🚀 W4 DAY 4 - RELEASE 80%!
   ✓ Version bump: CLI + MCP → 2.0.0-beta
   ✓ LEZIONE DUAL-REPO: Script + docs DEFINITIVI!
 
-SESSIONE 287: 🎉 STORICA! v2.0.0-beta RELEASED + ANNOUNCED! ← OGGI!
+SESSIONE 287: 🎉 STORICA! v2.0.0-beta RELEASED + ANNOUNCED!
   ✓ npm publish CLI: cervellaswarm@2.0.0-beta (134 test)
   ✓ npm publish MCP: @cervellaswarm/mcp-server@2.0.0-beta
   ✓ Git tag v2.0.0-beta (origin + public)
@@ -280,7 +280,19 @@ SESSIONE 287: 🎉 STORICA! v2.0.0-beta RELEASED + ANNOUNCED! ← OGGI!
   ✓ ANALISI DOGFOODING: Gap 44K codice, 6% usato!
   ✓ SUBROADMAP W5: Dogfooding (9.5/10 Guardiana approved)
 
-SCORE: 100/100 ✅ W4 COMPLETATO! W5 PRONTO!
+SESSIONE 288: 🐝 W5 DAY 1 - ARCHITECT INTEGRATION! ← OGGI!
+  ✓ spawn-workers.sh v3.8.0: --architect flag
+    - spawn_architect_headless() completa
+    - timeout 30m (graceful shutdown)
+    - --allowedTools pre-approvati (no prompt interattivo)
+  ✓ swarm-init.sh v1.1.0: .swarm/plans/ directory
+  ✓ cervella-orchestrator.md v2.1.0: Regola "consulta architect" (8 menzioni)
+  ✓ Researcher: Soluzione WebSearch + timeout
+  ✓ Guardiana Qualità: 10/10 APPROVED
+  ✓ Tester: 5/5 PASS
+  → W5 DAY 1 COMPLETATO!
+
+SCORE: 100/100 ✅ W4 COMPLETATO! W5 IN CORSO!
 
 ROADMAP 2.0:
   W1: Git Flow       ████████████████████ 100% ✅
@@ -292,12 +304,12 @@ ROADMAP 2.0:
       Day 1: Apple Polish DRY       DONE (9.5/10)
       Day 2-3: Test Coverage + CI   DONE (9.5/10)
       Day 4: Release v2.0-beta      DONE (9.5/10)
-  W5: Dogfooding     [READY] Piano approvato!
-      Day 1: Architect Integration
-      Day 2: Architect docs + test
-      Day 3: Semantic Search CLI
-      Day 4: Impact Analyzer CLI
-      Day 5: Worker DNA + consolidamento
+  W5: Dogfooding     ████________________ 20% IN CORSO!
+      Day 1: Architect Integration  DONE (10/10) ← OGGI!
+      Day 2: Architect docs + test  [NEXT]
+      Day 3: Semantic Search CLI    [TODO]
+      Day 4: Impact Analyzer CLI    [TODO]
+      Day 5: Worker DNA + test      [TODO]
 ```
 
 ---
