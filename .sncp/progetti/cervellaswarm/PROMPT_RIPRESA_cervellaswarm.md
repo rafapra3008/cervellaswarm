@@ -1,67 +1,62 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 273
-> **STATUS:** W1 Git Flow COMPLETATO! Prossimo: W2 Tree-sitter
+> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 274
+> **STATUS:** W2 Tree-sitter Day 1 COMPLETATO! Core implementato.
 
 ---
 
-## SESSIONE 273 - W1 GIT FLOW 100%!
+## SESSIONE 274 - W2 TREE-SITTER DAY 1!
 
 ```
 +================================================================+
-|   W1 GIT FLOW - COMPLETATO!                                    |
-|   Day 1-7: TUTTI FATTI!                                        |
-|   DUAL REMOTE: origin=private, public=release                  |
+|   W2 TREE-SITTER - DAY 1 COMPLETATO!                          |
+|   4 componenti core + 142 test                                 |
+|   Audit Guardiana: 96/100 (96%) APPROVED!                     |
 +================================================================+
 ```
 
 **FATTO:**
-- DUAL REMOTE configurato:
-  - `origin` → cervellaswarm-internal (PRIVATO, 851+ commit)
-  - `public` → cervellaswarm (PUBBLICO, solo release)
-- Day 6-7: docs/GIT_ATTRIBUTION.md completato
-- Test --auto-commit verificato (dry-run OK)
-- Ricerca Git Strategy con cervella-researcher
+- `treesitter_parser.py` - Parser AST multi-linguaggio
+- `symbol_extractor.py` - Estrazione simboli (funzioni, classi, types)
+- `dependency_graph.py` - PageRank per importanza
+- `repo_mapper.py` - Orchestratore principale
+- Studio completo: `.sncp/progetti/cervellaswarm/studi/STUDIO_TREE_SITTER_REPO_MAPPING.md`
+
+**TEST REALE:**
+- 208 file analizzati
+- 1101 simboli estratti
+- 145 simboli selezionati (budget 2000 tokens)
+- Riduzione: -80% token usage!
 
 ---
 
-## ARCHITETTURA GIT (NUOVO!)
+## FILE W2 TREE-SITTER
+
+| File | Righe | Status |
+|------|-------|--------|
+| `scripts/utils/treesitter_parser.py` | 365 | OK |
+| `scripts/utils/symbol_extractor.py` | 484 | OK |
+| `scripts/utils/dependency_graph.py` | 451 | OK |
+| `scripts/utils/repo_mapper.py` | 571 | OK (sopra 500) |
+
+**Dipendenze:** tree-sitter-language-pack, networkx
+
+---
+
+## ROADMAP 2.0
 
 ```
-LOCALE
-├── origin → cervellaswarm-internal (PRIVATO)
-│   └── Tutto il lavoro (851+ commit)
-└── public → cervellaswarm (PUBBLICO)
-    └── Solo release (v0.1.2, v0.2.0, ...)
+W1: Git Flow       ✅ COMPLETATO!
+W2: Tree-sitter    ████░░░░░░░░░░░ 25% (Day 1/7)
+W3: Architect/Editor
+W4: Polish + v2.0-beta
 ```
 
-**Workflow:**
-- Push quotidiano → `git push origin main`
-- Release pubblica → branch pulito su `public`
-
----
-
-## STATO W1 GIT FLOW
-
-| Day | Task | Stato |
-|-----|------|-------|
-| 1 | Setup + Script | DONE |
-| 2 | Conventional Commits | DONE (9.7/10) |
-| 3 | Attribution | DONE |
-| 4 | Integrazione CLI | DONE (9/10) |
-| 5 | Undo | DONE |
-| 6-7 | Docs + Polish | DONE |
-
----
-
-## FILE CHIAVE
-
-| File | Versione |
-|------|----------|
-| `scripts/utils/git_worker_commit.sh` | v1.2.2 |
-| `scripts/utils/worker_attribution.json` | v1.1.0 (16/16) |
-| `scripts/swarm/spawn-workers.sh` | v3.6.0 |
-| `docs/GIT_ATTRIBUTION.md` | v1.0.0 |
+**W2 Remaining:**
+- Day 2: Integrazione spawn-workers
+- Day 3: Test su Miracollo + Contabilita
+- Day 4-5: Performance optimization
+- Day 6-7: Docs + Polish
 
 ---
 
@@ -75,23 +70,13 @@ LOCALE
 
 ---
 
-## ROADMAP 2.0
-
-```
-W1 (20-26 Gen): Git Flow       ✅ COMPLETATO!
-W2 (27 Gen-2 Feb): Tree-sitter ← PROSSIMO
-W3 (3-9 Feb): Architect/Editor
-W4 (10-16 Feb): Polish + v2.0-beta
-```
-
----
-
 ## PROSSIMA SESSIONE
 
-1. Iniziare W2 Tree-sitter (o attendere 27 Gen)
-2. Monitorare Show HN
-3. Review feedback utenti
+1. **Double check Guardiana Qualità** - Verifica finale 4 moduli
+2. Integrare repo_mapper in spawn-workers.sh
+3. Test su altri progetti (Miracollo, Contabilita)
+4. Fix JSX support (usare javascript invece di jsx)
 
 ---
 
-*"273 sessioni. W1 Git Flow COMPLETATO!"*
+*"274 sessioni. W2 Tree-sitter Day 1 - Core FATTO!"*

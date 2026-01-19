@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 19 Gennaio 2026 - Sessione 273 - W1 Git Flow COMPLETATO!
+> Aggiornato: 19 Gennaio 2026 - Sessione 274 - W2 Tree-sitter Day 1 COMPLETATO!
 
 ```
 +==================================================================+
@@ -141,23 +141,34 @@ SESSIONE 272: 🔧 GIT FLOW 2.0 DAY 2-4!
   ✓ Fix: orchestrator JSON          16/16 agenti completi
   ✓ 3 Audit Guardiana               TUTTI APPROVED!
 
-SESSIONE 273: 🎯 W1 GIT FLOW COMPLETATO! ← OGGI!
+SESSIONE 273: 🎯 W1 GIT FLOW COMPLETATO!
   ✓ DUAL REMOTE CONFIGURATO!
     - origin → cervellaswarm-internal (PRIVATO, 851+ commit)
     - public → cervellaswarm (PUBBLICO, solo release)
   ✓ Day 6-7: docs/GIT_ATTRIBUTION.md  Documentazione completa!
   ✓ Test --auto-commit               Dry-run verificato OK
-  ✓ Ricerca Git Strategy             Best practice studiata
   → W1 GIT FLOW 7/7 COMPLETATO!
 
-SCORE: 10/10 ✅ W1 GIT FLOW 100% DONE!
+SESSIONE 274: 🌳 W2 TREE-SITTER DAY 1! ← OGGI!
+  ✓ CORE IMPLEMENTATO!
+    - treesitter_parser.py (365 righe)
+    - symbol_extractor.py (486 righe)
+    - dependency_graph.py (451 righe)
+    - repo_mapper.py (571 righe)
+  ✓ 142 TEST SUITE COMPLETA!
+  ✓ AUDIT 96/100!
+    - Score: 80% → 89% → 96%
+    - Guardiana Qualità APPROVED
+    - Guardiana Ops 8/10
+  → W2 DAY 1 COMPLETATO!
 
-PIANO GIORNATA 19 GENNAIO:
-  ✓ Test REALE completato
-  ✓ Guardiane consultate
-  ✓ Documentazione aggiornata
-  → 13:00: SHOW HN LAUNCH!
-  → DOPO: CervellaSwarm 2.0
+SCORE: 96/100 ✅ W2 TREE-SITTER CORE DONE!
+
+ROADMAP 2.0:
+  W1: Git Flow       ████████████████████ 100% ✅
+  W2: Tree-sitter    █████░░░░░░░░░░░░░░░ 25% (Day 1/7)
+  W3: Architect/Editor
+  W4: Polish + v2.0-beta
 ```
 
 ---
