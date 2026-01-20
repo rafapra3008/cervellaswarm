@@ -97,9 +97,11 @@ Worker   Worker   Worker
 
 | Tipo | Scope | File | Retention |
 |------|-------|------|-----------|
-| **STM** (Short-term) | Sessione | `oggi.md` | 1 giorno |
+| **STM** (Short-term) | Sessione | `PROMPT_RIPRESA + handoff` | Fino archivio |
 | **MTM** (Medium-term) | Progetto | `stato.md` | Fino archivio |
 | **LTM** (Long-term) | Globale | `COSTITUZIONE.md` | Permanente |
+
+> **SNCP 2.0:** `oggi.md` deprecated. STM ora gestito da PROMPT_RIPRESA + handoff.
 
 **Valore:** Informazioni giuste al momento giusto.
 

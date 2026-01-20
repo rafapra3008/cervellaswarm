@@ -53,8 +53,8 @@ for pr in .sncp/progetti/*/PROMPT_RIPRESA_*.md; do
     [ -f "$pr" ] && check_line_limit "$pr" 150 "$(basename "$pr")"
 done
 
-# oggi.md (max 60)
-check_line_limit ".sncp/stato/oggi.md" 60 "oggi.md"
+# oggi.md DEPRECATO (SNCP 2.0 - Sessione 297)
+# Non controlliamo più oggi.md
 
 # stato.md (max 500)
 for stato in .sncp/progetti/*/stato.md; do

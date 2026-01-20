@@ -152,21 +152,14 @@ print_global_stats() {
     local total_files=$(count_files "$SNCP_ROOT")
     local total_obsolete=$(count_obsolete "$SNCP_ROOT")
 
-    # oggi.md
-    local oggi_lines=$(get_line_count "$SNCP_ROOT/stato/oggi.md")
-    local oggi_date=$(get_file_age "$SNCP_ROOT/stato/oggi.md")
-    local oggi_icon="${GREEN}OK${NC}"
-    if [ "$oggi_lines" -gt 300 ]; then
-        oggi_icon="${RED}CRITICO${NC}"
-    elif [ "$oggi_lines" -gt 200 ]; then
-        oggi_icon="${YELLOW}WARNING${NC}"
-    fi
+    # oggi.md DEPRECATO (SNCP 2.0 - Sessione 297)
+    # Ora mostriamo solo statistiche generali
 
     echo -e "  ${CYAN}SNCP Root:${NC} $SNCP_ROOT"
     echo -e "  ${CYAN}Totale file MD:${NC} $total_files"
     echo -e "  ${CYAN}File obsoleti (>30gg):${NC} $total_obsolete"
     echo ""
-    echo -e "  ${CYAN}oggi.md:${NC} $oggi_lines righe [$oggi_icon] - ultimo update: $oggi_date"
+    echo -e "  ${CYAN}Sistema:${NC} SNCP 2.0 (PROMPT_RIPRESA + Handoff)"
 }
 
 # Print projects section
@@ -190,12 +183,8 @@ print_recommendations() {
 
     local recommendations=0
 
-    # Check oggi.md size
-    local oggi_lines=$(get_line_count "$SNCP_ROOT/stato/oggi.md")
-    if [ "$oggi_lines" -gt 300 ]; then
-        echo -e "  ${RED}[!]${NC} oggi.md ha $oggi_lines righe - esegui compaction!"
-        ((recommendations++))
-    fi
+    # oggi.md DEPRECATO (SNCP 2.0 - Sessione 297)
+    # Ora controlliamo PROMPT_RIPRESA e stato.md
 
     # Check obsolete files
     local total_obsolete=$(count_obsolete "$SNCP_ROOT")
@@ -204,20 +193,25 @@ print_recommendations() {
         ((recommendations++))
     fi
 
-    # Check today update
-    local oggi_date=$(get_file_age "$SNCP_ROOT/stato/oggi.md")
-    if [ "$oggi_date" != "$TODAY" ]; then
-        echo -e "  ${YELLOW}[!]${NC} oggi.md non aggiornato oggi (ultimo: $oggi_date)"
-        ((recommendations++))
-    fi
-
-    # Check projects stato.md
+    # Check projects stato.md e PROMPT_RIPRESA
     for proj in miracollo cervellaswarm contabilita; do
         local stato_file="$SNCP_ROOT/progetti/$proj/stato.md"
         if [ -f "$stato_file" ]; then
             local lines=$(get_line_count "$stato_file")
-            if [ "$lines" -gt 300 ]; then
-                echo -e "  ${YELLOW}[!]${NC} $proj/stato.md ha $lines righe - considera split"
+            if [ "$lines" -gt 500 ]; then
+                echo -e "  ${RED}[!]${NC} $proj/stato.md ha $lines righe > 500 - SERVE COMPACTION!"
+                ((recommendations++))
+            elif [ "$lines" -gt 400 ]; then
+                echo -e "  ${YELLOW}[!]${NC} $proj/stato.md ha $lines righe - considera archiviazione"
+                ((recommendations++))
+            fi
+        fi
+
+        local prompt_file="$SNCP_ROOT/progetti/$proj/PROMPT_RIPRESA_$proj.md"
+        if [ -f "$prompt_file" ]; then
+            local lines=$(get_line_count "$prompt_file")
+            if [ "$lines" -gt 150 ]; then
+                echo -e "  ${RED}[!]${NC} $proj/PROMPT_RIPRESA ha $lines righe > 150 - ARCHIVIA!"
                 ((recommendations++))
             fi
         fi
@@ -231,20 +225,14 @@ print_recommendations() {
 # Print summary score
 print_score() {
     echo ""
-    echo -e "${BLUE}--- SCORE SNCP ---${NC}"
+    echo -e "${BLUE}--- SCORE SNCP 2.0 ---${NC}"
     echo ""
 
     local score=100
     local issues=""
 
-    # Deduct for oggi.md size
-    local oggi_lines=$(get_line_count "$SNCP_ROOT/stato/oggi.md")
-    if [ "$oggi_lines" -gt 300 ]; then
-        score=$((score - 20))
-        issues="$issues file_size"
-    elif [ "$oggi_lines" -gt 200 ]; then
-        score=$((score - 10))
-    fi
+    # oggi.md DEPRECATO (SNCP 2.0 - Sessione 297)
+    # Score basato su: obsolete files, stato.md size, PROMPT_RIPRESA freshness
 
     # Deduct for obsolete files
     local total_obsolete=$(count_obsolete "$SNCP_ROOT")
@@ -255,12 +243,29 @@ print_score() {
         score=$((score - 5))
     fi
 
-    # Deduct for not updated today
-    local oggi_date=$(get_file_age "$SNCP_ROOT/stato/oggi.md")
-    if [ "$oggi_date" != "$TODAY" ]; then
-        score=$((score - 10))
-        issues="$issues freshness"
-    fi
+    # Deduct for stato.md size (any project)
+    for proj in miracollo cervellaswarm contabilita; do
+        local stato_file="$SNCP_ROOT/progetti/$proj/stato.md"
+        if [ -f "$stato_file" ]; then
+            local lines=$(get_line_count "$stato_file")
+            if [ "$lines" -gt 500 ]; then
+                score=$((score - 10))
+                issues="$issues ${proj}_stato_size"
+            fi
+        fi
+    done
+
+    # Deduct for PROMPT_RIPRESA too long
+    for proj in miracollo cervellaswarm contabilita; do
+        local prompt_file="$SNCP_ROOT/progetti/$proj/PROMPT_RIPRESA_$proj.md"
+        if [ -f "$prompt_file" ]; then
+            local lines=$(get_line_count "$prompt_file")
+            if [ "$lines" -gt 150 ]; then
+                score=$((score - 10))
+                issues="$issues ${proj}_prompt_size"
+            fi
+        fi
+    done
 
     # Score color
     local score_color="${GREEN}"
@@ -270,7 +275,7 @@ print_score() {
         score_color="${YELLOW}"
     fi
 
-    echo -e "  SNCP Health Score: ${score_color}$score/100${NC}"
+    echo -e "  SNCP 2.0 Health Score: ${score_color}$score/100${NC}"
     echo ""
 
     # Visual bar

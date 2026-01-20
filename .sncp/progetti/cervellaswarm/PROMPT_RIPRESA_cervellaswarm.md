@@ -1,86 +1,90 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 296
-> **STATUS:** SNCP 2.0 - Day 1 Completato!
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 297
+> **STATUS:** SNCP 2.0 - Day 2 Completato!
 
 ---
 
-## SESSIONE 296 - SNCP 2.0 INIZIATO!
+## SESSIONE 297 - SNCP 2.0 DAY 2 COMPLETATO!
 
 ```
 +================================================================+
 |   SNCP 2.0 - MEMORIA PERFETTA                                  |
 |                                                                |
-|   Score attuale: 8.8/10                                        |
-|   Score target:  9.5/10                                        |
-|   Durata: 6 giorni                                             |
+|   Score Guardiana Day 2: 9.5/10                                |
+|   Score target finale:  9.5/10                                 |
 |                                                                |
-|   Day 1: COMPLETATO! (deprecato oggi.md)                       |
+|   Day 1: DONE (deprecato oggi.md)                              |
+|   Day 2: DONE (puliti riferimenti)                             |
 +================================================================+
 ```
 
 ---
 
-## COSA FATTO SESSIONE 296
+## COSA FATTO SESSIONE 297
 
-### RICERCA: Memoria AI Assistants
-- Comparati 9 tool (Aider, Cursor, Copilot, Windsurf, Cline, etc.)
-- SNCP score 8.8/10 - MIGLIORE della media industry!
-- Validato da 2 Guardiane (Qualità 8.5/10 + Ricerca 8/10)
-- File: `.sncp/progetti/cervellaswarm/ricerche/20260120_RICERCA_MEMORIA_AI_ASSISTANTS.md`
+### DAY 2: Puliti tutti riferimenti a oggi.md
 
-### SUBROADMAP SNCP 2.0
-- Piano completo 6 giorni, 4 fasi
-- File: `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_SNCP_2.0.md`
+**Script puliti (6/6):**
+- `pre-session-check.sh` - rimosso check oggi.md
+- `post-session-update.sh` - rimosso check/compaction oggi.md
+- `health-check.sh` - rimosso stats/recommendations/score
+- `compact-state.sh` - default cambiato a stato.md
+- `sncp_daily_maintenance.sh` - rimosso auto-compact oggi.md
+- `pre-commit` hook - rimosso check limite 60 righe
 
-### DAY 1 COMPLETATO
-- oggi.md: DEPRECATO (notice + rimozione 27 Gen)
-- ~/.claude/CLAUDE.md: Rimosso limite oggi.md
-- .sncp/README.md: v5.0 (chiariti ruoli file)
-- file_limits_guard.py: v2.0 (rimosso oggi.md)
+**Docs aggiornati (5/5):**
+- `HOOKS.md` - nota SNCP 2.0
+- `SNCP_GUIDE.md` - nota deprecation
+- `ARCHITECTURE.md` - aggiornato limiti
+- `PATTERN_COMUNICAZIONE.md` - STM = PROMPT_RIPRESA + handoff
+- `CLAUDE.md` - aggiornato struttura SNCP 2.0
 
-### TEMPLATE NUOVO
-- TEMPLATE_SESSION_HANDOFF.md (6-sezioni)
-- Sezioni: Accomplished, Current State, Lessons Learned, Next Steps, Key Files, Blockers
+**Audit Guardiana:** 9.5/10 - APPROVE
 
 ---
 
 ## SNCP 2.0 PROGRESS
 
 ```
-Day 1: Depreca oggi.md    [][][][][][][][][][] DONE
-Day 2: Pulisci riferimenti          [__________] PENDING
+Day 1: Depreca oggi.md     [][][][][][][][][][] DONE
+Day 2: Pulisci riferimenti [][][][][][][][][][] DONE
 Day 3: Template handoff             [__________] PENDING
 Day 4: Test template                [__________] PENDING
 Day 5: Aggiorna hook                [__________] PENDING
 Day 6: Documentazione               [__________] PENDING
 
-PROGRESSO: 17% (1/6 giorni)
+PROGRESSO: 33% (2/6 giorni)
 ```
 
 ---
 
 ## PROSSIMA SESSIONE
 
-**SNCP 2.0 - Day 2:**
-- Pulire riferimenti oggi.md dagli script
-- Aggiornare pre-session-check.sh, health-check.sh, etc.
+**SNCP 2.0 - Day 3:**
+- Implementare template handoff 6-sezioni
+- Template gia creato: `.sncp/templates/TEMPLATE_SESSION_HANDOFF.md`
+- Testare su sessione reale
 
 ---
 
-## FILE CHIAVE MODIFICATI SESSIONE 296
+## FILE CHIAVE MODIFICATI SESSIONE 297
 
-| File | Versione | Cosa |
-|------|----------|------|
-| SUBROADMAP_SNCP_2.0.md | NEW | Piano completo SNCP 2.0 |
-| TEMPLATE_SESSION_HANDOFF.md | NEW | Template 6-sezioni |
-| 20260120_RICERCA_MEMORIA_AI_ASSISTANTS.md | NEW | Ricerca comparativa |
-| oggi.md | DEPRECATO | Notice + piano rimozione |
-| ~/.claude/CLAUDE.md | updated | Rimosso limite oggi.md |
-| .sncp/README.md | v5.0 | Chiariti ruoli file |
-| file_limits_guard.py | v2.0 | Rimosso check oggi.md |
+| File | Cosa |
+|------|------|
+| `scripts/sncp/pre-session-check.sh` | Rimosso check oggi.md |
+| `scripts/sncp/post-session-update.sh` | Rimosso check/compaction |
+| `scripts/sncp/health-check.sh` | Rimosso stats/score oggi.md |
+| `scripts/sncp/compact-state.sh` | Default = stato.md |
+| `scripts/cron/sncp_daily_maintenance.sh` | Rimosso auto-compact |
+| `scripts/hooks/pre-commit` | Rimosso check 60 righe |
+| `docs/HOOKS.md` | Nota SNCP 2.0 |
+| `docs/SNCP_GUIDE.md` | Nota deprecation |
+| `docs/ARCHITECTURE.md` | Aggiornato limiti |
+| `docs/PATTERN_COMUNICAZIONE.md` | STM aggiornato |
+| `CLAUDE.md` | Struttura SNCP 2.0 |
 
 ---
 
-*"296 sessioni! SNCP 2.0 iniziato!"*
-*Sessione 296 - Cervella & Rafa*
+*"297 sessioni! Day 2 completato - 9.5/10!"*
+*Sessione 297 - Cervella & Rafa*

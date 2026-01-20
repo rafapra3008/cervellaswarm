@@ -16,11 +16,13 @@ Il pre-commit hook esegue 5 verifiche prima di ogni commit:
 
 | Check | Tipo | Descrizione |
 |-------|------|-------------|
-| 1. Limiti Righe | BLOCCANTE | Verifica che PROMPT_RIPRESA (150), oggi.md (60), stato.md (500) rispettino i limiti |
+| 1. Limiti Righe | BLOCCANTE | Verifica che PROMPT_RIPRESA (150) e stato.md (500) rispettino i limiti |
 | 2. Naming Convention | BLOCCANTE | Verifica naming corretto per PROMPT_RIPRESA e HANDOFF |
 | 3. Docs Sync | WARNING | Verifica che stato.md sia aggiornato quando cambia codice |
 | 4. Compliance Marker | WARNING | Verifica marker COSTITUZIONE-APPLIED nei report |
 | 5. Syntax Validation | BLOCCANTE | Valida sintassi Python/JS/TS con Tree-sitter |
+
+> **NOTA SNCP 2.0:** oggi.md deprecato (Sessione 297). Usiamo solo PROMPT_RIPRESA + handoff.
 
 ---
 

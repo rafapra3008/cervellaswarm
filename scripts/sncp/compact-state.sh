@@ -10,9 +10,11 @@
 #
 # Uso: ./compact-state.sh [--auto] [file] [max_lines] [keep_lines]
 #      --auto: esegue senza conferma (per automazione)
-#      file: path al file (default: .sncp/stato/oggi.md)
-#      max_lines: trigger compaction (default: 300)
-#      keep_lines: righe da mantenere (default: 200)
+#      file: path al file (default: .sncp/progetti/cervellaswarm/stato.md)
+#      max_lines: trigger compaction (default: 500)
+#      keep_lines: righe da mantenere (default: 300)
+#
+# NOTA: oggi.md DEPRECATO (SNCP 2.0 - Sessione 297)
 #
 # ==============================================================================
 
@@ -29,10 +31,11 @@ if [ "$1" = "--auto" ]; then
     shift
 fi
 
-# Defaults
-FILE="${1:-$SNCP_ROOT/stato/oggi.md}"
-MAX_LINES="${2:-300}"
-KEEP_LINES="${3:-200}"
+# Defaults - oggi.md DEPRECATO (SNCP 2.0 - Sessione 297)
+# Ora il default è stato.md del progetto cervellaswarm
+FILE="${1:-$SNCP_ROOT/progetti/cervellaswarm/stato.md}"
+MAX_LINES="${2:-500}"
+KEEP_LINES="${3:-300}"
 
 # Colors
 RED='\033[0;31m'
@@ -98,15 +101,16 @@ run_compaction() {
     tail -n "$KEEP_LINES" "$FILE" > "$temp_file"
 
     # Determine file type for appropriate header
+    # oggi.md DEPRECATO (SNCP 2.0 - Sessione 297)
     local basename=$(basename "$FILE")
     local header_title="Stato"
 
     case "$basename" in
-        oggi.md)
-            header_title="STATO OGGI"
-            ;;
         stato.md)
             header_title="STATO PROGETTO"
+            ;;
+        PROMPT_RIPRESA*.md)
+            header_title="PROMPT RIPRESA"
             ;;
         mappa_viva.md)
             header_title="MAPPA VIVA"

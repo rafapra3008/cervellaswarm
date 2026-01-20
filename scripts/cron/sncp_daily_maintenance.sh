@@ -141,22 +141,8 @@ check_file_sizes() {
         fi
     done
 
-    # Check oggi.md
-    local oggi_file="$SNCP_ROOT/stato/oggi.md"
-    if [ -f "$oggi_file" ]; then
-        local oggi_lines=$(wc -l < "$oggi_file" | tr -d ' ')
-        if [ "$oggi_lines" -gt "$AUTO_COMPACT_TRIGGER" ]; then
-            log "AUTO-COMPACT: oggi.md ha $oggi_lines righe (> $AUTO_COMPACT_TRIGGER)"
-            if [ -x "$COMPACT_SCRIPT" ]; then
-                "$COMPACT_SCRIPT" --auto "$oggi_file" "$AUTO_COMPACT_TRIGGER" "$AUTO_COMPACT_KEEP" >> "$LOG_FILE" 2>&1 || true
-                ((compacted_files++))
-                log "  -> Compattato automaticamente"
-            fi
-        elif [ "$oggi_lines" -gt 60 ]; then
-            log "WARNING: oggi.md ha $oggi_lines righe (max 60, auto-compact a $AUTO_COMPACT_TRIGGER)"
-            ((large_files++))
-        fi
-    fi
+    # oggi.md DEPRECATO (SNCP 2.0 - Sessione 297)
+    # Non controlliamo più oggi.md - usiamo solo PROMPT_RIPRESA + handoff
 
     # Summary
     if [ "$compacted_files" -gt 0 ]; then

@@ -127,8 +127,9 @@ show_checklist() {
         echo -e "  [ ] ${CYAN}stato.md${NC} di $PROJECT aggiornato"
     fi
 
-    echo -e "  [ ] ${CYAN}oggi.md${NC} aggiornato"
+    # oggi.md DEPRECATO (SNCP 2.0 - Sessione 297)
     echo -e "  [ ] ${CYAN}PROMPT_RIPRESA.md${NC} aggiornato"
+    echo -e "  [ ] ${CYAN}Handoff${NC} creato (.sncp/handoff/)"
     echo -e "  [ ] ${CYAN}Decisioni${NC} documentate (se prese)"
     echo -e "  [ ] ${CYAN}Lezioni${NC} documentate (se apprese)"
     echo ""
@@ -139,15 +140,8 @@ show_update_summary() {
     echo -e "${BLUE}--- COSA AGGIORNARE ---${NC}"
     echo ""
 
-    # Check oggi.md
-    local oggi_file="$SNCP_ROOT/stato/oggi.md"
-    local oggi_date=$(stat -f "%Sm" -t "%Y-%m-%d" "$oggi_file" 2>/dev/null || echo "unknown")
-
-    if [ "$oggi_date" != "$TODAY" ]; then
-        echo -e "  ${YELLOW}[!]${NC} oggi.md: Non aggiornato oggi (ultimo: $oggi_date)"
-    else
-        echo -e "  ${GREEN}[OK]${NC} oggi.md: Aggiornato oggi"
-    fi
+    # oggi.md DEPRECATO (SNCP 2.0 - Sessione 297)
+    # Ora controlliamo solo PROMPT_RIPRESA e stato.md
 
     # Check project stato.md
     if [ -n "$PROJECT" ]; then
@@ -160,11 +154,17 @@ show_update_summary() {
                 echo -e "  ${GREEN}[OK]${NC} $PROJECT/stato.md: Aggiornato oggi"
             fi
         fi
-    fi
 
-    # Check for compaction needs
-    if check_compaction_needed "$SNCP_ROOT/stato/oggi.md" 300; then
-        echo -e "  ${RED}[!]${NC} oggi.md: SERVE COMPACTION!"
+        # Check PROMPT_RIPRESA
+        local prompt_file="$SNCP_ROOT/progetti/$PROJECT/PROMPT_RIPRESA_$PROJECT.md"
+        if [ -f "$prompt_file" ]; then
+            local prompt_date=$(stat -f "%Sm" -t "%Y-%m-%d" "$prompt_file" 2>/dev/null || echo "unknown")
+            if [ "$prompt_date" != "$TODAY" ]; then
+                echo -e "  ${YELLOW}[!]${NC} PROMPT_RIPRESA_$PROJECT.md: Non aggiornato oggi"
+            else
+                echo -e "  ${GREEN}[OK]${NC} PROMPT_RIPRESA_$PROJECT.md: Aggiornato oggi"
+            fi
+        fi
     fi
 
     echo ""
@@ -244,15 +244,7 @@ if [ -n "$SESSION" ]; then
     create_handoff "$SESSION" "$PROJECT"
 fi
 
-# Check and run compaction if needed
-if check_compaction_needed "$SNCP_ROOT/stato/oggi.md" 300; then
-    echo ""
-    echo -e "${YELLOW}ATTENZIONE: oggi.md serve compaction!${NC}"
-    read -p "Eseguire compaction automatica? [y/N] " -n 1 -r
-    echo ""
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        run_compaction "$SNCP_ROOT/stato/oggi.md" 300 200
-    fi
-fi
+# oggi.md compaction RIMOSSO (SNCP 2.0 - Sessione 297)
+# Ora usiamo solo PROMPT_RIPRESA + handoff
 
 print_footer

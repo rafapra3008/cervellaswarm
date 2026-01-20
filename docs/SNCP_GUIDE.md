@@ -53,12 +53,13 @@ Your AI team writes its own memory to disk. Next session, they read it back. No 
 │   │   └── roadmaps/           # Project plans
 │   └── another-project/
 │       └── ...
-├── stato/
-│   └── oggi.md                 # Global daily state
-├── handoff/                    # Session handoffs
+├── handoff/                    # Session handoffs (SNCP 2.0)
 └── memoria/
     └── decisioni/              # Global decisions
 ```
+
+> **SNCP 2.0 Note:** `oggi.md` has been deprecated (Session 297).
+> Use `PROMPT_RIPRESA.md` per-project + `handoff/` for session continuity.
 
 ### Key Files
 

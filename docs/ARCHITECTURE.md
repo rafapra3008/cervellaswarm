@@ -331,10 +331,8 @@ AI agents are stateless - they forget everything between sessions. SNCP solves t
 │   │   └── roadmaps/              # Plans
 │   └── project-b/
 │       └── [same structure]
-├── stato/
-│   └── oggi.md                    # Daily state
-└── handoff/
-    └── HANDOFF_*.md               # Session handoffs
+└── handoff/                         # Session handoffs (SNCP 2.0)
+    └── HANDOFF_*.md
 ```
 
 ### Context Mesh Pattern
@@ -355,8 +353,9 @@ Session End:
 
 **File Size Limits** (enforced by hooks):
 - `PROMPT_RIPRESA_*.md`: 150 lines max
-- `oggi.md`: 60 lines max
 - `stato.md`: 500 lines max
+
+> **SNCP 2.0:** `oggi.md` deprecated (Session 297). Use PROMPT_RIPRESA + handoff.
 
 When limits exceeded → Archive old sessions to `archivio/`
 

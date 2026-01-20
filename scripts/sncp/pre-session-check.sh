@@ -111,9 +111,8 @@ check_global() {
 
     local issues=0
 
-    # Check oggi.md
-    check_file_updated_today "$SNCP_ROOT/stato/oggi.md" "oggi.md" || ((issues++))
-    check_file_size "$SNCP_ROOT/stato/oggi.md" "oggi.md" 300 || ((issues++))
+    # oggi.md DEPRECATO (SNCP 2.0 - Sessione 297)
+    # Ora usiamo solo PROMPT_RIPRESA per ripresa sessione
 
     # Check mappa_viva.md
     check_file_size "$SNCP_ROOT/stato/mappa_viva.md" "mappa_viva.md" 200 || ((issues++))
