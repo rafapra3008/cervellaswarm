@@ -539,6 +539,78 @@ python semantic_search.py ~/Developer/CervellaSwarm TreesitterParser info
 python semantic_search.py ~/Developer/CervellaSwarm Symbol stats
 ```
 
+### Bash Wrapper CLI (W5)
+
+> **Added in W5 Day 3** - User-friendly CLI with JSON output
+
+The bash wrapper provides a simpler interface with automatic repo detection and JSON output.
+
+**Location:** `scripts/architect/semantic-search.sh`
+
+```bash
+# Usage from anywhere in the repo
+./scripts/architect/semantic-search.sh <command> <symbol_name> [--repo <path>]
+```
+
+**Commands:**
+- `find-symbol` - Find where a symbol is defined
+- `find-callers` - Find all functions that call this symbol
+- `find-references` - Find all references to this symbol
+
+**Options:**
+- `--repo <path>` - Repository root (default: git root or current dir)
+- `--help` - Show help message
+- `--version` - Show version
+
+**JSON Output Schema:**
+```json
+{
+  "found": true,
+  "results": [
+    {"file": "/path/to/file.py", "line": 75}
+  ],
+  "command": "find-symbol",
+  "symbol": "MyClass",
+  "repo": "/path/to/repo"
+}
+```
+
+**Exit Codes:**
+- `0` - Symbol found (or help/version displayed)
+- `1` - Symbol not found
+- `2` - Error (invalid args, missing dependencies)
+
+**Examples:**
+
+```bash
+# Find where SemanticSearch class is defined
+./scripts/architect/semantic-search.sh find-symbol "SemanticSearch"
+# Output: {"found": true, "results": [{"file": "...semantic_search.py", "line": 75}], ...}
+
+# Find all callers of extract_symbols
+./scripts/architect/semantic-search.sh find-callers "extract_symbols"
+# Output: {"found": true, "results": [{"file": "...", "line": N, "caller": "..."}, ...], ...}
+
+# Find all references to DependencyGraph
+./scripts/architect/semantic-search.sh find-references "DependencyGraph"
+# Output: {"found": true, "results": [...], ...}
+
+# Search in specific repo
+./scripts/architect/semantic-search.sh find-symbol "MyClass" --repo ~/other-project
+```
+
+**Comparison: Python vs Bash Wrapper**
+
+| Feature | Python CLI | Bash Wrapper |
+|---------|------------|--------------|
+| Output format | Human-readable | JSON |
+| Repo detection | Manual | Auto (git root) |
+| Commands | 6 | 3 (focused) |
+| Use case | Interactive | Scripting/Integration |
+| Exit codes | Always 0 | 0/1/2 |
+
+---
+
 ### ImpactAnalyzer CLI
 
 ```bash
