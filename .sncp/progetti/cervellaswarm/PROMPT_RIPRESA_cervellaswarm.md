@@ -1,80 +1,85 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 303
-> **STATUS:** FASE 1 SITO WEB COMPLETATA!
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 304
+> **STATUS:** FASE 2+3 COMPLETATE! Release 2.0 Documentazione DONE!
 
 ---
 
-## SESSIONE 303 - FASE 1 SITO WEB 100%!
+## SESSIONE 304 - FASE 2+3 COMPLETATE!
 
 ```
 +================================================================+
-|   FASE 1: SITO WEB - COMPLETATA!                               |
+|   FASE 2: DOCUMENTAZIONE              9.57/10                  |
+|   FASE 3: VERIFICA FINALE             9.8/10                   |
 |                                                                |
-|   5 FILE LANDING AGGIORNATI                                    |
-|   AUDIT GUARDIANA FINALE: 10/10                                |
-|   COMMIT: 3609c35                                              |
-|   VERIFICA VISIVA: Screenshot fatto                            |
+|   10 FILE AGGIORNATI/CREATI                                    |
+|   2 COMMIT: c6c1d0d + f467107                                  |
 |                                                                |
 +================================================================+
 ```
 
 ---
 
-## COSA FATTO SESSIONE 303
+## COSA FATTO SESSIONE 304
 
-### MODIFICHE SITO WEB
+### FASE 2: DOCUMENTAZIONE
 
-| File | Cosa Fatto |
-|------|------------|
-| **index.html** | 16->17, Pricing $29/$49, Feature W1-W6, Badge RECOMMENDED |
-| **faq.html** | 16->17, Founding Member $149/anno, Nomi Free/Pro/Team |
-| **how-it-works.html** | 16->17, Architect aggiunto in "Meet the Team" |
-| **getting-started.html** | 16->17 |
-| **og-template.html** | 16->17 |
+| File | Score | Cosa Fatto |
+|------|-------|------------|
+| packages/cli/README.md | 9.7/10 | 17 agenti, W1-W6, Architect, architettura |
+| packages/mcp-server/README.md | 9.5/10 | 17 agenti, Architect, modelli Opus/Sonnet |
+| docs/FAQ.md | 9.5/10 | NUOVO! 21 domande, pricing, differenziatori |
 
-### NUOVA SEZIONE "What Makes Us Different"
+### FASE 3: VERIFICA + FIX
 
-6 feature W1-W6 aggiunte:
-1. Self-Checking System (Guardiane) - PRIMA!
-2. Semantic Code Search (Tree-sitter)
-3. Architect-First Workflow
-4. Git Attribution
-5. SNCP Memory System
-6. Smart Task Routing
+| File | Fix Applicato |
+|------|---------------|
+| packages/cli/package.json | "17 AI agents" |
+| packages/mcp-server/package.json | "17 AI agents" |
+| packages/cli/bin/cervellaswarm.js | 17 agents + pricing $29/$49 |
+| packages/cli/src/commands/init.js | "17 AI agents" |
+| packages/cli/src/commands/upgrade.js | PRO $29, TEAM $49/user |
+| packages/cli/src/commands/billing.js | Pricing $29/$49 |
+| packages/mcp-server/src/index.ts | "17 AI agents" |
 
-### PRICING ALLINEATO (da decisioni S300)
+### CROSS-CHECK RESULTS
 
-| Tier | Prezzo | Agenti | Tasks |
-|------|--------|--------|-------|
-| FREE | $0/mo | 3 | 50/mese |
-| PRO | $29/mo | 17 | UNLIMITED |
-| TEAM | $49/user/mo | 17 | UNLIMITED |
+- npm CLI 2.0.0-beta: ONLINE
+- npm MCP 2.0.0-beta: ONLINE
+- API Fly.io health: OK
+- Guardiana trovato e fixato: pricing vecchio ($20/$35)
 
 ---
 
 ## PROSSIMA SESSIONE - DA FARE
 
-**FASE 2 della SUBROADMAP_RELEASE_2.0:**
-- [ ] README CLI professionale
-- [ ] README MCP completo (17 agenti, Architect)
-- [ ] FAQ aggiornate
+**Dalla SUBROADMAP_RELEASE_2.0:**
 
-**File riferimento:**
-- `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_RELEASE_2.0.md`
+```
+FASE 1: SITO WEB          [####################] 100% (S303)
+FASE 2: DOCUMENTAZIONE    [####################] 100% (S304)
+FASE 3: VERIFICA          [####################] 100% (S304)
+
+RIMANE:
+- npm publish con description aggiornate (17 agents)
+- Possibile: npm publish 2.0.0 (non beta) dopo primi utenti
+```
+
+**NOTA:** Le description su npm pubblico dicono ancora "16 agents".
+Al prossimo `npm publish` si aggiorneranno automaticamente.
 
 ---
 
-## FILE CHIAVE SESSIONE 303
+## FILE CHIAVE SESSIONE 304
 
 | File | Cosa |
 |------|------|
-| `landing/index.html` | Homepage con pricing + feature W1-W6 |
-| `landing/faq.html` | Founding Member $149 |
-| `landing/how-it-works.html` | Architect in "Meet the Team" |
-| `.playwright-mcp/landing_fase1_complete.png` | Screenshot verifica |
+| packages/cli/README.md | README professionale con W1-W6 |
+| packages/mcp-server/README.md | 17 agenti documentati |
+| docs/FAQ.md | FAQ tecnica completa |
+| .sncp/.../SUBROADMAP_RELEASE_2.0.md | Roadmap riferimento |
 
 ---
 
-*"Sessione 303! FASE 1 Sito Web completata, audit 10/10!"*
+*"Sessione 304! FASE 2+3 completate, media 9.7/10!"*
 *Cervella & Rafa*
