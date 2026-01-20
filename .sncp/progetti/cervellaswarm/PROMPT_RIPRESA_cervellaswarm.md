@@ -1,69 +1,72 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 306
-> **STATUS:** RICERCA BUSINESS + SUBROADMAP VENDITA COMPLETATA!
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 307
+> **STATUS:** FIX CONTEXT USAGE COMPLETATO!
 
 ---
 
-## SESSIONE 306 - "QUELLA L'UNICA" TROVATA!
+## SESSIONE 307 - FIX CONTEXT USAGE
 
 ```
 +================================================================+
-|   DECISIONE STRATEGICA:                                        |
+|   PROBLEMA RISOLTO:                                            |
 |                                                                |
-|   "QUELLA L'UNICA" = CERVELLASWARM                            |
+|   CAUSA: COSTITUZIONE caricata DUE VOLTE                      |
+|   1. Via @ in CLAUDE.md                                        |
+|   2. Via session_start_swarm.py hook                          |
 |                                                                |
-|   Perche: E GIA FATTO. E GIA REALE.                           |
-|   Non costruire nuovo. VENDERE quello che abbiamo.            |
-|                                                                |
-|   Target: 50 clienti = €1450/mese MRR                         |
-|   Timeline: 90 giorni                                          |
+|   FIX: Rimossa @ da CLAUDE.md (hook resta unica fonte)        |
+|   RISPARMIO: ~2,500 tokens (verifica prossima sessione)       |
 +================================================================+
 ```
 
 ---
 
-## COSA FATTO SESSIONE 306
+## COSA FATTO SESSIONE 307
 
-### Ricerca Business (ore di analisi)
+| Task | Status |
+|------|--------|
+| Analisi context usage | CAUSA TROVATA |
+| Investigazione con Ingegnera | COSTITUZIONE 2x |
+| FIX: Rimossa @ da CLAUDE.md | COMPLETATO |
+| Subroadmap context optimization | CREATA |
+| Script misurazione token | CREATO |
+| Audit Guardiana | APPROVED |
 
-| Ricerca | Risultato |
-|---------|-----------|
-| Opportunita business 2026 | 8 opzioni analizzate |
-| Shopify Bundle AI | Score 6.8/10 (scartato) |
-| Chrome Extension | Score 8.1/10 (scartato - saturo) |
-| Construction Payment | Score 9.3 → 6.8 (competenze mancanti) |
-| **CervellaSwarm** | GIA FATTO = scelta finale |
-
-### Plugin Claude Code
-
-| Domanda | Risposta |
-|---------|----------|
-| Vale la pena? | SI! |
-| Abbiamo gia tutto? | SI! (MCP + Plugin + CLI) |
-| Cosa manca? | Solo submission ai registry |
-
-### File Creati
+### File Creati/Modificati
 
 | File | Cosa |
 |------|------|
-| `SUBROADMAP_VENDITA_CERVELLASWARM.md` | Piano 90 giorni |
-| `PIANO_VENDITA_90_GIORNI_*.md` | 4 file dettagliati (~1500 righe) |
-| `RICERCA_PLUGIN_VS_MCP.md` | Analisi plugin |
+| `scripts/utils/measure_context_tokens.py` | Script misurazione |
+| `.sncp/roadmaps/SUBROADMAP_CONTEXT_OPTIMIZATION.md` | Piano ottimizzazione |
+| `~/.claude/CLAUDE.md` | Rimossa @ da riga 11 |
+| `~/.claude/docs/COSTITUZIONE_TRIGGER.md` | Version minimal (20 righe) |
+| `reports/CAUSA_RADICE_CONTEXT_DOPPIO.md` | Analisi Ingegnera |
+| `docs/analisi/RICERCA_OTTIMIZZAZIONE_CONTEXT_CLAUDE_CODE.md` | Ricerca |
 
 ---
 
-## PROSSIMI STEP (Sessione 307)
+## PROSSIMI STEP (Sessione 308)
 
 **PRIORITA CRITICA:**
-1. [ ] Submit plugin → clau.de/plugin-directory
-2. [ ] Submit MCP → registry.modelcontextprotocol.io
-3. [ ] Join MCP Discord (11K membri!)
-4. [ ] Stripe Live Mode
+1. [ ] Verificare risparmio token (nuova sessione)
+2. [ ] Submit plugin → clau.de/plugin-directory
+3. [ ] Submit MCP → registry.modelcontextprotocol.io
 
 **PRIORITA ALTA:**
-5. [ ] PR awesome-mcp-servers
-6. [ ] Show HN (martedi 21 Gen)
+4. [ ] Join MCP Discord (11K membri!)
+5. [ ] Stripe Live Mode
+6. [ ] PR awesome-mcp-servers
+
+---
+
+## INFO MANCANTI PER PLUGIN SUBMISSION
+
+| Info | Serve da Rafa |
+|------|---------------|
+| GitHub Repo | URL pubblico per plugin |
+| Email contatto | Per Anthropic |
+| URL organizzazione | cervellaswarm.com? |
 
 ---
 
@@ -87,14 +90,5 @@
 
 ---
 
-## FILE CHIAVE
-
-| File | Cosa |
-|------|------|
-| `.sncp/.../roadmaps/SUBROADMAP_VENDITA_CERVELLASWARM.md` | Piano vendita |
-| `.sncp/.../reports/PIANO_VENDITA_90_GIORNI_*.md` | Dettagli |
-
----
-
-*"Non costruire. VENDERE quello che abbiamo."*
-*Cervella & Rafa - Sessione 306*
+*"Analizza prima di giudicare. Il debito tecnico si paga con interessi."*
+*Cervella & Rafa - Sessione 307*

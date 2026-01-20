@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 20 Gennaio 2026 - Sessione 306 - "QUELLA L'UNICA" + SUBROADMAP VENDITA!
+> Aggiornato: 20 Gennaio 2026 - Sessione 307 - FIX CONTEXT USAGE!
 
 ```
 +==================================================================+
