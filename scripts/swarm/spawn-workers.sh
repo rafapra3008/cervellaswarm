@@ -92,9 +92,14 @@ AUTO_COMMIT=false
 # ============================================================================
 # AUTO-CONTEXT (v3.7.0) - Contesto intelligente codebase per worker!
 # Usa repo_mapper tree-sitter per dare ai worker comprensione del progetto
+# v3.9.0 (W6 Day 3): Auto-enable per worker code-aware!
 # ============================================================================
 AUTO_CONTEXT=false
 CONTEXT_BUDGET=1500
+
+# Worker che beneficiano automaticamente dal context (code-aware)
+# Questi worker ottengono --with-context automaticamente
+AUTO_CONTEXT_WORKERS="backend frontend tester reviewer ingegnera security architect guardiana-qualita"
 
 # ============================================================================
 # ARCHITECT MODE (v3.8.0) - Spawna architect per creare PLAN.md
@@ -787,7 +792,18 @@ spawn_worker_headless() {
     mkdir -p "${SWARM_DIR}/prompts"
 
     # v3.7.0: AUTO-CONTEXT - Aggiungi contesto codebase se abilitato
-    if [ "$AUTO_CONTEXT" = true ]; then
+    # v3.9.0: Auto-enable per worker code-aware (W6 Day 3)
+    local context_enabled=$AUTO_CONTEXT
+
+    # Se worker è code-aware, auto-enable context (a meno che non sia stato forzato OFF)
+    if [[ " $AUTO_CONTEXT_WORKERS " =~ " $worker_name " ]]; then
+        if [ "$AUTO_CONTEXT" != "forced_off" ]; then
+            context_enabled=true
+            print_info "Auto-context enabled for code-aware worker: $worker_name"
+        fi
+    fi
+
+    if [ "$context_enabled" = true ]; then
         print_info "Generating codebase context (budget: ${CONTEXT_BUDGET} tokens)..."
         local context
         context=$(generate_codebase_context "$CONTEXT_BUDGET")
@@ -993,13 +1009,15 @@ show_usage() {
     echo "  --auto-commit          Abilita git commit automatico dopo task"
     echo "  --no-auto-commit       Disabilita auto-commit (DEFAULT)"
     echo "  --with-context         Abilita contesto intelligente codebase (tree-sitter)"
-    echo "  --no-context           Disabilita contesto (DEFAULT)"
+    echo "  --no-context           Disabilita contesto (override auto-enable per code-aware)"
     echo "  --context-budget N     Token budget per contesto (default: 1500, implica --with-context)"
     echo "  --help                 Mostra questo help"
     echo ""
     echo "  AUTO-SVEGLIA e' ATTIVO di default! La Regina viene svegliata automaticamente."
     echo "  AUTO-COMMIT e' DISATTIVO di default. Usa --auto-commit per abilitarlo."
-    echo "  AUTO-CONTEXT e' DISATTIVO di default. Usa --with-context per abilitarlo."
+    echo "  AUTO-CONTEXT (v3.9.0): AUTOMATICO per worker code-aware!"
+    echo "    Worker con auto-context: backend, frontend, tester, reviewer, ingegnera, security, architect, guardiana-qualita"
+    echo "    Usa --no-context per disabilitare, --with-context per forzare su altri worker."
     echo ""
     echo "Esempi:"
     echo "  $0 --architect \"Refactor AuthService\"  # Architect crea plan (Opus)"
@@ -1161,7 +1179,7 @@ main() {
                 AUTO_CONTEXT=true
                 ;;
             --no-context)
-                AUTO_CONTEXT=false
+                AUTO_CONTEXT="forced_off"  # v3.9.0: Override auto-enable per worker code-aware
                 ;;
             --context-budget)
                 shift

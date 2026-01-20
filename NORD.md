@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 20 Gennaio 2026 - Sessione 292 - W5 COMPLETATA! 100%
+> Aggiornato: 20 Gennaio 2026 - Sessione 293 - W6 60%! Day 1-2-3 COMPLETATI!
 
 ```
 +==================================================================+
@@ -324,12 +324,27 @@ SESSIONE 291: 🐝 W5 DAY 4 - IMPACT CLI + TOOLS!
   ✓ Guardiana Qualità: 9.5/10 APPROVED
   → W5 DAY 4 COMPLETATO!
 
-SESSIONE 292: 🐝 W5 DAY 5 - WORKER DNA + TEST FINALE! ← OGGI!
+SESSIONE 292: 🐝 W5 DAY 5 - WORKER DNA + TEST FINALE!
   ✓ _SHARED_DNA.md: Sezione "CLI Tools Avanzati (W5)"
   ✓ cervella-backend.md: Sezione "CLI Tools per Analisi Codebase"
   ✓ Test E2E completo: 5/5 PASS
   ✓ Guardiana Qualità FINALE: 9.5/10 APPROVED
   → W5 DAY 5 COMPLETATO! W5 100%!
+
+SESSIONE 293: 🏠 W6 DAY 1-2-3 COMPLETATI! ← OGGI!
+  ✓ Day 1: SNCP + Pulizia TODO (10/10)
+    - stato.md, oggi.md aggiornati
+    - Review TODO: 9 trovati, 0 critici
+  ✓ Day 2: Tree-sitter Hooks (10/10)
+    - hooks/validate_syntax.py NUOVO (150 righe)
+    - Integrato in pre-commit hook
+    - docs/HOOKS.md NUOVO
+  ✓ Day 3: Auto-Context Selettivo (9.5/10)
+    - Analisi pro/contro con 2 Guardiane
+    - Benchmark: 2.37s overhead (accettabile)
+    - spawn-workers.sh v3.9.0: AUTO-CONTEXT!
+    - 8 worker code-aware = context automatico
+  → W6 60% COMPLETATO! MEDIA 9.83/10!
 
 SCORE: 100/100 ✅ W4 COMPLETATO! W5 COMPLETATA!
 
@@ -343,13 +358,15 @@ ROADMAP 2.0:
       Day 1: Apple Polish DRY       DONE (9.5/10)
       Day 2-3: Test Coverage + CI   DONE (9.5/10)
       Day 4: Release v2.0-beta      DONE (9.5/10)
-  W5: Dogfooding     ████████████████████ 100% ✅ COMPLETATA!
-      Day 1: Architect Integration  DONE (10/10)
-      Day 2: Architect docs + test  DONE (9.5/10)
-      Day 3: Semantic Search CLI    DONE (9.5/10)
-      Day 4: Impact Analyzer CLI    DONE (9.5/10)
-      Day 5: Worker DNA + test      DONE (9.5/10) ← OGGI!
-      MEDIA W5: 9.6/10
+  W5: Dogfooding     ████████████████████ 100% ✅
+      Day 1-5: COMPLETATA           MEDIA 9.6/10
+  W6: Casa Perfetta  ████████████________ 60% IN CORSO ← OGGI!
+      Day 1: SNCP + Pulizia         DONE (10/10)
+      Day 2: Tree-sitter Hooks      DONE (10/10)
+      Day 3: Auto-Context Selettivo DONE (9.5/10)
+      Day 4: Script Polish          PENDING
+      Day 5: Test Famiglia          PENDING
+      MEDIA W6 (finora): 9.83/10
 ```
 
 ---

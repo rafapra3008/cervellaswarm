@@ -1,70 +1,79 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 292
-> **STATUS:** W5 COMPLETATA! 100%
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 293
+> **STATUS:** W6 Casa Perfetta - 60% (Day 1-2-3 COMPLETATI)
 
 ---
 
-## SESSIONE 292 - W5 Day 5 FATTO!
+## SESSIONE 293 - W6 Day 1+2+3 FATTO!
 
 ```
 +================================================================+
-|   W5 DAY 5 - WORKER DNA + TEST FINALE                          |
+|   W6 "CASA PERFETTA" - 60% COMPLETATO                          |
 |                                                                |
-|   [x] _SHARED_DNA.md sezione CLI Tools Avanzati               |
-|   [x] cervella-backend.md esempi CLI pratici                  |
-|   [x] Test E2E completo (5 test passati)                      |
-|   [x] Audit Guardiana Qualita (3 step + finale)               |
+|   Day 1: SNCP + Pulizia         10/10                          |
+|   Day 2: Tree-sitter Hooks      10/10                          |
+|   Day 3: Auto-Context Selettivo 9.5/10                         |
 |                                                                |
-|   SCORE FINALE: 9.5/10 - W5 CHIUSA!                           |
+|   MEDIA W6: 9.83/10 (sopra target 9.5!)                        |
 +================================================================+
 ```
 
-### MODIFICHE FATTE
+---
 
-| File | Cosa |
-|------|------|
-| ~/.claude/agents/_SHARED_DNA.md | Sezione "CLI Tools Avanzati (W5)" |
-| ~/.claude/agents/cervella-backend.md | Sezione "CLI Tools per Analisi Codebase" |
+## COSA FATTO SESSIONE 293
 
-### TEST E2E PASSATI
+### Day 1: SNCP + Pulizia (10/10)
+- stato.md e oggi.md aggiornati con W6
+- Review TODO: 9 trovati in scripts/*.sh, 0 critici
+- Report: `.swarm/tasks/W6_D1_TODO_REPORT.md`
 
-```bash
-semantic-search.sh find-symbol "SemanticSearch" → found:true
-impact-analyze.sh estimate "SemanticSearch" → risk:0.709
-semantic-search.sh find-callers "spawn_worker" → found:false
-impact-analyze.sh dependencies "semantic_search.py" → 7+ deps
-semantic-search.sh find-symbol "NonExistent" → exit:1
+### Day 2: Tree-sitter Hooks (10/10)
+- `hooks/validate_syntax.py` - Valida sintassi con Tree-sitter
+- Integrato in `.git/hooks/pre-commit` (sezione 5)
+- `docs/HOOKS.md` - Documentazione completa
+- Test: file valido exit 0, file invalido exit 1
+
+### Day 3: Auto-Context Selettivo (9.5/10)
+- Analisi pro/contro con Guardiana Qualità + Ops
+- Benchmark: 2.37s overhead (< 3s target)
+- `spawn-workers.sh` v3.9.0 implementato
+- 8 worker code-aware = context automatico ON
+- Worker non-code = context OFF (risparmia tempo)
+
+---
+
+## W6 STATUS
+
+```
+Day 1: SNCP + Pulizia        ████████████████████ DONE
+Day 2: Tree-sitter Hooks     ████████████████████ DONE
+Day 3: Auto-Context          ████████████████████ DONE
+Day 4: Script Polish         ____________________ PENDING
+Day 5: Test Famiglia         ____________________ PENDING
 ```
 
 ---
 
-## W5 STATUS FINALE
+## PROSSIMA SESSIONE
 
-```
-W5 Day 1: Architect routing      [####################] 10.0/10
-W5 Day 2: Architect docs + E2E   [####################]  9.5/10
-W5 Day 3: Semantic CLI wrapper   [####################]  9.5/10
-W5 Day 4: Impact CLI + tools     [####################]  9.5/10
-W5 Day 5: Worker DNA + test      [####################]  9.5/10
-
-TOTALE W5: 100% (5/5 days)
-MEDIA W5: 9.6/10
-```
+**W6 Day 4:** Script Polish
+- D4-01: spawn-workers --version
+- D4-02: Fix import path SymbolExtractor
+- D4-03: Verificare --help su tutti script
+- D4-04: Test spawn-workers tutti i flag
 
 ---
 
-## PROSSIMI STEP (Post-W5)
+## FILE CHIAVE MODIFICATI
 
-```
-Da definire con recap Guardiana:
-- W6 planning?
-- Show HN follow-up?
-- Nuove feature?
-```
+| File | Versione | Cosa |
+|------|----------|------|
+| spawn-workers.sh | v3.9.0 | AUTO_CONTEXT_WORKERS |
+| validate_syntax.py | v1.0.0 | Hook Tree-sitter |
+| docs/HOOKS.md | NUOVO | Documentazione hooks |
 
 ---
 
-*"292 sessioni! W5 COMPLETATA!"*
-*"Ultrapassar os proprios limites!"*
-*Sessione 292 - Cervella & Rafa*
+*"293 sessioni! W6 60%! Ultrapassar os proprios limites!"*
+*Sessione 293 - Cervella & Rafa*

@@ -1,5 +1,5 @@
 # Stato CervellaSwarm
-> Ultimo aggiornamento: 17 Gennaio 2026 - Sessione 250 (Audit & Docs Sync)
+> Ultimo aggiornamento: 20 Gennaio 2026 - Sessione 293 (W6 INIZIATA!)
 
 ---
 
@@ -8,205 +8,102 @@
 ```
 +================================================================+
 |   IMPORTANTE: "SU CARTA" != "REALE"                            |
-|   Codice scritto ≠ Deployato ≠ Production-ready               |
+|   Solo quello che FUNZIONA conta!                              |
 +================================================================+
 
-SPRINT 1: BYOK Polish         [CODICE FATTO] [DEPLOY: NO!]
-SPRINT 2: Metering & Limits   [CODICE FATTO] [DEPLOY: NO!]
-SPRINT 3: Stripe Integration  [CODICE FATTO] [DEPLOY: NO!]
-SPRINT 3.5: Deploy & Test     [DA FARE] <-- BLOCCANTE!
+ROADMAP 2.0:
+  W1: Git Flow 2.0      [####################] 100% DONE!
+  W2: Tree-sitter       [####################] 100% DONE!
+  W3: Architect/Semantic [####################] 100% DONE!
+  W4: Polish + v2.0-beta [####################] 100% DONE!
+  W5: Dogfooding        [####################] 100% DONE!
+  W6: Casa Perfetta     [############________] 60% Day 3 DONE (9.5/10)
 
->>> Casa Pulita: 100% <<<
->>> Docs Sync System: AVVIATO <<<
+>>> PRODOTTO LIVE! <<<
+>>> v2.0.0-beta su npm <<<
+>>> cervellaswarm.com ONLINE <<<
 
-PROSSIMI STEP CRITICI:
-1. Test API (webhook, checkout)
-2. Deploy API su Fly.io
-3. npm publish CLI + MCP
-4. Test end-to-end REALE
+MEDIA SCORE W1-W5: 9.6/10
 ```
 
 ---
 
-## SESSIONE 250 - AUDIT & DOCS SYNC (17 Gennaio 2026)
+## COSA E' REALE (Funziona!)
 
-```
-PROBLEMA SCOPERTO:
-- Documenti dicevano Sprint 1-3 "COMPLETATI"
-- Audit REALE: codice scritto ma NIENTE deployato!
-- API su Fly.io: fly.toml esiste, deploy MAI fatto
-- CLI su npm: pronta ma MAI pubblicata
-- Test API: ZERO (cartella vuota!)
-
-AZIONI CORRETTIVE:
-1. SUBROADMAP_DOCS_SYNC creata
-2. Pre-commit hook per docs sync
-3. NORD.md aggiornato con realta
-4. SUBMAPPA_DUALMODE aggiornata
-5. Sprint 3.5 "Deploy & Test" aggiunto
-
-LEZIONE:
-"Mai dire COMPLETATO se non e' REALE!"
-La Costituzione aveva ragione: "SU CARTA" != "REALE"
-```
+| Componente | Versione | Status | Testato |
+|------------|----------|--------|---------|
+| CLI npm | cervellaswarm@2.0.0-beta | LIVE | npx cervellaswarm doctor |
+| MCP npm | @cervellaswarm/mcp-server@2.0.0-beta | LIVE | Claude Desktop |
+| Landing | cervellaswarm.com | LIVE | Cloudflare Pages |
+| API | cervellaswarm-api.fly.dev | ONLINE | Fly.io |
+| GitHub | github.com/rafapra3008/CervellaSwarm | PUBBLICO | Sessione 267 |
+| Agenti | 16 specializzati + Regina | OPERATIVI | Quotidiano |
+| Test | 241+ Python, 134 CLI | PASSANO | CI/CD |
 
 ---
 
-## SESSIONE 244 - RIFLESSIONE FAMIGLIA (17 Gennaio 2026)
+## ROADMAP W1-W5 COMPLETATA
 
-```
-FATTO:
-- Test Stripe finale (3 clienti test - funziona!)
-- 4 report analisi famiglia creati
-- Quick Win: 2 hook disabilitati (-3100 tokens)
+### W1: Git Flow 2.0 (Sessione 271-273)
+- git_worker_commit.sh v1.2.2 (720 righe)
+- worker_attribution.json (16 agenti)
+- Dual remote (origin + public)
 
-PROBLEMA TROVATO:
-- SNCP Health Score: 5.8/10
-- stato.md: 700 righe (limite 500!)
-- 15+ file duplicati VDA
-- Context spreca ~15k tokens/sessione
+### W2: Tree-sitter (Sessione 274-280)
+- treesitter_parser.py v1.0.0
+- symbol_extractor.py v2.2.0
+- dependency_graph.py v1.0.0
+- PageRank funzionante!
 
-DECISIONE: SUBROADMAP CASA PULITA prima di Sprint 4
-```
+### W3: Architect/Semantic (Sessione 281-283)
+- semantic_search.py v1.1.0
+- impact_analyzer.py v1.0.0
+- cervella-architect.md (Opus planning)
+- 85 test passano
 
----
+### W4: Polish + v2.0-beta (Sessione 284-287)
+- GitHub Actions CI (matrix 3.10-3.12)
+- pytest-cov 41% coverage
+- CHANGELOG.md completo
+- npm publish v2.0.0-beta!
 
-## SESSIONE 232-243 - SPRINT 1-2-3 COMPLETATI! (16-17 Gennaio 2026)
-
-```
-SPRINT 1 - BYOK:
-- Configurazione ANTHROPIC_API_KEY
-- Validazione key al primo uso
-- Error handling completo
-
-SPRINT 2 - METERING:
-- Tracking usage per user
-- Limiti chiamate implementati
-- Dashboard usage
-
-SPRINT 3 - STRIPE:
-- Account: CervellaSwarm (acct_1SqEoCDcRzSMjFE4)
-- Piani: Pro $20/month, Team $35/month
-- Webhook: https://cervellaswarm-api.fly.dev/webhooks/stripe
-- TEST 360 COMPLETATO (3 clienti test)
-
-DOCUMENTAZIONE:
-- .sncp/progetti/cervellaswarm/idee/STUDIO_VIABILITA_CLAUDE_MCP.md
-- 112 test passano
-- MCP Server connesso
-```
+### W5: Dogfooding (Sessione 288-292)
+- spawn-workers --architect
+- semantic-search.sh v1.0.0 CLI
+- impact-analyze.sh v1.0.0 CLI
+- _SHARED_DNA.md + cervella-backend.md aggiornati
+- Media: 9.6/10
 
 ---
 
-## SESSIONE 227 - RICERCA NPM PUBLISH (15 Gennaio 2026)
+## W6: CASA PERFETTA (Prossima)
 
-```
-RISULTATI CHIAVE:
-- Nome: "cervellaswarm" unscoped
-- Version: 0.1.0 (signaling onesto)
-- 2FA OBBLIGATORIO dal 2025
-- Workflow: pack -> test locale -> dry-run -> publish
+| Day | Focus | Status | Score |
+|-----|-------|--------|-------|
+| 1 | SNCP + Pulizia | DONE | 10/10 |
+| 2 | Tree-sitter Hooks | DONE | 10/10 |
+| 3 | Auto-Context Selettivo | DONE | 9.5/10 |
+| 4 | Script Polish | Pending | - |
+| 5 | Test Famiglia | Pending | - |
 
-STATUS CLI:
-- package.json: PRONTO
-- bin/cervellaswarm.js: FUNZIONA
-- LICENSE: PRESENTE
-- README.md: OK
-
-FILE: .sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_NPM_PUBLISH_COMPLETA.md
-```
+File: `.sncp/roadmaps/SUBROADMAP_W6.md`
 
 ---
 
-## SESSIONE 224 - PROTEZIONE PRE-PUBLISH (15 Gennaio 2026)
+## Famiglia CervellaSwarm
 
 ```
-BLOCCANTE (32 min, 0 euro):
-1. LICENSE file (Apache 2.0)
-2. NOTICE file (copyright)
-3. Copyright headers
-4. package.json license field
-5. Git commit + push
+1 Regina (Orchestrator) - Opus
+3 Guardiane - Opus:
+  - Guardiana Qualita
+  - Guardiana Ops
+  - Guardiana Ricerca
 
-SCOPERTE:
-- Copyright AUTOMATICO in Italia/EU
-- Git history = prova legale
-- DMCA takedown ~1 business day
-- Apache 2.0 RICHIEDE NOTICE file
-
-FILE: .sncp/progetti/cervellaswarm/ricerche/RICERCA_20260115_PROTEZIONE_PRE_PUBLISH.md
+12 Worker - Sonnet:
+  - cervella-backend, frontend, tester, docs
+  - cervella-devops, data, security, researcher
+  - cervella-marketing, scienziata, ingegnera, architect
 ```
-
----
-
-## SESSIONE 218 - CLI FUNZIONA! (15 Gennaio 2026)
-
-```
-DECISIONI FONDAMENTALI:
-1. CLI (non App Desktop) - compatibilita massima
-2. Wizard COMPLETO prima di tutto - differenziale prodotto
-3. COSTITUZIONE aggiornata - "IL TEMPO NON CI INTERESSA"
-
-CREATO:
-packages/cli/
-  bin/cervellaswarm.js (entry point)
-  src/commands/ (init, status, task, resume)
-  src/wizard/questions.js (10 domande!)
-  src/sncp/, src/agents/, src/display/, src/session/
-
-TEST: node bin/cervellaswarm.js --help = FUNZIONA!
-```
-
----
-
-## SESSIONE 214 - PRE/POST-FLIGHT 16 AGENTI (15 Gennaio 2026)
-
-```
-SOLUZIONE 3-LAYER (Score 9.5/10):
-
-LAYER 1 - PRE-FLIGHT (inizio task):
-  1. Obiettivo finale
-  2. SU CARTA vs REALE
-  3. Sono Partner
-  4. [RANDOM da pool 6 domande]
-
-LAYER 2 - POST-FLIGHT (fine task):
-  COSTITUZIONE-APPLIED: [SI/NO]
-  Principio usato: [quale + come]
-
-Tutti 16 agenti aggiornati!
-IMPATTO: -60-80% lettura checkbox
-```
-
----
-
-## Storia Completa
-
-> Sessioni 207-213 archiviate in: `archivio/2026-01/SESSIONI_207_213.md`
-
----
-
-## Score Dashboard
-
-| Area | Score | Note |
-|------|-------|------|
-| SNCP | 5.8 | Casa Pulita in corso |
-| CLI | 10/10 | Funziona! |
-| Stripe | 10/10 | 3 clienti test |
-| Agenti | 9.5/10 | 16 operativi + PRE/POST-FLIGHT |
-
----
-
-## Cosa Funziona REALE
-
-| Cosa | Status | Testato |
-|------|--------|---------|
-| CLI cervellaswarm | ATTIVO | Sessione 218 |
-| Stripe Integration | ATTIVO | Sessione 243 |
-| MCP Server | ATTIVO | Sessione 237 |
-| 16 Agenti | ATTIVI | Quotidiano |
-| sncp-init.sh | ATTIVO | Sessione 207 |
-| verify-sync.sh | ATTIVO | Sessione 207 |
 
 ---
 
@@ -214,33 +111,26 @@ IMPATTO: -60-80% lettura checkbox
 
 | Cosa | Path |
 |------|------|
-| Roadmap 2026 | `.sncp/progetti/cervellaswarm/roadmaps/ROADMAP_2026_PRODOTTO.md` |
-| SUBROADMAP Casa Pulita | `.sncp/roadmaps/SUBROADMAP_CASA_PULITA.md` |
-| Studio Viabilita | `.sncp/progetti/cervellaswarm/idee/STUDIO_VIABILITA_CLAUDE_MCP.md` |
-| Architettura MCP | `.sncp/progetti/cervellaswarm/idee/ARCHITETTURA_MCP_CERVELLASWARM.md` |
-| Script SNCP | `scripts/sncp/` |
+| NORD | `NORD.md` (root) |
+| SUBROADMAP W6 | `.sncp/roadmaps/SUBROADMAP_W6.md` |
+| DNA Famiglia | `docs/DNA_FAMIGLIA.md` |
+| Agents | `~/.claude/agents/` |
+| CLI Tools | `scripts/architect/` |
 
 ---
 
-## PROSSIMI STEP
+## Score Dashboard
 
-1. [x] Sprint 1 BYOK (Sessione 238)
-2. [x] Sprint 2 Metering (Sessione 239)
-3. [x] Sprint 3 Stripe (Sessione 240-243)
-4. [ ] Casa Pulita (Sessione 245) <- ORA
-5. [ ] Sprint 4 Sampling Implementation
-6. [ ] Sprint 5 Polish
-7. [ ] npm publish
-
----
-
-## Famiglia
-
-- 1 Regina (Orchestrator)
-- 3 Guardiane (Opus)
-- 12 Worker (Sonnet)
+| Area | Score | Note |
+|------|-------|------|
+| Roadmap W1-W5 | 9.6/10 | Tutte completate! |
+| Prodotto | 10/10 | LIVE su npm! |
+| Infrastruttura | 5/5 | Guardiana Ops verified |
+| Famiglia | 10/10 | 17 membri operativi |
+| Documentazione | 9/10 | NORD + DNA aggiornati |
 
 ---
 
 *"Lavoriamo in pace! Senza casino! Dipende da noi!"*
-*"Un po' ogni giorno fino al 100000%!"*
+*"Ultrapassar os proprios limites!"*
+*Sessione 293 - W6 Day 1 - Cervella & Rafa*

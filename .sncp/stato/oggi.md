@@ -1,6 +1,6 @@
-# OGGI - 19 Gennaio 2026
+# OGGI - 20 Gennaio 2026
 
-> **Sessione:** 289 | **Progetto:** CervellaSwarm | **Focus:** W5 Day 2 COMPLETATO!
+> **Sessione:** 293 | **Progetto:** CervellaSwarm | **Focus:** W6 Casa Perfetta
 
 ---
 
@@ -8,44 +8,48 @@
 
 ```
 +================================================================+
-|   SESSIONE 289 - W5 DAY 2 DONE!                                |
-|   Architect docs + Hardtest + Bug fix                          |
-|   SCORE: 9.5/10 - TARGET RAGGIUNTO!                            |
+|   SESSIONE 293 - W6 DAY 1+2+3 COMPLETATI!                      |
+|   Media: 9.83/10 | Target: 9.5/10                              |
 +================================================================+
 ```
 
 ---
 
-## COSA FATTO
+## W6 COMPLETATO OGGI
 
-| Task | Status | Score |
-|------|--------|-------|
-| Documentare --architect in CLAUDE.md | DONE | 9/10 |
-| W3-B Pattern in DNA_FAMIGLIA.md | DONE | 9.5/10 |
-| Hardtest E2E con tester | DONE | 9.5/10 |
-| Fix BUG-2 (task vuoto) | DONE | - |
-| Fix tools coerenza (AskUserQuestion) | DONE | - |
-| spawn-workers.sh v3.8.1 | DONE | - |
-| Famiglia 17 membri | DONE | - |
+| Day | Focus | Score |
+|-----|-------|-------|
+| 1 | SNCP + Pulizia TODO | 10/10 |
+| 2 | Tree-sitter Hooks (validate_syntax.py) | 10/10 |
+| 3 | Auto-Context Selettivo (spawn-workers v3.9.0) | 9.5/10 |
 
 ---
 
-## ROADMAP STATUS
+## FILE CREATI/MODIFICATI
+
+| File | Cosa |
+|------|------|
+| `hooks/validate_syntax.py` | Hook validazione sintassi Tree-sitter |
+| `docs/HOOKS.md` | Documentazione hooks |
+| `.swarm/tasks/W6_D1_TODO_REPORT.md` | Report TODO Day 1 |
+| `.swarm/tasks/W6_D3_CONTEXT_ANALYSIS.md` | Analisi --with-context |
+| `scripts/swarm/spawn-workers.sh` | Auto-context per code-aware workers |
+
+---
+
+## ROADMAP
 
 ```
-W1-W4: 100% DONE!
-W5: Dogfooding [████________] 40% (Day 1-2 DONE!)
+W1-W5: 100% DONE! (9.6/10)
+W6: [############________] 60% (Day 4-5 pending)
 ```
 
 ---
 
-## PROSSIMA SESSIONE
+## PROSSIMO
 
-W5 Day 3: Semantic CLI wrapper
-- semantic_search.py CLI
-- Test su codebase reale
-- Documentazione comandi
+W6 Day 4: Script Polish (--version, import fix)
 
 ---
 
-*"289 sessioni! 9.5/10 - Il nostro standard!"*
+*"293 sessioni! W6 60%! Ultrapassar os proprios limites!"*
