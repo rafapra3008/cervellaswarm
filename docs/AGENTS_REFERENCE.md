@@ -1,15 +1,17 @@
 # Agents Reference
 
-> **Complete guide to all 16 CervellaSwarm agents**
+> **Complete guide to all 17 CervellaSwarm agents**
 
 ---
 
 ## Overview
 
-CervellaSwarm has 16 specialized agents organized in a hierarchy:
+CervellaSwarm has 17 specialized agents organized in a hierarchy:
 
 ```
                     QUEEN (1)
+                       |
+                  ARCHITECT (1)
                        |
            +----------+----------+
            |                     |
@@ -20,6 +22,7 @@ CervellaSwarm has 16 specialized agents organized in a hierarchy:
 ```
 
 - **Queen (1):** Orchestrates everything
+- **Architect (1):** Strategic planning and system design (Opus model)
 - **Guardians (3):** Review and validate (Opus model)
 - **Workers (12):** Execute specialized tasks (Sonnet model)
 
@@ -47,6 +50,37 @@ CervellaSwarm has 16 specialized agents organized in a hierarchy:
 spawn-workers --orchestrator
 > "Build a user authentication system with OAuth, tests, and documentation"
 ```
+
+---
+
+## The Architect
+
+### cervella-architect
+
+**Role:** Strategic planning and system design
+
+**Model:** Opus (high reasoning capability)
+
+**When to use:**
+- Complex architectural decisions
+- Multi-component system design
+- Before major refactoring
+- Planning multi-agent workflows
+
+**Capabilities:**
+- Analyzes codebase structure
+- Designs implementation plans
+- Identifies dependencies and risks
+- Creates detailed technical roadmaps
+- Coordinates with Guardians for validation
+
+**Example:**
+```bash
+spawn-workers --architect
+> "Design the authentication system architecture before implementation"
+```
+
+**Note:** The Architect analyzes and plans but does NOT modify code directly. It produces plans that Workers then implement.
 
 ---
 

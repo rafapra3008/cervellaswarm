@@ -1,6 +1,6 @@
 # CervellaSwarm
 
-> **16 AI Agents. 1 Command. Your AI Development Team.**
+> **17 AI Agents. 1 Command. Your AI Development Team.**
 
 <p align="center">
   <img src="docs/demo/cli_workflow_en.png" alt="CervellaSwarm - AI Team Workflow" width="800">
@@ -10,7 +10,7 @@
   <em>Regina coordinates, Workers execute, Guardians verify. The only AI coding team that checks its own work.</em>
 </p>
 
-A multi-agent orchestration system for Claude Code. Instead of one AI assistant, get a team of 16 specialized AI agents working together on your codebase.
+A multi-agent orchestration system for Claude Code. Instead of one AI assistant, get a team of 17 specialized AI agents working together on your codebase.
 
 ## What Problem Does This Solve?
 
@@ -37,11 +37,12 @@ cervellaswarm task "find security issues"   # Auto-routes to security
 ```
 
 
-## The Team (16 Agents)
+## The Team (17 Agents)
 
 | Role | Agent | Specialty |
 |------|-------|-----------|
 | **Queen** | cervella-orchestrator | Coordinates all agents |
+| **Architect** | cervella-architect | Strategic planning, system design |
 | **Guardian** | cervella-guardiana-qualita | Code quality review |
 | **Guardian** | cervella-guardiana-ops | DevOps & infrastructure |
 | **Guardian** | cervella-guardiana-ricerca | Research validation |
@@ -116,7 +117,7 @@ cervellaswarm task "How do enterprise apps handle rate limiting?" -a researcher
 | Doc | Description |
 |-----|-------------|
 | [Getting Started](docs/GETTING_STARTED.md) | Full setup tutorial |
-| [Agents Reference](docs/AGENTS_REFERENCE.md) | All 16 agents detailed |
+| [Agents Reference](docs/AGENTS_REFERENCE.md) | All 17 agents detailed |
 | [SNCP Guide](docs/SNCP_GUIDE.md) | Memory system explained |
 | [Architecture](docs/ARCHITECTURE.md) | How it all works |
 
@@ -178,4 +179,4 @@ See [LICENSE](LICENSE) for full text.
 
 **CervellaSwarm** - Built with love by Cervella & Rafa
 
-*"16 brains are better than one."*
+*"17 brains are better than one."*

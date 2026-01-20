@@ -15,6 +15,7 @@
   "dependencies": {
     "stripe": "^17.5.0",
     "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
     "lowdb": "^7.0.1",
     "dotenv": "^16.4.7",
     "cors": "^2.8.5"

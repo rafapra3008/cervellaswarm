@@ -10,12 +10,12 @@
 import "dotenv/config";
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
+import rateLimit from "express-rate-limit";
 
 import checkoutRoutes from "./routes/checkout.js";
 import portalRoutes from "./routes/portal.js";
 import subscriptionRoutes from "./routes/subscription.js";
 import webhookRoutes from "./routes/webhooks.js";
-import { stripe } from "./utils/stripe.js";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -23,6 +23,18 @@ const PORT = process.env.PORT || 3001;
 // ============================================
 // Middleware
 // ============================================
+
+// Rate limiting - 100 requests per 15 minutes per IP
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests, please try again later." },
+  skip: (req) => req.path === "/health", // allow health checks
+});
+
+app.use(limiter);
 
 // CORS - allow CLI from anywhere
 app.use(cors());
@@ -54,86 +66,6 @@ app.get("/health", (_req: Request, res: Response) => {
     service: "cervellaswarm-api",
     timestamp: new Date().toISOString(),
   });
-});
-
-// Debug: Stripe Account Status (temporary - for diagnosing checkout issue)
-app.get("/debug/stripe-account", async (_req: Request, res: Response) => {
-  try {
-    const account = await stripe.accounts.retrieve();
-    res.json({
-      id: account.id,
-      type: account.type,
-      charges_enabled: account.charges_enabled,
-      payouts_enabled: account.payouts_enabled,
-      details_submitted: account.details_submitted,
-      capabilities: account.capabilities,
-      requirements: account.requirements,
-      business_profile: account.business_profile,
-    });
-  } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({ error: error.message });
-    } else {
-      res.status(500).json({ error: "Failed to fetch account" });
-    }
-  }
-});
-
-// Debug: Verify prices and config
-app.get("/debug/stripe-config", async (_req: Request, res: Response) => {
-  try {
-    const proPriceId = process.env.STRIPE_PRICE_PRO || "";
-    const teamPriceId = process.env.STRIPE_PRICE_TEAM || "";
-
-    let proPrice = null;
-    let teamPrice = null;
-
-    if (proPriceId) {
-      try {
-        proPrice = await stripe.prices.retrieve(proPriceId);
-      } catch (e) {
-        proPrice = { error: (e as Error).message };
-      }
-    }
-
-    if (teamPriceId) {
-      try {
-        teamPrice = await stripe.prices.retrieve(teamPriceId);
-      } catch (e) {
-        teamPrice = { error: (e as Error).message };
-      }
-    }
-
-    res.json({
-      config: {
-        STRIPE_PRICE_PRO: proPriceId ? `${proPriceId.slice(0, 20)}...` : "NOT SET",
-        STRIPE_PRICE_TEAM: teamPriceId ? `${teamPriceId.slice(0, 20)}...` : "NOT SET",
-        STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY ? "SET (hidden)" : "NOT SET",
-      },
-      proPrice: proPrice ? {
-        id: (proPrice as any).id,
-        active: (proPrice as any).active,
-        currency: (proPrice as any).currency,
-        unit_amount: (proPrice as any).unit_amount,
-        product: (proPrice as any).product,
-        error: (proPrice as any).error,
-      } : null,
-      teamPrice: teamPrice ? {
-        id: (teamPrice as any).id,
-        active: (teamPrice as any).active,
-        currency: (teamPrice as any).currency,
-        unit_amount: (teamPrice as any).unit_amount,
-        product: (teamPrice as any).product,
-        error: (teamPrice as any).error,
-      } : null,
-    });
-  } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({ error: error.message });
-    } else {
-      res.status(500).json({ error: "Failed to fetch config" });
-    }
-  }
 });
 
 // Success page (after checkout)
