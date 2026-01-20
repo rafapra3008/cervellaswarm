@@ -1,79 +1,80 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 302
-> **STATUS:** PULIZIA CASA 16→17 COMPLETATA!
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 303
+> **STATUS:** FASE 1 SITO WEB COMPLETATA!
 
 ---
 
-## SESSIONE 302 - PULIZIA CASA 100%!
+## SESSIONE 303 - FASE 1 SITO WEB 100%!
 
 ```
 +================================================================+
-|   PULIZIA CASA 16→17 COMPLETATA!                               |
+|   FASE 1: SITO WEB - COMPLETATA!                               |
 |                                                                |
-|   45+ FILE SORGENTE AGGIORNATI                                 |
-|   SCORE GUARDIANA: 9.5/10                                      |
-|   RESIDUI: Solo file storici e generati (OK)                   |
+|   5 FILE LANDING AGGIORNATI                                    |
+|   AUDIT GUARDIANA FINALE: 10/10                                |
+|   COMMIT: 3609c35                                              |
+|   VERIFICA VISIVA: Screenshot fatto                            |
 |                                                                |
 +================================================================+
 ```
 
 ---
 
-## COSA FATTO SESSIONE 302
+## COSA FATTO SESSIONE 303
 
-### AGGIORNAMENTI 16→17 AGENTI
+### MODIFICHE SITO WEB
 
-| Gruppo | File Aggiornati |
-|--------|-----------------|
-| **CRITICI** | CLAUDE.md (root + ~/.claude/), hooks, ROADMAP | 4 |
-| **docs/** | strategia, visione, guide, roadmap, protocolli | 15+ |
-| **packages/** | CLI README, spawner.js/ts, test | 6 |
-| **cervella/** | README, pyproject, tier_manager (+architect!) | 7 |
-| **scripts/** | swarm-init, dashboard summary | 4 |
-| **plugin/** | plugin.json, README | 3 |
-| **dashboard/** | api main.py, types/index.ts | 2 |
-| **github/** | publish.yml | 1 |
+| File | Cosa Fatto |
+|------|------------|
+| **index.html** | 16->17, Pricing $29/$49, Feature W1-W6, Badge RECOMMENDED |
+| **faq.html** | 16->17, Founding Member $149/anno, Nomi Free/Pro/Team |
+| **how-it-works.html** | 16->17, Architect aggiunto in "Meet the Team" |
+| **getting-started.html** | 16->17 |
+| **og-template.html** | 16->17 |
 
-### BREAKDOWN CORRETTO (ora ovunque)
+### NUOVA SEZIONE "What Makes Us Different"
 
-```
-17 membri della famiglia:
-├── 1 Regina (opus)
-├── 3 Guardiane (opus)
-├── 1 Architect (opus)     ← NUOVO!
-└── 12 Api Worker (sonnet)
-```
+6 feature W1-W6 aggiunte:
+1. Self-Checking System (Guardiane) - PRIMA!
+2. Semantic Code Search (Tree-sitter)
+3. Architect-First Workflow
+4. Git Attribution
+5. SNCP Memory System
+6. Smart Task Routing
 
-### AUDIT GUARDIANA
+### PRICING ALLINEATO (da decisioni S300)
 
-- Score iniziale: 6/10 (65+ file con "16")
-- Score finale: 9.5/10 (solo storici/generati)
+| Tier | Prezzo | Agenti | Tasks |
+|------|--------|--------|-------|
+| FREE | $0/mo | 3 | 50/mese |
+| PRO | $29/mo | 17 | UNLIMITED |
+| TEAM | $49/user/mo | 17 | UNLIMITED |
 
 ---
 
 ## PROSSIMA SESSIONE - DA FARE
 
-**FASE 1 della SUBROADMAP_RELEASE_2.0:**
-- [ ] Pricing nel sito ($29/$49 come da decisioni S300)
-- [ ] Feature W1-W6 visibili nel sito
-- [ ] Tagline killer in hero
+**FASE 2 della SUBROADMAP_RELEASE_2.0:**
+- [ ] README CLI professionale
+- [ ] README MCP completo (17 agenti, Architect)
+- [ ] FAQ aggiornate
 
 **File riferimento:**
 - `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_RELEASE_2.0.md`
 
 ---
 
-## FILE CHIAVE SESSIONE 302
+## FILE CHIAVE SESSIONE 303
 
 | File | Cosa |
 |------|------|
-| `CLAUDE.md` (root) | 17 Cervelle + breakdown |
-| `~/.claude/CLAUDE.md` | 17 agenti pronti |
-| `.claude/hooks/session_start_swarm.py` | v2.2.0 - 17 membri |
-| `cervella/tier/tier_manager.py` | ALL_AGENTS con architect |
+| `landing/index.html` | Homepage con pricing + feature W1-W6 |
+| `landing/faq.html` | Founding Member $149 |
+| `landing/how-it-works.html` | Architect in "Meet the Team" |
+| `.playwright-mcp/landing_fase1_complete.png` | Screenshot verifica |
 
 ---
 
-*"Sessione 302! PULIZIA CASA completata, 45+ file aggiornati!"*
+*"Sessione 303! FASE 1 Sito Web completata, audit 10/10!"*
 *Cervella & Rafa*
