@@ -3,7 +3,7 @@
 /**
  * CervellaSwarm CLI
  *
- * 16 AI agents working as a team for your project.
+ * 17 AI agents working as a team for your project.
  * "Not an assistant - a TEAM."
  *
  * Copyright 2026 Rafa & Cervella
@@ -52,7 +52,7 @@ const banner = `
  | |__|  __/ |   \\ V /  __/ | | (_| |___) \\ V  V / (_| | |  | | | | | |
   \\____\\___|_|    \\_/ \\___|_|_|\\__,_|____/ \\_/\\_/ \\__,_|_|  |_| |_| |_|
 
-  16 AI agents. 1 command. Your AI dev team.
+  17 AI agents. 1 command. Your AI dev team.
 `;
 
 // Help footer with examples and getting started
@@ -93,7 +93,7 @@ Documentation: https://cervellaswarm.com
 // Setup program
 program
   .name('cervellaswarm')
-  .description('16 AI agents working as a team for your project')
+  .description('17 AI agents working as a team for your project')
   .version(packageJson.version, '-v, --version', 'Output the current version')
   .addHelpText('beforeAll', banner)
   .addHelpText('after', helpFooter);
@@ -216,8 +216,8 @@ program
   .option('-e, --email <email>', 'Email for checkout')
   .addHelpText('after', `
 Examples:
-  $ cervellaswarm upgrade pro     Upgrade to Pro ($20/mo, 500 calls)
-  $ cervellaswarm upgrade team    Upgrade to Team ($35/mo, 1000 calls)
+  $ cervellaswarm upgrade pro     Upgrade to Pro ($29/mo, unlimited)
+  $ cervellaswarm upgrade team    Upgrade to Team ($49/user/mo, unlimited)
 
 Opens Stripe Checkout in your browser.
 Payment is secure and handled by Stripe.

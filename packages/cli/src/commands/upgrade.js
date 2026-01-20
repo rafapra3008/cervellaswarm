@@ -24,15 +24,15 @@ import {
 const TIER_INFO = {
   pro: {
     name: 'Pro',
-    price: '$20/month',
-    calls: '500 calls/month',
-    features: ['All 16 agents', 'Priority support', '10x more calls']
+    price: '$29/month',
+    calls: 'Unlimited tasks',
+    features: ['All 17 agents', 'Priority support', 'Unlimited tasks']
   },
   team: {
     name: 'Team',
-    price: '$35/month',
-    calls: '1000 calls/month',
-    features: ['All Pro features', 'Team collaboration', '20x more calls']
+    price: '$49/user/month',
+    calls: 'Unlimited tasks',
+    features: ['All Pro features', 'Team collaboration', 'Shared memory']
   }
 };
 
@@ -127,8 +127,8 @@ export async function upgradeCommand(tier, options) {
       console.log('');
       console.log(chalk.white.bold('  Available tiers:'));
       console.log('');
-      console.log(chalk.cyan('  pro   ') + chalk.gray('$20/mo - 500 calls/month'));
-      console.log(chalk.cyan('  team  ') + chalk.gray('$35/mo - 1000 calls/month'));
+      console.log(chalk.cyan('  pro   ') + chalk.gray('$29/mo - 17 agents, unlimited tasks'));
+      console.log(chalk.cyan('  team  ') + chalk.gray('$49/user/mo - 17 agents, shared memory'));
       console.log('');
       console.log(chalk.gray('  Usage: cervellaswarm upgrade <pro|team>'));
       console.log('');

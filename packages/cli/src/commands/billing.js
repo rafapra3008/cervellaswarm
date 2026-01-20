@@ -139,8 +139,8 @@ export async function billingCommand(options) {
       console.log('');
       console.log(chalk.white.bold('  Upgrade options:'));
       console.log('');
-      console.log(chalk.cyan('  cervellaswarm upgrade pro   ') + chalk.gray('$20/mo - 500 calls'));
-      console.log(chalk.cyan('  cervellaswarm upgrade team  ') + chalk.gray('$35/mo - 1000 calls'));
+      console.log(chalk.cyan('  cervellaswarm upgrade pro   ') + chalk.gray('$29/mo - 17 agents, unlimited'));
+      console.log(chalk.cyan('  cervellaswarm upgrade team  ') + chalk.gray('$49/user/mo - shared memory'));
       console.log('');
       return;
     }

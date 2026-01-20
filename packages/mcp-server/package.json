@@ -1,7 +1,7 @@
 {
   "name": "@cervellaswarm/mcp-server",
   "version": "2.0.0-beta",
-  "description": "16 AI agents with quality guardians - the only team that checks its own work",
+  "description": "17 AI agents with quality guardians - the only team that checks its own work",
   "type": "module",
   "main": "dist/index.js",
   "bin": {

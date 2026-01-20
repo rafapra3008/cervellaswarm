@@ -2,7 +2,7 @@
 /**
  * CervellaSwarm MCP Server
  *
- * 16 AI agents exposed as MCP tools for Claude Code integration.
+ * 17 AI agents exposed as MCP tools for Claude Code integration.
  * "Not an assistant - a TEAM."
  *
  * Copyright 2026 Rafa & Cervella
@@ -194,7 +194,7 @@ server.tool(
           type: "text",
           text:
             "# CervellaSwarm Workers\n\n" +
-            "16 specialized AI agents ready to help:\n\n" +
+            "17 specialized AI agents ready to help:\n\n" +
             list +
             "\n\n" +
             "Use `spawn_worker` to assign a task to any worker.",

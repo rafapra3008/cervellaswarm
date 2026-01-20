@@ -113,7 +113,7 @@ function isAlreadyInitialized() {
 export async function initCommand(options) {
   console.log('');
   console.log(chalk.cyan.bold('  Welcome to CervellaSwarm!'));
-  console.log(chalk.gray('  16 AI agents. 1 command. Your AI dev team.'));
+  console.log(chalk.gray('  17 AI agents. 1 command. Your AI dev team.'));
   console.log('');
 
   // Check if already initialized
