@@ -118,6 +118,97 @@ Updates: stato.md with completion status
 
 ---
 
+## Session Handoffs (SNCP 2.0)
+
+Session handoffs provide detailed documentation of each work session, capturing not just what was done but *why* and *what was learned*.
+
+### The 6-Section Template
+
+Every handoff follows this structure:
+
+| Section | Purpose |
+|---------|---------|
+| **1. ACCOMPLISHED** | What completed + WHY those decisions |
+| **2. CURRENT STATE** | Status of work (% if WIP) |
+| **3. LESSONS LEARNED** | What worked, what didn't, patterns discovered |
+| **4. NEXT STEPS** | Prioritized actions for next session |
+| **5. KEY FILES** | Files touched/created + their purpose |
+| **6. BLOCKERS** | Open problems + workarounds |
+
+**Template location:** `.swarm/templates/TEMPLATE_SESSION_HANDOFF.md`
+
+### Naming Convention
+
+```
+HANDOFF_YYYYMMDD_{progetto}_S{N}.md
+```
+
+**Example:** `HANDOFF_20260120_cervellaswarm_S298.md`
+
+- **YYYYMMDD** - Date (for chronological sorting)
+- **{progetto}** - Project name (for filtering)
+- **S{N}** - Session number
+
+### Where to Save
+
+```
+.sncp/handoff/HANDOFF_YYYYMMDD_{progetto}_S{N}.md
+```
+
+### When to Create Handoffs
+
+- **End of every significant session** - Captured progress
+- **Before context switch** - Moving to another project
+- **After completing a milestone** - Major feature done
+- **When blocked** - Document blocker for next session
+
+### Handoff vs PROMPT_RIPRESA
+
+| | PROMPT_RIPRESA | Handoff |
+|--|----------------|---------|
+| **Purpose** | Quick context resume | Detailed session record |
+| **Length** | Max 150 lines | As needed |
+| **Updated** | Every session | Every significant session |
+| **Contains** | Current state, next steps | Full session narrative |
+| **Read by** | Agent at start | Human/agent when needed |
+
+**Rule:** PROMPT_RIPRESA for quick resume, Handoff for detailed history.
+
+### Best Practices for Handoffs
+
+Based on real usage testing (Session 298):
+
+1. **Always include WHY** - Not just what was done, but why that choice
+   ```markdown
+   - [x] Used JWT instead of sessions
+     - Perche: Better for mobile clients, stateless
+   ```
+
+2. **LESSONS LEARNED is mandatory** - Even if brief
+   - What worked well
+   - What didn't work
+   - Patterns to remember
+
+3. **BLOCKERS section always present** - Even if empty
+   - Forces you to think about impediments
+   - Documents workarounds for future sessions
+
+4. **Prioritize NEXT STEPS** - Use ALTA/MEDIA/BASSA
+   - Helps next session know where to start
+   - Prevents important items from being forgotten
+
+5. **Include file paths** - Not just names
+   ```markdown
+   | `docs/SNCP_GUIDE.md` | Added handoff section |  # Good
+   | SNCP_GUIDE.md | Updated |                       # Bad
+   ```
+
+6. **Update handoff DURING session** - Not just at end
+   - Captures details while fresh
+   - Reduces "what did I do?" at session end
+
+---
+
 ## Usage
 
 ### Initialize for a New Project
