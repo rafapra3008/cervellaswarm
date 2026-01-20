@@ -5,106 +5,70 @@
 
 # PROMPT RIPRESA - PMS Core
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 300
-> **STATO:** 90% LIVE | Health 6.8/10 (SPLIT FILE in corso!)
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 301
+> **STATO:** 90% LIVE | Health 7.2/10 (SPLIT FILE 67%!)
 
 ---
 
-## SESSIONE 300 - PULIZIA CASA CONTINUA
+## SESSIONE 301 - DUE FILE SPLITTATI!
 
 ```
 +================================================================+
-|   SPLIT FILE GIGANTI: 2/6 COMPLETATI!                          |
+|   SPLIT FILE GIGANTI: 4/6 COMPLETATI! (67%)                     |
 |                                                                |
-|   [x] test_action_tracking.py: 820 → 8 file (tutti <150 righe) |
-|   [x] ml_api.py: 705 → 7 file (tutti <150 righe)               |
-|   [ ] cm_import_service.py: 762 (PROSSIMO)                     |
-|   [ ] planning_core.py: 746 (ALTO RISCHIO)                     |
-|   [ ] ab_testing_api.py: 768                                   |
+|   [x] test_action_tracking.py: 820 → 8 file                    |
+|   [x] ml_api.py: 705 → 7 file                                  |
+|   [x] cm_import_service.py: 762 → 8 file (services/cm/)        |
+|   [x] planning_core.py: 746 → 5 file (routers/planning/)       |
+|   [ ] ab_testing_api.py: 768 (PROSSIMO)                        |
 |   [ ] city_tax.py: 721                                         |
-|                                                                |
 +================================================================+
 ```
 
-**Commit:**
-- `871a1f9` - Split test_action_tracking.py
-- `2e5a802` - Split ml_api.py
+**Commit S301:**
+- `a6acb84` - Split cm_import_service.py
+- `fe31ec5` - Split planning_core.py
 
 ---
 
-## SESSIONE 272 - PULIZIA CASA PMS
+## STRUTTURA NUOVA (S301)
 
 ```
-+================================================================+
-|                                                                |
-|   PULIZIA CASA COMPLETATA!                                     |
-|                                                                |
-|   - Audit tecnico: Health 6.5/10 mappato                       |
-|   - Modulo subscription organizzato                            |
-|   - 4 TODO tecnici fixati                                      |
-|   - SUBROADMAP split file creata                               |
-|                                                                |
-+================================================================+
+services/cm/                    # CM Import (8 file)
+├── __init__.py, guest_management.py, booking_management.py
+├── booking_room.py, availability.py, import_tracking.py
+└── auto_import.py
+
+routers/planning/               # Planning Core (5 file nuovi)
+├── utils.py, core.py, booking_create.py, booking_dates.py
+└── (+ swap.py, segment_swap.py, room_change.py, etc.)
 ```
-
-### Fix Applicati (Sessione 272)
-
-| File | Fix |
-|------|-----|
-| `routers/settings/rooms.py` | Check prenotazioni prima delete |
-| `services/email/bookingengine.py` | num_guests da email |
-| `routers/weather.py` | Location/type da database |
-| `routers/ml_api.py` | TODO obsoleto rimosso |
-
-### File Creati
-
-| File | Scopo |
-|------|-------|
-| `modules/subscription/` | Modulo parcheggiato (README incluso) |
-| `core/encryption.py` | TokenEncryptor Fernet per Twilio |
 
 ---
 
-## MAPPA SPLIT FILE GIGANTI
+## MAPPA SPLIT FILE
 
 **SUBROADMAP:** `.sncp/progetti/miracollo/roadmaps/SUBROADMAP_SPLIT_FILE_GIGANTI.md`
 
-| # | File | Righe | Rischio | Sessioni |
-|---|------|-------|---------|----------|
-| 1 | test_action_tracking.py | 820 | Basso | 1 |
-| 2 | ml_api.py | 705 | Basso | 1 |
-| 3 | cm_import_service.py | 762 | Medio | 1.5 |
-| 4 | planning_core.py | 746 | ALTO | 2 |
-| 5 | ab_testing_api.py | 768 | Medio | 1.5 |
-| 6 | city_tax.py | 721 | Medio | 1.5 |
-
-**Totale:** 8-9 sessioni
+| # | File | Stato |
+|---|------|-------|
+| 1 | test_action_tracking.py | DONE S300 |
+| 2 | ml_api.py | DONE S300 |
+| 3 | cm_import_service.py | DONE S301 |
+| 4 | planning_core.py | DONE S301 |
+| 5 | ab_testing_api.py | PROSSIMO |
+| 6 | city_tax.py | TODO |
 
 ---
 
-## MODULO FINANZIARIO - STATO
+## MODULO FINANZIARIO
 
 | Fase | Componente | Stato |
 |------|------------|-------|
 | 1 | Ricevute PDF | 100% REALE |
 | 1B | Checkout UI | 100% REALE |
-| 2 | Scontrini RT | 90% - test stampante DA FARE |
-| 3 | Fatture XML | 60% - PARCHEGGIATO |
-| 4 | Export | 0% - PARCHEGGIATO |
-
----
-
-## PROSSIMO STEP
-
-```
-OPZIONE A - Split File (consigliato):
-  1. test_action_tracking.py (warm-up, zero rischio)
-  2. ml_api.py (basso rischio)
-  3. ... seguire SUBROADMAP
-
-OPZIONE B - Test Scontrini RT:
-  Quando in hotel: test stampante Bar
-```
+| 2 | Scontrini RT | 90% - test stampante |
+| 3-4 | Fatture/Export | PARCHEGGIATO |
 
 ---
 
@@ -112,9 +76,8 @@ OPZIONE B - Test Scontrini RT:
 
 | Cosa | Motivo |
 |------|--------|
-| Subscription system | In `modules/`, pronto quando serve |
-| Fatture XML impl. | Test SPRING OK |
-| Export commercialista | Manuale OK per 10-15 fatt/mese |
+| Subscription system | In `modules/`, pronto |
+| Fatture XML | Test SPRING OK |
 | Notifiche CM | Modulo futuro |
 
 ---
@@ -124,19 +87,8 @@ OPZIONE B - Test Scontrini RT:
 ```
 Internet -> Nginx (443) -> Backend (8001) -> SQLite
 VM: miracollo-cervella (Google Cloud)
-PATH: /home/rafapra/app/
 ```
 
 ---
 
-## GUIDE E DOC
-
-| File | Scopo |
-|------|-------|
-| SUBROADMAP_SPLIT_FILE_GIGANTI.md | Piano split 6 file |
-| GUIDA_FATTURE_XML_MIRACOLLO.md | Fatture XML |
-| MAPPA_MODULO_FINANZIARIO.md | Stato modulo completo |
-
----
-
-*"Pulizia casa prima di costruire nuovo!" - Sessione 272*
+*"Pulizia casa 67%! Due file splittati oggi!" - Sessione 301*
