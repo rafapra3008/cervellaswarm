@@ -45,7 +45,7 @@
 
 ```
 PRIMA: 1 Cervella = 1 task alla volta
-DOPO:  1 Regina + 16 Worker = N task in parallelo
+DOPO:  1 Regina + 16 Membri (Guardiane + Architect + Worker) = N task in parallelo
 ```
 
 **Obiettivo:** Da 20x a 100x, 200x... senza limiti.
@@ -66,7 +66,7 @@ DOPO:  1 Regina + 16 Worker = N task in parallelo
  Qualità   Ops      Backend  Frontend  Tester  Researcher  Scienziata
 ```
 
-**La Famiglia Completa (16 membri):**
+**La Famiglia Completa (17 membri):**
 
 | Livello | Nome | Ruolo | Model |
 |---------|------|-------|-------|
@@ -74,6 +74,7 @@ DOPO:  1 Regina + 16 Worker = N task in parallelo
 | 🛡️ | cervella-guardiana-qualita | Verifica output worker | opus |
 | 🛡️ | cervella-guardiana-ops | Supervisiona deploy/security | opus |
 | 🛡️ | cervella-guardiana-ricerca | Valida qualità ricerche | opus |
+| 🏛️ | **cervella-architect** | Pianifica task complessi (W5) | opus |
 | 🎨 | cervella-frontend | UI/UX, React, CSS | sonnet |
 | ⚙️ | cervella-backend | Python, FastAPI, API | sonnet |
 | 🧪 | cervella-tester | Testing, QA, HARDTEST | sonnet |

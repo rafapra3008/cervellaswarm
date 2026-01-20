@@ -11,7 +11,7 @@
 |                                                                              |
 |   CERVELLASWARM - LA FAMIGLIA COMPLETA                                       |
 |                                                                              |
-|   16 membri | 3 livelli | 1 missione: LIBERTA GEOGRAFICA                    |
+|   17 membri | 4 livelli | 1 missione: LIBERTA GEOGRAFICA                    |
 |                                                                              |
 +------------------------------------------------------------------------------+
 ```

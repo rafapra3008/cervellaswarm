@@ -16,7 +16,7 @@
 |   Dopo 3 studi approfonditi, abbiamo una strategia chiara:       |
 |                                                                  |
 |   1. IL MERCATO E' PRONTO ($30B entro 2032)                      |
-|   2. IL NOSTRO VANTAGGIO E' UNICO (16 agenti coordinati)        |
+|   2. IL NOSTRO VANTAGGIO E' UNICO (17 agenti coordinati)        |
 |   3. LA VIA E' CHIARA (Extension → Fork → Rebuild)               |
 |                                                                  |
 |   "The battle isn't about the editor, it's about the agent      |
@@ -32,7 +32,7 @@
 ```
 +------------------------------------------------------------------+
 |                                                                  |
-|   IL VERO DIFFERENZIALE NON SONO I 16 AGENTI.                   |
+|   IL VERO DIFFERENZIALE NON SONO I 17 AGENTI.                   |
 |   NON E' IL MULTI-AI.                                            |
 |   NON E' L'ORGANIZZAZIONE.                                       |
 |                                                                  |
@@ -64,7 +64,7 @@ FLOW CERVELLASWARM:
 
 2. OGNI GIORNO
    └─ Utente: "Avvia CervellaSwarm"
-   └─ Lo sciame lavora sulla mappa (16 agenti coordinati)
+   └─ Lo sciame lavora sulla mappa (17 agenti coordinati)
    └─ Cliente + Regina analizzano insieme i progressi
    └─ Aggiornano la mappa se serve (nuove idee, problemi, soluzioni)
 
@@ -131,13 +131,13 @@ Il prodotto e' semplicemente: dare agli altri quello che usiamo noi.
 1. **Tutti gli AI IDE sono Fork di VS Code** - Non e' un caso
 2. **Extension VS Code NON basta** per deep AI integration
 3. **Approccio consigliato:** Extension (valida) → Fork (scala) → Rebuild (se serve)
-4. **MVP:** VS Code Extension con 16 agenti (1-3 mesi)
+4. **MVP:** VS Code Extension con 17 agenti (1-3 mesi)
 
 ### Dalla Scienziata (Business)
 
 1. **Mercato:** $4.91B (2024) → $30.1B (2032) - CAGR 27.1%
 2. **2026 = Anno dei Multi-Agent Systems** - Noi siamo GIA' li!
-3. **Il nostro differenziante:** "L'unico IDE con 16 agenti specializzati coordinati"
+3. **Il nostro differenziante:** "L'unico IDE con 17 agenti specializzati coordinati"
 4. **Posizionamento:** Non vendiamo AI, vendiamo ORGANIZZAZIONE
 
 ### Dall'Ingegnera (Architettura)
@@ -164,7 +164,7 @@ Il prodotto e' semplicemente: dare agli altri quello che usiamo noi.
 
 ```
 [ ] VS Code Extension "CervellaSwarm"
-    - Agent Selector (16 agenti)
+    - Agent Selector (17 agenti)
     - Multi-AI Backend (Claude/GPT/Gemini)
     - Task Panel
     - Roadmap Viewer
@@ -206,7 +206,7 @@ Il prodotto e' semplicemente: dare agli altri quello che usiamo noi.
 | Tier | Prezzo | Include |
 |------|--------|---------|
 | **Hive Free** | $0 | 3 agenti, 1 progetto |
-| **Hive Pro** | $25/mo | 16 agenti, progetti illimitati |
+| **Hive Pro** | $25/mo | 17 agenti, progetti illimitati |
 | **Hive Team** | $35/user | + Collaboration |
 | **Hive Enterprise** | $60/user | + On-prem, SSO |
 
@@ -218,7 +218,7 @@ Il prodotto e' semplicemente: dare agli altri quello che usiamo noi.
 
 | Noi | Competitor |
 |-----|------------|
-| 16 agenti specializzati | Generico |
+| 17 agenti specializzati | Generico |
 | Multi-AI nativo | Locked a un provider |
 | Handoff strutturato | Niente |
 | Roadmaps visuali | Niente |
@@ -274,7 +274,7 @@ Il prodotto e' semplicemente: dare agli altri quello che usiamo noi.
 |                                                                  |
 |   ABBIAMO TUTTO QUELLO CHE SERVE:                               |
 |                                                                  |
-|   ✅ 16 agenti funzionanti                                      |
+|   ✅ 17 agenti funzionanti                                      |
 |   ✅ Sistema spawn-workers stabile                               |
 |   ✅ Filosofia ORDINE e ORGANIZZAZIONE                          |
 |   ✅ Roadmap chiara                                              |

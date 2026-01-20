@@ -1,0 +1,39 @@
+
+[0;36m+================================================================+[0m
+[0;36m|                                                                |[0m
+[0;36m|   [0;35mSNCP HEALTH DASHBOARD[0;36m                                       |[0m
+[0;36m|   [0mSistema Nervoso Centrale Progetti[0;36m                            |[0m
+[0;36m|                                                                |[0m
+[0;36m|   Data: 2026-01-20 08:30                                       |[0m
+[0;36m+================================================================+[0m
+
+[0;34m--- STATISTICHE GLOBALI ---[0m
+
+  [0;36mSNCP Root:[0m /Users/rafapra/Developer/CervellaSwarm/.sncp
+  [0;36mTotale file MD:[0m 808
+  [0;36mFile obsoleti (>30gg):[0m 0
+
+  [0;36mSistema:[0m SNCP 2.0 (PROMPT_RIPRESA + Handoff)
+
+[0;34m--- PROGETTI ---[0m
+
+  Progetto        | Files    | stato.md         | Obsoleti
+  ----------------|----------|------------------|----------
+  miracollo       | 324 files | stato: 114 righe [[0;32mOK[0m] | obsoleti:  0 [[0;32mOK[0m]
+  cervellaswarm   | 120 files | stato: 136 righe [[0;32mOK[0m] | obsoleti:  0 [[0;32mOK[0m]
+  contabilita     |   8 files | stato:  29 righe [[0;32mOK[0m] | obsoleti:  0 [[0;32mOK[0m]
+
+[0;34m--- RACCOMANDAZIONI ---[0m
+
+  [0;32mNessuna raccomandazione - SNCP in ottimo stato![0m
+
+[0;34m--- SCORE SNCP 2.0 ---[0m
+
+  SNCP 2.0 Health Score: [0;32m100/100[0m
+
+  [##############################] 100%
+
+[0;36m+================================================================+[0m
+[0;36m|   [0m"Se documentiamo = facciamo!"[0;36m                               |[0m
+[0;36m+================================================================+[0m
+

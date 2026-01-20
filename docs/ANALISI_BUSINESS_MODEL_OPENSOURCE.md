@@ -403,13 +403,13 @@ TOTAL MRR: $5.5K+ from 1000 initial users
 **SNCP = Trade Secret!**
 
 > "The only AI coding team that checks its own work"
-> "16 agents + memory persistence + compliance"
+> "17 agents + memory persistence + compliance"
 
 **Differenziatori:**
 
 | Feature | Copilot | Cursor | CervellaSwarm |
 |---------|---------|--------|---------------|
-| Multi-agent | ❌ | ❌ | ✅ 16 agenti! |
+| Multi-agent | ❌ | ❌ | ✅ 17 agenti! |
 | Memory (SNCP) | ❌ | ❌ | ✅ UNICO! |
 | Self-review | ❌ | ❌ | ✅ Guardiane! |
 | BYOK mode | ✅ | ❌ | ✅ (dual!) |

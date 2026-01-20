@@ -4,8 +4,8 @@
 > **Score Target:** 9.5/10
 
 **Creata:** 20 Gennaio 2026 - Sessione 299
-**Aggiornata:** 20 Gennaio 2026 - Sessione 300 (Audit Guardiana)
-**Basata su:** Analisi Researcher + Marketing + Ingegnera
+**Aggiornata:** 20 Gennaio 2026 - Sessione 301 (Ricerca Completa + Findings)
+**Basata su:** Analisi Researcher + Marketing + Ingegnera + Ricerca AIDER
 
 ---
 
@@ -33,7 +33,7 @@
 
 **Cosa NON cambiamo:**
 - Codice (gia solido, 241 test passano)
-- Architettura (16 agenti funzionano)
+- Architettura (17 agenti funzionano) ← CORRETTO: 17 non 16!
 - API Fly.io (running, health OK)
 - npm packages (gia 2.0.0-beta!)
 
@@ -41,6 +41,74 @@
 - Sito web (pricing, testi, feature)
 - Documentazione (README, FAQ)
 - Coerenza ovunque
+
+---
+
+## SESSIONE 301 - RICERCA COMPLETA (20 Gen 2026)
+
+### FAMIGLIA CONFERMATA: 17 MEMBRI
+
+| Livello | Membri | Model | Ruolo |
+|---------|--------|-------|-------|
+| Regina | 1 | Opus | Coordina tutto |
+| Guardiane | 3 | Opus | Verificano qualita |
+| **Architect** | **1** | **Opus** | **NUOVO! Pianifica task complessi** |
+| Worker | 12 | Sonnet | Specialisti |
+
+**TOTALE: 5 Opus + 12 Sonnet = 17 membri!**
+
+### COMPARAZIONE vs AIDER (Ricerca Researcher)
+
+**PARITY RAGGIUNTA:**
+- Tree-sitter (W2) = loro "repository map"
+- Git Attribution (W1) = loro "auto-commit"
+- Architect Pattern (W3-B) = loro "architect mode"
+
+**5 DIFFERENZIATORI NOSTRI:**
+1. **17 agent team** vs 1 AI solo
+2. **3 Guardiane** verificano qualita (UNICO!)
+3. **SNCP 2.0** memoria perfetta vs session-only
+4. **Semantic Search API** impact analysis in 2s
+5. **Task classification** routing automatico
+
+**5 GAP (Roadmap futura):**
+1. Multi-model support (P1) - loro 20+ providers
+2. IDE file watching (P1)
+3. Voice/image input (P3)
+4. Prompt caching esplicito (P2)
+5. 100+ languages (P2)
+
+### SNCP 2.0 - COMPLETATO! (Sessione 299)
+
+| Cosa | Status |
+|------|--------|
+| oggi.md deprecato | DONE |
+| Template Handoff 6-sezioni | DONE |
+| Hook aggiornati | DONE |
+| Score | 9.5/10 |
+
+### W5 DOGFOODING - STATO VERIFICATO (Sessione 301)
+
+> **NOTA:** Report Ingegnera (19 Gen) era OUTDATED. Verificato 20 Gen - tutto INTEGRATO!
+
+| Feature | Creata | Integrata | Come Usare |
+|---------|--------|-----------|------------|
+| W1 Git Flow | 100% | ✅ 100% | `spawn-workers --auto-commit` |
+| W2 Tree-sitter | 100% | ✅ Auto | Auto-context per worker code-aware |
+| W3-A Semantic Search | 100% | ✅ CLI | `semantic-search.sh find-symbol "X"` |
+| W3-B Architect | 100% | ✅ Flag | `spawn-workers --architect "task"` |
+| W4 CI/CD | 100% | ✅ Auto | GitHub Actions su push/PR |
+
+**STRUMENTI VERIFICATI (20 Gen 2026):**
+- `spawn-workers.sh v3.9.0` - Include --architect (v3.8.0)
+- `semantic-search.sh v1.0.0` - CLI wrapper completo
+- `impact_analyzer.py` - API disponibile
+- Auto-context per 8 worker code-aware (v3.9.0)
+
+### FILE RICERCA CREATI (Sessione 301)
+
+- `.swarm/tasks/RICERCA_AIDER_VS_CERVELLASWARM.md` - Comparativa completa
+- `.swarm/tasks/MARKETING_COMUNICAZIONE_V2.md` - Copy pronti all'uso
 
 ---
 
@@ -135,8 +203,8 @@ Aggiungere differenziatori W1-W6:
 - Link a CHANGELOG per W1-W6
 
 **packages/mcp-server/README.md:**
-- Famiglia 16 agenti documentata
-- Ruoli chiari (3 Guardiane + 12 Worker)
+- Famiglia 17 agenti documentata (incluso Architect!)
+- Ruoli chiari (1 Regina + 3 Guardiane + 1 Architect + 12 Worker)
 - Integrazione con Claude Desktop
 
 #### Day 4: FAQ & Docs
@@ -208,28 +276,38 @@ Aggiungere differenziatori W1-W6:
 
 ## DEFINITION OF DONE
 
-**DAY 0: DECISIONI**
-- [ ] Early Bird deciso
-- [ ] Pricing confermato
-- [ ] Stripe timing deciso
-- [ ] v1.0.0 criteria definiti
-- [ ] Tagline scelto
+**DAY 0: DECISIONI** ✅ COMPLETATO (Sessione 300)
+- [x] Early Bird deciso ($149/anno Founding Members)
+- [x] Pricing confermato (FREE/PRO $29/TEAM $49)
+- [x] Stripe timing deciso (dopo 50 utenti beta)
+- [x] v1.0.0 criteria definiti (dopo 100-200 utenti 30d)
+- [x] Tagline scelto ("checks its own work")
 
-**FASE 1: SITO WEB**
-- [ ] Pricing corretto ovunque
+**FASE 1: SITO WEB** - IN PROGRESS
+- [ ] Pricing corretto ovunque ($29/$49)
 - [ ] Feature W1-W6 visibili
-- [ ] Tagline killer in hero
+- [ ] Tagline killer in hero ✅ FATTO (Sessione 300)
 - [ ] Zero claim non verificabili
+- [ ] **NUOVO:** Famiglia 17 membri documentata (non 16!)
+- [ ] **NUOVO:** Self-Checking come feature #1
 
 **FASE 2: DOCUMENTAZIONE**
 - [ ] README professionali
 - [ ] FAQ complete
 - [ ] CHANGELOG visibile
+- [ ] **NUOVO:** Architect Pattern documentato
+- [ ] **NUOVO:** Differenziatori vs AIDER
 
 **FASE 3: VERIFICA**
 - [ ] Cross-check passato
 - [ ] Audit Guardiana 9.5/10
 - [ ] Pronto per v1.0.0 (dopo primi utenti)
+
+**FASE 4: W5 DOGFOODING** ✅ COMPLETATO (Verificato Sessione 301)
+- [x] Architect integrato in spawn-workers (--architect flag) ← v3.8.0!
+- [x] Semantic Search CLI wrapper creato ← semantic-search.sh v1.0.0!
+- [x] CLAUDE.md aggiornato con nuove feature ← Sessione 301!
+- [x] Test REALE: semantic-search.sh PASSATO! ← Sessione 301!
 
 **GIA COMPLETATO (Sessione 287):**
 - [x] npm CLI 2.0.0-beta pubblicato
@@ -325,7 +403,7 @@ Aggiungere differenziatori W1-W6:
 |   Stiamo COMUNICANDO quello che abbiamo GIA'.                  |
 |                                                                |
 |   Feature W1-W6 esistono. Nessuno lo sa.                       |
-|   16 agenti funzionano. Nessuno lo sa.                         |
+|   17 agenti funzionano. Nessuno lo sa.                         |
 |   Score 9.6/10 media. Nessuno lo sa.                           |
 |                                                                |
 |   ORA LO SAPRANNO.                                             |
@@ -345,7 +423,30 @@ Aggiungere differenziatori W1-W6:
 
 ---
 
+## MESSAGGI KILLER DA COMUNICARE (Marketing Sessione 301)
+
+**Tagline principale:**
+> "The only AI coding team that checks its own work"
+
+**3 Differenziatori (comunicare SEMPRE):**
+1. **Self-Checking System** - 3 Guardiane Opus verificano ogni output
+2. **Semantic Code Understanding** - Tree-sitter, non grep
+3. **Architect-First Workflow** - Piano → Codice → Verifica
+
+**Copy user-centric:**
+- "Capisce il tuo codice come un senior developer"
+- "Impatto modifiche in 2 secondi"
+- "Piano prima, codice dopo. Zero refactoring a meta strada"
+- "Ricorda tutto, anche dopo settimane" (SNCP)
+
+**Analogie per utenti:**
+- Tree-sitter = "Google per codice, ma preciso"
+- 17 Agenti = "Software house con ruoli"
+- Guardiane = "Code review senior automatico"
+
+---
+
 *Subroadmap creata da: Regina + Researcher + Marketing + Ingegnera*
 *Data: 20 Gennaio 2026 - Sessione 299*
-*Aggiornata: 20 Gennaio 2026 - Sessione 300 (Audit Guardiana)*
+*Aggiornata: 20 Gennaio 2026 - Sessione 301 (Ricerca Completa + Findings)*
 *"Lavoriamo in pace! Senza casino! Dipende da noi!"*

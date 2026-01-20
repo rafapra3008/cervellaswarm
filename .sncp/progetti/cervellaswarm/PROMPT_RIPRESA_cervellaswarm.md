@@ -1,65 +1,69 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 300
-> **STATUS:** Day 0 COMPLETATO - 5/5 Decisioni Release 2.0!
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 301
+> **STATUS:** Ricerca Completa + W5 Verificato + Docs in corso
 
 ---
 
-## SESSIONE 300 - DAY 0 DECISIONI RELEASE 2.0
+## SESSIONE 301 - RICERCA E VERIFICA
 
 ```
 +================================================================+
-|   DAY 0 COMPLETATO - TUTTE LE 5 DECISIONI PRESE!              |
+|   RICERCA COMPLETATA + W5 FUNZIONA!                            |
 |                                                                |
-|   1. EARLY BIRD: $149/anno per 200 Founding Members           |
-|   2. PRICING: Free $0 / Pro $29 / Team $49                    |
-|   3. STRIPE LIVE: dopo 50 utenti beta (~15 Feb)               |
-|   4. v1.0.0: dopo 100-200 utenti 30d (~15 Apr)               |
-|   5. TAGLINE: "checks its own work" - IMPLEMENTATO!           |
+|   1. FAMIGLIA: 17 membri (non 16!) con Architect               |
+|   2. VS AIDER: 5 differenziatori, 5 gap identificati           |
+|   3. W5 DOGFOODING: Architect + Semantic Search FUNZIONANO!    |
+|   4. DOCS: Aggiornamento 16→17 IN CORSO (splittato)            |
 |                                                                |
 +================================================================+
 ```
 
 ---
 
-## COSA FATTO SESSIONE 300
+## COSA FATTO SESSIONE 301
 
-### DECISIONI PRESE (tutte documentate in SUBROADMAP_RELEASE_2.0.md)
+### RICERCA
+- Researcher: RICERCA_AIDER_VS_CERVELLASWARM.md
+- Marketing: MARKETING_COMUNICAZIONE_V2.md
+- Differenziatori identificati, copy pronti
 
-| # | Decisione | Scelta |
-|---|-----------|--------|
-| 5 | Tagline | "The only AI coding team that checks its own work" |
-| 4 | v1.0.0 | Dopo 100-200 utenti 30d |
-| 3 | Stripe Live | Dopo 50 utenti beta |
-| 2 | Pricing | FREE/PRO $29/TEAM $49/ENTERPRISE |
-| 1 | Early Bird | $149/anno 200 Founding Members |
+### VERIFICHE REALI
+- `spawn-workers --architect` ESISTE (v3.8.0)
+- `semantic-search.sh` FUNZIONA (testato!)
+- Test PASSATO: find-symbol "SemanticSearch" → found: true
 
-### IMPLEMENTATO
-- Tagline nel sito (`landing/index.html` righe 300-305)
-- Tagline nel README CLI (`packages/cli/README.md`)
-
----
-
-## PROSSIMA SESSIONE
-
-**FASE 1 SUBROADMAP:** Implementare pricing nel sito
-- Aggiornare `landing/index.html` (pricing section)
-- Allineare `tier_manager.py` e `tiers.ts`
-- Creare prodotti Stripe (Test Mode)
+### DOCUMENTI AGGIORNATI
+- SUBROADMAP_RELEASE_2.0.md (Sessione 301 findings)
+- CLAUDE.md (aggiunto Semantic Search)
+- DNA_FAMIGLIA.md (già 17 membri)
+- OVERVIEW_FAMIGLIA.md (16→17)
+- GUIDA_BEST_PRACTICES_SWARM.md (16→17 + Architect)
+- ANALISI_BUSINESS_MODEL_OPENSOURCE.md (16→17)
+- STRATEGIA_CERVELLASWARM_IDE.md (16→17)
 
 ---
 
-## FILE CHIAVE SESSIONE 300
+## PROSSIMA SESSIONE - DA COMPLETARE
+
+**Aggiornamento 16→17 membri (SPLITTATO):**
+- [ ] Altri file strategia con "16 agenti"
+- [ ] File roadmap con "16 agenti"
+- [ ] Audit Guardiana score 10.0 famiglia
+- [ ] FASE 1: Pricing nel sito (da SUBROADMAP)
+
+---
+
+## FILE CHIAVE SESSIONE 301
 
 | File | Cosa |
 |------|------|
-| `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_RELEASE_2.0.md` | 5 decisioni documentate |
-| `landing/index.html` | Tagline implementato |
-| `packages/cli/README.md` | Tagline implementato |
-| `.swarm/tasks/ANALISI_MARKETING_5_DECISIONI.md` | Analisi completa |
-| `.swarm/tasks/RICERCA_COMPETITOR_PRICING_2026.md` | Ricerca competitor |
+| `.swarm/tasks/RICERCA_AIDER_VS_CERVELLASWARM.md` | Comparativa completa |
+| `.swarm/tasks/MARKETING_COMUNICAZIONE_V2.md` | Copy pronti |
+| `SUBROADMAP_RELEASE_2.0.md` | W5 verificato, 17 membri |
+| `scripts/architect/semantic-search.sh` | CLI wrapper FUNZIONA |
 
 ---
 
-*"Sessione 300! Day 0 completato - 5/5 decisioni!"*
+*"Sessione 301! Ricerca fatta, W5 verificato, docs in corso!"*
 *Cervella & Rafa*
