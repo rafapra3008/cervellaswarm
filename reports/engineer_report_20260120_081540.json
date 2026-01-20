@@ -1,0 +1,292 @@
+{
+  "timestamp": "20/01/2026 08:15",
+  "project": "/Users/rafapra/Developer/miracollogeminifocus/miracallook",
+  "results": {
+    "large_files": [],
+    "large_functions": [
+      {
+        "file": "frontend/src/utils/bundles.ts",
+        "line": 34,
+        "lines": 73,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/hooks/useDraft.ts",
+        "line": 12,
+        "lines": 201,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/hooks/useAttachments.ts",
+        "line": 15,
+        "lines": 113,
+        "name": "function"
+      },
+      {
+        "file": "backend/main.py",
+        "line": 36,
+        "lines": 73,
+        "name": "dispatch"
+      },
+      {
+        "file": "backend/auth/google.py",
+        "line": 47,
+        "lines": 63,
+        "name": "save_credentials_to_db"
+      },
+      {
+        "file": "backend/auth/google.py",
+        "line": 211,
+        "lines": 90,
+        "name": "callback"
+      },
+      {
+        "file": "backend/ai/claude.py",
+        "line": 47,
+        "lines": 111,
+        "name": "summarize_email"
+      },
+      {
+        "file": "backend/ai/claude.py",
+        "line": 158,
+        "lines": 54,
+        "name": "summarize_batch"
+      },
+      {
+        "file": "backend/scripts/migrate_encrypt_tokens.py",
+        "line": 30,
+        "lines": 89,
+        "name": "migrate_tokens"
+      },
+      {
+        "file": "backend/gmail/labels.py",
+        "line": 63,
+        "lines": 60,
+        "name": "list_labels"
+      },
+      {
+        "file": "backend/gmail/labels.py",
+        "line": 123,
+        "lines": 59,
+        "name": "create_label"
+      },
+      {
+        "file": "backend/gmail/labels.py",
+        "line": 208,
+        "lines": 62,
+        "name": "update_label"
+      },
+      {
+        "file": "backend/gmail/labels.py",
+        "line": 313,
+        "lines": 66,
+        "name": "modify_message_labels"
+      },
+      {
+        "file": "backend/gmail/compose.py",
+        "line": 32,
+        "lines": 56,
+        "name": "send_email"
+      },
+      {
+        "file": "backend/gmail/compose.py",
+        "line": 88,
+        "lines": 115,
+        "name": "send_email_with_attachments"
+      },
+      {
+        "file": "backend/gmail/compose.py",
+        "line": 203,
+        "lines": 152,
+        "name": "reply_email"
+      },
+      {
+        "file": "backend/gmail/compose.py",
+        "line": 355,
+        "lines": 68,
+        "name": "forward_email"
+      },
+      {
+        "file": "backend/gmail/ai.py",
+        "line": 23,
+        "lines": 79,
+        "name": "get_message_summary"
+      },
+      {
+        "file": "backend/gmail/ai.py",
+        "line": 102,
+        "lines": 97,
+        "name": "get_inbox_summaries"
+      },
+      {
+        "file": "backend/gmail/actions.py",
+        "line": 258,
+        "lines": 152,
+        "name": "batch_modify"
+      },
+      {
+        "file": "backend/gmail/message.py",
+        "line": 63,
+        "lines": 85,
+        "name": "get_thread"
+      },
+      {
+        "file": "backend/gmail/message.py",
+        "line": 148,
+        "lines": 67,
+        "name": "get_inbox_html"
+      },
+      {
+        "file": "backend/gmail/utils.py",
+        "line": 97,
+        "lines": 74,
+        "name": "create_message"
+      },
+      {
+        "file": "backend/gmail/drafts.py",
+        "line": 21,
+        "lines": 54,
+        "name": "list_drafts"
+      },
+      {
+        "file": "backend/gmail/drafts.py",
+        "line": 125,
+        "lines": 55,
+        "name": "get_draft"
+      },
+      {
+        "file": "backend/gmail/drafts.py",
+        "line": 180,
+        "lines": 56,
+        "name": "update_draft"
+      },
+      {
+        "file": "backend/gmail/inbox.py",
+        "line": 15,
+        "lines": 56,
+        "name": "_get_messages_from_label"
+      },
+      {
+        "file": "backend/gmail/search.py",
+        "line": 19,
+        "lines": 71,
+        "name": "search_emails"
+      },
+      {
+        "file": "frontend/src/App.tsx",
+        "line": 52,
+        "lines": 260,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/Compose/ComposeModal.tsx",
+        "line": 20,
+        "lines": 102,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/Compose/ComposeModal.tsx",
+        "line": 235,
+        "lines": 198,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/Compose/AttachmentPicker.tsx",
+        "line": 46,
+        "lines": 131,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/EmailDetail/EmailDetail.tsx",
+        "line": 20,
+        "lines": 93,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/GuestSidebar/GuestSidebar.tsx",
+        "line": 30,
+        "lines": 130,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/Search/SearchBar.tsx",
+        "line": 35,
+        "lines": 74,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/BulkActions/LabelPicker.tsx",
+        "line": 54,
+        "lines": 64,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/Reply/ReplyModal.tsx",
+        "line": 56,
+        "lines": 199,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/CommandPalette/CommandPalette.tsx",
+        "line": 43,
+        "lines": 146,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/Thread/ThreadView.tsx",
+        "line": 51,
+        "lines": 165,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/Thread/ThreadView.tsx",
+        "line": 238,
+        "lines": 62,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/Forward/ForwardModal.tsx",
+        "line": 53,
+        "lines": 174,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/EmailList/EmailList.tsx",
+        "line": 64,
+        "lines": 161,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/EmailList/EmailListItem.tsx",
+        "line": 47,
+        "lines": 66,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/EmailList/BundleItem.tsx",
+        "line": 29,
+        "lines": 51,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/EmailContextMenu/EmailContextMenu.tsx",
+        "line": 68,
+        "lines": 111,
+        "name": "function"
+      },
+      {
+        "file": "frontend/src/components/EmailContextMenu/EmailContextMenu.tsx",
+        "line": 220,
+        "lines": 61,
+        "name": "function"
+      }
+    ],
+    "todos": [],
+    "duplicates": [],
+    "stats": {
+      "total_files": 90,
+      "total_lines": 11859,
+      "total_issues": 46
+    }
+  }
+}

@@ -6,7 +6,7 @@ REGOLA FONDAMENTALE:
 - ARCHITECT = COSA + PERCHE + ORDINE
 - WORKER = COME (implementazione)
 
-Tool PERMESSI: Read, Glob, Grep, WebSearch, WebFetch, AskUserQuestion
+Tool PERMESSI: Read, Glob, Grep, WebSearch, WebFetch
 Tool VIETATI: Write, Edit, Bash
 
 COME LAVORO (4 Fasi):
