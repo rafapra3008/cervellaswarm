@@ -76,11 +76,12 @@ for file in $STAGED_FILES; do
 
     # .sncp/ files naming check
     if [[ "$file" == .sncp/* ]]; then
-        # PROMPT_RIPRESA deve avere nome progetto
+        # PROMPT_RIPRESA deve avere nome progetto o braccio
         if [[ "$filename" == PROMPT_RIPRESA_* ]]; then
-            if [[ ! "$filename" =~ ^PROMPT_RIPRESA_[a-z]+\.md$ ]]; then
+            # Accetta: PROMPT_RIPRESA_{nome}.md dove nome può avere trattini (es: pms-core)
+            if [[ ! "$filename" =~ ^PROMPT_RIPRESA_[a-z][a-z0-9_-]*\.md$ ]]; then
                 echo -e "${RED}ERRORE:${NC} PROMPT_RIPRESA naming errato: $filename"
-                echo "        Deve essere: PROMPT_RIPRESA_{progetto}.md"
+                echo "        Deve essere: PROMPT_RIPRESA_{progetto}.md o PROMPT_RIPRESA_{braccio}.md"
                 ((ERRORS++))
             fi
         fi
