@@ -5,59 +5,58 @@
 
 # PROMPT RIPRESA - PMS Core
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 301
-> **STATO:** 90% LIVE | Health 7.2/10 (SPLIT FILE 67%!)
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 302
+> **STATO:** 90% LIVE | Health 9.0/10 (PULIZIA CASA 100%!)
 
 ---
 
-## SESSIONE 301 - DUE FILE SPLITTATI!
+## SESSIONE 302 - PULIZIA CASA COMPLETATA!
 
 ```
 +================================================================+
-|   SPLIT FILE GIGANTI: 4/6 COMPLETATI! (67%)                     |
+|   SPLIT FILE GIGANTI: 6/6 COMPLETATI! (100%)                   |
 |                                                                |
-|   [x] test_action_tracking.py: 820 → 8 file                    |
-|   [x] ml_api.py: 705 → 7 file                                  |
-|   [x] cm_import_service.py: 762 → 8 file (services/cm/)        |
-|   [x] planning_core.py: 746 → 5 file (routers/planning/)       |
-|   [ ] ab_testing_api.py: 768 (PROSSIMO)                        |
-|   [ ] city_tax.py: 721                                         |
+|   [x] test_action_tracking.py: 820 -> 8 file  (S300)          |
+|   [x] ml_api.py: 705 -> 7 file               (S300)          |
+|   [x] cm_import_service.py: 762 -> 8 file    (S301)          |
+|   [x] planning_core.py: 746 -> 5 file        (S301)          |
+|   [x] ab_testing_api.py: 768 -> 5 file       (S302)          |
+|   [x] city_tax.py: 721 -> 6 file             (S302)          |
+|                                                                |
+|   TOTALE: 4,522 righe -> 39 file modulari!                    |
 +================================================================+
 ```
 
-**Commit S301:**
-- `a6acb84` - Split cm_import_service.py
-- `fe31ec5` - Split planning_core.py
+**Commit S302:**
+- `8842536` - Split ab_testing_api.py (5 file)
+- `a9c34da` - Split city_tax.py (6 file)
 
 ---
 
-## STRUTTURA NUOVA (S301)
+## STRUTTURA NUOVA (S302)
 
 ```
-services/cm/                    # CM Import (8 file)
-├── __init__.py, guest_management.py, booking_management.py
-├── booking_room.py, availability.py, import_tracking.py
-└── auto_import.py
+routers/ab_testing/             # A/B Testing (5 file)
+├── __init__.py, models.py, utils.py
+├── metrics.py, endpoints.py
 
-routers/planning/               # Planning Core (5 file nuovi)
-├── utils.py, core.py, booking_create.py, booking_dates.py
-└── (+ swap.py, segment_swap.py, room_change.py, etc.)
+routers/city_tax/               # City Tax (6 file)
+├── __init__.py, models.py, config.py
+├── calculation.py, collection.py, reports.py
 ```
 
 ---
 
-## MAPPA SPLIT FILE
+## MAPPA SPLIT FILE - COMPLETATA!
 
-**SUBROADMAP:** `.sncp/progetti/miracollo/roadmaps/SUBROADMAP_SPLIT_FILE_GIGANTI.md`
-
-| # | File | Stato |
-|---|------|-------|
-| 1 | test_action_tracking.py | DONE S300 |
-| 2 | ml_api.py | DONE S300 |
-| 3 | cm_import_service.py | DONE S301 |
-| 4 | planning_core.py | DONE S301 |
-| 5 | ab_testing_api.py | PROSSIMO |
-| 6 | city_tax.py | TODO |
+| # | File | Righe | Split | Sessione |
+|---|------|-------|-------|----------|
+| 1 | test_action_tracking.py | 820 | 8 file | S300 |
+| 2 | ml_api.py | 705 | 7 file | S300 |
+| 3 | cm_import_service.py | 762 | 8 file | S301 |
+| 4 | planning_core.py | 746 | 5 file | S301 |
+| 5 | ab_testing_api.py | 768 | 5 file | S302 |
+| 6 | city_tax.py | 721 | 6 file | S302 |
 
 ---
 
@@ -91,4 +90,4 @@ VM: miracollo-cervella (Google Cloud)
 
 ---
 
-*"Pulizia casa 67%! Due file splittati oggi!" - Sessione 301*
+*"PULIZIA CASA 100%! Health 9.0/10!" - Sessione 302*
