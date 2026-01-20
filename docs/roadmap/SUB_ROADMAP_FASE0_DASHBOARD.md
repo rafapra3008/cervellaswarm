@@ -135,7 +135,7 @@ Componente NordWidget:
 
 ```
 Componente FamigliaWidget:
-- Mostra i 16 agenti
+- Mostra i 17 agenti
 - Stato: idle/working/done
 - Icone colorate per tipo
 - Hover per dettagli
@@ -342,7 +342,7 @@ INTEGRAZIONE (Fase 3):
 
 ```
 [ ] Posso vedere il NORD del progetto
-[ ] Posso vedere i 16 membri della famiglia e il loro stato
+[ ] Posso vedere i 17 membri della famiglia e il loro stato
 [ ] Posso vedere la ROADMAP con gli step
 [ ] Posso vedere i task attivi in tempo reale
 [ ] Quando un file cambia, la UI si aggiorna

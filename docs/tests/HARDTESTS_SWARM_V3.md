@@ -20,7 +20,7 @@
 ## EVOLUZIONE DELLO SWARM
 
 ```
-v1: Agents base (16 membri)
+v1: Agents base (17 membri)
     └─> 12 Regole, pattern delegation
 
 v2: Memoria + Guardiane (Sessione 57-58)

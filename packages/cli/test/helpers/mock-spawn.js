@@ -4,7 +4,7 @@
  * Helper riutilizzabile per mockare child_process.spawn
  * nei test della CLI.
  *
- * "16 agenti. 1 comando. Il tuo team AI."
+ * "17 agenti. 1 comando. Il tuo team AI."
  */
 
 import EventEmitter from 'node:events';

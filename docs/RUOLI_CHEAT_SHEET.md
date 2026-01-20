@@ -1,6 +1,6 @@
 # RUOLI CHEAT SHEET - CervellaSwarm
 
-> **Chi fa COSA nella nostra famiglia di 16 Cervelle**
+> **Chi fa COSA nella nostra famiglia di 17 Cervelle**
 > Aggiornato: 14 Gennaio 2026 - Sessione 201
 
 ---
@@ -13,10 +13,11 @@
 |   LIVELLO 1: REGINA (1)                                        |
 |   +-- cervella-orchestrator (Opus) - Coordina TUTTO            |
 |                                                                |
-|   LIVELLO 2: GUARDIANE (3) - Opus                              |
+|   LIVELLO 2: GUARDIANE (3) + ARCHITECT (1) - Opus              |
 |   +-- guardiana-qualita   - Valida output agenti               |
 |   +-- guardiana-ops       - Deploy, infra, sicurezza           |
 |   +-- guardiana-ricerca   - Valida qualita ricerche            |
+|   +-- architect           - Pianifica task complessi           |
 |                                                                |
 |   LIVELLO 3: WORKER (12) - Sonnet                              |
 |   +-- backend, frontend, data, tester, reviewer                |

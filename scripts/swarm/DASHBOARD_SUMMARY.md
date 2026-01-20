@@ -45,7 +45,7 @@
 
 ## Funzionalità Implementate
 
-### 1. Visualizzazione Workers (16 membri sciame)
+### 1. Visualizzazione Workers (17 membri sciame)
 
 ```
 ┌────────────────────────────┬──────────┬─────────────────────────┐
@@ -145,7 +145,7 @@ La dashboard si integra perfettamente con il sistema esistente:
 
 ### Workers Riconosciuti
 
-Tutti i 16 membri dello sciame:
+Tutti i 17 membri dello sciame:
 - 1 Regina (orchestrator)
 - 3 Guardiane (qualità, ops, ricerca)
 - 12 Worker (backend, frontend, tester, reviewer, researcher, scienziata, ingegnera, marketing, devops, docs, data, security)

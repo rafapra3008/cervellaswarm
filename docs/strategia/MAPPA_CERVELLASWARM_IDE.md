@@ -28,7 +28,7 @@
 | Loro | Noi |
 |------|-----|
 | "Ecco un bot che scrive codice" | "Benvenuto nella FAMIGLIA!" |
-| AI generico | 16 membri con PERSONALITA' |
+| AI generico | 17 membri con PERSONALITA' |
 | Single thread | FINESTRE parallele |
 | Niente memoria | SESSIONI con checkpoint |
 | Caos | ORDINE e ORGANIZZAZIONE |
@@ -90,7 +90,7 @@
 |                                                                  |
 |   "L'AI NON TI RUBA IL LAVORO. L'AI SALVA IL TUO LAVORO."       |
 |                                                                  |
-|   CervellaSwarm: 16 AI specializzate che lavorano PER TE.       |
+|   CervellaSwarm: 17 AI specializzate che lavorano PER TE.       |
 |   Non per sostituirti. Per renderti INDISPENSABILE.             |
 |                                                                  |
 +------------------------------------------------------------------+
@@ -286,7 +286,7 @@ FASE 4: OBIETTIVO RAGGIUNTO
 
 - [x] **0.1** Sistema spawn-workers v3.0.0 funzionante
 - [x] **0.2** swarm-global-status implementato (Sessione 111!)
-- [x] **0.3** Tutti i 16 agenti in ~/.claude/agents/
+- [x] **0.3** Tutti i 17 agenti in ~/.claude/agents/
 - [ ] **0.4** Fix sveglia Regina (roadmap: ROADMAP_SVEGLIA_REGINA.md)
 
 **Output:** Sistema CLI solido - FUNZIONA!
@@ -330,7 +330,7 @@ FASE 4: OBIETTIVO RAGGIUNTO
   - Struttura base funzionante
 
 - [ ] **2.2** Panel "La Famiglia"
-  - Visualizzare i 16 agenti
+  - Visualizzare i 17 agenti
   - Stato di ogni agente (idle/working)
   - Click per vedere dettagli
 
@@ -589,7 +589,7 @@ FASE 4: OBIETTIVO RAGGIUNTO
 - [../../PROMPT_RIPRESA.md](../../PROMPT_RIPRESA.md) - Stato attuale
 
 ### Il Sistema Attuale (Il Prototipo!)
-- `~/.claude/agents/` - I 16 agenti
+- `~/.claude/agents/` - I 17 agenti
 - `~/.claude/scripts/spawn-workers` - Parallelismo
 - `~/.claude/scripts/watcher-regina.sh` - Notifiche
 - `.swarm/tasks/` - Sistema task

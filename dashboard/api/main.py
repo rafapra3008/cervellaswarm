@@ -3,7 +3,7 @@ Dashboard API CervellaSwarm
 
 FastAPI backend per la Dashboard MAPPA che visualizza:
 - IL NORD (obiettivo del progetto)
-- LA FAMIGLIA (16 agenti e loro stato)
+- LA FAMIGLIA (17 agenti e loro stato)
 - LA ROADMAP (step del progetto)
 - SESSIONE ATTIVA (task in corso)
 

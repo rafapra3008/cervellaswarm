@@ -236,7 +236,7 @@ Apache-2.0
 
 ---
 
-*"16 agenti. 1 comando. Il tuo team AI."*
+*"17 agenti. 1 comando. Il tuo team AI."*
 
 *Sometimes it feels like magic.*
 

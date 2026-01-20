@@ -545,7 +545,7 @@ BYOK: Always free
 - Context mesh
 - Trade secret implementation
 
-**2. 16 Agenti Famiglia**
+**2. 17 Agenti Famiglia**
 - Coordinazione complessa
 - DNA specializzato per ruolo
 - Guardiane + Workers (architecture unica)
@@ -555,7 +555,7 @@ BYOK: Always free
 - Margini 95%+ su BYOK
 
 **4. MCP Native**
-- Famiglia completa MCP (16/16!)
+- Famiglia completa MCP (17/17!)
 - First-class Claude integration
 - Anthropic ecosystem play
 

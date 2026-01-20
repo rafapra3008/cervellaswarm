@@ -11,7 +11,7 @@ export interface Nord {
   frase?: string; // Frase motivazionale
 }
 
-// LA FAMIGLIA - I 16 agenti
+// LA FAMIGLIA - I 17 agenti
 export type WorkerStatus = 'idle' | 'working' | 'done' | 'error';
 export type WorkerModel = 'opus' | 'sonnet';
 

@@ -48,7 +48,7 @@
 |   4. CONOSCERE LE CAPACITA'                                      |
 |      - Cosa sa fare OGNI cervella?                              |
 |      - Quali combo funzionano meglio?                           |
-|      - Come sfruttare al massimo 16 agenti?                     |
+|      - Come sfruttare al massimo 17 agenti?                     |
 |                                                                  |
 |   5. FARE DI PIU' CON QUELLO CHE ABBIAMO                        |
 |      - Non creare nuovo, USARE l'esistente!                     |

@@ -14,7 +14,7 @@
 | 7 Gen | INFRA | Porta 5173 per Dashboard Frontend | Vite dev server standard | ATTIVO |
 | 7 Gen | STACK | React + Vite + TypeScript (frontend) | Dagli studi TECH | ATTIVO |
 | 7 Gen | STACK | FastAPI + SSE (backend) | Dagli studi ARCH | ATTIVO |
-| 6 Gen | AGENTI | 16 agenti in ~/.claude/agents/ | Globali per tutti i progetti | ATTIVO |
+| 6 Gen | AGENTI | 17 agenti in ~/.claude/agents/ | Globali per tutti i progetti | ATTIVO |
 | 6 Gen | STRATEGIA | Dual-Track (IDE + VISUAL) | IDE per dev, VISUAL per tutti | ATTIVO |
 | 6 Gen | STRATEGIA | VISUAL first | Mercato piu' grande, meno competition | ATTIVO |
 | 6 Gen | CLAIM | "L'AI salva il tuo lavoro" | Non "ruba" ma "salva" | ATTIVO |
@@ -78,7 +78,7 @@
 
 ### 6 Gennaio 2026 - AGENTI
 
-**Decisione:** 16 agenti globali in ~/.claude/agents/
+**Decisione:** 17 agenti globali in ~/.claude/agents/
 **Struttura:**
 - 1 Regina (orchestrator) - Opus
 - 3 Guardiane (qualita, ops, ricerca) - Opus

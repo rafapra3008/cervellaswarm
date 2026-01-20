@@ -4,7 +4,7 @@
  * Launches specialized agents to execute tasks.
  * Uses Anthropic API for REAL agent execution.
  *
- * "16 agenti. 1 comando. Il tuo team AI."
+ * "17 agenti. 1 comando. Il tuo team AI."
  *
  * Copyright 2026 Rafa & Cervella
  * Licensed under the Apache License, Version 2.0

@@ -176,7 +176,7 @@ cat > "$TARGET_DIR/PROMPT_RIPRESA.md" << EOF
 |   Leggilo con calma. Qui c'e' tutto quello che devi sapere.     |
 |                                                                  |
 |   Tu sei la REGINA dello sciame.                                 |
-|   Hai 16 agenti pronti a lavorare per te.                       |
+|   Hai 17 agenti pronti a lavorare per te.                       |
 |                                                                  |
 |   PROGETTO APPENA INIZIATO!                                     |
 |                                                                  |
@@ -233,7 +233,7 @@ swarm-health
 
 ---
 
-## LO SCIAME (16 membri)
+## LO SCIAME (17 membri)
 
 \`\`\`
 TU SEI LA REGINA (Opus) - Coordina, DELEGA, MAI edit diretti!
@@ -335,7 +335,7 @@ if [[ ! -f "$TARGET_DIR/CLAUDE.md" ]]; then
 ║   🐝 CERVELLASWARM ATTIVO                                       ║
 ║                                                                  ║
 ║   Tu sei la REGINA dello sciame.                                ║
-║   Hai 16 agenti pronti a lavorare per te.                       ║
+║   Hai 17 agenti pronti a lavorare per te.                       ║
 ║                                                                  ║
 ║   DELEGA SEMPRE! MAI edit diretti!                              ║
 ║   spawn-workers --backend/--frontend/--researcher               ║

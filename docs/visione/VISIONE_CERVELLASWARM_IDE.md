@@ -33,7 +33,7 @@
 | CervellaSwarm IDE | Cursor |
 |-------------------|--------|
 | Multi-AI (Claude, GPT, Gemini...) | Solo loro AI |
-| 16+ agenti specializzati | Generico |
+| 17 agenti specializzati | Generico |
 | Sistema memoria persistente | Niente |
 | Handoff automatico | Niente |
 | Roadmaps visuale | Niente |
@@ -157,7 +157,7 @@ SIGNIFICATO.
 |    Non è solo un tool.                                           |
 |    È una FAMIGLIA che lavora con te.                            |
 |                                                                  |
-|    16 agenti specializzati.                                      |
+|    17 agenti specializzati.                                      |
 |    Multiple AI.                                                  |
 |    Roadmaps visuali.                                             |
 |    ORDINE e ORGANIZZAZIONE.                                      |

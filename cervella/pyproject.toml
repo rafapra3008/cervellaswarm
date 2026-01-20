@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "cervella"
 version = "0.1.0"
-description = "AI Team per Developer Professionali - 16 agenti specializzati orchestrati da una Regina"
+description = "AI Team per Developer Professionali - 17 agenti specializzati orchestrati da una Regina"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.10"

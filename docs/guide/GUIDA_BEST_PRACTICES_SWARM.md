@@ -45,7 +45,7 @@
 
 ```
 PRIMA: 1 Cervella = 1 task alla volta
-DOPO:  1 Regina + 16 Membri (Guardiane + Architect + Worker) = N task in parallelo
+DOPO:  1 Regina + 17 Membri (Guardiane + Architect + Worker) = N task in parallelo
 ```
 
 **Obiettivo:** Da 20x a 100x, 200x... senza limiti.

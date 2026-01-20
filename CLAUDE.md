@@ -1,6 +1,6 @@
 # CervellaSwarm
 
-> Sistema multi-agent: 16 Cervelle coordinate dalla Regina.
+> Sistema multi-agent: 17 Cervelle coordinate dalla Regina.
 > Regole operative complete: `~/.claude/CLAUDE.md`
 
 ## SNCP 2.0 - Struttura Progetto
@@ -29,9 +29,9 @@ CervellaSwarm/.sncp/
 
 ## La Famiglia
 
-16 agenti in `~/.claude/agents/`:
-- 1 Regina (orchestrator) + 3 Guardiane (Opus)
-- 12 Worker specializzati (Sonnet)
+17 agenti in `~/.claude/agents/`:
+- 1 Regina (opus) + 3 Guardiane (opus) + 1 Architect (opus)
+- 12 Api Worker (sonnet)
 
 Dettagli: `docs/DNA_FAMIGLIA.md`
 

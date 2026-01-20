@@ -22,7 +22,7 @@
 |   QW-5: Context Protection    [x] 100% GUIDA CREATA!            |
 |                                                                  |
 |   COMPLETATI: 5/5 (100%)                                         |
-|   Famiglia: 16 membri!                                           |
+|   Famiglia: 17 membri!                                           |
 |   Sessione 44: Pattern "I Cugini" - 3 API in parallelo!         |
 |                                                                  |
 +------------------------------------------------------------------+
@@ -251,7 +251,7 @@ Diversa da cervella-researcher: focus su trend, competitor, innovazioni.
 |                                                                  |
 |   cervella-scienziata.md CREATO!                                |
 |   Posizione: ~/.claude/agents/cervella-scienziata.md            |
-|   Famiglia: 14 -> 16 membri!                                     |
+|   Famiglia: 14 -> 17 membri!                                     |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
@@ -294,7 +294,7 @@ Trova file grandi, codice duplicato, TODO, propone ottimizzazioni.
 |                                                                  |
 |   cervella-ingegnera.md CREATO!                                 |
 |   Posizione: ~/.claude/agents/cervella-ingegnera.md             |
-|   Famiglia: 14 -> 16 membri!                                     |
+|   Famiglia: 14 -> 17 membri!                                     |
 |                                                                  |
 +------------------------------------------------------------------+
 ```

@@ -110,7 +110,7 @@ Lo script rileva il tipo dai file modificati:
 
 ## Worker Attribution
 
-### 16 Agenti Tracciabili
+### 17 Agenti Tracciabili
 
 **Workers (Sonnet):**
 - backend, frontend, tester, docs, reviewer

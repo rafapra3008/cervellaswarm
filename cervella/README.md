@@ -1,6 +1,6 @@
 # Cervella CLI
 
-> AI Team per Developer Professionali - 16 agenti specializzati al tuo servizio.
+> AI Team per Developer Professionali - 17 agenti specializzati al tuo servizio.
 
 ## Installazione
 

@@ -1,6 +1,6 @@
 # ROADMAP - CervellaSwarm
 
-> Vista rapida - 30 secondi | Aggiornato: 6 Gennaio 2026 - Sessione 108
+> Vista rapida - 30 secondi | Aggiornato: 20 Gennaio 2026 - Sessione 302
 
 ---
 
@@ -14,7 +14,7 @@ SUPPORTO MIRACOLLO        ██████████████████
 ```
 
 **LO SCIAME E' OPERATIVO E REALE!**
-- 16 agenti specializzati
+- 17 agenti specializzati (con Architect!)
 - 20+ comandi swarm-*
 - Auto-Sveglia funzionante
 - Supporto attivo a Miracollo (sessioni 104-107)
@@ -49,7 +49,7 @@ SUPPORTO MIRACOLLO        ██████████████████
 |                                                |
 |   CervellaSwarm IDE:                           |
 |   - Multi-AI (Claude, GPT, Gemini...)         |
-|   - 16+ agenti specializzati                   |
+|   - 17 agenti specializzati                    |
 |   - Roadmaps visuali integrati                |
 |   - COMUNICAZIONE e ORGANIZZAZIONE            |
 |                                                |

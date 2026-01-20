@@ -293,11 +293,11 @@ tmux list-sessions | grep swarm
 ```bash
 # 1. Agents installati?
 ls ~/.claude/agents/*.md | wc -l
-# Output atteso: 16
+# Output atteso: 17
 
 # 2. spawn-workers funzionante?
 spawn-workers --list
-# Output atteso: lista 16 worker
+# Output atteso: lista 17 worker
 
 # 3. Cartelle swarm create?
 ls -d .swarm/tasks .swarm/feedback .swarm/logs

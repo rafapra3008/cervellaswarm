@@ -620,7 +620,7 @@ Significa:
 ### Phase 2 (Short-term - Prossime 2 settimane)
 
 **DNA Agenti:**
-- [ ] Aggiornare tutti i 16 agenti con nuovi protocolli
+- [ ] Aggiornare tutti i 17 agenti con nuovi protocolli
 - [ ] Aggiungere sezioni: Status, Feedback, Heartbeat
 - [ ] Esempi pratici in ogni DNA
 

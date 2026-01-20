@@ -1,7 +1,7 @@
 # CervellaSwarm Plugin
 
 > AI Team per Dev Professionali
-> 16 agenti specializzati coordinati dalla Regina
+> 17 agenti specializzati coordinati dalla Regina
 
 ---
 
@@ -15,7 +15,7 @@
 
 ## Cosa Include
 
-### 16 Agenti Specializzati
+### 17 Agenti Specializzati
 
 | Agente | Specializzazione | Modello |
 |--------|------------------|---------|

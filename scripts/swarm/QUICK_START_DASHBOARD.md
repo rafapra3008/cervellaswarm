@@ -41,7 +41,7 @@ Crea task di esempio e mostra la dashboard in azione.
 
 ## What You'll See
 
-- **16 Workers** - Status di ogni worker (ACTIVE/READY/IDLE)
+- **17 Workers** - Status di ogni worker (ACTIVE/READY/IDLE)
 - **Task Queue** - Pending, In Progress, Completed
 - **Metrics** - Stats generali
 - **Last Activity** - Ultimi 5 eventi

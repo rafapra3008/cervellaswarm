@@ -93,7 +93,7 @@ def status(verbose: bool):
 
     # Upgrade hint per Free
     if tier_status["tier_type"] == "free":
-        console.print("\n[dim]Upgrade a Pro per tutti i 16 agenti: cervella upgrade[/dim]")
+        console.print("\n[dim]Upgrade a Pro per tutti i 17 agenti: cervella upgrade[/dim]")
 
     # Memoria SNCP
     if verbose:

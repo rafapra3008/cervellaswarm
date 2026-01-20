@@ -4,13 +4,13 @@
 [0;36m|   [0;35mSNCP HEALTH DASHBOARD[0;36m                                       |[0m
 [0;36m|   [0mSistema Nervoso Centrale Progetti[0;36m                            |[0m
 [0;36m|                                                                |[0m
-[0;36m|   Data: 2026-01-20 08:30                                       |[0m
+[0;36m|   Data: 2026-01-20 11:55                                       |[0m
 [0;36m+================================================================+[0m
 
 [0;34m--- STATISTICHE GLOBALI ---[0m
 
   [0;36mSNCP Root:[0m /Users/rafapra/Developer/CervellaSwarm/.sncp
-  [0;36mTotale file MD:[0m 808
+  [0;36mTotale file MD:[0m 814
   [0;36mFile obsoleti (>30gg):[0m 0
 
   [0;36mSistema:[0m SNCP 2.0 (PROMPT_RIPRESA + Handoff)

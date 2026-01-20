@@ -14,7 +14,7 @@ console = Console()
 def main():
     """Cervella - AI Team per Developer Professionali
 
-    16 agenti specializzati orchestrati da una Regina.
+    17 agenti specializzati orchestrati da una Regina.
     """
     pass
 

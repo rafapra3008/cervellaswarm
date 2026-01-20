@@ -1,69 +1,79 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 301
-> **STATUS:** Ricerca Completa + W5 Verificato + Docs in corso
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 302
+> **STATUS:** PULIZIA CASA 16→17 COMPLETATA!
 
 ---
 
-## SESSIONE 301 - RICERCA E VERIFICA
+## SESSIONE 302 - PULIZIA CASA 100%!
 
 ```
 +================================================================+
-|   RICERCA COMPLETATA + W5 FUNZIONA!                            |
+|   PULIZIA CASA 16→17 COMPLETATA!                               |
 |                                                                |
-|   1. FAMIGLIA: 17 membri (non 16!) con Architect               |
-|   2. VS AIDER: 5 differenziatori, 5 gap identificati           |
-|   3. W5 DOGFOODING: Architect + Semantic Search FUNZIONANO!    |
-|   4. DOCS: Aggiornamento 16→17 IN CORSO (splittato)            |
+|   45+ FILE SORGENTE AGGIORNATI                                 |
+|   SCORE GUARDIANA: 9.5/10                                      |
+|   RESIDUI: Solo file storici e generati (OK)                   |
 |                                                                |
 +================================================================+
 ```
 
 ---
 
-## COSA FATTO SESSIONE 301
+## COSA FATTO SESSIONE 302
 
-### RICERCA
-- Researcher: RICERCA_AIDER_VS_CERVELLASWARM.md
-- Marketing: MARKETING_COMUNICAZIONE_V2.md
-- Differenziatori identificati, copy pronti
+### AGGIORNAMENTI 16→17 AGENTI
 
-### VERIFICHE REALI
-- `spawn-workers --architect` ESISTE (v3.8.0)
-- `semantic-search.sh` FUNZIONA (testato!)
-- Test PASSATO: find-symbol "SemanticSearch" → found: true
+| Gruppo | File Aggiornati |
+|--------|-----------------|
+| **CRITICI** | CLAUDE.md (root + ~/.claude/), hooks, ROADMAP | 4 |
+| **docs/** | strategia, visione, guide, roadmap, protocolli | 15+ |
+| **packages/** | CLI README, spawner.js/ts, test | 6 |
+| **cervella/** | README, pyproject, tier_manager (+architect!) | 7 |
+| **scripts/** | swarm-init, dashboard summary | 4 |
+| **plugin/** | plugin.json, README | 3 |
+| **dashboard/** | api main.py, types/index.ts | 2 |
+| **github/** | publish.yml | 1 |
 
-### DOCUMENTI AGGIORNATI
-- SUBROADMAP_RELEASE_2.0.md (Sessione 301 findings)
-- CLAUDE.md (aggiunto Semantic Search)
-- DNA_FAMIGLIA.md (già 17 membri)
-- OVERVIEW_FAMIGLIA.md (16→17)
-- GUIDA_BEST_PRACTICES_SWARM.md (16→17 + Architect)
-- ANALISI_BUSINESS_MODEL_OPENSOURCE.md (16→17)
-- STRATEGIA_CERVELLASWARM_IDE.md (16→17)
+### BREAKDOWN CORRETTO (ora ovunque)
+
+```
+17 membri della famiglia:
+├── 1 Regina (opus)
+├── 3 Guardiane (opus)
+├── 1 Architect (opus)     ← NUOVO!
+└── 12 Api Worker (sonnet)
+```
+
+### AUDIT GUARDIANA
+
+- Score iniziale: 6/10 (65+ file con "16")
+- Score finale: 9.5/10 (solo storici/generati)
 
 ---
 
-## PROSSIMA SESSIONE - DA COMPLETARE
+## PROSSIMA SESSIONE - DA FARE
 
-**Aggiornamento 16→17 membri (SPLITTATO):**
-- [ ] Altri file strategia con "16 agenti"
-- [ ] File roadmap con "16 agenti"
-- [ ] Audit Guardiana score 10.0 famiglia
-- [ ] FASE 1: Pricing nel sito (da SUBROADMAP)
+**FASE 1 della SUBROADMAP_RELEASE_2.0:**
+- [ ] Pricing nel sito ($29/$49 come da decisioni S300)
+- [ ] Feature W1-W6 visibili nel sito
+- [ ] Tagline killer in hero
+
+**File riferimento:**
+- `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_RELEASE_2.0.md`
 
 ---
 
-## FILE CHIAVE SESSIONE 301
+## FILE CHIAVE SESSIONE 302
 
 | File | Cosa |
 |------|------|
-| `.swarm/tasks/RICERCA_AIDER_VS_CERVELLASWARM.md` | Comparativa completa |
-| `.swarm/tasks/MARKETING_COMUNICAZIONE_V2.md` | Copy pronti |
-| `SUBROADMAP_RELEASE_2.0.md` | W5 verificato, 17 membri |
-| `scripts/architect/semantic-search.sh` | CLI wrapper FUNZIONA |
+| `CLAUDE.md` (root) | 17 Cervelle + breakdown |
+| `~/.claude/CLAUDE.md` | 17 agenti pronti |
+| `.claude/hooks/session_start_swarm.py` | v2.2.0 - 17 membri |
+| `cervella/tier/tier_manager.py` | ALL_AGENTS con architect |
 
 ---
 
-*"Sessione 301! Ricerca fatta, W5 verificato, docs in corso!"*
+*"Sessione 302! PULIZIA CASA completata, 45+ file aggiornati!"*
 *Cervella & Rafa*

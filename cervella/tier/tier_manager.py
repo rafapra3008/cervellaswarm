@@ -3,8 +3,8 @@ Tier Manager - Gestisce tier, limiti e usage tracking
 
 Tier disponibili:
 - FREE: 3 agenti base, 50 task/mese (BYOK)
-- PRO: 16 agenti, unlimited (BYOK + $20/mese)
-- TEAM: 16 agenti, unlimited, features team ($40/user)
+- PRO: 17 agenti, unlimited (BYOK + $20/mese)
+- TEAM: 17 agenti, unlimited, features team ($40/user)
 - ENTERPRISE: 16+ agenti custom, unlimited ($60+)
 """
 
@@ -44,11 +44,11 @@ class TierConfig:
 # Agenti base disponibili per FREE tier
 FREE_AGENTS = ["backend", "frontend", "tester"]
 
-# Tutti gli agenti (16)
+# Tutti gli agenti (17)
 ALL_AGENTS = [
     "regina", "backend", "frontend", "tester", "researcher",
     "scienziata", "docs", "reviewer", "data", "devops",
-    "security", "marketing", "ingegnera",
+    "security", "marketing", "ingegnera", "architect",
     "guardiana-ops", "guardiana-qualita", "guardiana-ricerca"
 ]
 
@@ -74,7 +74,7 @@ TIER_CONFIGS = {
         tasks_per_month=-1,  # unlimited
         price_monthly=20,
         features=[
-            "16 agenti specializzati",
+            "17 agenti specializzati",
             "Task illimitati",
             "BYOK (porta la tua API key)",
             "Memoria SNCP",
@@ -283,7 +283,7 @@ class TierManager:
         return False, (
             f"L'agente '{clean_name}' non è disponibile nel tier {config.display_name}.\n"
             f"Agenti disponibili: {', '.join(config.agents_allowed)}\n"
-            f"Upgrade a Pro per tutti i 16 agenti: cervella upgrade"
+            f"Upgrade a Pro per tutti i 17 agenti: cervella upgrade"
         )
 
     def get_available_agents(self) -> list[str]:

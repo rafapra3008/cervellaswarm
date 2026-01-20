@@ -11,12 +11,13 @@ Carica automaticamente all'avvio sessione:
 - Warning se PROMPT_RIPRESA > 7 giorni vecchio (SNCP 2.0)
 - Warning se ultimo handoff > 3 giorni (SNCP 2.0)
 
-Versione: 2.1.0
+Versione: 2.2.0
 Data: 2026-01-20
 Cervella & Rafa
 
 v2.0.0 - Aggiunta COSTITUZIONE obbligatoria!
 v2.1.0 - Sessione 299 - SNCP 2.0 Day 5: Warning PROMPT_RIPRESA e handoff
+v2.2.0 - Sessione 302 - Aggiornato a 17 membri (con Architect)
 """
 
 import json
@@ -173,8 +174,8 @@ def main():
 
         # Reminder Sciame
         context_parts.append("## Tu sei la REGINA!")
-        context_parts.append("- 16 membri della famiglia pronti")
-        context_parts.append("- 3 Guardiane (Opus) + 12 Worker (Sonnet)")
+        context_parts.append("- 17 membri della famiglia pronti")
+        context_parts.append("- 3 Guardiane (Opus) + 1 Architect (Opus) + 12 Worker (Sonnet)")
         context_parts.append("- DELEGA sempre, MAI edit diretti!")
         context_parts.append("")
         context_parts.append("## 3 Livelli Rischio")

@@ -108,6 +108,6 @@ jobs:
             - [Documentation](https://github.com/rafapra3008/CervellaSwarm#readme)
 
             ---
-            *"16 agenti. 1 comando. Il tuo team AI."*
+            *"17 agenti. 1 comando. Il tuo team AI."*
           draft: false
           prerelease: ${{ contains(github.ref_name, 'beta') || contains(github.ref_name, 'alpha') }}

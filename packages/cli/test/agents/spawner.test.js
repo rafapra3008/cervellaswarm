@@ -7,7 +7,7 @@
  * Nota: I test della chiamata API vera richiedono ANTHROPIC_API_KEY
  * e sono eseguiti separatamente nei test di integrazione.
  *
- * "16 agenti. 1 comando. Il tuo team AI."
+ * "17 agenti. 1 comando. Il tuo team AI."
  */
 
 import { test, describe } from 'node:test';

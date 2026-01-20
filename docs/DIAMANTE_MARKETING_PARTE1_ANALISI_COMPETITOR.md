@@ -349,7 +349,7 @@ Noi abbiamo quality assurance INTEGRATA (le Guardiane). Non serve tool esterno!
 
 ```
 CervellaSwarm = L'UNICO AI coding system con:
-├── 16 agenti specializzati (vs 1 generico)
+├── 17 agenti specializzati (vs 1 generico)
 ├── 3 Guardiane che VERIFICANO (vs nessuna verifica)
 ├── Quality assurance INTEGRATA (vs tool separati)
 ├── Human-in-loop a livello Regina (vs autonomia cieca)
