@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 20 Gennaio 2026 - Sessione 304 - FASE 2+3 Documentazione COMPLETATE!
+> Aggiornato: 20 Gennaio 2026 - Sessione 305 - Security + Stripe + Sync Pubblico!
 
 ```
 +==================================================================+
@@ -49,7 +49,8 @@ FASE 2: MVP PRODOTTO             [####################] 100%! PRONTO!
   ✓ MCP su npm                   @cervellaswarm/mcp-server@2.0.0-beta  ← v2.0.0-beta!
   ✓ FAMIGLIA COMPLETA            17 AGENTI! (con Architect)
   ✓ API Fly.io                   ONLINE
-  ✓ Stripe                       $29/$49 (Test Mode) ← Sessione 300!
+  ✓ Stripe                       $29/$49 (Test Mode) ← Sessione 305 fix pricing!
+  ✓ API Security                 Rate limiting + debug endpoints rimossi (S305)
 
 FASE 3: PRIMI UTENTI             [####################] 100%! ← FATTO!
 

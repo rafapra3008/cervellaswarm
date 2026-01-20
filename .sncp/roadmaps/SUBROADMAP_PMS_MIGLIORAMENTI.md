@@ -125,7 +125,9 @@
 - **Tech:** GZipMiddleware FastAPI
 - **Dipendenze:** Nessuna
 - **Rischio:** BASSO
-- **Status:** [ ] TODO
+- **Status:** [x] DONE - Sessione 306
+- **Audit:** 10/10 APPROVED
+- **Note:** main.py, minimum_size=1000, compresslevel=5, riduzione bandwidth 70-90%
 
 **FASE 2 TOTALE:** 8-10 sessioni
 
@@ -248,7 +250,7 @@ FASE 3 (Feature)
 |------|----------|------|
 | 20 Gen 2026 | S303 | Creata SUBROADMAP, approvata da Rafa |
 | 20 Gen 2026 | S305 | F2.1 DONE, F2.2 DONE, F2.3 parziale (autocompact) |
-| 20 Gen 2026 | S306 | F2.3 DONE (planning_ops.py batch fix), FASE 2 = 60% |
+| 20 Gen 2026 | S306 | F2.3 DONE, F2.5 DONE (GZipMiddleware), FASE 2 = 80% |
 
 ---
 

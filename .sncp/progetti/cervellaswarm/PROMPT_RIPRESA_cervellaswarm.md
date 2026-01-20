@@ -1,85 +1,101 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 304
-> **STATUS:** FASE 2+3 COMPLETATE! Release 2.0 Documentazione DONE!
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 305
+> **STATUS:** Security fixes + Stripe $29/$49 + Sync pubblico COMPLETATO!
 
 ---
 
-## SESSIONE 304 - FASE 2+3 COMPLETATE!
+## SESSIONE 305 - SECURITY + STRIPE + SYNC
 
 ```
 +================================================================+
-|   FASE 2: DOCUMENTAZIONE              9.57/10                  |
-|   FASE 3: VERIFICA FINALE             9.8/10                   |
+|   TUTTI I TASK COMPLETATI!                                     |
 |                                                                |
-|   10 FILE AGGIORNATI/CREATI                                    |
-|   2 COMMIT: c6c1d0d + f467107                                  |
+|   - README.md: 17 agents + Architect                           |
+|   - AGENTS_REFERENCE.md: sezione Architect aggiunta            |
+|   - API: rate limiting + debug endpoints rimossi               |
+|   - Stripe: $29 PRO / $49 TEAM (nuovi price_id)               |
+|   - Repo pubblico: SINCRONIZZATO                               |
 |                                                                |
 +================================================================+
 ```
 
 ---
 
-## COSA FATTO SESSIONE 304
+## COSA FATTO SESSIONE 305
 
-### FASE 2: DOCUMENTAZIONE
+### Documentazione
+| File | Fix |
+|------|-----|
+| README.md (root) | 16 → 17 agents, Architect in tabella |
+| docs/AGENTS_REFERENCE.md | 16 → 17, sezione Architect completa |
 
-| File | Score | Cosa Fatto |
-|------|-------|------------|
-| packages/cli/README.md | 9.7/10 | 17 agenti, W1-W6, Architect, architettura |
-| packages/mcp-server/README.md | 9.5/10 | 17 agenti, Architect, modelli Opus/Sonnet |
-| docs/FAQ.md | 9.5/10 | NUOVO! 21 domande, pricing, differenziatori |
+### Security (API Fly.io)
+| Fix | Dettaglio |
+|-----|-----------|
+| Rate limiting | 100 req/15min per IP (express-rate-limit) |
+| Debug endpoints | /debug/stripe-account e /debug/stripe-config RIMOSSI |
+| Deploy | fly deploy completato |
 
-### FASE 3: VERIFICA + FIX
+### Stripe Pricing
+| Tier | Vecchio | Nuovo | Price ID |
+|------|---------|-------|----------|
+| PRO | $20/mo | $29/mo | price_1Srh32DcRzSMjFE4Oy60XTvL |
+| TEAM | $35/mo | $49/mo | price_1Srh4PDcRzSMjFE4GEF5jdfn |
 
-| File | Fix Applicato |
-|------|---------------|
-| packages/cli/package.json | "17 AI agents" |
-| packages/mcp-server/package.json | "17 AI agents" |
-| packages/cli/bin/cervellaswarm.js | 17 agents + pricing $29/$49 |
-| packages/cli/src/commands/init.js | "17 AI agents" |
-| packages/cli/src/commands/upgrade.js | PRO $29, TEAM $49/user |
-| packages/cli/src/commands/billing.js | Pricing $29/$49 |
-| packages/mcp-server/src/index.ts | "17 AI agents" |
-
-### CROSS-CHECK RESULTS
-
-- npm CLI 2.0.0-beta: ONLINE
-- npm MCP 2.0.0-beta: ONLINE
-- API Fly.io health: OK
-- Guardiana trovato e fixato: pricing vecchio ($20/$35)
+### Sync Pubblico
+- Metodo: git worktree isolato (fix definitivo)
+- Script aggiornato: scripts/git/sync-to-public.sh
+- Commit su public: e556db2
 
 ---
 
-## PROSSIMA SESSIONE - DA FARE
+## GUARDIANE COINVOLTE
 
-**Dalla SUBROADMAP_RELEASE_2.0:**
-
-```
-FASE 1: SITO WEB          [####################] 100% (S303)
-FASE 2: DOCUMENTAZIONE    [####################] 100% (S304)
-FASE 3: VERIFICA          [####################] 100% (S304)
-
-RIMANE:
-- npm publish con description aggiornate (17 agents)
-- Possibile: npm publish 2.0.0 (non beta) dopo primi utenti
-```
-
-**NOTA:** Le description su npm pubblico dicono ancora "16 agents".
-Al prossimo `npm publish` si aggiorneranno automaticamente.
+| Guardiana | Task | Verdetto |
+|-----------|------|----------|
+| Qualita | Audit pre-sync | GO 9/10 |
+| Ops | Security check + fix script | GO |
+| Ricerca | Audit outreach | 7.5/10 (canali non sfruttati) |
+| Marketing | Conferma pricing | $29/$49 OK |
 
 ---
 
-## FILE CHIAVE SESSIONE 304
+## STATO ATTUALE
+
+```
+cervellaswarm.com        → ONLINE (Cloudflare Pages)
+cervellaswarm-api.fly.dev → ONLINE (health OK)
+npm CLI                  → 2.0.0-beta
+npm MCP                  → 2.0.0-beta
+Stripe                   → Test Mode, $29/$49
+GitHub pubblico          → SINCRONIZZATO
+```
+
+---
+
+## PROSSIMI STEP
+
+1. **Outreach non sfruttati** (da Guardiana Ricerca):
+   - MCP Discord ufficiale (11K membri!) - NON JOINED
+   - awesome-mcp-servers PR - NON FATTA
+   - DEV.to article - NON SCRITTO
+
+2. **Show HN** - Decidere data definitiva
+
+3. **Stripe Live Mode** - Quando pronti per pagamenti reali
+
+---
+
+## FILE CHIAVE
 
 | File | Cosa |
 |------|------|
-| packages/cli/README.md | README professionale con W1-W6 |
-| packages/mcp-server/README.md | 17 agenti documentati |
-| docs/FAQ.md | FAQ tecnica completa |
-| .sncp/.../SUBROADMAP_RELEASE_2.0.md | Roadmap riferimento |
+| packages/api/src/index.ts | Rate limiting + no debug |
+| scripts/git/sync-to-public.sh | Metodo worktree (v2) |
+| docs/AGENTS_REFERENCE.md | 17 agents + Architect |
 
 ---
 
-*"Sessione 304! FASE 2+3 completate, media 9.7/10!"*
+*"Sessione 305! Security, Stripe, Sync - tutto fatto!"*
 *Cervella & Rafa*
