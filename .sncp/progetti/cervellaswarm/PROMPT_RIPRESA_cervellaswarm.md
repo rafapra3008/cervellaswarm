@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 305
-> **STATUS:** Security fixes + Stripe $29/$49 + Sync pubblico COMPLETATO!
+> **STATUS:** Security + Stripe + Sync + Landing Deploy COMPLETATO!
 
 ---
 
@@ -16,6 +16,7 @@
 |   - API: rate limiting + debug endpoints rimossi               |
 |   - Stripe: $29 PRO / $49 TEAM (nuovi price_id)               |
 |   - Repo pubblico: SINCRONIZZATO                               |
+|   - Landing: DEPLOY 17 agents su cervellaswarm.com             |
 |                                                                |
 +================================================================+
 ```
@@ -47,6 +48,11 @@
 - Metodo: git worktree isolato (fix definitivo)
 - Script aggiornato: scripts/git/sync-to-public.sh
 - Commit su public: e556db2
+
+### Landing Deploy
+- cervellaswarm.com: 17 agents (era 16)
+- Deploy: wrangler pages deploy
+- Cloudflare Pages: OK
 
 ---
 
