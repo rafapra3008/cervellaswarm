@@ -1,5 +1,18 @@
 # OGGI - 20 Gennaio 2026
 
+```
++================================================================+
+|   DEPRECATION NOTICE - Sessione 296 (20 Gennaio 2026)          |
+|                                                                |
+|   Questo file e' DEPRECATO.                                    |
+|   Usa invece: PROMPT_RIPRESA_{progetto}.md                     |
+|                                                                |
+|   Motivo: Ridondante - PROMPT_RIPRESA contiene gia tutto       |
+|   Piano: Rimozione dopo 1 settimana (27 Gennaio 2026)          |
+|   Ref: SUBROADMAP_SNCP_2.0.md                                  |
++================================================================+
+```
+
 > **Sessione:** 294 | **Progetto:** CervellaSwarm | **Focus:** W6 Casa Perfetta
 
 ---

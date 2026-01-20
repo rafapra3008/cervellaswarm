@@ -4,16 +4,15 @@ Hook SessionEnd - File Limits Guard
 
 Verifica che i file critici non superino i limiti:
 - PROMPT_RIPRESA_*.md: max 150 righe
-- oggi.md: max 60 righe
 - stato.md: max 500 righe
 
 Se superati, genera WARNING per archiviazione.
 
-Versione: 1.0.0
-Data: 2026-01-15
+Versione: 2.0.0
+Data: 2026-01-20
 Cervella & Rafa
 
-Sessione 216 - Context Mesh Implementation
+Sessione 296 - SNCP 2.0 (oggi.md deprecato)
 """
 
 import json
@@ -26,9 +25,9 @@ PROJECT_ROOT = Path(__file__).parent.parent.parent
 # Limiti OBBLIGATORI
 LIMITS = {
     "PROMPT_RIPRESA": 150,
-    "oggi.md": 60,
     "stato.md": 500
 }
+# NOTA: oggi.md rimosso (deprecato Sessione 296)
 
 # File da controllare
 FILES_TO_CHECK = [
@@ -36,13 +35,12 @@ FILES_TO_CHECK = [
     (PROJECT_ROOT / ".sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md", "PROMPT_RIPRESA"),
     (PROJECT_ROOT / ".sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md", "PROMPT_RIPRESA"),
     (PROJECT_ROOT / ".sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md", "PROMPT_RIPRESA"),
-    # oggi.md globale
-    (PROJECT_ROOT / ".sncp/stato/oggi.md", "oggi.md"),
     # stato.md per progetto
     (PROJECT_ROOT / ".sncp/progetti/cervellaswarm/stato.md", "stato.md"),
     (PROJECT_ROOT / ".sncp/progetti/miracollo/stato.md", "stato.md"),
     (PROJECT_ROOT / ".sncp/progetti/contabilita/stato.md", "stato.md"),
 ]
+# NOTA: oggi.md rimosso da controllo (deprecato Sessione 296)
 
 
 def count_lines(file_path: Path) -> int:

@@ -1,8 +1,8 @@
 # SNCP - Sistema Nervoso Centrale Persistente
 
 > **Progetto:** CervellaSwarm
-> **Versione SNCP:** 4.0 (Semplificato + Automatizzato!)
-> **Aggiornato:** 14 Gennaio 2026 - Sessione 211
+> **Versione SNCP:** 5.0 (Semplificato + Senza Ridondanza!)
+> **Aggiornato:** 20 Gennaio 2026 - Sessione 296
 
 ---
 
@@ -34,8 +34,7 @@
 │   ├── miracollo/         # Miracollo
 │   └── contabilita/       # Contabilita
 │
-├── stato/                 # STATO GLOBALE
-│   └── oggi.md            # Stato OGGI (tutti i progetti)
+├── stato/                 # (DEPRECATO - vedi sotto)
 │
 ├── memoria/               # DECISIONI GLOBALI
 │   └── decisioni/         # Decisioni architetturali cross-progetto
@@ -58,6 +57,34 @@
 └── archivio/              # ARCHIVIO (automatico!)
     ├── 2026-01/           # Per mese
     └── 2026-W03/          # Per settimana
+```
+
+---
+
+## RUOLI FILE (v5.0 - Chiarimento!)
+
+```
++------------------------------------------------------------------+
+|   stato.md (MAX 500 righe)                                       |
+|   └── Verita COMPLETA progetto (architettura, decisioni, stack)  |
+|   └── Aggiornare: ogni sessione significativa                    |
+|   └── Leggere: quando serve contesto PROFONDO                    |
+|                                                                  |
+|   PROMPT_RIPRESA_{progetto}.md (MAX 150 righe)                   |
+|   └── Context ripresa VELOCE (ultima sessione, next, blockers)   |
+|   └── Aggiornare: OGNI sessione                                  |
+|   └── Leggere: SEMPRE a inizio sessione                          |
+|                                                                  |
+|   PROMPT_RIPRESA_MASTER.md (MAX 50 righe)                        |
+|   └── INDICE puro (tabella link progetti)                        |
+|   └── Aggiornare: quando cambia progetto                         |
+|   └── Leggere: quando switch progetto                            |
+|                                                                  |
+|   oggi.md                                                        |
+|   └── DEPRECATO (Sessione 296) - NON USARE                       |
+|   └── Motivo: ridondante con PROMPT_RIPRESA                      |
+|   └── Rimozione: 27 Gennaio 2026                                 |
++------------------------------------------------------------------+
 ```
 
 ---
@@ -213,7 +240,8 @@ verify-sync --verbose
 | 207 | sncp-init wizard + verify-sync |
 | 209 | Hook automatici + Launchd manutenzione |
 | 211 | Pulizia struttura v4.0 (rimosse 4 cartelle obsolete) |
+| **296** | **SNCP 5.0: Deprecato oggi.md, chiariti ruoli file** |
 
 ---
 
-*"SNCP: Da manuale a AUTOMATICO!"*
+*"SNCP: Semplice, Chiaro, Senza Ridondanza!"*

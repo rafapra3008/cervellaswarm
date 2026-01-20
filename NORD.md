@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 20 Gennaio 2026 - Sessione 295 - W6 100%! COMPLETATO!
+> Aggiornato: 20 Gennaio 2026 - Sessione 296 - SNCP 2.0 Day 1!
 
 ```
 +==================================================================+
@@ -354,13 +354,29 @@ SESSIONE 294: 🏠 W6 DAY 4 COMPLETATO!
     - marketing aggiunto a ALL_WORKERS
   → W6 80%
 
-SESSIONE 295: 🏠 W6 DAY 5 COMPLETATO! ← OGGI!
+SESSIONE 295: 🏠 W6 DAY 5 COMPLETATO!
   ✓ Day 5: Test Famiglia (10/10)
     - D5-01: DNA Condiviso fix (10/10) - aggiunti mantra mancanti
     - D5-02: Audit 17 Worker (10/10) - tutti conformi
     - D5-03: Test spawn-workers.sh (10/10) - --version, --list, --help OK
     - D5-04: Test ciclo Regina->Worker->Guardiana (10/10)
   → W6 100% COMPLETATO! MEDIA FINALE 9.9/10!
+
+SESSIONE 296: 🧠 SNCP 2.0 - MEMORIA PERFETTA! ← OGGI!
+  ✓ RICERCA: Memoria AI Assistants (540 righe)
+    - Comparati 9 tool: Aider, Cursor, Copilot, Windsurf, Cline...
+    - SNCP score 8.8/10 (MIGLIORE della media!)
+    - Validato da 2 Guardiane (Qualità + Ricerca)
+  ✓ SUBROADMAP_SNCP_2.0.md CREATA (350 righe)
+    - 4 fasi, 6 giorni
+    - Target: 8.8 → 9.5/10
+  ✓ DAY 1 COMPLETATO:
+    - oggi.md DEPRECATO (notice + piano rimozione 27 Gen)
+    - ~/.claude/CLAUDE.md aggiornato
+    - .sncp/README.md → v5.0 (chiariti ruoli file)
+    - file_limits_guard.py → v2.0 (rimosso oggi.md)
+  ✓ TEMPLATE_SESSION_HANDOFF.md CREATO (6-sezioni)
+  → SNCP 2.0 Day 1/6 COMPLETATO!
 
 SCORE: 100/100 ✅ W4 COMPLETATO! W5 COMPLETATA!
 
@@ -470,6 +486,7 @@ ROADMAP 2.0:
 | **SUBMAPPA DUAL-MODE** | `.sncp/progetti/cervellaswarm/roadmaps/SUBMAPPA_DUALMODE_MONETIZZAZIONE.md` |
 | **CASA PULITA (100%!)** | `.sncp/roadmaps/SUBROADMAP_CASA_PULITA.md` |
 | **W5 DOGFOODING (9.5/10!)** | `.sncp/roadmaps/SUBROADMAP_W5_DOGFOODING.md` |
+| **SNCP 2.0 (IN CORSO!)** | `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_SNCP_2.0.md` |
 | **PHRASEBOOK** | `.sncp/roadmaps/SUBROADMAP_PHRASEBOOK.md` |
 | **FAMIGLIA COMPLETA MCP (100%!)** | `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_FAMIGLIA_COMPLETA_MCP.md` |
 | Roadmap visiva | `.sncp/progetti/cervellaswarm/roadmaps/ROADMAP_2026_PRODOTTO.md` |
