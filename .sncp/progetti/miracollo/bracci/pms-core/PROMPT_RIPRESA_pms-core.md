@@ -5,79 +5,68 @@
 
 # PROMPT RIPRESA - PMS Core
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 302
-> **STATO:** 90% LIVE | Health 9.0/10 (PULIZIA CASA 100%!)
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 303
+> **STATO:** 90% LIVE | Health 9.5/10 (FASE 1 FONDAMENTA 100%!)
 
 ---
 
-## SESSIONE 302 - PULIZIA CASA COMPLETATA!
+## SESSIONE 303 - FASE 1 FONDAMENTA COMPLETATA!
 
 ```
 +================================================================+
-|   SPLIT FILE GIGANTI: 6/6 COMPLETATI! (100%)                   |
+|   FASE 1: FONDAMENTA - 4/4 COMPLETATI!                         |
 |                                                                |
-|   [x] test_action_tracking.py: 820 -> 8 file  (S300)          |
-|   [x] ml_api.py: 705 -> 7 file               (S300)          |
-|   [x] cm_import_service.py: 762 -> 8 file    (S301)          |
-|   [x] planning_core.py: 746 -> 5 file        (S301)          |
-|   [x] ab_testing_api.py: 768 -> 5 file       (S302)          |
-|   [x] city_tax.py: 721 -> 6 file             (S302)          |
+|   [x] F1.1 Rate Limiting Globale    10/10 APPROVED            |
+|   [x] F1.2 Backup Automation         9/10 APPROVED            |
+|   [x] F1.3 Health Checks Avanzati   9.5/10 APPROVED           |
+|   [x] F1.4 Structured Logging        9/10 APPROVED            |
 |                                                                |
-|   TOTALE: 4,522 righe -> 39 file modulari!                    |
+|   Media audit: 9.4/10 - PMS BLINDATO!                         |
 +================================================================+
 ```
 
-**Commit S302:**
-- `8842536` - Split ab_testing_api.py (5 file)
-- `a9c34da` - Split city_tax.py (6 file)
+**Cosa implementato:**
+- Rate limiting: slowapi 30/min, proxy-aware (get_ipaddr)
+- Backup: scripts/backup_db.sh + test_restore.sh (gzip 90% compression)
+- Health: Kubernetes-style /live, /ready, /startup, /detailed
+- Logging: structlog JSON (prod) + Pretty (dev), Request ID automatico
 
 ---
 
-## STRUTTURA NUOVA (S302)
+## SUBROADMAP ATTIVA
+
+**File:** `.sncp/roadmaps/SUBROADMAP_PMS_MIGLIORAMENTI.md`
+
+| Fase | Status | Sessioni |
+|------|--------|----------|
+| 1 Fondamenta | ✅ DONE | 1 (S303) |
+| 2 Performance | TODO | 8-10 |
+| 3 Feature | TODO | 15-25 |
+
+---
+
+## SESSIONE 302 - PULIZIA CASA
 
 ```
-routers/ab_testing/             # A/B Testing (5 file)
-├── __init__.py, models.py, utils.py
-├── metrics.py, endpoints.py
-
-routers/city_tax/               # City Tax (6 file)
-├── __init__.py, models.py, config.py
-├── calculation.py, collection.py, reports.py
+SPLIT FILE GIGANTI: 6/6 COMPLETATI!
+4,522 righe -> 39 file modulari
 ```
 
 ---
 
-## MAPPA SPLIT FILE - COMPLETATA!
-
-| # | File | Righe | Split | Sessione |
-|---|------|-------|-------|----------|
-| 1 | test_action_tracking.py | 820 | 8 file | S300 |
-| 2 | ml_api.py | 705 | 7 file | S300 |
-| 3 | cm_import_service.py | 762 | 8 file | S301 |
-| 4 | planning_core.py | 746 | 5 file | S301 |
-| 5 | ab_testing_api.py | 768 | 5 file | S302 |
-| 6 | city_tax.py | 721 | 6 file | S302 |
-
----
-
-## MODULO FINANZIARIO
+## MODULO FINANZIARIO (PARCHEGGIATO)
 
 | Fase | Componente | Stato |
 |------|------------|-------|
-| 1 | Ricevute PDF | 100% REALE |
-| 1B | Checkout UI | 100% REALE |
-| 2 | Scontrini RT | 90% - test stampante |
+| 1-1B | Ricevute + Checkout | 100% REALE |
+| 2 | Scontrini RT | 90% |
 | 3-4 | Fatture/Export | PARCHEGGIATO |
 
 ---
 
-## PARCHEGGIATI
+## WARNING
 
-| Cosa | Motivo |
-|------|--------|
-| Subscription system | In `modules/`, pronto |
-| Fatture XML | Test SPRING OK |
-| Notifiche CM | Modulo futuro |
+- **FK violations:** 1262 nel DB (problema esistente, task separato)
 
 ---
 
@@ -90,4 +79,4 @@ VM: miracollo-cervella (Google Cloud)
 
 ---
 
-*"PULIZIA CASA 100%! Health 9.0/10!" - Sessione 302*
+*"FASE 1 FONDAMENTA 100%! Health 9.5/10!" - Sessione 303*
