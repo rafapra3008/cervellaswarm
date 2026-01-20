@@ -1,77 +1,65 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 299
-> **STATUS:** SNCP 2.0 COMPLETATO! (100%)
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 300
+> **STATUS:** Day 0 COMPLETATO - 5/5 Decisioni Release 2.0!
 
 ---
 
-## SESSIONE 299 - SNCP 2.0 COMPLETATO!
+## SESSIONE 300 - DAY 0 DECISIONI RELEASE 2.0
 
 ```
 +================================================================+
-|   SNCP 2.0 - MEMORIA PERFETTA - COMPLETATO!                    |
+|   DAY 0 COMPLETATO - TUTTE LE 5 DECISIONI PRESE!              |
 |                                                                |
-|   Score Guardiana Day 5: 10/10                                 |
-|   Score Guardiana Day 6: 9.5/10                                |
-|   Score target finale:  9.5/10  RAGGIUNTO!                    |
+|   1. EARLY BIRD: $149/anno per 200 Founding Members           |
+|   2. PRICING: Free $0 / Pro $29 / Team $49                    |
+|   3. STRIPE LIVE: dopo 50 utenti beta (~15 Feb)               |
+|   4. v1.0.0: dopo 100-200 utenti 30d (~15 Apr)               |
+|   5. TAGLINE: "checks its own work" - IMPLEMENTATO!           |
 |                                                                |
-|   Day 1: DONE (deprecato oggi.md)                              |
-|   Day 2: DONE (puliti riferimenti)                             |
-|   Day 3: DONE (template handoff 6-sezioni)                     |
-|   Day 4: DONE (test template + best practices)                 |
-|   Day 5: DONE (hook updates)                                   |
-|   Day 6: DONE (documentazione finale)                          |
 +================================================================+
 ```
 
 ---
 
-## COSA FATTO SESSIONE 299
+## COSA FATTO SESSIONE 300
 
-### DAY 5: Hook Updates (Score 10/10)
-- `session_start_swarm.py` v2.1.0 con warning automatici
-- `settings.json`: SessionEnd hook configurato
+### DECISIONI PRESE (tutte documentate in SUBROADMAP_RELEASE_2.0.md)
 
-### DAY 6: Documentazione Finale (Score 9.5/10)
-- README SNCP: hook names corretti + sezione HANDOFF
-- CLAUDE.md: hook names corretti
-- PROMPT_RIPRESA_MASTER: oggi.md rimosso dai limiti
+| # | Decisione | Scelta |
+|---|-----------|--------|
+| 5 | Tagline | "The only AI coding team that checks its own work" |
+| 4 | v1.0.0 | Dopo 100-200 utenti 30d |
+| 3 | Stripe Live | Dopo 50 utenti beta |
+| 2 | Pricing | FREE/PRO $29/TEAM $49/ENTERPRISE |
+| 1 | Early Bird | $149/anno 200 Founding Members |
 
----
-
-## SNCP 2.0 PROGRESS
-
-```
-Day 1: Depreca oggi.md     [##########] DONE
-Day 2: Pulisci riferimenti [##########] DONE
-Day 3: Template handoff    [##########] DONE
-Day 4: Test template       [##########] DONE
-Day 5: Aggiorna hook       [##########] DONE
-Day 6: Documentazione      [##########] DONE
-
-PROGRESSO: 100% (6/6 giorni) - COMPLETATO!
-```
+### IMPLEMENTATO
+- Tagline nel sito (`landing/index.html` righe 300-305)
+- Tagline nel README CLI (`packages/cli/README.md`)
 
 ---
 
 ## PROSSIMA SESSIONE
 
-SNCP 2.0 completato! Prossimi focus possibili:
-- Outreach e marketing CervellaSwarm
-- Nuove feature per utenti
-- Altro progetto (Miracollo, Contabilita)
+**FASE 1 SUBROADMAP:** Implementare pricing nel sito
+- Aggiornare `landing/index.html` (pricing section)
+- Allineare `tier_manager.py` e `tiers.ts`
+- Creare prodotti Stripe (Test Mode)
 
 ---
 
-## FILE CHIAVE SESSIONE 299
+## FILE CHIAVE SESSIONE 300
 
 | File | Cosa |
 |------|------|
-| `.claude/hooks/session_start_swarm.py` | v2.1.0 - Warning SNCP 2.0 |
-| `.sncp/README.md` | Documentazione SNCP aggiornata |
-| `~/.claude/CLAUDE.md` | Hook names corretti |
+| `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_RELEASE_2.0.md` | 5 decisioni documentate |
+| `landing/index.html` | Tagline implementato |
+| `packages/cli/README.md` | Tagline implementato |
+| `.swarm/tasks/ANALISI_MARKETING_5_DECISIONI.md` | Analisi completa |
+| `.swarm/tasks/RICERCA_COMPETITOR_PRICING_2026.md` | Ricerca competitor |
 
 ---
 
-*"299 sessioni! SNCP 2.0 COMPLETATO - 100%!"*
-*Sessione 299 - Cervella & Rafa*
+*"Sessione 300! Day 0 completato - 5/5 decisioni!"*
+*Cervella & Rafa*

@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 20 Gennaio 2026 - Sessione 299 - SNCP 2.0 COMPLETATO (100%!)
+> Aggiornato: 20 Gennaio 2026 - Sessione 300 - Day 0 Release 2.0 COMPLETATO!
 
 ```
 +==================================================================+
@@ -49,7 +49,7 @@ FASE 2: MVP PRODOTTO             [####################] 100%! PRONTO!
   ✓ MCP su npm                   @cervellaswarm/mcp-server@2.0.0-beta  ← v2.0.0-beta!
   ✓ FAMIGLIA COMPLETA            16 AGENTI!
   ✓ API Fly.io                   ONLINE
-  ✓ Stripe                       $20/$40 (Test Mode)
+  ✓ Stripe                       $29/$49 (Test Mode) ← Sessione 300!
 
 FASE 3: PRIMI UTENTI             [####################] 100%! ← FATTO!
 
