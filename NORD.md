@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 20 Gennaio 2026 - Sessione 291 - W5 Day 4 COMPLETATO!
+> Aggiornato: 20 Gennaio 2026 - Sessione 292 - W5 COMPLETATA! 100%
 
 ```
 +==================================================================+
@@ -303,7 +303,7 @@ SESSIONE 289: 🐝 W5 DAY 2 - ARCHITECT DOCS + HARDTEST!
   ✓ SCORE FINALE: 9.5/10 - TARGET RAGGIUNTO!
   → W5 DAY 2 COMPLETATO!
 
-SESSIONE 290: 🐝 W5 DAY 3 - SEMANTIC CLI WRAPPER! ← OGGI!
+SESSIONE 290: 🐝 W5 DAY 3 - SEMANTIC CLI WRAPPER!
   ✓ Pre-day checkpoint (git tag w5-day3-start)
   ✓ scripts/architect/semantic-search.sh v1.0.0 (301 righe)
     - 3 comandi: find-symbol, find-callers, find-references
@@ -315,7 +315,23 @@ SESSIONE 290: 🐝 W5 DAY 3 - SEMANTIC CLI WRAPPER! ← OGGI!
   ✓ Guardiana Qualità: 9.5/10 APPROVED
   → W5 DAY 3 COMPLETATO!
 
-SCORE: 100/100 ✅ W4 COMPLETATO! W5 IN CORSO!
+SESSIONE 291: 🐝 W5 DAY 4 - IMPACT CLI + TOOLS!
+  ✓ scripts/architect/impact-analyze.sh v1.0.0 (317 righe)
+    - 2 comandi: estimate, dependencies
+    - JSON output: {"found": bool, "result": {...}}
+    - Risk score + reasons
+  ✓ cervella-architect.md: +Bash tools
+  ✓ Guardiana Qualità: 9.5/10 APPROVED
+  → W5 DAY 4 COMPLETATO!
+
+SESSIONE 292: 🐝 W5 DAY 5 - WORKER DNA + TEST FINALE! ← OGGI!
+  ✓ _SHARED_DNA.md: Sezione "CLI Tools Avanzati (W5)"
+  ✓ cervella-backend.md: Sezione "CLI Tools per Analisi Codebase"
+  ✓ Test E2E completo: 5/5 PASS
+  ✓ Guardiana Qualità FINALE: 9.5/10 APPROVED
+  → W5 DAY 5 COMPLETATO! W5 100%!
+
+SCORE: 100/100 ✅ W4 COMPLETATO! W5 COMPLETATA!
 
 ROADMAP 2.0:
   W1: Git Flow       ████████████████████ 100% ✅
@@ -327,12 +343,13 @@ ROADMAP 2.0:
       Day 1: Apple Polish DRY       DONE (9.5/10)
       Day 2-3: Test Coverage + CI   DONE (9.5/10)
       Day 4: Release v2.0-beta      DONE (9.5/10)
-  W5: Dogfooding     ████████████████____ 80% IN CORSO!
+  W5: Dogfooding     ████████████████████ 100% ✅ COMPLETATA!
       Day 1: Architect Integration  DONE (10/10)
       Day 2: Architect docs + test  DONE (9.5/10)
       Day 3: Semantic Search CLI    DONE (9.5/10)
-      Day 4: Impact Analyzer CLI    DONE (9.5/10) ← OGGI!
-      Day 5: Worker DNA + test      [NEXT]
+      Day 4: Impact Analyzer CLI    DONE (9.5/10)
+      Day 5: Worker DNA + test      DONE (9.5/10) ← OGGI!
+      MEDIA W5: 9.6/10
 ```
 
 ---
