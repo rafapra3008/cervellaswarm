@@ -2,7 +2,7 @@
 
 > **The only AI coding team that checks its own work.**
 >
-> 16 specialized AI agents. Regina coordinates, Workers execute, Guardians verify.
+> 17 specialized AI agents. Regina coordinates, Architect plans, Workers execute, Guardians verify.
 
 ```
 cervellaswarm task "Add user authentication"
@@ -17,7 +17,7 @@ cervellaswarm task "Add user authentication"
 
 ## Why CervellaSwarm?
 
-Traditional AI assistants are generalists. CervellaSwarm gives you **16 specialized agents** organized in a hierarchy:
+Traditional AI assistants are generalists. CervellaSwarm gives you **17 specialized agents** organized in a hierarchy:
 
 ### The Queen (Orchestrator)
 
@@ -32,6 +32,12 @@ Traditional AI assistants are generalists. CervellaSwarm gives you **16 speciali
 | `cervella-guardiana-qualita` | Code quality, standards, reviews |
 | `cervella-guardiana-ops` | DevOps, infrastructure, deploy |
 | `cervella-guardiana-ricerca` | Research validation, fact-checking |
+
+### The Architect (Strategic Planner)
+
+| Agent | Specialty |
+|-------|-----------|
+| `cervella-architect` | Plans complex tasks, creates PLAN.md before implementation |
 
 ### The Workers (Specialists)
 
@@ -109,6 +115,47 @@ CervellaSwarm understands natural language. Here are the essential phrases:
 
 *"Not an assistant - a TEAM."*
 
+## What Makes Us Different
+
+CervellaSwarm is not just another AI coding tool. Here's what makes us unique:
+
+### 1. Self-Checking System
+
+3 Guardian agents powered by Opus verify EVERY output before delivery. Target quality score: 9.5/10.
+
+**No other AI coding tool does this.** Most tools give you raw LLM output. We give you reviewed, production-ready code.
+
+### 2. Semantic Code Search
+
+Tree-sitter AST parsing, not grep. Find symbol definitions, function callers, and references in 2 seconds.
+
+```bash
+semantic-search.sh find-symbol "MyClass"
+semantic-search.sh find-callers "my_function"
+```
+
+### 3. Architect-First Workflow
+
+Complex task? Architect creates a detailed plan BEFORE writing code. Opus plans, Sonnet implements.
+
+```bash
+spawn-workers --architect "Refactor AuthService"
+```
+
+### 4. Git Attribution
+
+Every agent signs their commits with `Co-Authored-By`. Full transparency on who did what.
+
+### 5. SNCP Memory System
+
+Persistent memory across sessions. Never explain your project twice. The swarm remembers context, decisions, and architecture.
+
+### 6. Smart Task Routing
+
+Automatic routing to the best worker based on task analysis. Frontend work goes to cervella-frontend, database queries to cervella-data.
+
+**The result?** Code that works the first time. Documentation that stays updated. Architecture that makes sense.
+
 ## Commands
 
 ### `cervellaswarm init`
@@ -147,11 +194,14 @@ cervellaswarm doctor --config   # Show all configuration values
 
 ## Key Features
 
-- **16 Specialized Agents**: Not one generalist, a full team
+- **17 Specialized Agents**: 1 Queen + 3 Guardians + 1 Architect + 12 Workers
+- **Quality-First**: 3 Opus Guardians verify every output (9.5/10 target)
+- **Architect Planning**: Complex tasks get a PLAN.md before implementation
 - **Smart Routing**: Automatically selects the best agent for your task
 - **Persistent Memory (SNCP)**: Never explain your project twice
 - **Session Management**: Track and resume tasks across sessions
-- **Quality Gates**: Guardian agents review before merge
+- **Semantic Search**: Tree-sitter AST parsing for intelligent code navigation
+- **Git Attribution**: Every agent signs their commits
 - **Retry Logic**: Automatic retries on rate limits or temporary errors
 
 ## Architecture
@@ -160,6 +210,7 @@ cervellaswarm doctor --config   # Show all configuration values
                     +-------------------+
                     |     QUEEN         |
                     | (Orchestrator)    |
+                    | Opus              |
                     +--------+----------+
                              |
         +--------------------+--------------------+
@@ -167,16 +218,28 @@ cervellaswarm doctor --config   # Show all configuration values
 +-------v-------+    +-------v-------+    +------v--------+
 |   GUARDIAN    |    |   GUARDIAN    |    |   GUARDIAN    |
 |   Qualita     |    |     Ops       |    |   Ricerca     |
+|   Opus        |    |   Opus        |    |   Opus        |
 +---------------+    +---------------+    +---------------+
         |
         +-- Reviews all worker output
+
+                    +-------------------+
+                    |    ARCHITECT      |
+                    | (Planner)         |
+                    | Opus              |
+                    +--------+----------+
+                             |
+                             +-- Creates PLAN.md for complex tasks
 
 +-----------------------------------------------+
 |                 12 WORKERS                    |
 |  backend, frontend, tester, docs, devops,    |
 |  data, security, researcher, ingegnera,      |
 |  marketing, reviewer, scienziata             |
+|  All Sonnet                                  |
 +-----------------------------------------------+
+
+TOTAL: 5 Opus + 12 Sonnet = 17 agents
 ```
 
 ## Requirements

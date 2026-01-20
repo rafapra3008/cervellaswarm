@@ -2,7 +2,7 @@
 
 > **The only AI coding team that checks its own work.**
 >
-> 16 AI agents with quality guardians for Claude Code.
+> 17 AI agents with quality guardians for Claude Code.
 
 ## Quick Start
 
@@ -62,9 +62,31 @@ Restart Claude Code to load the MCP server. You'll have access to these tools:
 - **check_status**: Verify configuration and API key
 - **check_usage**: Check your usage quota
 
-## Available Agents (16)
+## Available Agents (17)
 
-### Workers (12)
+**Models:** Regina/Guardiane/Architect use Opus 4.5, Workers use Sonnet 4.5
+
+### The Architect (1) - Strategic Planner [OPUS]
+
+| Agent | Specialty |
+|-------|-----------|
+| architect | Plans complex tasks, creates PLAN.md before implementation |
+
+### Guardiane (3) - Quality Gates [OPUS]
+
+| Guardiana | Role |
+|-----------|------|
+| guardiana-qualita | Verifies code quality (9.5+ standard) |
+| guardiana-ricerca | Verifies research accuracy |
+| guardiana-ops | Verifies deploy safety & security |
+
+### Regina (1) [OPUS]
+
+| Agent | Role |
+|-------|------|
+| orchestrator | The Queen - Coordinates all agents |
+
+### Workers (12) [SONNET]
 
 | Worker | Specialty |
 |--------|-----------|
@@ -80,20 +102,6 @@ Restart Claude Code to load the MCP server. You'll have access to these tools:
 | ingegnera | Architecture, Refactoring, Tech Debt |
 | scienziata | Market Research, Competitor Analysis |
 | reviewer | Code Review, Best Practices |
-
-### Guardiane (3) - Quality Gates
-
-| Guardiana | Role |
-|-----------|------|
-| guardiana-qualita | Verifies code quality (9.5+ standard) |
-| guardiana-ricerca | Verifies research accuracy |
-| guardiana-ops | Verifies deploy safety & security |
-
-### Regina (1)
-
-| Agent | Role |
-|-------|------|
-| orchestrator | The Queen - Coordinates all agents |
 
 ## Example Usage in Claude Code
 
@@ -166,4 +174,4 @@ Not promising perfection. Promising honesty and continuous improvement.
 
 ---
 
-*"16 agents with quality guardians. Your AI team in Claude Code."*
+*"17 agents with quality guardians. Your AI team in Claude Code."*
