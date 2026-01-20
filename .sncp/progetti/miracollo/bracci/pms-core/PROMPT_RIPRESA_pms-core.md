@@ -5,55 +5,40 @@
 
 # PROMPT RIPRESA - PMS Core
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 305
-> **STATO:** 90% LIVE | Health 9.5/10 (FASE 2 Performance IN PROGRESS)
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 306
+> **STATO:** 90% LIVE | Health 9.5/10 (FASE 2 Performance 60%)
 
 ---
 
-## SESSIONE 305 - FASE 2 PERFORMANCE (Parziale)
+## SESSIONE 306 - F2.3 COMPLETATO!
 
 ```
 +================================================================+
-|   FASE 2: PERFORMANCE - 2/5 COMPLETATI, 1 IN PROGRESS          |
+|   FASE 2: PERFORMANCE - 3/5 COMPLETATI (60%)                    |
 |                                                                |
 |   [x] F2.1 Database Indexes        9/10 APPROVED               |
 |   [x] F2.2 Caching Layer           9/10 APPROVED               |
-|   [~] F2.3 Query N+1 Fix           IN PROGRESS                 |
+|   [x] F2.3 Query N+1 Fix           9/10 APPROVED               |
 |   [ ] F2.4 Retry Logic             TODO                        |
 |   [ ] F2.5 API Compression         TODO                        |
 +================================================================+
 ```
 
-**F2.1 Database Indexes (DONE):**
-- Migration: `043_performance_indexes_v2.sql`
-- Index: idx_guests_email (fix), idx_room_assignments_dates, idx_bookings_status_dates
-- EXPLAIN QUERY PLAN confermato uso index
-
-**F2.2 Caching Layer (DONE):**
-- File: `backend/core/cache.py` (cachetools TTLCache)
-- TTL: room_types 60min, rate_plans 15min, hotel_config 30min
-- Invalidazione: room_types.py, rate_plans.py, hotel.py
-- Endpoint: /health/cache-stats
-
-**F2.3 Query N+1 (IN PROGRESS):**
+**F2.3 Query N+1 (DONE S306):**
 - dashboard.py: FIXATO (bug schema + 3→1 query)
-- guest_validation.py: Funzione batch CREATA
-- planning_ops.py: Import aggiunto, **LOOP DA MODIFICARE**
+- guest_validation.py: `validate_guests_compliance_batch()` CREATA
+- planning_ops.py: `get_today_arrivals()` FIXATO (N→2 query)
+- get_today_departures(): Non richiede fix (non usa compliance validation)
 
 ---
 
 ## PROSSIMA SESSIONE - DA FARE
 
-1. **COMPLETARE F2.3:**
-   - Modificare loop in `planning_ops.py:496-539` per usare `validate_guests_compliance_batch`
-   - Fare stessa fix per `get_today_departures()`
-   - Guardiana audit F2.3
-
-2. **F2.4 Retry Logic:**
+1. **F2.4 Retry Logic:**
    - Target: competitor_scraping, email_poller, cm_poller
    - Tech: tenacity library
 
-3. **F2.5 API Compression:**
+2. **F2.5 API Compression:**
    - GZipMiddleware FastAPI
 
 ---
@@ -65,34 +50,24 @@
 | Fase | Status | Sessioni |
 |------|--------|----------|
 | 1 Fondamenta | DONE | 1 (S303) |
-| 2 Performance | **IN PROGRESS** | 2/? (S305) |
+| 2 Performance | **60%** | 3 (S303-S306) |
 | 3 Feature | TODO | 15-25 |
 
 ---
 
-## FILE CHIAVE SESSIONE 305
+## FILE CHIAVE SESSIONE 306
 
 | File | Azione |
 |------|--------|
-| `backend/database/migrations/043_performance_indexes_v2.sql` | CREATO |
-| `backend/core/cache.py` | CREATO |
-| `backend/routers/public/helpers.py` | MODIFICATO (usa cache) |
-| `backend/routers/settings/room_types.py` | MODIFICATO (+invalidazione) |
-| `backend/routers/settings/rate_plans.py` | MODIFICATO (+invalidazione) |
-| `backend/routers/settings/hotel.py` | MODIFICATO (+invalidazione) |
-| `backend/routers/health.py` | MODIFICATO (+/health/cache-stats) |
-| `backend/routers/dashboard.py` | MODIFICATO (fix schema + 3→1 query) |
-| `backend/services/guest_validation.py` | MODIFICATO (+batch function) |
-| `backend/routers/planning_ops.py` | PARZIALE (import ok, loop TODO) |
-| `requirements.txt` | MODIFICATO (+cachetools) |
+| `backend/routers/planning_ops.py` | MODIFICATO (batch fix N+1) |
+| `.sncp/roadmaps/SUBROADMAP_PMS_MIGLIORAMENTI.md` | AGGIORNATO (F2.3 DONE) |
 
 ---
 
 ## WARNING
 
 - **FK violations:** 1262 nel DB (problema esistente, task separato)
-- **planning_ops.py:** Loop N+1 ancora da fixare (riga 496-539)
 
 ---
 
-*"FASE 2 Performance 40% - F2.1 e F2.2 DONE!" - Sessione 305*
+*"FASE 2 Performance 60% - F2.1, F2.2, F2.3 DONE!" - Sessione 306*

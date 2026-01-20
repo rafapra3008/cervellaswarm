@@ -84,7 +84,9 @@
 - **DA AGGIUNGERE:** idx_bookings_hotel_dates, idx_payments_booking, idx_guests_hotel
 - **Dipendenze:** Nessuna
 - **Rischio:** BASSO
-- **Status:** [ ] TODO
+- **Status:** [x] DONE - Sessione 305
+- **Audit:** 9/10 APPROVED
+- **Note:** Migration 043_performance_indexes_v2.sql, idx_guests_email fix, idx_room_assignments_dates, idx_bookings_status_dates, EXPLAIN confermato
 
 ### F2.2 Caching Layer [2 sessioni]
 - **Cosa:** LRU cache per dati quasi-statici
@@ -92,7 +94,9 @@
 - **Tech:** functools.lru_cache o cachetools
 - **Dipendenze:** Nessuna
 - **Rischio:** MEDIO (invalidation!)
-- **Status:** [ ] TODO
+- **Status:** [x] DONE - Sessione 305
+- **Audit:** 9/10 APPROVED
+- **Note:** backend/core/cache.py (cachetools TTLCache), TTL 60/15/30 min, invalidazione in room_types.py/rate_plans.py/hotel.py, endpoint /health/cache-stats
 
 ### F2.3 Query N+1 Fix [2-3 sessioni]
 - **Cosa:** Eager loading relazioni
@@ -100,7 +104,13 @@
 - **Tech:** JOIN + prefetch
 - **Dipendenze:** F2.1 (indexes)
 - **Rischio:** MEDIO
-- **Status:** [ ] TODO
+- **Status:** [x] DONE - Sessione 305/306
+- **Audit:** 9/10 APPROVED
+- **Note:**
+  - dashboard.py: FIXATO (bug schema + 3→1 query)
+  - guest_validation.py: validate_guests_compliance_batch() CREATA
+  - planning_ops.py: get_today_arrivals() FIXATO (N→2 query)
+  - get_today_departures() non richiede fix (non usa compliance validation)
 
 ### F2.4 Retry Logic [2 sessioni]
 - **Cosa:** Exponential backoff su servizi esterni
@@ -237,6 +247,8 @@ FASE 3 (Feature)
 | Data | Sessione | Cosa |
 |------|----------|------|
 | 20 Gen 2026 | S303 | Creata SUBROADMAP, approvata da Rafa |
+| 20 Gen 2026 | S305 | F2.1 DONE, F2.2 DONE, F2.3 parziale (autocompact) |
+| 20 Gen 2026 | S306 | F2.3 DONE (planning_ops.py batch fix), FASE 2 = 60% |
 
 ---
 

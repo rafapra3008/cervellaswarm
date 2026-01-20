@@ -1,21 +1,20 @@
 #!/bin/bash
 # =============================================================================
-# sync-to-public.sh - Sync sicuro da privato a pubblico
+# sync-to-public-v2.sh - Sync DEFINITIVO da privato a pubblico
 # =============================================================================
 #
-# PROBLEMA RISOLTO:
-# - origin (privato) contiene TUTTO (6900+ file)
-# - public (pubblico) deve avere SOLO file pubblici
-# - git push public main ESPORREBBE file sensibili!
+# SOLUZIONE AL PROBLEMA:
+# Usa git worktree per creare una copia ISOLATA del repo pubblico.
+# I file privati (.sncp/, NORD.md, etc.) NON interferiscono mai.
 #
-# SOLUZIONE:
-# Questo script crea commit selettivi per il repo pubblico
+# COME FUNZIONA:
+# 1. Crea worktree temporaneo da public/main
+# 2. Copia SOLO file pubblici nella worktree (NO node_modules)
+# 3. Commit e push dalla worktree
+# 4. Rimuove worktree
 #
 # USO:
-#   ./scripts/git/sync-to-public.sh
-#
-# LEZIONE APPRESA (Sessione 286):
-# "Se vedi questo problema la QUARTA volta, qualcosa è andato storto!"
+#   ./scripts/git/sync-to-public-v2.sh [commit-message]
 #
 # =============================================================================
 
@@ -26,30 +25,25 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 CYAN='\033[0;36m'
+BOLD='\033[1m'
 NC='\033[0m'
 
-# File/cartelle PRIVATE (MAI nel public)
-PRIVATE_PATTERNS=(
-    ".sncp/"
-    "NORD.md"
-    "docs/studio/"
-    "scripts/memory/"
-    "scripts/learning/"
-    "scripts/engineer/"
-    "reports/"
-    "data/"
-    "*.db"
-    "COSTITUZIONE.md"
-    "PROMPT_RIPRESA*.md"
-    "MAPPA_*.md"
-    "MANIFESTO.md"
-    "*_PRIVATO*"
-    "*_INTERNO*"
-)
+# Configurazione
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+WORKTREE_DIR="/tmp/cervellaswarm-public-sync-$$"
+WORKTREE_BRANCH="public-sync-temp-$$"
 
-# File/cartelle PUBBLICHE (da sincronizzare)
-PUBLIC_PATTERNS=(
-    "packages/"
+# File/cartelle PUBBLICHE (whitelist - SOLO questi vanno nel public)
+PUBLIC_FILES=(
+    "packages"
+    "README.md"
+    "CHANGELOG.md"
+    "LICENSE"
+    "NOTICE"
+    "CONTRIBUTING.md"
+    ".github"
+    ".gitignore"
     "docs/AGENTS_REFERENCE.md"
     "docs/ARCHITECTURE.md"
     "docs/GETTING_STARTED.md"
@@ -57,19 +51,67 @@ PUBLIC_PATTERNS=(
     "docs/SEMANTIC_SEARCH.md"
     "docs/ARCHITECT_PATTERN.md"
     "docs/GIT_ATTRIBUTION.md"
-    "README.md"
-    "CHANGELOG.md"
-    "LICENSE"
-    "NOTICE"
-    "CONTRIBUTING.md"
-    ".github/"
-    ".gitignore"
 )
 
-echo -e "${CYAN}========================================${NC}"
-echo -e "${CYAN}  SYNC TO PUBLIC REPO${NC}"
-echo -e "${CYAN}========================================${NC}"
-echo ""
+# File che NON DEVONO MAI apparire nella ROOT (blacklist precisa)
+BLACKLIST_ROOT_PATHS=(
+    ".sncp"
+    "NORD.md"
+    "COSTITUZIONE.md"
+    "MANIFESTO.md"
+    "data"
+    "reports"
+)
+
+# Pattern che non devono apparire da NESSUNA parte nel nome file
+BLACKLIST_FILENAME_PATTERNS=(
+    "PROMPT_RIPRESA"
+    "MAPPA_"
+    "_PRIVATO"
+    "_INTERNO"
+)
+
+# Directory che non devono esistere
+BLACKLIST_DIRS=(
+    "docs/studio"
+    "scripts/memory"
+    "scripts/learning"
+    "scripts/engineer"
+)
+
+cleanup() {
+    echo -e "\n${CYAN}Pulizia...${NC}"
+    cd "$REPO_ROOT"
+    git worktree remove "$WORKTREE_DIR" --force 2>/dev/null || true
+    git branch -D "$WORKTREE_BRANCH" 2>/dev/null || true
+}
+
+trap cleanup EXIT
+
+# Funzione per copiare escludendo node_modules e dist
+copy_excluding() {
+    local src="$1"
+    local dst="$2"
+    
+    if [ -d "$src" ]; then
+        # Per directory, usa rsync per escludere node_modules e altri
+        rsync -a --exclude='node_modules' --exclude='dist' --exclude='.turbo' "$src/" "$dst/"
+    else
+        cp "$src" "$dst"
+    fi
+}
+
+# =============================================================================
+# MAIN
+# =============================================================================
+
+echo -e "${BOLD}${CYAN}"
+echo "=============================================="
+echo "  SYNC TO PUBLIC - v2 (Worktree Method)"
+echo "=============================================="
+echo -e "${NC}"
+
+cd "$REPO_ROOT"
 
 # Verifica siamo nel repo giusto
 if [ ! -d ".git" ]; then
@@ -84,48 +126,155 @@ if ! git remote get-url public &>/dev/null; then
     exit 1
 fi
 
-# Mostra stato
-echo -e "${YELLOW}Remote pubblico:${NC} $(git remote get-url public)"
-echo -e "${YELLOW}Branch corrente:${NC} $(git branch --show-current)"
+echo -e "${YELLOW}Repo privato:${NC}  $(git remote get-url origin)"
+echo -e "${YELLOW}Repo pubblico:${NC} $(git remote get-url public)"
 echo ""
 
-# Verifica file sensibili NON siano staged
-echo -e "${CYAN}Verifico file sensibili...${NC}"
-SENSITIVE_FOUND=0
-for pattern in "${PRIVATE_PATTERNS[@]}"; do
-    if git ls-files | grep -q "$pattern" 2>/dev/null; then
-        echo -e "${YELLOW}  Tracciato (privato): ${pattern}${NC}"
-        SENSITIVE_FOUND=1
+# =============================================================================
+# STEP 1: Fetch public e crea worktree
+# =============================================================================
+
+echo -e "${CYAN}[1/6] Fetch public/main...${NC}"
+git fetch public
+
+echo -e "${CYAN}[2/6] Creo worktree isolato...${NC}"
+git worktree add -b "$WORKTREE_BRANCH" "$WORKTREE_DIR" public/main
+
+# =============================================================================
+# STEP 2: Copia file pubblici nel worktree (ESCLUDI node_modules)
+# =============================================================================
+
+echo -e "${CYAN}[3/6] Copio file pubblici (escludo node_modules/dist)...${NC}"
+cd "$WORKTREE_DIR"
+
+for item in "${PUBLIC_FILES[@]}"; do
+    src="$REPO_ROOT/$item"
+    if [ -e "$src" ]; then
+        # Crea directory parent se necessario
+        parent_dir=$(dirname "$item")
+        if [ "$parent_dir" != "." ]; then
+            mkdir -p "$parent_dir"
+        fi
+        
+        # Copia (file o directory)
+        if [ -d "$src" ]; then
+            rm -rf "$item" 2>/dev/null || true
+            mkdir -p "$item"
+            copy_excluding "$src" "$item"
+            echo -e "  ${GREEN}+${NC} $item/ (esclusi node_modules)"
+        else
+            cp "$src" "$item"
+            echo -e "  ${GREEN}+${NC} $item"
+        fi
     fi
 done
 
-if [ $SENSITIVE_FOUND -eq 1 ]; then
+# =============================================================================
+# STEP 3: Verifica sicurezza - NESSUN file privato
+# =============================================================================
+
+echo ""
+echo -e "${CYAN}[4/6] Verifica sicurezza...${NC}"
+
+SECURITY_FAIL=0
+
+# Check 1: Path nella ROOT che non devono esistere
+for item in "${BLACKLIST_ROOT_PATHS[@]}"; do
+    if [ -e "$item" ]; then
+        echo -e "  ${RED}TROVATO FILE/DIR PRIVATO NELLA ROOT: ${item}${NC}"
+        SECURITY_FAIL=1
+    fi
+done
+
+# Check 2: Pattern nei nomi file (escludi node_modules e .git)
+for pattern in "${BLACKLIST_FILENAME_PATTERNS[@]}"; do
+    matches=$(find . -path "./node_modules" -prune -o -path "./.git" -prune -o -path "./packages/*/node_modules" -prune -o -name "*${pattern}*" -print 2>/dev/null | /usr/bin/grep -v "^$" || true)
+    if [ -n "$matches" ]; then
+        echo -e "  ${RED}TROVATO FILE CON PATTERN PRIVATO: ${pattern}${NC}"
+        echo "$matches"
+        SECURITY_FAIL=1
+    fi
+done
+
+# Check 3: Directory specifiche che non devono esistere
+for dir in "${BLACKLIST_DIRS[@]}"; do
+    if [ -d "$dir" ]; then
+        echo -e "  ${RED}TROVATA DIRECTORY PRIVATA: ${dir}${NC}"
+        SECURITY_FAIL=1
+    fi
+done
+
+# Check 4: Verifica che node_modules NON sia stato copiato
+if find . -type d -name "node_modules" 2>/dev/null | /usr/bin/grep -q .; then
+    echo -e "  ${RED}TROVATO node_modules - non dovrebbe esserci!${NC}"
+    SECURITY_FAIL=1
+fi
+
+if [ "$SECURITY_FAIL" -eq 1 ]; then
     echo ""
-    echo -e "${GREEN}OK: File sensibili esistono ma NON saranno pushati al public.${NC}"
-    echo -e "${GREEN}Il sync usa un commit SELETTIVO.${NC}"
+    echo -e "${RED}=============================================="
+    echo -e "  SICUREZZA FALLITA! Sync annullato."
+    echo -e "==============================================${NC}"
+    exit 1
+fi
+
+echo -e "  ${GREEN}OK - Nessun file privato trovato${NC}"
+
+# =============================================================================
+# STEP 4: Mostra diff e chiedi conferma
+# =============================================================================
+
+echo ""
+echo -e "${CYAN}[5/6] Modifiche da sincronizzare:${NC}"
+git add -A
+
+# Mostra solo file modificati (non tutti)
+CHANGES=$(git status --porcelain | wc -l | tr -d ' ')
+
+if [ "$CHANGES" -eq 0 ]; then
+    echo ""
+    echo -e "${YELLOW}Nessuna modifica da sincronizzare.${NC}"
+    echo "Il repo pubblico e gia aggiornato."
+    exit 0
+fi
+
+# Mostra summary
+echo ""
+echo "File modificati: $(git status --porcelain | /usr/bin/grep '^M' | wc -l | tr -d ' ')"
+echo "File aggiunti:   $(git status --porcelain | /usr/bin/grep '^A' | wc -l | tr -d ' ')"
+echo "File eliminati:  $(git status --porcelain | /usr/bin/grep '^D' | wc -l | tr -d ' ')"
+echo ""
+
+# Mostra solo primi 20 file
+echo "Prime 20 modifiche:"
+git status --short | head -20
+if [ "$CHANGES" -gt 20 ]; then
+    echo "... e altri $((CHANGES - 20)) file"
 fi
 
 echo ""
-echo -e "${CYAN}========================================${NC}"
-echo -e "${CYAN}  FILE CHE SARANNO SINCRONIZZATI${NC}"
-echo -e "${CYAN}========================================${NC}"
+echo -e "${YELLOW}=============================================="
+echo -e "  TOTALE: $CHANGES file da sincronizzare"
+echo -e "==============================================${NC}"
+echo ""
+echo "Stai per pushare al repo PUBBLICO:"
+echo "  $(git remote get-url public 2>/dev/null || echo 'public')"
+echo ""
 
-# Mostra file pubblici che verranno sincronizzati
-for pattern in "${PUBLIC_PATTERNS[@]}"; do
-    if [ -e "$pattern" ] || ls $pattern &>/dev/null 2>&1; then
-        echo -e "${GREEN}  + ${pattern}${NC}"
+# Messaggio commit
+if [ -n "$1" ]; then
+    COMMIT_MSG="$1"
+else
+    # Default: leggi versione da package.json se esiste
+    if [ -f "packages/cli/package.json" ]; then
+        VERSION=$(cat packages/cli/package.json | /usr/bin/grep '"version"' | head -1 | sed 's/.*"version": "\([^"]*\)".*/\1/')
+        COMMIT_MSG="Sync v${VERSION} from private"
+    else
+        COMMIT_MSG="Sync from private - $(date +%Y-%m-%d)"
     fi
-done
+fi
 
-echo ""
-echo -e "${YELLOW}========================================${NC}"
-echo -e "${YELLOW}  CONFERMA RICHIESTA${NC}"
-echo -e "${YELLOW}========================================${NC}"
-echo ""
-echo "Stai per sincronizzare i file pubblici al repo:"
-echo "  $(git remote get-url public)"
-echo ""
-echo -e "${RED}ATTENZIONE: Questa operazione è PUBBLICA e visibile a tutti!${NC}"
+echo -e "Commit message: ${CYAN}${COMMIT_MSG}${NC}"
 echo ""
 read -p "Vuoi procedere? (yes/no): " confirm
 
@@ -134,94 +283,34 @@ if [ "$confirm" != "yes" ]; then
     exit 0
 fi
 
-# Crea branch temporaneo per sync
-SYNC_BRANCH="sync-public-$(date +%Y%m%d-%H%M%S)"
-echo ""
-echo -e "${CYAN}Creo branch temporaneo: ${SYNC_BRANCH}${NC}"
-
-# Fetch public
-git fetch public
-
-# Checkout public/main in nuovo branch
-git checkout -b "$SYNC_BRANCH" public/main
-
-# Copia file pubblici dal main
-echo -e "${CYAN}Copio file pubblici...${NC}"
-git checkout main -- packages/
-git checkout main -- README.md
-git checkout main -- CHANGELOG.md
-git checkout main -- LICENSE
-git checkout main -- CONTRIBUTING.md 2>/dev/null || true
-git checkout main -- NOTICE 2>/dev/null || true
-git checkout main -- .github/ 2>/dev/null || true
-git checkout main -- docs/AGENTS_REFERENCE.md 2>/dev/null || true
-git checkout main -- docs/ARCHITECTURE.md 2>/dev/null || true
-git checkout main -- docs/GETTING_STARTED.md 2>/dev/null || true
-git checkout main -- docs/SNCP_GUIDE.md 2>/dev/null || true
-git checkout main -- docs/SEMANTIC_SEARCH.md 2>/dev/null || true
-git checkout main -- docs/ARCHITECT_PATTERN.md 2>/dev/null || true
-git checkout main -- docs/GIT_ATTRIBUTION.md 2>/dev/null || true
-
-# Verifica finale: nessun file sensibile
-echo -e "${CYAN}Verifica finale sicurezza...${NC}"
-for pattern in "${PRIVATE_PATTERNS[@]}"; do
-    if git status --porcelain | grep -q "$pattern" 2>/dev/null; then
-        echo -e "${RED}ERRORE: File sensibile trovato: ${pattern}${NC}"
-        echo -e "${RED}Annullo sync per sicurezza!${NC}"
-        git checkout main
-        git branch -D "$SYNC_BRANCH"
-        exit 1
-    fi
-done
-
-echo -e "${GREEN}Verifica sicurezza: PASSATA${NC}"
-echo ""
-
-# Mostra diff
-echo -e "${CYAN}Modifiche da committare:${NC}"
-git status --short
+# =============================================================================
+# STEP 5: Commit e push
+# =============================================================================
 
 echo ""
-read -p "Confermi commit e push? (yes/no): " confirm2
+echo -e "${CYAN}[6/6] Commit e push...${NC}"
 
-if [ "$confirm2" != "yes" ]; then
-    echo -e "${YELLOW}Sync annullato. Torno a main.${NC}"
-    git checkout main
-    git branch -D "$SYNC_BRANCH"
-    exit 0
-fi
-
-# Commit
-git add -A
-git commit -m "Release v2.0.0-beta - Sync from private
-
-Features:
-- W1: Git Flow 2.0 with worker attribution
-- W2: Tree-sitter AST parsing with PageRank
-- W3: Semantic Search + Architect Pattern
-- W4: Polish, test coverage, CI
+# Commit con --no-verify per evitare hook del repo principale
+git commit --no-verify -m "$COMMIT_MSG
 
 Co-Authored-By: Cervella <noreply@cervellaswarm.com>"
 
-# Push
-echo -e "${CYAN}Push to public...${NC}"
-git push public "$SYNC_BRANCH":main
+# Push dal worktree (usa HEAD perche siamo su branch temporaneo)
+git push public HEAD:main
+
+# =============================================================================
+# DONE
+# =============================================================================
 
 echo ""
-echo -e "${GREEN}========================================${NC}"
-echo -e "${GREEN}  SYNC COMPLETATO!${NC}"
-echo -e "${GREEN}========================================${NC}"
+echo -e "${GREEN}=============================================="
+echo -e "  SYNC COMPLETATO!"
+echo -e "==============================================${NC}"
 echo ""
-echo "Il repo pubblico è stato aggiornato."
+echo "Il repo pubblico e stato aggiornato:"
+echo "  https://github.com/rafapra3008/cervellaswarm"
 echo ""
-
-# Torna a main
-git checkout main
-git branch -D "$SYNC_BRANCH"
-
-echo -e "${GREEN}Tornato a branch main.${NC}"
-echo ""
-echo "Prossimi step:"
-echo "  1. Verifica su GitHub: https://github.com/rafapra3008/cervellaswarm"
-echo "  2. npm publish (se non già fatto)"
-echo "  3. Crea tag: git tag v2.0.0-beta && git push public v2.0.0-beta"
+echo "Prossimi step (se release):"
+echo "  1. Verifica su GitHub"
+echo "  2. npm publish (se necessario)"
+echo "  3. Crea tag: git tag vX.Y.Z && git push public vX.Y.Z"

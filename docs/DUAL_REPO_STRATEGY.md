@@ -1,7 +1,7 @@
 # Dual Repo Strategy - CervellaSwarm
 
-> **LEZIONE APPRESA**: Sessione 286 - Terza volta che incontriamo questo problema!
-> Ora documentato per sempre.
+> **SOLUZIONE DEFINITIVA**: Sessione 304+ - Metodo Worktree!
+> Problema risolto dopo 3 tentativi falliti.
 
 ---
 
@@ -24,68 +24,91 @@
 
 ---
 
-## La Soluzione
+## La Soluzione Definitiva: Worktree
 
-### Hybrid Model (Sessione 267)
+### Perche Worktree Funziona
 
-| Repo | URL | Contenuto |
-|------|-----|-----------|
-| **origin** (privato) | cervellaswarm-internal | Tutto il codice |
-| **public** (pubblico) | cervellaswarm | Solo file pubblici |
+1. **Isolamento totale**: Il worktree e una directory SEPARATA
+2. **No conflitti**: I file del repo privato NON interferiscono
+3. **Whitelist pura**: Solo i file nella lista vanno nel pubblico
+4. **Verifica automatica**: Blacklist controllata prima del push
 
-### Come Sincronizzare
-
-**USA SEMPRE lo script:**
+### Come Usare
 
 ```bash
+# Sempre usare lo script!
 ./scripts/git/sync-to-public.sh
+
+# Con messaggio custom
+./scripts/git/sync-to-public.sh "Release v2.1.0"
 ```
 
-Lo script:
-1. Crea branch temporaneo da public/main
-2. Copia SOLO file pubblici da main
-3. Verifica che nessun file sensibile sia incluso
-4. Richiede conferma MANUALE prima di push
-5. Pusha e pulisce
-
-### File Pubblici (sincronizzati)
+### Cosa Fa lo Script
 
 ```
-packages/           # CLI e MCP Server
-docs/*.md           # Solo doc pubbliche (non studio/)
+1. Fetch public/main
+2. Crea worktree temporaneo in /tmp/
+3. Copia SOLO file pubblici (whitelist)
+4. Esclude node_modules e dist
+5. Verifica sicurezza (blacklist)
+6. Mostra diff e chiede conferma
+7. Commit e push
+8. Pulisce worktree
+```
+
+---
+
+## File Pubblici (Whitelist)
+
+```
+packages/           # CLI e MCP Server (NO node_modules)
 README.md
 CHANGELOG.md
 LICENSE
+NOTICE
 CONTRIBUTING.md
 .github/
+.gitignore
+docs/AGENTS_REFERENCE.md
+docs/ARCHITECTURE.md
+docs/GETTING_STARTED.md
+docs/SNCP_GUIDE.md
+docs/SEMANTIC_SEARCH.md
+docs/ARCHITECT_PATTERN.md
+docs/GIT_ATTRIBUTION.md
 ```
 
-### File Privati (MAI sincronizzati)
+## File Privati (Blacklist)
 
 ```
 .sncp/              # Memoria esterna, strategie
 NORD.md             # Bussola progetto
+COSTITUZIONE.md     # Principi interni
+MANIFESTO.md
 docs/studio/        # Ricerche interne
 scripts/memory/     # Database swarm
 scripts/learning/   # Apprendimento interno
 scripts/engineer/   # Tool interni
 reports/            # Report interni
 data/               # Dati locali
-COSTITUZIONE.md     # (se nel repo)
 PROMPT_RIPRESA*.md
 MAPPA_*.md
+*_PRIVATO*
+*_INTERNO*
 ```
 
 ---
 
-## Checklist Pre-Sync
+## Tentativi Falliti (per memoria)
 
-Prima di sincronizzare al public:
+### v1 - Checkout + Add (FALLITO)
+- Problema: i file tracciati nel privato causavano conflitti durante checkout
 
-- [ ] Ho usato `./scripts/git/sync-to-public.sh`?
-- [ ] Lo script ha confermato "Verifica sicurezza: PASSATA"?
-- [ ] Ho rivisto i file nel diff prima di confermare?
-- [ ] NON ho fatto `git push public main` direttamente?
+### v1.1 - Con verifica sicurezza (FALLITO)
+- Problema: pre-commit hook interferiva, git add catturava file non voluti
+
+### v2 - Worktree (SUCCESSO!)
+- Soluzione: directory completamente isolata, nessuna interferenza
 
 ---
 
@@ -97,8 +120,7 @@ Prima di sincronizzare al public:
 # MAI fare questo!
 git push public main
 git push public HEAD:main
-
-# Espone TUTTI i file, inclusi quelli privati!
+git checkout public/main  # NO! Conflitti!
 ```
 
 ### CORRETTO
@@ -106,21 +128,7 @@ git push public HEAD:main
 ```bash
 # Sempre usare lo script
 ./scripts/git/sync-to-public.sh
-
-# Lo script gestisce tutto in sicurezza
 ```
-
----
-
-## Storia del Problema
-
-| Sessione | Cosa è successo |
-|----------|-----------------|
-| 267 | Creato Hybrid Model, primo sync manuale |
-| ??? | Secondo incontro con il problema |
-| 286 | Terzo incontro → Creato script definitivo |
-
-**Ora documentato. Non deve succedere una QUARTA volta!**
 
 ---
 
@@ -129,14 +137,14 @@ git push public HEAD:main
 ```
 1. Sviluppo su main (origin/privato)
 2. Test completi
-3. Version bump
-4. ./scripts/git/sync-to-public.sh
-5. npm publish
-6. git tag vX.Y.Z
-7. git push public vX.Y.Z
+3. Version bump (npm version patch/minor/major)
+4. ./scripts/git/sync-to-public.sh "Release vX.Y.Z"
+5. npm publish (se necessario)
+6. git tag vX.Y.Z && git push public vX.Y.Z
 ```
 
 ---
 
 *"Fatto BENE > Fatto VELOCE"*
-*Sessione 286 - Cervella & Rafa*
+*Sessione 304 - Cervella & Rafa*
+*Soluzione definitiva dopo 3 tentativi!*
