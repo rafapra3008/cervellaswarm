@@ -1,42 +1,41 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 298
-> **STATUS:** SNCP 2.0 - Day 3 + Day 4 Completati!
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 299
+> **STATUS:** SNCP 2.0 COMPLETATO! (100%)
 
 ---
 
-## SESSIONE 298 - SNCP 2.0 DAY 3-4 COMPLETATI!
+## SESSIONE 299 - SNCP 2.0 COMPLETATO!
 
 ```
 +================================================================+
-|   SNCP 2.0 - MEMORIA PERFETTA                                  |
+|   SNCP 2.0 - MEMORIA PERFETTA - COMPLETATO!                    |
 |                                                                |
-|   Score Guardiana Day 3: 9.5/10                                |
-|   Score Guardiana Day 4: 9.5/10                                |
-|   Score target finale:  9.5/10                                 |
+|   Score Guardiana Day 5: 10/10                                 |
+|   Score Guardiana Day 6: 9.5/10                                |
+|   Score target finale:  9.5/10  RAGGIUNTO!                    |
 |                                                                |
 |   Day 1: DONE (deprecato oggi.md)                              |
 |   Day 2: DONE (puliti riferimenti)                             |
 |   Day 3: DONE (template handoff 6-sezioni)                     |
 |   Day 4: DONE (test template + best practices)                 |
+|   Day 5: DONE (hook updates)                                   |
+|   Day 6: DONE (documentazione finale)                          |
 +================================================================+
 ```
 
 ---
 
-## COSA FATTO SESSIONE 298
+## COSA FATTO SESSIONE 299
 
-### DAY 3: Template Handoff 6-Sezioni
-- Template verificato in `.swarm/templates/TEMPLATE_SESSION_HANDOFF.md`
-- Naming convention: `HANDOFF_YYYYMMDD_{progetto}_S{N}.md`
-- Documentato in `docs/SNCP_GUIDE.md`
-- Audit Guardiana: 9.5/10 - APPROVE
+### DAY 5: Hook Updates (Score 10/10)
+- `session_start_swarm.py` v2.1.0 con warning automatici
+- `settings.json`: SessionEnd hook configurato
 
-### DAY 4: Test Template + Best Practices
-- Confronto vecchio (271) vs nuovo (298) formato
-- Miglioramenti: LESSONS LEARNED, BLOCKERS, priorita
-- 6 Best Practices documentate in SNCP_GUIDE.md
-- Audit Guardiana: 9.5/10 - APPROVE
+### DAY 6: Documentazione Finale (Score 9.5/10)
+- README SNCP: hook names corretti + sezione HANDOFF
+- CLAUDE.md: hook names corretti
+- PROMPT_RIPRESA_MASTER: oggi.md rimosso dai limiti
 
 ---
 
@@ -47,34 +46,32 @@ Day 1: Depreca oggi.md     [##########] DONE
 Day 2: Pulisci riferimenti [##########] DONE
 Day 3: Template handoff    [##########] DONE
 Day 4: Test template       [##########] DONE
-Day 5: Aggiorna hook       [__________] PENDING
-Day 6: Documentazione      [__________] PENDING
+Day 5: Aggiorna hook       [##########] DONE
+Day 6: Documentazione      [##########] DONE
 
-PROGRESSO: 67% (4/6 giorni)
+PROGRESSO: 100% (6/6 giorni) - COMPLETATO!
 ```
 
 ---
 
 ## PROSSIMA SESSIONE
 
-**SNCP 2.0 - Day 5:**
-- Aggiornare hook per supportare nuovo formato handoff
-- Hook da modificare (da subroadmap):
-  - `sncp_pre_session_hook.py` - Warning se handoff > 3 sessioni
-  - `sncp_verify_sync_hook.py` - Verifica handoff recente
-  - `file_limits_guard.py` - Nessun limite su handoff
+SNCP 2.0 completato! Prossimi focus possibili:
+- Outreach e marketing CervellaSwarm
+- Nuove feature per utenti
+- Altro progetto (Miracollo, Contabilita)
 
 ---
 
-## FILE CHIAVE SESSIONE 298
+## FILE CHIAVE SESSIONE 299
 
 | File | Cosa |
 |------|------|
-| `docs/SNCP_GUIDE.md` | Sezione Handoffs + Best Practices |
-| `.sncp/handoff/HANDOFF_20260120_cervellaswarm_S298.md` | Primo handoff nuovo formato |
-| `.swarm/templates/TEMPLATE_SESSION_HANDOFF.md` | Template 6-sezioni |
+| `.claude/hooks/session_start_swarm.py` | v2.1.0 - Warning SNCP 2.0 |
+| `.sncp/README.md` | Documentazione SNCP aggiornata |
+| `~/.claude/CLAUDE.md` | Hook names corretti |
 
 ---
 
-*"298 sessioni! Day 3-4 completati - 9.5/10!"*
-*Sessione 298 - Cervella & Rafa*
+*"299 sessioni! SNCP 2.0 COMPLETATO - 100%!"*
+*Sessione 299 - Cervella & Rafa*

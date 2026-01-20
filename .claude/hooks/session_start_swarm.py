@@ -8,18 +8,22 @@ Carica automaticamente all'avvio sessione:
 - PROMPT_RIPRESA.md (stato attuale)
 - Check CODE REVIEW day (Lunedi/Venerdi)
 - Reminder regole Sciame
+- Warning se PROMPT_RIPRESA > 7 giorni vecchio (SNCP 2.0)
+- Warning se ultimo handoff > 3 giorni (SNCP 2.0)
 
-Versione: 2.0.0
-Data: 2026-01-14
+Versione: 2.1.0
+Data: 2026-01-20
 Cervella & Rafa
 
 v2.0.0 - Aggiunta COSTITUZIONE obbligatoria!
+v2.1.0 - Sessione 299 - SNCP 2.0 Day 5: Warning PROMPT_RIPRESA e handoff
 """
 
 import json
 import sys
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
+import os
 
 # Path progetto
 PROJECT_ROOT = Path(__file__).parent.parent.parent
@@ -51,6 +55,63 @@ def check_if_review_day() -> tuple:
     is_review_day = day_num in [0, 4]
     day_name = day_names.get(day_num, now.strftime("%A"))
     return is_review_day, day_name
+
+
+def check_prompt_ripresa_age(file_path: Path, max_days: int = 7) -> tuple:
+    """
+    Verifica se PROMPT_RIPRESA e' troppo vecchio.
+    SNCP 2.0 - Warning se > 7 giorni senza update.
+
+    Returns: (is_old, days_old)
+    """
+    try:
+        if not file_path.exists():
+            return False, 0
+
+        mtime = os.path.getmtime(file_path)
+        file_date = datetime.fromtimestamp(mtime)
+        days_old = (datetime.now() - file_date).days
+
+        return days_old > max_days, days_old
+    except Exception:
+        return False, 0
+
+
+def check_handoff_age(handoff_dir: Path, project_name: str, max_days: int = 3) -> tuple:
+    """
+    Verifica se ultimo handoff per il progetto e' troppo vecchio.
+    SNCP 2.0 - Warning se > 3 giorni senza handoff.
+
+    Returns: (is_old, days_old, last_handoff_name)
+    """
+    try:
+        if not handoff_dir.exists():
+            return True, 999, None
+
+        # Cerca handoff per questo progetto
+        # Pattern: HANDOFF_*cervellaswarm*.md o HANDOFF_*_S*.md (nuovo formato)
+        handoffs = []
+        for f in handoff_dir.glob("*.md"):
+            name_lower = f.name.lower()
+            if project_name.lower() in name_lower or f"_s" in name_lower:
+                handoffs.append(f)
+
+        if not handoffs:
+            # Fallback: prendi tutti gli handoff recenti
+            handoffs = list(handoff_dir.glob("HANDOFF_*.md"))
+
+        if not handoffs:
+            return True, 999, None
+
+        # Trova il piu' recente per data modifica
+        latest = max(handoffs, key=lambda f: os.path.getmtime(f))
+        mtime = os.path.getmtime(latest)
+        file_date = datetime.fromtimestamp(mtime)
+        days_old = (datetime.now() - file_date).days
+
+        return days_old > max_days, days_old, latest.name
+    except Exception:
+        return False, 0, None
 
 
 def main():
@@ -88,6 +149,26 @@ def main():
             context_parts.append("## CODE REVIEW DAY!")
             context_parts.append(f"**Oggi e {day_name}** - Giorno di Code Review settimanale!")
             context_parts.append("Chiedi a Rafa se vuole invocare `cervella-reviewer` per audit.")
+            context_parts.append("")
+
+        # SNCP 2.0 - Warning se PROMPT_RIPRESA troppo vecchio
+        prompt_ripresa_path = PROJECT_ROOT / ".sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md"
+        is_pr_old, pr_days = check_prompt_ripresa_age(prompt_ripresa_path, max_days=7)
+        if is_pr_old:
+            context_parts.append("## SNCP WARNING - PROMPT_RIPRESA VECCHIO!")
+            context_parts.append(f"**PROMPT_RIPRESA non aggiornato da {pr_days} giorni!**")
+            context_parts.append("Aggiornare a fine sessione con stato attuale.")
+            context_parts.append("")
+
+        # SNCP 2.0 - Warning se ultimo handoff troppo vecchio
+        handoff_dir = PROJECT_ROOT / ".swarm/handoff"
+        is_handoff_old, handoff_days, last_handoff = check_handoff_age(handoff_dir, "cervellaswarm", max_days=3)
+        if is_handoff_old and handoff_days > 0:
+            context_parts.append("## SNCP WARNING - HANDOFF MANCANTE!")
+            context_parts.append(f"**Ultimo handoff: {handoff_days} giorni fa**")
+            if last_handoff:
+                context_parts.append(f"Ultimo: `{last_handoff}`")
+            context_parts.append("Creare handoff a fine sessione (template 6-sezioni).")
             context_parts.append("")
 
         # Reminder Sciame

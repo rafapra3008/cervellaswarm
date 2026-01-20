@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - MASTER (Globale)
 
-> **Ultimo aggiornamento:** 16 Gennaio 2026 - Sessione 244
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 299
 > **Tabella ecosistema condivisa - SOLO link ai file specifici**
 
 ---
@@ -9,9 +9,9 @@
 
 | Progetto | PROMPT_RIPRESA | Aggiornato | TL;DR |
 |----------|----------------|------------|-------|
-| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-01-16 | Sprint 3 Stripe COMPLETATO |
-| **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-16 | Miracollook: Design Salutare COMPLETATO! |
-| **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-01-15 | In pausa |
+| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-01-20 | SNCP 2.0 Day 6 - Cleanup riferimenti oggi.md |
+| **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-20 | Miracollook: Design Salutare COMPLETATO! |
+| **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-01-20 | In pausa |
 
 ---
 
@@ -33,11 +33,10 @@ FINE SESSIONE:
 ## LIMITI (OBBLIGATORI!)
 
 ```
-Ogni PROMPT_RIPRESA: max 150 righe
-oggi.md: max 60 righe
+PROMPT_RIPRESA: max 150 righe
 stato.md: max 500 righe
 
-VIOLAZIONE = ARCHIVIARE sessioni vecchie!
+(oggi.md: DEPRECATO - non usare)
 ```
 
 ---

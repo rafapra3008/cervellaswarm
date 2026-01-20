@@ -145,6 +145,23 @@ Tu fai:
 
 ---
 
+## HANDOFF SESSIONE (SNCP 2.0)
+
+Template 6-sezioni in `.swarm/templates/TEMPLATE_SESSION_HANDOFF.md`
+
+**Naming:** `HANDOFF_YYYYMMDD_{progetto}_S{N}.md`
+**Dove:** `.swarm/handoff/`
+
+**Sezioni:**
+1. ACCOMPLISHED - Cosa completato
+2. CURRENT STATE - Stato attuale
+3. LESSONS LEARNED - Cosa imparato
+4. NEXT STEPS - Prossimi passi
+5. KEY FILES - File importanti
+6. BLOCKERS - Problemi aperti
+
+---
+
 ## NAMING FILE
 
 ```
@@ -160,8 +177,8 @@ REPORT:      YYYYMMDD_TIPO_cosa.md
 
 | Quando | Cosa | Hook/Script |
 |--------|------|-------------|
-| Inizio sessione | Check stato SNCP | sncp_pre_session_hook.py |
-| Fine sessione | Verifica coerenza | sncp_verify_sync_hook.py |
+| Inizio sessione | Check stato SNCP + Warning | session_start_swarm.py |
+| Fine sessione | Verifica limiti file | file_limits_guard.py |
 | Login Mac | Daily maintenance | Launchd daily |
 | Ogni Lunedi | Weekly archive | Launchd weekly |
 
@@ -241,6 +258,7 @@ verify-sync --verbose
 | 209 | Hook automatici + Launchd manutenzione |
 | 211 | Pulizia struttura v4.0 (rimosse 4 cartelle obsolete) |
 | **296** | **SNCP 5.0: Deprecato oggi.md, chiariti ruoli file** |
+| 299 | SNCP 2.0 Day 5-6: Hook v2.1.0 + Documentazione finale |
 
 ---
 
