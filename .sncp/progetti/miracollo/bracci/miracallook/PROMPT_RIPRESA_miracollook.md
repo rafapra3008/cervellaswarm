@@ -5,34 +5,41 @@
 
 # PROMPT RIPRESA - Miracollook
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 302
-> **ROBUSTEZZA:** 9.6 → 9.7/10 (+0.1) | FASE 8 COMPLETATA!
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 303
+> **ROBUSTEZZA:** 9.7 → 9.8/10 (+0.1) | FASE 9 COMPLETATA!
 
 ---
 
-## SESSIONE 302 - FASE 8 TEST COVERAGE
+## SESSIONE 303 - FASE 9 DOCKER/INFRA
 
 ```
 +================================================================+
-|   SCORE: 9.6/10 → 9.7/10 (+0.1)                                |
-|   FASE 8 Test Coverage COMPLETATA!                              |
-|   Guardiana Qualità: 8.5/10, 7/10, 8.5/10, 8.5/10              |
+|   SCORE: 9.7/10 → 9.8/10 (+0.1)                                |
+|   FASE 9 Docker/Infra COMPLETATA!                               |
+|   Guardiana Qualità: 9.5, 9.5, 9, 8.5, 9/10                    |
 +================================================================+
 ```
 
-### FASE 8 - Test Coverage (9.7/10)
+### FASE 9 - Docker/Infra (9.8/10)
 
 | Task | Cosa | Score Guardiana |
 |------|------|-----------------|
-| 8.1 Test Gmail API | test_inbox.py, test_actions.py (+31 test) | 8.5/10 |
-| 8.2 Test AI | test_ai.py (+17 test) | 7/10 |
-| 8.3 Setup Vitest | vitest.config.ts + setup.ts | OK |
-| 8.4 Test hooks | useAppState.test.ts, useSelection.test.ts (+39 test) | 8.5/10 |
-| 8.5 Test api.ts | api.test.ts (+33 test) | 8.5/10 |
+| 9.1 Dockerfile backend | Multi-stage python:3.13-slim | 9.5/10 |
+| 9.2 Dockerfile frontend | node:20-alpine + nginx:1.25-alpine | 9.5/10 |
+| 9.3 docker-compose | Prod + Dev, healthcheck, limits | 9/10 |
+| 9.4 Health check avanzato | /health + /health/deep (DB check) | 8.5/10 |
+| 9.5 .env files | .env.example + .env.production.example | 9/10 |
 
-**Coverage Backend:** 49% → 73% (target 70% RAGGIUNTO!)
-**Test Backend:** 31 → 79 (+48)
-**Test Frontend:** 0 → 74 (Vitest nuovo!)
+### File Creati Sessione 303
+
+```
+miracollook/
+├── backend/Dockerfile, .dockerignore
+├── frontend/Dockerfile, .dockerignore, nginx.conf
+├── docker-compose.yml, docker-compose.dev.yml
+├── .env.example (aggiornato), .env.production.example
+└── .gitignore (aggiornato)
+```
 
 ---
 
@@ -47,34 +54,32 @@ FASE 4: Testing Backend  → 9.0/10  ✓
 FASE 5: Logging          → 9.2/10  ✓
 FASE 6: Frontend         → 9.5/10  ✓
 FASE 7: Refactoring      → 9.6/10  ✓
-FASE 8: Test Coverage    → 9.7/10  ✓ ← SESSIONE 302!
+FASE 8: Test Coverage    → 9.7/10  ✓
+FASE 9: Docker/Infra     → 9.8/10  ✓ ← SESSIONE 303!
 ```
 
 ---
 
-## VERSO 10/10 (SUBROADMAP)
+## VERSO 10/10
 
 ```
 Vedi: .sncp/roadmaps/SUBROADMAP_MIRACOLLOOK_10.md
 
-FASE 9: Docker/Infra     → TODO (containerizzazione)
 FASE 10: Documentation   → 10/10 PRODUCTION-READY!
+- README.md completo
+- docs/SETUP.md
+- docs/ARCHITECTURE.md
+- docs/DEPLOY.md
 ```
 
 ---
 
-## FILE CHIAVE SESSIONE 302
+## RICERCA CREATA
 
 | File | Contenuto |
 |------|-----------|
-| `backend/tests/test_inbox.py` | 10 test inbox endpoints |
-| `backend/tests/test_actions.py` | 21 test actions endpoints |
-| `backend/tests/test_ai.py` | 17 test AI summarization |
-| `frontend/vitest.config.ts` | Config Vitest |
-| `frontend/src/hooks/useAppState.test.ts` | 18 test hook |
-| `frontend/src/hooks/useSelection.test.ts` | 21 test hook |
-| `frontend/src/services/api.test.ts` | 33 test API client |
+| `RICERCA_DOCKER_BEST_PRACTICES_2026.md` | Template completi, best practices |
 
 ---
 
-*"9.7/10 - Coverage 73%! Ancora 2 fasi al 10!" - Sessione 302*
+*"9.8/10 - Docker ready! Solo 1 fase al 10! Ultrapassar os próprios limites!" - Sessione 303*
