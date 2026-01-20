@@ -5,8 +5,30 @@
 
 # PROMPT RIPRESA - PMS Core
 
-> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 272
-> **STATO:** 90% LIVE | Health 6.5/10 (in miglioramento)
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 300
+> **STATO:** 90% LIVE | Health 6.8/10 (SPLIT FILE in corso!)
+
+---
+
+## SESSIONE 300 - PULIZIA CASA CONTINUA
+
+```
++================================================================+
+|   SPLIT FILE GIGANTI: 2/6 COMPLETATI!                          |
+|                                                                |
+|   [x] test_action_tracking.py: 820 → 8 file (tutti <150 righe) |
+|   [x] ml_api.py: 705 → 7 file (tutti <150 righe)               |
+|   [ ] cm_import_service.py: 762 (PROSSIMO)                     |
+|   [ ] planning_core.py: 746 (ALTO RISCHIO)                     |
+|   [ ] ab_testing_api.py: 768                                   |
+|   [ ] city_tax.py: 721                                         |
+|                                                                |
++================================================================+
+```
+
+**Commit:**
+- `871a1f9` - Split test_action_tracking.py
+- `2e5a802` - Split ml_api.py
 
 ---
 

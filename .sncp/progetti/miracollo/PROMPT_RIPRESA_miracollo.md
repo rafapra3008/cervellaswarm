@@ -4,8 +4,8 @@
 
 # PROMPT RIPRESA - Ecosistema Miracollo
 
-> **Ultimo aggiornamento:** 19 Gennaio 2026 - Sessione 270
-> **Status:** 3 bracci attivi, Miracollook robustezza +2.0!
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 300
+> **Status:** 3 bracci attivi, PMS PULIZIA CASA 2/6 file!
 
 ---
 
@@ -27,7 +27,7 @@
 
 | Braccio | Porta | Score | Focus Attuale |
 |---------|-------|-------|---------------|
-| **PMS Core** | 8001 | 90% LIVE | Modulo Finanziario (75%) |
+| **PMS Core** | 8001 | 90% LIVE | PULIZIA CASA 2/6 file split |
 | **Miracollook** | 8002 | 8.5/10 | FASE 4-6 robustezza |
 | **Room Hardware** | 8003 | 10% | Attesa hardware Amazon |
 
