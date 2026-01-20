@@ -1,22 +1,20 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 290
-> **STATUS:** W5 Day 3 COMPLETATO!
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 291
+> **STATUS:** W5 Day 4 COMPLETATO!
 
 ---
 
-## SESSIONE 290 - W5 Day 3 FATTO!
+## SESSIONE 291 - W5 Day 4 FATTO!
 
 ```
 +================================================================+
-|   W5 DAY 3 - SEMANTIC SEARCH CLI WRAPPER                        |
+|   W5 DAY 4 - IMPACT CLI + TOOLS                                 |
 |                                                                |
-|   [x] Pre-day checkpoint (git tag w5-day3-start)               |
-|   [x] Creare scripts/architect/semantic-search.sh v1.0.0       |
-|   [x] Implementare 3 comandi + JSON output                     |
-|   [x] Test 3 criteri misurabili PASS                           |
-|   [x] Aggiornare docs/SEMANTIC_SEARCH.md                       |
-|   [x] Audit Guardiana Qualita                                  |
+|   [x] Creare scripts/architect/impact-analyze.sh v1.0.0        |
+|   [x] Aggiungere Bash ai tools di cervella-architect           |
+|   [x] Test E2E: Architect crea plan completo                   |
+|   [x] Audit Guardiana Qualita (3 step audit)                   |
 |                                                                |
 |   SCORE FINALE: 9.5/10 - TARGET RAGGIUNTO!                     |
 +================================================================+
@@ -26,23 +24,24 @@
 
 | File | Versione | Cosa |
 |------|----------|------|
-| scripts/architect/semantic-search.sh | v1.0.0 | CLI wrapper (301 righe) |
-| docs/SEMANTIC_SEARCH.md | - | Sezione "Bash Wrapper CLI (W5)" |
+| scripts/architect/impact-analyze.sh | v1.0.0 | CLI wrapper (317 righe) |
+| ~/.claude/agents/cervella-architect.md | - | +Bash tools, CLI docs |
+| .swarm/plans/PLAN_refactor_SemanticSearch_performance.md | - | Test E2E |
 
 ### CRITERI VERIFICATI
 
 ```bash
-# Test 1: Symbol esistente
-./scripts/architect/semantic-search.sh find-symbol "SemanticSearch"
-# Exit code: 0, JSON: {"found": true, ...}
+# Test 1: Impact estimate
+./scripts/architect/impact-analyze.sh estimate "SemanticSearch"
+# Exit code: 0, JSON: {"found": true, "result": {"risk_score": 0.709, ...}}
 
 # Test 2: Symbol non esistente
-./scripts/architect/semantic-search.sh find-symbol "NonExistent123"
+./scripts/architect/impact-analyze.sh estimate "NonExistent"
 # Exit code: 1, JSON: {"found": false, ...}
 
-# Test 3: Help
-./scripts/architect/semantic-search.sh --help
-# Exit code: 0
+# Test 3: Bash in architect
+grep -c "Bash" ~/.claude/agents/cervella-architect.md
+# Output: 3 (>= 1 required)
 ```
 
 ---
@@ -52,25 +51,25 @@
 ```
 W5 Day 1: Architect routing     [DONE] 100%
 W5 Day 2: Architect docs + E2E  [DONE] 100%
-W5 Day 3: Semantic CLI wrapper  [DONE] 100%  <-- OGGI!
-W5 Day 4: Impact CLI + tools    [NEXT]
-W5 Day 5: Worker DNA + test     [TODO]
+W5 Day 3: Semantic CLI wrapper  [DONE] 100%
+W5 Day 4: Impact CLI + tools    [DONE] 100%  <-- OGGI!
+W5 Day 5: Worker DNA + test     [NEXT]
 
-TOTALE W5: 60% (3/5 days)
+TOTALE W5: 80% (4/5 days)
 ```
 
 ---
 
-## PROSSIMA SESSIONE (Day 4)
+## PROSSIMA SESSIONE (Day 5)
 
 ```
-1. Creare scripts/architect/impact-analyze.sh
-2. Aggiungere Bash ai tools di cervella-architect
-3. Test E2E: Architect usa entrambi CLI
+1. _SHARED_DNA.md menzioni semantic/architect
+2. cervella-backend.md esempi CLI
+3. Test FINALE workflow completo
 ```
 
 ---
 
-*"290 sessioni! W5 al 60%!"*
+*"291 sessioni! W5 al 80%!"*
 *"Ultrapassar os proprios limites!"*
-*Sessione 290 - Cervella & Rafa*
+*Sessione 291 - Cervella & Rafa*

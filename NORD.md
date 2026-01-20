@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 20 Gennaio 2026 - Sessione 290 - W5 Day 3 COMPLETATO!
+> Aggiornato: 20 Gennaio 2026 - Sessione 291 - W5 Day 4 COMPLETATO!
 
 ```
 +==================================================================+
@@ -327,12 +327,12 @@ ROADMAP 2.0:
       Day 1: Apple Polish DRY       DONE (9.5/10)
       Day 2-3: Test Coverage + CI   DONE (9.5/10)
       Day 4: Release v2.0-beta      DONE (9.5/10)
-  W5: Dogfooding     ████████████________ 60% IN CORSO!
+  W5: Dogfooding     ████████████████____ 80% IN CORSO!
       Day 1: Architect Integration  DONE (10/10)
       Day 2: Architect docs + test  DONE (9.5/10)
-      Day 3: Semantic Search CLI    DONE (9.5/10) ← OGGI!
-      Day 4: Impact Analyzer CLI    [NEXT]
-      Day 5: Worker DNA + test      [TODO]
+      Day 3: Semantic Search CLI    DONE (9.5/10)
+      Day 4: Impact Analyzer CLI    DONE (9.5/10) ← OGGI!
+      Day 5: Worker DNA + test      [NEXT]
 ```
 
 ---
