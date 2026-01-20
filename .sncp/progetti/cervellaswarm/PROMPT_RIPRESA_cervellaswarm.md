@@ -1,95 +1,89 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 305
-> **STATUS:** Security + Stripe + Sync + Landing Deploy COMPLETATO!
+> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 306
+> **STATUS:** RICERCA BUSINESS + SUBROADMAP VENDITA COMPLETATA!
 
 ---
 
-## SESSIONE 305 - SECURITY + STRIPE + SYNC
+## SESSIONE 306 - "QUELLA L'UNICA" TROVATA!
 
 ```
 +================================================================+
-|   TUTTI I TASK COMPLETATI!                                     |
+|   DECISIONE STRATEGICA:                                        |
 |                                                                |
-|   - README.md: 17 agents + Architect                           |
-|   - AGENTS_REFERENCE.md: sezione Architect aggiunta            |
-|   - API: rate limiting + debug endpoints rimossi               |
-|   - Stripe: $29 PRO / $49 TEAM (nuovi price_id)               |
-|   - Repo pubblico: SINCRONIZZATO                               |
-|   - Landing: DEPLOY 17 agents su cervellaswarm.com             |
+|   "QUELLA L'UNICA" = CERVELLASWARM                            |
 |                                                                |
+|   Perche: E GIA FATTO. E GIA REALE.                           |
+|   Non costruire nuovo. VENDERE quello che abbiamo.            |
+|                                                                |
+|   Target: 50 clienti = €1450/mese MRR                         |
+|   Timeline: 90 giorni                                          |
 +================================================================+
 ```
 
 ---
 
-## COSA FATTO SESSIONE 305
+## COSA FATTO SESSIONE 306
 
-### Documentazione
-| File | Fix |
-|------|-----|
-| README.md (root) | 16 → 17 agents, Architect in tabella |
-| docs/AGENTS_REFERENCE.md | 16 → 17, sezione Architect completa |
+### Ricerca Business (ore di analisi)
 
-### Security (API Fly.io)
-| Fix | Dettaglio |
-|-----|-----------|
-| Rate limiting | 100 req/15min per IP (express-rate-limit) |
-| Debug endpoints | /debug/stripe-account e /debug/stripe-config RIMOSSI |
-| Deploy | fly deploy completato |
+| Ricerca | Risultato |
+|---------|-----------|
+| Opportunita business 2026 | 8 opzioni analizzate |
+| Shopify Bundle AI | Score 6.8/10 (scartato) |
+| Chrome Extension | Score 8.1/10 (scartato - saturo) |
+| Construction Payment | Score 9.3 → 6.8 (competenze mancanti) |
+| **CervellaSwarm** | GIA FATTO = scelta finale |
 
-### Stripe Pricing
-| Tier | Vecchio | Nuovo | Price ID |
-|------|---------|-------|----------|
-| PRO | $20/mo | $29/mo | price_1Srh32DcRzSMjFE4Oy60XTvL |
-| TEAM | $35/mo | $49/mo | price_1Srh4PDcRzSMjFE4GEF5jdfn |
+### Plugin Claude Code
 
-### Sync Pubblico
-- Metodo: git worktree isolato (fix definitivo)
-- Script aggiornato: scripts/git/sync-to-public.sh
-- Commit su public: e556db2
+| Domanda | Risposta |
+|---------|----------|
+| Vale la pena? | SI! |
+| Abbiamo gia tutto? | SI! (MCP + Plugin + CLI) |
+| Cosa manca? | Solo submission ai registry |
 
-### Landing Deploy
-- cervellaswarm.com: 17 agents (era 16)
-- Deploy: wrangler pages deploy
-- Cloudflare Pages: OK
+### File Creati
+
+| File | Cosa |
+|------|------|
+| `SUBROADMAP_VENDITA_CERVELLASWARM.md` | Piano 90 giorni |
+| `PIANO_VENDITA_90_GIORNI_*.md` | 4 file dettagliati (~1500 righe) |
+| `RICERCA_PLUGIN_VS_MCP.md` | Analisi plugin |
 
 ---
 
-## GUARDIANE COINVOLTE
+## PROSSIMI STEP (Sessione 307)
 
-| Guardiana | Task | Verdetto |
-|-----------|------|----------|
-| Qualita | Audit pre-sync | GO 9/10 |
-| Ops | Security check + fix script | GO |
-| Ricerca | Audit outreach | 7.5/10 (canali non sfruttati) |
-| Marketing | Conferma pricing | $29/$49 OK |
+**PRIORITA CRITICA:**
+1. [ ] Submit plugin → clau.de/plugin-directory
+2. [ ] Submit MCP → registry.modelcontextprotocol.io
+3. [ ] Join MCP Discord (11K membri!)
+4. [ ] Stripe Live Mode
+
+**PRIORITA ALTA:**
+5. [ ] PR awesome-mcp-servers
+6. [ ] Show HN (martedi 21 Gen)
 
 ---
 
-## STATO ATTUALE
+## DIFFERENZIATORE
 
 ```
-cervellaswarm.com        → ONLINE (Cloudflare Pages)
-cervellaswarm-api.fly.dev → ONLINE (health OK)
-npm CLI                  → 2.0.0-beta
-npm MCP                  → 2.0.0-beta
-Stripe                   → Test Mode, $29/$49
-GitHub pubblico          → SINCRONIZZATO
+"The only AI coding team that checks its own work"
+
+17 specialisti + 3 Guardiane = Verifica automatica
 ```
 
 ---
 
-## PROSSIMI STEP
+## METRICHE TARGET
 
-1. **Outreach non sfruttati** (da Guardiana Ricerca):
-   - MCP Discord ufficiale (11K membri!) - NON JOINED
-   - awesome-mcp-servers PR - NON FATTA
-   - DEV.to article - NON SCRITTO
-
-2. **Show HN** - Decidere data definitiva
-
-3. **Stripe Live Mode** - Quando pronti per pagamenti reali
+| Mese | Clienti | MRR |
+|------|---------|-----|
+| 1 | 20-25 | $725 |
+| 2 | 40-45 | $1250 |
+| 3 | 50+ | $1450+ |
 
 ---
 
@@ -97,11 +91,10 @@ GitHub pubblico          → SINCRONIZZATO
 
 | File | Cosa |
 |------|------|
-| packages/api/src/index.ts | Rate limiting + no debug |
-| scripts/git/sync-to-public.sh | Metodo worktree (v2) |
-| docs/AGENTS_REFERENCE.md | 17 agents + Architect |
+| `.sncp/.../roadmaps/SUBROADMAP_VENDITA_CERVELLASWARM.md` | Piano vendita |
+| `.sncp/.../reports/PIANO_VENDITA_90_GIORNI_*.md` | Dettagli |
 
 ---
 
-*"Sessione 305! Security, Stripe, Sync - tutto fatto!"*
-*Cervella & Rafa*
+*"Non costruire. VENDERE quello che abbiamo."*
+*Cervella & Rafa - Sessione 306*
