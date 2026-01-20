@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 20 Gennaio 2026 - Sessione 298 - SNCP 2.0 Day 4 (67%!)
+> Aggiornato: 20 Gennaio 2026 - Sessione 299 - SNCP 2.0 COMPLETATO (100%!)
 
 ```
 +==================================================================+
