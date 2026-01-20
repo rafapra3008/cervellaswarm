@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 20 Gennaio 2026 - Sessione 293 - W6 60%! Day 1-2-3 COMPLETATI!
+> Aggiornato: 20 Gennaio 2026 - Sessione 294 - W6 80%! Day 1-2-3-4 COMPLETATI!
 
 ```
 +==================================================================+
@@ -331,7 +331,7 @@ SESSIONE 292: 🐝 W5 DAY 5 - WORKER DNA + TEST FINALE!
   ✓ Guardiana Qualità FINALE: 9.5/10 APPROVED
   → W5 DAY 5 COMPLETATO! W5 100%!
 
-SESSIONE 293: 🏠 W6 DAY 1-2-3 COMPLETATI! ← OGGI!
+SESSIONE 293: 🏠 W6 DAY 1-2-3 COMPLETATI!
   ✓ Day 1: SNCP + Pulizia TODO (10/10)
     - stato.md, oggi.md aggiornati
     - Review TODO: 9 trovati, 0 critici
@@ -344,7 +344,15 @@ SESSIONE 293: 🏠 W6 DAY 1-2-3 COMPLETATI! ← OGGI!
     - Benchmark: 2.37s overhead (accettabile)
     - spawn-workers.sh v3.9.0: AUTO-CONTEXT!
     - 8 worker code-aware = context automatico
-  → W6 60% COMPLETATO! MEDIA 9.83/10!
+  → W6 60%!
+
+SESSIONE 294: 🏠 W6 DAY 4 COMPLETATO! ← OGGI!
+  ✓ Day 4: Script Polish (9.5/10)
+    - spawn-workers.sh --version flag
+    - semantic_search.py import fix
+    - task_manager.py --help/--version (v1.4.0)
+    - marketing aggiunto a ALL_WORKERS
+  → W6 80% COMPLETATO! MEDIA 9.75/10!
 
 SCORE: 100/100 ✅ W4 COMPLETATO! W5 COMPLETATA!
 
@@ -360,13 +368,13 @@ ROADMAP 2.0:
       Day 4: Release v2.0-beta      DONE (9.5/10)
   W5: Dogfooding     ████████████████████ 100% ✅
       Day 1-5: COMPLETATA           MEDIA 9.6/10
-  W6: Casa Perfetta  ████████████________ 60% IN CORSO ← OGGI!
+  W6: Casa Perfetta  ████████████████____ 80% IN CORSO ← OGGI!
       Day 1: SNCP + Pulizia         DONE (10/10)
       Day 2: Tree-sitter Hooks      DONE (10/10)
       Day 3: Auto-Context Selettivo DONE (9.5/10)
-      Day 4: Script Polish          PENDING
+      Day 4: Script Polish          DONE (9.5/10)
       Day 5: Test Famiglia          PENDING
-      MEDIA W6 (finora): 9.83/10
+      MEDIA W6 (finora): 9.75/10
 ```
 
 ---

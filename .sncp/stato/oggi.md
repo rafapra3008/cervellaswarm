@@ -1,6 +1,6 @@
 # OGGI - 20 Gennaio 2026
 
-> **Sessione:** 293 | **Progetto:** CervellaSwarm | **Focus:** W6 Casa Perfetta
+> **Sessione:** 294 | **Progetto:** CervellaSwarm | **Focus:** W6 Casa Perfetta
 
 ---
 
@@ -8,8 +8,8 @@
 
 ```
 +================================================================+
-|   SESSIONE 293 - W6 DAY 1+2+3 COMPLETATI!                      |
-|   Media: 9.83/10 | Target: 9.5/10                              |
+|   SESSIONE 294 - W6 DAY 4 COMPLETATO!                          |
+|   Media: 9.75/10 | Target: 9.5/10                              |
 +================================================================+
 ```
 
@@ -19,9 +19,13 @@
 
 | Day | Focus | Score |
 |-----|-------|-------|
-| 1 | SNCP + Pulizia TODO | 10/10 |
-| 2 | Tree-sitter Hooks (validate_syntax.py) | 10/10 |
-| 3 | Auto-Context Selettivo (spawn-workers v3.9.0) | 9.5/10 |
+| 4 | Script Polish | 9.5/10 |
+
+**Dettagli Day 4:**
+- spawn-workers.sh --version flag
+- semantic_search.py import fix (try/except fallback)
+- task_manager.py --help/--version (v1.4.0)
+- marketing aggiunto a ALL_WORKERS
 
 ---
 
@@ -29,11 +33,9 @@
 
 | File | Cosa |
 |------|------|
-| `hooks/validate_syntax.py` | Hook validazione sintassi Tree-sitter |
-| `docs/HOOKS.md` | Documentazione hooks |
-| `.swarm/tasks/W6_D1_TODO_REPORT.md` | Report TODO Day 1 |
-| `.swarm/tasks/W6_D3_CONTEXT_ANALYSIS.md` | Analisi --with-context |
-| `scripts/swarm/spawn-workers.sh` | Auto-context per code-aware workers |
+| `scripts/swarm/spawn-workers.sh` | --version, marketing fix |
+| `scripts/utils/semantic_search.py` | try/except import |
+| `scripts/swarm/task_manager.py` | --help, --version (v1.4.0) |
 
 ---
 
@@ -41,15 +43,15 @@
 
 ```
 W1-W5: 100% DONE! (9.6/10)
-W6: [############________] 60% (Day 4-5 pending)
+W6: [################____] 80% (Day 5 pending)
 ```
 
 ---
 
 ## PROSSIMO
 
-W6 Day 4: Script Polish (--version, import fix)
+W6 Day 5: Test Famiglia (16 agenti)
 
 ---
 
-*"293 sessioni! W6 60%! Ultrapassar os proprios limites!"*
+*"294 sessioni! W6 80%! Un passo alla volta!"*

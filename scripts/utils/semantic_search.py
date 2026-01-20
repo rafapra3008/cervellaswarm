@@ -64,9 +64,15 @@ import logging
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
-from dependency_graph import DependencyGraph
-from symbol_extractor import Symbol, SymbolExtractor
-from treesitter_parser import TreesitterParser
+# Handle imports for both direct execution and module import
+try:
+    from dependency_graph import DependencyGraph
+    from symbol_extractor import Symbol, SymbolExtractor
+    from treesitter_parser import TreesitterParser
+except ImportError:
+    from scripts.utils.dependency_graph import DependencyGraph
+    from scripts.utils.symbol_extractor import Symbol, SymbolExtractor
+    from scripts.utils.treesitter_parser import TreesitterParser
 
 # Configure logging
 logger = logging.getLogger(__name__)

@@ -6,8 +6,9 @@ Gestisce la creazione, monitoraggio e stato dei task per il sistema Multi-Finest
 Usa file marker (.ready, .working, .done) per sincronizzazione tra agenti.
 """
 
-__version__ = "1.3.0"
-__version_date__ = "2026-01-09"
+__version__ = "1.4.0"
+__version_date__ = "2026-01-20"
+# v1.4.0: Aggiunto --help, -h, --version, -v flags (W6 Day 4)
 # v1.3.0: Migliorato error handling - logging, eccezioni specifiche, gestione permessi
 # v1.2.0: Fix race condition in mark_working() - ora ATOMICO con exclusive create!
 
@@ -426,24 +427,36 @@ def cleanup_task(task_id: str, remove_markers: bool = True) -> bool:
     return True
 
 
+def print_usage():
+    """Stampa l'help del task manager."""
+    print("Task Manager - CervellaSwarm Multi-Finestra")
+    print(f"Versione: {__version__}")
+    print()
+    print("Usage:")
+    print("  task_manager.py list                           - Lista tutti i task")
+    print("  task_manager.py create TASK_ID AGENT DESC      - Crea nuovo task")
+    print("  task_manager.py ready TASK_ID                  - Segna task come ready")
+    print("  task_manager.py working TASK_ID                - Segna task come working")
+    print("  task_manager.py ack-received TASK_ID           - Segna ACK_RECEIVED (task ricevuto)")
+    print("  task_manager.py ack-understood TASK_ID         - Segna ACK_UNDERSTOOD (task capito)")
+    print("  task_manager.py done TASK_ID                   - Segna task come done")
+    print("  task_manager.py status TASK_ID                 - Mostra stato task")
+    print("  task_manager.py cleanup TASK_ID                - Rimuove marker files")
+    print("  task_manager.py --help                         - Mostra questo help")
+    print("  task_manager.py --version                      - Mostra versione")
+    print()
+
+
 if __name__ == "__main__":
     import sys
 
-    if len(sys.argv) < 2:
-        print("Task Manager - CervellaSwarm Multi-Finestra")
-        print()
-        print("Usage:")
-        print("  task_manager.py list                           - Lista tutti i task")
-        print("  task_manager.py create TASK_ID AGENT DESC      - Crea nuovo task")
-        print("  task_manager.py ready TASK_ID                  - Segna task come ready")
-        print("  task_manager.py working TASK_ID                - Segna task come working")
-        print("  task_manager.py ack-received TASK_ID           - Segna ACK_RECEIVED (task ricevuto)")
-        print("  task_manager.py ack-understood TASK_ID         - Segna ACK_UNDERSTOOD (task capito)")
-        print("  task_manager.py done TASK_ID                   - Segna task come done")
-        print("  task_manager.py status TASK_ID                 - Mostra stato task")
-        print("  task_manager.py cleanup TASK_ID                - Rimuove marker files")
-        print()
-        sys.exit(1)
+    if len(sys.argv) < 2 or sys.argv[1] in ["--help", "-h", "help"]:
+        print_usage()
+        sys.exit(0 if len(sys.argv) > 1 else 1)
+
+    if sys.argv[1] in ["--version", "-v"]:
+        print(f"task_manager.py v{__version__}")
+        sys.exit(0)
 
     command = sys.argv[1]
 

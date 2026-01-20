@@ -12,12 +12,15 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 3.8.1
-# Data: 2026-01-19
+# Versione: 3.9.0
+# Data: 2026-01-20
 # Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
 # v2.0.0: Config centralizzata ~/.swarm/config
 #
 # CHANGELOG:
+# v3.9.0: AUTO-CONTEXT SELETTIVO + --version flag (W6 Day 3-4)
+#         + AUTO_CONTEXT_WORKERS: 8 worker code-aware ottengono context automatico
+#         + --no-context per override, --version per mostrare versione
 # v3.8.1: Fix validazione task vuoto + AskUserQuestion per architect (W5 Day 2)
 #         + Validazione: task non può essere vuoto o solo spazi
 #         + AskUserQuestion aggiunto a allowedTools (Phase 3: Review)
@@ -58,6 +61,11 @@
 # Aggiunto: Supporto Guardiane (Opus)
 
 set -e
+
+# ============================================================================
+# VERSION (per --version flag)
+# ============================================================================
+VERSION="3.9.0"
 
 # ============================================================================
 # COMMON LIBRARY (v3.4.0) - Funzioni condivise
@@ -234,7 +242,7 @@ NC='\033[0m' # No Color
 COMMON_WORKERS="backend frontend tester"
 
 # Lista tutti i worker disponibili
-ALL_WORKERS="backend frontend tester docs reviewer devops researcher data security scienziata ingegnera"
+ALL_WORKERS="backend frontend tester docs reviewer devops researcher data security scienziata ingegnera marketing"
 
 # Architect (speciale - NON cerca task, riceve prompt diretto)
 ARCHITECT_WORKER="architect"
@@ -1011,6 +1019,7 @@ show_usage() {
     echo "  --with-context         Abilita contesto intelligente codebase (tree-sitter)"
     echo "  --no-context           Disabilita contesto (override auto-enable per code-aware)"
     echo "  --context-budget N     Token budget per contesto (default: 1500, implica --with-context)"
+    echo "  --version              Mostra versione"
     echo "  --help                 Mostra questo help"
     echo ""
     echo "  AUTO-SVEGLIA e' ATTIVO di default! La Regina viene svegliata automaticamente."
@@ -1142,6 +1151,12 @@ main() {
                 ;;
             --list)
                 list_workers
+                exit 0
+                ;;
+            --version|-v)
+                echo "spawn-workers.sh v${VERSION}"
+                echo "CervellaSwarm Multi-Finestra"
+                echo "Cervella & Rafa"
                 exit 0
                 ;;
             --help|-h)
