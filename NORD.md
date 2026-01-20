@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 19 Gennaio 2026 - Sessione 289 - W5 Day 2 COMPLETATO!
+> Aggiornato: 20 Gennaio 2026 - Sessione 290 - W5 Day 3 COMPLETATO!
 
 ```
 +==================================================================+
@@ -292,7 +292,7 @@ SESSIONE 288: 🐝 W5 DAY 1 - ARCHITECT INTEGRATION!
   ✓ Tester: 5/5 PASS
   → W5 DAY 1 COMPLETATO!
 
-SESSIONE 289: 🐝 W5 DAY 2 - ARCHITECT DOCS + HARDTEST! ← OGGI!
+SESSIONE 289: 🐝 W5 DAY 2 - ARCHITECT DOCS + HARDTEST!
   ✓ Documentare --architect in CLAUDE.md (9/10)
   ✓ W3-B Architect Pattern in DNA_FAMIGLIA.md (9.5/10)
   ✓ Hardtest E2E con cervella-tester
@@ -302,6 +302,18 @@ SESSIONE 289: 🐝 W5 DAY 2 - ARCHITECT DOCS + HARDTEST! ← OGGI!
   ✓ DNA_FAMIGLIA.md v1.4.0: Famiglia 17 membri!
   ✓ SCORE FINALE: 9.5/10 - TARGET RAGGIUNTO!
   → W5 DAY 2 COMPLETATO!
+
+SESSIONE 290: 🐝 W5 DAY 3 - SEMANTIC CLI WRAPPER! ← OGGI!
+  ✓ Pre-day checkpoint (git tag w5-day3-start)
+  ✓ scripts/architect/semantic-search.sh v1.0.0 (301 righe)
+    - 3 comandi: find-symbol, find-callers, find-references
+    - JSON output: {"found": bool, "results": [...]}
+    - Exit codes: 0 (found), 1 (not found), 2 (error)
+    - Auto-detection repo root via git
+  ✓ Test 3 criteri misurabili PASS
+  ✓ docs/SEMANTIC_SEARCH.md: Sezione "Bash Wrapper CLI (W5)"
+  ✓ Guardiana Qualità: 9.5/10 APPROVED
+  → W5 DAY 3 COMPLETATO!
 
 SCORE: 100/100 ✅ W4 COMPLETATO! W5 IN CORSO!
 
@@ -315,11 +327,11 @@ ROADMAP 2.0:
       Day 1: Apple Polish DRY       DONE (9.5/10)
       Day 2-3: Test Coverage + CI   DONE (9.5/10)
       Day 4: Release v2.0-beta      DONE (9.5/10)
-  W5: Dogfooding     ████████____________ 40% IN CORSO!
+  W5: Dogfooding     ████████████________ 60% IN CORSO!
       Day 1: Architect Integration  DONE (10/10)
-      Day 2: Architect docs + test  DONE (9.5/10) ← OGGI!
-      Day 3: Semantic Search CLI    [NEXT]
-      Day 4: Impact Analyzer CLI    [TODO]
+      Day 2: Architect docs + test  DONE (9.5/10)
+      Day 3: Semantic Search CLI    DONE (9.5/10) ← OGGI!
+      Day 4: Impact Analyzer CLI    [NEXT]
       Day 5: Worker DNA + test      [TODO]
 ```
 
