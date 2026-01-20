@@ -1,6 +1,8 @@
 # CervellaSwarm
 
-> 16 AI agents working as a team for your project. Not an assistant - a **TEAM**.
+> **The only AI coding team that checks its own work.**
+>
+> 16 specialized AI agents. Regina coordinates, Workers execute, Guardians verify.
 
 ```
 cervellaswarm task "Add user authentication"

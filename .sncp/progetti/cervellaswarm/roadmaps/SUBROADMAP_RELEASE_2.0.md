@@ -264,13 +264,53 @@ Aggiungere differenziatori W1-W6:
 
 ---
 
-## DECISIONI DA PRENDERE CON RAFA (Day 0)
+## DECISIONI CON RAFA (Day 0) - Sessione 300
 
-1. **Early Bird $99/year** - Teniamo o rimuoviamo?
-2. **Pricing finale** - $20/500 calls confermato?
-3. **Stripe Live** - Quando attivare? (dopo Show HN?)
-4. **v1.0.0 timing** - Dopo quanti utenti beta?
-5. **Tagline homepage** - "16 AI Agents" (attuale) vs "The only AI team that checks its own work" (differenziante)?
+### DECISIONI PRESE
+
+| # | Decisione | Scelta | Data |
+|---|-----------|--------|------|
+| 5 | **Tagline homepage** | "The only AI coding team that checks its own work" | 20 Gen 2026 |
+| 4 | **v1.0.0 timing** | Dopo 100-200 utenti attivi 30 giorni (~15 Apr 2026) | 20 Gen 2026 |
+| 3 | **Stripe Live** | Dopo 50 utenti beta, retention >30%, 0 critical bugs (~15 Feb 2026) | 20 Gen 2026 |
+| 2 | **Pricing finale** | FREE $0 (3 agenti, 50 tasks) / PRO $29 (16 agenti, unlimited) / TEAM $49/user | 20 Gen 2026 |
+| 1 | **Early Bird** | $149/anno per primi 200 "Founding Members" (-57% vs $348 annuale) | 20 Gen 2026 |
+
+### PRICING STRUCTURE DETTAGLIATA (Decisione 2)
+
+| Tier | Prezzo | Agenti | Tasks | Target |
+|------|--------|--------|-------|--------|
+| FREE | $0/mo | 3 | 50/mese | Studenti, hobby |
+| PRO | $29/mo | 16 | UNLIMITED | Indie dev, freelance |
+| TEAM | $49/user/mo | 16 | UNLIMITED | Team 3-10 |
+| ENTERPRISE | Custom | Custom | UNLIMITED | Aziende |
+
+**Unità:** TASKS (1 task = 1 spawn-workers)
+**Naming:** Free/Pro/Team/Enterprise
+**Valore:** $1.81/agente vs $20+ competitor
+
+### EARLY BIRD DETTAGLIO (Decisione 1)
+
+| Aspetto | Valore |
+|---------|--------|
+| Prezzo | $149/anno |
+| Durata | **LIFETIME** - prezzo bloccato per sempre |
+| Limite | Primi 200 utenti (no deadline temporale) |
+| Sconto | -57% vs PRO annuale ($348) |
+| Messaging | **"Founding Member"** (esclusivo, non discount) |
+
+**Cosa include Founding Member:**
+- Tutto PRO (16 agenti, unlimited tasks)
+- Badge "Founding Member" sul profilo
+- Priority feature requests
+- Accesso anticipato nuove feature
+- Prezzo $149 BLOCCATO per sempre (anche se PRO aumenta)
+
+**Copy suggerito:**
+> "Become a Founding Member: Lock in $149/year forever.
+> After 200 members: $348/year. Your price never changes."
+
+**TUTTE LE 5 DECISIONI COMPLETATE - Day 0 DONE!**
 
 ---
 
