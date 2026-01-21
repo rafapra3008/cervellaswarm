@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 21 Gennaio 2026 - Sessione 308 - SUBROADMAP CONTEXT DURANTE LAVORO
+> Aggiornato: 21 Gennaio 2026 - Sessione 310 - v2.0.0-beta.1 LIVE + Diamante Lapidato
 
 ```
 +==================================================================+
@@ -45,8 +45,8 @@ FASE 1: FONDAMENTA               [####################] 100%!
 FASE 2: MVP PRODOTTO             [####################] 100%! PRONTO!
 
   REALE:
-  ✓ CLI su npm                   cervellaswarm@2.0.0-beta  ← v2.0.0-beta!
-  ✓ MCP su npm                   @cervellaswarm/mcp-server@2.0.0-beta  ← v2.0.0-beta!
+  ✓ CLI su npm                   cervellaswarm@2.0.0-beta.1  ← LIVE!
+  ✓ MCP su npm                   @cervellaswarm/mcp-server@2.0.0-beta.1  ← LIVE!
   ✓ FAMIGLIA COMPLETA            17 AGENTI! (con Architect)
   ✓ API Fly.io                   ONLINE
   ✓ Stripe                       $29/$49 (Test Mode) ← Sessione 305 fix pricing!
