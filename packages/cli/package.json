@@ -1,6 +1,6 @@
 {
   "name": "cervellaswarm",
-  "version": "2.0.0-beta",
+  "version": "2.0.0-beta.1",
   "description": "17 AI agents working as a team for your project. Not an assistant - a TEAM.",
   "bin": {
     "cervellaswarm": "bin/cervellaswarm.js",
