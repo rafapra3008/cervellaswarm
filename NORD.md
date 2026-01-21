@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 20 Gennaio 2026 - Sessione 307 - FIX CONTEXT USAGE!
+> Aggiornato: 21 Gennaio 2026 - Sessione 308 - SUBROADMAP CONTEXT DURANTE LAVORO
 
 ```
 +==================================================================+

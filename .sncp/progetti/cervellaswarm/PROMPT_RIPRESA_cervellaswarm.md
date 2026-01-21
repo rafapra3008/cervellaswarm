@@ -1,94 +1,88 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 307
-> **STATUS:** FIX CONTEXT USAGE COMPLETATO!
+> **Ultimo aggiornamento:** 21 Gennaio 2026 - Sessione 308
+> **STATUS:** SUBROADMAP CONTEXT DURANTE LAVORO APPROVED 9.5/10
 
 ---
 
-## SESSIONE 307 - FIX CONTEXT USAGE
+## SESSIONE 308 - CONTEXT OPTIMIZATION
 
 ```
 +================================================================+
-|   PROBLEMA RISOLTO:                                            |
+|   PROBLEMA IDENTIFICATO:                                        |
+|   Context cresce troppo velocemente DURANTE il lavoro           |
+|   (non all'avvio - quello è normale ~20%)                       |
 |                                                                |
-|   CAUSA: COSTITUZIONE caricata DUE VOLTE                      |
-|   1. Via @ in CLAUDE.md                                        |
-|   2. Via session_start_swarm.py hook                          |
-|                                                                |
-|   FIX: Rimossa @ da CLAUDE.md (hook resta unica fonte)        |
-|   RISPARMIO: ~2,500 tokens (verifica prossima sessione)       |
+|   SUBROADMAP CREATA E APPROVATA: 9.5/10                        |
 +================================================================+
 ```
 
 ---
 
-## COSA FATTO SESSIONE 307
+## COSA FATTO SESSIONE 308
 
 | Task | Status |
 |------|--------|
-| Analisi context usage | CAUSA TROVATA |
-| Investigazione con Ingegnera | COSTITUZIONE 2x |
-| FIX: Rimossa @ da CLAUDE.md | COMPLETATO |
-| Subroadmap context optimization | CREATA |
-| Script misurazione token | CREATO |
-| Audit Guardiana | APPROVED |
+| Investigazione context usage | COMPLETATA |
+| Analisi hook con Guardiane | COMPLETATA |
+| Fix hook SessionEnd (file_limits_guard.py) | FIXATO |
+| Subroadmap context durante lavoro | CREATA 9.5/10 |
+| Audit Guardiana Qualità | APPROVED |
 
 ### File Creati/Modificati
 
 | File | Cosa |
 |------|------|
-| `scripts/utils/measure_context_tokens.py` | Script misurazione |
-| `.sncp/roadmaps/SUBROADMAP_CONTEXT_OPTIMIZATION.md` | Piano ottimizzazione |
-| `~/.claude/CLAUDE.md` | Rimossa @ da riga 11 |
-| `~/.claude/docs/COSTITUZIONE_TRIGGER.md` | Version minimal (20 righe) |
-| `reports/CAUSA_RADICE_CONTEXT_DOPPIO.md` | Analisi Ingegnera |
-| `docs/analisi/RICERCA_OTTIMIZZAZIONE_CONTEXT_CLAUDE_CODE.md` | Ricerca |
+| `.sncp/roadmaps/SUBROADMAP_CONTEXT_DURANTE_LAVORO.md` | Piano ottimizzazione |
+| `.claude/hooks/file_limits_guard.py` | Fix schema JSON SessionEnd |
+| `docs/studio/RICERCA_CONTEXT_OPTIMIZATION_2026.md` | Ricerca Researcher |
 
 ---
 
-## PROSSIMI STEP (Sessione 308)
+## DIAGNOSI PRELIMINARE
 
-**PRIORITA CRITICA:**
-1. [ ] Verificare risparmio token (nuova sessione)
-2. [ ] Submit plugin → clau.de/plugin-directory
-3. [ ] Submit MCP → registry.modelcontextprotocol.io
+**Cause potenziali identificate:**
+1. Subagent context accumulation
+2. Tool results troppo grandi
+3. Hook durante lavoro (debug_hook.py, log_event.py)
+4. Agent prompt growth (architect 293 righe!)
+5. Context base fisso (CLAUDE.md 336 righe)
+6. MCP servers output
 
-**PRIORITA ALTA:**
-4. [ ] Join MCP Discord (11K membri!)
-5. [ ] Stripe Live Mode
-6. [ ] PR awesome-mcp-servers
+**Hook rimuovibili SICURI (Guardiana approved):**
+- debug_hook.py
+- log_event.py
 
----
-
-## INFO MANCANTI PER PLUGIN SUBMISSION
-
-| Info | Serve da Rafa |
-|------|---------------|
-| GitHub Repo | URL pubblico per plugin |
-| Email contatto | Per Anthropic |
-| URL organizzazione | cervellaswarm.com? |
+**Hook con errore:**
+- subagent_start_costituzione.py NON ESISTE ma configurato
 
 ---
 
-## DIFFERENZIATORE
+## PROSSIMI STEP (Sessione 309)
 
-```
-"The only AI coding team that checks its own work"
+**FASE 1 - Diagnosi (priorità):**
+1. [ ] Misurare crescita context con spawn worker
+2. [ ] Documentare delta % per ogni operazione
+3. [ ] Identificare colpevole principale
 
-17 specialisti + 3 Guardiane = Verifica automatica
-```
+**FASE 2 - Fix mirati:**
+4. [ ] Rimuovere hook non essenziali (se causa)
+5. [ ] Ridurre prompt agent (con cautela su architect)
+
+**Problemi correlati:**
+- [ ] Fix config SubagentStart (rimuovere file mancante)
+- [ ] Investigare problemi commit (Rafa ha menzionato)
 
 ---
 
 ## METRICHE TARGET
 
-| Mese | Clienti | MRR |
-|------|---------|-----|
-| 1 | 20-25 | $725 |
-| 2 | 40-45 | $1250 |
-| 3 | 50+ | $1450+ |
+| Metrica | Baseline | Target |
+|---------|----------|--------|
+| Context dopo 5 spawn | Da misurare | -30% |
+| Durata sessione | ~45 min | 90+ min |
 
 ---
 
-*"Analizza prima di giudicare. Il debito tecnico si paga con interessi."*
-*Cervella & Rafa - Sessione 307*
+*"Prima capire, poi agire. Mai fretta."*
+*Cervella & Rafa - Sessione 308*
