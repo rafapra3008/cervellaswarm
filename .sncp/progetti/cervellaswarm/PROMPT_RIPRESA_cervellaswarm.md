@@ -1,88 +1,70 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 21 Gennaio 2026 - Sessione 308
-> **STATUS:** SUBROADMAP CONTEXT DURANTE LAVORO APPROVED 9.5/10
+> **Ultimo aggiornamento:** 21 Gennaio 2026 - Sessione 309
+> **STATUS:** Context Optimization - FIX APPLICATI E TESTATI
 
 ---
 
-## SESSIONE 308 - CONTEXT OPTIMIZATION
+## SESSIONE 309 - FIX CONTEXT OPTIMIZATION
 
 ```
 +================================================================+
-|   PROBLEMA IDENTIFICATO:                                        |
-|   Context cresce troppo velocemente DURANTE il lavoro           |
-|   (non all'avvio - quello è normale ~20%)                       |
+|   FIX APPLICATI E TESTATI - AUDIT PASS 9/10                    |
 |                                                                |
-|   SUBROADMAP CREATA E APPROVATA: 9.5/10                        |
+|   3 hook problematici rimossi                                  |
+|   4 hard tests passati                                         |
+|   Config pulita e funzionale                                   |
 +================================================================+
 ```
 
 ---
 
-## COSA FATTO SESSIONE 308
+## COSA FATTO SESSIONE 309
 
 | Task | Status |
 |------|--------|
-| Investigazione context usage | COMPLETATA |
-| Analisi hook con Guardiane | COMPLETATA |
-| Fix hook SessionEnd (file_limits_guard.py) | FIXATO |
-| Subroadmap context durante lavoro | CREATA 9.5/10 |
-| Audit Guardiana Qualità | APPROVED |
+| Rimosso debug_hook.py da PostToolUse(Task) | FATTO |
+| Rimosso log_event.py da PostToolUse(Task) | FATTO |
+| Rimosso session_start_scientist.py (non esisteva!) | FATTO |
+| Hard Test 1: Config JSON valida | PASS |
+| Hard Test 2: Hook rimossi non in config | PASS |
+| Hard Test 3: Tutti hook configurati esistono | PASS |
+| Hard Test 4: Spawn worker funziona | PASS |
+| Audit Finale Guardiana Qualita | APPROVED 9/10 |
 
-### File Creati/Modificati
+### File Modificati
 
 | File | Cosa |
 |------|------|
-| `.sncp/roadmaps/SUBROADMAP_CONTEXT_DURANTE_LAVORO.md` | Piano ottimizzazione |
-| `.claude/hooks/file_limits_guard.py` | Fix schema JSON SessionEnd |
-| `docs/studio/RICERCA_CONTEXT_OPTIMIZATION_2026.md` | Ricerca Researcher |
+| `~/.claude/settings.json` | Rimossi 3 hook problematici |
 
 ---
 
-## DIAGNOSI PRELIMINARE
+## BENEFICI OTTENUTI
 
-**Cause potenziali identificate:**
-1. Subagent context accumulation
-2. Tool results troppo grandi
-3. Hook durante lavoro (debug_hook.py, log_event.py)
-4. Agent prompt growth (architect 293 righe!)
-5. Context base fisso (CLAUDE.md 336 righe)
-6. MCP servers output
-
-**Hook rimuovibili SICURI (Guardiana approved):**
-- debug_hook.py
-- log_event.py
-
-**Hook con errore:**
-- subagent_start_costituzione.py NON ESISTE ma configurato
+- Ogni spawn worker ora ha **2 hook in meno**
+- Nessun errore silenzioso da file mancanti
+- Config piu pulita e leggera
 
 ---
 
-## PROSSIMI STEP (Sessione 309)
+## ISSUE GITHUB ACTIONS (da investigare)
 
-**FASE 1 - Diagnosi (priorità):**
-1. [ ] Misurare crescita context con spawn worker
-2. [ ] Documentare delta % per ogni operazione
-3. [ ] Identificare colpevole principale
-
-**FASE 2 - Fix mirati:**
-4. [ ] Rimuovere hook non essenziali (se causa)
-5. [ ] Ridurre prompt agent (con cautela su architect)
-
-**Problemi correlati:**
-- [ ] Fix config SubagentStart (rimuovere file mancante)
-- [ ] Investigare problemi commit (Rafa ha menzionato)
+Rafa riceve email di test falliti:
+- Python Tests falliscono su 3.10, 3.11, 3.12
+- Repo: cervellaswarm-internal
+- NON e errore commit, e CI/CD
 
 ---
 
-## METRICHE TARGET
+## PROSSIMI STEP (Sessione 310)
 
-| Metrica | Baseline | Target |
-|---------|----------|--------|
-| Context dopo 5 spawn | Da misurare | -30% |
-| Durata sessione | ~45 min | 90+ min |
+1. [ ] Investigare test Python falliti su GitHub Actions
+2. [ ] Verificare se serve aggiornare npm/mcp packages
+3. [ ] Opzionale: Ridurre CLAUDE.md (336 -> 200 righe)
+4. [ ] Opzionale: Ridurre architect prompt (293 -> 180 righe)
 
 ---
 
 *"Prima capire, poi agire. Mai fretta."*
-*Cervella & Rafa - Sessione 308*
+*Cervella & Rafa - Sessione 309*
