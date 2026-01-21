@@ -89,40 +89,37 @@ def main():
 
         if warnings:
             # Formatta warning
-            warning_lines = ["## FILE LIMITS WARNING"]
-            warning_lines.append("")
+            warning_lines = ["FILE LIMITS WARNING:"]
 
             for w in warnings:
                 if "over" in w:
-                    warning_lines.append(f"- **{w['file']}**: {w['lines']} righe (LIMITE {w['limit']}!) - ARCHIVIARE!")
+                    warning_lines.append(f"  {w['file']}: {w['lines']} righe (LIMITE {w['limit']}!) - ARCHIVIARE!")
                 else:
-                    warning_lines.append(f"- {w['file']}: {w['lines']}/{w['limit']} righe (90% limite)")
+                    warning_lines.append(f"  {w['file']}: {w['lines']}/{w['limit']} righe (90% limite)")
 
-            warning_lines.append("")
-            warning_lines.append("**AZIONE:** Archivia sessioni vecchie in `.sncp/progetti/*/archivio/`")
+            warning_lines.append("AZIONE: Archivia sessioni vecchie in .sncp/progetti/*/archivio/")
 
-            context_md = "\n".join(warning_lines)
-        else:
-            context_md = "File Limits OK - tutti i file sotto il limite."
-
-        result = {
-            "hookSpecificOutput": {
-                "hookEventName": "SessionEnd",
-                "additionalContext": context_md
+            # SessionEnd usa systemMessage per output (non hookSpecificOutput)
+            result = {
+                "continue": True,
+                "systemMessage": "\n".join(warning_lines)
             }
-        }
+        else:
+            # Tutto OK - output minimo
+            result = {
+                "continue": True
+            }
 
         print(json.dumps(result))
         sys.exit(0)
 
     except Exception as e:
-        error_result = {
-            "hookSpecificOutput": {
-                "hookEventName": "SessionEnd",
-                "additionalContext": f"File Limits Guard: errore - {str(e)}"
-            }
+        # Errore - non bloccare ma segnala
+        result = {
+            "continue": True,
+            "reason": f"File Limits Guard: errore - {str(e)}"
         }
-        print(json.dumps(error_result))
+        print(json.dumps(result))
         sys.exit(0)
 
 
