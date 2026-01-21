@@ -19,7 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Initial beta release
-- 8 specialized worker agents (backend, frontend, tester, docs, devops, data, security, researcher)
+- 8 specialized worker types (backend, frontend, tester, docs, devops, data, security, researcher)
+- Full swarm: 17 agents including 3 Guardians (Opus) and Architect
 - Task routing system with intelligent agent selection
 - SNCP (Sistema Nervoso Centrale Progetto) for project memory
 - Session management with resume capability

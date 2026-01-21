@@ -1,5 +1,8 @@
 # CervellaSwarm MCP Server
 
+[![npm version](https://img.shields.io/npm/v/@cervellaswarm/mcp-server.svg)](https://www.npmjs.com/package/@cervellaswarm/mcp-server)
+[![npm downloads](https://img.shields.io/npm/dm/@cervellaswarm/mcp-server.svg)](https://www.npmjs.com/package/@cervellaswarm/mcp-server)
+
 > **The only AI coding team that checks its own work.**
 >
 > 17 AI agents with quality guardians for Claude Code.

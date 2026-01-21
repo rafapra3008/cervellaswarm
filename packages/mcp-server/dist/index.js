@@ -260,14 +260,16 @@ server.tool("check_usage", "Check your current CervellaSwarm usage, remaining ca
 // ============================================
 // RESOURCES
 // ============================================
-// TODO: Add SNCP resources in future versions
+// TODO(#1): Add SNCP resources in future versions
+// https://github.com/rafapra3008/cervellaswarm-internal/issues/1
 // - Project state (.sncp/progetti/*/stato.md)
 // - Session history
 // - Worker reports
 // ============================================
 // PROMPTS
 // ============================================
-// TODO: Add prompts in future versions
+// TODO(#2): Add prompts in future versions
+// https://github.com/rafapra3008/cervellaswarm-internal/issues/2
 // - coordinate_workers: Plan multi-agent tasks
 // - analyze_codebase: Full project analysis
 // ============================================

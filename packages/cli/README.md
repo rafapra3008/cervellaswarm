@@ -1,5 +1,8 @@
 # CervellaSwarm
 
+[![npm version](https://img.shields.io/npm/v/cervellaswarm.svg)](https://www.npmjs.com/package/cervellaswarm)
+[![npm downloads](https://img.shields.io/npm/dm/cervellaswarm.svg)](https://www.npmjs.com/package/cervellaswarm)
+
 > **The only AI coding team that checks its own work.**
 >
 > 17 specialized AI agents. Regina coordinates, Architect plans, Workers execute, Guardians verify.
