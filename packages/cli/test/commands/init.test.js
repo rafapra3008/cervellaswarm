@@ -22,10 +22,10 @@ describe('Init Command', () => {
 
       // Simula l'output del comando init
       console.log('  Welcome to CervellaSwarm!');
-      console.log('  16 AI agents. 1 command. Your AI dev team.');
+      console.log('  17 AI agents. 1 command. Your AI dev team.');
 
       assert.ok(output.hasLog('Welcome to CervellaSwarm'), 'Should show welcome');
-      assert.ok(output.hasLog('16 AI agents'), 'Should show tagline');
+      assert.ok(output.hasLog('17 AI agents'), 'Should show tagline');
     });
   });
 

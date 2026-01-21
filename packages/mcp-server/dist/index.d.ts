@@ -2,7 +2,7 @@
 /**
  * CervellaSwarm MCP Server
  *
- * 16 AI agents exposed as MCP tools for Claude Code integration.
+ * 17 AI agents exposed as MCP tools for Claude Code integration.
  * "Not an assistant - a TEAM."
  *
  * Copyright 2026 Rafa & Cervella

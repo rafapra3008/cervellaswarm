@@ -2,7 +2,6 @@
   "name": "cervellaswarm",
   "version": "2.0.0-beta",
   "description": "17 AI agents working as a team for your project. Not an assistant - a TEAM.",
-  "main": "src/index.js",
   "bin": {
     "cervellaswarm": "bin/cervellaswarm.js",
     "cs": "bin/cervellaswarm.js"
