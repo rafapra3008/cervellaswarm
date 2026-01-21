@@ -1,54 +1,63 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 21 Gennaio 2026 - Sessione 309
-> **STATUS:** Context Optimization DONE + Packages Fix DONE + Subroadmap NPM APPROVED
+> **Ultimo aggiornamento:** 21 Gennaio 2026 - Sessione 310
+> **STATUS:** v2.0.0-beta.1 LIVE + Diamante Lapidato
 
 ---
 
-## SESSIONE 309 - COMPLETATA
+## SESSIONE 310 - COMPLETATA
 
 ```
 +================================================================+
-|   3 PARTI COMPLETATE:                                          |
-|   1. Context Optimization (interno) - 3 hook rimossi           |
-|   2. Packages npm fix - CLI + MCP sincronizzati                |
-|   3. Subroadmap pubblicazione - 9/10 APPROVED                  |
+|   PUBBLICAZIONE + REFACTORING COMPLETATI                       |
 +================================================================+
+```
+
+### Pubblicato su npm
+| Package | Versione | Status |
+|---------|----------|--------|
+| cervellaswarm | 2.0.0-beta.1 | LIVE |
+| @cervellaswarm/mcp-server | 2.0.0-beta.1 | LIVE |
+
+### Refactoring "Lapidare il Diamante"
+| Task | Status |
+|------|--------|
+| Split config/manager.js (522→max 151 righe) | DONE |
+| Fix CHANGELOG (chiarito 17 agenti) | DONE |
+| Badge npm nei README | DONE |
+| GitHub Issues per TODO (#1, #2) | DONE |
+| Trusted Publisher configurato | DONE |
+
+---
+
+## STATO TECNICO
+
+```
+CLI: 134/134 test PASS
+MCP: Build OK
+Vulnerabilita: 0
+File >500 righe: 0 (risolto!)
+```
+
+### Struttura config/ dopo split
+```
+config/
+├── schema.js      (102 righe)
+├── api-key.js     (76 righe)
+├── settings.js    (151 righe)
+├── diagnostics.js (78 righe)
+├── billing.js     (145 righe)
+├── index.js       (62 righe)
+└── manager.js     (19 righe - wrapper)
 ```
 
 ---
 
-## COSA FATTO
+## PROSSIMI STEP (Sessione 311)
 
-### Parte 1: Context Optimization
-| Task | Status |
-|------|--------|
-| Rimosso debug_hook.py | DONE |
-| Rimosso log_event.py | DONE |
-| Rimosso session_start_scientist.py | DONE |
-| Hard Tests 4/4 | PASS |
-| Audit Guardiana | 9/10 |
-
-### Parte 2: Packages NPM
-| Task | Status |
-|------|--------|
-| CLI: rimosso campo "main" | DONE |
-| CLI: test 16→17 agenti | DONE |
-| MCP: rebuild dist/ | DONE |
-| Test CLI 134/134 | PASS |
-
-### Parte 3: Subroadmap
-- `.sncp/roadmaps/SUBROADMAP_PUBBLICAZIONE_NPM.md` creata
-- Score Guardiana: 9/10 APPROVED
-- Pronta per esecuzione
-
----
-
-## PROSSIMI STEP (Sessione 310)
-
-1. [ ] Eseguire pubblicazione npm v2.0.0-beta.1 (seguire subroadmap)
-2. [ ] Creare CHANGELOG.md nei packages
-3. [ ] Verificare CI workflow
+1. [ ] VS Code Extension Research
+2. [ ] Browser Access Research
+3. [ ] Valutazione @cervellaswarm/core package
 
 ---
 
@@ -56,12 +65,19 @@
 
 | File | Cosa |
 |------|------|
-| `~/.claude/settings.json` | Hook ottimizzati |
-| `.sncp/roadmaps/SUBROADMAP_PUBBLICAZIONE_NPM.md` | Piano pubblicazione |
-| `packages/cli/package.json` | Campo main rimosso |
-| `packages/mcp-server/dist/` | Ricompilato 17 agenti |
+| `.sncp/roadmaps/SUBROADMAP_LAPIDARE_DIAMANTE.md` | Piano refactoring |
+| `packages/cli/src/config/index.js` | Nuovo entry point config |
+| GitHub Issue #1 | SNCP resources |
+| GitHub Issue #2 | MCP prompts |
 
 ---
 
-*"Su carta != Reale. Pubblicato = Reale!"*
-*Cervella & Rafa - Sessione 309*
+## COMMIT SESSIONE
+
+- `65172f3` - chore: bump version to 2.0.0-beta.1
+- `c5decaa` - refactor(cli): Split config/manager.js into modules
+
+---
+
+*"Lapidare il diamante - un taglio alla volta!"*
+*Cervella & Rafa - Sessione 310*

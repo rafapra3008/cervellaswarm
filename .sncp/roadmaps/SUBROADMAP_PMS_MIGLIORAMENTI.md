@@ -157,10 +157,13 @@
 
 ### F3.2 Webhooks Outbound [3 sessioni]
 - **Cosa:** Sistema webhook per eventi
-- **Target:** booking.created, payment.received, guest.checked_in
+- **Target:** booking.created, payment.received, guest.checked_in, booking.cancelled
 - **Dipendenze:** Nessuna
 - **ROI:** Real-time integrations
-- **Status:** [ ] TODO
+- **Status:** [x] DONE - Sessione 308
+- **Audit:** 9/10 APPROVED
+- **Note:** HMAC SHA-256 + timing-safe, exponential backoff (1s->1h), DLQ, 4 eventi
+- **Files:** migration 044, models/webhook.py, services/webhook_*.py, routers/webhooks.py
 
 ### F3.3 Revenue Management Dashboard [5-7 sessioni]
 - **Cosa:** Dashboard dedicato revenue
@@ -257,6 +260,7 @@ FASE 3 (Feature)
 | 20 Gen 2026 | S306 | F2.3 DONE, F2.5 DONE (GZipMiddleware), FASE 2 = 80% |
 | 21 Gen 2026 | S307 | F2.4 DONE (tenacity), **FASE 2 = 100%!** |
 | 21 Gen 2026 | S307 | F3.1 DONE (Batch Ops), FASE 3 iniziata! |
+| 21 Gen 2026 | S308 | **F3.2 DONE (Webhooks Outbound)**, FASE 3 = 40% |
 
 ---
 
