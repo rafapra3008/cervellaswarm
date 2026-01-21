@@ -5,65 +5,71 @@
 
 # PROMPT RIPRESA - PMS Core
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 306
-> **STATO:** 90% LIVE | Health 9.5/10 (FASE 2 Performance 80%)
+> **Ultimo aggiornamento:** 21 Gennaio 2026 - Sessione 307
+> **STATO:** 90% LIVE | Health 9.5/10
 
 ---
 
-## SESSIONE 306 - FASE 2 QUASI COMPLETA!
+## SESSIONE 307 - DOPPIO COMPLETAMENTO!
 
 ```
 +================================================================+
-|   FASE 2: PERFORMANCE - 4/5 COMPLETATI (80%)                    |
+|   F2.4 Retry Logic       9/10 DONE - tenacity                  |
+|   F3.1 Batch Operations  9/10 DONE - 3 endpoint                |
 |                                                                |
-|   [x] F2.1 Database Indexes        9/10 APPROVED               |
-|   [x] F2.2 Caching Layer           9/10 APPROVED               |
-|   [x] F2.3 Query N+1 Fix           9/10 APPROVED               |
-|   [ ] F2.4 Retry Logic             TODO                        |
-|   [x] F2.5 API Compression         10/10 APPROVED              |
+|   FASE 2 PERFORMANCE = 100% COMPLETATA!                        |
+|   FASE 3 FEATURE = INIZIATA! (1/5)                            |
 +================================================================+
 ```
 
-**Cosa fatto S306:**
-- F2.3 Query N+1: planning_ops.py get_today_arrivals() FIXATO (N→2 query)
-- F2.5 API Compression: GZipMiddleware aggiunto (minimum_size=1000, compresslevel=5)
+---
+
+## FASE 2 - 100% COMPLETATA
+
+| Task | Score | Tech |
+|------|-------|------|
+| F2.1 Database Indexes | 9/10 | 3 index + email fix |
+| F2.2 Caching Layer | 9/10 | cachetools TTL |
+| F2.3 Query N+1 Fix | 9/10 | batch queries |
+| F2.4 Retry Logic | 9/10 | tenacity decorators |
+| F2.5 API Compression | 10/10 | GZipMiddleware |
 
 ---
 
-## PROSSIMA SESSIONE - DA FARE
+## FASE 3 - INIZIATA (1/5)
 
-1. **F2.4 Retry Logic:** (ultimo task FASE 2!)
-   - Target: competitor_scraping, email_poller, cm_poller
-   - Tech: tenacity library
-   - Dopo questo: FASE 2 = 100%!
-
----
-
-## SUBROADMAP ATTIVA
-
-**File:** `.sncp/roadmaps/SUBROADMAP_PMS_MIGLIORAMENTI.md`
-
-| Fase | Status | Sessioni |
-|------|--------|----------|
-| 1 Fondamenta | DONE | 1 (S303) |
-| 2 Performance | **80%** | 3 (S303-S306) |
-| 3 Feature | TODO | 15-25 |
+| Task | Status | Note |
+|------|--------|------|
+| **F3.1 Batch Operations** | **DONE 9/10** | POST /api/batch/{guests,payments,bookings} |
+| F3.2 Webhooks Outbound | TODO | booking.created, payment.received |
+| F3.3 Revenue Dashboard | TODO | 5-7 sessioni |
+| F3.4 Housekeeping Module | TODO | 6-8 sessioni |
+| F3.5 Channel Manager 2-Way | FUTURO | dopo F3.2 |
 
 ---
 
-## FILE CHIAVE SESSIONE 306
+## FILE CHIAVE SESSIONE 307
 
 | File | Azione |
 |------|--------|
-| `backend/routers/planning_ops.py` | MODIFICATO (batch fix N+1) |
-| `backend/main.py` | MODIFICATO (+GZipMiddleware) |
+| `backend/services/email_poller.py` | +tenacity retry |
+| `backend/services/competitor_scraping_service.py` | +tenacity retry |
+| `backend/models/batch.py` | CREATO |
+| `backend/routers/batch.py` | CREATO |
 
 ---
 
-## WARNING
+## PROSSIMA SESSIONE - OPZIONI
+
+1. **F3.2 Webhooks Outbound** (3 sessioni) - Real-time integrations
+2. **F3.3 Revenue Dashboard** (5-7 sessioni) - Richiede subroadmap
+
+---
+
+## WARNING ESISTENTI
 
 - **FK violations:** 1262 nel DB (problema esistente, task separato)
 
 ---
 
-*"FASE 2 Performance 80% - Solo F2.4 rimasto!" - Sessione 306*
+*"FASE 2 completata! FASE 3 iniziata!" - Sessione 307*
