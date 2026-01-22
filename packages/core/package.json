@@ -1,6 +1,6 @@
 {
   "name": "@cervellaswarm/core",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "Core utilities for CervellaSwarm - shared between CLI and MCP Server",
   "type": "module",
   "main": "dist/index.js",
@@ -30,7 +30,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "test": "node --test test/",
+    "test": "node --test test/*.test.js",
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run clean && npm run build && npm test"
   },
@@ -52,7 +52,8 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.39.0"
+    "@anthropic-ai/sdk": "^0.39.0",
+    "conf": "^13.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

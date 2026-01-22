@@ -1,15 +1,15 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 22 Gennaio 2026 - Sessione 312
-> **STATUS:** v2.0.0-beta.1 LIVE + v2.1.0 IMPLEMENTATION STARTED
+> **Ultimo aggiornamento:** 22 Gennaio 2026 - Sessione 313
+> **STATUS:** v2.0.0-beta.1 LIVE + v2.1.0 @cervellaswarm/core COMPLETO
 
 ---
 
-## SESSIONE 312 - COMPLETATA
+## SESSIONE 313 - COMPLETATA
 
 ```
 +================================================================+
-|   v2.1.0 IMPLEMENTATION - 3 TASK COMPLETATI!                    |
+|   v2.1.0 - @cervellaswarm/core COMPLETATO!                     |
 +================================================================+
 ```
 
@@ -17,80 +17,64 @@
 
 | # | Task | Risultato |
 |---|------|-----------|
-| 1 | Browser Access MVP | spawn-workers.sh v4.0.0 + researcher ha Playwright |
-| 2 | VS Code Extension POC | v0.1.0 con sidebar + terminal integration |
-| 3 | @cervellaswarm/core scaffold | Package creato, client utils migrati |
+| 1 | Config manager a core | 4 file TS (types, schema, api-key, settings) |
+| 2 | Worker prompts a core | 4 file TS (types, prompts, registry, utils) |
+| 3 | CLI + MCP usano core | Dipendenza locale, 134/134 test CLI |
+| 4 | VS Code Extension test | Compila OK, pronto per F5 |
 
-### Dettagli Implementazione
+### Dettagli @cervellaswarm/core v1.0.0-alpha.2
 
-**Browser Access (DONE):**
-- `spawn-workers.sh` v4.0.0 inietta MCP config
-- Config: `~/.claude/mcp-configs/researcher.json`
-- Solo cervella-researcher (MVP scope)
-- Docs: `docs/BROWSER_ACCESS.md`
+**Config Module:**
+- `config/types.ts` - ClaudeModel, ConfigSchema, constraints
+- `config/schema.ts` - Conf singleton, globalSchema
+- `config/api-key.ts` - getApiKey, setApiKey, hasApiKey
+- `config/settings.ts` - getDefaultModel, getTimeout, etc.
 
-**VS Code Extension (POC DONE):**
-- `cervellaswarm-extension/` v0.1.0
-- SidebarProvider.ts con webview React-like
-- Task input + status display + quick spawn
-- Terminal integration per CLI
-
-**@cervellaswarm/core (SCAFFOLD DONE):**
-- `packages/core/` v1.0.0-alpha.1
-- `client/retry.ts` - withRetry, withTimeout
-- `client/errors.ts` - parseError, CervellaSwarmError
-- `workers/index.ts` - Worker types
-- Build OK, 0 vulnerabilita
+**Workers Module:**
+- `workers/types.ts` - WorkerType, GuardianType, SpawnResult
+- `workers/prompts.ts` - AGENT_PROMPTS, buildAgentPrompt
+- `workers/registry.ts` - getAvailableWorkers, AGENT_DESCRIPTIONS
+- `workers/utils.ts` - extractFilesFromOutput, formatDuration
 
 ---
 
 ## STATO TECNICO
 
 ```
-CLI: 134/134 test PASS
-MCP: Build OK
-Core: Build OK (alpha)
-Extension: Compila OK
+Core: 37/37 test PASS (v1.0.0-alpha.2)
+CLI: 134/134 test PASS (con @cervellaswarm/core)
+MCP: Build OK (con @cervellaswarm/core)
+Extension: Compila OK (v0.1.0)
 Vulnerabilita: 0
 ```
 
 ---
 
-## PROSSIMI STEP (Sessione 313+)
+## PROSSIMI STEP (Sessione 314+)
 
 ### v2.1.0 - Completare
-1. [ ] @cervellaswarm/core: Migrare config manager
-2. [ ] @cervellaswarm/core: Migrare worker prompts
-3. [ ] CLI + MCP: Usare @cervellaswarm/core
-4. [ ] VS Code Extension: Test in VS Code reale
+1. [x] @cervellaswarm/core: Config manager - DONE
+2. [x] @cervellaswarm/core: Worker prompts - DONE
+3. [x] CLI + MCP: Usare core - DONE
+4. [x] VS Code Extension: Test ready - DONE
+5. [ ] Extension: Test manuale in VS Code (F5)
 
 ### v2.2.0 - Future
-5. [ ] Extension: File decoration, inline diff
-6. [ ] Local Models Research (Ollama)
+6. [ ] Extension: File decoration, inline diff
+7. [ ] Local Models Research (Ollama)
+8. [ ] Pubblicare core su npm
 
 ---
 
-## FILE CHIAVE (Nuovi S312)
+## FILE CHIAVE (Nuovi S313)
 
 | File | Cosa |
 |------|------|
-| `scripts/swarm/spawn-workers.sh` | v4.0.0 con Browser Access |
-| `~/.claude/mcp-configs/researcher.json` | Playwright MCP config |
-| `cervellaswarm-extension/src/SidebarProvider.ts` | POC sidebar |
-| `packages/core/` | Nuovo package @cervellaswarm/core |
-| `docs/BROWSER_ACCESS.md` | Documentazione browser |
-
----
-
-## BONUS: Claude Code migrato a native installer
-
-```
-Claude Code: v2.1.15 (native)
-Location: ~/.local/bin/claude
-Auto-update: attivo
-```
+| `packages/core/src/config/` | Config manager completo |
+| `packages/core/src/workers/` | Worker prompts e registry |
+| `packages/core/test/` | 37 test (config + workers) |
 
 ---
 
 *"Ultrapassar os proprios limites!"*
-*Cervella & Rafa - Sessione 312*
+*Cervella & Rafa - Sessione 313*

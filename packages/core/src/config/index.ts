@@ -1,26 +1,63 @@
 /**
- * Configuration management (placeholder for future migration)
+ * Config Module - Main Entry Point
  *
- * @module @cervellaswarm/core/config
+ * Re-exports all config functions.
  *
- * TODO: Migrate from packages/cli/src/config/
- * - getApiKey()
- * - getDefaultModel()
- * - getTimeout()
- * - getMaxRetries()
- * - Schema validation
+ * @example
+ * ```ts
+ * import { getApiKey, getDefaultModel } from '@cervellaswarm/core/config';
+ * ```
+ *
+ * Copyright 2026 Rafa & Cervella
+ * Licensed under the Apache License, Version 2.0
  */
 
-export const CONFIG_VERSION = '1.0.0-alpha.1';
+// Types
+export type {
+  ClaudeModel,
+  SubscriptionTier,
+  ApiKeySource,
+  ConfigSchema,
+  ConfigOptions,
+  ConfigSummary
+} from './types.js';
 
-// Placeholder exports - will be populated in v1.0.0
-export interface ConfigOptions {
-  apiKey?: string;
-  model?: string;
-  timeout?: number;
-  maxRetries?: number;
-}
+export {
+  VALID_MODELS,
+  VALID_TIERS,
+  CONFIG_CONSTRAINTS
+} from './types.js';
 
-export function getConfigVersion(): string {
-  return CONFIG_VERSION;
-}
+// Schema & Singleton
+export {
+  getGlobalConfig,
+  resetGlobalConfig,
+  globalSchema,
+  DEFAULT_CONFIG
+} from './schema.js';
+
+// API Key Management
+export {
+  getApiKey,
+  setApiKey,
+  hasApiKey,
+  clearApiKey,
+  getApiKeySource
+} from './api-key.js';
+
+// Settings (Model, Preferences, Bulk)
+export {
+  getDefaultModel,
+  setDefaultModel,
+  getTimeout,
+  setTimeout,
+  getMaxRetries,
+  setMaxRetries,
+  isVerbose,
+  setVerbose,
+  isTelemetryEnabled,
+  setTelemetry,
+  getAllConfig,
+  resetConfig,
+  getConfigPath
+} from './settings.js';

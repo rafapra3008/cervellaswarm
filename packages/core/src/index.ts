@@ -16,5 +16,5 @@ export * from './config/index.js';
 export * from './workers/index.js';
 
 // Package info
-export const VERSION = '1.0.0-alpha.1';
+export const VERSION = '1.0.0-alpha.2';
 export const PACKAGE_NAME = '@cervellaswarm/core';

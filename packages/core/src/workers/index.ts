@@ -1,97 +1,97 @@
 /**
- * Worker registry and prompts (placeholder for future migration)
+ * Workers Module - Main Entry Point
  *
- * @module @cervellaswarm/core/workers
+ * Re-exports all worker/agent functions.
  *
- * TODO: Migrate from:
- * - packages/cli/src/agents/spawner.js (WORKER_PROMPTS)
- * - packages/mcp-server/src/agents/spawner.ts (WORKER_CONFIGS)
+ * @example
+ * ```ts
+ * import { getAvailableWorkers, buildAgentPrompt } from '@cervellaswarm/core/workers';
+ * ```
+ *
+ * Copyright 2026 Rafa & Cervella
+ * Licensed under the Apache License, Version 2.0
  */
 
-export const WORKERS_VERSION = '1.0.0-alpha.1';
+export const WORKERS_VERSION = '1.0.0-alpha.2';
 
-/**
- * Worker types available in CervellaSwarm
- */
-export type WorkerType =
-  | 'backend'
-  | 'frontend'
-  | 'tester'
-  | 'docs'
-  | 'devops'
-  | 'data'
-  | 'security'
-  | 'researcher'
-  | 'marketing'
-  | 'ingegnera'
-  | 'scienziata'
-  | 'reviewer';
+// Import for local use
+import {
+  WORKER_TYPES as _WORKER_TYPES,
+  GUARDIAN_TYPES as _GUARDIAN_TYPES
+} from './types.js';
 
-/**
- * Guardian types (Opus-powered supervisors)
- */
-export type GuardianType =
-  | 'guardiana-qualita'
-  | 'guardiana-ops'
-  | 'guardiana-ricerca';
+// Types
+export type {
+  WorkerType,
+  GuardianType,
+  SpecialAgentType,
+  AgentType,
+  ModelTier,
+  AgentConfig,
+  ProjectContext,
+  SpawnOptions,
+  SpawnResult
+} from './types.js';
 
-/**
- * All agent types
- */
-export type AgentType = WorkerType | GuardianType | 'orchestrator' | 'architect';
+export {
+  WORKER_TYPES,
+  GUARDIAN_TYPES,
+  ALL_AGENT_TYPES
+} from './types.js';
 
-/**
- * Worker configuration
- */
-export interface WorkerConfig {
-  name: string;
-  prompt: string;
-  model: 'sonnet' | 'opus';
-  description: string;
-}
+// Prompts
+export {
+  buildBaseContext,
+  buildAgentPrompt,
+  getAgentPromptData,
+  AGENT_PROMPTS
+} from './prompts.js';
 
-/**
- * Get list of all available worker types
- */
-export function getAvailableWorkers(): WorkerType[] {
-  return [
-    'backend',
-    'frontend',
-    'tester',
-    'docs',
-    'devops',
-    'data',
-    'security',
-    'researcher',
-    'marketing',
-    'ingegnera',
-    'scienziata',
-    'reviewer',
-  ];
-}
+// Registry
+export {
+  getAgentConfig,
+  getAvailableWorkers,
+  getAvailableGuardians,
+  getAllAgents,
+  isValidAgent,
+  normalizeAgentType,
+  getSuggestedNextStep,
+  AGENT_DESCRIPTIONS,
+  AGENT_MODEL_TIERS,
+  AGENT_NEXT_STEPS
+} from './registry.js';
 
-/**
- * Get list of all guardian types
- */
-export function getAvailableGuardians(): GuardianType[] {
-  return ['guardiana-qualita', 'guardiana-ops', 'guardiana-ricerca'];
-}
+// Utils
+export {
+  extractFilesFromOutput,
+  extractCodeBlocks,
+  estimateTokens,
+  formatDuration,
+  truncateText,
+  parseAgentName,
+  hasErrorIndicators,
+  extractSummary
+} from './utils.js';
 
 /**
  * Check if a worker type is valid
  */
-export function isValidWorker(type: string): type is WorkerType {
-  return getAvailableWorkers().includes(type as WorkerType);
+export function isValidWorker(type: string): boolean {
+  const normalizedType = type.replace(/^cervella-/, '');
+  return (_WORKER_TYPES as readonly string[]).includes(normalizedType);
 }
 
 /**
  * Check if a guardian type is valid
  */
-export function isValidGuardian(type: string): type is GuardianType {
-  return getAvailableGuardians().includes(type as GuardianType);
+export function isValidGuardian(type: string): boolean {
+  const normalizedType = type.replace(/^cervella-/, '');
+  return (_GUARDIAN_TYPES as readonly string[]).includes(normalizedType);
 }
 
-// Placeholder: Worker prompts will be migrated in v1.0.0
+/**
+ * Get workers version
+ */
 export function getWorkersVersion(): string {
   return WORKERS_VERSION;
 }
