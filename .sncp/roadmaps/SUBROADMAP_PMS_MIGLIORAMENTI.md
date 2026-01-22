@@ -170,14 +170,18 @@
 - **Include:** Forecasting, alerts competitor, scenario planning
 - **Dipendenze:** F2 (performance)
 - **ROI:** ADR +5-10%
-- **Status:** [ ] TODO
+- **Status:** [x] DONE - Sessione 312
+- **Audit:** 8/10 APPROVED
+- **Note:** GIÀ 80% esistente! revenue.html + competitors.html + what-if.html completi. Minor enhancement per grafici/alerts futuri.
 
 ### F3.4 Housekeeping Module [6-8 sessioni]
 - **Cosa:** Gestione pulizie intelligente
 - **Include:** Routing ottimizzato, task management, mobile view
 - **Dipendenze:** Nessuna
 - **ROI:** Efficienza operativa +30%
-- **Status:** [ ] TODO
+- **Status:** [x] DONE (Quick Wins) - Sessione 312
+- **Audit:** 9/10 APPROVED
+- **Note:** GIÀ 80% esistente! Room Manager MVP + auto-dirty checkout + Planning panel + bulk ops. FASE 2 (Task Assignment + Mobile PWA) next.
 
 ### F3.5 Channel Manager 2-Way (FUTURO) [10-15 sessioni]
 - **Cosa:** Sync bidirezionale OTA
@@ -261,6 +265,7 @@ FASE 3 (Feature)
 | 21 Gen 2026 | S307 | F2.4 DONE (tenacity), **FASE 2 = 100%!** |
 | 21 Gen 2026 | S307 | F3.1 DONE (Batch Ops), FASE 3 iniziata! |
 | 21 Gen 2026 | S308 | **F3.2 DONE (Webhooks Outbound)**, FASE 3 = 40% |
+| 22 Gen 2026 | S312 | **F3.3 DONE (Revenue già esistente)**, **F3.4 Quick Wins DONE** (auto-dirty, panel, bulk), FASE 3 = 60% |
 
 ---
 

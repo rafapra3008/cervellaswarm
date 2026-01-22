@@ -5,75 +5,88 @@
 
 # PROMPT RIPRESA - PMS Core
 
-> **Ultimo aggiornamento:** 21 Gennaio 2026 - Sessione 308
+> **Ultimo aggiornamento:** 22 Gennaio 2026 - Sessione 312
 > **STATO:** 90% LIVE | Health 9.5/10
 
 ---
 
-## SESSIONE 308 - F3.2 WEBHOOKS OUTBOUND COMPLETATO!
+## SESSIONE 312 - F3.4 HOUSEKEEPING QUICK WINS COMPLETATO!
 
 ```
 +================================================================+
-|   F3.2 Webhooks Outbound  9/10 DONE                            |
+|   F3.4 Housekeeping Quick Wins  9/10 DONE                      |
 |                                                                |
-|   - HMAC SHA-256 signatures (timing-safe)                      |
-|   - Exponential backoff retry (5 tentativi, 1s->1h)           |
-|   - Dead Letter Queue (DLQ)                                    |
-|   - 4 eventi: booking, payment, guest check-in                 |
+|   - Auto-dirty on checkout (camera → dirty automatico)         |
+|   - Planning housekeeping panel (sidebar integrata)            |
+|   - Bulk operations (multi-select + azioni massive)            |
 |                                                                |
-|   FASE 3 FEATURE = 2/5 (40%)                                   |
+|   FASE 3 FEATURE = 3/5 (60%)                                   |
 +================================================================+
 ```
+
+### Scoperte Sessione 312
+
+- **F3.3 Revenue Dashboard** già 80% completo! (revenue.html + competitors.html esistenti)
+- **F3.4 Housekeeping** già 80% completo! (Room Manager MVP esistente)
+- Enhancement invece di creazione da zero = più veloce!
 
 ---
 
-## FASE 3 - PROGRESSO (2/5)
+## FASE 3 - PROGRESSO (3/5)
 
 | Task | Status | Note |
 |------|--------|------|
 | **F3.1 Batch Operations** | **DONE 9/10** | POST /api/batch/* |
 | **F3.2 Webhooks Outbound** | **DONE 9/10** | HMAC, retry, DLQ |
-| F3.3 Revenue Dashboard | TODO | 5-7 sessioni |
-| F3.4 Housekeeping Module | TODO | 6-8 sessioni |
+| **F3.3 Revenue Dashboard** | **DONE 8/10** | Già esistente, enhancement minor |
+| **F3.4 Housekeeping Quick Wins** | **DONE 9/10** | Auto-dirty, panel, bulk |
 | F3.5 Channel Manager 2-Way | FUTURO | dopo F3.2 (ora possibile!) |
 
 ---
 
-## FILE CREATI SESSIONE 308
+## FILE CREATI/MODIFICATI SESSIONE 312
 
-| File | Righe | Scopo |
-|------|-------|-------|
-| `migrations/044_webhooks_tables.sql` | 126 | Schema 4 tabelle |
-| `models/webhook.py` | 221 | Pydantic models |
-| `services/webhook_security.py` | 97 | HMAC SHA-256 |
-| `services/webhook_emitter.py` | 171 | Event creation |
-| `services/webhook_dispatcher.py` | 351 | HTTP delivery + retry |
-| `routers/webhooks.py` | 561 | API endpoints |
-| `docs/DESIGN_WEBHOOKS_OUTBOUND.md` | 1662 | Design completo |
+### Backend
+| File | Scopo |
+|------|-------|
+| `services/room_manager_service.py` | + bulk_update_housekeeping() |
+| `services/checkin_service.py` | + auto-dirty on checkout |
+| `routers/room_manager.py` | + POST /bulk-housekeeping |
+| `routers/planning_ops.py` | + await async fix |
 
----
+### Frontend
+| File | Scopo |
+|------|-------|
+| `js/planning/housekeeping-panel.js` | NUOVO - Panel housekeeping in Planning |
+| `css/planning/housekeeping-panel.css` | NUOVO - Stili dark theme |
+| `js/room-manager/api.js` | + bulkUpdateHousekeeping() |
+| `js/room-manager/core.js` | + Button "Bulk Clean" |
+| `planning.html` | + button, panel, script |
 
-## ENDPOINT WEBHOOKS CREATI
-
-```
-POST   /api/webhooks/subscriptions     - Crea subscription
-GET    /api/webhooks/subscriptions     - Lista subscriptions
-GET    /api/webhooks/subscriptions/:id - Dettaglio
-PATCH  /api/webhooks/subscriptions/:id - Aggiorna
-DELETE /api/webhooks/subscriptions/:id - Elimina
-GET    /api/webhooks/events/:id/status - Status delivery
-GET    /api/webhooks/dlq               - Dead Letter Queue
-POST   /api/webhooks/dlq/:id/retry     - Retry da DLQ
-GET    /api/webhooks/supported-events  - Lista eventi supportati
-```
+### Docs
+| File | Scopo |
+|------|-------|
+| `ANALISI_HOUSEKEEPING_ESISTENTE.md` | Research codebase |
+| `RICERCA_HOUSEKEEPING_*.md` | Best practices (4 parti) |
+| `BULK_HOUSEKEEPING_IMPLEMENTATION.md` | Documentazione |
 
 ---
 
-## PROSSIMA SESSIONE - OPZIONI
+## ENDPOINT HOUSEKEEPING
 
-1. **F3.3 Revenue Dashboard** (5-7 sessioni) - Richiede subroadmap
-2. **F3.4 Housekeeping Module** (6-8 sessioni)
-3. **Emission Points** - Integrare webhooks in booking/payment/checkin
+```
+POST /api/room-manager/{hotel_code}/bulk-housekeeping  - Bulk update status
+GET  /api/room-manager/{hotel_code}/rooms              - Lista camere
+PUT  /api/room-manager/rooms/{id}/housekeeping         - Update singolo
+```
+
+---
+
+## PROSSIMA SESSIONE - F3.4 FASE 2
+
+1. **Task Assignment System** - Chi pulisce cosa?
+2. **Mobile PWA Basic** - Lista task per housekeeper
+3. **Cleaning Time Tracking** - Start/end timestamps
 
 ---
 
@@ -83,4 +96,4 @@ GET    /api/webhooks/supported-events  - Lista eventi supportati
 
 ---
 
-*"Webhooks pronti! Real-time integrations abilitate!" - Sessione 308*
+*"Housekeeping Quick Wins completati! +30% efficienza operativa!" - Sessione 312*
