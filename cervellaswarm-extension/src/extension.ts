@@ -1,12 +1,22 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
+import { SidebarProvider } from './SidebarProvider';
 
 /**
  * Extension activation entry point
  */
 export function activate(context: vscode.ExtensionContext) {
 	console.log('CervellaSwarm extension activated!');
+
+	// Register Sidebar Provider (main UI)
+	const sidebarProvider = new SidebarProvider(context.extensionUri);
+	context.subscriptions.push(
+		vscode.window.registerWebviewViewProvider(
+			SidebarProvider.viewType,
+			sidebarProvider
+		)
+	);
 
 	// Register all commands
 	const commands = [

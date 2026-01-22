@@ -1,15 +1,15 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 22 Gennaio 2026 - Sessione 311
-> **STATUS:** v2.0.0-beta.1 LIVE + DIAMANTE LAPIDATO 100%
+> **Ultimo aggiornamento:** 22 Gennaio 2026 - Sessione 312
+> **STATUS:** v2.0.0-beta.1 LIVE + v2.1.0 IMPLEMENTATION STARTED
 
 ---
 
-## SESSIONE 311 - COMPLETATA
+## SESSIONE 312 - COMPLETATA
 
 ```
 +================================================================+
-|   RICERCHE STRATEGICHE + DECISIONI ARCHITETTURALI              |
+|   v2.1.0 IMPLEMENTATION - 3 TASK COMPLETATI!                    |
 +================================================================+
 ```
 
@@ -17,28 +17,30 @@
 
 | # | Task | Risultato |
 |---|------|-----------|
-| 1 | @cervellaswarm/core valutazione | NON ORA, SI v2.1.0 (41% duplicazione) |
-| 2 | VS Code Extension Research | FATTIBILE (2-3 sett MVP) |
-| 3 | Browser Access Research | Playwright MCP GIA' INSTALLATO! |
+| 1 | Browser Access MVP | spawn-workers.sh v4.0.0 + researcher ha Playwright |
+| 2 | VS Code Extension POC | v0.1.0 con sidebar + terminal integration |
+| 3 | @cervellaswarm/core scaffold | Package creato, client utils migrati |
 
-### Decisioni Chiave
+### Dettagli Implementazione
 
-**@cervellaswarm/core:**
-- Duplicazione 41% (385/942 righe)
-- Creare in v2.1.0 dopo stabilizzazione v2.0.x
-- Effort stimato: 4.5 giorni
+**Browser Access (DONE):**
+- `spawn-workers.sh` v4.0.0 inietta MCP config
+- Config: `~/.claude/mcp-configs/researcher.json`
+- Solo cervella-researcher (MVP scope)
+- Docs: `docs/BROWSER_ACCESS.md`
 
-**VS Code Extension:**
-- Architettura: Thin Extension + Thick CLI
-- MVP: Sidebar + Worker status + Terminal integration
-- Effort: 2-3 settimane
+**VS Code Extension (POC DONE):**
+- `cervellaswarm-extension/` v0.1.0
+- SidebarProvider.ts con webview React-like
+- Task input + status display + quick spawn
+- Terminal integration per CLI
 
-**Browser Access:**
-- SCOPERTA: Playwright MCP gia' disponibile (Regina ha accesso)
-- PROBLEMA: Workers non ereditano MCP config
-- SOLUZIONE: Iniettare config via spawn-workers.sh
-- MVP: Solo cervella-researcher con whitelist
-- Effort: ~12h
+**@cervellaswarm/core (SCAFFOLD DONE):**
+- `packages/core/` v1.0.0-alpha.1
+- `client/retry.ts` - withRetry, withTimeout
+- `client/errors.ts` - parseError, CervellaSwarmError
+- `workers/index.ts` - Worker types
+- Build OK, 0 vulnerabilita
 
 ---
 
@@ -47,53 +49,48 @@
 ```
 CLI: 134/134 test PASS
 MCP: Build OK
+Core: Build OK (alpha)
+Extension: Compila OK
 Vulnerabilita: 0
-File >500 righe: 0
-DIAMANTE: LAPIDATO 100%
 ```
 
 ---
 
-## PROSSIMI STEP (Sessione 312+)
+## PROSSIMI STEP (Sessione 313+)
 
-### v2.1.0 - Enhancement Release
-1. [ ] VS Code Extension POC (2 giorni)
-2. [ ] Browser Access MVP per cervella-researcher (1-2 sett)
-3. [ ] @cervellaswarm/core package (4.5 giorni)
+### v2.1.0 - Completare
+1. [ ] @cervellaswarm/core: Migrare config manager
+2. [ ] @cervellaswarm/core: Migrare worker prompts
+3. [ ] CLI + MCP: Usare @cervellaswarm/core
+4. [ ] VS Code Extension: Test in VS Code reale
 
-### v2.3.0 - Future
-4. [ ] Local Models Research (Ollama, LM Studio)
+### v2.2.0 - Future
+5. [ ] Extension: File decoration, inline diff
+6. [ ] Local Models Research (Ollama)
 
 ---
 
-## FILE CHIAVE (Nuovi S311)
+## FILE CHIAVE (Nuovi S312)
 
 | File | Cosa |
 |------|------|
-| `.sncp/.../studio/STUDIO_VSCODE_EXTENSION.md` | Research VS Code (822 righe) |
-| `.sncp/.../reports/RESEARCH_20260122_BROWSER_ACCESS.md` | Research Browser (580 righe) |
-| `reports/engineer_duplication_analysis.md` | Analisi duplicazione |
-| `.sncp/roadmaps/SUBROADMAP_LAPIDARE_DIAMANTE.md` | Piano aggiornato |
+| `scripts/swarm/spawn-workers.sh` | v4.0.0 con Browser Access |
+| `~/.claude/mcp-configs/researcher.json` | Playwright MCP config |
+| `cervellaswarm-extension/src/SidebarProvider.ts` | POC sidebar |
+| `packages/core/` | Nuovo package @cervellaswarm/core |
+| `docs/BROWSER_ACCESS.md` | Documentazione browser |
 
 ---
 
-## MILESTONE RAGGIUNTA
+## BONUS: Claude Code migrato a native installer
 
 ```
-+================================================================+
-|                                                                |
-|   DIAMANTE LAPIDATO - TUTTE LE FASI COMPLETE                  |
-|                                                                |
-|   FASE 1: Pulizia interna (S310)           DONE               |
-|   FASE 2: Technical debt (S311)            DONE               |
-|   FASE 3: Gap competitivi research (S311)  DONE               |
-|                                                                |
-|   PRONTO per v2.1.0 implementation!                           |
-|                                                                |
-+================================================================+
+Claude Code: v2.1.15 (native)
+Location: ~/.local/bin/claude
+Auto-update: attivo
 ```
 
 ---
 
 *"Ultrapassar os proprios limites!"*
-*Cervella & Rafa - Sessione 311*
+*Cervella & Rafa - Sessione 312*

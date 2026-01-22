@@ -18,6 +18,9 @@
 # v2.0.0: Config centralizzata ~/.swarm/config
 #
 # CHANGELOG:
+# v4.0.0: BROWSER ACCESS! cervella-researcher puo' navigare il web (Playwright MCP)
+#         Worker con browser: researcher (estendibile in futuro)
+#         Config MCP in ~/.claude/mcp-configs/researcher.json
 # v3.9.0: AUTO-CONTEXT SELETTIVO + --version flag (W6 Day 3-4)
 #         + AUTO_CONTEXT_WORKERS: 8 worker code-aware ottengono context automatico
 #         + --no-context per override, --version per mostrare versione
@@ -65,7 +68,7 @@ set -e
 # ============================================================================
 # VERSION (per --version flag)
 # ============================================================================
-VERSION="3.9.0"
+VERSION="4.0.0"
 
 # ============================================================================
 # COMMON LIBRARY (v3.4.0) - Funzioni condivise
@@ -113,6 +116,13 @@ AUTO_CONTEXT_WORKERS="backend frontend tester reviewer ingegnera security archit
 # ARCHITECT MODE (v3.8.0) - Spawna architect per creare PLAN.md
 # ============================================================================
 ARCHITECT_TASK=""
+
+# ============================================================================
+# BROWSER ACCESS (v4.0.0) - MCP Config per worker con browser access
+# Worker che possono navigare il web (Playwright MCP)
+# ============================================================================
+BROWSER_ACCESS_WORKERS="researcher"
+BROWSER_MCP_CONFIG="$HOME/.claude/mcp-configs/researcher.json"
 
 # ============================================================================
 # OUTPUT UNBUFFERED (v3.2.0) - Output realtime dai worker!
@@ -375,6 +385,20 @@ FOCUS: Cerca task per 'cervella-devops' in .swarm/tasks/"
         researcher)
             echo "Sei CERVELLA-RESEARCHER.
 Specializzazione: Ricerca tecnica, studi, analisi.
+
+BROWSER ACCESS (v4.0.0):
+Hai accesso a Playwright MCP per navigare il web!
+Tools disponibili: browser_navigate, browser_snapshot, browser_click, browser_type, etc.
+
+QUANDO USARE IL BROWSER:
+- Navigare documentazione tecnica ufficiale
+- Verificare esempi live da docs
+- Ricercare su siti tecnici (github.com, docs.python.org, react.dev, etc.)
+
+QUANDO NON USARE:
+- Per search generici (usa WebSearch)
+- Per siti che richiedono login
+- Per siti non tecnici
 
 ${base_prompt}
 
@@ -855,15 +879,27 @@ spawn_worker_headless() {
     # Salva timestamp start
     date +%s > "${SWARM_DIR}/status/worker_${worker_name}.start"
 
+    # v4.0.0: BROWSER ACCESS - MCP config per worker con browser access
+    local MCP_CONFIG_ARG=""
+    if [[ " $BROWSER_ACCESS_WORKERS " =~ " $worker_name " ]]; then
+        if [[ -f "$BROWSER_MCP_CONFIG" ]]; then
+            MCP_CONFIG_ARG="--mcp-config \"${BROWSER_MCP_CONFIG}\""
+            print_info "Browser access enabled for: $worker_name"
+        else
+            print_warning "Browser MCP config not found: $BROWSER_MCP_CONFIG"
+        fi
+    fi
+
     # Spawn in tmux detached (NESSUNA FINESTRA!)
     # v3.2.0: Aggiunto STDBUF_CMD per output realtime
     # v3.5.0: Unset ANTHROPIC_API_KEY per usare account Claude Max invece di API
     # v3.6.0: AUTO_COMMIT - git commit automatico dopo task (se abilitato)
+    # v4.0.0: MCP_CONFIG_ARG per browser access (Playwright MCP)
     tmux new-session -d -s "$session_name" \
         "cd ${PROJECT_ROOT} && \
          export CERVELLASWARM_WORKER=1 && \
          unset ANTHROPIC_API_KEY && \
-         ${STDBUF_CMD} ${claude_path} -p --append-system-prompt \"\$(cat ${prompt_file})\" \"${initial_prompt}\" 2>&1 | tee \"${log_file}\"; \
+         ${STDBUF_CMD} ${claude_path} -p ${MCP_CONFIG_ARG} --append-system-prompt \"\$(cat ${prompt_file})\" \"${initial_prompt}\" 2>&1 | tee \"${log_file}\"; \
          if [ \"${AUTO_COMMIT}\" = true ]; then \
              echo '' >> \"${log_file}\"; \
              echo '[CervellaSwarm] Auto-commit: checking for changes...' >> \"${log_file}\"; \

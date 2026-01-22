@@ -1,71 +1,81 @@
-# cervellaswarm README
+# CervellaSwarm VS Code Extension
 
-This is the README for your extension "cervellaswarm". After writing up a brief description, we recommend including the following sections.
+> Multi-Agent AI Orchestration System for VS Code
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+### Sidebar Control Panel
+- **Task Input**: Submit tasks directly from VS Code
+- **Worker Status**: Monitor active workers in real-time
+- **Quick Spawn**: Launch specific workers with one click
 
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+### Terminal Integration
+- Seamless integration with CervellaSwarm CLI
+- Tasks run in dedicated terminal
+- Full output visibility
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- VS Code 1.107.0+
+- CervellaSwarm CLI installed (`npm install -g cervellaswarm`)
+- Claude API access (Pro subscription recommended)
 
-## Extension Settings
+## Getting Started
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+1. Open the CervellaSwarm sidebar (bee icon in activity bar)
+2. Enter a task description
+3. Click "Run Task" or press Enter
+4. Watch the task execute in the terminal
 
-For example:
+## Quick Spawn Workers
 
-This extension contributes the following settings:
+Use the quick spawn buttons to launch specific workers:
+- **Backend**: Python, FastAPI specialist
+- **Frontend**: React, CSS specialist
+- **Tester**: Testing, QA specialist
+- **Researcher**: Technical research specialist
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+## Architecture
 
-## Known Issues
+```
+VS Code Extension (Thin Layer)
+    |
+    +-- Sidebar Webview (UI)
+    |   +-- Task input, status, worker buttons
+    |
+    +-- Terminal Integration
+        +-- Spawns CLI commands
+            |
+            v
+    CervellaSwarm CLI (Thick Layer)
+        +-- Worker management, SNCP, execution
+```
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## Version History
 
-## Release Notes
+- **v0.1.0** (2026-01-22): Initial POC with sidebar and terminal integration
+- **v0.0.1**: Scaffold with basic commands
 
-Users appreciate release notes as you update your extension.
+## Development
 
-### 1.0.0
+```bash
+# Install dependencies
+npm install
 
-Initial release of ...
+# Compile
+npm run compile
 
-### 1.0.1
+# Watch mode
+npm run watch
 
-Fixed issue #.
+# Package VSIX
+npm run package
+```
 
-### 1.1.0
+## License
 
-Added features X, Y, and Z.
+Apache 2.0 - See LICENSE
 
 ---
 
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+*CervellaSwarm - 17 brains are better than one*

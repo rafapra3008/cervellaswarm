@@ -2,7 +2,7 @@
   "name": "cervellaswarm",
   "displayName": "CervellaSwarm - Multi-Agent AI Orchestra",
   "description": "Multi-agent AI orchestration system for VS Code - Specialized AI agents working in harmony",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "publisher": "rafapra",
   "icon": "media/icon.png",
   "galleryBanner": {
@@ -44,6 +44,24 @@
   ],
   "main": "./dist/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "cervellaswarm",
+          "title": "CervellaSwarm",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "cervellaswarm": [
+        {
+          "type": "webview",
+          "id": "cervellaswarm.sidebar",
+          "name": "Swarm Control"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "cervellaswarm.initialize",
