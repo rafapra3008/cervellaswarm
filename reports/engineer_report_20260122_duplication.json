@@ -1,0 +1,198 @@
+{
+  "analysis": {
+    "date": "2026-01-22",
+    "analyst": "cervella-ingegnera",
+    "objective": "Identify code duplication between CLI and MCP-server packages"
+  },
+  "summary": {
+    "healthScore": "6/10",
+    "recommendation": "CREATE @cervellaswarm/core (but NOT now - plan for v2.1+)",
+    "urgency": "HIGH",
+    "effort": "4.5 days"
+  },
+  "topIssues": [
+    {
+      "severity": "HIGH",
+      "description": "85% duplicate logic in spawner modules",
+      "linesAffected": "351/739 total lines",
+      "files": [
+        "packages/cli/src/agents/spawner.js",
+        "packages/mcp-server/src/agents/spawner.ts"
+      ]
+    },
+    {
+      "severity": "HIGH",
+      "description": "100% duplicate logic in config/manager",
+      "linesAffected": "~200 lines",
+      "files": [
+        "packages/cli/src/config/*.js",
+        "packages/mcp-server/src/config/manager.ts"
+      ]
+    },
+    {
+      "severity": "MEDIUM",
+      "description": "Worker prompts hardcoded in both packages",
+      "linesAffected": "~100 lines",
+      "impact": "Need to update prompts in 2 places"
+    }
+  ],
+  "duplicationMetrics": {
+    "totalLinesAnalyzed": 942,
+    "duplicatedLines": 385,
+    "duplicationPercentage": 41,
+    "components": [
+      {
+        "name": "Spawner core",
+        "cliLines": 200,
+        "mcpLines": 180,
+        "duplicateLines": 180,
+        "duplicationPercent": 90
+      },
+      {
+        "name": "Error handling",
+        "cliLines": 50,
+        "mcpLines": 45,
+        "duplicateLines": 45,
+        "duplicationPercent": 100
+      },
+      {
+        "name": "Retry logic",
+        "cliLines": 30,
+        "mcpLines": 30,
+        "duplicateLines": 30,
+        "duplicationPercent": 100
+      },
+      {
+        "name": "Worker prompts",
+        "cliLines": 50,
+        "mcpLines": 50,
+        "duplicateLines": 50,
+        "duplicationPercent": 100
+      },
+      {
+        "name": "Config API key",
+        "cliLines": 76,
+        "mcpLines": 30,
+        "duplicateLines": 30,
+        "duplicationPercent": 100
+      },
+      {
+        "name": "Config settings",
+        "cliLines": 151,
+        "mcpLines": 50,
+        "duplicateLines": 50,
+        "duplicationPercent": 100
+      }
+    ]
+  },
+  "filesAnalyzed": {
+    "cli": [
+      "packages/cli/src/agents/spawner.js (374 lines)",
+      "packages/cli/src/agents/router.js (40 lines)",
+      "packages/cli/src/config/schema.js (102 lines)",
+      "packages/cli/src/config/api-key.js (76 lines)",
+      "packages/cli/src/config/settings.js (151 lines)",
+      "packages/cli/src/config/billing.js (145 lines)",
+      "packages/cli/src/config/diagnostics.js (78 lines)"
+    ],
+    "mcp": [
+      "packages/mcp-server/src/agents/spawner.ts (365 lines)",
+      "packages/mcp-server/src/config/manager.ts (207 lines)"
+    ]
+  },
+  "recommendation": {
+    "action": "CREATE_CORE_PACKAGE",
+    "timing": "POST_v2.0.0",
+    "rationale": "41% code duplication = significant technical debt, but premature to refactor before v2.0.0 stabilizes",
+    "timeline": {
+      "v2.0.0": "Ship with duplication (acceptable for MVP)",
+      "v2.0.1-v2.0.5": "Stabilize + Fix bugs",
+      "v2.1.0": "Refactor: Create @cervellaswarm/core"
+    }
+  },
+  "proposedCorePackage": {
+    "name": "@cervellaswarm/core",
+    "includes": [
+      "Spawner logic (retry, timeout, error handling)",
+      "Worker registry + prompts",
+      "Config manager (API key, settings, schema)",
+      "Anthropic client utilities"
+    ],
+    "excludes": [
+      "CLI commands (CLI-specific)",
+      "MCP protocol (MCP-specific)",
+      "Display/UI utilities (CLI-specific)",
+      "Billing logic (TBD)"
+    ]
+  },
+  "implementationPlan": {
+    "phase1": {
+      "name": "Planning",
+      "duration": "1 day",
+      "tasks": [
+        "Define exact API of @cervellaswarm/core",
+        "Decide versioning strategy",
+        "Setup monorepo dependencies"
+      ]
+    },
+    "phase2": {
+      "name": "Implementation",
+      "duration": "2-3 days",
+      "tasks": [
+        "Create core package scaffold",
+        "Migrate spawner logic",
+        "Migrate config manager",
+        "Migrate worker registry",
+        "Update CLI to use core",
+        "Update MCP to use core"
+      ]
+    },
+    "phase3": {
+      "name": "Testing",
+      "duration": "1 day",
+      "tasks": [
+        "Test CLI with core",
+        "Test MCP with core",
+        "Integration tests",
+        "Verify no regressions"
+      ]
+    },
+    "phase4": {
+      "name": "Deploy",
+      "duration": "0.5 day",
+      "tasks": [
+        "Publish @cervellaswarm/core@1.0.0",
+        "Publish cervellaswarm@2.1.0",
+        "Publish @cervellaswarm/mcp-server@1.1.0"
+      ]
+    },
+    "totalEffort": "4.5 days (1 week calendar time)"
+  },
+  "alternativesConsidered": [
+    {
+      "name": "Keep Duplication",
+      "verdict": "REJECTED",
+      "reason": "Not sustainable long-term, 2x bugs, 2x maintenance"
+    },
+    {
+      "name": "MCP imports from CLI directly",
+      "verdict": "REJECTED",
+      "reason": "Architecturally wrong (MCP depends on CLI)"
+    },
+    {
+      "name": "Git submodules",
+      "verdict": "REJECTED",
+      "reason": "Maintenance nightmare, complex versioning"
+    },
+    {
+      "name": "Core package",
+      "verdict": "ACCEPTED",
+      "reason": "Clean architecture, DRY, scalable (best long-term choice)"
+    }
+  ],
+  "priority": {
+    "critical": "Ship v2.0.0 without refactor (keep momentum)",
+    "high": "Plan core package for v2.1.0",
+    "medium": "Document decision (DONE)"
+  }
+}

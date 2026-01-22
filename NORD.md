@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 21 Gennaio 2026 - Sessione 310 - v2.0.0-beta.1 LIVE + Diamante Lapidato
+> Aggiornato: 22 Gennaio 2026 - Sessione 311 - DIAMANTE LAPIDATO 100% + Roadmap v2.1.0
 
 ```
 +==================================================================+
@@ -363,7 +363,7 @@ SESSIONE 295: 🏠 W6 DAY 5 COMPLETATO!
     - D5-04: Test ciclo Regina->Worker->Guardiana (10/10)
   → W6 100% COMPLETATO! MEDIA FINALE 9.9/10!
 
-SESSIONE 296: 🧠 SNCP 2.0 - MEMORIA PERFETTA! ← OGGI!
+SESSIONE 296: 🧠 SNCP 2.0 - MEMORIA PERFETTA!
   ✓ RICERCA: Memoria AI Assistants (540 righe)
     - Comparati 9 tool: Aider, Cursor, Copilot, Windsurf, Cline...
     - SNCP score 8.8/10 (MIGLIORE della media!)
@@ -378,6 +378,25 @@ SESSIONE 296: 🧠 SNCP 2.0 - MEMORIA PERFETTA! ← OGGI!
     - file_limits_guard.py → v2.0 (rimosso oggi.md)
   ✓ TEMPLATE_SESSION_HANDOFF.md CREATO (6-sezioni)
   → SNCP 2.0 Day 1/6 COMPLETATO!
+
+SESSIONE 310: 💎 LAPIDARE IL DIAMANTE - FASE 1!
+  ✓ Split config/manager.js           522→max 151 righe
+  ✓ Fix CHANGELOG                     17 agenti chiarito
+  ✓ Badge npm README                  CLI + MCP
+  ✓ GitHub Issues #1 #2               TODO linkati
+  ✓ Trusted Publisher                 Configurato per CI
+  → FASE 1 COMPLETATA!
+
+SESSIONE 311: 💎 DIAMANTE LAPIDATO 100%! ← OGGI!
+  ✓ @cervellaswarm/core valutazione   41% duplicazione → v2.1.0
+  ✓ VS Code Extension Research        822 righe studio
+    - Architettura: Thin Extension + Thick CLI
+    - MVP: 2-3 settimane
+  ✓ Browser Access Research           580 righe studio
+    - SCOPERTA: Playwright MCP già installato!
+    - MVP: ~12h per cervella-researcher
+  → DIAMANTE LAPIDATO - TUTTE LE FASI COMPLETE!
+  → ROADMAP v2.1.0 DEFINITA!
 
 SCORE: 100/100 ✅ W4 COMPLETATO! W5 COMPLETATA!
 

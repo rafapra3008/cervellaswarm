@@ -1,32 +1,44 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 21 Gennaio 2026 - Sessione 310
-> **STATUS:** v2.0.0-beta.1 LIVE + Diamante Lapidato
+> **Ultimo aggiornamento:** 22 Gennaio 2026 - Sessione 311
+> **STATUS:** v2.0.0-beta.1 LIVE + DIAMANTE LAPIDATO 100%
 
 ---
 
-## SESSIONE 310 - COMPLETATA
+## SESSIONE 311 - COMPLETATA
 
 ```
 +================================================================+
-|   PUBBLICAZIONE + REFACTORING COMPLETATI                       |
+|   RICERCHE STRATEGICHE + DECISIONI ARCHITETTURALI              |
 +================================================================+
 ```
 
-### Pubblicato su npm
-| Package | Versione | Status |
-|---------|----------|--------|
-| cervellaswarm | 2.0.0-beta.1 | LIVE |
-| @cervellaswarm/mcp-server | 2.0.0-beta.1 | LIVE |
+### Task Completati
 
-### Refactoring "Lapidare il Diamante"
-| Task | Status |
-|------|--------|
-| Split config/manager.js (522→max 151 righe) | DONE |
-| Fix CHANGELOG (chiarito 17 agenti) | DONE |
-| Badge npm nei README | DONE |
-| GitHub Issues per TODO (#1, #2) | DONE |
-| Trusted Publisher configurato | DONE |
+| # | Task | Risultato |
+|---|------|-----------|
+| 1 | @cervellaswarm/core valutazione | NON ORA, SI v2.1.0 (41% duplicazione) |
+| 2 | VS Code Extension Research | FATTIBILE (2-3 sett MVP) |
+| 3 | Browser Access Research | Playwright MCP GIA' INSTALLATO! |
+
+### Decisioni Chiave
+
+**@cervellaswarm/core:**
+- Duplicazione 41% (385/942 righe)
+- Creare in v2.1.0 dopo stabilizzazione v2.0.x
+- Effort stimato: 4.5 giorni
+
+**VS Code Extension:**
+- Architettura: Thin Extension + Thick CLI
+- MVP: Sidebar + Worker status + Terminal integration
+- Effort: 2-3 settimane
+
+**Browser Access:**
+- SCOPERTA: Playwright MCP gia' disponibile (Regina ha accesso)
+- PROBLEMA: Workers non ereditano MCP config
+- SOLUZIONE: Iniettare config via spawn-workers.sh
+- MVP: Solo cervella-researcher con whitelist
+- Effort: ~12h
 
 ---
 
@@ -36,48 +48,52 @@
 CLI: 134/134 test PASS
 MCP: Build OK
 Vulnerabilita: 0
-File >500 righe: 0 (risolto!)
-```
-
-### Struttura config/ dopo split
-```
-config/
-├── schema.js      (102 righe)
-├── api-key.js     (76 righe)
-├── settings.js    (151 righe)
-├── diagnostics.js (78 righe)
-├── billing.js     (145 righe)
-├── index.js       (62 righe)
-└── manager.js     (19 righe - wrapper)
+File >500 righe: 0
+DIAMANTE: LAPIDATO 100%
 ```
 
 ---
 
-## PROSSIMI STEP (Sessione 311)
+## PROSSIMI STEP (Sessione 312+)
 
-1. [ ] VS Code Extension Research
-2. [ ] Browser Access Research
-3. [ ] Valutazione @cervellaswarm/core package
+### v2.1.0 - Enhancement Release
+1. [ ] VS Code Extension POC (2 giorni)
+2. [ ] Browser Access MVP per cervella-researcher (1-2 sett)
+3. [ ] @cervellaswarm/core package (4.5 giorni)
+
+### v2.3.0 - Future
+4. [ ] Local Models Research (Ollama, LM Studio)
 
 ---
 
-## FILE CHIAVE
+## FILE CHIAVE (Nuovi S311)
 
 | File | Cosa |
 |------|------|
-| `.sncp/roadmaps/SUBROADMAP_LAPIDARE_DIAMANTE.md` | Piano refactoring |
-| `packages/cli/src/config/index.js` | Nuovo entry point config |
-| GitHub Issue #1 | SNCP resources |
-| GitHub Issue #2 | MCP prompts |
+| `.sncp/.../studio/STUDIO_VSCODE_EXTENSION.md` | Research VS Code (822 righe) |
+| `.sncp/.../reports/RESEARCH_20260122_BROWSER_ACCESS.md` | Research Browser (580 righe) |
+| `reports/engineer_duplication_analysis.md` | Analisi duplicazione |
+| `.sncp/roadmaps/SUBROADMAP_LAPIDARE_DIAMANTE.md` | Piano aggiornato |
 
 ---
 
-## COMMIT SESSIONE
+## MILESTONE RAGGIUNTA
 
-- `65172f3` - chore: bump version to 2.0.0-beta.1
-- `c5decaa` - refactor(cli): Split config/manager.js into modules
+```
++================================================================+
+|                                                                |
+|   DIAMANTE LAPIDATO - TUTTE LE FASI COMPLETE                  |
+|                                                                |
+|   FASE 1: Pulizia interna (S310)           DONE               |
+|   FASE 2: Technical debt (S311)            DONE               |
+|   FASE 3: Gap competitivi research (S311)  DONE               |
+|                                                                |
+|   PRONTO per v2.1.0 implementation!                           |
+|                                                                |
++================================================================+
+```
 
 ---
 
-*"Lapidare il diamante - un taglio alla volta!"*
-*Cervella & Rafa - Sessione 310*
+*"Ultrapassar os proprios limites!"*
+*Cervella & Rafa - Sessione 311*
