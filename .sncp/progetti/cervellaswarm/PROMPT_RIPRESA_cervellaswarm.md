@@ -1,56 +1,49 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 22 Gennaio 2026 - Sessione 313
+> **Ultimo aggiornamento:** 23 Gennaio 2026 - Sessione 314
 > **STATUS:** v2.0.0-beta.1 LIVE + v2.1.0 @cervellaswarm/core COMPLETO
 
 ---
 
-## SESSIONE 313 - COMPLETATA
+## SESSIONE 314 - COMPLETATA
 
 ```
 +================================================================+
-|   v2.1.0 - @cervellaswarm/core COMPLETATO!                     |
+|   NUOVO PROGETTO: RafaFreelance CREATO!                        |
 +================================================================+
 ```
 
-### Task Completati
+### Cosa Abbiamo Fatto
 
 | # | Task | Risultato |
 |---|------|-----------|
-| 1 | Config manager a core | 4 file TS (types, schema, api-key, settings) |
-| 2 | Worker prompts a core | 4 file TS (types, prompts, registry, utils) |
-| 3 | CLI + MCP usano core | Dipendenza locale, 134/134 test CLI |
-| 4 | VS Code Extension test | Compila OK, pronto per F5 |
+| 1 | Ricerca guadagno online | 4 report dettagliati |
+| 2 | Analisi fattibilita | No-Code WhatsApp = 85-90% prob |
+| 3 | Creato progetto RafaFreelance | ~/Developer/RafaFreelance/ |
+| 4 | Roadmap 90 giorni | Dual-Track: iTalki + WhatsApp |
 
-### Dettagli @cervellaswarm/core v1.0.0-alpha.2
+### Nuovo Progetto
 
-**Config Module:**
-- `config/types.ts` - ClaudeModel, ConfigSchema, constraints
-- `config/schema.ts` - Conf singleton, globalSchema
-- `config/api-key.ts` - getApiKey, setApiKey, hasApiKey
-- `config/settings.ts` - getDefaultModel, getTimeout, etc.
-
-**Workers Module:**
-- `workers/types.ts` - WorkerType, GuardianType, SpawnResult
-- `workers/prompts.ts` - AGENT_PROMPTS, buildAgentPrompt
-- `workers/registry.ts` - getAvailableWorkers, AGENT_DESCRIPTIONS
-- `workers/utils.ts` - extractFilesFromOutput, formatDuration
+**RafaFreelance** - Liberta Geografica
+- Path: `~/Developer/RafaFreelance/`
+- SNCP: `.sncp/progetti/rafafreelance/`
+- Target: EUR 1.500-2.000/mese
+- Strategia: iTalki (cash) + WhatsApp Automation (scale)
 
 ---
 
-## STATO TECNICO
+## STATO TECNICO (invariato da S313)
 
 ```
 Core: 37/37 test PASS (v1.0.0-alpha.2)
-CLI: 134/134 test PASS (con @cervellaswarm/core)
-MCP: Build OK (con @cervellaswarm/core)
+CLI: 134/134 test PASS
+MCP: Build OK
 Extension: Compila OK (v0.1.0)
-Vulnerabilita: 0
 ```
 
 ---
 
-## PROSSIMI STEP (Sessione 314+)
+## PROSSIMI STEP CervellaSwarm
 
 ### v2.1.0 - Completare
 1. [x] @cervellaswarm/core: Config manager - DONE
@@ -66,15 +59,14 @@ Vulnerabilita: 0
 
 ---
 
-## FILE CHIAVE (Nuovi S313)
+## FILE CHIAVE
 
 | File | Cosa |
 |------|------|
-| `packages/core/src/config/` | Config manager completo |
-| `packages/core/src/workers/` | Worker prompts e registry |
-| `packages/core/test/` | 37 test (config + workers) |
+| `packages/core/` | Config + Workers modules |
+| `.sncp/progetti/rafafreelance/` | NUOVO progetto Liberta Geografica |
 
 ---
 
-*"Ultrapassar os proprios limites!"*
-*Cervella & Rafa - Sessione 313*
+*"La liberta si costruisce un progetto alla volta!"*
+*Cervella & Rafa - Sessione 314*

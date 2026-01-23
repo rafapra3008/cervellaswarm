@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - MASTER (Globale)
 
-> **Ultimo aggiornamento:** 20 Gennaio 2026 - Sessione 299
+> **Ultimo aggiornamento:** 23 Gennaio 2026 - Sessione 314
 > **Tabella ecosistema condivisa - SOLO link ai file specifici**
 
 ---
@@ -12,6 +12,7 @@
 | **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-01-20 | SNCP 2.0 Day 6 - Cleanup riferimenti oggi.md |
 | **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-20 | Miracollook: Design Salutare COMPLETATO! |
 | **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-01-20 | In pausa |
+| **RafaFreelance** | `.sncp/progetti/rafafreelance/PROMPT_RIPRESA_rafafreelance.md` | 2026-01-23 | NUOVO! Dual-Track: iTalki + WhatsApp Automation |
 
 ---
 
