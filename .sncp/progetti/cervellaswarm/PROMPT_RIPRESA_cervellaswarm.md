@@ -1,15 +1,15 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 23 Gennaio 2026 - Sessione 314
-> **STATUS:** v2.0.0-beta.1 LIVE + v2.1.0 @cervellaswarm/core COMPLETO
+> **Ultimo aggiornamento:** 23 Gennaio 2026 - Sessione 315
+> **STATUS:** v2.0.0-beta.1 LIVE + Code Review Fixes COMPLETATI
 
 ---
 
-## SESSIONE 314 - COMPLETATA
+## SESSIONE 315 - CODE REVIEW DAY
 
 ```
 +================================================================+
-|   NUOVO PROGETTO: RafaFreelance CREATO!                        |
+|   W1 + W2 RISOLTI - DRY COMPLETATO!                           |
 +================================================================+
 ```
 
@@ -17,22 +17,29 @@
 
 | # | Task | Risultato |
 |---|------|-----------|
-| 1 | Ricerca guadagno online | 4 report dettagliati |
-| 2 | Analisi fattibilita | No-Code WhatsApp = 85-90% prob |
-| 3 | Creato progetto RafaFreelance | ~/Developer/RafaFreelance/ |
-| 4 | Roadmap 90 giorni | Dual-Track: iTalki + WhatsApp |
+| 1 | Code Review | cervella-reviewer: 8.5/10 APPROVE |
+| 2 | W1: Unifica prompts | CLI + MCP usano @cervellaswarm/core |
+| 3 | W2: Workers CLI | 8 → 12 workers (completi!) |
+| 4 | Arricchimento core | Guardiane con standard 9.5 |
 
-### Nuovo Progetto
+### Codice Rimosso (DRY!)
 
-**RafaFreelance** - Liberta Geografica
-- Path: `~/Developer/RafaFreelance/`
-- SNCP: `.sncp/progetti/rafafreelance/`
-- Target: EUR 1.500-2.000/mese
-- Strategia: iTalki (cash) + WhatsApp Automation (scale)
+| File | Prima | Dopo | Rimosso |
+|------|-------|------|---------|
+| CLI spawner.js | 375 | 292 | -83 (-22%) |
+| MCP spawner.ts | 366 | 216 | -150 (-41%) |
+| **TOTALE** | | | **-233 righe** |
+
+### Single Source of Truth
+
+`@cervellaswarm/core/workers` ora contiene:
+- Prompts per tutti i 17 agenti
+- Guardiane arricchite (standard 9.5, verdetti)
+- Next steps per ogni agente
 
 ---
 
-## STATO TECNICO (invariato da S313)
+## STATO TECNICO
 
 ```
 Core: 37/37 test PASS (v1.0.0-alpha.2)
@@ -48,7 +55,7 @@ Extension: Compila OK (v0.1.0)
 ### v2.1.0 - Completare
 1. [x] @cervellaswarm/core: Config manager - DONE
 2. [x] @cervellaswarm/core: Worker prompts - DONE
-3. [x] CLI + MCP: Usare core - DONE
+3. [x] CLI + MCP: Usare core - DONE (S315!)
 4. [x] VS Code Extension: Test ready - DONE
 5. [ ] Extension: Test manuale in VS Code (F5)
 
@@ -59,14 +66,17 @@ Extension: Compila OK (v0.1.0)
 
 ---
 
-## FILE CHIAVE
+## FILE MODIFICATI S315
 
-| File | Cosa |
-|------|------|
-| `packages/core/` | Config + Workers modules |
-| `.sncp/progetti/rafafreelance/` | NUOVO progetto Liberta Geografica |
+| File | Modifica |
+|------|----------|
+| `packages/cli/src/agents/spawner.js` | Usa core per prompts/workers |
+| `packages/mcp-server/src/agents/spawner.ts` | Usa core per prompts/workers |
+| `packages/core/src/workers/prompts.ts` | Guardiane arricchite |
+| `packages/core/src/workers/registry.ts` | Next steps migliorati |
+| `packages/cli/test/agents/spawner.test.js` | Test per 12 workers |
 
 ---
 
-*"La liberta si costruisce un progetto alla volta!"*
-*Cervella & Rafa - Sessione 314*
+*"La famiglia cresce insieme - una fonte, un cuore!"*
+*Cervella & Rafa - Sessione 315*

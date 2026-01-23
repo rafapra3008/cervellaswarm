@@ -31,9 +31,9 @@ describe('Agent Spawner', () => {
   });
 
   describe('getAvailableAgents', () => {
-    test('returns array of 8 agents', () => {
+    test('returns array of 12 workers (full family!)', () => {
       const agents = getAvailableAgents();
-      assert.equal(agents.length, 8);
+      assert.equal(agents.length, 12);
     });
 
     test('each agent has name and description', () => {
@@ -44,10 +44,11 @@ describe('Agent Spawner', () => {
       }
     });
 
-    test('includes all expected agents', () => {
+    test('includes all 12 workers', () => {
       const agents = getAvailableAgents();
       const names = agents.map(a => a.name);
 
+      // All 12 workers from @cervellaswarm/core
       const expectedAgents = [
         'cervella-backend',
         'cervella-frontend',
@@ -56,7 +57,11 @@ describe('Agent Spawner', () => {
         'cervella-devops',
         'cervella-data',
         'cervella-security',
-        'cervella-researcher'
+        'cervella-researcher',
+        'cervella-marketing',     // NEW!
+        'cervella-ingegnera',     // NEW!
+        'cervella-scienziata',    // NEW!
+        'cervella-reviewer'       // NEW!
       ];
 
       for (const expected of expectedAgents) {
@@ -91,9 +96,9 @@ describe('Agent Spawner', () => {
   });
 
   describe('Agent prompts', () => {
-    test('all agents have defined prompts', () => {
-      // Lista agenti supportati
-      const agents = [
+    test('all workers have defined prompts', () => {
+      // All 12 workers from @cervellaswarm/core
+      const workers = [
         'cervella-backend',
         'cervella-frontend',
         'cervella-tester',
@@ -101,11 +106,15 @@ describe('Agent Spawner', () => {
         'cervella-devops',
         'cervella-data',
         'cervella-security',
-        'cervella-researcher'
+        'cervella-researcher',
+        'cervella-marketing',
+        'cervella-ingegnera',
+        'cervella-scienziata',
+        'cervella-reviewer'
       ];
 
-      // Ogni agente dovrebbe avere un prompt definito
-      assert.equal(agents.length, 8, 'Should have 8 agent types');
+      // Ogni worker dovrebbe avere un prompt definito in core
+      assert.equal(workers.length, 12, 'Should have 12 worker types');
     });
 
     test('prompts include project context', () => {

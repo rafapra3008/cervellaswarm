@@ -80,10 +80,10 @@ export const AGENT_NEXT_STEPS: Record<string, string> = {
   'ingegnera': 'Prioritize technical debt items',
   'scienziata': 'Create action plan from insights',
   'reviewer': 'Address review comments',
-  'guardiana-qualita': 'Fix issues before merge',
-  'guardiana-ops': 'Implement security recommendations',
-  'guardiana-ricerca': 'Update research with corrections',
-  'orchestrator': 'Execute delegated tasks',
+  'guardiana-qualita': 'If APPROVATO: proceed to merge. If DA RIVEDERE: fix and resubmit',
+  'guardiana-ops': 'If PRONTO PER DEPLOY: deploy. If BLOCCO: address security concerns first',
+  'guardiana-ricerca': 'If VERIFICATO: publish. If DA APPROFONDIRE: research more',
+  'orchestrator': 'Execute the plan with the assigned workers',
   'architect': 'Begin implementation per plan'
 };
 

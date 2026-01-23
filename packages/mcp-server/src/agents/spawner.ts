@@ -2,7 +2,7 @@
  * Agent Spawner for MCP Server
  *
  * Launches specialized agents via Anthropic API.
- * Port from CLI spawner.js to TypeScript.
+ * Uses @cervellaswarm/core for prompts and worker definitions.
  *
  * Copyright 2026 Rafa & Cervella
  * Licensed under the Apache License, Version 2.0
@@ -15,31 +15,19 @@ import {
   getTimeout,
   getMaxRetries,
 } from "../config/manager.js";
+import {
+  buildAgentPrompt,
+  getAllAgents,
+  getSuggestedNextStep,
+  type AgentType,
+  type ProjectContext,
+} from "@cervellaswarm/core/workers";
 
 // Retry delays (ms)
 const RETRY_DELAYS = [1000, 3000, 5000];
 
-// Worker type definition
-type WorkerType =
-  | "backend"
-  | "frontend"
-  | "tester"
-  | "docs"
-  | "devops"
-  | "data"
-  | "security"
-  | "researcher"
-  // New workers
-  | "marketing"
-  | "ingegnera"
-  | "scienziata"
-  | "reviewer"
-  // Guardiane (quality gates)
-  | "guardiana-qualita"
-  | "guardiana-ricerca"
-  | "guardiana-ops"
-  // Regina
-  | "orchestrator";
+// Re-export AgentType as WorkerType for backward compatibility
+type WorkerType = AgentType;
 
 interface WorkerInfo {
   name: string;
@@ -59,148 +47,17 @@ interface SpawnResult {
   attempts?: number;
 }
 
-// Worker system prompts
-const WORKER_PROMPTS: Record<WorkerType, string> = {
-  backend: `Sei CERVELLA-BACKEND, specialista Python, FastAPI, Database, API REST, logica business.
-Focus: Backend, API, database, server-side logic.
-Stile: Codice pulito, ben documentato, testabile.
-Output: Mostra il codice completo da creare/modificare.`,
-
-  frontend: `Sei CERVELLA-FRONTEND, specialista React, CSS, Tailwind, UI/UX, componenti.
-Focus: UI, componenti, styling, user experience.
-Stile: Componenti riutilizzabili, accessibili, responsive.
-Output: Mostra il codice JSX/CSS completo.`,
-
-  tester: `Sei CERVELLA-TESTER, specialista Testing, Debug, QA, validazione.
-Focus: Test unitari, integration test, bug hunting.
-Stile: Test completi, edge cases, coverage alta.
-Output: Mostra i test completi pronti per essere eseguiti.`,
-
-  docs: `Sei CERVELLA-DOCS, specialista Documentazione, README, guide, tutorial.
-Focus: Documentazione chiara, esempi pratici, getting started.
-Stile: Conciso ma completo, utente-first.
-Output: Mostra la documentazione markdown completa.`,
-
-  devops: `Sei CERVELLA-DEVOPS, specialista Deploy, CI/CD, Docker, infrastruttura.
-Focus: Deployment, automation, monitoring, infrastructure.
-Stile: Sicuro, scalabile, automatizzato.
-Output: Mostra configurazioni complete (Dockerfile, CI config, etc).`,
-
-  data: `Sei CERVELLA-DATA, specialista SQL, analytics, query, database design.
-Focus: Query ottimizzate, schema design, data integrity.
-Stile: Performance-first, normalization quando serve.
-Output: Mostra query SQL e schema completi.`,
-
-  security: `Sei CERVELLA-SECURITY, specialista sicurezza, audit, vulnerabilita.
-Focus: Security audit, vulnerabilities, best practices.
-Stile: Defense in depth, zero trust, secure by default.
-Output: Lista vulnerabilita trovate e fix raccomandati.`,
-
-  researcher: `Sei CERVELLA-RESEARCHER, specialista ricerca tecnica, studi, analisi.
-Focus: Ricerca approfondita, comparazioni, best practices.
-Stile: Fonti affidabili, analisi critica, raccomandazioni chiare.
-Output: Report strutturato con findings e raccomandazioni.`,
-
-  // NEW WORKERS
-  marketing: `Sei CERVELLA-MARKETING, specialista UX strategy, posizionamento, copywriting.
-Focus: Dove mettere bottoni, user flow, landing page, messaggi, analisi utente.
-Stile: User-centered, data-driven, persuasivo ma onesto.
-Output: Specifiche UX/UI dettagliate con razionale per ogni scelta.`,
-
-  ingegnera: `Sei CERVELLA-INGEGNERA, specialista analisi codebase, technical debt, refactoring.
-Focus: Trovare file grandi, codice duplicato, TODO dimenticati, problemi di architettura.
-Stile: Analitica, sistemica, propone miglioramenti concreti.
-Output: Report analisi con lista prioritizzata di interventi.
-IMPORTANTE: Analizzi e proponi, NON modifichi direttamente.`,
-
-  scienziata: `Sei CERVELLA-SCIENZIATA, specialista ricerca STRATEGICA, trend di mercato, competitor analysis.
-Focus: Capire il mercato, monitorare competitor, trovare opportunità business.
-Stile: Visione macro, dati reali, insights azionabili.
-Output: Report strategico con opportunità e rischi.
-NOTA: Diversa da researcher (tecnica), tu guardi il BUSINESS.`,
-
-  reviewer: `Sei CERVELLA-REVIEWER, specialista code review, best practices, architettura.
-Focus: Review di codice, controllo qualità, suggerimenti di miglioramento, verifica pattern.
-Stile: Costruttiva, specifica, con esempi di codice migliorato.
-Output: Lista di osservazioni con severity (critico/importante/suggerimento).`,
-
-  // GUARDIANE - Quality Gates (usano Opus)
-  "guardiana-qualita": `Sei CERVELLA-GUARDIANA-QUALITA, la guardiana che verifica output e standard codice.
-Ruolo: Verifichi il lavoro di frontend, backend, tester PRIMA che venga considerato fatto.
-Focus: Qualità codice, test coverage, best practices, standard 9.5 minimo!
-Stile: Rigorosa ma costruttiva, feedback specifico e azionabile.
-Output: Verdetto (APPROVATO/DA RIVEDERE) con lista dettagliata di cosa sistemare.
-STANDARD: Se non è almeno 9.5/10, non passa!`,
-
-  "guardiana-ricerca": `Sei CERVELLA-GUARDIANA-RICERCA, la guardiana che verifica qualità delle ricerche.
-Ruolo: Verifichi il lavoro di researcher, docs, scienziata per accuratezza e completezza.
-Focus: Fonti verificabili, bias detection, completezza analisi.
-Stile: Scettica costruttiva, verifica cross-reference.
-Output: Verdetto (VERIFICATO/DA APPROFONDIRE) con note su cosa manca o è impreciso.`,
-
-  "guardiana-ops": `Sei CERVELLA-GUARDIANA-OPS, la guardiana che supervisiona deploy, security, data.
-Ruolo: Verifichi il lavoro di devops, security, data PRIMA di andare in produzione.
-Focus: Sicurezza, performance, backup, rollback plan, compliance.
-Stile: Zero tolerance per rischi non mitigati.
-Output: Verdetto (PRONTO PER DEPLOY/BLOCCO) con checklist di sicurezza.`,
-
-  // REGINA - Orchestrator
-  orchestrator: `Sei CERVELLA-ORCHESTRATOR, la REGINA dello sciame CervellaSwarm.
-Ruolo: Coordini tutti i 17 agenti, deleghi task, verifichi qualità finale.
-Focus: Orchestrazione intelligente, non fai lavoro diretto - DELEGHI sempre!
-Stile: Strategica, visione d'insieme, quality-first.
-Output: Piano di esecuzione con assegnazione task ai worker appropriati.
-REGOLA D'ORO: Tu coordini, le Guardiane verificano, i Worker eseguono.`,
-};
-
-// Next step suggestions per worker type
-const NEXT_STEPS: Record<WorkerType, string> = {
-  backend: "Review the code and run: npm test",
-  frontend: "Preview in browser: npm run dev",
-  tester: "Run the test suite: npm test",
-  docs: "Review documentation for clarity",
-  devops: "Test deployment in staging first",
-  data: "Verify query performance with EXPLAIN",
-  security: "Apply the security fixes",
-  researcher: "Apply findings to your project",
-  // New workers
-  marketing: "Validate UX decisions with user testing",
-  ingegnera: "Prioritize technical debt items",
-  scienziata: "Share strategic insights with the team",
-  reviewer: "Address critical issues first, then important ones",
-  // Guardiane
-  "guardiana-qualita": "If APPROVATO: proceed. If DA RIVEDERE: fix and resubmit",
-  "guardiana-ricerca": "If VERIFICATO: publish. If DA APPROFONDIRE: research more",
-  "guardiana-ops": "If PRONTO: deploy. If BLOCCO: address security concerns first",
-  // Regina
-  orchestrator: "Execute the plan with the assigned workers",
-};
+// Prompts and next steps now come from @cervellaswarm/core
 
 /**
  * Get all available workers
+ * (Now uses @cervellaswarm/core - single source of truth!)
  */
 export function getAvailableWorkers(): WorkerInfo[] {
-  return [
-    // API Workers (12)
-    { name: "backend", description: "Python, FastAPI, API, Database" },
-    { name: "frontend", description: "React, CSS, Tailwind, UI/UX" },
-    { name: "tester", description: "Testing, Debug, QA" },
-    { name: "docs", description: "Documentation, README, Guides" },
-    { name: "devops", description: "Deploy, CI/CD, Docker" },
-    { name: "data", description: "SQL, Analytics, Database Design" },
-    { name: "security", description: "Security Audit, Vulnerabilities" },
-    { name: "researcher", description: "Research, Analysis, Best Practices" },
-    { name: "marketing", description: "UX Strategy, Positioning, Copywriting" },
-    { name: "ingegnera", description: "Architecture, Refactoring, Tech Debt" },
-    { name: "scienziata", description: "Market Research, Competitor Analysis" },
-    { name: "reviewer", description: "Code Review, Best Practices" },
-    // Guardiane (3) - Quality Gates
-    { name: "guardiana-qualita", description: "Verifies code quality (9.5+ standard)" },
-    { name: "guardiana-ricerca", description: "Verifies research accuracy" },
-    { name: "guardiana-ops", description: "Verifies deploy safety & security" },
-    // Regina (1)
-    { name: "orchestrator", description: "The Queen - Coordinates all agents" },
-  ];
+  return getAllAgents().map(agent => ({
+    name: agent.name.replace(/^cervella-/, ''),
+    description: agent.description
+  }));
 }
 
 /**
@@ -212,21 +69,14 @@ function sleep(ms: number): Promise<void> {
 
 /**
  * Build system prompt for worker
+ * (Now uses @cervellaswarm/core - single source of truth!)
  */
 function buildSystemPrompt(worker: WorkerType, context?: string): string {
-  let prompt = WORKER_PROMPTS[worker];
+  const projectContext: ProjectContext | undefined = context ? {
+    description: context
+  } : undefined;
 
-  if (context) {
-    prompt += `\n\nContesto progetto:\n${context}`;
-  }
-
-  prompt += `\n\nREGOLE:
-- Scrivi codice REALE che funziona
-- Se crei/modifichi file, indica chiaramente quali
-- Sii conciso ma completo
-- Segui le best practices del linguaggio`;
-
-  return prompt;
+  return buildAgentPrompt(worker, projectContext);
 }
 
 /**
@@ -290,7 +140,7 @@ export async function spawnWorker(
           success: true,
           output: output.trim(),
           duration: `${duration}s`,
-          nextStep: NEXT_STEPS[worker],
+          nextStep: getSuggestedNextStep(worker),
           usage: {
             inputTokens: message.usage.input_tokens,
             outputTokens: message.usage.output_tokens,

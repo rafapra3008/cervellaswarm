@@ -2,12 +2,13 @@
  * Agent Spawner for MCP Server
  *
  * Launches specialized agents via Anthropic API.
- * Port from CLI spawner.js to TypeScript.
+ * Uses @cervellaswarm/core for prompts and worker definitions.
  *
  * Copyright 2026 Rafa & Cervella
  * Licensed under the Apache License, Version 2.0
  */
-type WorkerType = "backend" | "frontend" | "tester" | "docs" | "devops" | "data" | "security" | "researcher" | "marketing" | "ingegnera" | "scienziata" | "reviewer" | "guardiana-qualita" | "guardiana-ricerca" | "guardiana-ops" | "orchestrator";
+import { type AgentType } from "@cervellaswarm/core/workers";
+type WorkerType = AgentType;
 interface WorkerInfo {
     name: string;
     description: string;
@@ -26,6 +27,7 @@ interface SpawnResult {
 }
 /**
  * Get all available workers
+ * (Now uses @cervellaswarm/core - single source of truth!)
  */
 export declare function getAvailableWorkers(): WorkerInfo[];
 /**

@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 22 Gennaio 2026 - Sessione 313 - @cervellaswarm/core COMPLETATO!
+> Aggiornato: 23 Gennaio 2026 - Sessione 315 - Code Review Day + DRY Fix!
 
 ```
 +==================================================================+
@@ -387,7 +387,7 @@ SESSIONE 310: 💎 LAPIDARE IL DIAMANTE - FASE 1!
   ✓ Trusted Publisher                 Configurato per CI
   → FASE 1 COMPLETATA!
 
-SESSIONE 311: 💎 DIAMANTE LAPIDATO 100%! ← OGGI!
+SESSIONE 311: 💎 DIAMANTE LAPIDATO 100%!
   ✓ @cervellaswarm/core valutazione   41% duplicazione → v2.1.0
   ✓ VS Code Extension Research        822 righe studio
     - Architettura: Thin Extension + Thick CLI
@@ -397,6 +397,14 @@ SESSIONE 311: 💎 DIAMANTE LAPIDATO 100%! ← OGGI!
     - MVP: ~12h per cervella-researcher
   → DIAMANTE LAPIDATO - TUTTE LE FASI COMPLETE!
   → ROADMAP v2.1.0 DEFINITA!
+
+SESSIONE 315: 🔍 CODE REVIEW DAY - DRY FIX!
+  ✓ cervella-reviewer audit           8.5/10 APPROVE
+  ✓ W1: Prompts unificati             CLI + MCP → @cervellaswarm/core
+  ✓ W2: CLI workers                   8 → 12 (famiglia completa!)
+  ✓ Codice rimosso                    -233 righe duplicate!
+  ✓ Guardiane arricchite              Standard 9.5, verdetti
+  → SINGLE SOURCE OF TRUTH COMPLETATO!
 
 SCORE: 100/100 ✅ W4 COMPLETATO! W5 COMPLETATA!
 
