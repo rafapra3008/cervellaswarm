@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - MASTER (Globale)
 
-> **Ultimo aggiornamento:** 23 Gennaio 2026 - Sessione 314
+> **Ultimo aggiornamento:** 24 Gennaio 2026 - Sessione 316
 > **Tabella ecosistema condivisa - SOLO link ai file specifici**
 
 ---
@@ -13,6 +13,7 @@
 | **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-20 | Miracollook: Design Salutare COMPLETATO! |
 | **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-01-20 | In pausa |
 | **RafaFreelance** | `.sncp/progetti/rafafreelance/PROMPT_RIPRESA_rafafreelance.md` | 2026-01-23 | NUOVO! Dual-Track: iTalki + WhatsApp Automation |
+| **CervellaTrading** | `.sncp/progetti/cervellatrading/PROMPT_RIPRESA_cervellatrading.md` | 2026-01-24 | NUOVO! Trading sicuro 20-25% annuo |
 
 ---
 
