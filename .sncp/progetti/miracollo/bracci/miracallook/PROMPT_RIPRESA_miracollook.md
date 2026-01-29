@@ -5,105 +5,87 @@
 
 # PROMPT RIPRESA - Miracollook
 
-> **Ultimo aggiornamento:** 22 Gennaio 2026 - Sessione 312
+> **Ultimo aggiornamento:** 29 Gennaio 2026 - Sessione 315
 > **ROBUSTEZZA:** 10/10 - PRODUCTION READY + PMS INTEGRATION!
 
 ---
 
-## SESSIONE 312 - INTEGRAZIONE PMS CORE!
+## SESSIONE 315 - ACCESSO DATABASE ERICSOFT ✓
 
 ```
 +================================================================+
-|   MIRACOLLOOK: PMS INTEGRATION COMPLETATA!                     |
-|                                                                |
-|   - Backend: endpoint /gmail/enrich-context OK                 |
-|   - Frontend: GuestContextCard + useGuestContext OK            |
-|   - API Key: Configurata in entrambi i sistemi                 |
-|   - Design: Palette miracollo-* GIA' APPLICATA!                |
+|   ACCESSO DIRETTO AL DATABASE ERICSOFT OTTENUTO!               |
+|   452 tabelle - Backup fatto - Pronto per studio               |
 +================================================================+
 ```
 
-### NUOVI FILE
+### COSA ABBIAMO FATTO
+
+| # | Task | Stato |
+|---|------|-------|
+| 1 | Test API Bedzzle | ✓ Dati vengono da Ericsoft |
+| 2 | Accesso DB SQL Server | ✓ SSMS connesso |
+| 3 | Backup database PRA | ✓ 29/01/2026 |
+| 4 | Guardiane analisi | ✓ 452 tabelle mappate |
+
+### TABELLE PRIORITARIE (Guardiana Qualità)
+
+| Priorità | Tabella | Scopo |
+|----------|---------|-------|
+| P0 | Scheda | Prenotazioni/soggiorni |
+| P0 | Ospite | Dati ospiti |
+| P0 | Risorsa | Camere |
+| P1 | Anagrafica | Email, telefono |
+| P1 | SchedaConto | Addebiti/servizi |
+
+### FILE CREATI S315
 
 | File | Cosa |
 |------|------|
-| `backend/gmail/pms_context.py` | Endpoint PMS integration (260 righe) |
-| `frontend/src/components/GuestContext/GuestContextCard.tsx` | Card info ospite (162 righe) |
-| `frontend/src/hooks/useGuestContext.ts` | Hook fetch + cache (82 righe) |
+| `SUBROADMAP_CONNETTORE_ERICSOFT.md` | Piano 3 fasi |
+| `ricerche/CREDENZIALI_ERICSOFT_S315.md` | Accesso DB (sensibile!) |
 
-### MODIFICHE
+---
 
-| File | Cosa |
-|------|------|
-| `backend/gmail/api.py` | +import pms_context, +include_router |
-| `frontend/src/components/EmailDetail/EmailDetail.tsx` | +GuestContextCard |
-| `frontend/src/types/email.ts` | +GuestInfo, ActiveBooking, GuestContextResponse |
-| `frontend/src/services/api.ts` | +enrichGuestContext |
-| `.env` (miracallook) | +PMS_API_URL, +PMS_API_KEY |
-| `.env` (pms root) | +ADMIN_API_KEY |
-
-### COME FUNZIONA
+## PROSSIMO STEP (S316)
 
 ```
-Email ricevuta → Miracollook chiama /gmail/enrich-context
-                          ↓
-                 PMS risponde con guest info + booking
-                          ↓
-                 UI mostra card "OSPITE CONOSCIUTO"
-```
+1. Studio struttura tabelle reali
+   - SELECT TOP 5 * FROM Scheda
+   - Capire relazioni FK
 
-### COSA VEDE L'UTENTE
-
-```
-+----------------------------------------------------------+
-| 🏨 OSPITE CONOSCIUTO                         Gold ⭐      |
-|                                                          |
-| Mario Rossi                                              |
-| • 3 soggiorni (15 notti)                                |
-| • Speso: €1,500                                         |
-| • Ultima visita: 20 Dic 2025                            |
-|                                                          |
-| 📅 PRENOTAZIONE ATTIVA                                   |
-| #NL-2026-000123                                          |
-| Check-in: 15 Feb 2026 • Camera 101 • 3 notti            |
-| Status: Confermata ✅ Pagata                             |
-+----------------------------------------------------------+
+2. Creare utente READ-ONLY
+   - miracollook_reader (no sa!)
+   - Solo permessi SELECT
 ```
 
 ---
 
-## SESSIONE 304 - HARDTEST + LOGIN PAGE
+## SESSIONI PRECEDENTI
+
+| Sessione | Cosa | Archivio |
+|----------|------|----------|
+| S314 | MyReception esplorato | `archivio/S314_MYRECEPTION.md` |
+
+---
+
+## CREDENZIALI MYRECEPTION
 
 ```
-FASE 11: HARDTEST + LoginPage → 9.5/10 ✅
-- Docker build/up OK
-- OAuth Google END-TO-END
-- 9 email REALI caricate
+URL: https://marketplace.bedzzle.com/admin/apps/MyReception/
+Username: naturaelodge
+Password: Dolomiti*2026
 ```
 
 ---
 
-## PROSSIMI STEP
-
-```
-1. Design "salutare" (palette colori) → GIA' FATTO! ✅
-2. Collegamento con PMS Core → FATTO! ✅ (Sessione 312)
-3. Integrazione WhatsApp → TODO
-4. Più AI (risposte intelligenti) → TODO
-5. Comunicazioni avanzate → TODO
-```
-
----
-
-## FILE CHIAVE (Aggiornato S312)
+## FILE CHIAVE
 
 | File | Cosa |
 |------|------|
-| `docker-compose.yml` | Orchestrazione (backend:8002, frontend:80) |
-| `backend/gmail/pms_context.py` | **NUOVO** - PMS integration |
-| `frontend/src/components/GuestContext/GuestContextCard.tsx` | **NUOVO** - UI ospite |
-| `frontend/src/hooks/useGuestContext.ts` | **NUOVO** - Hook fetch |
-| `backend/auth/google.py` | OAuth Google |
+| `miracallook/CLAUDE.md` | Istruzioni workspace |
+| `docker-compose.yml` | Orchestrazione |
+| `backend/gmail/pms_context.py` | PMS integration |
 
 ---
 
@@ -118,18 +100,11 @@ uvicorn backend.main:app --port 8001
 cd ~/Developer/miracollogeminifocus/miracallook
 docker-compose up -d
 
-# 3. Apri browser
+# 3. Browser
 open http://localhost:80
-
-# 4. Login → seleziona email da ospite conosciuto → vedi card PMS!
-```
-
-### Test endpoint diretto
-```bash
-curl "http://localhost:8002/gmail/enrich-context?email=mario.rossi@gmail.com"
-curl "http://localhost:8002/gmail/pms-status"
 ```
 
 ---
 
-*"PMS + EMAIL = CONTESTO COMPLETO! Ultrapassar os próprios limites!" - Sessione 312*
+*"Studiare prima, implementare dopo!" - Formula Magica*
+*"Fatto bene > Fatto veloce" - Sessione 315*
