@@ -38,26 +38,27 @@
 
 ---
 
-## FASE 2 - PREPARA ACCESSO DB SICURO
+## FASE 2 - PREPARA ACCESSO DB SICURO ✓ COMPLETATA S316
 
 **Obiettivo:** Creare accesso READ-ONLY al database Ericsoft
 
 | Step | Cosa | Stato |
 |------|------|-------|
 | 2.1 | Backup completo database PRA | [x] FATTO 29/01/2026 |
-| 2.2 | Studiare struttura tabelle | [ ] ← ORA |
-| 2.3 | Creare utente `miracollook_reader` | [ ] |
-| 2.4 | Dare SOLO permessi SELECT | [ ] |
-| 2.5 | Testare connessione con nuovo utente | [ ] |
+| 2.2 | Studiare struttura tabelle | [x] COMPLETATO S316 |
+| 2.3 | Creare utente `miracollook_reader` | [x] COMPLETATO S316 |
+| 2.4 | Dare SOLO permessi SELECT (5 tabelle) | [x] GRANT + DENY testato |
+| 2.5 | Testare connessione con nuovo utente | [x] Test permessi OK |
 
 **Server:**
 - IP: `192.168.200.5`
 - Istanza: `NLTERMINAL01\SQLERICSOFT22`
 - Database: `PRA`
+- **User:** `miracollook_reader` (credenziali in .env)
 
 **REGOLA SACRA:** MAI usare utente `sa` per applicazioni!
 
-**Rischio:** BASSO se seguiamo i passi
+**Rischio:** COMPLETATO CON SUCCESSO
 
 ---
 
@@ -67,12 +68,14 @@
 
 | Step | Cosa | Stato |
 |------|------|-------|
-| 3.1 | Creare modulo Python per connessione SQL | [ ] |
-| 3.2 | Query per prenotazioni | [ ] |
-| 3.3 | Query per ospiti | [ ] |
+| 3.1 | Creare modulo Python per connessione SQL | [x] S317 |
+| 3.2 | Test connessione reale (da rete hotel) | [ ] |
+| 3.3 | Integrazione email enrichment | [ ] |
 | 3.4 | Query per servizi | [ ] |
 | 3.5 | Sync periodico (ogni X minuti) | [ ] |
 | 3.6 | Cache locale per performance | [ ] |
+
+**S317:** Modulo `backend/ericsoft/` creato con circuit breaker, semaphore, logging. Audit Guardiana 9/10.
 
 **Rischio:** MEDIO - richiede test approfonditi
 
@@ -81,17 +84,18 @@
 ## CHECKLIST SICUREZZA (OBBLIGATORIA)
 
 ```
-Prima di FASE 2:
+FASE 2 COMPLETATA:
 [x] Backup database fatto (29/01/2026)
-[ ] Utente READ-ONLY creato
-[ ] Permessi verificati (solo SELECT)
-[x] Test su orario non critico (mattina)
+[x] Utente READ-ONLY creato (miracollook_reader)
+[x] Permessi verificati (solo SELECT su 5 tabelle)
+[x] Test su orario non critico (13:30)
+[x] DENY INSERT/UPDATE/DELETE verificato
 
-Prima di FASE 3:
-[ ] Timeout su ogni query (max 5 sec)
-[ ] Max 2 connessioni simultanee
-[ ] Logging di tutte le query
-[ ] Circuit breaker implementato
+FASE 3.1 COMPLETATA (S317):
+[x] Timeout su ogni query (max 5 sec) - connector.py
+[x] Max 2 connessioni simultanee - asyncio.Semaphore
+[x] Logging di tutte le query - structlog
+[x] Circuit breaker implementato - 3 failures → 60s block
 ```
 
 ---
@@ -99,9 +103,10 @@ Prima di FASE 3:
 ## TIMELINE
 
 ```
-S315 (29/01):    FASE 1 ✓ + Backup ✓ + Studio tabelle
-PROSSIME:        FASE 2 - Utente READ-ONLY
-DOPO:            FASE 3 - Connettore nostro
+S315 (29/01):    FASE 1 ✓ + Backup ✓
+S316 (29/01):    FASE 2 ✓ COMPLETATA! Schema + Utente
+S317 (29/01):    FASE 3.1 ✓ COMPLETATA! Modulo Python + Audit 9/10
+S318:            FASE 3.2 - Test connessione reale (da rete hotel)
 ```
 
 **Nessuna fretta. Un passo alla volta. Documentare tutto.**

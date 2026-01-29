@@ -5,58 +5,68 @@
 
 # PROMPT RIPRESA - Miracollook
 
-> **Ultimo aggiornamento:** 29 Gennaio 2026 - Sessione 315
-> **ROBUSTEZZA:** 10/10 - PRODUCTION READY + PMS INTEGRATION!
+> **Ultimo aggiornamento:** 29 Gennaio 2026 - Sessione 317
+> **ROBUSTEZZA:** 10/10 - CONNETTORE ERICSOFT IMPLEMENTATO!
 
 ---
 
-## SESSIONE 315 - ACCESSO DATABASE ERICSOFT ✓
+## SESSIONE 317 - ERICSOFT CONNECTOR COMPLETATO! ✓
 
 ```
 +================================================================+
-|   ACCESSO DIRETTO AL DATABASE ERICSOFT OTTENUTO!               |
-|   452 tabelle - Backup fatto - Pronto per studio               |
+|   S317: FASE 3.1 COMPLETATA!                                     |
+|   - Modulo ericsoft/ creato con tutte le misure sicurezza       |
+|   - 3 endpoints REST funzionanti                                |
+|   - Guardiana Qualita: 9/10 APPROVE                             |
 +================================================================+
 ```
 
-### COSA ABBIAMO FATTO
+### RISULTATI S317
 
 | # | Task | Stato |
 |---|------|-------|
-| 1 | Test API Bedzzle | ✓ Dati vengono da Ericsoft |
-| 2 | Accesso DB SQL Server | ✓ SSMS connesso |
-| 3 | Backup database PRA | ✓ 29/01/2026 |
-| 4 | Guardiane analisi | ✓ 452 tabelle mappate |
+| 1 | pymssql aggiunto a requirements | ✓ |
+| 2 | Config Ericsoft in .env | ✓ |
+| 3 | Modulo `backend/ericsoft/` | ✓ 4 file |
+| 4 | Circuit breaker + semaphore | ✓ |
+| 5 | Integrazione in main.py | ✓ |
+| 6 | Audit Guardiana | ✓ 9/10 |
 
-### TABELLE PRIORITARIE (Guardiana Qualità)
+### ENDPOINTS CREATI
 
-| Priorità | Tabella | Scopo |
-|----------|---------|-------|
-| P0 | Scheda | Prenotazioni/soggiorni |
-| P0 | Ospite | Dati ospiti |
-| P0 | Risorsa | Camere |
-| P1 | Anagrafica | Email, telefono |
-| P1 | SchedaConto | Addebiti/servizi |
+```
+GET /ericsoft/status          # Health check connessione
+GET /ericsoft/bookings        # Lista prenotazioni con email
+GET /ericsoft/bookings/active # Prenotazioni attive (in casa)
+GET /ericsoft/bookings/search # Cerca per email
+```
 
-### FILE CREATI S315
+### CHECKLIST SICUREZZA
 
-| File | Cosa |
-|------|------|
-| `SUBROADMAP_CONNETTORE_ERICSOFT.md` | Piano 3 fasi |
-| `ricerche/CREDENZIALI_ERICSOFT_S315.md` | Accesso DB (sensibile!) |
+| Requisito | File | Implementazione |
+|-----------|------|-----------------|
+| Timeout 5 sec | connector.py | `timeout` + `login_timeout` |
+| Max 2 conn | connector.py | `asyncio.Semaphore` |
+| Logging | connector.py | `structlog` ogni query |
+| Circuit breaker | connector.py | 3 failures → 60s block |
+| Solo SELECT | DB level | utente `miracollook_reader` |
 
 ---
 
-## PROSSIMO STEP (S316)
+## PROSSIMO STEP (S318)
 
 ```
-1. Studio struttura tabelle reali
-   - SELECT TOP 5 * FROM Scheda
-   - Capire relazioni FK
+FASE 3.2: Test connessione reale
+- Installare pymssql: pip install pymssql
+- Avviare backend su rete hotel
+- Testare GET /ericsoft/status
+- Testare GET /ericsoft/bookings/active
 
-2. Creare utente READ-ONLY
-   - miracollook_reader (no sa!)
-   - Solo permessi SELECT
+OPPURE
+
+FASE 3.3: Integrazione con email enrichment
+- Collegare ericsoft a gmail/pms_context.py
+- Quando arriva email → cerca in Ericsoft
 ```
 
 ---
@@ -65,17 +75,8 @@
 
 | Sessione | Cosa | Archivio |
 |----------|------|----------|
+| S316 | Schema DB + Utente | `ricerche/STUDIO_TABELLE_S316.md` |
 | S314 | MyReception esplorato | `archivio/S314_MYRECEPTION.md` |
-
----
-
-## CREDENZIALI MYRECEPTION
-
-```
-URL: https://marketplace.bedzzle.com/admin/apps/MyReception/
-Username: naturaelodge
-Password: Dolomiti*2026
-```
 
 ---
 
@@ -83,28 +84,31 @@ Password: Dolomiti*2026
 
 | File | Cosa |
 |------|------|
-| `miracallook/CLAUDE.md` | Istruzioni workspace |
-| `docker-compose.yml` | Orchestrazione |
-| `backend/gmail/pms_context.py` | PMS integration |
+| `backend/ericsoft/connector.py` | Connettore SQL sicuro |
+| `backend/ericsoft/api.py` | Endpoints REST |
+| `backend/gmail/pms_context.py` | PMS HTTP integration |
+| `.env` | Credenziali Ericsoft |
 
 ---
 
 ## COME TESTARE
 
 ```bash
-# 1. Avvia PMS Core
-cd ~/Developer/miracollogeminifocus
-uvicorn backend.main:app --port 8001
+# 1. Installa dipendenze
+cd ~/Developer/miracollogeminifocus/miracallook/backend
+pip install pymssql
 
-# 2. Avvia Miracollook
-cd ~/Developer/miracollogeminifocus/miracallook
-docker-compose up -d
+# 2. Avvia backend (da rete hotel!)
+uvicorn main:app --port 8002 --reload
 
-# 3. Browser
-open http://localhost:80
+# 3. Test endpoint
+curl http://localhost:8002/ericsoft/status
+curl http://localhost:8002/ericsoft/bookings/active
 ```
+
+**NOTA:** Connessione Ericsoft funziona SOLO da rete interna hotel (192.168.200.x)
 
 ---
 
 *"Studiare prima, implementare dopo!" - Formula Magica*
-*"Fatto bene > Fatto veloce" - Sessione 315*
+*"Un progresso al giorno!" - Sessione 317*

@@ -2,8 +2,9 @@
 
 > **Il Centro Comunicazioni dell'Hotel Intelligente**
 >
-> **Aggiornato: 19 Gennaio 2026 - Verifica Codice REALE**
+> **Aggiornato: 29 Gennaio 2026 - Sessione 317 - Sync con codice REALE**
 > **Questo file riflette lo stato REALE, non quello "su carta"**
+> **MAPPA STRATEGICA:** `MAPPA_STRATEGICA_MIRACOLLOOK.md` (NUOVO!)
 
 ---
 
@@ -20,14 +21,15 @@
 
 ---
 
-## STATO REALE (19 Gennaio 2026 - Verificato dal CODICE!)
+## STATO REALE (29 Gennaio 2026 - Verificato dal CODICE!)
 
 ```
 FASE 0 (Fondamenta)     [####################] 100%
 FASE P (Performance)    [####################] 100% MERGED!
-FASE 1 (Email Solido)   [##################..] 92% <- VERIFICATO!
-FASE 2 (PMS Integration)[....................] 0%
+FASE 1 (Email Solido)   [##################..] 92%
+FASE 2 (PMS Integration)[#######.............] 35% <- Ericsoft S317!
 FASE 3 (Hotel Workflow) [....................] 0%
+FASE 4 (OCR/Check-in)   [##################..] 90% <- 25 file, 2.1K LOC!
 ```
 
 ### FASE 0+P - COMPLETATE
@@ -51,9 +53,11 @@ FATTO (VERIFICATO NEL CODICE):
   Context Menu         - EmailContextMenu.tsx (280L) COMPLETO!
   Design Salutare      - Colori #778DA9, #E0DED0, #EBEBF5
 
+FATTO (S267-268):
+  Bulk Actions API      - actions.py batch-modify + useBulkActions.ts
+  Labels CRUD API       - labels.py 379L, 6 endpoint CRUD
+
 DA FARE:
-  1.7  Bulk Actions API      (4h backend) - UI pronta, API manca!
-  1.8  Labels CRUD API       (3h backend) - UI disabled, API solo list
   1.9  Contacts Autocomplete (6h full)
   1.10 Settings Page         (8h full)
 ```
@@ -62,12 +66,13 @@ DA FARE:
 
 ## LA BIBBIA
 
-**MAPPA COMPLETA:** `MAPPA_COMPLETA_MIRACOLLOOK.md`
+**MAPPA STRATEGICA:** `MAPPA_STRATEGICA_MIRACOLLOOK.md` (NUOVO S317!)
 
-48 step totali mappati, ogni step con:
-- Status REALE
-- Link a studio
-- Dipendenze chiare
+La mappa completa con:
+- 6 sezioni (Visione, Stato, Fasi, Valore, Ricerche, KPI)
+- Priorità business-driven
+- 60+ ricerche catalogate
+- Timeline e milestone
 
 ---
 
@@ -109,16 +114,27 @@ Domani (con):
 
 ```
 COMPLETAMENTO FASE 1 (92% -> 100%):
-[ ] Bulk Actions API backend   (4h) - UI frontend GIA PRONTA!
-[ ] Labels CRUD API backend    (3h) - Abilitare UI dopo
+[x] Bulk Actions API backend   - FATTO S267!
+[x] Labels CRUD API backend    - FATTO S268!
 [ ] Contacts Autocomplete      (6h)
 [ ] Settings Page              (8h)
 
-FASE 2 - PMS INTEGRATION (LA MAGIA!):
-[ ] 2.1 Guest Identification   (8h)
-[ ] 2.2 GuestSidebar Reale     (6h)
-[ ] 2.3 Booking Context        (4h)
-[ ] 2.4 Guest History          (6h)
+FASE 2 - PMS INTEGRATION (35% -> 100%):
+[x] 2.0 Connettore Ericsoft    - FATTO S317! (4 file, circuit breaker!)
+[x] 2.1 Guest Identification   - PARZIALE (pms_context.py esiste)
+[x] 2.2 GuestSidebar Reale     - PARZIALE (GuestSidebar.tsx esiste)
+[ ] 2.3 Test rete hotel        (2h)
+[ ] 2.4 Email enrichment UI    (4h)
+[ ] 2.5 Booking Context        (4h)
+[ ] 2.6 Guest History          (6h)
+
+FASE 4 - OCR/CHECK-IN (90% -> 100%):
+[x] OCR Parser MRZ             - FATTO! (mrz_parser.py 393L)
+[x] OCR Parser CI/Patente      - FATTO! (italian_document_parser.py 638L)
+[x] Database schema            - FATTO! (012_document_scans.sql)
+[x] Frontend UI                - FATTO! (document-scanner.js 351L)
+[ ] Form check-in web          (2 giorni)
+[ ] Ericsoft WRITE             (da studiare permessi)
 ```
 
 ---
@@ -170,5 +186,5 @@ FASE 2 - PMS INTEGRATION (LA MAGIA!):
 
 ---
 
-*Aggiornato: 15 Gennaio 2026 - Sessione 225*
-*"Studiato MACRO. Pronto per implementare con MICRO."*
+*Aggiornato: 29 Gennaio 2026 - Sessione 317*
+*"La MAPPA STRATEGICA è pronta. Il diamante brilla!"*
