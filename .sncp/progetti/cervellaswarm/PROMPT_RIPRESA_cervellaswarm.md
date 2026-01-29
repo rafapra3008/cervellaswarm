@@ -1,7 +1,43 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 27 Gennaio 2026 - Sessione 316
-> **STATUS:** v2.0.0-beta.1 LIVE + Extension Test COMPLETATO
+> **Ultimo aggiornamento:** 29 Gennaio 2026 - Sessione 320
+> **STATUS:** v2.0.0-beta.1 LIVE + SNCP 3.0 COMPLETATO!
+
+---
+
+## SESSIONE 320 - SNCP 3.0 MEMORY & SECURITY
+
+```
++================================================================+
+|   SNCP 3.0 IMPLEMENTATO! Security + Memory Management          |
++================================================================+
+```
+
+### Cosa Abbiamo Fatto
+
+| # | Task | Score Guardiana |
+|---|------|-----------------|
+| P0 | Sanitizzato 6+ file con credentials | 10/10 |
+| QW1 | `audit-secrets.sh` - scan automatico | 9/10 |
+| QW2 | `check-ripresa-size.sh` - monitor limiti | 9/10 |
+| MM1 | `memory-flush.sh` - auto-save sessioni | 8/10 |
+| MM2 | `daily-log.sh` - log temporali | 9/10 |
+
+### Nuovi Script
+
+```bash
+scripts/sncp/audit-secrets.sh        # Security scan
+scripts/sncp/check-ripresa-size.sh   # Monitor size
+scripts/sncp/daily-log.sh            # Log giornalieri
+scripts/swarm/memory-flush.sh        # Auto-save sessioni
+```
+
+### Ricerca Moltbot
+
+- Studio memoria persistente Moltbot/Clawdbot (68K+ GitHub stars)
+- Report: `reports/RICERCA_MEMORIA_PERSISTENTE_MOLTBOT.md`
+- Report: `reports/SCIENTIST_20260128_moltbot_clawdbot.md`
+- Mappa: `.swarm/plans/MAPPA_IMPLEMENTAZIONI_MEMORIA.md`
 
 ---
 

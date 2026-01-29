@@ -30,9 +30,9 @@
 
 **Credenziali:**
 - URL: `https://connect.bedzzle.com/oapi/v1/marketplace`
-- PublicKey: `AIzaSyBmH1GN1M1Bs36oJaS0gEoNLqMERmKoClQ`
-- PrivateKey: `803ca5c21c482907346927a3a4efa60b`
-- ProductKey: `9af72bea-1e03-48d1-859b-db15d8b0f159`
+- PublicKey: `[stored in .env as BEDZZLE_PUBLIC_KEY]`
+- PrivateKey: `[stored in .env as BEDZZLE_PRIVATE_KEY]`
+- ProductKey: `[stored in .env as BEDZZLE_PRODUCT_KEY]`
 
 **Rischio:** ZERO - solo lettura API esterna
 

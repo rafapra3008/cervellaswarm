@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 23 Gennaio 2026 - Sessione 315 - Code Review Day + DRY Fix!
+> Aggiornato: 29 Gennaio 2026 - Sessione 320 - SNCP 3.0 Memory & Security!
 
 ```
 +==================================================================+
@@ -405,6 +405,16 @@ SESSIONE 315: 🔍 CODE REVIEW DAY - DRY FIX!
   ✓ Codice rimosso                    -233 righe duplicate!
   ✓ Guardiane arricchite              Standard 9.5, verdetti
   → SINGLE SOURCE OF TRUTH COMPLETATO!
+
+SESSIONE 320: 🔒 SNCP 3.0 - MEMORY & SECURITY!
+  ✓ Studio Moltbot/Clawdbot           Memoria persistente AI assistants
+  ✓ P0: Sanitizzato credentials       6+ file (10/10 Guardiana)
+  ✓ QW1: audit-secrets.sh             Security scan automatico (9/10)
+  ✓ QW2: check-ripresa-size.sh        Monitor limiti file (9/10)
+  ✓ MM1: memory-flush.sh              Auto-save sessioni (8/10)
+  ✓ MM2: daily-log.sh                 Log temporali (9/10)
+  ✓ CLAUDE.md aggiornato              Sezione SNCP 3.0 scripts
+  → SNCP 3.0 COMPLETATO! SCORE MEDIO: 9/10
 
 SCORE: 100/100 ✅ W4 COMPLETATO! W5 COMPLETATA!
 
