@@ -5,65 +5,83 @@
 
 # PROMPT RIPRESA - Miracollook
 
-> **Ultimo aggiornamento:** 29 Gennaio 2026 - Sessione 319
-> **ROBUSTEZZA:** 10/10 - CONNESSIONE ERICSOFT FUNZIONANTE!
+> **Ultimo aggiornamento:** 29 Gennaio 2026 - Sessione 320
+> **ROBUSTEZZA:** 9.5/10 - STUDIO GUEST MANAGEMENT COMPLETATO!
 
 ---
 
-## SESSIONE 319 - CONNESSIONE REALE FUNZIONANTE! 🎉
+## SESSIONE 320 - STUDIO GUEST MANAGEMENT PROFESSIONALE COMPLETATO!
 
 ```
 +================================================================+
-|   S319: MIRACOLLOOK SI CONNETTE AL DATABASE ERICSOFT!           |
+|   S320: STUDIATO GUEST MANAGEMENT PROFESSIONALE!                |
 |                                                                  |
-|   PROBLEMA RISOLTO: Porta era 54081, non 1433!                 |
-|   FILTRO IMPLEMENTATO: DataCancellazione IS NULL                |
-|   TEST REALE: 16 ospiti in casa letti dal DB!                  |
-|   CONNETTORE: TESTATO e FUNZIONANTE (in rete locale)           |
+|   ✅ RICERCA COMPLETATA: Best practices PMS professionali       |
+|   ✅ PROBLEMA IDENTIFICATO: Query S319 escludeva 24 ospiti!    |
+|   ✅ SOLUZIONE: GuestProfile separato da Booking (1:N)         |
+|   ✅ PROPOSTA: Architettura completa 9.5/10 quality            |
 |                                                                  |
-|   NEXT: WireGuard per accesso remoto                            |
+|   PROSSIMO STEP: Implementare Phase 1 (modello dati)           |
+|                                                                  |
+|   File creati S320:                                             |
+|   - STUDIO_GUEST_MANAGEMENT_BEST_PRACTICES.md (1265 righe!)    |
+|   - PROPOSTA_GUEST_MANAGEMENT_PROFESSIONALE.md (723 righe!)    |
 +================================================================+
 ```
 
-### COSA ABBIAMO SCOPERTO S319
+### COSA ABBIAMO SCOPERTO S320
 
-| Problema | Soluzione | Perché |
-|----------|-----------|--------|
-| Porta 1433 non risponde | Porta 54081! | SSMS usa porta dinamica custom |
-| Cancellazioni duplicate | `WHERE DataCancellazione IS NULL` | Flag soft-delete nel DB |
-| Stati scheda ambigui | Mappati: 1=?, 2=Arrivi, 3=InCasa, 5=Partiti | Serve validazione con Rafa |
+| Problema | Soluzione | Impatto |
+|----------|-----------|---------|
+| Query esclude 24 ospiti | Rimuovere filtro email, tracciare TUTTI | Coverage 60% → 100% |
+| Booking = Guest (sbagliato) | Separare GuestProfile da Booking (1:N) | Storico completo |
+| Solo email | Multi-canale (Email, SMS, WhatsApp, Manual) | Tutti contattabili |
+| Nessun post-stay | Workflow automatico (thank you, review) | +31-40% repeat bookings |
 
-**Credenziali:** 192.168.200.5:54081 (NON porta 1433!)
-**Query chiave:** `WHERE DataCancellazione IS NULL AND IdStatoScheda IN (2,3)`
-**Test:** 16 ospiti trovati (5 arrivi + 11 in casa)
+**RIFERIMENTI CHIAVE:**
+- Best practices: Mews, Opera, Cloudbeds, RoomRaccoon, Protel
+- Modello dati: GuestProfile (permanente) + Stay (transazionale)
+- Stati lifecycle: Pre-Arrival → Arrival → In-House → Departure → Post-Stay
+- Quality target: 9.5/10 (standard PMS professionali)
 
-**File creato:** `ricerche/MAPPING_STATI_ERICSOFT.md` (dettagli query + stati)
+**File creati S320:**
+- `studi/STUDIO_GUEST_MANAGEMENT_BEST_PRACTICES.md` (1265 righe)
+- `studi/PROPOSTA_GUEST_MANAGEMENT_PROFESSIONALE.md` (723 righe)
 
 ---
 
 ## STATO REALE (29 Gennaio 2026)
 
 ```
-FASE 0 (Fondamenta)     [####################] 100%
-FASE P (Performance)    [####################] 100%
-FASE 1 (Email Solido)   [##################..] 92%
-FASE 2 (PMS Integration)[##########..........] 50%  ← S319: CONNESSIONE OK!
-FASE 4 (OCR/Check-in)   [##################..] 90%
+FASE 0 (Fondamenta)       [####################] 100%
+FASE P (Performance)      [####################] 100%
+FASE 1 (Email Solido)     [##################..] 92%
+FASE 2.0 (Guest Mgmt)     [....................] 0%   ← S320: STUDIATO! Pronto implementare
+FASE 2.1 (PMS UI)         [##########..........] 50%  ← S319: CONNESSIONE OK!
+FASE 4 (OCR/Check-in)     [##################..] 90%
 ```
 
 ---
 
-## PROSSIMO STEP: FASE A (WireGuard)
+## PROSSIMO STEP: IMPLEMENTARE GUEST MANAGEMENT (FASE 2.0)
 
-**FASE B SALTATA** - Connessione testata S319!
+**✅ STUDIO COMPLETATO S320 - Ora si implementa!**
 
-**Setup WireGuard (4-6h):**
-- Identificare server gateway rete 200 (CHIEDI A RAFA)
-- Installare WireGuard server + client
-- Port forwarding router UDP 51820
-- Test: accesso remoto a 192.168.200.5:54081
+**PIANO S320:**
+1. ✅ Studiato best practices PMS professionali (Mews, Opera, Cloudbeds)
+2. ✅ Identificato problema: query esclude 24 ospiti su 40 (60% coverage)
+3. ✅ Proposta architettura: GuestProfile + multi-canale + post-stay
+4. ⏳ PROSSIMO: Implementare Phase 1 (modello GuestProfile completo)
 
-**Dettagli:** `SUBROADMAP_ERICSOFT_INTEGRATION.md` Fase A
+**FASE 2.0 - GUEST MANAGEMENT (6 giorni):**
+1. Modello GuestProfile + Stay (separazione 1:N)
+2. Query Master (TUTTI gli ospiti, non solo email)
+3. Stati lifecycle completi (Pre-Arrival → Post-Stay)
+4. Multi-canale (Email, SMS, WhatsApp, Manual)
+5. Post-stay automation (thank you, review, offers)
+6. Testing coverage 100% ospiti
+
+**DOPO FASE 2.0:** WireGuard per accesso remoto (SUBROADMAP Fase A)
 
 ---
 
@@ -72,14 +90,23 @@ FASE 4 (OCR/Check-in)   [##################..] 90%
 **Path:** `miracallook/backend/ericsoft/`
 **Status:** ✅ FUNZIONANTE (testato S319, solo rete locale)
 
-**Endpoints:**
+**Endpoints attuali:**
 - `/ericsoft/status` - Health check ✅
-- `/ericsoft/bookings/active` - Ospiti in casa ✅ (16 trovati)
+- `/ericsoft/bookings/active` - Ospiti in casa ✅ (16 trovati - LIMITATO!)
 - `/ericsoft/bookings/search` - Cerca per email
 - `/ericsoft/bookings` - Lista prenotazioni
 
-**Funziona:** Porta 54081, filtro cancellazioni, stati 2+3, performance OK
-**Serve:** WireGuard (remoto), validazione stati, Cache Redis
+**⚠️ LIMITAZIONE S319:** Query esclude 24 ospiti (filtro email!)
+
+**PROSSIMI ENDPOINT S320 (Guest Management):**
+- `/api/guests/all` - TUTTI gli ospiti (100% coverage)
+- `/api/guests/search?email=X` - Cerca per email
+- `/api/guests/search?phone=X` - Cerca per telefono
+- `/api/guests/{id}` - Dettagli singolo ospite
+- `/api/guests/post-stay?days=7` - Ospiti partiti (post-stay marketing)
+
+**Funziona:** Porta 54081, filtro cancellazioni, performance OK
+**Serve:** Guest Management completo (S320), WireGuard (remoto), Cache Redis
 
 ---
 
@@ -87,9 +114,11 @@ FASE 4 (OCR/Check-in)   [##################..] 90%
 
 | File | Cosa |
 |------|------|
-| **SUBROADMAP_ERICSOFT_INTEGRATION.md** | Piano 6 fasi! |
-| MAPPA_STRATEGICA_MIRACOLLOOK.md | Visione completa |
-| NORD_MIRACOLLOOK.md | Direzione |
+| **MAPPA_STRATEGICA_MIRACOLLOOK.md** | Visione completa (AGGIORNATA S320!) |
+| **SUBROADMAP_ERICSOFT_INTEGRATION.md** | Piano 6 fasi (AGGIORNATA S320!) |
+| **STUDIO_GUEST_MANAGEMENT_BEST_PRACTICES.md** | **NUOVO S320!** Best practices PMS (1265 righe) |
+| **PROPOSTA_GUEST_MANAGEMENT_PROFESSIONALE.md** | **NUOVO S320!** Architettura 9.5/10 (723 righe) |
+| NORD_MIRACOLLOOK.md | Direzione (DA CREARE!) |
 | `backend/ericsoft/` | Connettore SQL |
 
 ---
@@ -110,7 +139,8 @@ Ericsoft DB (200.5:54081) → Server Gateway → WireGuard → Miracollook
 
 | Sessione | Cosa |
 |----------|------|
-| **S319** | 🎉 **CONNESSIONE FUNZIONANTE! Porta 54081, 16 ospiti letti** |
+| **S320** | 📚 **STUDIO GUEST MANAGEMENT COMPLETATO! 1988 righe ricerca!** |
+| S319 | Connessione funzionante (porta 54081, 16 ospiti) |
 | S318 | Studio architettura + Subroadmap Ericsoft |
 | S317 | Connettore Ericsoft + Mappa Strategica |
 | S316 | Schema DB + User READ-ONLY |
@@ -118,5 +148,5 @@ Ericsoft DB (200.5:54081) → Server Gateway → WireGuard → Miracollook
 
 ---
 
-*"FUNZIONA! Il connettore legge i dati reali!"*
-*Cervella & Rafa - Sessione 319*
+*"Studio professionale completato - ora implementiamo!"*
+*Cervella Docs & Rafa - Sessione 320*
