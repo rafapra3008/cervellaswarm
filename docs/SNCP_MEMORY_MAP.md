@@ -226,18 +226,88 @@ INVECE usa:
 
 ---
 
-## Miglioramenti Futuri (da Ricerca S321)
+## Studio Memoria AI (Ricerca S321)
 
-| # | Miglioramento | Effort | Beneficio |
-|---|---------------|--------|-----------|
-| 1 | Observation Masking | 1 sett | -50% token usage |
-| 2 | sqlite-vec semantic search | 1 mese | Ricerca semantica |
-| 3 | Core Memory Regina | 3 sett | Working memory curated |
-| 4 | MemGPT-like architecture | 3+ mesi | Full hierarchical memory |
+### Scoperta Chiave
 
-**Report completo:** `docs/studio/RICERCA_MEMORIA_AI_AGENTS.md`
+```
++================================================================+
+|   OBSERVATION MASKING > LLM SUMMARIZATION                      |
+|                                                                |
+|   - 52% MENO COSTOSO                                           |
+|   - +2.6% PERFORMANCE                                          |
+|   - Zero infrastruttura extra                                  |
++================================================================+
+```
+
+### Come Funzionano i Big Players
+
+| Sistema | Approccio | Cosa Possiamo Imparare |
+|---------|-----------|------------------------|
+| **Clawdbot** | File MD + sqlite-vec | Semplice e potente! |
+| **MemGPT** | OS-like memory tiers | Self-editing memory |
+| **sqlite-vec** | Vector search in SQLite | Locale, veloce, portabile |
+| **AutoGPT** | Episodic + Semantic memory | Knowledge graphs |
+| **LangChain** | Buffer/Summary/Entity memory | Strategie multiple |
+
+### Observation Masking - Come Funziona
+
+```
+Quando context > 50%:
+
+PRIMA:
+[Step 1] Read file auth.py (500 lines shown)
+[Step 2] Grep for "password" (200 matches shown)
+[Step 3] Read config.py (300 lines shown)
+...tutto in memoria...
+
+DOPO:
+<masked: file_read auth.py>
+<masked: grep_search password>
+[Step 15] Found issue in auth.py:42 [FULL]
+[Step 16] Current fix [FULL]
+
+→ 50%+ less tokens, same accuracy!
+```
+
+---
+
+## Roadmap Miglioramenti Memoria
+
+### Quick Wins (1-2 settimane)
+
+| # | Cosa | Beneficio | Effort | Come |
+|---|------|-----------|--------|------|
+| 1 | **Observation Masking** | -50% token usage | 1 sett | Modifica DNA Worker |
+| 2 | **Pre-Task Memo** | Worker non perdono focus | 1 sett | File .swarm/outputs/ |
+| 3 | **Daily Memory Flush** | PROMPT_RIPRESA fresh | 2 giorni | Cron job launchd |
+
+### Medium Term (1-2 mesi)
+
+| # | Cosa | Beneficio | Effort | Come |
+|---|------|-----------|--------|------|
+| 4 | **sqlite-vec** | Semantic search locale | 1 mese | .swarm/memory/*.sqlite |
+| 5 | **Core Memory Regina** | Working memory curated | 3 sett | .swarm/regina/CORE_MEMORY.md |
+
+### Long Term (3+ mesi)
+
+| # | Cosa | Beneficio | Effort |
+|---|------|-----------|--------|
+| 6 | **MemGPT-like architecture** | Full hierarchical memory | 3+ mesi |
+| 7 | **Cross-agent knowledge sharing** | Agenti imparano da altri | 4+ mesi |
+
+---
+
+## Riferimenti
+
+| Documento | Contenuto |
+|-----------|-----------|
+| `docs/studio/RICERCA_MEMORIA_AI_AGENTS.md` | Studio completo 1039 righe |
+| `reports/RICERCA_MEMORIA_PERSISTENTE_MOLTBOT.md` | Studio Moltbot S320 |
+| `.swarm/plans/MAPPA_IMPLEMENTAZIONI_MEMORIA.md` | Piano implementazione |
 
 ---
 
 *Mappa creata: 30 Gennaio 2026 - Sessione 321*
+*Aggiornata: 30 Gennaio 2026 - Dettagli ricerca aggiunti*
 *Cervella & Rafa*
