@@ -249,8 +249,68 @@ Architect produce sempre un piano strutturato:
 
 ---
 
+## SNCP 3.0 - MEMORY & SECURITY (S320-S321)
+
+### Script Disponibili
+
+```bash
+# SECURITY - Scan secrets prima commit
+./scripts/sncp/audit-secrets.sh
+
+# MONITOR - Limiti PROMPT_RIPRESA
+./scripts/sncp/check-ripresa-size.sh
+
+# DAILY LOG - Timeline giornaliera
+./scripts/sncp/daily-log.sh [progetto] "nota"
+
+# MEMORY FLUSH - Auto-save (integrato in SessionEnd hook)
+# Eseguito AUTOMATICAMENTE fine sessione
+
+# CHECKPOINT - Commit automatico
+checkpoint [N] "Descrizione"
+```
+
+### Workflow Sessione Completo
+
+```
+1. SessionStart → Hook carica COSTITUZIONE + PROMPT_RIPRESA
+2. Durante      → daily-log.sh per note importanti
+3. SessionEnd   → memory-flush AUTO-SAVE contesto
+4. Chiusura     → checkpoint [N] "Descrizione" → commit + push
+```
+
+### Limiti Memoria (INVIOLABILI)
+
+| File | Limite | Script Verifica |
+|------|--------|-----------------|
+| PROMPT_RIPRESA | 150 righe | check-ripresa-size.sh |
+| stato.md | 500 righe | file_limits_guard.py |
+
+**Violazione = WARNING!** Archiviare sessioni vecchie.
+
+### Regola Security
+
+**MAI secrets in PROMPT_RIPRESA o stato.md!**
+
+```
+SBAGLIATO: API_KEY=sk-xxx
+CORRETTO:  [stored in .env as ANTHROPIC_API_KEY]
+```
+
+### Test Coverage (S321)
+
+```
+Core: 82 test PASS
+CLI: 134 test PASS
+MCP: 74 test PASS
+Extension: 6 test PASS
+TOTALE: 296 test!
+```
+
+---
+
 *Creato: 31 Dicembre 2025*
-*Aggiornato: 19 Gennaio 2026 - W3-B Architect Pattern + Famiglia 17 membri!*
-*Versione: 1.4.0*
+*Aggiornato: 30 Gennaio 2026 - SNCP 3.0 + S321 Test Coverage!*
+*Versione: 1.5.0*
 
 **Cervella & Rafa** 💙🐝

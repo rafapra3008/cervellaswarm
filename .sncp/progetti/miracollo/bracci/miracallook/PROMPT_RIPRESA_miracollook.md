@@ -5,81 +5,63 @@
 
 # PROMPT RIPRESA - Miracollook
 
-> **Ultimo aggiornamento:** 30 Gennaio 2026 - Sessione 322
-> **STATUS:** Guest Management 60% - Code Review + Security Fix completati
+> **Ultimo aggiornamento:** 30 Gennaio 2026 - Sessione 323
+> **STATUS:** FASE 3 Cache Layer COMPLETATA!
 
 ---
 
-## SESSIONE 322 - CODE REVIEW + ARCHITETTURA CHIARITA
+## SESSIONE 323 - CACHE LAYER IMPLEMENTATO
 
 ### Cosa Abbiamo Fatto
 
 | # | Task | Risultato |
 |---|------|-----------|
-| 1 | Code Review S321 | 8.5/10 → 3 issue trovate |
-| 2 | Fix LIKE injection | 10/10 - Security fix |
-| 3 | Fix TOP default | 10/10 - Performance |
-| 4 | Fix logging stati | 10/10 - Robustness |
-| 5 | Test unitari | 18/18 PASS |
-| 6 | **CHIARIMENTO ARCHITETTURA** | **Stessa rete = NO VPN!** |
+| 1 | aiocache aggiunto | requirements.txt |
+| 2 | Decoratori @cached | 6 metodi |
+| 3 | StaleCache class | Graceful degradation |
+| 4 | Invalidation API | 4 metodi |
+| 5 | Test unitari | 20/20 PASS |
+| 6 | **Guardiana Audit** | **9/10 APPROVE** |
 
-### CHIARIMENTO IMPORTANTE
+### Connector v2.1.0
 
-```
-+================================================================+
-|                                                                  |
-|   ARCHITETTURA CORRETTA:                                        |
-|                                                                  |
-|   Miracollook backend gira nella STESSA RETE dell'hotel!        |
-|                                                                  |
-|   ❌ NON serve VPN                                               |
-|   ❌ NON serve Raspberry Pi                                      |
-|   ❌ NON serve partnership Ericsoft                              |
-|   ✅ Accesso diretto read-only al DB                            |
-|                                                                  |
-+================================================================+
-```
+**Nuove features:**
+- Cache in-memory con aiocache
+- TTL differenziati per metodo
+- Graceful degradation (1h stale fallback)
+- Cache invalidation API
 
-### Versioni Aggiornate
-
-| File | Versione | Modifica |
-|------|----------|----------|
-| connector.py | 2.0.0 → 2.0.1 | LIKE sanitizer + logging |
-| guest_queries.py | 1.0.0 → 1.0.1 | Costanti limite + warning |
-| models/__init__.py | 1.0.0 → 1.0.1 | Export legacy models |
+**TTL Strategy:**
+| Metodo | TTL |
+|--------|-----|
+| get_all_guests | 5 min |
+| get_in_house_guests | 1 min |
+| get_guests_by_status | 1 min |
+| get_post_stay_guests | 2 min |
+| get_pre_arrival_guests | 2 min |
+| get_guest_by_id | 2 min |
+| Stale fallback | 1 ora |
 
 ---
 
 ## STATO INTEGRAZIONE ERICSOFT
 
 ```
-FASE 1: Connector Base        [####################] 100% ✅
+FASE 1: Connector Base        [####################] 100%
 FASE 2: Guest Management      [############........] 60%
-FASE 3: Cache Layer           [....................] 0%
+FASE 3: Cache Layer           [####################] 100% ← S323!
 FASE 4: API Endpoints         [....................] 0%
 FASE 5: Frontend Integration  [....................] 0%
 FASE 6: Test & Production     [....................] 0%
 ```
 
-### FASE 2 - Dettaglio
-
-| Step | Status |
-|------|--------|
-| Modello GuestProfile | ✅ 540 righe |
-| Query SQL Master | ✅ 443 righe |
-| Connector v2.0.1 | ✅ 6 metodi nuovi |
-| Security fix | ✅ S322 |
-| Test unitari | ✅ 18/18 pass |
-| **Test DB reale** | ⏳ **Da fare in hotel** |
-
 ---
 
-## PROSSIMI STEP (S323+)
+## PROSSIMI STEP (S324+)
 
-1. **Test DB reale** - Quando in hotel: `python test_guest_management.py`
-2. **Cache Layer** - FASE 3 della subroadmap
-3. **API Endpoints** - FASE 4 (GET /api/guests/*)
-4. **Frontend** - GuestContextCard
+1. **Test DB reale** - Quando in hotel
+2. **API Endpoints** - FASE 4 (GET /api/guests/*)
+3. **Frontend** - GuestContextCard
 
 ---
 
@@ -87,36 +69,18 @@ FASE 6: Test & Production     [....................] 0%
 
 | File | Path |
 |------|------|
-| Connector | `miracallook/backend/ericsoft/connector.py` |
-| GuestProfile | `miracallook/backend/ericsoft/models/guest_profile.py` |
-| Query SQL | `miracallook/backend/ericsoft/queries/guest_queries.py` |
-| Test unitari | `miracallook/backend/tests/test_guest_profile.py` |
+| Connector v2.1.0 | `miracallook/backend/ericsoft/connector.py` |
+| Test cache | `miracallook/backend/tests/test_cache_layer.py` |
 | **SUBROADMAP** | `.sncp/progetti/miracollo/bracci/miracallook/SUBROADMAP_ERICSOFT_INTEGRATION.md` |
 
 ---
 
-## CONNETTORE ERICSOFT v2.0.1
+## TEST TOTALI: 38/38 PASS
 
-**Metodi disponibili:**
-- `get_all_guests(limit)` - Tutti ospiti (4270!)
-- `get_in_house_guests()` - In casa (~111)
-- `get_guests_by_status(status)` - Per stato
-- `get_post_stay_guests(days)` - Partiti
-- `get_pre_arrival_guests(days)` - In arrivo
-- `get_guest_by_id(id)` - Profilo completo
+- test_guest_profile.py: 18/18
+- test_cache_layer.py: 20/20
 
 ---
 
-## SESSIONI PRECEDENTI
-
-| Sessione | Cosa |
-|----------|------|
-| S322 | Code Review + Security Fix + Architettura chiarita |
-| S321 | Implementazione GuestProfile + Query + Connector |
-| S320 | Studio Guest Management (1988 righe ricerca) |
-| S319 | Connessione funzionante (porta 54081) |
-
----
-
-*"Stessa rete = semplice. Zero complicazioni!"*
-*Cervella & Rafa - Sessione 322*
+*"Cache layer per performance! Stessa rete = semplice!"*
+*Cervella & Rafa - Sessione 323*

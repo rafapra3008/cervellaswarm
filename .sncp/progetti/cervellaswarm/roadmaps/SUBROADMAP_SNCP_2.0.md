@@ -340,3 +340,51 @@ Dalla ricerca, queste cose sono nice-to-have ma NON priorita:
 *Subroadmap creata da: Regina + Guardiane*
 *Data: 20 Gennaio 2026 - Sessione 296*
 *"Lavoriamo in pace! Senza casino! Dipende da noi!"*
+
+---
+
+## SNCP 3.0 - EVOLUZIONE (S320-S321)
+
+> **Aggiornato:** 30 Gennaio 2026 - Sessione 321
+> **Status:** SNCP 2.0 → 3.0 COMPLETATO!
+
+### Cosa Abbiamo Aggiunto
+
+| # | Feature | Sessione | Score |
+|---|---------|----------|-------|
+| 1 | `audit-secrets.sh` | S320 | 9/10 |
+| 2 | `check-ripresa-size.sh` | S320 | 9/10 |
+| 3 | `memory-flush.sh` | S320 | 8/10 |
+| 4 | `daily-log.sh` | S320 | 9/10 |
+| 5 | `checkpoint.sh` | S321 | 8/10 |
+| 6 | memory-flush hook SessionEnd | S321 | 9/10 |
+
+### Studio Memoria AI (S320-S321)
+
+- **Moltbot/Clawdbot**: File MD + sqlite-vec
+- **MemGPT**: OS-like memory tiers
+- **Observation Masking**: -52% costo, +2.6% performance
+
+**Report:** `docs/studio/RICERCA_MEMORIA_AI_AGENTS.md` (1039 righe)
+
+### Score Finale
+
+```
+SNCP 2.0 (S296-S299): 8.8/10 → 9.2/10
+SNCP 3.0 (S320-S321): 9.2/10 → 9.5/10 (target raggiunto!)
+```
+
+### Prossimi Miglioramenti (Backlog)
+
+| # | Feature | Effort | Beneficio |
+|---|---------|--------|-----------|
+| 1 | Observation Masking | 1 sett | -50% token |
+| 2 | sqlite-vec | 1 mese | Semantic search |
+| 3 | Core Memory Regina | 3 sett | Working memory |
+
+**Mappa completa:** `docs/SNCP_MEMORY_MAP.md`
+
+---
+
+*SNCP 3.0 COMPLETATO!*
+*Sessione 321 - Cervella & Rafa*

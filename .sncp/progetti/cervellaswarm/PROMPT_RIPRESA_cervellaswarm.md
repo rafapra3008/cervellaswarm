@@ -1,123 +1,104 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 29 Gennaio 2026 - Sessione 320
-> **STATUS:** v2.0.0-beta.1 LIVE + SNCP 3.0 COMPLETATO!
+> **Ultimo aggiornamento:** 30 Gennaio 2026 - Sessione 321
+> **STATUS:** v2.0.0-beta.1 LIVE + Score verso 9.5/10!
 
 ---
 
-## SESSIONE 320 - SNCP 3.0 MEMORY & SECURITY
+## SESSIONE 321 - GAP TO 9.5 + AUTOMAZIONE
 
 ```
 +================================================================+
-|   SNCP 3.0 IMPLEMENTATO! Security + Memory Management          |
+|   12/13 TASK COMPLETATI - Test + SNCP + Automazione            |
 +================================================================+
 ```
 
 ### Cosa Abbiamo Fatto
 
-| # | Task | Score Guardiana |
-|---|------|-----------------|
-| P0 | Sanitizzato 6+ file con credentials | 10/10 |
-| QW1 | `audit-secrets.sh` - scan automatico | 9/10 |
-| QW2 | `check-ripresa-size.sh` - monitor limiti | 9/10 |
-| MM1 | `memory-flush.sh` - auto-save sessioni | 8/10 |
-| MM2 | `daily-log.sh` - log temporali | 9/10 |
+| # | Task | Risultato | Score |
+|---|------|-----------|-------|
+| 1 | Test MCP-Server | **0 → 74 test!** | 9/10 |
+| 2 | Test Core | **37 → 82 test!** | 9/10 |
+| 3 | stato.md | Aggiornato S321 | 9.5/10 |
+| 4 | room-hardware PROMPT_RIPRESA | **199 → 95 righe** | 9/10 |
+| 5 | memory-flush hook | Integrato SessionEnd | 9/10 |
+| 6 | checkpoint.sh | Nuovo script! | 8/10 |
 
-### Nuovi Script
+### Nuovi Strumenti
 
 ```bash
-scripts/sncp/audit-secrets.sh        # Security scan
-scripts/sncp/check-ripresa-size.sh   # Monitor size
-scripts/sncp/daily-log.sh            # Log giornalieri
-scripts/swarm/memory-flush.sh        # Auto-save sessioni
+checkpoint 321 "Description"     # Checkpoint automatico
+# memory-flush auto a SessionEnd  # Hook integrato
 ```
 
-### Ricerca Moltbot
+### Decisione Chiave
 
-- Studio memoria persistente Moltbot/Clawdbot (68K+ GitHub stars)
-- Report: `reports/RICERCA_MEMORIA_PERSISTENTE_MOLTBOT.md`
-- Report: `reports/SCIENTIST_20260128_moltbot_clawdbot.md`
-- Mappa: `.swarm/plans/MAPPA_IMPLEMENTAZIONI_MEMORIA.md`
+> **Focus INTERNO prima di tutto. Marketing/outreach non prioritario.**
 
 ---
 
-## SESSIONE 316 - EXTENSION TEST
+## STATO TECNICO AGGIORNATO
 
 ```
-+================================================================+
-|   STEP 5 COMPLETATO - Extension testata automaticamente!       |
-+================================================================+
-```
-
-### Cosa Abbiamo Fatto
-
-| # | Task | Risultato |
-|---|------|-----------|
-| 1 | Build Extension | npm run compile OK |
-| 2 | Test automatici | 8 test scritti, 6 pass, 2 skip |
-| 3 | Audit Guardiana | 9.5/10 APPROVE |
-
-### Test Results
-
-```
-  CervellaSwarm Extension Test Suite
-    ✔ Extension should be present
-    ✔ Extension should activate
-    ✔ All commands should be registered (6/6)
-    - Initialize command (skip - no workspace in test env)
-    - Check status command (skip - no workspace in test env)
-    ✔ Launch agent command available
-    ✔ Sidebar view registered
-    ✔ Configuration available
-  6 passing, 2 pending
-```
-
-### File Modificato
-
-| File | Modifica |
-|------|----------|
-| `cervellaswarm-extension/src/test/extension.test.ts` | 8 test reali (da placeholder) |
-
----
-
-## STATO TECNICO
-
-```
-Core: 37/37 test PASS (v1.0.0-alpha.2)
+Core: 82/82 test PASS (era 37!)
 CLI: 134/134 test PASS
-MCP: Build OK
-Extension: 6/6 test PASS (v0.1.0)
+MCP: 74/74 test PASS (era 0!)
+Extension: 6/6 test PASS
+TOTALE: 296 test (era 177!)
 ```
 
 ---
 
-## PROSSIMI STEP CervellaSwarm
+## COSA MANCA PER 9.5/10
 
-### v2.1.0 - COMPLETATO!
-1. [x] @cervellaswarm/core: Config manager - DONE
-2. [x] @cervellaswarm/core: Worker prompts - DONE
-3. [x] CLI + MCP: Usare core - DONE (S315!)
-4. [x] VS Code Extension: Test ready - DONE
-5. [x] Extension: Test automatici - DONE (S316!)
-
-### v2.2.0 - Future
-6. [ ] Extension: File decoration, inline diff
-7. [ ] Local Models Research (Ollama)
-8. [ ] Pubblicare core su npm
+| Gap | Status | Impatto |
+|-----|--------|---------|
+| npm core publish | Richiede `npm login` | Medio |
+| miracallook PROMPT_RIPRESA | 146/150 righe | Warning |
+| Studio Clawdbot | In corso S321 | Miglioramenti futuri |
 
 ---
 
-## FILE MODIFICATI S315
+## COME USARE CERVELLASWARM (Guida Rapida)
 
-| File | Modifica |
-|------|----------|
-| `packages/cli/src/agents/spawner.js` | Usa core per prompts/workers |
-| `packages/mcp-server/src/agents/spawner.ts` | Usa core per prompts/workers |
-| `packages/core/src/workers/prompts.ts` | Guardiane arricchite |
-| `packages/core/src/workers/registry.ts` | Next steps migliorati |
-| `packages/cli/test/agents/spawner.test.js` | Test per 12 workers |
+### Inizio Sessione
+```bash
+# Hook automatico carica COSTITUZIONE + PROMPT_RIPRESA
+```
+
+### Delegare Task
+```bash
+spawn-workers --list              # Vedi tutti i worker
+spawn-workers --backend           # Lancia backend
+spawn-workers --frontend          # Lancia frontend
+spawn-workers --tester            # Lancia tester
+spawn-workers --architect         # Pianificazione (Opus)
+```
+
+### Fine Sessione
+```bash
+checkpoint 321 "Descrizione"      # Commit + push automatico
+# memory-flush eseguito automaticamente
+```
+
+### Comandi Utili
+```bash
+verify-sync cervellaswarm         # Verifica coerenza docs
+swarm-session-check               # Check stato sessione
+audit-secrets.sh                  # Scan security
+check-ripresa-size.sh             # Monitor limiti file
+```
 
 ---
 
-*"La famiglia cresce insieme - una fonte, un cuore!"*
-*Cervella & Rafa - Sessione 315*
+## PROSSIMI STEP
+
+1. [ ] Studio Clawdbot (in corso)
+2. [ ] npm login + publish core
+3. [ ] Archiviare miracallook PROMPT_RIPRESA
+4. [ ] Implementare miglioramenti da ricerca
+
+---
+
+*"Ultrapassar os próprios limites!"*
+*Sessione 321 - Cervella & Rafa*

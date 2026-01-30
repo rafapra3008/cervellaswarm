@@ -1,6 +1,6 @@
 # SUBROADMAP: Integrazione Ericsoft - Miracollook
 
-> **Aggiornato:** 30 Gennaio 2026 - Sessione 322
+> **Aggiornato:** 30 Gennaio 2026 - Sessione 323
 > **Obiettivo:** Miracollook legge dati ospiti da DB Ericsoft
 > **Approccio:** Accesso diretto read-only (stessa rete hotel)
 
@@ -40,12 +40,12 @@
 
 ---
 
-## STATO FASI (30 Gen 2026)
+## STATO FASI (30 Gen 2026 - S323)
 
 ```
 FASE 1: Connector Base        [####################] 100% ✅
 FASE 2: Guest Management      [############........] 60%
-FASE 3: Cache Layer           [....................] 0%
+FASE 3: Cache Layer           [####################] 100% ✅ S323!
 FASE 4: API Endpoints         [....................] 0%
 FASE 5: Frontend Integration  [....................] 0%
 FASE 6: Test & Production     [....................] 0%
@@ -95,18 +95,32 @@ FASE 6: Test & Production     [....................] 0%
 
 ---
 
-## FASE 3: Cache Layer - DA FARE
+## FASE 3: Cache Layer - COMPLETATA ✅
 
-**Obiettivo:** Ridurre carico DB, graceful degradation
-**Priorità:** ALTA
+**Sessione:** S323
+**Status:** 100% DONE
+**Guardiana Audit:** 9/10 APPROVE
 
-| Step | Cosa | Dettagli |
-|------|------|----------|
-| 3.1 | Cache in-memory | cachetools TTL |
-| 3.2 | Cache get_all_guests | TTL 5 min |
-| 3.3 | Cache get_in_house | TTL 1 min |
-| 3.4 | Graceful degradation | Serve stale se DB down |
-| 3.5 | Cache invalidation | Manual + TTL |
+| Step | Cosa | Status |
+|------|------|--------|
+| 3.1 | aiocache in-memory | ✅ v0.12.3 |
+| 3.2 | Cache get_all_guests | ✅ TTL 5 min |
+| 3.3 | Cache get_in_house | ✅ TTL 1 min |
+| 3.4 | Cache altri metodi | ✅ TTL 1-2 min |
+| 3.5 | Graceful degradation | ✅ StaleCache (1h fallback) |
+| 3.6 | Cache invalidation | ✅ API completa |
+| 3.7 | Test unitari | ✅ 20/20 pass |
+
+**Connector:** v2.1.0 (con cache)
+
+**TTL Strategy:**
+- `get_all_guests` → 5 min (dataset grande)
+- `get_in_house_guests` → 1 min (sensibile)
+- `get_guests_by_status` → 1 min
+- `get_post_stay_guests` → 2 min
+- `get_pre_arrival_guests` → 2 min
+- `get_guest_by_id` → 2 min
+- Stale fallback → 1 ora
 
 ---
 
@@ -157,9 +171,9 @@ FASE 6: Test & Production     [....................] 0%
 
 ## PROSSIMI STEP IMMEDIATI
 
-1. **Test DB reale** - Quando in hotel, eseguire `test_guest_management.py`
-2. **Cache Layer** - Implementare FASE 3
-3. **API Endpoints** - Implementare FASE 4
+1. **Test DB reale** - Quando in hotel, eseguire test completi
+2. **API Endpoints** - Implementare FASE 4
+3. **Frontend** - GuestContextCard
 
 ---
 
@@ -167,10 +181,11 @@ FASE 6: Test & Production     [....................] 0%
 
 | File | Cosa | Versione |
 |------|------|----------|
-| `ericsoft/connector.py` | Connector principale | v2.0.1 |
+| `ericsoft/connector.py` | Connector + Cache | v2.1.0 |
 | `ericsoft/models/guest_profile.py` | Modello GuestProfile | v1.0.0 |
 | `ericsoft/queries/guest_queries.py` | Query SQL | v1.0.1 |
-| `tests/test_guest_profile.py` | Test unitari | 18 test |
+| `tests/test_guest_profile.py` | Test guest profile | 18 test |
+| `tests/test_cache_layer.py` | Test cache | 20 test |
 
 ---
 
@@ -192,6 +207,6 @@ NOTA: Stato 4 NON ESISTE!
 
 ---
 
-*"Accesso diretto, semplice, sicuro. Stessa rete = zero complicazioni!"*
+*"Accesso diretto, semplice, sicuro. Cache layer per performance!"*
 
-*Cervella & Rafa - Sessione 322*
+*Cervella & Rafa - Sessione 323*
