@@ -5,128 +5,105 @@
 
 # PROMPT RIPRESA - Miracollook
 
-> **Ultimo aggiornamento:** 29 Gennaio 2026 - Sessione 321
-> **ROBUSTEZZA:** 9.9/10 - IMPLEMENTAZIONE GUEST MANAGEMENT COMPLETATA!
+> **Ultimo aggiornamento:** 30 Gennaio 2026 - Sessione 322
+> **STATUS:** Guest Management 60% - Code Review + Security Fix completati
 
 ---
 
-## SESSIONE 321 - IMPLEMENTAZIONE GUEST MANAGEMENT COMPLETATA!
+## SESSIONE 322 - CODE REVIEW + ARCHITETTURA CHIARITA
+
+### Cosa Abbiamo Fatto
+
+| # | Task | Risultato |
+|---|------|-----------|
+| 1 | Code Review S321 | 8.5/10 → 3 issue trovate |
+| 2 | Fix LIKE injection | 10/10 - Security fix |
+| 3 | Fix TOP default | 10/10 - Performance |
+| 4 | Fix logging stati | 10/10 - Robustness |
+| 5 | Test unitari | 18/18 PASS |
+| 6 | **CHIARIMENTO ARCHITETTURA** | **Stessa rete = NO VPN!** |
+
+### CHIARIMENTO IMPORTANTE
 
 ```
 +================================================================+
-|   S321: IMPLEMENTATO GUEST MANAGEMENT PROFESSIONALE!            |
 |                                                                  |
-|   ✅ MODELLO GuestProfile creato (540 righe, 9.4/10)           |
-|   ✅ QUERY MASTER 6 query SQL (443 righe, 9.2/10)              |
-|   ✅ CONNECTOR v2.0.0 refactored (9.8/10)                       |
-|   ✅ AUDIT ogni step - MEDIA SESSIONE 9.9/10                   |
+|   ARCHITETTURA CORRETTA:                                        |
 |                                                                  |
-|   STATO 4 VERIFICATO: NON ESISTE (query reale su DB!)          |
-|   COVERAGE: 100% ospiti (4270 record vs 16 prima!)             |
+|   Miracollook backend gira nella STESSA RETE dell'hotel!        |
 |                                                                  |
-|   PRONTO PER DEPLOY: SI                                         |
+|   ❌ NON serve VPN                                               |
+|   ❌ NON serve Raspberry Pi                                      |
+|   ❌ NON serve partnership Ericsoft                              |
+|   ✅ Accesso diretto read-only al DB                            |
+|                                                                  |
 +================================================================+
 ```
 
-### COSA ABBIAMO FATTO S321
+### Versioni Aggiornate
 
-| Step | Cosa | Voto | File |
-|------|------|------|------|
-| 1 | Modello GuestProfile | 9.4/10 | `models/guest_profile.py` (540 righe) |
-| 2 | Query Master | 9.2/10 | `queries/guest_queries.py` (443 righe) |
-| 3 | Refactor connector | 9.8/10 | `connector.py` v2.0.0 |
-
-### DATI REALI VERIFICATI (Query Rafa su DB)
-
-```
-IdStatoScheda | Totale | Mapping
-1             | 816    | PRE_ARRIVAL (prenotazioni future)
-2             | 132    | ARRIVAL_DAY (arrivi oggi)
-3             | 111    | IN_HOUSE (ospiti in casa)
-5             | 3211   | POST_STAY (storico partiti)
-TOTALE: 4270 record
-
-STATO 4: NON ESISTE! (zero record)
-```
+| File | Versione | Modifica |
+|------|----------|----------|
+| connector.py | 2.0.0 → 2.0.1 | LIKE sanitizer + logging |
+| guest_queries.py | 1.0.0 → 1.0.1 | Costanti limite + warning |
+| models/__init__.py | 1.0.0 → 1.0.1 | Export legacy models |
 
 ---
 
-## STATO REALE (29 Gennaio 2026)
+## STATO INTEGRAZIONE ERICSOFT
 
 ```
-FASE 0 (Fondamenta)       [####################] 100%
-FASE P (Performance)      [####################] 100%
-FASE 1 (Email Solido)     [##################..] 92%
-FASE 2.0 (Guest Mgmt)     [########............] 40%  ← S321: MODELLO + QUERY + CONNECTOR!
-FASE 2.1 (PMS UI)         [##########..........] 50%
-FASE 4 (OCR/Check-in)     [##################..] 90%
+FASE 1: Connector Base        [####################] 100% ✅
+FASE 2: Guest Management      [############........] 60%
+FASE 3: Cache Layer           [....................] 0%
+FASE 4: API Endpoints         [....................] 0%
+FASE 5: Frontend Integration  [....................] 0%
+FASE 6: Test & Production     [....................] 0%
 ```
+
+### FASE 2 - Dettaglio
+
+| Step | Status |
+|------|--------|
+| Modello GuestProfile | ✅ 540 righe |
+| Query SQL Master | ✅ 443 righe |
+| Connector v2.0.1 | ✅ 6 metodi nuovi |
+| Security fix | ✅ S322 |
+| Test unitari | ✅ 18/18 pass |
+| **Test DB reale** | ⏳ **Da fare in hotel** |
 
 ---
 
-## PROSSIMO STEP: TEST + API ENDPOINTS (FASE 2.0 continua)
+## PROSSIMI STEP (S323+)
 
-**S321 COMPLETATO - Backend pronto! Ora serve:**
-
-1. ⏳ **Test reale** contro DB Ericsoft (verificare query funzionano)
-2. ⏳ **API endpoints** per esporre nuovi metodi (`/api/guests/*`)
-3. ⏳ **Frontend** GuestContextCard con nuovo modello
-4. ⏳ **Post-stay automation** (thank you, review)
-
----
-
-## CONNETTORE ERICSOFT v2.0.0
-
-**Path:** `miracallook/backend/ericsoft/`
-**Status:** ✅ REFACTORED con GuestProfile!
-
-**NUOVI Metodi (S321):**
-- `get_all_guests(limit)` - TUTTI gli ospiti (4270!)
-- `get_guests_by_status(status)` - Filtra per stato
-- `get_in_house_guests()` - Ospiti in casa (~111)
-- `get_post_stay_guests(days)` - Partiti ultimi N giorni
-- `get_pre_arrival_guests(days)` - Arrivi prossimi N giorni
-- `get_guest_by_id(id)` - Profilo completo con storico
-
-**Vecchi metodi:** Marcati DEPRECATED, ancora funzionanti
+1. **Test DB reale** - Quando in hotel: `python test_guest_management.py`
+2. **Cache Layer** - FASE 3 della subroadmap
+3. **API Endpoints** - FASE 4 (GET /api/guests/*)
+4. **Frontend** - GuestContextCard
 
 ---
 
 ## FILE CHIAVE
 
-| File | Cosa |
+| File | Path |
 |------|------|
-| **models/guest_profile.py** | **NUOVO S321!** Modello professionale (540 righe) |
-| **queries/guest_queries.py** | **NUOVO S321!** 6 query SQL (443 righe) |
-| **connector.py** | **AGGIORNATO S321!** v2.0.0 con 6 nuovi metodi |
-| MAPPA_STRATEGICA_MIRACOLLOOK.md | Visione completa |
-| SUBROADMAP_ERICSOFT_INTEGRATION.md | Piano 6 fasi |
-| STUDIO_GUEST_MANAGEMENT_BEST_PRACTICES.md | Best practices (1265 righe) |
+| Connector | `miracallook/backend/ericsoft/connector.py` |
+| GuestProfile | `miracallook/backend/ericsoft/models/guest_profile.py` |
+| Query SQL | `miracallook/backend/ericsoft/queries/guest_queries.py` |
+| Test unitari | `miracallook/backend/tests/test_guest_profile.py` |
+| **SUBROADMAP** | `.sncp/progetti/miracollo/bracci/miracallook/SUBROADMAP_ERICSOFT_INTEGRATION.md` |
 
 ---
 
-## ARCHITETTURA GUEST MANAGEMENT
+## CONNETTORE ERICSOFT v2.0.1
 
-```
-GuestProfile (permanente)
-    │
-    ├── id_anagrafica (PK)
-    ├── cognome, nome
-    ├── contact: ContactPreference
-    │       ├── email (può essere NULL!)
-    │       ├── phone
-    │       └── whatsapp
-    ├── gdpr: GDPRConsent
-    │       ├── marketing_consent + date
-    │       ├── profiling_consent + date (SEPARATO!)
-    │       └── data_sharing_consent + date
-    │
-    └── stays: List[Stay]  (relazione 1:N)
-            ├── id_scheda_conto
-            ├── check_in, check_out
-            ├── room
-            └── status (PRE_ARRIVAL, ARRIVAL_DAY, IN_HOUSE, POST_STAY)
-```
+**Metodi disponibili:**
+- `get_all_guests(limit)` - Tutti ospiti (4270!)
+- `get_in_house_guests()` - In casa (~111)
+- `get_guests_by_status(status)` - Per stato
+- `get_post_stay_guests(days)` - Partiti
+- `get_pre_arrival_guests(days)` - In arrivo
+- `get_guest_by_id(id)` - Profilo completo
 
 ---
 
@@ -134,13 +111,12 @@ GuestProfile (permanente)
 
 | Sessione | Cosa |
 |----------|------|
-| **S321** | **IMPLEMENTAZIONE! Modello + Query + Connector v2.0.0 (9.9/10)** |
+| S322 | Code Review + Security Fix + Architettura chiarita |
+| S321 | Implementazione GuestProfile + Query + Connector |
 | S320 | Studio Guest Management (1988 righe ricerca) |
 | S319 | Connessione funzionante (porta 54081) |
-| S318 | Studio architettura + Subroadmap |
-| S317 | Connettore Ericsoft + Mappa Strategica |
 
 ---
 
-*"Implementazione professionale completata - ora test e API!"*
-*Cervella & Rafa - Sessione 321*
+*"Stessa rete = semplice. Zero complicazioni!"*
+*Cervella & Rafa - Sessione 322*

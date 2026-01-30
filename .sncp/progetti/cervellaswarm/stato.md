@@ -1,5 +1,5 @@
 # Stato CervellaSwarm
-> Ultimo aggiornamento: 20 Gennaio 2026 - Sessione 293 (W6 INIZIATA!)
+> Ultimo aggiornamento: 30 Gennaio 2026 - Sessione 321
 
 ---
 
@@ -12,18 +12,19 @@
 +================================================================+
 
 ROADMAP 2.0:
-  W1: Git Flow 2.0      [####################] 100% DONE!
-  W2: Tree-sitter       [####################] 100% DONE!
+  W1: Git Flow 2.0       [####################] 100% DONE!
+  W2: Tree-sitter        [####################] 100% DONE!
   W3: Architect/Semantic [####################] 100% DONE!
   W4: Polish + v2.0-beta [####################] 100% DONE!
-  W5: Dogfooding        [####################] 100% DONE!
-  W6: Casa Perfetta     [############________] 60% Day 3 DONE (9.5/10)
+  W5: Dogfooding         [####################] 100% DONE!
+  W6: Casa Perfetta      [####################] 100% DONE!
 
 >>> PRODOTTO LIVE! <<<
->>> v2.0.0-beta su npm <<<
+>>> v2.0.0-beta.1 su npm <<<
 >>> cervellaswarm.com ONLINE <<<
+>>> SNCP 3.0 COMPLETATO! <<<
 
-MEDIA SCORE W1-W5: 9.6/10
+MEDIA SCORE W1-W6: 9.5/10
 ```
 
 ---
@@ -37,8 +38,8 @@ MEDIA SCORE W1-W5: 9.6/10
 | Landing | cervellaswarm.com | LIVE | Cloudflare Pages |
 | API | cervellaswarm-api.fly.dev | ONLINE | Fly.io |
 | GitHub | github.com/rafapra3008/CervellaSwarm | PUBBLICO | Sessione 267 |
-| Agenti | 16 specializzati + Regina | OPERATIVI | Quotidiano |
-| Test | 241+ Python, 134 CLI | PASSANO | CI/CD |
+| Agenti | 17 (Regina + 3 Guardiane + 1 Architect + 12 Worker) | OPERATIVI | 320+ sessioni |
+| Test | Core 37 + CLI 134 + MCP 74 = 245 test | PASSANO | CI/CD |
 
 ---
 
@@ -76,33 +77,43 @@ MEDIA SCORE W1-W5: 9.6/10
 
 ---
 
-## W6: CASA PERFETTA (Prossima)
+## W6: CASA PERFETTA (COMPLETATA!)
 
 | Day | Focus | Status | Score |
 |-----|-------|--------|-------|
 | 1 | SNCP + Pulizia | DONE | 10/10 |
 | 2 | Tree-sitter Hooks | DONE | 10/10 |
 | 3 | Auto-Context Selettivo | DONE | 9.5/10 |
-| 4 | Script Polish | Pending | - |
-| 5 | Test Famiglia | Pending | - |
+| 4 | Script Polish | DONE | 9/10 |
+| 5 | Test Famiglia | DONE | 9/10 |
+
+**SNCP 3.0 (Sessione 320):**
+- audit-secrets.sh - Security scan
+- check-ripresa-size.sh - Monitor limiti
+- memory-flush.sh - Auto-save sessioni
+- daily-log.sh - Log temporali
 
 File: `.sncp/roadmaps/SUBROADMAP_W6.md`
 
 ---
 
-## Famiglia CervellaSwarm
+## Famiglia CervellaSwarm (17 membri)
 
 ```
 1 Regina (Orchestrator) - Opus
+
 3 Guardiane - Opus:
   - Guardiana Qualita
   - Guardiana Ops
   - Guardiana Ricerca
 
+1 Architect - Opus:
+  - cervella-architect (pianificazione)
+
 12 Worker - Sonnet:
   - cervella-backend, frontend, tester, docs
   - cervella-devops, data, security, researcher
-  - cervella-marketing, scienziata, ingegnera, architect
+  - cervella-reviewer, marketing, scienziata, ingegnera
 ```
 
 ---
@@ -133,4 +144,4 @@ File: `.sncp/roadmaps/SUBROADMAP_W6.md`
 
 *"Lavoriamo in pace! Senza casino! Dipende da noi!"*
 *"Ultrapassar os proprios limites!"*
-*Sessione 293 - W6 Day 1 - Cervella & Rafa*
+*Sessione 321 - Score 9.5/10 - Cervella & Rafa*

@@ -8,6 +8,11 @@
             "type": "command",
             "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/file_limits_guard.py",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "python3 /Users/rafapra/Developer/CervellaSwarm/.claude/hooks/memory_flush_auto.py",
+            "timeout": 10
           }
         ]
       }

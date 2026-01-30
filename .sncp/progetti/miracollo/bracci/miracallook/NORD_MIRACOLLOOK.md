@@ -2,7 +2,7 @@
 
 > **Il Centro Comunicazioni dell'Hotel Intelligente**
 >
-> **Aggiornato: 29 Gennaio 2026 - Sessione 317 - Sync con codice REALE**
+> **Aggiornato: 30 Gennaio 2026 - Sessione 322 - Architettura Ericsoft chiarita**
 > **Questo file riflette lo stato REALE, non quello "su carta"**
 > **MAPPA STRATEGICA:** `MAPPA_STRATEGICA_MIRACOLLOOK.md` (NUOVO!)
 
@@ -21,15 +21,17 @@
 
 ---
 
-## STATO REALE (29 Gennaio 2026 - Verificato dal CODICE!)
+## STATO REALE (30 Gennaio 2026 - Sessione 322)
 
 ```
 FASE 0 (Fondamenta)     [####################] 100%
 FASE P (Performance)    [####################] 100% MERGED!
 FASE 1 (Email Solido)   [##################..] 92%
-FASE 2 (PMS Integration)[#######.............] 35% <- Ericsoft S317!
+FASE 2 (PMS/Ericsoft)   [############........] 60% <- S322: Guest Mgmt!
 FASE 3 (Hotel Workflow) [....................] 0%
-FASE 4 (OCR/Check-in)   [##################..] 90% <- 25 file, 2.1K LOC!
+FASE 4 (OCR/Check-in)   [##################..] 90%
+
+NOTA: Architettura CHIARITA - Stessa rete = NO VPN!
 ```
 
 ### FASE 0+P - COMPLETATE
@@ -119,14 +121,19 @@ COMPLETAMENTO FASE 1 (92% -> 100%):
 [ ] Contacts Autocomplete      (6h)
 [ ] Settings Page              (8h)
 
-FASE 2 - PMS INTEGRATION (35% -> 100%):
-[x] 2.0 Connettore Ericsoft    - FATTO S317! (4 file, circuit breaker!)
-[x] 2.1 Guest Identification   - PARZIALE (pms_context.py esiste)
-[x] 2.2 GuestSidebar Reale     - PARZIALE (GuestSidebar.tsx esiste)
-[ ] 2.3 Test rete hotel        (2h)
-[ ] 2.4 Email enrichment UI    (4h)
-[ ] 2.5 Booking Context        (4h)
-[ ] 2.6 Guest History          (6h)
+FASE 2 - ERICSOFT INTEGRATION (60% -> 100%):
+Vedi: SUBROADMAP_ERICSOFT_INTEGRATION.md
+
+[x] 2.1 Connector v2.0.1       - FATTO S322! (security fix!)
+[x] 2.2 GuestProfile Model     - FATTO S321! (540 righe)
+[x] 2.3 Query SQL Master       - FATTO S321! (443 righe)
+[x] 2.4 Test unitari           - FATTO S322! (18/18 pass)
+[ ] 2.5 Test DB reale          - Da fare IN HOTEL
+[ ] 2.6 Cache Layer
+[ ] 2.7 API Endpoints
+[ ] 2.8 Frontend GuestCard
+
+ARCHITETTURA: Stessa rete hotel = NO VPN!
 
 FASE 4 - OCR/CHECK-IN (90% -> 100%):
 [x] OCR Parser MRZ             - FATTO! (mrz_parser.py 393L)
@@ -186,5 +193,5 @@ FASE 4 - OCR/CHECK-IN (90% -> 100%):
 
 ---
 
-*Aggiornato: 29 Gennaio 2026 - Sessione 317*
-*"La MAPPA STRATEGICA è pronta. Il diamante brilla!"*
+*Aggiornato: 30 Gennaio 2026 - Sessione 322*
+*"Stessa rete = semplice. Zero complicazioni!"*

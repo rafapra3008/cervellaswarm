@@ -1,356 +1,197 @@
-# SUBROADMAP: Integrazione Ericsoft Completa
+# SUBROADMAP: Integrazione Ericsoft - Miracollook
 
-> **Creata:** 29 Gennaio 2026 - Sessione 318
-> **Obiettivo:** Miracollook legge dati Ericsoft da OVUNQUE, robusto e professionale
-> **Approccio:** Come fanno i professionisti (Bedzzle/MyReception)
+> **Aggiornato:** 30 Gennaio 2026 - Sessione 322
+> **Obiettivo:** Miracollook legge dati ospiti da DB Ericsoft
+> **Approccio:** Accesso diretto read-only (stessa rete hotel)
 
 ---
 
-## VISIONE
+## ARCHITETTURA (CORRETTA!)
 
 ```
 +================================================================+
 |                                                                  |
-|   Quando arriva una email, Miracollook SA CHI È L'OSPITE!       |
+|   RETE HOTEL (192.168.200.x) - TUTTO QUI!                       |
 |                                                                  |
-|   - Nome, camera, check-in/out                                  |
-|   - Storico prenotazioni                                        |
-|   - Contesto per risposta AI intelligente                       |
-|                                                                  |
-|   Funziona da OVUNQUE: hotel, casa, cloud                       |
-|                                                                  |
-+================================================================+
+|   ┌──────────────┐         ┌──────────────────┐                 |
+|   │   ERICSOFT   │         │   MIRACOLLOOK    │                 |
+|   │   SQL Server │◄────────│   BACKEND        │                 |
+|   │  (200.5)     │  SQL    │   (:8002)        │                 |
+|   │              │ read-   │                  │                 |
+|   │              │ only    │  - Connector     │                 |
+|   └──────────────┘         │  - Cache         │                 |
+|                            │  - API REST      │                 |
+|                            └────────┬─────────┘                 |
+|                                     │                           |
++═════════════════════════════════════╪═══════════════════════════+
+                                      │ API REST
+                                      ▼
+                              ┌───────────────┐
+                              │   FRONTEND    │
+                              │   Browser     │
+                              └───────────────┘
+```
+
+**NOTA IMPORTANTE:**
+- ❌ NON serve VPN (siamo nella stessa rete!)
+- ❌ NON serve Raspberry Pi gateway
+- ❌ NON serve partnership Ericsoft
+- ✅ Accesso diretto read-only al DB
+
+---
+
+## STATO FASI (30 Gen 2026)
+
+```
+FASE 1: Connector Base        [####################] 100% ✅
+FASE 2: Guest Management      [############........] 60%
+FASE 3: Cache Layer           [....................] 0%
+FASE 4: API Endpoints         [....................] 0%
+FASE 5: Frontend Integration  [....................] 0%
+FASE 6: Test & Production     [....................] 0%
 ```
 
 ---
 
-## ARCHITETTURA TARGET
+## FASE 1: Connector Base - COMPLETATA ✅
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      RETE HOTEL (192.168.200.x)                  │
-│                                                                  │
-│  ┌──────────────┐         ┌──────────────┐                      │
-│  │   ERICSOFT   │         │   SERVER     │                      │
-│  │   SQL Server │◄────────│   GATEWAY    │                      │
-│  │  (200.5)     │  SQL    │  (WireGuard) │                      │
-│  └──────────────┘         └──────┬───────┘                      │
-│                                   │                              │
-└───────────────────────────────────┼──────────────────────────────┘
-                                    │
-                                    │ WireGuard VPN (criptato)
-                                    │
-┌───────────────────────────────────┼──────────────────────────────┐
-│                      OVUNQUE (Internet)                          │
-│                                   │                              │
-│                           ┌───────▼───────┐                      │
-│                           │  MIRACOLLOOK  │                      │
-│                           │    BACKEND    │                      │
-│                           │               │                      │
-│                           │ - Connector   │                      │
-│                           │ - Cache Redis │                      │
-│                           │ - API REST    │                      │
-│                           └───────┬───────┘                      │
-│                                   │                              │
-│                           ┌───────▼───────┐                      │
-│                           │   FRONTEND    │                      │
-│                           │ + WhatsApp    │                      │
-│                           │ + Future      │                      │
-│                           └───────────────┘                      │
-│                                                                  │
-└──────────────────────────────────────────────────────────────────┘
-```
+**Sessioni:** S317-S319
+**Status:** 100% DONE
+
+| Step | Cosa | Status |
+|------|------|--------|
+| 1.1 | Credenziali DB | ✅ .env configurato |
+| 1.2 | Connector pymssql | ✅ v2.0.1 |
+| 1.3 | Circuit breaker | ✅ 3 failures → 60s block |
+| 1.4 | Timeout + Semaphore | ✅ 5s timeout, max 2 conn |
+| 1.5 | Connessione testata | ✅ S319 (dalla rete hotel) |
+
+**File:** `ericsoft/connector.py`
 
 ---
 
-## FASI
+## FASE 2: Guest Management - IN CORSO
 
-### FASE A: Accesso Remoto (WireGuard)
-**Obiettivo:** Miracollook raggiunge Ericsoft da OVUNQUE
-**Effort:** 4-6 ore
-**Costo:** €0 (open source)
+**Sessioni:** S320-S322
+**Status:** 60%
 
-| Step | Task | Dettagli |
+| Step | Cosa | Status | File |
+|------|------|--------|------|
+| 2.1 | Studio best practices | ✅ 1988 righe ricerca | S320 |
+| 2.2 | Modello GuestProfile | ✅ 9.4/10 | `models/guest_profile.py` |
+| 2.3 | Query SQL Master | ✅ 9.2/10 | `queries/guest_queries.py` |
+| 2.4 | Connector v2.0.1 | ✅ 9.8/10 | 6 nuovi metodi |
+| 2.5 | Security fix LIKE | ✅ 10/10 | S322 |
+| 2.6 | Test unitari | ✅ 18/18 pass | `tests/test_guest_profile.py` |
+| 2.7 | Test su DB reale | ⏳ | Da fare in hotel |
+
+**Metodi disponibili:**
+- `get_all_guests(limit)` - Tutti gli ospiti
+- `get_in_house_guests()` - Ospiti in casa (~111)
+- `get_guests_by_status(status)` - Per stato
+- `get_post_stay_guests(days)` - Partiti recentemente
+- `get_pre_arrival_guests(days)` - In arrivo
+- `get_guest_by_id(id)` - Profilo completo
+
+---
+
+## FASE 3: Cache Layer - DA FARE
+
+**Obiettivo:** Ridurre carico DB, graceful degradation
+**Priorità:** ALTA
+
+| Step | Cosa | Dettagli |
 |------|------|----------|
-| A.1 | Identificare server gateway | Server sempre acceso nella rete 200 |
-| A.2 | Installare WireGuard server | `apt install wireguard` o equivalente |
-| A.3 | Configurare WireGuard | Generare chiavi, configurare peer |
-| A.4 | Port forwarding router | Aprire porta UDP (default 51820) |
-| A.5 | Installare WireGuard client | Sul Mac/server Miracollook |
-| A.6 | Test connessione | `ping 192.168.200.5` da remoto |
-
-**Deliverable:** Miracollook può raggiungere rete 200 da ovunque
-
-**Documentazione da creare:**
-- `docs/WIREGUARD_SETUP.md` - Guida installazione
-- `docs/WIREGUARD_TROUBLESHOOTING.md` - Problemi comuni
+| 3.1 | Cache in-memory | cachetools TTL |
+| 3.2 | Cache get_all_guests | TTL 5 min |
+| 3.3 | Cache get_in_house | TTL 1 min |
+| 3.4 | Graceful degradation | Serve stale se DB down |
+| 3.5 | Cache invalidation | Manual + TTL |
 
 ---
 
-### FASE B: Test Connessione Reale
-**Obiettivo:** Validare che il connettore S317 funziona
-**Effort:** 2 ore
-**Dipende da:** FASE A
+## FASE 4: API Endpoints - DA FARE
 
-| Step | Task | Dettagli |
+**Obiettivo:** Esporre dati ospiti via REST API
+**Priorità:** ALTA (dopo cache)
+
+| Endpoint | Metodo | Descrizione |
+|----------|--------|-------------|
+| `/api/guests` | GET | Lista ospiti (paginata) |
+| `/api/guests/in-house` | GET | Ospiti in casa |
+| `/api/guests/search` | GET | Cerca per email/telefono |
+| `/api/guests/{id}` | GET | Profilo completo |
+| `/api/guests/post-stay` | GET | Partiti ultimi N giorni |
+| `/api/ericsoft/status` | GET | Health check DB |
+
+---
+
+## FASE 5: Frontend Integration - DA FARE
+
+**Obiettivo:** GuestContextCard quando leggi email
+**Priorità:** MEDIA (dopo API)
+
+| Step | Cosa | Dettagli |
 |------|------|----------|
-| B.1 | Configurare .env | Credenziali Ericsoft (già documentate) |
-| B.2 | Avviare backend | `uvicorn main:app --port 8002` |
-| B.3 | Test /ericsoft/status | Verifica connessione |
-| B.4 | Test /ericsoft/bookings | Verifica dati reali |
-| B.5 | Test /ericsoft/bookings/active | Ospiti in casa ORA |
-| B.6 | Test /ericsoft/bookings/search | Cerca per email |
-
-**Success Criteria:**
-- [ ] Status 200 su tutti gli endpoint
-- [ ] Dati prenotazioni REALI visibili
-- [ ] Response time < 500ms
-- [ ] Circuit breaker funziona (test con DB offline)
-
-**Deliverable:** Screenshot/log dei test passati
+| 5.1 | GuestContextCard | Componente React |
+| 5.2 | Hook useGuestContext | Fetch dati ospite |
+| 5.3 | Integrazione EmailView | Mostra card se ospite trovato |
+| 5.4 | Loading/Error states | UX completa |
 
 ---
 
-### FASE C: Cache Layer (Redis)
-**Obiettivo:** Performance + resilienza
-**Effort:** 4 ore
-**Dipende da:** FASE B
+## FASE 6: Test & Production - DA FARE
 
-| Step | Task | Dettagli |
+**Obiettivo:** Validare tutto su ambiente reale
+**Priorità:** ALTA (gating per production)
+
+| Step | Cosa | Dettagli |
 |------|------|----------|
-| C.1 | Setup Redis | Docker o installazione locale |
-| C.2 | Creare CacheService | `backend/services/cache.py` |
-| C.3 | Cache guest by email | TTL 1 ora |
-| C.4 | Cache active bookings | TTL 15 minuti |
-| C.5 | Cache invalidation | Logica pulizia |
-| C.6 | Fallback se Redis down | Graceful degradation |
-
-**Schema Cache:**
-```
-ericsoft:guest:{email}     → GuestBooking JSON (TTL 1h)
-ericsoft:active:{date}     → List[GuestBooking] JSON (TTL 15min)
-ericsoft:health            → Status JSON (TTL 1min)
-```
-
-**Deliverable:** Cache funzionante con test
+| 6.1 | Test dalla rete hotel | Verifica connessione |
+| 6.2 | Test query performance | < 500ms response |
+| 6.3 | Test circuit breaker | Simula DB offline |
+| 6.4 | Test cache | Verifica TTL funziona |
+| 6.5 | Documentazione | README setup |
 
 ---
 
-### FASE D: Guest Management Service (NUOVO S320)
-**Obiettivo:** Gestione professionale TUTTI gli ospiti (non solo con email)
-**Effort:** 6 giorni
-**Dipende da:** FASE C
+## PROSSIMI STEP IMMEDIATI
 
-**NOTA S320:** Questa fase è stata COMPLETAMENTE ridisegnata dopo studio best practices PMS professionali.
+1. **Test DB reale** - Quando in hotel, eseguire `test_guest_management.py`
+2. **Cache Layer** - Implementare FASE 3
+3. **API Endpoints** - Implementare FASE 4
 
-| Step | Task | Dettagli |
+---
+
+## FILE CHIAVE
+
+| File | Cosa | Versione |
 |------|------|----------|
-| D.1 | Modello GuestProfile completo | `models/guest_profile.py` - Separazione Guest/Booking |
-| D.2 | Query Master (tutti ospiti) | Query Ericsoft che traccia TUTTI (con/senza email) |
-| D.3 | Deduplicazione intelligente | Merge soggiorni per IdAnagrafica |
-| D.4 | Multi-channel contacts | Email, SMS, WhatsApp, Manual fallback |
-| D.5 | Stati lifecycle mapping | Pre-Arrival → Post-Stay completi |
-| D.6 | Post-stay automation | Thank you, review, future booking offers |
-| D.7 | Endpoint /guests/* | API REST completa gestione ospiti |
-| D.8 | Test con dati reali | Validare coverage 100% ospiti |
-
-**RICERCHE S320:**
-- `studi/STUDIO_GUEST_MANAGEMENT_BEST_PRACTICES.md` (1265 righe)
-- `studi/PROPOSTA_GUEST_MANAGEMENT_PROFESSIONALE.md` (723 righe)
-
-**API Design (AGGIORNATO S320):**
-```
-GET /api/guests/all
-Response:
-{
-  "guests": [
-    {
-      "id_anagrafica": 123,
-      "nome_completo": "Mario Rossi",
-      "contacts": [
-        {"channel": "email", "value": "mario@example.com", "primary": true},
-        {"channel": "whatsapp", "value": "+393331234567", "primary": false}
-      ],
-      "current_stay": {
-        "room": "101",
-        "check_in": "2026-01-30",
-        "check_out": "2026-02-02",
-        "status": "in_house"
-      },
-      "total_stays": 3,
-      "is_repeat_guest": true
-    }
-  ],
-  "total": 40,
-  "coverage": "100%"
-}
-
-GET /api/guests/search?email=mario@example.com
-GET /api/guests/search?phone=3331234567
-GET /api/guests/{id_anagrafica}
-GET /api/guests/post-stay?days=7  # Ospiti partiti ultimi 7gg
-```
-
-**Deliverable:** API completa con GuestProfile model + test coverage 100% ospiti
+| `ericsoft/connector.py` | Connector principale | v2.0.1 |
+| `ericsoft/models/guest_profile.py` | Modello GuestProfile | v1.0.0 |
+| `ericsoft/queries/guest_queries.py` | Query SQL | v1.0.1 |
+| `tests/test_guest_profile.py` | Test unitari | 18 test |
 
 ---
 
-### FASE E: Frontend GuestContextCard
-**Obiettivo:** UI che mostra contesto ospite quando leggi email
-**Effort:** 6 ore
-**Dipende da:** FASE D
-
-| Step | Task | Dettagli |
-|------|------|----------|
-| E.1 | Creare GuestContextCard | `components/GuestContextCard.tsx` |
-| E.2 | Integrare in EmailView | Mostra card quando email selezionata |
-| E.3 | Loading state | Skeleton mentre carica |
-| E.4 | Empty state | Messaggio se ospite non trovato |
-| E.5 | Error state | Gestione errori graceful |
-| E.6 | Styling | Design coerente con Miracollook |
-
-**UI Mockup:**
-```
-┌─────────────────────────────────────┐
-│  🏨 Ospite: Mario Rossi             │
-├─────────────────────────────────────┤
-│  📅 Check-in:   30 Gen 2026         │
-│  📅 Check-out:  02 Feb 2026         │
-│  🚪 Camera:     101                 │
-│  📊 Status:     ✅ Confermato       │
-│                                     │
-│  [Vedi Prenotazione] [Storico]      │
-└─────────────────────────────────────┘
-```
-
-**Deliverable:** Componente funzionante in UI
-
----
-
-### FASE F: Test End-to-End + Documentazione
-**Obiettivo:** Tutto funziona insieme, documentato
-**Effort:** 4 ore
-**Dipende da:** FASE E
-
-| Step | Task | Dettagli |
-|------|------|----------|
-| F.1 | Test E2E completo | Flow: email → enrichment → UI |
-| F.2 | Test da remoto | Verifica funziona fuori hotel |
-| F.3 | Test resilienza | Redis down, DB down, VPN down |
-| F.4 | Documentazione utente | Come usare la feature |
-| F.5 | Documentazione tecnica | Architettura, troubleshooting |
-| F.6 | Update NORD + PROMPT_RIPRESA | Stato aggiornato |
-
-**Deliverable:** Feature completa e documentata
-
----
-
-## FUTURO (Post-MVP)
-
-### FASE G: Multi-PMS Adapter Pattern
-**Quando:** Dopo validazione con Ericsoft
-**Obiettivo:** Supportare altri PMS (Opera, Mews, Protel)
-
-```python
-# Architettura Adapter
-class PMSAdapter(ABC):
-    @abstractmethod
-    async def get_guest_by_email(self, email: str) -> Guest
-
-    @abstractmethod
-    async def get_active_bookings(self) -> List[Booking]
-
-class EricsoftAdapter(PMSAdapter):
-    # Implementazione SQL diretta (esistente)
-
-class OperaAdapter(PMSAdapter):
-    # Implementazione via API REST
-
-class MewsAdapter(PMSAdapter):
-    # Implementazione via API REST
-```
-
-### FASE H: Webhook Real-time
-**Quando:** Se Ericsoft aggiunge supporto o per PMS cloud
-**Obiettivo:** Notifiche push invece di polling
-
-### FASE I: Analytics Dashboard
-**Quando:** Dopo accumulo dati
-**Obiettivo:** Insights su ospiti, comunicazioni, trend
-
----
-
-## TIMELINE STIMATA
+## DATI VERIFICATI (S321)
 
 ```
-FASE A (WireGuard)         ████████░░░░  4-6h      Sessione 319 (NEXT)
-FASE B (Test)              ████░░░░░░░░  2h        Sessione 319
-FASE C (Cache)             ████████░░░░  4h        Sessione 320-321
-FASE D (Guest Mgmt)        ████████████  6 giorni  Sessione 321-325 (NUOVO!)
-FASE E (Frontend)          ████████████  6h        Sessione 326-327
-FASE F (E2E + Docs)        ████████░░░░  4h        Sessione 327
+DB Ericsoft - Tabella SchedaConto/Anagrafica:
 
-TOTALE MVP:                              ~7-8 giorni (~8-10 sessioni)
-                                         (aumentato per Guest Management completo)
+IdStatoScheda | Totale | Mapping
+1             | 816    | PRE_ARRIVAL
+2             | 132    | ARRIVAL_DAY
+3             | 111    | IN_HOUSE
+5             | 3211   | POST_STAY
+--------------+--------+-----------
+TOTALE        | 4270   | ospiti
+
+NOTA: Stato 4 NON ESISTE!
 ```
 
 ---
 
-## DIPENDENZE
+*"Accesso diretto, semplice, sicuro. Stessa rete = zero complicazioni!"*
 
-```
-FASE A ──► FASE B ──► FASE C ──► FASE D ──► FASE E ──► FASE F
-  │                                                       │
-  └───────────────── BLOCCO CRITICO ─────────────────────┘
-
-Se FASE A non funziona, tutto si ferma!
-Priorità MASSIMA: risolvere accesso rete.
-```
-
----
-
-## RISCHI E MITIGAZIONI
-
-| Rischio | Probabilità | Impatto | Mitigazione |
-|---------|-------------|---------|-------------|
-| Router hotel non permette port forwarding | Media | Alto | Usare Tailscale come fallback |
-| Server gateway non disponibile | Bassa | Alto | Identificare alternative |
-| Schema Ericsoft cambia | Bassa | Medio | Test automatici, monitoring |
-| Performance query lente | Media | Medio | Cache Redis, query optimization |
-| Redis down | Bassa | Basso | Fallback a query dirette |
-
----
-
-## CHECKLIST PRE-INIZIO
-
-- [ ] Identificato server gateway nella rete 200
-- [ ] Accesso admin al server gateway
-- [ ] Credenziali Ericsoft verificate (S315)
-- [ ] Router hotel accessibile per port forwarding
-- [ ] Backup piano (Tailscale) se WireGuard non funziona
-
----
-
-## METRICHE SUCCESSO
-
-| Metrica | Target | Come Misurare |
-|---------|--------|---------------|
-| Tempo risposta enrichment | < 200ms | Log + monitoring |
-| Accuracy match email→guest | > 95% | Test su dati reali |
-| Uptime connessione | > 99% | Health checks |
-| Cache hit rate | > 80% | Redis stats |
-
----
-
-## NOTE
-
-**Approccio validato:** MyReception/Bedzzle usa lo stesso pattern (SQL diretto + API layer).
-
-**Differenziatore:** Miracollook aggiunge AI (email intelligenti, preventivi automatici, OCR).
-
-**Filosofia:** Un passo alla volta, fatto BENE. Ogni fase completa prima di procedere.
-
----
-
-*"Come fanno i professionisti - ma con il nostro tocco AI!"*
-*Cervella & Rafa - Sessione 318*
+*Cervella & Rafa - Sessione 322*
