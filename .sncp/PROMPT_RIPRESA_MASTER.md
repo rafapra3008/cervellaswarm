@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - MASTER (Globale)
 
-> **Ultimo aggiornamento:** 28 Gennaio 2026 - Sessione 317
+> **Ultimo aggiornamento:** 30 Gennaio 2026 - Sessione 323
 > **Tabella ecosistema condivisa - SOLO link ai file specifici**
 
 ---
@@ -9,8 +9,8 @@
 
 | Progetto | PROMPT_RIPRESA | Aggiornato | TL;DR |
 |----------|----------------|------------|-------|
-| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-01-20 | SNCP 2.0 Day 6 - Cleanup riferimenti oggi.md |
-| **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-20 | Miracollook: Design Salutare COMPLETATO! |
+| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-01-29 | SNCP 3.0 Memory & Security |
+| **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-30 | Miracollook: Cache Layer v2.1.0 COMPLETATO! |
 | **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-01-20 | In pausa |
 | **RafaFreelance** | `.sncp/progetti/rafafreelance/PROMPT_RIPRESA_rafafreelance.md` | 2026-01-23 | Dual-Track: iTalki + WhatsApp Automation |
 | **CervellaTrading** | `.sncp/progetti/cervellatrading/PROMPT_RIPRESA_cervellatrading.md` | 2026-01-24 | Trading sicuro 20-25% annuo |

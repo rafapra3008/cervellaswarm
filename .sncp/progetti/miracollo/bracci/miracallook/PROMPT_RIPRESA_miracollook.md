@@ -5,63 +5,82 @@
 
 # PROMPT RIPRESA - Miracollook
 
-> **Ultimo aggiornamento:** 30 Gennaio 2026 - Sessione 323
-> **STATUS:** FASE 3 Cache Layer COMPLETATA!
+> **Ultimo aggiornamento:** 31 Gennaio 2026 - Sessione 324
+> **STATUS:** READ-ONLY ATTIVO - Focus su perfezionare Miracollo
 
 ---
 
-## SESSIONE 323 - CACHE LAYER IMPLEMENTATO
+## SESSIONE 324 - DECISIONE STRATEGICA
+
+### La Grande Decisione
+
+```
++================================================================+
+|   APPROCCIO: READ-ONLY (Ericsoft → Miracollo)                 |
+|                                                                |
+|   "Miracollo è ancora prototipo. Dobbiamo migliorarlo         |
+|    al 30000% prima di fare sync bidirezionale."               |
+|                                                 - Rafa         |
+|                                                                |
+|   GUARDIANE: APPROVE 100%                                      |
+|   - Qualità: 10/10                                             |
+|   - Security: 9.5/10                                           |
++================================================================+
+```
 
 ### Cosa Abbiamo Fatto
 
 | # | Task | Risultato |
 |---|------|-----------|
-| 1 | aiocache aggiunto | requirements.txt |
-| 2 | Decoratori @cached | 6 metodi |
-| 3 | StaleCache class | Graceful degradation |
-| 4 | Invalidation API | 4 metodi |
-| 5 | Test unitari | 20/20 PASS |
-| 6 | **Guardiana Audit** | **9/10 APPROVE** |
+| 1 | Ricerca completa (3 agenti) | Pattern sync studiati |
+| 2 | Verifica permessi in hotel | Script eseguito |
+| 3 | Scoperto accesso ADMIN | Possiamo fare tutto |
+| 4 | Piano bidirezionale pronto | Ma PARCHEGGIATO |
+| 5 | **Decisione Rafa** | **READ-ONLY per ora** |
+| 6 | **Guardiane validazione** | **APPROVE 100%** |
 
-### Connector v2.1.0
+### Perché READ-ONLY
 
-**Nuove features:**
-- Cache in-memory con aiocache
-- TTL differenziati per metodo
-- Graceful degradation (1h stale fallback)
-- Cache invalidation API
-
-**TTL Strategy:**
-| Metodo | TTL |
-|--------|-----|
-| get_all_guests | 5 min |
-| get_in_house_guests | 1 min |
-| get_guests_by_status | 1 min |
-| get_post_stay_guests | 2 min |
-| get_pre_arrival_guests | 2 min |
-| get_guest_by_id | 2 min |
-| Stale fallback | 1 ora |
+- Miracollo è ancora prototipo (planning, prenotazioni, ospiti da sistemare)
+- Scrivere su Ericsoft con bug = DISASTRO (prenotazioni perse, dati corrotti)
+- READ-ONLY = zero rischio per Ericsoft
+- Tempo per perfezionare Miracollo con dati REALI
 
 ---
 
 ## STATO INTEGRAZIONE ERICSOFT
 
 ```
-FASE 1: Connector Base        [####################] 100%
-FASE 2: Guest Management      [############........] 60%
-FASE 3: Cache Layer           [####################] 100% ← S323!
-FASE 4: API Endpoints         [....................] 0%
-FASE 5: Frontend Integration  [....................] 0%
-FASE 6: Test & Production     [....................] 0%
+FASE 1: READ-ONLY              [####################] 100% ← GIÀ FATTO!
+FASE 2: Perfezionare Miracollo [....................] CURRENT
+FASE 3: Sync Bidirezionale     [....................] FUTURO (quando pronto)
+FASE 4: Transizione            [....................] FUTURO LONTANO
 ```
+
+**Connector v2.1.0:** FUNZIONANTE (READ-ONLY)
+**Cache Layer:** ATTIVO (aiocache, S323)
+**Change Tracking:** NON NECESSARIO per ora
 
 ---
 
-## PROSSIMI STEP (S324+)
+## COSA NON FARE (per ora)
 
-1. **Test DB reale** - Quando in hotel
-2. **API Endpoints** - FASE 4 (GET /api/guests/*)
-3. **Frontend** - GuestContextCard
+| Cosa | Perché |
+|------|--------|
+| Abilitare Change Tracking | Non serve per READ-ONLY |
+| Creare utente WRITE | Non scriviamo su Ericsoft |
+| Implementare Outbox | Solo per bidirezionale |
+
+**Tutto parcheggiato fino a quando Miracollo ≥ 9.0/10**
+
+---
+
+## PROSSIMI STEP (S325+)
+
+1. **Focus su Miracollo** - Planning, prenotazioni, ospiti
+2. **Usare dati reali** - Connector già funziona
+3. **NON toccare** - Sync bidirezionale
+4. **Rivalutare** - Quando Miracollo score ≥ 9.0
 
 ---
 
@@ -70,17 +89,20 @@ FASE 6: Test & Production     [....................] 0%
 | File | Path |
 |------|------|
 | Connector v2.1.0 | `miracallook/backend/ericsoft/connector.py` |
-| Test cache | `miracallook/backend/tests/test_cache_layer.py` |
-| **SUBROADMAP** | `.sncp/progetti/miracollo/bracci/miracallook/SUBROADMAP_ERICSOFT_INTEGRATION.md` |
+| Script permessi | `miracallook/backend/scripts/check_ericsoft_permissions.py` |
+| **SUBROADMAP** | `.sncp/.../miracallook/SUBROADMAP_ERICSOFT_SYNC.md` |
+| Credenziali | `.env` (reader), `.env.admin` (admin - per futuro) |
 
 ---
 
-## TEST TOTALI: 38/38 PASS
+## TEST: 38/38 PASS
 
 - test_guest_profile.py: 18/18
 - test_cache_layer.py: 20/20
 
 ---
 
-*"Cache layer per performance! Stessa rete = semplice!"*
-*Cervella & Rafa - Sessione 323*
+*"Fatto BENE > Fatto VELOCE"*
+*"Dobbiamo migliorare Miracollo al 30000% prima" - Rafa*
+
+*Cervella & Rafa - Sessione 324*
