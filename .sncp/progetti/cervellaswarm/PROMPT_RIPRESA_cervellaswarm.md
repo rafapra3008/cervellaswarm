@@ -1,57 +1,50 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 31 Gennaio 2026 - Sessione 322
-> **STATUS:** v2.0.0-beta.1 LIVE + Piano SNCP 4.0 pronto!
+> **Ultimo aggiornamento:** 31 Gennaio 2026 - Sessione 323
+> **STATUS:** v2.0.0-beta.1 LIVE + SNCP 4.0 Quick Wins 75% COMPLETATI!
 
 ---
 
-## SESSIONE 322 - STUDIO OPENCLAW + PIANO SNCP 4.0
+## SESSIONE 323 - SNCP 4.0 IMPLEMENTAZIONE
 
 ```
 +================================================================+
-|   RICERCA COMPLETATA - Piano memoria intelligente pronto!       |
+|   3/4 QUICK WINS COMPLETATI - Audit Guardiana: 8/10 tutti!     |
 +================================================================+
 ```
 
 ### Cosa Abbiamo Fatto
 
-| # | Task | Risultato |
-|---|------|-----------|
-| 1 | Studio OpenClaw (ex-Clawdbot) | Analisi completa |
-| 2 | Confronto SNCP vs OpenClaw | SNCP superiore su sicurezza/org |
-| 3 | Lancio sciame (Architetta + Guardiane + Ingegnera) | 3 report |
-| 4 | Creato SUBROADMAP_SNCP_4.0.md | Piano completo |
+| # | Task | Status | Score |
+|---|------|--------|-------|
+| QW1 | Auto-load daily logs | ✅ FATTO | 8/10 |
+| QW2 | Memory flush token trigger | ✅ FATTO | 8/10 |
+| QW3 | SessionEnd hook flush | ✅ FATTO | 8/10 |
+| QW4 | BM25 search | ⏳ TODO | - |
 
-### Scoperte Chiave
+### File Creati/Modificati
 
-**SNCP vince su:**
-- Multi-progetto (loro: single workspace)
-- Sicurezza (loro: vulnerabilità CRITICHE)
-- Git-native 100%
-
-**OpenClaw vince su:**
-- Daily logs auto-caricati (oggi + ieri)
-- Memory flush pre-compaction
-- Ricerca BM25 + embeddings
-
-### Decisione
-
-> **Adottare pattern OpenClaw (automazione) mantenendo architettura SNCP (sicurezza).**
+| File | Azione |
+|------|--------|
+| `scripts/sncp/load-daily-memory.sh` | NUOVO - Carica today+yesterday |
+| `~/.claude/hooks/daily_memory_loader.py` | NUOVO - Hook SessionStart |
+| `~/.claude/hooks/session_end_flush.py` | NUOVO - Hook SessionEnd |
+| `~/.claude/scripts/context-monitor.py` | MODIFICATO - Trigger 75% |
+| `~/.claude/settings.json` | MODIFICATO - Hooks registrati |
 
 ---
 
-## PIANO SNCP 4.0 - Quick Wins
+## SNCP 4.0 - STATO ATTUALE
 
-| Task | Effort | File |
-|------|--------|------|
-| QW1: Auto-load daily logs | 2-4h | `scripts/sncp/load-daily-memory.sh` |
-| QW2: Memory flush trigger | 3-4h | `scripts/swarm/memory-flush.sh` |
-| QW3: SessionEnd hook | 1-2h | `hooks/session_end_flush.py` |
-| QW4: BM25 search | 4-6h | `scripts/sncp/smart-search.py` |
+```
+AUTOMAZIONE MEMORIA:
+✅ Daily logs auto-caricati (oggi + ieri) al SessionStart
+✅ Memory flush automatico a SessionEnd
+✅ Memory flush trigger quando contesto >= 75%
+⏳ BM25 search (prossima sessione)
 
-**Totale: ~2 giorni per 9.5/10**
-
-**Roadmap completa:** `.sncp/roadmaps/SUBROADMAP_SNCP_4.0.md`
+SCORE: 8.8/10 → ~9.2/10 (manca solo BM25)
+```
 
 ---
 
@@ -67,34 +60,23 @@ TOTALE: 296 test
 
 ---
 
-## PROSSIMI STEP (Sessione 323)
+## PROSSIMI STEP (Sessione 324)
 
-1. [ ] **QW1:** Implementare auto-load daily logs
-2. [ ] **QW3:** SessionEnd hook flush
-3. [ ] **QW2:** Memory flush con token trigger
-4. [ ] **QW4:** BM25 search (se tempo)
+1. [ ] **QW4:** Implementare BM25 search (`scripts/sncp/smart-search.py`)
+2. [ ] Testare sistema completo SNCP 4.0 in sessione reale
+3. [ ] Aggiornare SUBROADMAP_SNCP_4.0.md con progress
 
-**Priorità:** QW1 + QW3 prima (automazione base), poi QW2 + QW4.
-
----
-
-## COMANDI UTILI
-
-```bash
-spawn-workers --list              # Vedi agenti
-checkpoint 322 "Descrizione"      # Commit + push
-verify-sync cervellaswarm         # Verifica coerenza
-```
+**Nota:** QW4 richiede `pip install rank-bm25` (pure Python, no API keys)
 
 ---
 
-## ARCHIVIO S321
+## ARCHIVIO S322
 
-- Test: 177 → 296 test (Core, MCP, CLI)
-- checkpoint.sh nuovo script
-- memory-flush hook integrato
+- Studio OpenClaw completato
+- Piano SNCP 4.0 creato (SUBROADMAP_SNCP_4.0.md)
+- Decisione: pattern OpenClaw + architettura SNCP
 
 ---
 
 *"La memoria è preziosa. Trattiamola con cura."*
-*Sessione 322 - Cervella & Rafa*
+*Sessione 323 - Cervella & Rafa*
