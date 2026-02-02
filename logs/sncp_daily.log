@@ -986,3 +986,61 @@
 [2026-01-31 08:30:05] 
 [2026-01-31 08:30:05] Manutenzione completata!
 [2026-01-31 08:30:05] ============================================
+[2026-02-01 08:32:48] 
+[2026-02-01 08:32:48] ============================================
+[2026-02-01 08:32:48] SNCP DAILY MAINTENANCE - 2026-02-01
+[2026-02-01 08:32:48] ============================================
+[2026-02-01 08:32:48] === SNCP Daily Health Check ===
+[2026-02-01 08:32:48] Health check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/health_2026-02-01.txt
+[2026-02-01 08:32:48] Tutto OK!
+[2026-02-01 08:32:48] === Cleanup file temporanei ===
+[2026-02-01 08:32:48] Cleanup completato
+[2026-02-01 08:32:48] === Verifica dimensioni file ===
+[2026-02-01 08:32:48] Dimensioni file OK
+[2026-02-01 08:32:48] === Compliance Check ===
+[2026-02-01 08:32:48] Compliance check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/compliance_2026-02-01.txt
+[2026-02-01 08:32:48] Compliance OK!
+[2026-02-01 08:32:48] === Statistiche SNCP ===
+[2026-02-01 08:32:48]   cervellaswarm: 145 file
+[2026-02-01 08:32:48]   cervellatrader: 1 file
+[2026-02-01 08:32:48]   cervellatrading: 3 file
+[2026-02-01 08:32:48]   contabilita: 8 file
+[2026-02-01 08:32:48]   creatormetrics: 7 file
+[2026-02-01 08:32:48]   crypto-research: 16 file
+[2026-02-01 08:32:48]   menumaster: 3 file
+[2026-02-01 08:32:48]   miracollo: 375 file
+[2026-02-01 08:32:48]   rafafreelance: 2 file
+[2026-02-01 08:32:48]   saasexplorer: 2 file
+[2026-02-01 08:32:48]   Dimensione totale SNCP:  12M
+[2026-02-01 08:32:48] 
+[2026-02-01 08:32:48] Manutenzione completata!
+[2026-02-01 08:32:48] ============================================
+[2026-02-02 08:30:05] 
+[2026-02-02 08:30:05] ============================================
+[2026-02-02 08:30:05] SNCP DAILY MAINTENANCE - 2026-02-02
+[2026-02-02 08:30:05] ============================================
+[2026-02-02 08:30:05] === SNCP Daily Health Check ===
+[2026-02-02 08:30:05] Health check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/health_2026-02-02.txt
+[2026-02-02 08:30:05] Tutto OK!
+[2026-02-02 08:30:05] === Cleanup file temporanei ===
+[2026-02-02 08:30:05] Cleanup completato
+[2026-02-02 08:30:05] === Verifica dimensioni file ===
+[2026-02-02 08:30:05] Dimensioni file OK
+[2026-02-02 08:30:05] === Compliance Check ===
+[2026-02-02 08:30:05] Compliance check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/compliance_2026-02-02.txt
+[2026-02-02 08:30:05] Compliance OK!
+[2026-02-02 08:30:05] === Statistiche SNCP ===
+[2026-02-02 08:30:05]   cervellaswarm: 145 file
+[2026-02-02 08:30:05]   cervellatrader: 1 file
+[2026-02-02 08:30:05]   cervellatrading: 3 file
+[2026-02-02 08:30:05]   contabilita: 8 file
+[2026-02-02 08:30:05]   creatormetrics: 7 file
+[2026-02-02 08:30:05]   crypto-research: 16 file
+[2026-02-02 08:30:05]   menumaster: 3 file
+[2026-02-02 08:30:05]   miracollo: 375 file
+[2026-02-02 08:30:05]   rafafreelance: 2 file
+[2026-02-02 08:30:05]   saasexplorer: 2 file
+[2026-02-02 08:30:05]   Dimensione totale SNCP:  12M
+[2026-02-02 08:30:05] 
+[2026-02-02 08:30:05] Manutenzione completata!
+[2026-02-02 08:30:05] ============================================
