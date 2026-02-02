@@ -13,9 +13,9 @@ Output: JSON con [{file, score, snippet}, ...]
 Target: <500ms per ~100 file
 """
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 __version_date__ = "2026-02-02"
-__changelog__ = "Added explainable search: matched_terms, match_positions, explanation"
+__changelog__ = "S327: Added path traversal protection (security fix)"
 
 import os
 import sys
@@ -252,6 +252,19 @@ def main():
 
     query = sys.argv[1]
     directory = sys.argv[2]
+
+    # Security: Path traversal protection (S327)
+    # realpath() risolve symlink, abspath() no
+    directory = os.path.realpath(directory)
+    cwd = os.path.realpath(os.getcwd())
+
+    # Directory deve essere dentro cwd (no escape via ../ o symlink)
+    # Trailing sep evita prefix attack: /allowed/path vs /allowed/pathevil
+    if not (directory + os.sep).startswith(cwd + os.sep):
+        print(f"ERROR: Directory must be within current working directory", file=sys.stderr)
+        print(f"  Requested: {directory}", file=sys.stderr)
+        print(f"  Allowed: {cwd}", file=sys.stderr)
+        sys.exit(1)
 
     # Verifica directory esiste
     if not os.path.isdir(directory):

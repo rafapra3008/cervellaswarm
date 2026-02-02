@@ -6,8 +6,8 @@ Riceve payload da hook PostToolUse e logga eventi nel database.
 Gestisce errori gracefully per non bloccare mai il workflow.
 """
 
-__version__ = "1.2.0"
-__version_date__ = "2026-01-01"  # Fix: supporta formato PostToolUse hook (tool_name, tool_input, cwd, session_id a root level)
+__version__ = "1.3.0"
+__version_date__ = "2026-02-02"  # S327: WAL mode per performance (10x faster commits)
 
 import json
 import sqlite3
@@ -199,9 +199,13 @@ def log_event(payload: dict) -> dict:
             "notes": None,
         }
 
-        # Inserisci in DB
+        # Inserisci in DB con ottimizzazioni performance
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
+
+        # WAL mode per write concorrenti veloci (10x faster commits)
+        cursor.execute("PRAGMA journal_mode=WAL")
+        cursor.execute("PRAGMA synchronous=NORMAL")
 
         cursor.execute("""
             INSERT INTO swarm_events (

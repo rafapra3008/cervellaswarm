@@ -21,6 +21,21 @@ export function sleep(ms: number): Promise<void> {
 }
 
 /**
+ * Add random jitter to a delay to prevent thundering herd
+ * when multiple agents retry simultaneously (e.g., after 529 error)
+ *
+ * @param delay - Base delay in milliseconds
+ * @param jitterPercent - Jitter range as decimal (default: 0.25 = ±25%)
+ * @returns Delay with random jitter applied
+ */
+export function addJitter(delay: number, jitterPercent: number = 0.25): number {
+  // Random value between -1 and +1
+  const random = Math.random() * 2 - 1;
+  const jitter = delay * jitterPercent * random;
+  return Math.max(0, Math.round(delay + jitter));
+}
+
+/**
  * Options for retryable operations
  */
 export interface RetryOptions {
@@ -126,8 +141,9 @@ export async function withRetry<T>(
         onRetry(attempt + 1, error);
       }
 
-      // Wait before retrying
-      const delay = delays[Math.min(attempt, delays.length - 1)];
+      // Wait before retrying (with jitter to prevent thundering herd)
+      const baseDelay = delays[Math.min(attempt, delays.length - 1)];
+      const delay = addJitter(baseDelay);
       await sleep(delay);
     }
   }
