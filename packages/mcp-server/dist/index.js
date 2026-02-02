@@ -13,7 +13,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { spawnWorker, getAvailableWorkers } from "./agents/spawner.js";
-import { getApiKey, hasApiKey, getApiKeySource, validateApiKey, getConfigPath, getConfigDir, getTier, } from "./config/manager.js";
+import { getApiKey, hasApiKey, getApiKeySource, validateApiKey, validateApiKeyFormat, getConfigPath, getConfigDir, getTier, } from "./config/manager.js";
 import { getUsageTracker, QuotaStatus } from "./billing/usage.js";
 // Server metadata
 const SERVER_NAME = "cervellaswarm";
@@ -57,16 +57,15 @@ server.tool("spawn_worker", "Spawn a CervellaSwarm worker agent to execute a tas
     idempotentHint: false,
     openWorldHint: true,
 }, async ({ worker, task, context }) => {
-    // Check API key
-    if (!hasApiKey()) {
+    // Check API key FORMAT (fast, no API call)
+    const keyValidation = validateApiKeyFormat();
+    if (!keyValidation.valid) {
         return {
             content: [
                 {
                     type: "text",
-                    text: "Error: No API key configured.\n\n" +
-                        "To use CervellaSwarm, set your Anthropic API key:\n" +
-                        "1. Run: cervellaswarm init\n" +
-                        "2. Or set: export ANTHROPIC_API_KEY=sk-ant-...\n\n" +
+                    text: `Error: ${keyValidation.error}\n\n` +
+                        `${keyValidation.suggestion}\n\n` +
                         "Get your key at: https://console.anthropic.com/",
                 },
             ],

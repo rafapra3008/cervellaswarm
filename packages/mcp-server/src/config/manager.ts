@@ -153,6 +153,47 @@ export interface ValidationResult {
   warning?: string;
 }
 
+export interface FormatValidationResult {
+  valid: boolean;
+  error?: string;
+  suggestion?: string;
+}
+
+/**
+ * Validate API key FORMAT only (no API call)
+ * Fast check that can be done before every operation
+ */
+export function validateApiKeyFormat(key: string | null = null): FormatValidationResult {
+  const testKey = key || getApiKey();
+
+  if (!testKey) {
+    return {
+      valid: false,
+      error: "MISSING_API_KEY",
+      suggestion: "Run: cervellaswarm init or set ANTHROPIC_API_KEY"
+    };
+  }
+
+  if (!testKey.startsWith("sk-ant-")) {
+    return {
+      valid: false,
+      error: "INVALID_API_KEY_FORMAT",
+      suggestion: "API key must start with 'sk-ant-'. Get yours at https://console.anthropic.com/"
+    };
+  }
+
+  // Basic length check (Anthropic keys are ~100+ chars)
+  if (testKey.length < 40) {
+    return {
+      valid: false,
+      error: "INVALID_API_KEY_FORMAT",
+      suggestion: "API key seems too short. Get a valid key at https://console.anthropic.com/"
+    };
+  }
+
+  return { valid: true };
+}
+
 /**
  * Validate API key by making a minimal test call
  * Returns { valid: boolean, error?: string, warning?: string }

@@ -19,6 +19,7 @@ import {
   hasApiKey,
   getApiKeySource,
   validateApiKey,
+  validateApiKeyFormat,
   getConfigPath,
   getConfigDir,
   getTier,
@@ -75,17 +76,16 @@ server.tool(
     openWorldHint: true,
   },
   async ({ worker, task, context }) => {
-    // Check API key
-    if (!hasApiKey()) {
+    // Check API key FORMAT (fast, no API call)
+    const keyValidation = validateApiKeyFormat();
+    if (!keyValidation.valid) {
       return {
         content: [
           {
             type: "text",
             text:
-              "Error: No API key configured.\n\n" +
-              "To use CervellaSwarm, set your Anthropic API key:\n" +
-              "1. Run: cervellaswarm init\n" +
-              "2. Or set: export ANTHROPIC_API_KEY=sk-ant-...\n\n" +
+              `Error: ${keyValidation.error}\n\n` +
+              `${keyValidation.suggestion}\n\n` +
               "Get your key at: https://console.anthropic.com/",
           },
         ],

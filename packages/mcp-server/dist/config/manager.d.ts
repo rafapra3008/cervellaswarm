@@ -23,6 +23,16 @@ export interface ValidationResult {
     error?: string;
     warning?: string;
 }
+export interface FormatValidationResult {
+    valid: boolean;
+    error?: string;
+    suggestion?: string;
+}
+/**
+ * Validate API key FORMAT only (no API call)
+ * Fast check that can be done before every operation
+ */
+export declare function validateApiKeyFormat(key?: string | null): FormatValidationResult;
 /**
  * Validate API key by making a minimal test call
  * Returns { valid: boolean, error?: string, warning?: string }

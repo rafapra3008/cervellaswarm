@@ -1,70 +1,70 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2 Febbraio 2026 - Sessione 328
-> **STATUS:** v2.0.0-beta.1 LIVE + SNCP 5.0 FASE 2 COMPLETATA!
+> **Ultimo aggiornamento:** 2 Febbraio 2026 - Sessione 329
+> **STATUS:** v2.0.0-beta.1 LIVE + FILONE 1 TECH DEBT 90% COMPLETATO
 
 ---
 
-## SESSIONE 328 - P2.2 CONSOLIDATION SCHEDULER COMPLETATO!
+## SESSIONE 329 - F1.1 + F1.2 COMPLETATI
 
 ```
 +================================================================+
-|   S328: P2.2 Consolidation Scheduler (9/10)                     |
+|   S329: F1.1 Split COMPLETO + F1.2 API Key Validation COMPLETO  |
 +================================================================+
 ```
 
-### P2.2 Consolidation Scheduler
+### Completati
 
-| File | Versione | Score |
-|------|----------|-------|
-| `consolidate-ripresa.sh` | v1.0.0 | 9/10 |
+| Task | Status | Dettagli |
+|------|--------|----------|
+| F1.1 Split symbol_extractor | COMPLETATO | 1069 → 392 righe |
+| F1.2 API Key validation | COMPLETATO | `validateApiKeyFormat()` |
+| F1.3 Consolidation | SKIPPATO | Richiede API key, prossima sessione |
 
-**Acceptance Criteria:** 4/4 PASS
-- [x] Script consolidate-ripresa.sh funziona
-- [x] Haiku API integration
-- [x] Archivio automatico originale
-- [x] Log di cosa consolidato
+### File Creati/Modificati
 
-**Progetti sopra soglia rilevati:**
-- `cervellatrading`: 120 righe (80%)
-- `saasexplorer`: 126 righe (84%)
-
----
-
-## SNCP 5.0 - PROGRESSO
-
-```
-FASE 1 (Quick Wins)         [####################] 100% ✅
-FASE 2 (Token Optimization) [####################] 100% ✅
-  - P2.1 Progressive Disclosure  ✅ COMPLETATO (S327)
-  - P2.2 Consolidation Scheduler ✅ COMPLETATO (S328)
-FASE 3 (Advanced)           [....................] 0%
-  - Solo se serve
-```
+| File | Righe | Scopo |
+|------|-------|-------|
+| `python_extractor.py` | 399 | Estrazione simboli Python |
+| `typescript_extractor.py` | 422 | Estrazione simboli TS/JS |
+| `symbol_extractor.py` | 392 | Core facade (era 1069!) |
+| `config/manager.ts` | +30 | `validateApiKeyFormat()` |
 
 ---
 
-## PROSSIMI STEP (Sessione 329+)
+## POST-SNCP5 FILONE 1
 
-1. [x] ~~SNCP 5.0 FASE 1~~ - COMPLETATA!
-2. [x] ~~SNCP 5.0 FASE 2~~ - COMPLETATA!
-3. [ ] Fix remaining HIGH (H3 memory leak, H5 API key)
-4. [ ] Consolidare progetti sopra soglia (cervellatrading, saasexplorer)
+```
+FILONE 1 Tech Debt       [##################..] 90%
+  - H3 LRU Cache         ✅ FATTO (S328)
+  - F1.1 Split           ✅ FATTO (S329)
+  - F1.2 API Key         ✅ FATTO (S329)
+  - F1.3 Consolidation   ⏳ DA FARE (serve API key)
+```
+
+---
+
+## PROSSIMI STEP (S330)
+
+1. [ ] **F1.3** Consolidare cervellatrading + saasexplorer (con API key)
+2. [ ] **F2.1** Ricerca MCP Apps (FILONE 2)
+
+---
+
+## TEST STATUS
+
+- 46 symbol test PASSED
+- Build MCP server OK
 
 ---
 
 ## ARCHIVIO SESSIONI
 
-**S326:** Ricerca Memory Tools + SUBROADMAP SNCP 5.0
 **S327:** Code Review (3 fix) + P2.1 Progressive Disclosure
-**S328:** P2.2 Consolidation Scheduler (9/10)
-
-**LEZIONI S328:**
-- "Ogni step → Guardiana audit" confermato efficace (score 9/10)
-- Script rileva automaticamente progetti sopra soglia
-- API key check solo quando necessario (non per scan)
+**S328:** P2.2 + SUBROADMAP POST-SNCP5 + H3 Fix + Split parziale
+**S329:** F1.1 Split COMPLETO + F1.2 API Key validation
 
 ---
 
-*"La memoria consapevole sa COSA, PERCHÉ e QUANDO."*
-*SNCP 5.0 FASE 2 COMPLETATA - Cervella & Rafa*
+*"Ultrapassar os proprios limites!"*
+*Sessione 329 - Cervella & Rafa*

@@ -8,7 +8,7 @@
  * Licensed under the Apache License, Version 2.0
  */
 import Anthropic from "@anthropic-ai/sdk";
-import { getApiKey, getDefaultModel, getTimeout, getMaxRetries, } from "../config/manager.js";
+import { getApiKey, getDefaultModel, getTimeout, getMaxRetries, validateApiKeyFormat, } from "../config/manager.js";
 import { buildAgentPrompt, getAllAgents, getSuggestedNextStep, } from "@cervellaswarm/core/workers";
 // Retry delays (ms)
 const RETRY_DELAYS = [1000, 3000, 5000];
@@ -44,11 +44,13 @@ function buildSystemPrompt(worker, context) {
  */
 export async function spawnWorker(worker, task, context) {
     const apiKey = getApiKey();
-    if (!apiKey) {
+    // Validate API key format BEFORE making any API call
+    const keyValidation = validateApiKeyFormat(apiKey);
+    if (!keyValidation.valid) {
         return {
             success: false,
-            error: "API key not configured",
-            nextStep: "Run cervellaswarm init or set ANTHROPIC_API_KEY",
+            error: keyValidation.error || "Invalid API key",
+            nextStep: keyValidation.suggestion || "Check your API key",
         };
     }
     const systemPrompt = buildSystemPrompt(worker, context);

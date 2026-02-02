@@ -14,6 +14,7 @@ import {
   getDefaultModel,
   getTimeout,
   getMaxRetries,
+  validateApiKeyFormat,
 } from "../config/manager.js";
 import {
   buildAgentPrompt,
@@ -89,11 +90,13 @@ export async function spawnWorker(
 ): Promise<SpawnResult> {
   const apiKey = getApiKey();
 
-  if (!apiKey) {
+  // Validate API key format BEFORE making any API call
+  const keyValidation = validateApiKeyFormat(apiKey);
+  if (!keyValidation.valid) {
     return {
       success: false,
-      error: "API key not configured",
-      nextStep: "Run cervellaswarm init or set ANTHROPIC_API_KEY",
+      error: keyValidation.error || "Invalid API key",
+      nextStep: keyValidation.suggestion || "Check your API key",
     };
   }
 
