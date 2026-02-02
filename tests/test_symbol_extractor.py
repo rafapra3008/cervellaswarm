@@ -477,9 +477,8 @@ class TestRealFiles:
 
         assert len(symbols) > 0
 
-        # Check for known symbols
+        # Check for known symbols (Symbol class extracted to symbol_types.py in F1.1)
         names = [s.name for s in symbols]
-        assert "Symbol" in names
         assert "SymbolExtractor" in names
         assert "extract_symbols" in names
 
