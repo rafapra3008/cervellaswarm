@@ -1,70 +1,58 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2 Febbraio 2026 - Sessione 329
-> **STATUS:** v2.0.0-beta.1 LIVE + FILONE 1 TECH DEBT 90% COMPLETATO
+> **Ultimo aggiornamento:** 2 Febbraio 2026 - Sessione 330
+> **STATUS:** v2.0.0-beta.1 LIVE + FILONE 1 COMPLETATO + F2 SKIPPATO
 
 ---
 
-## SESSIONE 329 - F1.1 + F1.2 COMPLETATI
+## SESSIONE 330 - FILONE 1 COMPLETATO + DECISIONE F2
 
 ```
 +================================================================+
-|   S329: F1.1 Split COMPLETO + F1.2 API Key Validation COMPLETO  |
+|   S330: F1.3 Consolidation + F2.1 Research + Skip F2            |
 +================================================================+
 ```
 
 ### Completati
 
-| Task | Status | Dettagli |
-|------|--------|----------|
-| F1.1 Split symbol_extractor | COMPLETATO | 1069 → 392 righe |
-| F1.2 API Key validation | COMPLETATO | `validateApiKeyFormat()` |
-| F1.3 Consolidation | SKIPPATO | Richiede API key, prossima sessione |
+| Task | Status | Score |
+|------|--------|-------|
+| F1.3 Consolidation | COMPLETATO | 9.5/10 |
+| F2.1 MCP Apps Research | COMPLETATO | 9/10 |
 
-### File Creati/Modificati
+### Decisione Strategica: SKIP FILONE 2
 
-| File | Righe | Scopo |
-|------|-------|-------|
-| `python_extractor.py` | 399 | Estrazione simboli Python |
-| `typescript_extractor.py` | 422 | Estrazione simboli TS/JS |
-| `symbol_extractor.py` | 392 | Core facade (era 1069!) |
-| `config/manager.ts` | +30 | `validateApiKeyFormat()` |
+**Motivo:** MCP Apps NON funziona in Claude Code (solo Claude Desktop).
+La famiglia ha discusso (Guardiana Qualita + Marketing) e Rafa ha deciso: focus su F3 Enterprise.
+
+**Ricerca salvata:** `.swarm/research/MCP_APPS_ANALYSIS.md` (1,494 righe) - reference per futuro.
 
 ---
 
-## POST-SNCP5 FILONE 1
+## POST-SNCP5 STATUS
 
 ```
-FILONE 1 Tech Debt       [##################..] 90%
-  - H3 LRU Cache         ✅ FATTO (S328)
-  - F1.1 Split           ✅ FATTO (S329)
-  - F1.2 API Key         ✅ FATTO (S329)
-  - F1.3 Consolidation   ⏳ DA FARE (serve API key)
+FILONE 1 Tech Debt       [####################] 100% COMPLETATO!
+FILONE 2 MCP Apps        [XXXXXXXXXXXXXXXXXXXX] SKIPPATO
+FILONE 3 Enterprise      [                    ] 0% - PROSSIMO!
 ```
 
 ---
 
-## PROSSIMI STEP (S330)
+## PROSSIMI STEP (S331)
 
-1. [ ] **F1.3** Consolidare cervellatrading + saasexplorer (con API key)
-2. [ ] **F2.1** Ricerca MCP Apps (FILONE 2)
-
----
-
-## TEST STATUS
-
-- 46 symbol test PASSED
-- Build MCP server OK
+1. [ ] **F3.1** Compliance Research (HIPAA, SOC 2, FedRAMP)
+2. [ ] **F3.2** Case Study Interno (dogfooding CervellaSwarm)
 
 ---
 
 ## ARCHIVIO SESSIONI
 
-**S327:** Code Review (3 fix) + P2.1 Progressive Disclosure
-**S328:** P2.2 + SUBROADMAP POST-SNCP5 + H3 Fix + Split parziale
-**S329:** F1.1 Split COMPLETO + F1.2 API Key validation
+**S328:** P2.2 + SUBROADMAP POST-SNCP5 + H3 Fix
+**S329:** F1.1 Split + F1.2 API Key validation
+**S330:** F1.3 Consolidation + F2.1 Research + Skip F2
 
 ---
 
 *"Ultrapassar os proprios limites!"*
-*Sessione 329 - Cervella & Rafa*
+*Sessione 330 - Cervella & Rafa*
