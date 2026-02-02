@@ -25,9 +25,16 @@ Version: 2.2.0 (W2.5-C Caching)
 Date: 2026-01-19
 """
 
-__version__ = "2.2.0"
-__version_date__ = "2026-01-19"
+__version__ = "2.3.0"
+__version_date__ = "2026-02-02"
 __changelog__ = """
+v2.3.0 (2026-02-02) - F1.1 LRU Cache (H3 Memory Leak Fix)
+    - Replaced unbounded dict cache with LRU cache (maxsize=1000)
+    - Imported SymbolCache from symbol_cache.py
+    - Cache now evicts least recently used entries automatically
+    - Added hit/miss statistics tracking
+    - Fixes H3 from Code Review S327
+
 v2.2.0 (2026-01-19) - W2.5-C Caching
     - Added _symbol_cache for mtime-based symbol caching (REQ-09)
     - Added clear_cache(), invalidate_cache(), get_cache_stats() methods
@@ -58,6 +65,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from tree_sitter import Node
 from treesitter_parser import TreesitterParser
+from symbol_cache import SymbolCache
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -183,19 +191,21 @@ class SymbolExtractor:
         parser: TreesitterParser instance for parsing files
     """
 
-    def __init__(self, parser: TreesitterParser):
+    def __init__(self, parser: TreesitterParser, cache_maxsize: int = 1000):
         """Initialize extractor with a parser.
 
         Args:
             parser: TreesitterParser instance to use for parsing
+            cache_maxsize: Maximum number of files to cache (default 1000).
+                          LRU eviction when exceeded. Fixes H3 memory leak.
 
         Attributes:
             parser: TreesitterParser instance for parsing files
-            _symbol_cache: Cache of extracted symbols keyed by (file_path, mtime)
+            _symbol_cache: LRU cache of extracted symbols (SymbolCache)
         """
         self.parser = parser
-        self._symbol_cache: Dict[str, tuple] = {}  # {path: (mtime, symbols)}
-        logger.debug("SymbolExtractor initialized")
+        self._symbol_cache = SymbolCache(maxsize=cache_maxsize)
+        logger.debug(f"SymbolExtractor initialized with cache maxsize={cache_maxsize}")
 
     def _extract_python_references(self, node: Node) -> List[str]:
         """Extract all references from a Python AST node.
@@ -603,11 +613,11 @@ class SymbolExtractor:
         except OSError:
             current_mtime = 0.0
 
-        if abs_path in self._symbol_cache:
-            cached_mtime, cached_symbols = self._symbol_cache[abs_path]
-            if cached_mtime == current_mtime:
-                logger.debug(f"Using cached symbols for: {file_path}")
-                return cached_symbols
+        # Try cache first (LRU cache handles mtime validation internally)
+        cached_symbols = self._symbol_cache.get(abs_path, current_mtime)
+        if cached_symbols is not None:
+            logger.debug(f"Using cached symbols for: {file_path}")
+            return cached_symbols
 
         # REQ-10: Graceful degradation - handle parse failures
         try:
@@ -641,9 +651,9 @@ class SymbolExtractor:
             logger.warning(f"Symbol extraction not implemented for: {language}")
             symbols = []
 
-        # REQ-09: Store in cache
+        # REQ-09: Store in LRU cache (with automatic eviction)
         if current_mtime > 0:
-            self._symbol_cache[abs_path] = (current_mtime, symbols)
+            self._symbol_cache.set(abs_path, current_mtime, symbols)
             logger.debug(f"Cached {len(symbols)} symbols for: {file_path}")
 
         return symbols
@@ -1055,8 +1065,7 @@ class SymbolExtractor:
             >>> extractor.invalidate_cache("app.py")
         """
         abs_path = str(Path(file_path).resolve())
-        if abs_path in self._symbol_cache:
-            del self._symbol_cache[abs_path]
+        if self._symbol_cache.invalidate(abs_path):
             logger.debug(f"Invalidated cache for: {file_path}")
 
     def get_cache_stats(self) -> Dict[str, int]:
@@ -1066,17 +1075,17 @@ class SymbolExtractor:
             Dictionary with cache statistics:
             - cached_files: Number of files with cached symbols
             - cached_symbols: Total number of cached symbols
+            - maxsize: Maximum cache size (LRU limit)
+            - hits: Number of cache hits
+            - misses: Number of cache misses
+            - hit_rate: Hit rate percentage (0-100)
 
         Example:
             >>> stats = extractor.get_cache_stats()
             >>> print(stats)
-            {'cached_files': 10, 'cached_symbols': 156}
+            {'cached_files': 10, 'cached_symbols': 156, 'maxsize': 1000, ...}
         """
-        total_symbols = sum(len(symbols) for _, symbols in self._symbol_cache.values())
-        return {
-            'cached_files': len(self._symbol_cache),
-            'cached_symbols': total_symbols,
-        }
+        return self._symbol_cache.get_stats()
 
 
 # Convenience function for simple usage
