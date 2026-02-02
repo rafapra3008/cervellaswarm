@@ -1,15 +1,43 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2 Febbraio 2026 - Sessione 326
-> **STATUS:** v2.0.0-beta.1 LIVE + SNCP 5.0 PIANIFICATO!
+> **Ultimo aggiornamento:** 2 Febbraio 2026 - Sessione 327
+> **STATUS:** v2.0.0-beta.1 LIVE + 3 Security Fix!
 
 ---
 
-## SESSIONE 326 - RICERCA MEMORY TOOLS + SNCP 5.0
+## SESSIONE 327 - CODE REVIEW DAY!
 
 ```
 +================================================================+
-|   RICERCA COMPLETATA! SNCP 5.0 PRONTO PER IMPLEMENTAZIONE!     |
+|   CODE REVIEW COMPLETATA! 3 fix, score medio 9.0/10!           |
++================================================================+
+```
+
+### Fix Applicati
+
+| Fix | File | Score | Cosa |
+|-----|------|-------|------|
+| C2 | `log_event.py` v1.3.0 | 8/10 | WAL mode SQLite |
+| H1 | `smart-search.py` v1.2.0 | 10/10 | Path traversal protection |
+| H4 | `retry.ts` | 9/10 | Jitter ±25% retry |
+
+### Report Code Review
+
+- **Overall Health:** 7.5/10
+- **Critical:** 2 (fixati)
+- **High:** 5 (1 fixato, 1 falso positivo)
+- **Medium:** 8 (backlog)
+- **Low:** 12 (backlog)
+
+**File:** `.swarm/reports/CODE_REVIEW_S327.md`
+
+---
+
+## SESSIONE 326 - SNCP 5.0 FASE 1 COMPLETATA!
+
+```
++================================================================+
+|   SNCP 5.0 FASE 1 COMPLETATA! Score medio 9.53/10!             |
 +================================================================+
 ```
 
@@ -18,9 +46,10 @@
 | Task | Status | Score |
 |------|--------|-------|
 | Ricerca 5 Memory Tools | ✅ FATTO | Report 1000+ righe |
-| Validazione Guardiana Ricerca | ✅ FATTO | 7.5/10 → correzioni |
-| Validazione Guardiana Qualità | ✅ FATTO | 9.2/10 |
 | SUBROADMAP_SNCP_5.0.md | ✅ FATTO | 9.6/10 |
+| **P1.1: Explainable Search** | ✅ FATTO | 9.6/10 |
+| **P1.2: Temporal Validity** | ✅ FATTO | 9.5/10 |
+| **P1.3: Memory Ontology** | ✅ FATTO | 9.5/10 |
 
 ### Tool Analizzati
 
@@ -67,25 +96,26 @@ TOTALE: 310 test
 
 ---
 
-## PROSSIMI STEP (Sessione 327+)
+## PROSSIMI STEP (Sessione 328+)
 
-1. [ ] **SNCP 5.0 FASE 1** - Implementare P1.1, P1.2, P1.3
-2. [ ] Usare MEMORY.md in sessioni reali
-3. [ ] Monitorare "Memory loss incidents"
+1. [x] ~~SNCP 5.0 FASE 1~~ - COMPLETATA! (9.53/10)
+2. [x] ~~Code Review S327~~ - COMPLETATA! (9.0/10)
+3. [ ] **SNCP 5.0 FASE 2** - P2.1 Progressive Disclosure, P2.2 Consolidation
+4. [ ] Fix remaining HIGH (H3 memory leak, H5 API key validation)
+5. [ ] Usare MEMORY.md in sessioni reali
 
 ---
 
 ## ARCHIVIO SESSIONI
 
-**S324:** QW4 + Template MEMORY.md - FASE 1 COMPLETATA!
 **S325:** MF1.2 + MF2 + MF3 - SNCP 4.0 COMPLETATO!
 **S326:** Ricerca Memory Tools + SUBROADMAP SNCP 5.0
+**S327:** Code Review Day - 3 fix security/performance
 
-**LEZIONI S326:**
-- ClaudeMem 17.7k stelle - progressive disclosure pattern
-- SNCP già superiore a media industria (8.8 vs 7.5)
-- "Ogni step → Guardiana audit" confermato efficace
-- Correzioni fatte dopo feedback Guardiana Ricerca
+**LEZIONI S327:**
+- "Ogni step → Guardiana audit" = score 9.0/10 medio
+- H2 (race condition) era FALSO POSITIVO - 'x' mode è già atomico
+- WAL mode migliora performance ma non risolve N+1 (serve daemon)
 
 ---
 
