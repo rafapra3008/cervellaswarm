@@ -135,3 +135,151 @@ def real_sncp_projects():
 
     # Return only existing projects
     return {name: path for name, path in projects.items() if path.exists()}
+
+
+# ============================================================================
+# QW1 FIXTURES - Daily Memory Auto-Load
+# ============================================================================
+
+
+@pytest.fixture
+def sncp_test_env(tmp_path):
+    """Create SNCP_ROOT environment variable for tests."""
+    import os
+    env = os.environ.copy()
+    env["SNCP_ROOT"] = str(tmp_path)
+    return env, tmp_path
+
+
+@pytest.fixture
+def mock_daily_logs_both(sncp_test_env):
+    """Create project with both today and yesterday logs."""
+    from datetime import datetime, timedelta
+
+    env, tmp_path = sncp_test_env
+    project_dir = tmp_path / "testproject"
+    memoria_dir = project_dir / "memoria"
+    memoria_dir.mkdir(parents=True)
+
+    today = datetime.now().strftime("%Y-%m-%d")
+    yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+
+    # Today's log
+    (memoria_dir / f"{today}.md").write_text(f"""# Daily Log {today}
+
+## Sessione Mattina
+- Testing QW1 implementation
+- Daily memory auto-load
+
+## Note
+Today's log content for testing.
+""")
+
+    # Yesterday's log
+    (memoria_dir / f"{yesterday}.md").write_text(f"""# Daily Log {yesterday}
+
+## Sessione Pomeriggio
+- Completed previous tasks
+- Ready for new session
+
+## Note
+Yesterday's log content for testing.
+""")
+
+    return project_dir, env
+
+
+@pytest.fixture
+def mock_daily_logs_today(sncp_test_env):
+    """Create project with only today's log."""
+    from datetime import datetime
+
+    env, tmp_path = sncp_test_env
+    project_dir = tmp_path / "testproject"
+    memoria_dir = project_dir / "memoria"
+    memoria_dir.mkdir(parents=True)
+
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    (memoria_dir / f"{today}.md").write_text(f"""# Daily Log {today}
+
+## Sessione
+- Only today's log exists
+
+## Note
+Testing missing yesterday scenario.
+""")
+
+    return project_dir, env
+
+
+@pytest.fixture
+def mock_daily_logs_empty(sncp_test_env):
+    """Create project with no logs."""
+    env, tmp_path = sncp_test_env
+    project_dir = tmp_path / "testproject"
+    memoria_dir = project_dir / "memoria"
+    memoria_dir.mkdir(parents=True)
+
+    return project_dir, env
+
+
+@pytest.fixture
+def mock_project_no_memoria(sncp_test_env):
+    """Create project without memoria directory."""
+    env, tmp_path = sncp_test_env
+    project_dir = tmp_path / "testproject"
+    project_dir.mkdir(parents=True)
+
+    return project_dir, env
+
+
+@pytest.fixture
+def mock_daily_logs_special_chars(sncp_test_env):
+    """Create log with special characters."""
+    from datetime import datetime
+
+    env, tmp_path = sncp_test_env
+    project_dir = tmp_path / "testproject"
+    memoria_dir = project_dir / "memoria"
+    memoria_dir.mkdir(parents=True)
+
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    (memoria_dir / f"{today}.md").write_text("""# Daily Log with Special Chars
+
+## Content
+- Emoji: 🚀 ❤️‍🔥 ✅ 🧪
+- Quotes: "double" and 'single'
+- Unicode: Ñoño, café, naïve
+- Special: !@#$%^&*()
+
+## Note
+Testing JSON escaping.
+""")
+
+    return project_dir, env
+
+
+@pytest.fixture
+def mock_daily_logs_large(sncp_test_env):
+    """Create project with very large log file (>10k lines)."""
+    from datetime import datetime
+
+    env, tmp_path = sncp_test_env
+    project_dir = tmp_path / "testproject"
+    memoria_dir = project_dir / "memoria"
+    memoria_dir.mkdir(parents=True)
+
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    # Generate large content
+    lines = [f"Line {i}: Daily log content for performance testing" for i in range(10001)]
+    large_content = "\n".join(lines)
+
+    (memoria_dir / f"{today}.md").write_text(f"""# Daily Log {today}
+
+{large_content}
+""")
+
+    return project_dir, env
