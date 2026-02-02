@@ -13,8 +13,9 @@ Output: JSON con [{file, score, snippet}, ...]
 Target: <500ms per ~100 file
 """
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __version_date__ = "2026-02-02"
+__changelog__ = "Added explainable search: matched_terms, match_positions, explanation"
 
 import os
 import sys
@@ -80,6 +81,64 @@ def read_markdown_files(directory: str) -> List[Tuple[str, str]]:
             continue
 
     return files_content
+
+
+def get_match_details(content: str, query_tokens: List[str]) -> Dict:
+    """
+    Calcola dettagli di match per explainability.
+
+    Returns:
+        Dict con matched_terms, match_positions, explanation
+    """
+    content_lower = content.lower()
+    content_tokens = set(preprocess_text(content))
+
+    # Quali query tokens sono presenti nel documento
+    matched_terms = []
+    match_positions = []
+
+    for token in query_tokens:
+        if token in content_tokens:
+            matched_terms.append(token)
+            # Trova TUTTE le posizioni del token (non solo la prima)
+            start = 0
+            while True:
+                pos = content_lower.find(token, start)
+                if pos == -1:
+                    break
+                match_positions.append(pos)
+                start = pos + 1
+
+    # Calcola frequenza media dei termini matchati
+    term_frequencies = []
+    for token in matched_terms:
+        freq = content_lower.count(token)
+        term_frequencies.append(freq)
+
+    avg_freq = sum(term_frequencies) / len(term_frequencies) if term_frequencies else 0
+
+    # Genera explanation
+    total_query_terms = len(query_tokens)
+    matched_count = len(matched_terms)
+
+    if matched_count == 0:
+        explanation = "No direct term matches, ranked by document similarity"
+    elif matched_count == total_query_terms:
+        explanation = f"All {matched_count} query terms matched"
+        if avg_freq > 3:
+            explanation += f", high frequency (avg {avg_freq:.1f} occurrences)"
+        elif avg_freq > 1:
+            explanation += f", moderate frequency (avg {avg_freq:.1f} occurrences)"
+    else:
+        explanation = f"Matched {matched_count}/{total_query_terms} query terms"
+        if avg_freq > 1:
+            explanation += f" with avg {avg_freq:.1f} occurrences"
+
+    return {
+        "matched_terms": matched_terms,
+        "match_positions": sorted(match_positions),
+        "explanation": explanation
+    }
 
 
 def extract_snippet(content: str, query_tokens: List[str], context_chars: int = 150) -> str:
@@ -169,10 +228,16 @@ def search_bm25(query: str, directory: str, top_k: int = 10) -> List[Dict]:
         content = contents[idx]
         snippet = extract_snippet(content, query_tokens)
 
+        # NEW: Explainable search details
+        match_details = get_match_details(content, query_tokens)
+
         results.append({
             "file": filepath,
             "score": round(score, 3),
-            "snippet": snippet
+            "snippet": snippet,
+            "matched_terms": match_details["matched_terms"],
+            "match_positions": match_details["match_positions"],
+            "explanation": match_details["explanation"]
         })
 
     return results
