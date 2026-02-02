@@ -1,15 +1,15 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2 Febbraio 2026 - Sessione 325
-> **STATUS:** v2.0.0-beta.1 LIVE + SNCP 4.0 COMPLETATO!
+> **Ultimo aggiornamento:** 2 Febbraio 2026 - Sessione 326
+> **STATUS:** v2.0.0-beta.1 LIVE + SNCP 5.0 PIANIFICATO!
 
 ---
 
-## SESSIONE 325 - SNCP 4.0 COMPLETATO!
+## SESSIONE 326 - RICERCA MEMORY TOOLS + SNCP 5.0
 
 ```
 +================================================================+
-|   SNCP 4.0 COMPLETATO! FASE 1 + FASE 2 = 9.1/10!              |
+|   RICERCA COMPLETATA! SNCP 5.0 PRONTO PER IMPLEMENTAZIONE!     |
 +================================================================+
 ```
 
@@ -17,42 +17,40 @@
 
 | Task | Status | Score |
 |------|--------|-------|
-| MF1.2: 3 MEMORY.md reali | ✅ FATTO | 9.5/10 |
-| MF2: quality-check.py | ✅ FATTO | 9.2/10 |
-| MF3: Integration test e2e | ✅ FATTO | 14/14 PASS |
+| Ricerca 5 Memory Tools | ✅ FATTO | Report 1000+ righe |
+| Validazione Guardiana Ricerca | ✅ FATTO | 7.5/10 → correzioni |
+| Validazione Guardiana Qualità | ✅ FATTO | 9.2/10 |
+| SUBROADMAP_SNCP_5.0.md | ✅ FATTO | 9.6/10 |
 
-### MEMORY.md Creati (MF1.2)
-- `.sncp/progetti/cervellaswarm/MEMORY.md` (428 righe, 9.5/10)
-- `.sncp/progetti/miracollo/MEMORY.md` (391 righe, 9.5/10)
-- `.sncp/progetti/contabilita/MEMORY.md` (322 righe, 9.5/10)
+### Tool Analizzati
 
-### quality-check.py (MF2)
-- 4 criteri: Actionability, Specificity, Freshness, Conciseness
-- Testato su 8 progetti (avg 8.9/10)
-- Path: `scripts/sncp/quality-check.py`
+| Tool | Stelle | Cosa Copiamo |
+|------|--------|--------------|
+| ClaudeMem | 17.7k | Progressive disclosure |
+| MCP-Memory | 1.3k | Memory Ontology 5 types |
+| OpenMemory | 3.2k | Temporal validity, explainable search |
 
-### Integration Test e2e (MF3)
-- 14 test PASS, 771 righe
-- Coverage: QW1-4 + MEMORY.md + workflow completo
-- Path: `tests/sncp/test_e2e_sncp_4.py`
+### File Creati
+
+- `.swarm/research/MEMORY_TOOLS_ANALYSIS.md` (1000+ righe, 9.2/10)
+- `.sncp/roadmaps/SUBROADMAP_SNCP_5.0.md` (9.6/10)
 
 ---
 
-## SNCP 4.0 - STATO FINALE
+## SNCP 5.0 - PIANO
 
 ```
-FASE 1: ✅ COMPLETATA (9.0/10)
-- QW1: Daily logs auto-load
-- QW2: Memory flush trigger 75%
-- QW3: SessionEnd hook flush
-- QW4: BM25 search
+FASE 1 (1.5 sessioni) - Quick Wins:
+- P1.1: Explainable Search (0.5 sess)
+- P1.2: Temporal Validity (template)
+- P1.3: Memory Ontology 5 types (1 sess)
 
-FASE 2: ✅ COMPLETATA (9.3/10)
-- MF1: Template + 3 MEMORY.md reali
-- MF2: quality-check.py
-- MF3: Integration test e2e
+FASE 2 (3 sessioni) - Token Optimization:
+- P2.1: Progressive Disclosure
+- P2.2: Consolidation Scheduler
 
-SCORE COMPLESSIVO: 9.1/10
+FASE 3 (solo se serve):
+- Hybrid Search, Knowledge Graph
 ```
 
 ---
@@ -69,28 +67,27 @@ TOTALE: 310 test
 
 ---
 
-## PROSSIMI STEP (Sessione 326+)
+## PROSSIMI STEP (Sessione 327+)
 
-1. [ ] Usare MEMORY.md in sessioni reali
-2. [ ] Monitorare "Memory loss incidents" (target: 0/mese)
-3. [ ] FASE 3 Embeddings (solo se serve dopo FASE 2)
-4. [ ] Altro progetto (Miracollo? Contabilità?)
+1. [ ] **SNCP 5.0 FASE 1** - Implementare P1.1, P1.2, P1.3
+2. [ ] Usare MEMORY.md in sessioni reali
+3. [ ] Monitorare "Memory loss incidents"
 
 ---
 
 ## ARCHIVIO SESSIONI
 
-**S322:** Studio OpenClaw + Piano SNCP 4.0
-**S323:** QW1, QW2, QW3 completati (8/10)
-**S324:** QW4 + Template MEMORY.md (9.5/10) - FASE 1 COMPLETATA!
+**S324:** QW4 + Template MEMORY.md - FASE 1 COMPLETATA!
 **S325:** MF1.2 + MF2 + MF3 - SNCP 4.0 COMPLETATO!
+**S326:** Ricerca Memory Tools + SUBROADMAP SNCP 5.0
 
-**LEZIONI S325:**
-- "Ogni step → Guardiana audit" = qualità garantita
-- 3 MEMORY.md creati e auditati in 1 sessione
-- Formula Magica applicata 5+ volte con successo
+**LEZIONI S326:**
+- ClaudeMem 17.7k stelle - progressive disclosure pattern
+- SNCP già superiore a media industria (8.8 vs 7.5)
+- "Ogni step → Guardiana audit" confermato efficace
+- Correzioni fatte dopo feedback Guardiana Ricerca
 
 ---
 
-*"La memoria è preziosa. Trattiamola con cura."*
-*SNCP 4.0 - Cervella & Rafa*
+*"La memoria consapevole sa COSA, PERCHÉ e QUANDO."*
+*SNCP 5.0 - Cervella & Rafa*
