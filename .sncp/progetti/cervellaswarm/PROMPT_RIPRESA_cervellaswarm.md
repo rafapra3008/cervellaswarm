@@ -1,56 +1,58 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2 Febbraio 2026 - Sessione 324
-> **STATUS:** v2.0.0-beta.1 LIVE + SNCP 4.0 FASE 1 COMPLETATA!
+> **Ultimo aggiornamento:** 2 Febbraio 2026 - Sessione 325
+> **STATUS:** v2.0.0-beta.1 LIVE + SNCP 4.0 COMPLETATO!
 
 ---
 
-## SESSIONE 324 - SNCP 4.0 FASE 1 COMPLETATA! 🎉
+## SESSIONE 325 - SNCP 4.0 COMPLETATO!
 
 ```
 +================================================================+
-|   4/4 QUICK WINS COMPLETATI - Score finale: 9.0/10!            |
+|   SNCP 4.0 COMPLETATO! FASE 1 + FASE 2 = 9.1/10!              |
 +================================================================+
 ```
 
 ### Cosa Abbiamo Fatto
 
-| # | Task | Status | Score |
-|---|------|--------|-------|
-| QW1 | Auto-load daily logs | ✅ FATTO | 8/10 |
-| QW2 | Memory flush token trigger | ✅ FATTO | 8/10 |
-| QW3 | SessionEnd hook flush | ✅ FATTO | 8/10 |
-| QW4 | BM25 search | ✅ FATTO | **9.5/10** |
+| Task | Status | Score |
+|------|--------|-------|
+| MF1.2: 3 MEMORY.md reali | ✅ FATTO | 9.5/10 |
+| MF2: quality-check.py | ✅ FATTO | 9.2/10 |
+| MF3: Integration test e2e | ✅ FATTO | 14/14 PASS |
 
-### File Creati Sessione 324
+### MEMORY.md Creati (MF1.2)
+- `.sncp/progetti/cervellaswarm/MEMORY.md` (428 righe, 9.5/10)
+- `.sncp/progetti/miracollo/MEMORY.md` (391 righe, 9.5/10)
+- `.sncp/progetti/contabilita/MEMORY.md` (322 righe, 9.5/10)
 
-| File | Azione |
-|------|--------|
-| `scripts/sncp/smart-search.py` | NUOVO - BM25 search (212 righe) |
+### quality-check.py (MF2)
+- 4 criteri: Actionability, Specificity, Freshness, Conciseness
+- Testato su 8 progetti (avg 8.9/10)
+- Path: `scripts/sncp/quality-check.py`
 
-**Processo S324:**
-1. 🔍 Ricerca: BM25 best practices (rank-bm25, BM25Plus)
-2. 🤝 Consulenza: Backend + Guardiana (competenza OK)
-3. 🐍 Implementazione: cervella-backend (BM25Plus per doc corti)
-4. ✅ Test: CervellaSwarm + Miracollo (performance <1s)
-5. 👸 Audit: cervella-guardiana-qualita → **9.5/10**
-
-**Strategia vincente:** "Ogni step → Guardiana audit" funziona!
+### Integration Test e2e (MF3)
+- 14 test PASS, 771 righe
+- Coverage: QW1-4 + MEMORY.md + workflow completo
+- Path: `tests/sncp/test_e2e_sncp_4.py`
 
 ---
 
-## SNCP 4.0 - STATO ATTUALE
+## SNCP 4.0 - STATO FINALE
 
 ```
-FASE 1: COMPLETATA! ✅
-✅ Daily logs auto-caricati (oggi + ieri) al SessionStart
-✅ Memory flush automatico a SessionEnd
-✅ Memory flush trigger quando contesto >= 75%
-✅ BM25 search (<500ms, score 9.5/10)
+FASE 1: ✅ COMPLETATA (9.0/10)
+- QW1: Daily logs auto-load
+- QW2: Memory flush trigger 75%
+- QW3: SessionEnd hook flush
+- QW4: BM25 search
 
-SCORE: 8.8/10 → 9.0/10 (Fase 1 completata!)
+FASE 2: ✅ COMPLETATA (9.3/10)
+- MF1: Template + 3 MEMORY.md reali
+- MF2: quality-check.py
+- MF3: Integration test e2e
 
-PROSSIMO: FASE 2 (MEMORY.md + Quality scoring)
+SCORE COMPLESSIVO: 9.1/10
 ```
 
 ---
@@ -61,38 +63,34 @@ PROSSIMO: FASE 2 (MEMORY.md + Quality scoring)
 Core: 82/82 test PASS
 CLI: 134/134 test PASS
 MCP: 74/74 test PASS
-Extension: 6/6 test PASS
-TOTALE: 296 test
+SNCP e2e: 14/14 test PASS
+TOTALE: 310 test
 ```
 
 ---
 
-## PROSSIMI STEP (Sessione 325+)
+## PROSSIMI STEP (Sessione 326+)
 
-**FASE 2: Memoria Strutturata** (da pianificare)
-1. [ ] MF1: Creare template MEMORY.md per long-term facts
-2. [ ] MF2: Script quality-check.py per PROMPT_RIPRESA
-3. [ ] Testare sistema completo SNCP 4.0 in sessioni reali
-4. [ ] Monitorare "Memory loss incidents" (target: 0/mese)
-
-**FASE 3: Embeddings Opzionali** (v2.1.0 - solo se serve)
-- Valutare necessità dopo uso FASE 2
-- Se progetti > 5 E search > 5s → implementare
+1. [ ] Usare MEMORY.md in sessioni reali
+2. [ ] Monitorare "Memory loss incidents" (target: 0/mese)
+3. [ ] FASE 3 Embeddings (solo se serve dopo FASE 2)
+4. [ ] Altro progetto (Miracollo? Contabilità?)
 
 ---
 
 ## ARCHIVIO SESSIONI
 
 **S322:** Studio OpenClaw + Piano SNCP 4.0
-**S323:** QW1, QW2, QW3 completati (8/10 tutti)
-**S324:** QW4 completato (9.5/10) - FASE 1 COMPLETATA!
+**S323:** QW1, QW2, QW3 completati (8/10)
+**S324:** QW4 + Template MEMORY.md (9.5/10) - FASE 1 COMPLETATA!
+**S325:** MF1.2 + MF2 + MF3 - SNCP 4.0 COMPLETATO!
 
-**LEZIONI S324:**
-- ✅ "Ogni step → Guardiana audit" = strategia vincente
-- ✅ Consulenza competenza (Backend dubbio) = comportamento PARTNER
-- ✅ Ricerca → Implementazione → Test → Audit = FORMULA MAGICA
+**LEZIONI S325:**
+- "Ogni step → Guardiana audit" = qualità garantita
+- 3 MEMORY.md creati e auditati in 1 sessione
+- Formula Magica applicata 5+ volte con successo
 
 ---
 
 *"La memoria è preziosa. Trattiamola con cura."*
-*Sessione 323 - Cervella & Rafa*
+*SNCP 4.0 - Cervella & Rafa*
