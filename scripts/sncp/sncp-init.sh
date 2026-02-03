@@ -14,9 +14,15 @@
 #   - roadmaps/
 #   - handoff/
 #
-# Versione: 1.0.0
-# Data: 14 Gennaio 2026
+# Versione: 2.0.0
+# Data: 3 Febbraio 2026
 # Cervella & Rafa
+#
+# CHANGELOG v2.0.0:
+#   - Crea PROMPT_RIPRESA da template
+#   - Crea NORD.md nella root del progetto
+#   - Crea archivio/ e ricerche/
+#   - Naming consistente (underscore)
 # ==============================================================================
 
 set -e
@@ -26,8 +32,9 @@ set -e
 # ==============================================================================
 
 SNCP_ROOT="${SNCP_ROOT:-/Users/rafapra/Developer/CervellaSwarm/.sncp}"
+TEMPLATES_PATH="${SNCP_ROOT}/../scripts/sncp/templates"
 TODAY=$(date +%Y-%m-%d)
-VERSION="1.0.0"
+VERSION="2.0.0"
 
 # Colors
 RED='\033[0;31m'
@@ -49,6 +56,135 @@ print_header() {
     echo -e "${PURPLE}|            \"La memoria e' il fondamento\"                       |${NC}"
     echo -e "${PURPLE}+================================================================+${NC}"
     echo ""
+}
+
+# Normalizza nome progetto: trattini -> underscore, minuscolo
+normalize_name() {
+    local name="$1"
+    echo "$name" | tr '-' '_' | tr '[:upper:]' '[:lower:]'
+}
+
+# Crea PROMPT_RIPRESA da template
+create_prompt_ripresa() {
+    local project_name="$1"
+    local base_path="$2"
+    local normalized_name=$(normalize_name "$project_name")
+    local template_file="$TEMPLATES_PATH/PROMPT_RIPRESA_TEMPLATE.md"
+    local output_file="$base_path/PROMPT_RIPRESA_${normalized_name}.md"
+
+    if [ -f "$template_file" ]; then
+        # Sostituisci placeholder
+        sed -e "s/{{NOME_PROGETTO}}/$project_name/g" \
+            -e "s/{{DATA}}/$TODAY/g" \
+            -e "s/{{NUMERO_SESSIONE}}/1/g" \
+            -e "s/{{PROSSIMA_SESSIONE}}/2/g" \
+            -e "s/{{STATUS_BREVE}}/Setup SNCP completato/g" \
+            -e "s/{{TITOLO_SESSIONE}}/Setup Iniziale/g" \
+            -e "s/{{TASK_1}}/Setup SNCP/g" \
+            -e "s/{{NOTE_1}}/Struttura creata/g" \
+            -e "s/{{TASK_2}}/Compilare stato.md/g" \
+            -e "s/{{NOTE_2}}/Da fare/g" \
+            -e "s|{{PATH_FILE_1}}|.sncp/progetti/${normalized_name}/stato.md|g" \
+            -e "s/{{RIGHE_1}}/~80/g" \
+            -e "s/{{DESC_1}}/Stato iniziale/g" \
+            -e "s/{{DECISIONE_1}}/Stack tecnico/g" \
+            -e "s/{{SCELTA_1}}/[da definire]/g" \
+            -e "s/{{MOTIVO_1}}/[da documentare]/g" \
+            -e "s/{{FASE_O_FILONE_1}}/SETUP/g" \
+            -e "s/{{PERCENTUALE_1}}/100/g" \
+            -e "s/{{FASE_O_FILONE_2}}/SVILUPPO/g" \
+            -e "s/{{PERCENTUALE_2}}/0/g" \
+            -e "s/{{FASE_O_FILONE_3}}/DEPLOY/g" \
+            -e "s/{{PERCENTUALE_3}}/0/g" \
+            -e "s/{{STEP_1}}/Completare stato.md/g" \
+            -e "s/{{DESC_STEP_1}}/Info reali progetto/g" \
+            -e "s/{{STEP_2}}/Definire roadmap/g" \
+            -e "s/{{DESC_STEP_2}}/Obiettivi e milestone/g" \
+            -e "s/{{STEP_3}}/Iniziare sviluppo/g" \
+            -e "s/{{DESC_STEP_3}}/Prima feature/g" \
+            -e "s/{{N-3}}/--/g" \
+            -e "s/{{N-2}}/--/g" \
+            -e "s/{{N-1}}/--/g" \
+            -e "s/{{N}}/1/g" \
+            -e "s/{{RIASSUNTO_SESSIONE_N-3}}/(nessuna)/g" \
+            -e "s/{{RIASSUNTO_SESSIONE_N-2}}/(nessuna)/g" \
+            -e "s/{{RIASSUNTO_SESSIONE_N-1}}/(nessuna)/g" \
+            -e "s/{{RIASSUNTO_SESSIONE_CORRENTE}}/Setup SNCP iniziale/g" \
+            -e "s/{{CITAZIONE_MOTIVAZIONALE}}/Ultrapassar os proprios limites!/g" \
+            -e "s/{{DESCRIZIONE_RUOLO_FILE}}/[opzionale]/g" \
+            -e "s/{{LINK_AD_ALTRI_FILE}}/[opzionale]/g" \
+            "$template_file" > "$output_file"
+        return 0
+    else
+        echo -e "${YELLOW}[!]${NC} Template PROMPT_RIPRESA non trovato: $template_file"
+        return 1
+    fi
+}
+
+# Crea NORD.md nella root del progetto
+create_nord_md() {
+    local project_name="$1"
+    local project_path="$2"
+    local normalized_name=$(normalize_name "$project_name")
+    local template_file="$TEMPLATES_PATH/NORD_TEMPLATE.md"
+    local output_file="$project_path/NORD.md"
+
+    if [ -z "$project_path" ] || [ ! -d "$project_path" ]; then
+        echo -e "${YELLOW}[!]${NC} Project path non trovato, NORD.md non creato"
+        return 1
+    fi
+
+    if [ -f "$output_file" ]; then
+        echo -e "${YELLOW}[!]${NC} NORD.md gia' esistente in $project_path"
+        return 1
+    fi
+
+    if [ -f "$template_file" ]; then
+        sed -e "s/{{NOME_PROGETTO}}/$project_name/g" \
+            -e "s/{{nome_progetto}}/$normalized_name/g" \
+            -e "s/{{DATA}}/$TODAY/g" \
+            -e "s/{{NUMERO_SESSIONE}}/1/g" \
+            -e "s/{{SINTESI_UNA_RIGA}}/[descrizione breve]/g" \
+            -e "s/{{DESCRIZIONE_LINEA_1}}/[cosa fa - linea 1]/g" \
+            -e "s/{{DESCRIZIONE_LINEA_2}}/[cosa fa - linea 2]/g" \
+            -e "s/{{DESCRIZIONE_LINEA_3}}/[cosa fa - linea 3]/g" \
+            -e "s/{{CITAZIONE_MOTIVAZIONALE}}/Ultrapassar os proprios limites!/g" \
+            -e "s/{{FASE_1}}/SETUP/g" \
+            -e "s/{{PERC_1}}/100/g" \
+            -e "s/{{FASE_2}}/SVILUPPO/g" \
+            -e "s/{{PERC_2}}/0/g" \
+            -e "s/{{FASE_3}}/DEPLOY/g" \
+            -e "s/{{PERC_3}}/0/g" \
+            -e "s/{{COMPONENTE_1}}/[componente 1]/g" \
+            -e "s/{{STATUS_1}}/[status]/g" \
+            -e "s/{{COMPONENTE_2}}/[componente 2]/g" \
+            -e "s/{{STATUS_2}}/[status]/g" \
+            -e "s/{{COMPONENTE_3}}/[componente 3]/g" \
+            -e "s/{{STATUS_3}}/[status]/g" \
+            -e "s/{{DECISIONE_1}}/Setup SNCP/g" \
+            -e "s/{{SCELTA_1}}/Attivato/g" \
+            -e "s/{{MOTIVO_1}}/Memoria persistente/g" \
+            -e "s/{{DATA_1}}/$TODAY/g" \
+            -e "s/{{DECISIONE_2}}/[altra decisione]/g" \
+            -e "s/{{SCELTA_2}}/[scelta]/g" \
+            -e "s/{{MOTIVO_2}}/[motivo]/g" \
+            -e "s/{{DATA_2}}/[data]/g" \
+            -e "s/{{COSA_1}}/[feature parcheggiata]/g" \
+            -e "s/{{MOTIVO_PARCHEGGIO_1}}/[motivo]/g" \
+            -e "s/{{DATA_P1}}/[data]/g" \
+            -e "s/{{COSA_2}}/[altra feature]/g" \
+            -e "s/{{MOTIVO_PARCHEGGIO_2}}/[motivo]/g" \
+            -e "s/{{DATA_P2}}/[data]/g" \
+            -e "s/{{PUNTATORE_EXTRA_1}}/Roadmap/g" \
+            -e "s|{{PATH_1}}|.sncp/progetti/${normalized_name}/roadmaps/|g" \
+            -e "s/{{PUNTATORE_EXTRA_2}}/Decisioni/g" \
+            -e "s|{{PATH_2}}|.sncp/progetti/${normalized_name}/decisioni/|g" \
+            "$template_file" > "$output_file"
+        return 0
+    else
+        echo -e "${YELLOW}[!]${NC} Template NORD.md non trovato: $template_file"
+        return 1
+    fi
 }
 
 print_usage() {
@@ -440,8 +576,10 @@ echo -e "${BLUE}[i]${NC} Creazione struttura..."
 mkdir -p "$BASE_PATH/decisioni"
 mkdir -p "$BASE_PATH/roadmaps"
 mkdir -p "$BASE_PATH/handoff"
+mkdir -p "$BASE_PATH/archivio"
+mkdir -p "$BASE_PATH/ricerche"
 
-echo -e "${GREEN}[OK]${NC} Cartelle create"
+echo -e "${GREEN}[OK]${NC} Cartelle create (6 totali)"
 
 # Create stato.md
 create_stato_md "$PROJECT_NAME" "$BASE_PATH" "$STACK" "$DEPLOY"
@@ -451,33 +589,60 @@ echo -e "${GREEN}[OK]${NC} stato.md creato"
 create_config_md "$PROJECT_NAME" "$BASE_PATH" "$PROJECT_PATH" "$STACK" "$DEPLOY"
 echo -e "${GREEN}[OK]${NC} CONFIG.md creato"
 
+# Create PROMPT_RIPRESA (v2.0.0)
+NORMALIZED_NAME=$(normalize_name "$PROJECT_NAME")
+if create_prompt_ripresa "$PROJECT_NAME" "$BASE_PATH"; then
+    echo -e "${GREEN}[OK]${NC} PROMPT_RIPRESA_${NORMALIZED_NAME}.md creato"
+else
+    echo -e "${YELLOW}[!]${NC} PROMPT_RIPRESA non creato (template mancante)"
+fi
+
+# Create NORD.md in project root (v2.0.0)
+if [ -n "$PROJECT_PATH" ] && [ -d "$PROJECT_PATH" ]; then
+    if create_nord_md "$PROJECT_NAME" "$PROJECT_PATH"; then
+        echo -e "${GREEN}[OK]${NC} NORD.md creato in $PROJECT_PATH"
+    fi
+else
+    echo -e "${YELLOW}[!]${NC} NORD.md non creato (project path non trovato)"
+    echo -e "${CYAN}[TIP]${NC} Crea manualmente NORD.md nella root del progetto"
+fi
+
 # Summary
 echo ""
 echo -e "${PURPLE}+================================================================+${NC}"
-echo -e "${PURPLE}|                   INIZIALIZZAZIONE COMPLETATA                  |${NC}"
+echo -e "${PURPLE}|              INIZIALIZZAZIONE COMPLETATA v$VERSION               |${NC}"
 echo -e "${PURPLE}+================================================================+${NC}"
 echo ""
-echo -e "${GREEN}Struttura creata:${NC}"
+echo -e "${GREEN}Struttura SNCP creata:${NC}"
 echo ""
 echo "  $BASE_PATH/"
-echo "  ├── stato.md          <- UNICA fonte di verita"
-echo "  ├── CONFIG.md         <- Configurazione progetto"
-echo "  ├── decisioni/        <- Decisioni importanti"
-echo "  ├── roadmaps/         <- Piani attivi"
-echo "  └── handoff/          <- Sessioni parallele"
+echo "  ├── PROMPT_RIPRESA_${NORMALIZED_NAME}.md  <- Stato sessioni (LEGGI QUESTO!)"
+echo "  ├── stato.md                        <- Stato tecnico progetto"
+echo "  ├── CONFIG.md                       <- Configurazione e convenzioni"
+echo "  ├── decisioni/                      <- Decisioni importanti"
+echo "  ├── roadmaps/                       <- Piani e subroadmap"
+echo "  ├── handoff/                        <- Sessioni parallele"
+echo "  ├── archivio/                       <- Sessioni vecchie"
+echo "  └── ricerche/                       <- Studi e analisi"
 echo ""
+if [ -n "$PROJECT_PATH" ] && [ -f "$PROJECT_PATH/NORD.md" ]; then
+    echo -e "${GREEN}NORD.md creato in:${NC}"
+    echo "  $PROJECT_PATH/NORD.md  <- LA BUSSOLA (sacro!)"
+    echo ""
+fi
 echo -e "${CYAN}PROSSIMI STEP:${NC}"
-echo "  1. Compila stato.md con info reali del progetto"
-echo "  2. Compila CONFIG.md con convenzioni"
-echo "  3. Crea prima roadmap in roadmaps/"
+echo "  1. Leggi e compila PROMPT_RIPRESA_${NORMALIZED_NAME}.md"
+echo "  2. Compila NORD.md con la visione del progetto"
+echo "  3. Aggiorna stato.md con info tecniche"
 echo "  4. Inizia a lavorare!"
 echo ""
 echo -e "${BLUE}Comandi utili:${NC}"
-echo "  - pre-session-check.sh $PROJECT_NAME   # Check salute SNCP"
-echo "  - health-check.sh                      # Check completo"
-echo "  - compact-state.sh $PROJECT_NAME       # Compatta se troppo grande"
+echo "  - pre-session-check.sh $PROJECT_NAME   # Check inizio sessione"
+echo "  - check-ripresa-size.sh $PROJECT_NAME  # Verifica limiti (150 righe)"
+echo "  - health-check.sh                      # Check completo SNCP"
 echo ""
-echo -e "${GREEN}SNCP pronto per: $PROJECT_NAME${NC}"
+echo -e "${GREEN}SNCP v2.0 pronto per: $PROJECT_NAME${NC}"
 echo ""
 echo -e "${PURPLE}\"La memoria e' il fondamento dell'intelligenza collettiva.\"${NC}"
+echo -e "${PURPLE}\"Ultrapassar os proprios limites!\"${NC}"
 echo ""
