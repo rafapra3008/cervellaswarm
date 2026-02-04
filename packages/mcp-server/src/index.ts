@@ -28,7 +28,7 @@ import { getUsageTracker, QuotaStatus } from "./billing/usage.js";
 
 // Server metadata
 const SERVER_NAME = "cervellaswarm";
-const SERVER_VERSION = "0.2.2";
+const SERVER_VERSION = "0.2.3";
 
 // Create MCP server instance
 const server = new McpServer({
@@ -138,6 +138,11 @@ server.tool(
       const stats = await usageTracker.getStats();
       const usageInfo = `Usage: ${stats.calls}/${stats.limit} calls this month`;
 
+      // Show retry info if multiple attempts were needed
+      const retryInfo = result.attempts && result.attempts > 1
+        ? `⚠️ Note: Completed after ${result.attempts} attempts (retry succeeded)\n\n`
+        : '';
+
       return {
         content: [
           {
@@ -147,6 +152,7 @@ server.tool(
               `Duration: ${result.duration}\n` +
               `Tokens: ${result.usage?.inputTokens || 0} in / ${result.usage?.outputTokens || 0} out\n` +
               `${usageInfo}\n\n` +
+              retryInfo +
               `---\n\n${result.output}\n\n---\n\n` +
               `Next step: ${result.nextStep}${warningMessage}`,
           },

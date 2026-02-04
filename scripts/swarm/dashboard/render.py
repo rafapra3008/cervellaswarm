@@ -11,7 +11,7 @@ Responsabilità:
 - Layout e struttura visiva
 """
 
-__version__ = "2.2.0"
+__version__ = "2.3.0"
 __version_date__ = "2026-02-04"
 
 import json
@@ -25,6 +25,8 @@ from .data import (
     get_recent_activity,
     calculate_session_duration,
     get_live_activity_from_heartbeat,
+    get_system_resources,
+    get_stuck_workers,
 )
 
 # Import colors
@@ -201,6 +203,79 @@ def render_activity(tasks: List[Dict]) -> str:
     return '\n'.join(lines)
 
 
+def render_resources() -> str:
+    """Renderizza le risorse di sistema (CPU, RAM)."""
+    lines = []
+
+    resources = get_system_resources()
+
+    lines.append("║                                                                                      ║")
+    lines.append("║  " + colorize("SYSTEM RESOURCES", Colors.BOLD) + "                                                                     ║")
+
+    # CPU
+    cpu = resources['cpu_percent']
+    if cpu > 0:
+        cpu_str = f"{cpu:.0f}%"
+    else:
+        cpu_str = "N/A"
+
+    # Memory
+    mem_used = resources['memory_used_gb']
+    mem_total = resources['memory_total_gb']
+    mem_percent = resources['memory_percent']
+
+    if mem_total > 0:
+        mem_str = f"{mem_used:.1f}/{mem_total:.1f} GB ({mem_percent:.0f}%)"
+    else:
+        mem_str = "N/A"
+
+    line = f"║  CPU: {cpu_str}  │  RAM: {mem_str}"
+
+    # Padding finale
+    line_clean = Colors.strip(line)
+    final_pad = 86 - len(line_clean)
+    line += ' ' * final_pad + "║"
+
+    lines.append(line)
+
+    return '\n'.join(lines)
+
+
+def render_alerts() -> str:
+    """Renderizza alert per worker stuck."""
+    lines = []
+
+    stuck = get_stuck_workers(threshold_sec=300)
+
+    if stuck:
+        lines.append("║                                                                                      ║")
+        lines.append("║  " + colorize("⚠️ ALERTS", Colors.BRIGHT_RED) + "                                                                           ║")
+
+        for worker in stuck:
+            # Formatta tempo
+            age_sec = worker['last_seen_sec']
+            if age_sec < 60:
+                age_str = f"{age_sec}s"
+            elif age_sec < 3600:
+                age_str = f"{age_sec // 60}m {age_sec % 60}s"
+            else:
+                hours = age_sec // 3600
+                minutes = (age_sec % 3600) // 60
+                age_str = f"{hours}h {minutes}m"
+
+            message = f"Worker '{worker['worker']}' stuck for {age_str}!"
+            line = f"║  {message}"
+
+            # Padding finale
+            line_clean = Colors.strip(line)
+            final_pad = 86 - len(line_clean)
+            line += ' ' * final_pad + "║"
+
+            lines.append(line)
+
+    return '\n'.join(lines)
+
+
 def render_heartbeat() -> str:
     """Renderizza la sezione heartbeat live."""
     lines = []
@@ -263,10 +338,19 @@ def render_dashboard(tasks: List[Dict]) -> str:
         render_header(),
         render_workers(tasks),
         render_stats(tasks),
+        render_resources(),
         render_heartbeat(),
+    ]
+
+    # Aggiungi alerts solo se ci sono
+    alerts = render_alerts()
+    if alerts:
+        sections.append(alerts)
+
+    sections.extend([
         render_activity(tasks),
         render_footer()
-    ]
+    ])
 
     return '\n'.join(sections)
 
@@ -308,10 +392,22 @@ def render_json(tasks: List[Dict]) -> str:
             'task_id': activity['task_id']
         })
 
+    # System resources
+    resources = get_system_resources()
+
+    # Stuck workers
+    stuck = get_stuck_workers(threshold_sec=300)
+
+    # Session duration
+    duration = calculate_session_duration()
+
     data = {
         'timestamp': datetime.now().isoformat(),
         'workers': workers_status,
         'queue_stats': stats,
+        'system_resources': resources,
+        'session_duration': duration,
+        'stuck_workers': stuck,
         'recent_activity': activities_formatted
     }
 

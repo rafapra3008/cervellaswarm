@@ -12,12 +12,16 @@
 #   ./spawn-workers.sh --all                  # Tutti i worker comuni
 #   ./spawn-workers.sh --list                 # Lista worker disponibili
 #
-# Versione: 3.9.0
-# Data: 2026-01-20
+# Versione: 4.1.0
+# Data: 2026-02-04
 # Apple Style: Auto-close, Graceful shutdown, Notifiche macOS
 # v2.0.0: Config centralizzata ~/.swarm/config
 #
 # CHANGELOG:
+# v4.1.0: OUTPUT VALIDATION! Reflection Pattern per auto-validazione output worker (Sessione 336)
+#         + output_validator.py standalone (valida qualità output post-task)
+#         + --with-validation flag per abilitare (default: OFF)
+#         + Score 0-100, error detection, retry suggestions
 # v4.0.0: BROWSER ACCESS! cervella-researcher puo' navigare il web (Playwright MCP)
 #         Worker con browser: researcher (estendibile in futuro)
 #         Config MCP in ~/.claude/mcp-configs/researcher.json
@@ -68,7 +72,7 @@ set -e
 # ============================================================================
 # VERSION (per --version flag)
 # ============================================================================
-VERSION="4.0.0"
+VERSION="4.1.0"
 
 # ============================================================================
 # COMMON LIBRARY (v3.4.0) - Funzioni condivise
@@ -123,6 +127,13 @@ ARCHITECT_TASK=""
 # ============================================================================
 BROWSER_ACCESS_WORKERS="researcher"
 BROWSER_MCP_CONFIG="$HOME/.claude/mcp-configs/researcher.json"
+
+# ============================================================================
+# OUTPUT VALIDATION (v4.1.0) - Reflection Pattern (FASE 2)
+# Valida output worker post-task per auto-detect errori
+# DEFAULT: false (feature sperimentale)
+# ============================================================================
+OUTPUT_VALIDATION=false
 
 # ============================================================================
 # OUTPUT UNBUFFERED (v3.2.0) - Output realtime dai worker!
@@ -910,7 +921,16 @@ spawn_worker_headless() {
                  echo '[CervellaSwarm] No changes to commit.' >> \"${log_file}\"; \
              fi; \
          fi; \
-         echo 'WORKER_DONE' >> \"${log_file}\""
+         echo 'WORKER_DONE' >> \"${log_file}\"; \
+         if [ \"${OUTPUT_VALIDATION}\" = true ]; then \
+             echo '' >> \"${log_file}\"; \
+             echo '[CervellaSwarm] Output validation: checking quality...' >> \"${log_file}\"; \
+             if ${PROJECT_ROOT}/scripts/swarm/output_validator.py --last-output >> \"${log_file}\" 2>&1; then \
+                 echo '[CervellaSwarm] ✓ Output validation PASSED' >> \"${log_file}\"; \
+             else \
+                 echo '[CervellaSwarm] ✗ Output validation FAILED - consider retry' >> \"${log_file}\"; \
+             fi; \
+         fi"
 
     # Imposta remain-on-exit per catturare output dopo fine
     tmux set-option -t "$session_name" remain-on-exit on 2>/dev/null
@@ -1055,6 +1075,7 @@ show_usage() {
     echo "  --with-context         Abilita contesto intelligente codebase (tree-sitter)"
     echo "  --no-context           Disabilita contesto (override auto-enable per code-aware)"
     echo "  --context-budget N     Token budget per contesto (default: 1500, implica --with-context)"
+    echo "  --with-validation      Abilita validazione output post-task (Reflection Pattern)"
     echo "  --version              Mostra versione"
     echo "  --help                 Mostra questo help"
     echo ""
@@ -1241,6 +1262,9 @@ main() {
                     print_error "--context-budget richiede un numero!"
                     exit 1
                 fi
+                ;;
+            --with-validation)
+                OUTPUT_VALIDATION=true
                 ;;
             *)
                 print_error "Opzione sconosciuta: $1"

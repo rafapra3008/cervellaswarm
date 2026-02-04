@@ -4,14 +4,22 @@ CervellaSwarm Dashboard - Data Layer
 Funzioni per raccolta dati da task manager e heartbeat.
 """
 
-__version__ = "2.2.0"
+__version__ = "2.3.0"
 __version_date__ = "2026-02-04"
 
 import sys
 import time
+import subprocess
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Optional
+
+# Optional: psutil per system resources
+try:
+    import psutil
+    PSUTIL_AVAILABLE = True
+except ImportError:
+    PSUTIL_AVAILABLE = False
 
 # Import task_manager dal sistema
 try:
@@ -180,12 +188,188 @@ def calculate_session_duration() -> str:
     """
     Calcola la durata della sessione corrente.
 
+    Cerca timestamp in:
+    1. .swarm/session_start (se esiste)
+    2. File più vecchio in .swarm/status/
+
     Returns:
-        Stringa con durata (es. "45m")
+        Stringa con durata (es. "45m" o "1h 23m")
     """
-    # Per ora ritorniamo un valore fisso
-    # In futuro potremmo leggere da un file di session start
-    return "N/A"
+    try:
+        start_time = None
+
+        # 1. Prova session_start file
+        session_start_file = Path('.swarm/session_start')
+        if session_start_file.exists():
+            content = session_start_file.read_text().strip()
+            try:
+                start_time = int(content)
+            except ValueError:
+                pass
+
+        # 2. Fallback: file più vecchio in .swarm/status/
+        if start_time is None:
+            status_dir = Path('.swarm/status')
+            if status_dir.exists():
+                files = list(status_dir.glob('*'))
+                if files:
+                    oldest = min(files, key=lambda f: f.stat().st_mtime)
+                    start_time = int(oldest.stat().st_mtime)
+
+        if start_time is None:
+            return "N/A"
+
+        # Calcola durata
+        duration_sec = int(time.time()) - start_time
+
+        # Formatta
+        if duration_sec < 60:
+            return f"{duration_sec}s"
+        elif duration_sec < 3600:
+            return f"{duration_sec // 60}m"
+        else:
+            hours = duration_sec // 3600
+            minutes = (duration_sec % 3600) // 60
+            return f"{hours}h {minutes}m"
+
+    except Exception:
+        return "N/A"
+
+
+def get_system_resources() -> Dict:
+    """
+    Ottiene informazioni sulle risorse di sistema.
+
+    Returns:
+        Dict con: cpu_percent, memory_used_gb, memory_total_gb, memory_percent
+    """
+    if PSUTIL_AVAILABLE:
+        # Usa psutil se disponibile
+        try:
+            cpu_percent = psutil.cpu_percent(interval=0.1)
+            mem = psutil.virtual_memory()
+            return {
+                'cpu_percent': cpu_percent,
+                'memory_used_gb': mem.used / (1024**3),
+                'memory_total_gb': mem.total / (1024**3),
+                'memory_percent': mem.percent
+            }
+        except Exception:
+            pass
+
+    # Fallback: comandi shell (macOS)
+    try:
+        # CPU: usa top (macOS)
+        top_output = subprocess.check_output(
+            ['top', '-l', '1', '-n', '0', '-F'],
+            stderr=subprocess.DEVNULL,
+            timeout=2
+        ).decode()
+
+        cpu_percent = 0.0
+        for line in top_output.split('\n'):
+            if 'CPU usage' in line:
+                # Esempio: "CPU usage: 7.89% user, 4.21% sys, 87.89% idle"
+                parts = line.split(',')
+                for part in parts:
+                    if 'idle' in part:
+                        idle = float(part.split('%')[0].strip().split()[-1])
+                        cpu_percent = 100.0 - idle
+                        break
+                break
+
+        # Memory: usa vm_stat (macOS)
+        vm_output = subprocess.check_output(
+            ['vm_stat'],
+            stderr=subprocess.DEVNULL,
+            timeout=2
+        ).decode()
+
+        page_size = 4096  # default macOS
+        pages_free = 0
+        pages_active = 0
+        pages_inactive = 0
+        pages_wired = 0
+
+        for line in vm_output.split('\n'):
+            if 'page size' in line.lower():
+                page_size = int(line.split(':')[1].strip().split()[0])
+            elif 'Pages free' in line:
+                pages_free = int(line.split(':')[1].strip().replace('.', ''))
+            elif 'Pages active' in line:
+                pages_active = int(line.split(':')[1].strip().replace('.', ''))
+            elif 'Pages inactive' in line:
+                pages_inactive = int(line.split(':')[1].strip().replace('.', ''))
+            elif 'Pages wired down' in line:
+                pages_wired = int(line.split(':')[1].strip().replace('.', ''))
+
+        memory_used_bytes = (pages_active + pages_inactive + pages_wired) * page_size
+        memory_total_bytes = (pages_free + pages_active + pages_inactive + pages_wired) * page_size
+
+        memory_used_gb = memory_used_bytes / (1024**3)
+        memory_total_gb = memory_total_bytes / (1024**3)
+        memory_percent = (memory_used_gb / memory_total_gb * 100) if memory_total_gb > 0 else 0
+
+        return {
+            'cpu_percent': cpu_percent,
+            'memory_used_gb': memory_used_gb,
+            'memory_total_gb': memory_total_gb,
+            'memory_percent': memory_percent
+        }
+
+    except Exception:
+        # Fallback finale: valori N/A
+        return {
+            'cpu_percent': 0.0,
+            'memory_used_gb': 0.0,
+            'memory_total_gb': 0.0,
+            'memory_percent': 0.0
+        }
+
+
+def get_stuck_workers(threshold_sec: int = 300) -> List[Dict]:
+    """
+    Identifica worker con heartbeat "stuck" (non aggiornato da troppo tempo).
+
+    Args:
+        threshold_sec: Soglia in secondi per considerare un worker stuck (default: 300 = 5 min)
+
+    Returns:
+        Lista di dict con: worker, last_seen_sec, last_task
+    """
+    stuck = []
+    status_dir = Path('.swarm/status')
+
+    if not status_dir.exists():
+        return stuck
+
+    for hb_file in status_dir.glob('heartbeat_*.log'):
+        try:
+            content = hb_file.read_text().strip()
+            if not content:
+                continue
+
+            lines = content.split('\n')
+            last_line = lines[-1]
+            parts = last_line.split('|')
+
+            if len(parts) >= 3:
+                timestamp = int(parts[0])
+                task = parts[1]
+
+                age = int(time.time()) - timestamp
+
+                # Considera stuck se > threshold E il task non e "idle"
+                if age > threshold_sec and task != '-':
+                    stuck.append({
+                        'worker': hb_file.stem.replace('heartbeat_', ''),
+                        'last_seen_sec': age,
+                        'last_task': task
+                    })
+        except Exception:
+            continue
+
+    return stuck
 
 
 def get_live_activity_from_heartbeat() -> List[Dict]:

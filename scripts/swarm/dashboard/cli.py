@@ -17,7 +17,7 @@ Responsabilità:
 - Interfaccia utente terminale
 """
 
-__version__ = "2.2.0"
+__version__ = "2.3.0"
 __version_date__ = "2026-02-04"
 
 import sys
