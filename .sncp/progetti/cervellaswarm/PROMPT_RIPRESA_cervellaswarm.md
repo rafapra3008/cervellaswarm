@@ -1,79 +1,76 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-03 - Sessione 333
-> **STATUS:** v2.0.0-beta.1 LIVE + SNCP-INIT v2.0 COMPLETO!
+> **Ultimo aggiornamento:** 2026-02-04 - Sessione 334
+> **STATUS:** REFACTORING CASA IN CORSO
 
 ---
 
-## SESSIONE 333 - SNCP-INIT v2.0 TESTATO + NUOVO PROGETTO!
+## SESSIONE 334 - REFACTORING TECHNICAL DEBT
 
 ```
 +================================================================+
-|   S333: O5 COMPLETATO! + CervellaCostruzione CREATO!          |
+|   S334: FASE 1 COMPLETATA! FASE 2 INIZIATA                     |
 +================================================================+
 ```
 
-### Completati
+### SUBROADMAP ATTIVA
 
-| Task | Status | Note |
-|------|--------|------|
-| O5 Test SNCP-INIT v2.0 | COMPLETATO | Testato con CervellaCostruzione! |
-| Nuovo progetto creato | COMPLETATO | CervellaCostruzione |
-| Ricerche mercato Foz | COMPLETATO | 6000+ righe totali |
-| Sistema gestione | COMPLETATO | 4 parti + 5 checklist |
+**File:** `.sncp/roadmaps/SUBROADMAP_REFACTORING_CASA.md`
 
-### Output Sessione
+### Stato Fasi
 
-| Output | Descrizione |
-|--------|-------------|
-| `~/Developer/cervellacostruzione/NORD.md` | Visione progetto costruzione |
-| `.sncp/progetti/cervellacostruzione/` | Struttura SNCP completa |
-| `ricerche/` (12 file) | Mercato, costi, strategia Foz |
+| Fase | File | Status | Score |
+|------|------|--------|-------|
+| FASE 1 | weekly_retro.py | COMPLETATA | 9.5/10 |
+| FASE 2 | analytics.py | INIZIATA | - |
+| FASE 3 | dashboard.py | TODO | - |
+| FASE 4 | Test | TODO | - |
+| FASE 5 | Cleanup | TODO | - |
 
----
-
-## SNCP-INIT v2.0 STATUS
+### FASE 1 - Output (COMPLETATA)
 
 ```
-SNCP-INIT v2.0           [####################] 100% COMPLETO!
-  - O1 Template RIPRESA  [####################] DONE 9.5/10
-  - O2 Template NORD     [####################] DONE 9.6/10
-  - O3 Script v2.0       [####################] DONE 9.5/10
-  - O4 Documentazione    [####################] DONE 9.7/10
-  - O5 Test Reale        [####################] DONE (CervellaCostruzione!)
+scripts/memory/retro/
+├── __init__.py      22 righe   v2.2.0
+├── sections.py     225 righe   v2.2.0
+├── output.py       414 righe   v2.2.0
+├── suggestions.py   78 righe   v2.2.0
+└── cli.py          365 righe   v2.2.0
 ```
 
-**SNCP-INIT v2.0 = 100% COMPLETATO!**
+- SQL injection FIXATO (query parametrizzate)
+- generate_retro() ridotto da 447 a 60 righe
+- Audit Guardiana: 9.5/10 APPROVE
 
----
-
-## STATO CervellaSwarm
+### FASE 2 - In Corso (PARZIALE)
 
 ```
-CLI npm:     cervellaswarm@2.0.0-beta.1     LIVE
-MCP npm:     @cervellaswarm/mcp-server      LIVE
-API Fly.io:  ONLINE
-Stripe:      Test Mode ($29/$49)
-SNCP-INIT:   v2.0.0 COMPLETO + TESTATO!
+scripts/memory/analytics/
+├── helpers.py       CREATO
+├── commands/
+│   └── __init__.py  CREATO
+└── (altri file da creare)
 ```
 
----
-
-## PROSSIMI STEP (S334+)
-
-1. [ ] **F3.3** Enterprise Landing Page
-2. [ ] **F3.4** Enterprise Pricing Tier
+**NOTA:** API Anthropic dava errore 500, interrotto per checkpoint.
 
 ---
 
-## ARCHIVIO SESSIONI
+## PROSSIMA SESSIONE (S335)
 
-**S330:** F1.3 Consolidation + F2.1 Research
-**S331:** F3.1 Compliance + F3.2 Case Study
-**S332:** SNCP-INIT v2.0 O1-O4 (9.58/10)
-**S333:** O5 Test REALE + CervellaCostruzione CREATO!
+1. **Continuare FASE 2** - Completare refactoring analytics.py
+2. Creare comandi separati in analytics/commands/
+3. FIX SQL injection in events.py, dashboard.py
+4. cmd_retro() deve RIUSARE modulo retro/ (no duplicazione!)
 
 ---
 
-*"Ultrapassar os proprios limites!"*
-*Sessione 333 - Cervella & Rafa*
+## ARCHIVIO
+
+**S333:** SNCP-INIT v2.0 + CervellaCostruzione
+**S334:** FASE 1 weekly_retro.py COMPLETATA (9.5/10)
+
+---
+
+*"Casa pulita dentro = codice che dura nel tempo"*
+*Sessione 334 - Cervella & Rafa*
