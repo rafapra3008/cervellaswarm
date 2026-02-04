@@ -58,10 +58,44 @@ scripts/memory/analytics/
 
 ## PROSSIMA SESSIONE (S335)
 
-1. **Continuare FASE 2** - Completare refactoring analytics.py
-2. Creare comandi separati in analytics/commands/
-3. FIX SQL injection in events.py, dashboard.py
-4. cmd_retro() deve RIUSARE modulo retro/ (no duplicazione!)
+**PRIORITA:** Continuare SUBROADMAP_REFACTORING_CASA.md
+
+### FASE 2 - analytics.py (847 righe)
+
+**Struttura iniziata:**
+```
+scripts/memory/analytics/
+├── helpers.py           CREATO (console, HAS_RICH)
+└── commands/__init__.py CREATO (imports)
+```
+
+**DA CREARE:**
+```
+scripts/memory/analytics/
+├── cli.py               # main(), argparse
+└── commands/
+    ├── summary.py       # cmd_summary (74 righe)
+    ├── lessons.py       # cmd_lessons (45 righe)
+    ├── events.py        # cmd_events - FIX SQL!
+    ├── agents.py        # cmd_agents (59 righe)
+    ├── patterns.py      # cmd_patterns (52 righe)
+    ├── dashboard.py     # cmd_dashboard - FIX SQL!
+    ├── auto_detect.py   # cmd_auto_detect
+    └── retro.py         # RIUSARE modulo retro/!
+```
+
+**SQL INJECTION DA FIXARE:**
+- cmd_events(): riga 217-224
+- cmd_dashboard(): righe 397-418
+- cmd_retro(): righe 615-622, 685-688, 711-718
+
+**PATTERN:** Seguire stesso approccio di FASE 1 (retro/)
+
+### Dopo FASE 2
+
+- FASE 3: dashboard.py (620 righe)
+- FASE 4: Test & Validazione
+- FASE 5: Cleanup finale
 
 ---
 
