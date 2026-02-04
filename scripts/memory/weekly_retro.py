@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 """
+⚠️  DEPRECATED - Sessione 335 (4 Feb 2026)
+⚠️  Usa: python3 -m scripts.memory.retro.cli
+⚠️  Questo file verrà rimosso in sessione ~340
+
 CervellaSwarm Weekly Retrospective v2.0.0 - Report Settimanale Automatico
 
 Genera un report retrospettivo settimanale con:

@@ -2,15 +2,16 @@
 #
 # CervellaSwarm Dashboard - Wrapper Bash
 #
-# Questo script è un semplice wrapper per dashboard.py
-# che assicura di essere nella directory corretta.
+# Wrapper per il modulo dashboard (refactoring S335).
+# Assicura di essere nella directory corretta per import Python.
 #
 
-__version__="1.0.0"
-__version_date__="2026-01-03"
+__version__="2.0.0"
+__version_date__="2026-02-04"
 
-# Trova la directory dello script
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Trova la directory base di CervellaSwarm
+SWARM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 
-# Esegui dashboard.py passando tutti gli argomenti
-exec python3 "${SCRIPT_DIR}/dashboard.py" "$@"
+# Esegui il modulo dashboard passando tutti gli argomenti
+cd "$SWARM_DIR"
+exec python3 -m scripts.swarm.dashboard.cli "$@"

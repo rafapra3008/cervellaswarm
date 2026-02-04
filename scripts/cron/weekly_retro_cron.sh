@@ -1,7 +1,7 @@
 #!/bin/bash
 # weekly_retro_cron.sh - Script per cron weekly retrospective
 #
-# Esegue weekly_retro.py e salva report in data/retro/
+# Esegue scripts.memory.retro.cli (modulo Python) e salva report in data/retro/
 # Destinato per cron: ogni lunedì alle 8:00
 #
 # SETUP CRON:
@@ -18,7 +18,7 @@ set -e
 
 # Path di base
 SWARM_DIR="/Users/rafapra/Developer/CervellaSwarm"
-SCRIPT="$SWARM_DIR/scripts/memory/weekly_retro.py"
+# NOTA: Refactoring S335 - ora usa modulo Python
 LOG_FILE="$SWARM_DIR/data/logs/weekly_retro_cron.log"
 
 # Crea directory log se non esiste
@@ -31,7 +31,7 @@ echo "[$(date '+%Y-%m-%d %H:%M:%S')] Weekly Retro STARTED" >> "$LOG_FILE"
 # Esegui weekly_retro con save e quiet mode
 cd "$SWARM_DIR"
 
-if python3 "$SCRIPT" --save --quiet >> "$LOG_FILE" 2>&1; then
+if python3 -m scripts.memory.retro.cli --save --quiet >> "$LOG_FILE" 2>&1; then
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] Weekly Retro COMPLETED" >> "$LOG_FILE"
 else
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] Weekly Retro FAILED" >> "$LOG_FILE"

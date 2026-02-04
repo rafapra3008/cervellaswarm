@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 """
+⚠️  DEPRECATED - Sessione 335 (4 Feb 2026)
+⚠️  Usa: python3 -m scripts.memory.analytics.cli
+⚠️  Questo file verrà rimosso in sessione ~340
+
 CervellaSwarm Analytics - Sistema di Reporting
 
 Analizza il database swarm_memory.db e mostra metriche/statistiche
