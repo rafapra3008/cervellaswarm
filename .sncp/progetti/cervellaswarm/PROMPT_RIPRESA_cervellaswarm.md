@@ -1,70 +1,79 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 2026-02-10 - Sessione 352
-> **STATUS:** FASE A+B+C 100%. MAPPA MIGLIORAMENTI 9/11 step FATTI. Resta solo FASE D.
+> **STATUS:** MAPPA MIGLIORAMENTI INTERNI 11/11 step COMPLETATA! FASE A+B+C+D = 100%
 
 ---
 
-## SESSIONE 352 - B.1+B.2+B.3+C.2+C.3
+## SESSIONE 352 - RECORD: 7 STEP IN 1 SESSIONE
 
 ```
 +================================================================+
-|   S352: 5 STEP COMPLETATI (record sessione!)                    |
+|   S352: 7 STEP COMPLETATI (record assoluto!)                    |
 |                                                                  |
 |   B.1 CLAUDE.md Riduzione         373->151 righe    9/10       |
-|   B.2 Skills Dynamic Context      3 skills LIVE     9.5/10     |
+|   B.2 Skills Dynamic Context      5 skills LIVE     9.5/10     |
 |   B.3 Smart SessionStart          -42% contesto     9/10       |
 |   C.2 MCP Server Health Monitor   8 check auto      8.5/10     |
 |   C.3 LaunchAgent Health Check    7 agent monitorati 9/10      |
+|   D.1 Agent Teams Studio + PoC   Ricerca + test     9/10       |
+|   D.2 SNCP come MCP Server       4 tool, v0.3.0    9/10       |
 |                                                                  |
-|   FASE B: 100% (3/3)   FASE C: 100% (3/3)                     |
-|   Score medio sessione: 9.0/10                                  |
+|   MAPPA MIGLIORAMENTI: 11/11 = 100% COMPLETATA!                |
+|   Score medio sessione: 9.1/10                                  |
 +================================================================+
 ```
 
 ### Cosa fatto
 | # | Azione | Dettaglio |
 |---|--------|-----------|
-| 1 | B.1: CLAUDE.md | Da 373 a 151 righe. Sezioni ridondanti eliminate, Miracollo spostato a progetto-level |
-| 2 | B.2: Skills | 5 skill create: swarm-tools, sncp-scripts, swarm-status, swarm-context, swarm-health |
-| 3 | B.3: Smart Loading | Hook v3.0.0: rimosso COSTITUZIONE+NORD da SessionStart (-42% contesto) |
-| 4 | C.2: MCP Health | Nuovo `scripts/mcp/health_check.py` con 8 check + hook in entrambi i settings |
-| 5 | C.3: LaunchAgent | Nuovo `scripts/mcp/launchagent_health.py` - monitora 7 agent, rileva crash |
+| 1 | B.1: CLAUDE.md | 373 -> 151 righe. Sezioni -> Skills o progetto-level |
+| 2 | B.2: Skills DCI | 5 skills: swarm-tools, sncp-scripts, swarm-status, swarm-context, swarm-health |
+| 3 | B.3: Smart Loading | Hook v3.0.0: -42% contesto (rimosso COSTITUZIONE+NORD) |
+| 4 | C.2: MCP Health | `scripts/mcp/health_check.py` con 8 check |
+| 5 | C.3: LaunchAgent | `scripts/mcp/launchagent_health.py` - 7 agent |
+| 6 | D.1: Agent Teams | Studio completo + PoC parallelo (2 agenti, 1.6x speedup) |
+| 7 | D.2: SNCP MCP | 4 tool MCP (read_ripresa, read_stato, list_projects, search) |
 
 ### Decisioni Prese con PERCHE
-- **Miracollo in progetto-level (non Skill)** perche i Worker vedono CLAUDE.md del progetto ma NON le Skills della Regina
-- **Symlink skills** (`~/.claude-insiders/skills -> ~/.claude/skills/`) per evitare duplicazione
-- **COSTITUZIONE rimossa da SessionStart** perche e disponibile via Read quando serve e SubagentStart la inietta ai subagenti
-- **plutil fallback** per plist con commenti XML che plistlib non gestisce
+- **Miracollo in progetto-level** perche Worker vedono CLAUDE.md progetto, NON Skills
+- **Agent Teams abilitato** ma approccio ibrido (spawn-workers + Agent Teams + Task tool)
+- **SNCP via MCP** perche agenti accedono memoria senza sapere path filesystem
+- **Split tools.ts** perche index.ts superava 500 righe con 8 tool
 
-### File Creati/Modificati
-- `~/.claude/CLAUDE.md` - ridotto da 373 a 151 righe
-- `~/.claude/skills/{swarm-tools,sncp-scripts,swarm-status,swarm-context,swarm-health}/SKILL.md` - 5 nuove
-- `~/.claude-insiders/skills` - symlink a `~/.claude/skills/`
-- `~/Developer/miracollogeminifocus/CLAUDE.md` - aggiunta disambiguazione bracci
-- `.claude/hooks/session_start_swarm.py` - v3.0.0 smart loading
-- `scripts/mcp/health_check.py` - NUOVO: MCP health monitor
-- `scripts/mcp/launchagent_health.py` - NUOVO: LaunchAgent health check
-- `~/.claude/settings.json` + `~/.claude-insiders/settings.json` - hook MCP aggiunto
-
-### Scoperte
-- Miracollook backend crash (exit code 1, manca `aiocache`, error log 130MB)
-- subagent_start_costituzione.py e .DISABLED ma settings lo referenzia (pre-esistente)
+### File Creati/Modificati (S352)
+- `~/.claude/CLAUDE.md` - 373 -> 151 righe
+- `~/.claude/skills/{5 nuove}` + symlink insiders
+- `~/Developer/miracollogeminifocus/CLAUDE.md` - disambiguazione bracci
+- `.claude/hooks/session_start_swarm.py` - v3.0.0
+- `scripts/mcp/health_check.py` - NUOVO
+- `scripts/mcp/launchagent_health.py` - NUOVO
+- `packages/mcp-server/src/sncp/reader.ts` - NUOVO: lettura file SNCP
+- `packages/mcp-server/src/sncp/tools.ts` - NUOVO: 4 tool MCP SNCP
+- `packages/mcp-server/src/index.ts` - v0.3.0 (8 tool totali)
+- `docs/studio/RICERCA_AGENT_TEAMS_CLAUDE_CODE.md` - ricerca 753 righe
+- `docs/studio/D1_AGENT_TEAMS_POC.md` - PoC risultati
+- Settings: Agent Teams env var + MCP health hook
 
 ---
 
-## PROSSIMA SESSIONE (S353)
+## SESSIONE 353 - CervellaBrasil NASCEU!
 
-**COSA FARE:** FASE D - Evoluzione Agenti
+Rafa decidiu a direcao: **CervellaBrasil** - projeto financeiro estrategico.
+- Workspace criado: `~/Developer/CervellaBrasil/`
+- 7 pesquisas profundas (10.386 linhas, 200+ fontes)
+- Auditoria Guardiana: 9.2/10
+- SNCP: `.sncp/progetti/cervellabrasil/`
+- Handoff: `HANDOFF_20260210_S353.md`
 
-| Step | Cosa | Tempo |
-|------|------|-------|
-| D.1 | Agent Teams - studio + PoC | 4h |
-| D.2 | SNCP come MCP server | 6h |
+**DETALHES:** Ver `PROMPT_RIPRESA_cervellabrasil.md`
 
-**DOVE:** `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_MIGLIORAMENTI_INTERNI.md`
+---
 
-**NOTA:** Fixare Miracollook backend (pip install aiocache + rotate log 130MB) quando si lavora su quel progetto.
+## PROSSIMA SESSIONE (S354)
+
+Continuare CervellaBrasil FASE 0 - aprofundamento pesquisas.
+Rafa quer estudar cada opcao antes de agir.
 
 ---
 
@@ -76,9 +85,10 @@
 | S349 | Audit reale + Pulizia + MAPPA MIGLIORAMENTI |
 | S350 | FASE A: A.1 Async Hooks (9/10) + A.2 Bash Validator (9.5/10) |
 | S351 | A.3 Persistent Memory (9/10) + C.1 Hook Integrity (9.5/10) |
-| S352 | FASE B+C: 5 step, score 9.0/10 (record!) |
+| S352 | COMPLETAMENTO MAPPA: B+C+D = 7 step, score 9.1/10 |
+| S353 | CervellaBrasil nasceu! 7 pesquisas, 10k+ linhas |
 
 ---
 
-*"Ultrapassar os proprios limites!"*
-*Sessione 352 - Cervella & Rafa*
+*"Fazer do nosso mundo um lugar muito melhor"*
+*Sessione 353 - Cervella & Rafa*
