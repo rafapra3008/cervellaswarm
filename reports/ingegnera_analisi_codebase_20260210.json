@@ -1,0 +1,394 @@
+{
+  "analisi_codebase_cervellaswarm": {
+    "timestamp": "2026-02-10T13:34:00",
+    "health_score": "7/10",
+    "status": "GOOD_WITH_ISSUES",
+    "summary": "Codebase sana ma con 6 file CRITICAL sopra 500 righe, 176 report vecchi, 96 .pyc file da pulire, 58 moduli non testati"
+  },
+  
+  "1_file_grandi": {
+    "severity": "CRITICAL",
+    "soglia_critical": 500,
+    "soglia_warning": 300,
+    "critical_files": [
+      {
+        "file": "scripts/utils/semantic_search.py",
+        "lines": 577,
+        "severity": "CRITICAL",
+        "suggestion": "Split in: SemanticSearchCore (query logic), SemanticSearchCache (caching), SemanticSearchCLI (interface)"
+      },
+      {
+        "file": "scripts/utils/repo_mapper.py",
+        "lines": 569,
+        "severity": "CRITICAL",
+        "suggestion": "Split in: RepoMapperCore (mapping logic), RepoMapperOutput (formatters), RepoMapperCLI"
+      },
+      {
+        "file": "scripts/utils/impact_analyzer.py",
+        "lines": 564,
+        "severity": "CRITICAL",
+        "suggestion": "Split in: ImpactAnalysisEngine, ImpactReporter, ImpactCLI"
+      },
+      {
+        "file": "scripts/swarm/architect_flow.py",
+        "lines": 525,
+        "severity": "CRITICAL",
+        "suggestion": "Split in: ArchitectCore (planning), ArchitectValidator, ArchitectCLI"
+      },
+      {
+        "file": "scripts/swarm/task_manager.py",
+        "lines": 524,
+        "severity": "CRITICAL",
+        "suggestion": "Split in: TaskManagerCore (task logic), TaskPersistence (DB), TaskCLI"
+      },
+      {
+        "file": "scripts/memory/load_context.py",
+        "lines": 522,
+        "severity": "CRITICAL",
+        "suggestion": "Split in: ContextLoader (loading), ContextFilter (filtering), ContextFormatter"
+      }
+    ],
+    "warning_files": [
+      {
+        "file": "scripts/memory/migrate.py",
+        "lines": 479,
+        "severity": "WARNING",
+        "suggestion": "Vicino alla soglia CRITICAL. Pianificare split se cresce."
+      },
+      {
+        "file": "scripts/utils/dependency_graph.py",
+        "lines": 464,
+        "severity": "WARNING"
+      },
+      {
+        "file": "scripts/engineer/analyze_codebase.py",
+        "lines": 441,
+        "severity": "WARNING"
+      },
+      {
+        "file": "scripts/utils/typescript_extractor.py",
+        "lines": 422,
+        "severity": "WARNING"
+      },
+      {
+        "file": "scripts/swarm/dashboard/data.py",
+        "lines": 417,
+        "severity": "WARNING"
+      },
+      {
+        "file": "scripts/swarm/dashboard/render.py",
+        "lines": 414,
+        "severity": "WARNING"
+      },
+      {
+        "file": "scripts/memory/retro/output.py",
+        "lines": 413,
+        "severity": "WARNING"
+      }
+    ],
+    "recommendation": "URGENTE: Refactor 6 file CRITICAL sopra 500 righe. Pianificare split per 7 file WARNING sopra 400 righe."
+  },
+  
+  "2_todo_fixme_hack": {
+    "severity": "LOW",
+    "total_found": 12,
+    "breakdown": {
+      "TODO": 8,
+      "FIXME": 2,
+      "HACK": 1,
+      "XXX": 1
+    },
+    "items": [
+      {
+        "file": "scripts/engineer/analyze_codebase.py",
+        "type": "PATTERN_DEFINITION",
+        "severity": "INFO",
+        "note": "File definisce pattern per cercare TODO, non un vero TODO"
+      },
+      {
+        "file": "src/alerting/notifiers/slack_notifier.py",
+        "line": 13,
+        "type": "XXX",
+        "content": "XXX/YYY/ZZZ placeholder",
+        "severity": "LOW",
+        "suggestion": "Placeholder esempio, OK se documentazione"
+      },
+      {
+        "file": "scripts/sncp/quality-check.py",
+        "type": "TODO",
+        "severity": "LOW",
+        "note": "Script controlla TODO nei file SNCP, non un vero TODO"
+      },
+      {
+        "file": "tests/sncp/test_e2e_sncp_4.py",
+        "lines": [82, 112, 113],
+        "type": "TODO",
+        "content": "Completare E2E tests, Verificare integrazione hook",
+        "severity": "MEDIUM",
+        "suggestion": "Completare test E2E per SNCP 4.0"
+      }
+    ],
+    "recommendation": "Solo 1 TODO reale trovato (test E2E SNCP). Situazione ottima."
+  },
+  
+  "3_import_duplicati": {
+    "severity": "MEDIUM",
+    "duplicates_found": 2,
+    "issues": [
+      {
+        "type": "EXACT_DUPLICATE",
+        "severity": "HIGH",
+        "file1": "scripts/sncp/smart_search.py",
+        "file2": "scripts/sncp/smart-search.py",
+        "content": "IDENTICAL (diff shows no differences)",
+        "suggestion": "Rimuovere uno dei due. Convenzionalmente tenere smart_search.py (underscore) e deprecare smart-search.py (dash)"
+      },
+      {
+        "type": "PARTIAL_DUPLICATION",
+        "severity": "MEDIUM",
+        "pattern": "memory/analytics/commands/ vs memory/commands/",
+        "files": [
+          {
+            "analytics": "memory/analytics/commands/dashboard.py (123 lines)",
+            "direct": "memory/commands/dashboard.py (12 lines)",
+            "status": "DIFFERENT - analytics piu completo"
+          },
+          {
+            "analytics": "memory/analytics/commands/auto_detect.py (113 lines)",
+            "direct": "memory/commands/auto_detect.py (128 lines)",
+            "status": "DIFFERENT - direct piu completo"
+          },
+          {
+            "analytics": "memory/analytics/commands/retro.py (42 lines)",
+            "direct": "memory/commands/retro.py (43 lines)",
+            "status": "SIMILAR - quasi identici"
+          }
+        ],
+        "suggestion": "Consolidare architettura: decidere se usare memory/analytics/commands/ o memory/commands/. Sembra ci siano due implementazioni parallele."
+      }
+    ],
+    "recommendation": "1) Rimuovere smart-search.py duplicato. 2) Analizzare e consolidare memory/analytics/commands vs memory/commands"
+  },
+  
+  "4_codice_morto": {
+    "severity": "MEDIUM",
+    "potentially_unused": 15,
+    "note": "Analisi parziale (primi 20 moduli). Potenzialmente piu moduli non importati.",
+    "files": [
+      "scripts/convert_agents_to_agent_hq.py",
+      "scripts/swarm/output_validator.py",
+      "scripts/parallel/task_analyzer.py",
+      "scripts/parallel/prompt_builder.py",
+      "scripts/parallel/suggest_pattern.py",
+      "scripts/tools/add_version_headers.py",
+      "scripts/memory/lesson_formatter.py",
+      "scripts/memory/suggestions.py",
+      "scripts/memory/context_scorer.py",
+      "scripts/memory/log_event.py"
+    ],
+    "caveats": [
+      "Alcuni potrebbero essere script CLI (lanciati direttamente, non importati)",
+      "Alcuni potrebbero essere importati dinamicamente",
+      "Richiede analisi manuale per confermare"
+    ],
+    "recommendation": "Verificare manualmente se questi file sono: 1) CLI standalone OK, 2) Dead code da rimuovere, 3) Feature in sviluppo"
+  },
+  
+  "5_test_coverage_gap": {
+    "severity": "MEDIUM",
+    "total_script_modules": 69,
+    "tested_modules": 26,
+    "untested_modules": 58,
+    "coverage_percentage": "37.7%",
+    "critical_gaps": [
+      "scripts/engineer/analyze_codebase.py - 441 righe, NO TEST",
+      "scripts/utils/impact_analyzer.py - 564 righe, NO TEST",
+      "scripts/swarm/architect_flow.py - 525 righe, NO TEST",
+      "scripts/memory/load_context.py - 522 righe, NO TEST",
+      "scripts/memory/migrate.py - 479 righe, NO TEST"
+    ],
+    "untested_sample": [
+      "tools/add_version_headers.py",
+      "engineer/analyze_codebase.py",
+      "engineer/create_auto_pr.py",
+      "memory/context_scorer.py",
+      "memory/init_db.py",
+      "memory/lesson_formatter.py",
+      "memory/log_event.py",
+      "utils/impact_analyzer.py",
+      "utils/semantic_search.py",
+      "swarm/architect_flow.py"
+    ],
+    "recommendation": "PRIORITA: Testare i 6 file CRITICAL grandi. Obiettivo: 60% coverage sui file sopra 300 righe."
+  },
+  
+  "6_file_stale": {
+    "severity": "MEDIUM",
+    "categories": {
+      "pyc_cache": {
+        "count": 96,
+        "severity": "LOW",
+        "type": "__pycache__/*.pyc files",
+        "suggestion": "Aggiungere __pycache__/ a .gitignore (gia presente?). Pulire con: find . -type d -name '__pycache__' -exec rm -rf {} +"
+      },
+      "logs": {
+        "count": 73,
+        "severity": "LOW",
+        "type": ".log files in logs/",
+        "suggestion": "Normale accumulo log. Considerare rotazione automatica se > 100 file."
+      },
+      "old_reports": {
+        "count": 176,
+        "total_reports": 218,
+        "severity": "MEDIUM",
+        "type": "reports/ files older than 7 days",
+        "percentage": "80.7% dei report hanno piu di 7 giorni",
+        "oldest": [
+          "tech_debt_miracollo_20260117_145131.md (20 giorni)",
+          "sncp_structure_analysis_20260118.md (20 giorni)",
+          "security_audit_pre_push_20260119.md (20 giorni)",
+          "scientist_prompt_*.md serie (20 giorni)"
+        ],
+        "suggestion": "Archiviare report > 30 giorni in reports/archive/. Considerare cleanup automatico."
+      },
+      "ds_store": {
+        "count": 3,
+        "severity": "LOW",
+        "files": [".DS_Store", "docs/.DS_Store", "docs/demo/docs/.DS_Store"],
+        "suggestion": "Aggiungere .DS_Store a .gitignore globale"
+      },
+      "coverage": {
+        "count": 1,
+        "file": ".coverage (53KB)",
+        "severity": "LOW",
+        "suggestion": "File modificato oggi, OK. Aggiungere a .gitignore se non gia presente."
+      }
+    },
+    "recommendation": "1) Archiviare 176 report vecchi. 2) Cleanup .pyc (comando find). 3) .gitignore per .DS_Store"
+  },
+  
+  "7_architettura": {
+    "severity": "INFO",
+    "directories_analysis": {
+      "memory": {
+        "count": 31,
+        "severity": "WARNING",
+        "note": "Directory piu popolata. Analizzare se serve ulteriore suddivisione."
+      },
+      "utils": {
+        "count": 14,
+        "severity": "INFO",
+        "note": "Utils e una catch-all. Considerare se alcuni moduli dovrebbero avere propria directory."
+      },
+      "swarm": {
+        "count": 8,
+        "severity": "OK"
+      },
+      "common": {
+        "count": 5,
+        "severity": "OK"
+      },
+      "learning": {
+        "count": 4,
+        "severity": "OK"
+      },
+      "parallel": {
+        "count": 3,
+        "severity": "OK"
+      },
+      "sncp": {
+        "count": 3,
+        "severity": "OK"
+      },
+      "compaction": {
+        "count": 3,
+        "severity": "OK"
+      },
+      "engineer": {
+        "count": 2,
+        "severity": "OK"
+      }
+    },
+    "observations": [
+      "Architettura generale ben organizzata",
+      "memory/ e la directory piu grande (31 file) - potrebbe beneficiare di sotto-directory tematiche",
+      "utils/ (14 file) - alcuni moduli grandi potrebbero meritare directory dedicata",
+      "Duplication pattern: memory/analytics/commands vs memory/commands - architettura da consolidare"
+    ],
+    "recommendation": "Considerare split memory/ in sotto-directory: memory/loaders/, memory/analytics/, memory/storage/"
+  },
+  
+  "prioritized_recommendations": [
+    {
+      "priority": 1,
+      "severity": "CRITICAL",
+      "action": "Refactor 6 file sopra 500 righe",
+      "files": [
+        "semantic_search.py",
+        "repo_mapper.py",
+        "impact_analyzer.py",
+        "architect_flow.py",
+        "task_manager.py",
+        "load_context.py"
+      ],
+      "effort": "3-5 giorni",
+      "impact": "HIGH - Migliora manutenibilita e testabilita"
+    },
+    {
+      "priority": 2,
+      "severity": "HIGH",
+      "action": "Rimuovere smart-search.py duplicato",
+      "effort": "5 minuti",
+      "impact": "LOW - Pulizia immediata"
+    },
+    {
+      "priority": 3,
+      "severity": "HIGH",
+      "action": "Consolidare memory/analytics/commands vs memory/commands",
+      "effort": "1-2 ore",
+      "impact": "MEDIUM - Chiarisce architettura"
+    },
+    {
+      "priority": 4,
+      "severity": "MEDIUM",
+      "action": "Archiviare 176 report vecchi in reports/archive/",
+      "effort": "10 minuti",
+      "impact": "LOW - Riduce clutter"
+    },
+    {
+      "priority": 5,
+      "severity": "MEDIUM",
+      "action": "Aggiungere test per 6 file CRITICAL",
+      "effort": "2-3 giorni",
+      "impact": "HIGH - Aumenta confidence in refactoring"
+    },
+    {
+      "priority": 6,
+      "severity": "LOW",
+      "action": "Cleanup .pyc e __pycache__",
+      "effort": "1 comando",
+      "impact": "LOW - Pulizia"
+    },
+    {
+      "priority": 7,
+      "severity": "LOW",
+      "action": "Completare TODO test E2E SNCP",
+      "effort": "1-2 ore",
+      "impact": "MEDIUM - Completa test suite SNCP"
+    }
+  ],
+  
+  "metrics_summary": {
+    "total_python_files": 75,
+    "total_lines_top_40": 13000,
+    "avg_lines_per_file": 173,
+    "files_over_500": 6,
+    "files_over_400": 7,
+    "files_over_300": 13,
+    "test_coverage": "37.7%",
+    "todo_count": 1,
+    "duplicate_files": 2,
+    "old_reports": 176,
+    "cache_files": 96
+  }
+}

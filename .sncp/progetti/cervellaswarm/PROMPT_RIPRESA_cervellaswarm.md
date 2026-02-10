@@ -1,58 +1,72 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-10 - Sessione 340
-> **STATUS:** MEGA ROADMAP INTERNA - FASE 3 IN CORSO (3.1 + 3.2 COMPLETATI)
+> **Ultimo aggiornamento:** 2026-02-10 - Sessione 341
+> **STATUS:** MEGA ROADMAP INTERNA COMPLETATA (FASE 1-4)
 
 ---
 
-## SESSIONE 340 - ORDINE + FASE 3.2
+## SESSIONE 341 - FASE 3.3 + FASE 4
 
 ```
 +================================================================+
-|   S340: Ordine S339 + Test Coverage Push                       |
-|   384+ test PASS (era 204 = +88%)                              |
-|   3 file CRITICAL testati + fix import shadowing               |
-|   Guardiana: 9.5/10 ordine + 9.2/10 test                      |
+|   S341: FASE 3.3 + FASE 4 COMPLETATE                          |
+|   366 test PASS (era 219 = +67%)                               |
+|   +147 test nuovi (80 dashboard + 67 analytics commands)       |
+|   Coverage: 42% -> analizzato, gap identificati                |
+|   Guardiana: 8.5/10 (FASE 3.3) + 8.5/10 (FASE 4)             |
 +================================================================+
 ```
 
-### Cosa fatto S340
-
+### FASE 3.3 - Monitoring Dashboard
 | Azione | Dettaglio |
 |--------|-----------|
-| Fix test_db.py | Import path + mock target + SQLite lazy assertions. 11/11 PASS |
-| Fix package shadowing | Rimossi tests/{common,memory,swarm}/__init__.py (facevano shadow su scripts/) |
-| Fix vecchi test | test_architect_flow.py + test_task_classifier.py: `from swarm.` -> `from scripts.swarm.` |
-| Type hint handler.py | Aggiunto `Any` type annotation a response params |
-| **test_task_manager.py** | 56 test NUOVI per core swarm orchestration |
-| **test_load_context.py** | 37 test NUOVI per memoria (95% coverage) |
-| **test_impact_analyzer.py** | 41 test NUOVI per dependency analysis |
+| Test CLI Dashboard | 52 test: data.py (25) + render.py+cli.py (27) |
+| Test Analytics Dashboard | 28 test: core (17) + edge (11) |
+| Fix duplicazione | dashboard.py -> thin re-export |
+| Split 3 file oversized | impact_analyzer, dashboard_cli, dashboard_analytics |
+| conftest.py DRY | tests/memory/ + tests/utils/ |
 
-### Lezione Appresa
+### FASE 4 - Perfezione
+| Azione | Dettaglio |
+|--------|-----------|
+| Cleanup duplicati | Rimosso smart-search.py (copia esatta smart_search.py) |
+| Archivio report | 200 report vecchi -> reports/archive/ |
+| Consolidamento | auto_detect.py + retro.py -> thin re-exports (come dashboard) |
+| Test analytics cmds | 67 test NUOVI: agents(8), events(8), lessons(13), patterns(13), summary(12), helpers(13) |
+| Ingegnera report | Analisi codebase completa: health 7/10, 6 file >500, gap identificati |
 
-**Package shadowing:** `tests/xxx/__init__.py` + `scripts/xxx/__init__.py` = Python trova il package sbagliato. Soluzione: MAI mettere `__init__.py` nelle cartelle test. Pytest non ne ha bisogno.
+### Stato Coverage (--cov)
+- **42% totale** (4075 stmts, 2380 missing)
+- 100%: compaction, dashboard analytics, config, __init__
+- 90%+: colors, db, load_context, dashboard/render
+- Gap principali: retro/ (12-31%), analytics cmds (ora testati!), utils/ parsers
 
 ---
 
-## MEGA ROADMAP INTERNA
+## MEGA ROADMAP INTERNA - COMPLETATA
 
-**FASE 1 - Quick Wins:** COMPLETATA (9.1/10)
-**FASE 2 - Evoluzione:** COMPLETATA (8.7/10)
-**FASE 3 - Crescita:** IN CORSO
-- [x] 3.1 POC Compaction API (S339) - 19 test
-- [x] 3.2 Test coverage push (S340) - 134 nuovi test, totale 384+
-- [ ] 3.3 Monitoring dashboard
-- [x] 3.4 Split ricerca Agent Teams (S339, su disco gitignored)
+**FASE 1 - Quick Wins:** 9.1/10
+**FASE 2 - Evoluzione:** 8.7/10
+**FASE 3 - Crescita:** 8.5/10
+- [x] 3.1 POC Compaction API (S339)
+- [x] 3.2 Test coverage push (S340)
+- [x] 3.3 Monitoring dashboard (S341)
+- [x] 3.4 Split ricerca Agent Teams (S339)
 
-**FASE 4 - Perfezione:** PENDING
+**FASE 4 - Perfezione:** 8.5/10
+- [x] 4.1 Cleanup duplicati + stale (S341)
+- [x] 4.2 Consolidamento memory/commands/ (S341)
+- [x] 4.3 Analytics commands tests +67 (S341)
+- [x] 4.4 Guardiana audit (S341)
 
 ---
 
 ## TODO PROSSIMA SESSIONE
 
-- [ ] FASE 3.3 - Monitoring dashboard miglioramenti
-- [ ] Valutare split test_impact_analyzer.py (869 righe > limite 500)
-- [ ] Poi FASE 4
+- [ ] 6 file >500 righe da splittare (semantic_search, repo_mapper, impact_analyzer, architect_flow, task_manager, load_context)
+- [ ] Retro module tests (12-31% coverage)
+- [ ] Coverage push obiettivo 60%
+- [ ] Schema DB canonico da definire (conftest vs analytics usano colonne diverse)
 
 ---
 
@@ -65,8 +79,9 @@
 | S338 | FASE 2 (8.7/10) |
 | S339 | FASE 3 parziale (POC Compaction + test parziali) |
 | S340 | Ordine S339 + FASE 3.2 Test Coverage (9.2/10) |
+| S341 | FASE 3.3 + FASE 4 COMPLETATE (+147 test, 366 totali) |
 
 ---
 
 *"Ultrapassar os proprios limites!"*
-*Sessione 340 - Cervella & Rafa*
+*Sessione 341 - Cervella & Rafa*

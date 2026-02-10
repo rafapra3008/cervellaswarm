@@ -23,30 +23,7 @@ from impact_analyzer import (
     ImpactResult,
 )
 
-
-# === FIXTURES ===
-
-
-@pytest.fixture
-def mock_symbol():
-    """Mock Symbol object."""
-    symbol = MagicMock()
-    symbol.name = "TestClass"
-    symbol.type = "class"
-    symbol.file = "/test/file.py"
-    symbol.line = 10
-    symbol.references = ["OtherClass", "helper_func"]
-    return symbol
-
-
-@pytest.fixture
-def temp_repo(tmp_path):
-    """Temporary repo directory."""
-    repo = tmp_path / "test_repo"
-    repo.mkdir()
-    (repo / "main.py").write_text("class Main: pass")
-    (repo / "utils.py").write_text("def helper(): pass")
-    return str(repo)
+# Fixtures mock_symbol, temp_repo from conftest.py
 
 
 # === IMPACTRESULT TESTS ===
