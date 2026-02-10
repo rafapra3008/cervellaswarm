@@ -30,7 +30,12 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts" / "sncp")
 
 import daily_memory_loader
 import session_end_flush
-from smart_search import search_bm25
+try:
+    from smart_search import search_bm25
+except ImportError:
+    smart_search = None
+    search_bm25 = None
+    pytestmark = pytest.mark.skip(reason="smart_search module removed in S341")
 
 # Import quality-check dynamically (has dash in name)
 import importlib.util

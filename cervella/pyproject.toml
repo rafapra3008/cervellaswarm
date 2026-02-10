@@ -73,7 +73,7 @@ addopts = [
     "--cov-report=term-missing",
     "--cov-report=html",
     "--cov-report=xml",
-    "--cov-fail-under=40",  # Baseline 41%, target graduale: 40 -> 50 -> 60
+    "--cov-fail-under=55",  # S342: coverage 60%, soglia protettiva 55%
     "-v",
 ]
 

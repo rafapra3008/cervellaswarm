@@ -21,12 +21,16 @@ from pathlib import Path
 
 # Import module to test
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts" / "sncp"))
-from smart_search import (
-    preprocess_text,
-    read_markdown_files,
-    extract_snippet,
-    search_bm25,
-)
+try:
+    from smart_search import (
+        preprocess_text,
+        read_markdown_files,
+        extract_snippet,
+        search_bm25,
+    )
+except ImportError:
+    pytestmark = pytest.mark.skip(reason="smart_search module removed in S341")
+    preprocess_text = read_markdown_files = extract_snippet = search_bm25 = None
 
 
 # ============================================================================
