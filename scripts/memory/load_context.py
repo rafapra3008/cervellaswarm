@@ -32,6 +32,12 @@ except ImportError:
     get_suggestions = None
     get_context_aware_suggestions = None
 
+# Import extracted formatters (S342 split)
+try:
+    from load_context_formatters import format_lessons_for_agent, format_context
+except ImportError:
+    from scripts.memory.load_context_formatters import format_lessons_for_agent, format_context
+
 
 def get_recent_events(conn: sqlite3.Connection, limit: int = 20) -> list:
     """
@@ -259,79 +265,6 @@ def get_relevant_lessons(
     return lessons[:limit]
 
 
-def format_lessons_for_agent(lessons: list) -> str:
-    """
-    Formatta lezioni per prompt agent in markdown.
-
-    Args:
-        lessons: Lista di lezioni da formattare
-
-    Returns:
-        Markdown formattato
-    """
-    if not lessons:
-        return ""
-
-    output = []
-    output.append("## 📚 LEZIONI RILEVANTI PER QUESTO TASK\n")
-    output.append("*Lezioni apprese da errori passati - APPLICALE!*\n\n")
-
-    for lesson in lessons:
-        severity = lesson.get("severity", "MEDIUM")
-        emoji = {
-            "CRITICAL": "🔴",
-            "HIGH": "🟠",
-            "MEDIUM": "🟡",
-            "LOW": "🟢"
-        }.get(severity, "⚪")
-
-        pattern = lesson.get("pattern") or "Pattern Unknown"
-        output.append(f"### {emoji} {severity} - {pattern}\n")
-
-        # Trigger
-        trigger = lesson.get("trigger")
-        if trigger:
-            output.append(f"**Trigger:** {trigger}\n\n")
-
-        # Problem
-        problem = lesson.get("problem")
-        if problem:
-            output.append(f"**Problem:** {problem}\n\n")
-
-        # Root Cause
-        root_cause = lesson.get("root_cause")
-        if root_cause:
-            output.append(f"**Root Cause:** {root_cause}\n\n")
-
-        # Solution
-        solution = lesson.get("solution")
-        if solution:
-            output.append(f"**Solution:** {solution}\n\n")
-
-        # Prevention
-        prevention = lesson.get("prevention")
-        if prevention:
-            output.append(f"**Prevention:** {prevention}\n\n")
-
-        # Example
-        example = lesson.get("example")
-        if example:
-            output.append(f"**Example:** {example}\n\n")
-
-        # Metadata
-        confidence = lesson.get("confidence", 0)
-        times_applied = lesson.get("times_applied", 0)
-        score = lesson.get("score", 0)
-        output.append(
-            f"*Confidence: {confidence:.0%} | "
-            f"Applicata {times_applied}x | "
-            f"Score: {score}*\n\n"
-        )
-        output.append("---\n\n")
-
-    return "".join(output)
-
-
 def get_active_suggestions(project: str = None) -> list:
     """
     Recupera suggerimenti attivi.
@@ -349,77 +282,6 @@ def get_active_suggestions(project: str = None) -> list:
         return get_suggestions(project=project, limit=5)
     except Exception:
         return []
-
-
-def format_context(events: list, stats: dict, lessons: list, suggestions: list = None) -> str:
-    """
-    Formatta contesto in markdown per hook.
-
-    Args:
-        events: Lista eventi recenti
-        stats: Statistiche agent
-        lessons: Lezioni apprese
-        suggestions: Suggerimenti attivi (opzionale)
-
-    Returns:
-        Markdown formattato
-    """
-    output = []
-
-    # Header
-    output.append("# 🐝 CervellaSwarm - Memoria Attiva\n")
-    output.append(f"*Aggiornato: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC*\n")
-
-    # Eventi recenti
-    if events:
-        output.append("## 📊 Ultimi Eventi Swarm\n")
-        for evt in events[:10]:  # Max 10
-            status = "✅" if evt["success"] else "❌"
-            output.append(
-                f"- {status} **{evt['agent']}** ({evt['project']}): {evt['task']}\n"
-            )
-        output.append("")
-
-    # Suggerimenti attivi
-    if suggestions:
-        output.append("## 💡 SUGGERIMENTI ATTIVI\n")
-        output.append("*Basati su lezioni apprese e pattern di errori*\n\n")
-        for sug in suggestions:
-            severity = sug.get('severity', 'MEDIUM')
-            emoji = {'CRITICAL': '🔴', 'HIGH': '🟠', 'MEDIUM': '🟡', 'LOW': '🟢'}.get(severity, '⚪')
-            pattern = sug.get('pattern', 'Unknown')
-            prevention = sug.get('prevention') or sug.get('mitigation') or 'N/A'
-            output.append(f"- {emoji} **[{severity}] {pattern}**\n")
-            output.append(f"  → {prevention[:100]}\n")
-        output.append("\n")
-
-    # Statistiche
-    if stats:
-        output.append("## 🎯 Statistiche Agent\n")
-        for agent, data in stats.items():
-            success_rate = (data["successful_tasks"] / data["total_tasks"] * 100
-                          if data["total_tasks"] > 0 else 0)
-            projects = ", ".join(data["projects"])
-            output.append(
-                f"- **{agent}**: {data['total_tasks']} task "
-                f"({success_rate:.1f}% successo) - Progetti: {projects}\n"
-            )
-        output.append("")
-
-    # Lezioni apprese
-    if lessons:
-        output.append("## 💡 Lezioni Apprese (Alta Confidence)\n")
-        for lesson in lessons:
-            output.append(f"### {lesson['pattern']}\n")
-            output.append(f"- **Problema**: {lesson['problem']}\n")
-            output.append(f"- **Soluzione**: {lesson['solution']}\n")
-            output.append(
-                f"- **Confidence**: {lesson['confidence']:.0%} "
-                f"(applicata {lesson['times_applied']} volte)\n"
-            )
-            output.append("")
-
-    return "".join(output)
 
 
 def load_context(agent_name: str = None, project: str = None) -> dict:

@@ -36,7 +36,6 @@ Date: 2026-01-19
 __version__ = "1.0.0"
 __version_date__ = "2026-01-19"
 
-import argparse
 import logging
 from pathlib import Path
 from typing import Dict, List, Optional
@@ -443,127 +442,7 @@ def generate_repo_map(
     return map_text
 
 
-def main():
-    """CLI entry point for repository mapper."""
-    parser = argparse.ArgumentParser(
-        description="Generate repository map using tree-sitter",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
-  # Generate map for current directory
-  python3 scripts/utils/repo_mapper.py --repo-path .
-
-  # Specify token budget
-  python3 scripts/utils/repo_mapper.py --repo-path . --budget 3000
-
-  # Save to file
-  python3 scripts/utils/repo_mapper.py --repo-path . --output repo_map.md
-
-  # Filter only Python files
-  python3 scripts/utils/repo_mapper.py --repo-path . --filter "**/*.py"
-
-  # Filter specific directory
-  python3 scripts/utils/repo_mapper.py --repo-path . --filter "scripts/**/*.py"
-        """
-    )
-
-    parser.add_argument(
-        '--repo-path',
-        type=str,
-        default='.',
-        help='Path to repository root (default: current directory)'
-    )
-
-    parser.add_argument(
-        '--budget',
-        type=int,
-        default=2000,
-        help='Token budget for map (default: 2000)'
-    )
-
-    parser.add_argument(
-        '--filter',
-        type=str,
-        default=None,
-        help='Glob pattern to filter files (e.g., "**/*.py")'
-    )
-
-    parser.add_argument(
-        '--output',
-        type=str,
-        default=None,
-        help='Output file path (if not specified, prints to stdout)'
-    )
-
-    parser.add_argument(
-        '--verbose',
-        action='store_true',
-        help='Enable verbose logging'
-    )
-
-    parser.add_argument(
-        '--stats',
-        action='store_true',
-        help='Show statistics after generating map'
-    )
-
-    args = parser.parse_args()
-
-    # Configure logging
-    log_level = logging.DEBUG if args.verbose else logging.INFO
-    logging.basicConfig(
-        level=log_level,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
-
-    try:
-        # Generate map
-        print(f"\n🗺️  Generating repository map for: {args.repo_path}")
-        print(f"Token budget: {args.budget}")
-        if args.filter:
-            print(f"Filter pattern: {args.filter}")
-        print()
-
-        mapper = RepoMapper(args.repo_path)
-        map_text = mapper.build_map(
-            token_budget=args.budget,
-            filter_pattern=args.filter
-        )
-
-        # Output map
-        if args.output:
-            with open(args.output, 'w') as f:
-                f.write(map_text)
-            print(f"✅ Map saved to: {args.output}")
-        else:
-            print(map_text)
-
-        # Show statistics if requested
-        if args.stats:
-            stats = mapper.get_stats()
-            print(f"\n📊 Statistics:")
-            print(f"  Total symbols: {stats['symbols']}")
-            print(f"  Graph nodes: {stats['graph_nodes']}")
-            print(f"  Graph edges: {stats['graph_edges']}")
-            print(f"  Isolated symbols: {stats['graph_isolated']}")
-
-            # Estimate actual tokens used
-            actual_tokens = mapper._estimate_tokens(map_text)
-            print(f"  Estimated tokens: {actual_tokens} / {args.budget}")
-
-    except FileNotFoundError as e:
-        print(f"\n❌ {e}")
-        return 1
-    except Exception as e:
-        print(f"\n❌ Unexpected error: {e}")
-        if args.verbose:
-            import traceback
-            traceback.print_exc()
-        return 1
-
-    return 0
-
-
 if __name__ == "__main__":
     import sys
+    from repo_mapper_cli import main
     sys.exit(main())
