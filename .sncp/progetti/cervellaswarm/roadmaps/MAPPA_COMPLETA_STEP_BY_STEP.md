@@ -2,7 +2,7 @@
 
 > **"Ogni step chiaro. Ogni step puntato e studiato."** - Rafa
 > **Data creazione:** 15 Gennaio 2026
-> **Ultima modifica:** 15 Gennaio 2026 - Sessione 225 (3 step critici STUDIATI!)
+> **Ultima modifica:** 10 Febbraio 2026 - Sessione 349 (Audit reale + FASE 3-4 parcheggiato)
 
 ---
 
@@ -746,16 +746,17 @@ STRUTTURA: Open Core (futuro)
 
 ## STEP 2.18: Security Audit
 
-**Stato:** [DA FARE]
-**Ricerca fatta:** npm audit docs
+**Stato:** [FATTO] - Sessioni 286, 320
+**Ricerca fatta:** npm audit docs + audit pratico
 **Dipende da:** 2.17
 **Output:** 0 vulnerabilita note
 
-**DA FARE:**
-- [ ] npm audit
-- [ ] Dependency review
-- [ ] No secrets in code
-- [ ] Rate limiting (se API)
+**COMPLETATO:**
+- [x] `scripts/sncp/audit-secrets.sh` (159 righe) - Scan automatico secrets
+- [x] Security audit pre-push (227 righe) - Verdict: "VERDE - SAFE TO PUSH"
+- [x] Security audit Ericsoft sync (589 righe) - Risk matrix completa, score 9.5/10
+- [x] .gitignore verificato, no secrets nel repo pubblico
+- [x] npm audit clean
 
 **Criterio completamento:** npm audit = 0 high/critical
 
@@ -763,18 +764,20 @@ STRUTTURA: Open Core (futuro)
 
 ## STEP 2.19: Documentation README
 
-**Stato:** [DA FARE]
+**Stato:** [FATTO] - Sessioni 228-310
 **Ricerca fatta:** README best practices
 **Dipende da:** 2.13
 **Output:** README.md per utenti esterni
 
-**DA CREARE:**
-- [ ] Quick Start (< 2 min to first use)
-- [ ] Installation
-- [ ] Commands reference
-- [ ] Configuration
-- [ ] Troubleshooting
-- [ ] Contributing
+**COMPLETATO:**
+- [x] Quick Start (< 2 min to first use) - In CLI README + Root README
+- [x] Installation - 3 step (`npx cervellaswarm init`)
+- [x] Commands reference - init, task, status, resume, doctor
+- [x] Configuration - Documentata
+- [x] Contributing - CONTRIBUTING.md con Apache 2.0 + DCO
+- [x] README CLI: 315 righe, README root: 183 righe
+- [x] CHANGELOG.md: 139 righe (Keep a Changelog format)
+- [x] 50+ file in docs/ (GETTING_STARTED, AGENTS_REFERENCE, ARCHITECTURE, etc.)
 
 **Criterio completamento:** Developer esterno capisce senza chiedere
 
@@ -782,26 +785,159 @@ STRUTTURA: Open Core (futuro)
 
 ## STEP 2.20: MVP v1.0 Release
 
-**Stato:** [DA FARE]
+**Stato:** [PARZIALE - PARCHEGGIATO]
 **Ricerca fatta:** Tutti i precedenti
 **Dipende da:** 2.1-2.19
 **Output:** Prima release pubblica
 
 **CHECKLIST RELEASE:**
-- [ ] Tutti i test passano
-- [ ] npm publish funziona
-- [ ] README completo
-- [ ] Changelog v1.0.0
-- [ ] GitHub release tag
-- [ ] 5 tester esterni confermano funzionamento
+- [x] Tutti i test passano (968 test, 95% coverage)
+- [x] npm publish funziona (v0.1.2 latest + v2.0.0-beta.1 beta)
+- [x] README completo
+- [x] Changelog v2.0.0-beta
+- [x] GitHub release tag (v2.0.0-beta.1)
+- [ ] 5 tester esterni confermano funzionamento (PARCHEGGIATO)
+
+**NOTA (S349):** Prodotto pubblicato come beta. Release formale "v1.0"
+rimandata - focus spostato su uso interno. Riprenderemo quando il
+prodotto torna attivo.
 
 **Criterio completamento:** Installabile e usabile da esterni
 
 ---
 
-# FASE 3: PRIMI UTENTI (Mag-Giu 2026)
+# ROADMAP 2.0 INTERNA (Gen-Feb 2026) - COMPLETATA
+
+> **"Prima COSTRUIRE perfettamente, poi VENDERE"**
+>
+> Questa sezione documenta 120 sessioni (S229-S348) di lavoro interno
+> non presente nella Mappa originale. Aggiunta in S349 dopo audit reale.
+
+---
+
+## W1: Git Flow 2.0 - Worker Attribution (9.5/10)
+
+**Stato:** [FATTO] - Sessioni 271-273
+**Output:**
+- `scripts/git/git_worker_commit.sh` (720 righe) - Commit attribution automatica
+- Auto-detect commit type da file changes
+- Dual remote: privato (origin) + pubblico (public)
+- 13 scope patterns per conventional commits
+- `docs/GIT_ATTRIBUTION.md`
+
+---
+
+## W2: Tree-sitter AST Parsing (9.5/10)
+
+**Stato:** [FATTO] - Sessioni 274-280
+**Output:**
+- `scripts/utils/treesitter_parser.py` (365 righe) - Multi-language AST
+- `scripts/utils/symbol_extractor.py` (486 righe) - Symbol extraction
+- `scripts/utils/dependency_graph.py` (451 righe) - PageRank ranking
+- `scripts/utils/repo_mapper.py` (571 righe) - Repository mapping
+- `scripts/utils/python_extractor.py` + `typescript_extractor.py` (36k totali)
+- `scripts/utils/symbol_cache.py` - Caching 152x speedup
+
+---
+
+## W3: Architect + Semantic Search (9.7/10)
+
+**Stato:** [FATTO] - Sessioni 281-285
+**Output:**
+- `scripts/utils/semantic_search.py` - find-symbol, find-callers, find-references
+- `scripts/architect/semantic-search.sh` - CLI wrapper
+- `scripts/swarm/architect_flow.py` (525 righe) - Planning orchestration
+- `scripts/swarm/task_classifier.py` (280 righe) - Complexity detection
+- `cervella-architect.md` agent (Opus) con 4-phase planning
+- `docs/SEMANTIC_SEARCH.md` (778 righe)
+
+---
+
+## W4: Polish + v2.0-beta Release (9.5/10)
+
+**Stato:** [FATTO] - Sessioni 286-290
+**Output:**
+- DRY refactor: `scripts/common/` (db.py, colors.py, config.py, paths.py)
+- pytest-cov integration, GitHub Actions CI (Python 3.10-3.12)
+- CHANGELOG.md (Keep a Changelog format)
+- npm publish: cervellaswarm@2.0.0-beta.1
+- 241 test iniziali
+
+---
+
+## W5: Dogfooding Integration (9.6/10)
+
+**Stato:** [FATTO] - Sessioni 291-300
+**Output:**
+- `scripts/architect/impact-analyze.sh` - Impact analyzer CLI
+- Architect routing integrato in spawn-workers
+- Worker DNA aggiornato con tree-sitter awareness
+- E2E workflow validato: architect -> plan -> worker -> validate
+- Health Score: 6/10 -> 8/10, Feature Adoption: 38% -> 70%
+
+---
+
+## W6: Casa Perfetta (9.9/10)
+
+**Stato:** [FATTO] - Sessioni 301-329
+**Output:**
+- SNCP cleanup + stato.md aggiornato
+- `hooks/validate_syntax.py` - Pre-commit con TreeSitterParser
+- Script polish: `--help` coverage 100%, `--version` flag
+- Test famiglia completo: tutti 19 agenti testati E2E
+- 0 TODO critici, 0 tech debt
+
+---
+
+## Coverage Push (S337-S348)
+
+**Stato:** [FATTO] - Sessioni 337-348
+**Output:**
+- Test: 177 -> 968 (+791 test in 12 sessioni!)
+- Coverage: 41% -> 95% (practical ceiling)
+- Tempo suite: 5.4s
+- Technical debt: ZERO
+- Test/Code ratio: 1.28 (piu test che codice)
+- 206 stmts missing = TUTTI __main__ blocks o ImportError fallbacks
+
+---
+
+## SNCP 3.0 Scripts (9/10)
+
+**Stato:** [FATTO] - Sessione 320
+**Output:**
+- `scripts/sncp/audit-secrets.sh` (159 righe) - Scan secrets
+- `scripts/sncp/check-ripresa-size.sh` (136 righe) - Monitor limiti file
+- `scripts/sncp/daily-log.sh` (155 righe) - Log giornalieri
+- `scripts/swarm/memory-flush.sh` (127 righe) - Auto-save memoria
+- 14+ hooks attivi su 6 trigger points (2935 righe Python)
+- 5 cron job automatici (daily, weekly, log rotation)
+
+---
+
+## Riepilogo ROADMAP 2.0 INTERNA
+
+| Fase | Score | Sessioni | Deliverable Chiave |
+|------|-------|----------|-------------------|
+| W1 Git Flow | 9.5/10 | 271-273 | Worker attribution, dual remote |
+| W2 Tree-sitter | 9.5/10 | 274-280 | AST parsing, symbol extraction, PageRank |
+| W3 Architect | 9.7/10 | 281-285 | Semantic search, planning agent |
+| W4 v2.0-beta | 9.5/10 | 286-290 | DRY refactor, CI/CD, npm publish |
+| W5 Dogfooding | 9.6/10 | 291-300 | Integration E2E, impact analyzer |
+| W6 Casa Perfetta | 9.9/10 | 301-329 | Polish, hooks, family test |
+| Coverage Push | 10/10 | 337-348 | 968 test, 95% coverage |
+| SNCP 3.0 | 9/10 | 320 | Security + memory scripts |
+| **MEDIA** | **9.6/10** | **S229-S348** | **120 sessioni, infrastruttura completa** |
+
+---
+
+# FASE 3: PRIMI UTENTI (Mag-Giu 2026) - PARCHEGGIATO
 
 > **"50 developer usano CervellaSwarm per lavoro VERO"**
+>
+> **NOTA S349:** Questa fase e PARCHEGGIATA. Il focus e sull'uso interno
+> di CervellaSwarm, non sul prodotto per utenti esterni.
+> Riprenderemo quando decidiamo di riattivare il prodotto.
 
 ---
 
@@ -1034,9 +1170,12 @@ COSTO: €200-1,200 setup, €5-6K/anno running
 
 ---
 
-# FASE 4: SCALA (Lug-Dic 2026)
+# FASE 4: SCALA (Lug-Dic 2026) - PARCHEGGIATO
 
 > **"1000+ developer, revenue ricorrente, liberta geografica"**
+>
+> **NOTA S349:** Questa fase e PARCHEGGIATA insieme a FASE 3.
+> Riprenderemo quando il prodotto torna attivo.
 
 ---
 
@@ -1305,17 +1444,19 @@ COSTO: €200-1,200 setup, €5-6K/anno running
 
 # APPENDICE: STEP COMPLETATI (SOMMARIO)
 
-| Fase | Step Totali | Completati | % |
-|------|-------------|------------|---|
-| FASE 0 | 4 | 4 | 100% |
-| FASE 1 | 8 | 8 | 100% |
-| FASE 2 | 20 | 18 | 90% |
-| FASE 3 | 12 | 0 | 0% |
-| FASE 4 | 12 | 0 | 0% |
-| **TOTALE** | **56** | **30** | **54%** |
+| Fase | Step Totali | Completati | % | Note |
+|------|-------------|------------|---|------|
+| FASE 0 | 4 | 4 | 100% | |
+| FASE 1 | 8 | 8 | 100% | |
+| FASE 2 | 20 | 19.5 | 98% | 2.20 parziale (beta, no v1.0 formale) |
+| FASE 3 | 12 | 0 | PARCHEGGIATO | Prodotto esterno non attivo |
+| FASE 4 | 12 | 0 | PARCHEGGIATO | Prodotto esterno non attivo |
+| **TOTALE ATTIVO** | **32** | **31.5** | **98%** | |
 
+> **Sessione 349:** Audit reale - 2.18 e 2.19 erano GIA FATTI ma non tracciati. FASE 3+4 marcate PARCHEGGIATO.
+>
 > **Sessione 228:** +3 step (2.12, 2.13, 2.14) - Error Handling + Help System + npm Publish Setup!
-
+>
 > **Sessione 227:** +4 step (2.7, 2.8, 2.9, 2.11) - CLI testata e funzionante!
 
 ---
@@ -1331,7 +1472,7 @@ Un passo al giorno. Arriveremo. SEMPRE.
 ---
 
 *Creata: 15 Gennaio 2026*
-*Prossima review: 22 Gennaio 2026*
+*Ultimo audit: 10 Febbraio 2026 - Sessione 349*
 *Target finale: Dicembre 2026 - LIBERTA GEOGRAFICA*
 
 ---

@@ -1,53 +1,53 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-10 - Sessione 348
-> **STATUS:** Coverage 95% CEILING! 968 test. Push completo + pulizia.
+> **Ultimo aggiornamento:** 2026-02-10 - Sessione 349
+> **STATUS:** Audit reale completato. MAPPA + NORD aggiornati. Chiarezza totale.
 
 ---
 
-## SESSIONE 348 - Coverage 92% -> 95% + Split file
+## SESSIONE 349 - Audit Reale + Aggiornamento MAPPA e NORD
 
 ```
 +================================================================+
-|   S348: 95% COVERAGE - PRACTICAL CEILING!                       |
-|   968 test PASS (era 897 = +71 nuovi, -0 persi)                |
-|   Coverage: 92% -> 95% (+3 punti, ceiling raggiunto)            |
-|   Guardiana: 9/10 | Ingegnera: 8.5/10                          |
-|   3 file over-limit splittati (665->355+379, etc.)              |
+|   S349: AUDIT REALE - VERITA SULLA MAPPA                        |
+|                                                                  |
+|   SCOPERTA: NORD e MAPPA parlavano di FASI diverse!             |
+|   - NORD "FASE 3: 100%" = Roadmap 2.0 interna (W5-W6)          |
+|   - MAPPA "FASE 3: 0%" = Prodotto esterno (parcheggiato)        |
+|                                                                  |
+|   AZIONE: Tutto allineato e chiarito                             |
 +================================================================+
 ```
 
 ### Cosa fatto
 | Step | Azione | Dettaglio |
 |------|--------|-----------|
-| 1 | convert_agents_to_agent_hq.py | +30 test, 0%->99% (nuovo file test) |
-| 2 | Chirurgical coverage | +12 test su 5 file esistenti |
-| 3 | Split test_load_context.py | 665 -> core(355) + format(379) |
-| 4 | Split test_task_manager.py | 660 -> core(277) + extended(388) |
-| 5 | Split test_symbol_extractor.py | 662 -> core(291) + extended(353) |
-| 6 | NORD.md aggiornato | Numeri coverage reali |
+| 1 | Audit con 4 agenti | FASE 2, W1-W6, Infrastruttura, Discrepanza FASI |
+| 2 | NORD.md riscritto | Separato "Roadmap 2.0 Interna" da "Mappa Prodotto" |
+| 3 | MAPPA 2.18+2.19 | Aggiornati a FATTO (erano gia fatti ma non tracciati) |
+| 4 | MAPPA 2.20 | Aggiornato a PARZIALE/PARCHEGGIATO |
+| 5 | MAPPA FASE 3+4 | Marcate PARCHEGGIATO (prodotto esterno non attivo) |
+| 6 | MAPPA +ROADMAP 2.0 | Aggiunta sezione intera con W1-W6 + Coverage Push + SNCP 3.0 |
+| 7 | Tabella riassuntiva | Aggiornata: 31.5/32 step attivi = 98% |
 
-### Stato Coverage (95% - CEILING)
-- **95% totale** (3992 stmts, 206 missing)
-- 206 missing = TUTTI __main__ blocks + ImportError fallbacks
-- 100%: sections, render, python_extractor, typescript_extractor, symbol_cache, +10 altri
-- 99%: convert_agents, load_context, dashboard/data, task_manager, add_version_headers
-- Nessun gap testabile rimasto
+### Stato Reale Dopo Audit
+- **MAPPA PRODOTTO:** FASE 0-1 100%, FASE 2 98%, FASE 3-4 PARCHEGGIATO
+- **ROADMAP 2.0 INTERNA:** 100% completata (9.6/10 media)
+- **Infrastruttura:** 19 agenti, 135+ scripts, 14+ hooks, 968 test, 95% coverage
+- **Nessuna confusione** tra roadmap interna e prodotto esterno
 
-### Audit Famiglia
-- Guardiana Qualita: 9/10 (3 file over-limit erano unico problema, risolto)
-- Ingegnera: 8.5/10 (tech debt ZERO, ratio test/code 1.28)
-- Test/Code ratio: 1.28 (21,834 LOC test vs 17,048 LOC scripts)
+### Decisione Chiave S349
+Il prodotto CervellaSwarm per utenti esterni e PARCHEGGIATO.
+Focus e sull'uso INTERNO come sistema di lavoro AI.
 
 ---
 
 ## TODO PROSSIMA SESSIONE
 
-- [ ] Coverage push COMPLETATO - non servono altri test
+- [ ] Decidere prossimo obiettivo (il prodotto e parcheggiato, cosa facciamo?)
 - [ ] test_python_extractor.py a 494 righe - monitorare
 - [ ] test_typescript_extractor.py a 492 righe - monitorare
 - [ ] 5 file scripts/ vicini a 500 righe (monitorare)
-- [ ] Decidere prossimo obiettivo (feature interna? refactoring?)
 
 ---
 
@@ -67,8 +67,9 @@
 | S346 | Coverage push 81%->86% (+87 test, 831 totali) |
 | S347 | Coverage push 86%->92% (+66 test, 897 totali) |
 | S348 | 95% CEILING + split 3 file + audit famiglia |
+| S349 | Audit reale + MAPPA e NORD aggiornati + chiarezza FASI |
 
 ---
 
 *"Un po' ogni giorno fino al 100000%!"*
-*Sessione 348 - Cervella & Rafa*
+*Sessione 349 - Cervella & Rafa*

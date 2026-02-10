@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 10 Febbraio 2026 - NORD.md trimmed (568 → 125 righe)
+> Aggiornato: 10 Febbraio 2026 - S349 (Audit reale + chiarezza FASI)
 
 ```
 +==================================================================+
@@ -38,28 +38,25 @@
 
 ```
 +================================================================+
-|   ROADMAP 2.0 - COMPLETATA!                                    |
+|   DUE ROADMAP - NON CONFONDERE!                                 |
 +================================================================+
 
-FASE 1: FONDAMENTA               [####################] 100%
-FASE 2: MVP PRODOTTO             [####################] 100%
-FASE 3: PRIMI UTENTI             [####################] 100%
-FASE 4: SCALA                    [##..................] 10%
+1) ROADMAP 2.0 INTERNA (W1-W6) = COMPLETATA!
+   Il nostro sistema di lavoro AI. Uso INTERNO.
 
-STATO ATTUALE:
-  ✓ CLI + MCP su npm              cervellaswarm@2.0.0-beta.1
-  ✓ FAMIGLIA COMPLETA             17 AGENTI (con Architect)
-  ✓ API Fly.io                    ONLINE
-  ✓ cervellaswarm.com             LIVE
-  ✓ Repo Pubblico                 github.com/rafapra3008/cervellaswarm
+2) MAPPA PRODOTTO (FASE 0-4) = PARCHEGGIATA
+   Il prodotto per utenti esterni. Riprendiamo dopo.
+```
 
-ROADMAP 2.0 (W1-W6):
-  W1: Git Flow        ████████████████████ 100% (9.5/10)
-  W2: Tree-sitter     ████████████████████ 100% (9.5/10)
-  W3: Architect       ████████████████████ 100% (9.7/10)
-  W4: v2.0-beta       ████████████████████ 100% (9.5/10)
-  W5: Dogfooding      ████████████████████ 100% (9.6/10)
-  W6: Casa Perfetta   ████████████████████ 100% (9.9/10)
+### ROADMAP 2.0 INTERNA - COMPLETATA (9.6/10)
+
+```
+W1: Git Flow        ████████████████████ 100% (9.5/10)
+W2: Tree-sitter     ████████████████████ 100% (9.5/10)
+W3: Architect       ████████████████████ 100% (9.7/10)
+W4: v2.0-beta       ████████████████████ 100% (9.5/10)
+W5: Dogfooding      ████████████████████ 100% (9.6/10)
+W6: Casa Perfetta   ████████████████████ 100% (9.9/10)
 
 SNCP 3.0:
   ✓ Memory & Security Scripts     COMPLETATI (9/10)
@@ -70,8 +67,32 @@ COVERAGE PUSH (S337-S348):
   ✓ Coverage                      95% (practical ceiling)
   ✓ Tempo suite                   5.4s
   ✓ Technical debt                ZERO
+```
 
-MEDIA QUALITA FINALE: 9.6/10
+### MAPPA PRODOTTO - PARCHEGGIATA
+
+```
+FASE 0: Prerequisiti             [####################] 100%
+FASE 1: Fondamenta              [####################] 100%
+FASE 2: MVP Prodotto            [###################.] 98%
+  (2.20 v1.0 Release non formale - prodotto in beta)
+FASE 3: Primi Utenti            [....................] PARCHEGGIATO
+FASE 4: Scala                   [....................] PARCHEGGIATO
+```
+
+### INFRASTRUTTURA REALE
+
+```
+STATO ATTUALE:
+  ✓ CLI + MCP su npm              cervellaswarm@2.0.0-beta.1
+  ✓ FAMIGLIA COMPLETA             19 agenti (1 Regina + 3 Guardiane + 1 Architect + 14 Worker)
+  ✓ API Fly.io                    ONLINE
+  ✓ cervellaswarm.com             LIVE
+  ✓ Repo Pubblico                 github.com/rafapra3008/cervellaswarm
+  ✓ Scripts                       135+ file, ~20,000+ righe
+  ✓ Hooks                         14+ hooks su 6 trigger points
+  ✓ Memoria                       SQLite DB + analytics + retrospective
+  ✓ Cron                          5 job automatici
 ```
 
 ---
