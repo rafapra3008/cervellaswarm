@@ -111,6 +111,7 @@ STATO ATTUALE:
 | Cosa | Dove |
 |------|------|
 | **MAPPA COMPLETA (BIBBIA!)** | `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_COMPLETA_STEP_BY_STEP.md` |
+| **MAPPA MIGLIORAMENTI (ATTIVA!)** | `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_MIGLIORAMENTI_INTERNI.md` |
 | **MARKETING DIAMANTE** | `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_DIAMANTE_MARKETING_LANCIO.md` |
 | **MAPPA STUDI ORO** | `.sncp/progetti/cervellaswarm/MAPPA_STUDI_ORO.md` |
 | **MANIFESTO** | `.sncp/progetti/cervellaswarm/MANIFESTO.md` |
