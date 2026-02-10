@@ -15,10 +15,10 @@ from pathlib import Path
 from datetime import datetime
 import tempfile
 
-# Aggiungo scripts/ al path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
+# Aggiungo project root al path (NON scripts/, per evitare conflitto con tests/swarm/)
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from swarm.architect_flow import (
+from scripts.swarm.architect_flow import (
     route_task,
     validate_plan,
     validate_plan_file,
@@ -39,7 +39,7 @@ from swarm.architect_flow import (
     MAX_REVISIONS,
 )
 
-from swarm.task_classifier import TaskComplexity
+from scripts.swarm.task_classifier import TaskComplexity
 
 
 # =============================================================================

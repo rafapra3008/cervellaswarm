@@ -10,10 +10,10 @@ import pytest
 import sys
 from pathlib import Path
 
-# Aggiungo scripts/ al path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
+# Aggiungo project root al path (NON scripts/, per evitare conflitto con tests/swarm/)
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from swarm.task_classifier import (
+from scripts.swarm.task_classifier import (
     classify_task,
     estimate_files_affected,
     calculate_keyword_score,
