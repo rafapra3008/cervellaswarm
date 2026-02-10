@@ -1,53 +1,57 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-10 - Sessione 349
-> **STATUS:** Audit reale completato. MAPPA + NORD aggiornati. Chiarezza totale.
+> **Ultimo aggiornamento:** 2026-02-10 - Sessione 350
+> **STATUS:** FASE A (A.1 + A.2) completata. MAPPA MIGLIORAMENTI 2/11 step FATTI.
 
 ---
 
-## SESSIONE 349 - Audit Reale + Aggiornamento MAPPA e NORD
+## SESSIONE 350 - FASE A Quick Wins (A.1 + A.2)
 
 ```
 +================================================================+
-|   S349: AUDIT REALE - VERITA SULLA MAPPA                        |
+|   S350: FASE A - 2 STEP COMPLETATI                              |
 |                                                                  |
-|   SCOPERTA: NORD e MAPPA parlavano di FASI diverse!             |
-|   - NORD "FASE 3: 100%" = Roadmap 2.0 interna (W5-W6)          |
-|   - MAPPA "FASE 3: 0%" = Prodotto esterno (parcheggiato)        |
+|   A.1 Async Hooks SessionEnd    -> FATTO (9/10)                 |
+|   A.2 PreToolUse Bash Validator -> FATTO (9.5/10)               |
 |                                                                  |
-|   AZIONE: Tutto allineato e chiarito                             |
+|   Guardiana audit dopo ogni step -> standard confermato          |
 +================================================================+
 ```
 
 ### Cosa fatto
-| Step | Azione | Dettaglio |
-|------|--------|-----------|
-| 1 | Audit con 4 agenti | FASE 2, W1-W6, Infrastruttura, Discrepanza FASI |
-| 2 | NORD.md riscritto | Separato "Roadmap 2.0 Interna" da "Mappa Prodotto" |
-| 3 | MAPPA 2.18+2.19 | Aggiornati a FATTO (erano gia fatti ma non tracciati) |
-| 4 | MAPPA 2.20 | Aggiornato a PARZIALE/PARCHEGGIATO |
-| 5 | MAPPA FASE 3+4 | Marcate PARCHEGGIATO (prodotto esterno non attivo) |
-| 6 | MAPPA +ROADMAP 2.0 | Aggiunta sezione intera con W1-W6 + Coverage Push + SNCP 3.0 |
-| 7 | Tabella riassuntiva | Aggiornata: 31.5/32 step attivi = 98% |
+| # | Azione | Dettaglio |
+|---|--------|-----------|
+| 1 | A.1: Async Hooks | 4 hook non-critici resi async, 2 critici sync. Settings main + insiders allineati |
+| 2 | A.2: Bash Validator | Nuovo `bash_validator.py` con 3 livelli: BLOCK/ASK/ALLOW + auto-fix force->lease |
+| 3 | Guardiana audit x2 | Ogni step verificato dalla Guardiana. Score 9/10 e 9.5/10 |
+| 4 | MAPPA aggiornata | A.1 e A.2 marcati FATTO con score |
 
-### Stato Reale Dopo Audit
-- **MAPPA PRODOTTO:** FASE 0-1 100%, FASE 2 98%, FASE 3-4 PARCHEGGIATO
-- **ROADMAP 2.0 INTERNA:** 100% completata (9.6/10 media)
-- **Infrastruttura:** 19 agenti, 135+ scripts, 14+ hooks, 968 test, 95% coverage
-- **Nessuna confusione** tra roadmap interna e prodotto esterno
+### Decisioni Prese con PERCHE
+- **Async solo non-critici** perche save + prompt_ripresa DEVONO completare prima di chiudere
+- **Safe rm list** perche rm -rf node_modules/dist/build sono operazioni normali, non pericolose
+- **Auto-fix force->lease** perche --force-with-lease e sempre preferibile a --force
+- **Test da file** perche il validator blocca comandi con pattern pericolosi nel testo inline
 
-### Decisione Chiave S349
-Il prodotto CervellaSwarm per utenti esterni e PARCHEGGIATO.
-Focus e sull'uso INTERNO come sistema di lavoro AI.
+### File Creati/Modificati
+- `~/.claude/hooks/bash_validator.py` - NUOVO: validatore comandi bash (224 righe)
+- `~/.claude/settings.json` - Async hooks + PreToolUse hook
+- `~/.claude-insiders/settings.json` - Async hooks + PreToolUse hook
+- `.sncp/.../MAPPA_MIGLIORAMENTI_INTERNI.md` - A.1+A.2 marcati FATTO
 
 ---
 
-## TODO PROSSIMA SESSIONE
+## PROSSIMA SESSIONE (S351)
 
-- [ ] Decidere prossimo obiettivo (il prodotto e parcheggiato, cosa facciamo?)
-- [ ] test_python_extractor.py a 494 righe - monitorare
-- [ ] test_typescript_extractor.py a 492 righe - monitorare
-- [ ] 5 file scripts/ vicini a 500 righe (monitorare)
+**COSA FARE:** A.3 + C.1
+
+| Step | Cosa | Tempo |
+|------|------|-------|
+| A.3 | Persistent Memory per Guardiane | 2h |
+| C.1 | Hook Integrity Check | 2h |
+
+**DOVE:** `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_MIGLIORAMENTI_INTERNI.md`
+
+**NOTA:** Miracollook plist hanno path sbagliati - fixare quando si lavora su quel progetto.
 
 ---
 
@@ -55,21 +59,11 @@ Focus e sull'uso INTERNO come sistema di lavoro AI.
 
 | Sessione | Cosa |
 |----------|------|
-| S333-S336 | SNCP-INIT v2.0, Refactoring, Subroadmap |
-| S337 | FASE 1 (9.1/10) |
-| S338 | FASE 2 (8.7/10) |
-| S339-S340 | FASE 3 (Test Coverage + POC Compaction) |
-| S341 | FASE 3.3 + FASE 4 (+147 test, 366 totali) |
-| S342 | Coverage push 53%->60% (+113 test, 525 totali) |
-| S343 | FASE 5.1 AST pipeline 60%->73% (+122 test, 647 totali) |
-| S344 | FASE 5.2 repo_mapper+types 73%->77% (+57 test, 704 totali) |
-| S345 | FASE 5.3 paths+output+schema 77%->81% (+40 test, 744 totali) |
-| S346 | Coverage push 81%->86% (+87 test, 831 totali) |
-| S347 | Coverage push 86%->92% (+66 test, 897 totali) |
-| S348 | 95% CEILING + split 3 file + audit famiglia |
-| S349 | Audit reale + MAPPA e NORD aggiornati + chiarezza FASI |
+| S337-S348 | Coverage push 41% -> 95% (968 test) |
+| S349 | Audit reale + Pulizia + MAPPA MIGLIORAMENTI |
+| S350 | FASE A: A.1 Async Hooks (9/10) + A.2 Bash Validator (9.5/10) |
 
 ---
 
 *"Un po' ogni giorno fino al 100000%!"*
-*Sessione 349 - Cervella & Rafa*
+*Sessione 350 - Cervella & Rafa*
