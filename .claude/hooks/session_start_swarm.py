@@ -3,21 +3,24 @@
 Hook SessionStart CervellaSwarm - Caricamento Contesto Sciame
 
 Carica automaticamente all'avvio sessione:
-- COSTITUZIONE.md (chi siamo - PRIMA DI TUTTO!)
-- NORD.md (dove siamo)
 - PROMPT_RIPRESA.md (stato attuale)
 - Check CODE REVIEW day (Lunedi/Venerdi)
 - Reminder regole Sciame
 - Warning se PROMPT_RIPRESA > 7 giorni vecchio (SNCP 2.0)
 - Warning se ultimo handoff > 3 giorni (SNCP 2.0)
 
-Versione: 2.2.0
-Data: 2026-01-20
+NON carica (B.3 Smart Loading - S352):
+- COSTITUZIONE.md -> disponibile via trigger "mi sento persa" o Read diretto (~/.claude/COSTITUZIONE.md)
+- NORD.md -> disponibile via /swarm-context skill (carica NORD + PROMPT_RIPRESA on-demand)
+
+Versione: 3.0.0
+Data: 2026-02-10
 Cervella & Rafa
 
 v2.0.0 - Aggiunta COSTITUZIONE obbligatoria!
 v2.1.0 - Sessione 299 - SNCP 2.0 Day 5: Warning PROMPT_RIPRESA e handoff
 v2.2.0 - Sessione 302 - Aggiornato a 17 membri (con Architect)
+v3.0.0 - Sessione 352 - B.3 Smart Loading: rimosso COSTITUZIONE e NORD (-210 righe contesto)
 """
 
 import json
@@ -28,9 +31,6 @@ import os
 
 # Path progetto
 PROJECT_ROOT = Path(__file__).parent.parent.parent
-
-# Path Costituzione (GLOBALE - vale per TUTTI!)
-COSTITUZIONE_PATH = Path.home() / ".claude/COSTITUZIONE.md"
 
 
 def load_file_summary(file_path: Path, max_lines: int = 100) -> str:
@@ -118,11 +118,6 @@ def check_handoff_age(handoff_dir: Path, project_name: str, max_days: int = 3) -
 def main():
     """Entry point hook."""
     try:
-        # PRIMA DI TUTTO: COSTITUZIONE! (chi siamo)
-        costituzione = load_file_summary(COSTITUZIONE_PATH, max_lines=150)
-
-        # Carica file chiave progetto
-        nord = load_file_summary(PROJECT_ROOT / "NORD.md", max_lines=60)
         # PROMPT_RIPRESA specifico per CervellaSwarm (Context Mesh pattern)
         prompt_ripresa = load_file_summary(
             PROJECT_ROOT / ".sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md",
@@ -138,11 +133,6 @@ def main():
         # Header
         context_parts.append("# CERVELLASWARM - Sessione Iniziata")
         context_parts.append(f"*Workspace: CervellaSwarm | {datetime.now().strftime('%Y-%m-%d %H:%M')}*")
-        context_parts.append("")
-
-        # COSTITUZIONE - PRIMA DI TUTTO!
-        context_parts.append("## COSTITUZIONE - Chi Siamo")
-        context_parts.append(costituzione)
         context_parts.append("")
 
         # CODE REVIEW reminder se lunedi/venerdi
@@ -177,16 +167,13 @@ def main():
         context_parts.append("- 17 membri della famiglia pronti")
         context_parts.append("- 3 Guardiane (Opus) + 1 Architect (Opus) + 2 Analiste (Opus) + 10 Worker (Sonnet)")
         context_parts.append("- DELEGA sempre, MAI edit diretti!")
+        context_parts.append("- COSTITUZIONE: leggi con `Read ~/.claude/COSTITUZIONE.md` quando serve")
+        context_parts.append("- NORD + Contesto: usa `/swarm-context` per caricare on-demand")
         context_parts.append("")
         context_parts.append("## 3 Livelli Rischio")
         context_parts.append("- 1-BASSO (docs) -> vai")
         context_parts.append("- 2-MEDIO (feature) -> Guardiana verifica")
         context_parts.append("- 3-ALTO (deploy/auth) -> Guardiana + Rafa")
-        context_parts.append("")
-
-        # NORD (la bussola)
-        context_parts.append("## NORD - La Bussola")
-        context_parts.append(nord)
         context_parts.append("")
 
         # PROMPT_RIPRESA (stato attuale)
