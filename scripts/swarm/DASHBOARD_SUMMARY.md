@@ -10,9 +10,10 @@
 
 ### Files Creati
 
-1. **`dashboard.py`** (472 righe)
-   - Script Python principale
-   - Rendering ASCII completo
+1. **`scripts/swarm/dashboard/`** (modulo refactored)
+   - `cli.py` - Entry point CLI principale
+   - `render.py` - Rendering ASCII e JSON
+   - Altri moduli specializzati
    - Watch mode con refresh automatico
    - Output JSON per integrazione
    - Supporto colori ANSI
@@ -35,7 +36,10 @@
 
 ```
 /Users/rafapra/Developer/CervellaSwarm/scripts/swarm/
-├── dashboard.py          # ✓ Principale
+├── dashboard/            # ✓ Modulo principale
+│   ├── cli.py
+│   ├── render.py
+│   └── ...
 ├── dashboard.sh          # ✓ Wrapper bash
 ├── demo_dashboard.sh     # ✓ Demo
 └── README_DASHBOARD.md   # ✓ Docs
@@ -98,7 +102,7 @@ Stati supportati:
 ```bash
 ./dashboard.sh
 # oppure
-python3 dashboard.py
+python3 -m scripts.swarm.dashboard.cli
 ```
 
 ### Watch Mode

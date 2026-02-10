@@ -52,7 +52,7 @@ class Colors:
     MAGENTA = "\033[95m"
     CYAN = "\033[96m"
 
-    # Bright aliases for dashboard.py compatibility
+    # Bright aliases for dashboard compatibility
     BRIGHT_BLACK = "\033[90m"
     BRIGHT_RED = "\033[91m"
     BRIGHT_GREEN = "\033[92m"

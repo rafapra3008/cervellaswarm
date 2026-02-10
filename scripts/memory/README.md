@@ -147,7 +147,7 @@ Script utility per interrogare il database.
 
 ### 🔹 Analytics Scripts
 
-#### analytics.py
+#### analytics (modulo CLI)
 
 CLI completa per analytics con Rich formatting.
 
@@ -155,41 +155,41 @@ CLI completa per analytics con Rich formatting.
 
 ```bash
 # Overview generale
-python3 analytics.py summary
+python3 -m scripts.memory.analytics.cli summary
 
 # Lista lezioni attive
-python3 analytics.py lessons
+python3 -m scripts.memory.analytics.cli lessons
 
 # Ultimi eventi (default 10)
-python3 analytics.py events
+python3 -m scripts.memory.analytics.cli events
 
 # Statistiche per agente
-python3 analytics.py agents
+python3 -m scripts.memory.analytics.cli agents
 
 # Pattern di errori
-python3 analytics.py patterns
+python3 -m scripts.memory.analytics.cli patterns
 
 # Dashboard live con Rich
-python3 analytics.py dashboard
+python3 -m scripts.memory.analytics.cli dashboard
 
 # Auto-rileva pattern errori
-python3 analytics.py auto-detect
+python3 -m scripts.memory.analytics.cli auto-detect
 
 # Weekly retrospective
-python3 analytics.py retro
+python3 -m scripts.memory.analytics.cli retro
 ```
 
 **Opzioni:**
 
 ```bash
 # Numero eventi (per events)
-python3 analytics.py events -n 50
+python3 -m scripts.memory.analytics.cli events -n 50
 
 # Giorni da analizzare (per auto-detect)
-python3 analytics.py auto-detect -d 30
+python3 -m scripts.memory.analytics.cli auto-detect -d 30
 
 # Mostra versione
-python3 analytics.py --version
+python3 -m scripts.memory.analytics.cli --version
 ```
 
 **Output:**
@@ -241,7 +241,7 @@ python3 pattern_detector.py
 
 ---
 
-#### weekly_retro.py
+#### retro (modulo CLI)
 
 Report retrospettiva settimanale automatico.
 
@@ -249,10 +249,13 @@ Report retrospettiva settimanale automatico.
 
 ```bash
 # Ultimi 7 giorni
-python3 weekly_retro.py
+python3 -m scripts.memory.retro.cli
 
 # Ultimi 14 giorni
-python3 weekly_retro.py -d 14
+python3 -m scripts.memory.retro.cli -d 14
+
+# Salva report in markdown
+python3 -m scripts.memory.retro.cli --save
 ```
 
 **Output include:**
@@ -566,10 +569,10 @@ Guida interattiva con esempi pratici.
 ./scripts/memory/query_events.py --failed
 
 # Dashboard live con Rich
-python3 analytics.py dashboard
+python3 -m scripts.memory.analytics.cli dashboard
 
 # Report settimanale
-python3 weekly_retro.py
+python3 -m scripts.memory.retro.cli
 ```
 
 ### Pattern e Suggerimenti
@@ -579,7 +582,7 @@ python3 weekly_retro.py
 python3 pattern_detector.py
 
 # Mostra pattern rilevati
-python3 analytics.py patterns
+python3 -m scripts.memory.analytics.cli patterns
 
 # Suggerimenti per evitare errori
 python3 suggestions.py
@@ -595,7 +598,7 @@ python3 suggestions.py -p miracollo
 ./scripts/memory/query_events.py --recent 10 --format table
 
 # Eventi con dettagli completi
-python3 analytics.py events -n 20
+python3 -m scripts.memory.analytics.cli events -n 20
 ```
 
 ---

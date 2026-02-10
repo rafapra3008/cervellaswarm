@@ -210,13 +210,13 @@ def generate_next_steps(conn: sqlite3.Connection, metrics: Dict[str, Any]) -> Li
     active_lessons_count = cursor.fetchone()['active']
 
     if active_patterns_count > 0:
-        next_steps.append("1. Review pattern attivi con `analytics.py patterns`")
+        next_steps.append("1. Review pattern attivi con `python -m scripts.memory.analytics.cli patterns`")
 
     if active_lessons_count > 0:
-        next_steps.append("2. Review lezioni attive con `analytics.py lessons`")
+        next_steps.append("2. Review lezioni attive con `python -m scripts.memory.analytics.cli lessons`")
 
     if metrics['failures'] > 5:
-        next_steps.append("3. Analizzare ultimi errori con `analytics.py events -n 20`")
+        next_steps.append("3. Analizzare ultimi errori con `python -m scripts.memory.analytics.cli events -n 20`")
 
     if not next_steps:
         next_steps.append("✅ Nessuna azione richiesta - Sistema OK!")

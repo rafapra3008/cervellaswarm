@@ -1,66 +1,75 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-04 - Sessione 336
-> **STATUS:** SUBROADMAP MIGLIORAMENTI TECNICI COMPLETATA!
+> **Ultimo aggiornamento:** 2026-02-10 - Sessione 337
+> **STATUS:** MEGA ROADMAP INTERNA - FASE 1 COMPLETATA!
 
 ---
 
-## SESSIONE 336 - MIGLIORAMENTI TECNICI COMPLETATI!
+## SESSIONE 337 - RECAP MEGA + PULIZIA CASA
 
 ```
 +================================================================+
-|   SUBROADMAP MIGLIORAMENTI TECNICI: 4/4 FASI COMPLETATE!       |
-|   Score Medio: 9.25/10                                          |
+|   PRIMA SESSIONE OPUS 4.6!                                     |
+|   MEGA RECAP INTERNO + FASE 1 ROADMAP COMPLETATA               |
 |                                                                 |
-|   FASE 1: Monitoring Dashboard v2.3.0     9/10   ✅             |
-|   FASE 2: Reflection Pattern v1.0.0       9/10   ✅             |
-|   FASE 3: MCP Server v0.2.3               9.5/10 ✅             |
-|   FASE 4: Checkpointing Plus (MINIMAL)    9/10   ✅             |
-|                                                                 |
-|   Tempo: 1 sessione (stimati 10 giorni!)                       |
+|   5 esplorazioni parallele (agenti, script, SNCP, infra, 2026) |
+|   MEGA ROADMAP INTERNA: 33 task in 7 aree, 4 fasi              |
+|   FASE 1: 5 task completati, score medio 9.1/10                |
 +================================================================+
 ```
 
-### Output Sessione
+### FASE 1 Completata (Quick Wins)
 
-**FASE 1 - Dashboard Enhanced:**
-- `scripts/swarm/dashboard/` v2.3.0
-- Nuove funzioni: `get_system_resources()`, `get_stuck_workers()`
-- Sezioni: SYSTEM RESOURCES, ALERTS
+| Task | Score | Dettaglio |
+|------|-------|-----------|
+| Trim NORD.md | 9/10 | 568 -> 125 righe. Archivio in `.sncp/archivio/2026-02/` |
+| File deprecati | 9.5/10 | 4 rimossi + 13 riferimenti fixati |
+| Daily-log.sh | 9/10 | Hook SessionStart integrato, workflow automatico |
+| Cron setup | 9/10 | LaunchAgents per cleanup-logs + archive-reports |
+| POC Haiku 4.5 | 5/10 | BOCCIATO - qualita insufficiente per nostri standard |
 
-**FASE 2 - Reflection Pattern:**
-- `scripts/swarm/output_validator.py` v1.0.0
-- 7 checks automatici, score 0-100
-- Flag `--with-validation` in spawn-workers.sh
+### Decisione Modelli
 
-**FASE 3 - MCP Server:**
-- `packages/mcp-server/` v0.2.3
-- Retry visibility aggiunta
-- Già production-grade (9.7/10)
+```
+Haiku per worker: NO (score 5/10, superficiale, errori)
+Sonnet per worker: SI (confermato, qualita adeguata)
+Opus per tutti: DA VALUTARE (abbonamento flat = stesso costo)
+```
 
-**FASE 4 - Checkpointing:**
-- `scripts/swarm/cleanup-logs.sh`
-- Sistema già sufficiente, solo cleanup aggiunto
+**Filosofia:** Qualita > Velocita > Costo. Non abbiamo fretta.
 
-### Ricerche Effettuate
+### Ricerche Sessione 337
 
-- **OpenClaw Analysis:** Successo marketing, problemi security
-- **Local AI:** Reale per nicchie, non serve per noi (Claude Max)
-- **Competitor Analysis:** CervellaSwarm al 93% pattern coverage
+- `docs/studio/RICERCA_CLAUDE_ECOSYSTEM_2026.md` - Opus 4.6, Agent Teams, Haiku 4.5, MCP/AAIF
+- `docs/studio/RICERCA_HAIKU_4_5_AGENTI_CONFIG.md` - Config agenti, benchmark modelli
+
+### MEGA ROADMAP INTERNA (33 task, 7 aree)
+
+**FASE 1 - Quick Wins:** COMPLETATA (9.1/10)
+**FASE 2 - Evoluzione:** IN CORSO
+- Migrazione worker (valutare Opus per tutti)
+- Studio Agent Teams API
+- Pulizia profonda docs/
+
+**FASE 3 - Crescita:** PENDING
+- POC Agent Teams + Compaction API
+- Test coverage 41% -> 50%
+- Monitoring dashboard
+
+**FASE 4 - Perfezione:** PENDING
+- Documentazione, nuove lingue tree-sitter, unificazione format
 
 ---
 
-## PROSSIMA SESSIONE
+## PROSSIMA SESSIONE (FASE 2)
 
-### TODO Rimasti
-- [ ] Trim NORD.md (568 righe > 500)
-- [ ] Rimuovere file deprecati (S340)
-- [ ] (Opzionale) Cron per cleanup-logs.sh
-
-### Docs Nuovi S336
-- `.sncp/roadmaps/SUBROADMAP_MIGLIORAMENTI_TECNICI.md` - COMPLETATA
-- `docs/studio/RICERCA_AI_NOVITA_Q1_2026.md`
-- `docs/studio/STUDIO_OPENCLAW_LOCAL_AI_ANALISI_CRITICA.md`
+### TODO
+- [ ] Decidere: tutti Opus? O mix Sonnet/Opus?
+- [ ] Studio Agent Teams API (feature nativa Opus 4.6)
+- [ ] Pulizia docs/ (61MB -> ~30MB)
+- [ ] Progetti senza stato.md (CervellaTrader, CreatorMetrics)
+- [ ] Handoff stagnante (aggiornare)
+- [ ] Installare LaunchAgents (seguire INSTALL_LAUNCHD.md)
 
 ---
 
@@ -72,8 +81,9 @@
 | S334 | Refactoring FASE 1-2 (9.5/10 x2) |
 | S335 | Refactoring FASE 3-5 completo |
 | S336 | SUBROADMAP Miglioramenti Tecnici (4/4 fasi, 9.25/10) |
+| S337 | MEGA RECAP + FASE 1 Roadmap Interna (9.1/10) |
 
 ---
 
-*"Ultrapassar os próprios limites!"*
-*Sessione 336 - Cervella & Rafa*
+*"Ultrapassar os proprios limites!"*
+*Sessione 337 - Cervella & Rafa - Prima sessione Opus 4.6*

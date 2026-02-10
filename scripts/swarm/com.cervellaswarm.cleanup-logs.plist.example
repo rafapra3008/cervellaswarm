@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Label: identificatore univoco -->
+    <key>Label</key>
+    <string>com.cervellaswarm.cleanup-logs</string>
+
+    <!-- Program: script da eseguire -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/rafapra/Developer/CervellaSwarm/scripts/swarm/cleanup-logs.sh</string>
+        <string>--execute</string>
+    </array>
+
+    <!-- Working Directory -->
+    <key>WorkingDirectory</key>
+    <string>/Users/rafapra/Developer/CervellaSwarm</string>
+
+    <!-- Schedule: Ogni giorno alle 03:00 -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>3</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <!-- Logs: dove salvare output -->
+    <key>StandardOutPath</key>
+    <string>/Users/rafapra/Developer/CervellaSwarm/.swarm/logs/cleanup_launchd.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/rafapra/Developer/CervellaSwarm/.swarm/logs/cleanup_launchd.err</string>
+
+    <!-- Environment -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+
+    <!-- Options -->
+    <key>RunAtLoad</key>
+    <false/> <!-- Non eseguire subito al caricamento -->
+
+    <key>ProcessType</key>
+    <string>Background</string>
+</dict>
+</plist>
+
+<!--
+INSTALLAZIONE:
+
+1. Copia questo file (senza .example)
+   cp com.cervellaswarm.cleanup-logs.plist.example ~/Library/LaunchAgents/com.cervellaswarm.cleanup-logs.plist
+
+2. Carica agent
+   launchctl load ~/Library/LaunchAgents/com.cervellaswarm.cleanup-logs.plist
+
+3. Verifica
+   launchctl list | grep cleanup
+
+4. Test manuale (non aspettare domani!)
+   launchctl start com.cervellaswarm.cleanup-logs
+
+5. Controlla log
+   cat .swarm/logs/cleanup_launchd.log
+
+---
+
+RIMOZIONE:
+
+launchctl unload ~/Library/LaunchAgents/com.cervellaswarm.cleanup-logs.plist
+rm ~/Library/LaunchAgents/com.cervellaswarm.cleanup-logs.plist
+
+---
+
+ALTERNATIVE:
+
+Se preferisci cron (Linux-style):
+crontab -e
+# Aggiungi:
+0 3 * * * cd /Users/rafapra/Developer/CervellaSwarm && ./scripts/swarm/cleanup-logs.sh --execute
+
+-->

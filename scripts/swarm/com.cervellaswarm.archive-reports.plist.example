@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Label: identificatore univoco -->
+    <key>Label</key>
+    <string>com.cervellaswarm.archive-reports</string>
+
+    <!-- Program: script da eseguire -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/rafapra/Developer/CervellaSwarm/scripts/archive_old_reports.sh</string>
+        <string>7</string>
+    </array>
+
+    <!-- Working Directory -->
+    <key>WorkingDirectory</key>
+    <string>/Users/rafapra/Developer/CervellaSwarm</string>
+
+    <!-- Schedule: Ogni Domenica alle 04:00 -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Weekday</key>
+        <integer>0</integer> <!-- 0 = Sunday -->
+        <key>Hour</key>
+        <integer>4</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <!-- Logs: dove salvare output -->
+    <key>StandardOutPath</key>
+    <string>/Users/rafapra/Developer/CervellaSwarm/logs/archive_reports_launchd.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/rafapra/Developer/CervellaSwarm/logs/archive_reports_launchd.err</string>
+
+    <!-- Environment -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+
+    <!-- Options -->
+    <key>RunAtLoad</key>
+    <false/> <!-- Non eseguire subito al caricamento -->
+
+    <key>ProcessType</key>
+    <string>Background</string>
+</dict>
+</plist>
+
+<!--
+INSTALLAZIONE:
+
+1. Copia questo file (senza .example)
+   cp com.cervellaswarm.archive-reports.plist.example ~/Library/LaunchAgents/com.cervellaswarm.archive-reports.plist
+
+2. Carica agent
+   launchctl load ~/Library/LaunchAgents/com.cervellaswarm.archive-reports.plist
+
+3. Verifica
+   launchctl list | grep archive-reports
+
+4. Test manuale (non aspettare domenica!)
+   launchctl start com.cervellaswarm.archive-reports
+
+5. Controlla log
+   cat logs/archive_reports_launchd.log
+
+---
+
+RIMOZIONE:
+
+launchctl unload ~/Library/LaunchAgents/com.cervellaswarm.archive-reports.plist
+rm ~/Library/LaunchAgents/com.cervellaswarm.archive-reports.plist
+
+---
+
+ALTERNATIVE:
+
+Se preferisci cron (Linux-style):
+crontab -e
+# Aggiungi:
+0 4 * * 0 cd /Users/rafapra/Developer/CervellaSwarm && ./scripts/archive_old_reports.sh 7
+
+-->

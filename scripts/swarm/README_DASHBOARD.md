@@ -16,7 +16,7 @@ Dashboard ASCII minimale per monitorare lo stato dello sciame in tempo reale.
 ```bash
 ./dashboard.sh
 # oppure
-python3 dashboard.py
+python3 -m scripts.swarm.dashboard.cli
 ```
 
 Output:
@@ -39,7 +39,7 @@ Output:
 ```bash
 ./dashboard.sh --watch
 # oppure
-python3 dashboard.py --watch
+python3 -m scripts.swarm.dashboard.cli --watch
 ```
 
 - Refresh ogni 2 secondi (default)
@@ -51,7 +51,7 @@ python3 dashboard.py --watch
 ```bash
 ./dashboard.sh --json
 # oppure
-python3 dashboard.py --json
+python3 -m scripts.swarm.dashboard.cli --json
 ```
 
 Utile per:
@@ -164,9 +164,8 @@ python3 task_manager.py ready TEST_001
 
 Soluzione:
 ```bash
-# Esegui dalla directory corretta
-cd scripts/swarm/
-python3 dashboard.py
+# Esegui dalla root del progetto
+python3 -m scripts.swarm.dashboard.cli
 ```
 
 ### Colori non visualizzati
@@ -178,7 +177,7 @@ Soluzione: Usa `--json` per output senza colori
 ## File Correlati
 
 - `task_manager.py` - Gestione task (required)
-- `dashboard.py` - Script principale dashboard
+- `scripts/swarm/dashboard/` - Modulo dashboard (cli.py, render.py, etc.)
 - `dashboard.sh` - Wrapper bash
 - `.swarm/tasks/` - Directory task files
 

@@ -96,6 +96,6 @@ python scripts/memory/retro/cli.py -s -q
 - Spostare _print_*_section() in output.py
 - Ridurre cli.py a < 200 righe
 
-**Step 3:** Aggiornare weekly_retro.py originale
-- Diventare wrapper per `retro.cli.main()`
-- Deprecation warning
+**Step 3:** File legacy deprecati
+- `weekly_retro.py` è stato rimosso
+- Usare `python3 -m scripts.memory.retro.cli`

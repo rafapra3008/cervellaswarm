@@ -288,12 +288,12 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Esempi:
-  python weekly_retro.py              # Report ultimi 7 giorni
-  python weekly_retro.py -d 14        # Report ultimi 14 giorni
-  python weekly_retro.py --save       # Salva report in data/retro/
-  python weekly_retro.py --quiet      # Output minimale (per cron)
-  python weekly_retro.py -s -q        # Salva report in modalità quiet
-  python weekly_retro.py -o ~/reports # Salva in directory custom
+  python -m scripts.memory.retro.cli              # Report ultimi 7 giorni
+  python -m scripts.memory.retro.cli -d 14        # Report ultimi 14 giorni
+  python -m scripts.memory.retro.cli --save       # Salva report in data/retro/
+  python -m scripts.memory.retro.cli --quiet      # Output minimale (per cron)
+  python -m scripts.memory.retro.cli -s -q        # Salva report in modalità quiet
+  python -m scripts.memory.retro.cli -o ~/reports # Salva in directory custom
 
 Novità v2.2.0 (Step 2 Refactor):
   🔒 SECURITY FIX: SQL injection eliminato (parametrized queries)

@@ -1,30 +1,39 @@
-"""
-CervellaSwarm Analytics - Dashboard Command
-
-Dashboard live con Rich - Panoramica visuale del sistema.
-"""
+"""Analytics dashboard command - Live visual dashboard."""
 
 __version__ = "2.2.0"
 __version_date__ = "2026-02-04"
 
 import sys
-from datetime import datetime, timedelta
 from pathlib import Path
+from datetime import datetime, timedelta
 
-# Setup path per import common
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+# Aggiungi path per import
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from common.db import connect_db
-from common.colors import RED, YELLOW, CYAN, RESET
-from ..helpers import HAS_RICH, console, Table, Panel, box
+
+# Rich import opzionale
+try:
+    from rich.console import Console
+    from rich.table import Table
+    from rich.panel import Panel
+    from rich import box
+    HAS_RICH = True
+    console = Console()
+except ImportError:
+    HAS_RICH = False
+    console = None
+
+# Colori ANSI per fallback
+from common.colors import RED, GREEN, YELLOW, CYAN, RESET
 
 
 def cmd_dashboard():
     """Dashboard live con Rich - Panoramica visuale del sistema."""
     if not HAS_RICH:
-        print(f"\n{RED}Comando 'dashboard' richiede Rich installato!{RESET}")
+        print(f"\n{RED}❌ Comando 'dashboard' richiede Rich installato!{RESET}")
         print(f"{YELLOW}Suggerimento:{RESET} pip install rich")
-        print(f"{CYAN}Alternativa:{RESET} Usa 'python -m scripts.memory.analytics.cli summary'\n")
+        print(f"{CYAN}Alternativa:{RESET} Usa 'python -m scripts.memory.analytics.cli summary' per output base\n")
         return
 
     conn = connect_db()
@@ -33,7 +42,7 @@ def cmd_dashboard():
     # Fetch metriche settimana corrente
     week_ago = (datetime.now() - timedelta(days=7)).isoformat()
 
-    # Query parametrizzate (NO SQL injection!)
+    # FIX SQL INJECTION: usa query parametrizzate
     cursor.execute("""
         SELECT COUNT(*) as total
         FROM swarm_events
@@ -58,11 +67,19 @@ def cmd_dashboard():
     errors_week = cursor.fetchone()['errors']
 
     # Pattern attivi
-    cursor.execute("SELECT COUNT(*) as active FROM error_patterns WHERE status = 'ACTIVE'")
+    cursor.execute("""
+        SELECT COUNT(*) as active
+        FROM error_patterns
+        WHERE status = 'ACTIVE'
+    """)
     active_patterns = cursor.fetchone()['active']
 
     # Lezioni attive
-    cursor.execute("SELECT COUNT(*) as active FROM lessons_learned WHERE status = 'ACTIVE'")
+    cursor.execute("""
+        SELECT COUNT(*) as active
+        FROM lessons_learned
+        WHERE status = 'ACTIVE'
+    """)
     active_lessons = cursor.fetchone()['active']
 
     # Top agente della settimana
@@ -82,8 +99,10 @@ def cmd_dashboard():
     conn.close()
 
     # === RICH OUTPUT ===
+
+    # Tabella metriche
     metrics_table = Table(
-        title="METRICHE SETTIMANA",
+        title="📊 METRICHE SETTIMANA",
         box=box.ROUNDED,
         show_header=True,
         header_style="bold cyan"
@@ -92,27 +111,27 @@ def cmd_dashboard():
     metrics_table.add_column("Valore", justify="right", style="bold green")
     metrics_table.add_column("Trend", justify="center")
 
-    metrics_table.add_row("Eventi Totali", str(events_week), "")
+    metrics_table.add_row("Eventi Totali", str(events_week), "📈")
     metrics_table.add_row(
         "Success Rate",
         f"{success_rate:.1f}%",
-        "" if success_rate > 80 else ""
+        "✅" if success_rate > 80 else "⚠️"
     )
-    metrics_table.add_row("Errori", str(errors_week), "" if errors_week > 5 else "")
-    metrics_table.add_row("Pattern Attivi", str(active_patterns), "")
-    metrics_table.add_row("Lessons Attive", str(active_lessons), "")
+    metrics_table.add_row("Errori", str(errors_week), "❌" if errors_week > 5 else "✅")
+    metrics_table.add_row("Pattern Attivi", str(active_patterns), "🔍")
+    metrics_table.add_row("Lessons Attive", str(active_lessons), "📚")
 
     # Panel agente top
     top_agent_panel = Panel(
         f"[bold yellow]{top_agent}[/bold yellow]\n[dim]{top_agent_tasks} task completati[/dim]",
-        title="TOP AGENTE SETTIMANA",
+        title="🏆 TOP AGENTE SETTIMANA",
         border_style="yellow"
     )
 
-    # Output
+    # Layout
     console.print("\n")
     console.print(Panel(
-        "[bold cyan]CERVELLASWARM DASHBOARD[/bold cyan]",
+        "[bold cyan]🐝 CERVELLASWARM DASHBOARD[/bold cyan]",
         style="cyan",
         box=box.DOUBLE
     ))

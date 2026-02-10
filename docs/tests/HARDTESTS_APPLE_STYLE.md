@@ -462,8 +462,8 @@ python3 scripts/swarm/task_manager.py create TEST_ACK cervella-backend "Test ACK
 ## TEST QW5: DASHBOARD
 
 ```bash
-python3 scripts/swarm/dashboard.py
-python3 scripts/swarm/dashboard.py --json
+python3 -m scripts.swarm.dashboard.cli
+python3 -m scripts.swarm.dashboard.cli --json
 ```
 
 ### Checklist

@@ -21,7 +21,7 @@ USAGE:
 # =============================================================================
 
 # Soglia similarita per pattern detection (0.0 - 1.0)
-# Usato in: pattern_detector.py, analytics.py
+# Usato in: pattern_detector.py, analytics CLI
 SIMILARITY_THRESHOLD = 0.7
 
 # Minimo occorrenze per considerare un pattern valido

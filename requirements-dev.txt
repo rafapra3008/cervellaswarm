@@ -4,7 +4,7 @@
 # Gli script funzionano anche senza rich/pytest, con fallback su plain text.
 
 # Rich - Terminal output formattato (tabelle, panel, progress bar)
-# Usato da: analytics.py, weekly_retro.py, analyze_codebase.py, wizard.py
+# Usato da: analytics/cli.py, retro/cli.py, analyze_codebase.py, wizard.py
 rich>=13.0.0
 
 # Pytest - Testing framework

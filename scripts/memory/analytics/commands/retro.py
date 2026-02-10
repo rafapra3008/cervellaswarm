@@ -30,12 +30,12 @@ def cmd_retro():
     if not HAS_RICH:
         print(f"\n{RED}Comando 'retro' richiede Rich installato!{RESET}")
         print(f"{YELLOW}Suggerimento:{RESET} pip install rich")
-        print(f"{CYAN}Alternativa:{RESET} Usa 'python weekly_retro.py' per fallback plain text\n")
+        print(f"{CYAN}Alternativa:{RESET} Usa 'python -m scripts.memory.retro.cli' per fallback plain text\n")
         return
 
     if not RETRO_AVAILABLE:
         print(f"\n{RED}Modulo retro non disponibile!{RESET}")
-        print(f"{YELLOW}Suggerimento:{RESET} Verifica scripts/memory/retro/ esista\n")
+        print(f"{YELLOW}Suggerimento:{RESET} Usa 'python -m scripts.memory.retro.cli'\n")
         return
 
     # Riusa il modulo retro/ - NO duplicazione codice!
