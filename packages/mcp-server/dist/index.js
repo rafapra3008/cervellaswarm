@@ -283,6 +283,12 @@ async function main() {
     const transport = new StdioServerTransport();
     await server.connect(transport);
     console.error(`CervellaSwarm MCP Server v${SERVER_VERSION} started`);
+    const shutdown = async () => {
+        await server.close();
+        process.exit(0);
+    };
+    process.on("SIGINT", shutdown);
+    process.on("SIGTERM", shutdown);
 }
 main().catch((error) => {
     console.error("Failed to start server:", error);
