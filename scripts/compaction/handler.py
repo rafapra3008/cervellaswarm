@@ -11,12 +11,12 @@ __version__ = "1.0.0"
 __version_date__ = "2026-02-10"
 
 import logging
-from typing import Optional
+from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
 
-def handle_compaction_response(response, messages: list, preserve_last_n: int = 2) -> list:
+def handle_compaction_response(response: Any, messages: list, preserve_last_n: int = 2) -> list:
     """Gestisce una response con compaction block.
 
     Se la response ha stop_reason == "compaction":
@@ -61,7 +61,7 @@ def handle_compaction_response(response, messages: list, preserve_last_n: int = 
     return new_messages
 
 
-def extract_compaction_usage(response) -> Optional[dict]:
+def extract_compaction_usage(response: Any) -> Optional[dict]:
     """Estrae le metriche di usage dalla compaction.
 
     Returns:
