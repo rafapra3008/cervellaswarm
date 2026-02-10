@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """
-Test suite per scripts/swarm/dashboard/data.py
+Test suite per scripts/swarm/dashboard/data.py - Core
 
 Coverage: get_worker_status, get_task_queue_stats, get_recent_activity,
-calculate_session_duration, get_system_resources, get_stuck_workers,
-get_live_activity_from_heartbeat, get_task_description
+calculate_session_duration, get_system_resources.
+Stuck workers/live activity/task description in test_dashboard_data_extended.py.
 
-Split da test_dashboard_cli.py (934 righe > limite 500).
-Sessione 341.
+Split da test_dashboard_cli.py. Sessione 341, re-split S346.
 """
 
 import sys
@@ -25,9 +24,6 @@ from scripts.swarm.dashboard.data import (
     get_recent_activity,
     calculate_session_duration,
     get_system_resources,
-    get_stuck_workers,
-    get_live_activity_from_heartbeat,
-    get_task_description,
 )
 
 
@@ -39,14 +35,6 @@ def temp_tasks_dir(tmp_path):
     tasks_dir = tmp_path / "tasks"
     tasks_dir.mkdir()
     return tasks_dir
-
-
-@pytest.fixture
-def temp_status_dir(tmp_path):
-    """Crea directory temporanea per status (heartbeat)."""
-    status_dir = tmp_path / ".swarm" / "status"
-    status_dir.mkdir(parents=True)
-    return status_dir
 
 
 @pytest.fixture
@@ -182,6 +170,31 @@ def test_get_recent_activity_limit(mock_path_cls, temp_tasks_dir, sample_tasks):
     assert len(activities) == 3
 
 
+@patch('scripts.swarm.dashboard.data.Path')
+def test_get_recent_activity_ack_suffixes(mock_path_cls, sample_tasks):
+    """Test task_id handling for .ack_received/.ack_understood suffixes (line 158)."""
+    mock_tasks_path = MagicMock()
+    mock_path_cls.return_value = mock_tasks_path
+
+    now = time.time()
+    ack_received = MagicMock()
+    ack_received.name = "TASK_001.ack_received"
+    ack_received.suffix = ".ack_received"
+    ack_received.stat.return_value.st_mtime = now - 10
+
+    ack_understood = MagicMock()
+    ack_understood.name = "TASK_002.ack_understood"
+    ack_understood.suffix = ".ack_understood"
+    ack_understood.stat.return_value.st_mtime = now - 5
+
+    mock_tasks_path.glob.return_value = [ack_received, ack_understood]
+    activities = get_recent_activity(sample_tasks, limit=5)
+
+    assert len(activities) == 2
+    assert any(a['action'] == 'Received' for a in activities)
+    assert any(a['action'] == 'Understood' for a in activities)
+
+
 # ========== calculate_session_duration ==========
 
 @patch('scripts.swarm.dashboard.data.Path')
@@ -226,6 +239,42 @@ def test_calculate_session_duration_no_file(mock_path_cls):
     assert duration == "N/A"
 
 
+@patch('scripts.swarm.dashboard.data.Path')
+def test_calculate_session_duration_value_error(mock_path_cls):
+    """Test ValueError when parsing non-numeric content (lines 207-208)."""
+    mock_session_file = MagicMock()
+    mock_session_file.exists.return_value = True
+    mock_session_file.read_text.return_value = "not-a-number"
+    mock_status_dir = MagicMock()
+    mock_status_dir.exists.return_value = False
+    mock_path_cls.side_effect = [mock_session_file, mock_status_dir]
+
+    duration = calculate_session_duration()
+    assert duration == "N/A"
+
+
+@patch('scripts.swarm.dashboard.data.Path')
+@patch('time.time')
+def test_calculate_session_duration_seconds(mock_time, mock_path_cls):
+    """Test seconds format when < 60s (line 227)."""
+    mock_time.return_value = 1700000045
+    mock_session_file = MagicMock()
+    mock_session_file.exists.return_value = True
+    mock_session_file.read_text.return_value = "1700000000"
+    mock_path_cls.return_value = mock_session_file
+
+    duration = calculate_session_duration()
+    assert duration == "45s"
+
+
+@patch('scripts.swarm.dashboard.data.Path')
+def test_calculate_session_duration_exception(mock_path_cls):
+    """Test generic exception returns N/A (lines 235-236)."""
+    mock_path_cls.side_effect = Exception("Unexpected error")
+    duration = calculate_session_duration()
+    assert duration == "N/A"
+
+
 # ========== get_system_resources ==========
 
 def test_get_system_resources_with_psutil():
@@ -266,121 +315,21 @@ def test_get_system_resources_fallback_error(mock_subprocess):
     assert resources['memory_percent'] == 0.0
 
 
-# ========== get_stuck_workers ==========
+def test_get_system_resources_with_psutil_mock():
+    """Test get_system_resources with psutil available (lines 248-258)."""
+    if not sys.modules.get('psutil'):
+        pytest.skip("psutil not available")
 
-def test_get_stuck_workers(temp_status_dir):
-    """Test identificazione worker stuck."""
-    now = int(time.time())
-    stuck_hb = temp_status_dir / "heartbeat_cervella-backend.log"
-    stuck_hb.write_text(f"{now - 600}|TASK_001|Processing...")
-    active_hb = temp_status_dir / "heartbeat_cervella-frontend.log"
-    active_hb.write_text(f"{now - 60}|TASK_002|Working...")
-    idle_hb = temp_status_dir / "heartbeat_cervella-tester.log"
-    idle_hb.write_text(f"{now - 600}|-|Idle...")
-
-    with patch('scripts.swarm.dashboard.data.Path') as mock_path:
-        mock_status = MagicMock()
-        mock_status.exists.return_value = True
-        mock_status.glob.return_value = [stuck_hb, active_hb, idle_hb]
-        mock_path.return_value = mock_status
-
-        stuck = get_stuck_workers(threshold_sec=300)
-        assert len(stuck) == 1
-        assert stuck[0]['worker'] == 'cervella-backend'
-        assert stuck[0]['last_seen_sec'] >= 600
-
-
-def test_get_stuck_workers_empty_dir():
-    """Test con directory status vuota."""
-    with patch('scripts.swarm.dashboard.data.Path') as mock_path:
-        mock_status = MagicMock()
-        mock_status.exists.return_value = False
-        mock_path.return_value = mock_status
-        stuck = get_stuck_workers()
-        assert len(stuck) == 0
-
-
-def test_get_stuck_workers_invalid_format(temp_status_dir):
-    """Test con heartbeat file formato invalido."""
-    bad_hb = temp_status_dir / "heartbeat_cervella-bad.log"
-    bad_hb.write_text("invalid format")
-
-    with patch('scripts.swarm.dashboard.data.Path') as mock_path:
-        mock_status = MagicMock()
-        mock_status.exists.return_value = True
-        mock_status.glob.return_value = [bad_hb]
-        mock_path.return_value = mock_status
-        stuck = get_stuck_workers()
-        assert len(stuck) == 0
-
-
-# ========== get_live_activity_from_heartbeat ==========
-
-def test_get_live_activity_from_heartbeat(temp_status_dir):
-    """Test lettura live activity da heartbeat."""
-    now = int(time.time())
-    active_hb = temp_status_dir / "heartbeat_cervella-backend.log"
-    active_hb.write_text(f"{now - 30}|TASK_001|Processing...")
-    stale_hb = temp_status_dir / "heartbeat_cervella-frontend.log"
-    stale_hb.write_text(f"{now - 200}|TASK_002|Working...")
-
-    with patch('scripts.swarm.dashboard.data.Path') as mock_path:
-        mock_status = MagicMock()
-        mock_status.exists.return_value = True
-        mock_status.glob.return_value = [active_hb, stale_hb]
-        mock_path.return_value = mock_status
-
-        activities = get_live_activity_from_heartbeat()
-        assert len(activities) == 2
-        backend = [a for a in activities if a['worker'] == 'cervella-backend'][0]
-        assert backend['is_active'] is True
-        frontend = [a for a in activities if a['worker'] == 'cervella-frontend'][0]
-        assert frontend['is_active'] is False
-
-
-def test_get_live_activity_empty():
-    """Test con nessun heartbeat."""
-    with patch('scripts.swarm.dashboard.data.Path') as mock_path:
-        mock_status = MagicMock()
-        mock_status.exists.return_value = False
-        mock_path.return_value = mock_status
-        activities = get_live_activity_from_heartbeat()
-        assert len(activities) == 0
-
-
-# ========== get_task_description ==========
-
-def test_get_task_description(temp_tasks_dir):
-    """Test estrazione descrizione da file task."""
-    task_file = temp_tasks_dir / "TASK_001.md"
-    task_file.write_text("# TASK: Write tests for dashboard module\n\n## Details\n...")
-    with patch('scripts.swarm.dashboard.data.TASKS_DIR', str(temp_tasks_dir)):
-        desc = get_task_description('TASK_001')
-        assert desc == "Write tests for dashboard module"
-
-
-def test_get_task_description_truncation(temp_tasks_dir):
-    """Test troncamento descrizione > 40 caratteri."""
-    task_file = temp_tasks_dir / "TASK_002.md"
-    long_desc = "This is a very long task description that exceeds forty characters"
-    task_file.write_text(f"# TASK: {long_desc}\n")
-    with patch('scripts.swarm.dashboard.data.TASKS_DIR', str(temp_tasks_dir)):
-        desc = get_task_description('TASK_002')
-        assert len(desc) <= 40
-        assert desc.endswith('...')
-
-
-def test_get_task_description_missing_file(temp_tasks_dir):
-    """Test con file task mancante."""
-    with patch('scripts.swarm.dashboard.data.TASKS_DIR', str(temp_tasks_dir)):
-        desc = get_task_description('TASK_999')
-        assert desc == "Unknown task"
-
-
-def test_get_task_description_no_header(temp_tasks_dir):
-    """Test con file senza header '# TASK:'."""
-    task_file = temp_tasks_dir / "TASK_003.md"
-    task_file.write_text("Some content without proper header")
-    with patch('scripts.swarm.dashboard.data.TASKS_DIR', str(temp_tasks_dir)):
-        desc = get_task_description('TASK_003')
-        assert desc == "No description"
+    with patch('scripts.swarm.dashboard.data.PSUTIL_AVAILABLE', True):
+        import psutil as real_psutil
+        with patch.object(real_psutil, 'cpu_percent', return_value=42.5):
+            mock_mem = MagicMock()
+            mock_mem.used = 8 * (1024**3)
+            mock_mem.total = 16 * (1024**3)
+            mock_mem.percent = 50.0
+            with patch.object(real_psutil, 'virtual_memory', return_value=mock_mem):
+                resources = get_system_resources()
+                assert resources['cpu_percent'] == 42.5
+                assert resources['memory_used_gb'] == 8.0
+                assert resources['memory_total_gb'] == 16.0
+                assert resources['memory_percent'] == 50.0

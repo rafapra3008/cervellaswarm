@@ -329,6 +329,19 @@ def test_boundary_5_files():
 
 
 # ============================================================================
+# T16: estimate_files_affected "both" keyword (line 105)
+# ============================================================================
+def test_estimate_files_affected_both_keyword():
+    """estimate_files_affected returns 2 for 'both' keyword (line 105)."""
+    assert estimate_files_affected("update both frontend and backend") == 2
+
+
+def test_estimate_files_affected_two_keyword():
+    """estimate_files_affected returns 2 for 'two' keyword (line 105)."""
+    assert estimate_files_affected("modify two files") == 2
+
+
+# ============================================================================
 # RUN TESTS
 # ============================================================================
 if __name__ == "__main__":
