@@ -353,3 +353,24 @@ class TestExportGraphviz:
             assert Path(output_path).exists()
         finally:
             Path(output_path).unlink(missing_ok=True)
+
+    def test_export_graphviz_success_path(self):
+        """Test export success path covers logger.info (line 350)."""
+        graph = DependencyGraph()
+
+        s1 = Symbol("func1", "function", "app.py", 10, "def func1():")
+        s2 = Symbol("func2", "function", "app.py", 20, "def func2():")
+
+        graph.add_symbol(s1)
+        graph.add_symbol(s2)
+        graph.add_reference("app.py:func1", "app.py:func2")
+
+        with tempfile.NamedTemporaryFile(suffix=".dot", delete=False) as f:
+            output_path = f.name
+
+        try:
+            with patch('scripts.utils.dependency_graph.nx.drawing.nx_pydot.write_dot'):
+                graph.export_graphviz(output_path)
+            # Success path reached (no exception)
+        finally:
+            Path(output_path).unlink(missing_ok=True)
