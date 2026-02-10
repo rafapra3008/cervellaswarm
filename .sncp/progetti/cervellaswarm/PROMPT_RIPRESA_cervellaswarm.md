@@ -1,54 +1,50 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-10 - Sessione 345
-> **STATUS:** Coverage 81%! FASE 5.3 completata. 744 test.
+> **Ultimo aggiornamento:** 2026-02-10 - Sessione 346
+> **STATUS:** Coverage 86%! 831 test. Obiettivo 85% SUPERATO!
 
 ---
 
-## SESSIONE 345 - FASE 5.3: paths.py + coverage 80% + schema DB
+## SESSIONE 346 - Coverage 81% -> 86% (+87 test)
 
 ```
 +================================================================+
-|   S345: FASE 5.3 COMPLETATA                                     |
-|   744 test PASS (era 704 = +40 test)                            |
-|   Coverage: 77% -> 81% (+4 punti)                               |
-|   Guardiana: 9/10 (Step 1-2), 8/10 (Step 3, fixato)            |
+|   S346: OBIETTIVO 85% SUPERATO!                                 |
+|   831 test PASS (era 744 = +87 test)                            |
+|   Coverage: 81% -> 86% (+5 punti)                               |
+|   Guardiana: 9-9.5/10 ogni step                                 |
 +================================================================+
 ```
 
 ### Cosa fatto
 | Step | Azione | Dettaglio |
 |------|--------|-----------|
-| 1 | Test common/paths.py | 19 test, 47%->95% coverage |
-| 2 | Test retro/output.py Rich mode | +12 test, 65%->99% coverage |
-| 2 | Test auto_detect.py | +9 test, 30%->98% coverage |
-| 3 | Schema DB canonico | Unificato conftest.py con init_db.py |
+| 1 | retro/cli.py | +15 test, 63%->98% |
+| 2 | treesitter_parser, dependency_graph | Max pratico (solo __main__) |
+| 3b | dashboard/data.py | +13 test, 89%->93% |
+| 3b | task_classifier.py | +2 test, 84%->85% |
+| 3c | architect_flow.py | +6 test, 91%->97% |
+| 4 | measure_context_tokens.py | +30 test, 0%->99% |
+| 5 | repo_mapper_cli.py | +25 test, 0%->96% |
 
-### File nuovi/modificati
-- `tests/common/test_paths.py` (248 righe) - nuovo
-- `tests/memory/test_retro_output.py` (467 righe) - +12 Rich mode tests
-- `tests/memory/test_auto_detect_helpers.py` (258 righe) - nuovo
-- `tests/memory/conftest.py` - Schema canonico unificato (3 SQL costanti)
-- `tests/memory/test_analytics_cmd_patterns.py` - Schema canonico inline
+### Scoperta chiave
+treesitter_parser (75%), dependency_graph (65%), symbol_extractor (72%) hanno TUTTE le linee mancanti in `__main__` o ImportError. Max pratico per policy.
 
-### Stato Coverage (81%)
-- **81% totale** (3992 stmts, 771 missing)
-- 100%: python_extractor, typescript_extractor, symbol_cache, language_builtins, compaction, symbol_types, patterns, dashboard, events, lessons, summary
-- 99%: impact_analyzer, retro/output, add_version_headers
-- **98%: auto_detect** (era 30%)
-- **95%: paths.py, repo_mapper**
-- 89%: generate_worker_context, dashboard/data
-- 75%: treesitter_parser
-- 72%: symbol_extractor, helpers (ImportError gap)
-- 65%: dependency_graph
-- Gap rimasti: semantic_search 17%, CLI wrappers 0%, retro/cli 63%
+### Stato Coverage (86%)
+- **86% totale** (3992 stmts, 564 missing)
+- 99%: measure_context_tokens (era 0%)
+- 98%: retro/cli.py (era 63%)
+- 97%: architect_flow (era 91%)
+- 96%: repo_mapper_cli (era 0%)
+- 93%: dashboard/data (era 89%)
+- Gap rimasti: semantic_search 17%, impact_analyzer_cli 0%, semantic_search_cli 0%
 
 ---
 
 ## TODO PROSSIMA SESSIONE
 
-- [ ] Push verso 85% (retro/cli.py 63% = ~64 stmts, treesitter_parser 75%)
-- [ ] CLI wrappers a 0% (impact_analyzer_cli, repo_mapper_cli, semantic_search_cli)
+- [ ] Push verso 90% (impact_analyzer_cli, semantic_search_cli)
+- [ ] semantic_search.py (115 stmts missing, 17%) - il gap piu grande
 - [ ] test_python_extractor.py a 494 righe - borderline, monitorare
 - [ ] test_typescript_extractor.py a 492 righe - borderline, monitorare
 - [ ] 3 `__init__.py` in test dirs (pre-esistenti) - rischio shadowing latente
@@ -70,8 +66,9 @@
 | S343 | FASE 5.1 AST pipeline 60%->73% (+122 test, 647 totali) |
 | S344 | FASE 5.2 repo_mapper+types 73%->77% (+57 test, 704 totali) |
 | S345 | FASE 5.3 paths+output+schema 77%->81% (+40 test, 744 totali) |
+| S346 | Coverage push 81%->86% (+87 test, 831 totali) |
 
 ---
 
 *"Ultrapassar os proprios limites!"*
-*Sessione 345 - Cervella & Rafa*
+*Sessione 346 - Cervella & Rafa*
