@@ -1,61 +1,59 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-10 - Sessione 344
-> **STATUS:** Coverage 77%! FASE 5.2 completata. 704 test.
+> **Ultimo aggiornamento:** 2026-02-10 - Sessione 345
+> **STATUS:** Coverage 81%! FASE 5.3 completata. 744 test.
 
 ---
 
-## SESSIONE 344 - FASE 5.2: repo_mapper + symbol_types + generate_worker_context
+## SESSIONE 345 - FASE 5.3: paths.py + coverage 80% + schema DB
 
 ```
 +================================================================+
-|   S344: FASE 5.2 COMPLETATA                                     |
-|   704 test PASS (era 647 = +57 test)                            |
-|   Coverage: 73% -> 77% (+4 punti)                               |
-|   Guardiana: 9/10                                                |
+|   S345: FASE 5.3 COMPLETATA                                     |
+|   744 test PASS (era 704 = +40 test)                            |
+|   Coverage: 77% -> 81% (+4 punti)                               |
+|   Guardiana: 9/10 (Step 1-2), 8/10 (Step 3, fixato)            |
 +================================================================+
 ```
 
 ### Cosa fatto
-| Azione | Dettaglio |
-|--------|-----------|
-| Split test_repo_mapper.py | 573 righe -> core (235) + integration (245) |
-| Test repo_mapper gaps | +2 test (line 163 references, line 244 non-file) |
-| Test symbol_types | 5 test, 100% coverage (__repr__ coperto) |
-| Test generate_worker_context | 16 test, 89% coverage |
-| Test dependency_graph export | +1 test (export success path, line 350) |
+| Step | Azione | Dettaglio |
+|------|--------|-----------|
+| 1 | Test common/paths.py | 19 test, 47%->95% coverage |
+| 2 | Test retro/output.py Rich mode | +12 test, 65%->99% coverage |
+| 2 | Test auto_detect.py | +9 test, 30%->98% coverage |
+| 3 | Schema DB canonico | Unificato conftest.py con init_db.py |
 
 ### File nuovi/modificati
-- `tests/test_repo_mapper_core.py` (235 righe) - split da test_repo_mapper.py
-- `tests/test_repo_mapper_integration.py` (245 righe) - split da test_repo_mapper.py
-- `tests/utils/test_symbol_types.py` (64 righe) - nuovo
-- `tests/utils/test_generate_worker_context.py` (337 righe) - nuovo
-- `tests/utils/test_dependency_graph_analysis.py` (+1 test)
-- `tests/test_repo_mapper.py` - RIMOSSO (sostituito dallo split)
+- `tests/common/test_paths.py` (248 righe) - nuovo
+- `tests/memory/test_retro_output.py` (467 righe) - +12 Rich mode tests
+- `tests/memory/test_auto_detect_helpers.py` (258 righe) - nuovo
+- `tests/memory/conftest.py` - Schema canonico unificato (3 SQL costanti)
+- `tests/memory/test_analytics_cmd_patterns.py` - Schema canonico inline
 
-### Stato Coverage (77%)
-- **77% totale** (3992 stmts, 902 missing)
-- 100%: python_extractor, typescript_extractor, symbol_cache, language_builtins, compaction, **symbol_types**
-- 99%: impact_analyzer
-- **95%: repo_mapper** (era 0%)
-- **89%: generate_worker_context** (era 0%)
+### Stato Coverage (81%)
+- **81% totale** (3992 stmts, 771 missing)
+- 100%: python_extractor, typescript_extractor, symbol_cache, language_builtins, compaction, symbol_types, patterns, dashboard, events, lessons, summary
+- 99%: impact_analyzer, retro/output, add_version_headers
+- **98%: auto_detect** (era 30%)
+- **95%: paths.py, repo_mapper**
+- 89%: generate_worker_context, dashboard/data
 - 75%: treesitter_parser
-- 72%: symbol_extractor
-- 65%: dependency_graph (testabile ~100%, gap = imports/main)
-- Gap rimasti: semantic_search 17%, CLI wrappers 0%
+- 72%: symbol_extractor, helpers (ImportError gap)
+- 65%: dependency_graph
+- Gap rimasti: semantic_search 17%, CLI wrappers 0%, retro/cli 63%
 
 ---
 
 ## TODO PROSSIMA SESSIONE
 
-- [ ] FASE 5.3: Solidificare common/paths.py
-- [ ] Schema DB canonico (conftest vs analytics usano colonne diverse)
+- [ ] Push verso 85% (retro/cli.py 63% = ~64 stmts, treesitter_parser 75%)
+- [ ] CLI wrappers a 0% (impact_analyzer_cli, repo_mapper_cli, semantic_search_cli)
 - [ ] test_python_extractor.py a 494 righe - borderline, monitorare
 - [ ] test_typescript_extractor.py a 492 righe - borderline, monitorare
 - [ ] 3 `__init__.py` in test dirs (pre-esistenti) - rischio shadowing latente
 - [ ] Semantic search test fail (ordine risultati non deterministico)
-- [ ] CLI wrappers (impact_analyzer_cli, repo_mapper_cli, semantic_search_cli) a 0%
-- [ ] Push verso 80% (serve ~25 stmts in piu)
+- [ ] ResourceWarning unclosed database in test_retro_cli.py
 
 ---
 
@@ -71,9 +69,9 @@
 | S342 | Coverage push 53%->60% (+113 test, 525 totali) |
 | S343 | FASE 5.1 AST pipeline 60%->73% (+122 test, 647 totali) |
 | S344 | FASE 5.2 repo_mapper+types 73%->77% (+57 test, 704 totali) |
+| S345 | FASE 5.3 paths+output+schema 77%->81% (+40 test, 744 totali) |
 
 ---
 
 *"Ultrapassar os proprios limites!"*
-*Sessione 344 - Cervella & Rafa*
-
+*Sessione 345 - Cervella & Rafa*

@@ -307,3 +307,161 @@ def test_print_header_quiet_mode(capsys):
     assert captured.out == ""
 
 
+# === RICH MODE TESTS ===
+
+@patch('scripts.memory.retro.output.console')
+def test_print_section_header_rich_mode(mock_console):
+    """print_section_header in RICH mode calls console.print."""
+    result = print_section_header("Test Section", OutputMode.RICH)
+
+    assert result is None
+    assert mock_console.print.called
+
+
+@patch('scripts.memory.retro.output.console')
+def test_print_table_rich_mode(mock_console):
+    """print_table in RICH mode calls console.print con Table."""
+    data = [
+        {"name": "Alice", "age": 30},
+        {"name": "Bob", "age": 25}
+    ]
+    columns = [
+        ("Name", "name", "left", "cyan", 15),
+        ("Age", "age", "right", "white", 8)
+    ]
+
+    result = print_table(data, columns, "Test Table", OutputMode.RICH)
+
+    assert result is None
+    assert mock_console.print.called
+
+
+@patch('scripts.memory.retro.output.console')
+def test_print_panel_rich_mode(mock_console):
+    """print_panel in RICH mode calls console.print con Panel."""
+    result = print_panel("Test content", "Panel Title", "white", OutputMode.RICH)
+
+    assert result is None
+    assert mock_console.print.called
+
+
+@patch('scripts.memory.retro.output.console')
+def test_print_metrics_table_rich_mode(mock_console):
+    """print_metrics_table in RICH mode calls console.print con Table."""
+    metrics = {
+        'total': 100,
+        'successes': 80,
+        'failures': 20,
+        'success_rate': 80.0
+    }
+
+    result = print_metrics_table(metrics, OutputMode.RICH)
+
+    assert result is None
+    assert mock_console.print.called
+
+
+@patch('scripts.memory.retro.output.console')
+def test_print_patterns_section_rich_mode(mock_console):
+    """print_patterns_section in RICH mode calls console.print."""
+    patterns = [
+        {"pattern_name": "Import Error", "severity_level": "CRITICAL", "occurrence_count": 5},
+        {"pattern_name": "DB Error", "severity_level": "HIGH", "occurrence_count": 3}
+    ]
+
+    print_patterns_section(patterns)
+
+    assert mock_console.print.called
+
+
+@patch('scripts.memory.retro.output.console')
+def test_print_lessons_section_rich_mode(mock_console):
+    """print_lessons_section in RICH mode calls console.print."""
+    lessons = [
+        {"pattern": "Fix import paths", "severity": "HIGH"},
+        {"pattern": "Add DB pool", "severity": "MEDIUM"}
+    ]
+
+    print_lessons_section(lessons)
+
+    assert mock_console.print.called
+
+
+@patch('scripts.memory.retro.output.console')
+def test_print_agents_section_rich_mode(mock_console):
+    """print_agents_section in RICH mode calls console.print."""
+    agents = [
+        {
+            "agent_name": "cervella-backend",
+            "total": 10,
+            "successes": 8,
+            "failures": 2,
+            "avg_duration": 2500.0
+        }
+    ]
+
+    print_agents_section(agents)
+
+    assert mock_console.print.called
+
+
+@patch('scripts.memory.retro.output.console')
+def test_print_recommendations_section_rich_mode(mock_console):
+    """print_recommendations_section in RICH mode calls console.print."""
+    recommendations = [
+        "Success rate < 80% - Investigate",
+        "Alto numero di errori - Review"
+    ]
+
+    print_recommendations_section(recommendations)
+
+    assert mock_console.print.called
+
+
+@patch('scripts.memory.retro.output.console')
+def test_print_suggestions_section_rich_mode(mock_console):
+    """print_suggestions_section in RICH mode calls console.print."""
+    pattern_suggestions = [
+        ("pattern", 5, "Pattern 'Import Error' ripetuto 5 volte senza lezione")
+    ]
+    agent_suggestions = [
+        ("agent", 60, "Agente 'cervella-bad' con 60% success rate")
+    ]
+
+    print_suggestions_section(pattern_suggestions, agent_suggestions)
+
+    assert mock_console.print.called
+
+
+@patch('scripts.memory.retro.output.console')
+def test_print_next_steps_section_rich_mode(mock_console):
+    """print_next_steps_section in RICH mode calls console.print."""
+    next_steps = [
+        "1. Review pattern attivi",
+        "2. Review lezioni attive"
+    ]
+
+    print_next_steps_section(next_steps)
+
+    assert mock_console.print.called
+
+
+@patch('scripts.memory.retro.output.console')
+def test_print_empty_message_rich_mode(mock_console):
+    """print_empty_message in RICH mode calls console.print."""
+    print_empty_message("Nessun dato disponibile")
+
+    assert mock_console.print.called
+
+
+@patch('scripts.memory.retro.output.console')
+def test_print_header_rich_mode(mock_console):
+    """print_header in RICH mode calls console.print."""
+    period_start = "2026-01-01T00:00:00"
+    period_end = "2026-01-07T23:59:59"
+
+    print_header(period_start, period_end, quiet=False)
+
+    assert mock_console.print.called
+
+

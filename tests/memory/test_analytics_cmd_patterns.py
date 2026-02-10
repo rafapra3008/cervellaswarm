@@ -25,23 +25,30 @@ from scripts.memory.analytics.commands.patterns import cmd_patterns
 
 @pytest.fixture
 def patterns_temp_db(tmp_path):
-    """Database temporaneo con schema error_patterns."""
+    """Database temporaneo con schema canonico error_patterns.
+    MUST match conftest.CANONICAL_ERROR_PATTERNS (inline per no-import rule).
+    """
     db_path = tmp_path / "patterns_test.db"
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
     cursor.execute("""
-        CREATE TABLE error_patterns (
-            id INTEGER PRIMARY KEY,
-            pattern_name TEXT,
+        CREATE TABLE IF NOT EXISTS error_patterns (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            pattern_name TEXT NOT NULL,
             pattern_type TEXT,
-            severity_level TEXT,
-            occurrence_count INTEGER,
-            status TEXT,
+            first_seen TEXT,
             last_seen TEXT,
+            occurrence_count INTEGER DEFAULT 1,
+            severity_level TEXT DEFAULT 'MEDIUM',
+            error_signature TEXT,
+            affected_agents TEXT,
+            affected_files TEXT,
             root_cause_hypothesis TEXT,
-            mitigation_description TEXT
+            mitigation_applied INTEGER DEFAULT 0,
+            mitigation_description TEXT,
+            status TEXT DEFAULT 'ACTIVE'
         )
     """)
     conn.commit()

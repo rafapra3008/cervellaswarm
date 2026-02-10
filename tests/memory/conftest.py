@@ -3,6 +3,7 @@ Shared fixtures per tests/memory/.
 
 Sessione 341 - Estratte da test_dashboard_analytics_*.py (DRY).
 Sessione 342 - Aggiunto retro_db con schema completo per modulo retro.
+Sessione 345 - Schema canonico unificato (match init_db.py).
 """
 
 import pytest
@@ -12,97 +13,121 @@ from pathlib import Path
 from datetime import datetime, timedelta
 
 
-@pytest.fixture
-def temp_db():
-    """Database temporaneo con schema completo."""
-    temp_file = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
-    db_path = Path(temp_file.name)
-    temp_file.close()
+# =============================================================================
+# SCHEMA CANONICO - Match scripts/memory/init_db.py
+#
+# Divergenze intenzionali rispetto a init_db.py:
+# - ID: INTEGER AUTOINCREMENT (test) vs TEXT (produzione) - semplifica insert
+# - NOT NULL rilassati: pattern_type, first_seen, last_seen, timestamp(lessons)
+#   perche i test inseriscono subset di colonne
+# - UNIQUE rimosso da pattern_name (test possono inserire duplicati)
+# - DEFAULT aggiunti: event_type='task', duration_ms=0, success=0
+#   perche i test spesso non specificano questi campi
+# =============================================================================
 
+CANONICAL_SWARM_EVENTS = """
+    CREATE TABLE IF NOT EXISTS swarm_events (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        timestamp TEXT NOT NULL,
+        session_id TEXT,
+        event_type TEXT DEFAULT 'task',
+        agent_name TEXT,
+        agent_role TEXT,
+        task_id TEXT,
+        parent_task_id TEXT,
+        task_description TEXT,
+        task_status TEXT,
+        duration_ms INTEGER DEFAULT 0,
+        success INTEGER DEFAULT 0,
+        error_message TEXT,
+        project TEXT,
+        files_modified TEXT,
+        tags TEXT,
+        notes TEXT,
+        created_at TEXT DEFAULT (datetime('now'))
+    )
+"""
+
+CANONICAL_ERROR_PATTERNS = """
+    CREATE TABLE IF NOT EXISTS error_patterns (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        pattern_name TEXT NOT NULL,
+        pattern_type TEXT,
+        first_seen TEXT,
+        last_seen TEXT,
+        occurrence_count INTEGER DEFAULT 1,
+        severity_level TEXT DEFAULT 'MEDIUM',
+        error_signature TEXT,
+        affected_agents TEXT,
+        affected_files TEXT,
+        root_cause_hypothesis TEXT,
+        mitigation_applied INTEGER DEFAULT 0,
+        mitigation_description TEXT,
+        status TEXT DEFAULT 'ACTIVE'
+    )
+"""
+
+CANONICAL_LESSONS_LEARNED = """
+    CREATE TABLE IF NOT EXISTS lessons_learned (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        timestamp TEXT,
+        context TEXT,
+        problem TEXT,
+        solution TEXT,
+        pattern TEXT,
+        agents_involved TEXT,
+        confidence REAL DEFAULT 0.5,
+        times_applied INTEGER DEFAULT 0,
+        created_at TEXT DEFAULT (datetime('now')),
+        category TEXT,
+        severity TEXT DEFAULT 'MEDIUM',
+        root_cause TEXT,
+        prevention TEXT,
+        time_wasted_minutes INTEGER,
+        occurrence_count INTEGER DEFAULT 1,
+        status TEXT DEFAULT 'ACTIVE',
+        related_pattern_id INTEGER,
+        project TEXT,
+        trigger TEXT,
+        example TEXT,
+        tags TEXT,
+        related_patterns TEXT,
+        auto_generated INTEGER DEFAULT 0,
+        last_applied TEXT
+    )
+"""
+
+
+def _create_canonical_db(db_path: Path):
+    """Crea database con schema canonico completo."""
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
-
-    cursor.execute("""
-        CREATE TABLE swarm_events (
-            id INTEGER PRIMARY KEY, timestamp TEXT,
-            agent_name TEXT, task_description TEXT, project TEXT, success INTEGER
-        )
-    """)
-    cursor.execute("""
-        CREATE TABLE error_patterns (
-            id INTEGER PRIMARY KEY, pattern_name TEXT, status TEXT, severity_level TEXT
-        )
-    """)
-    cursor.execute("""
-        CREATE TABLE lessons_learned (
-            id INTEGER PRIMARY KEY, trigger TEXT, problem TEXT, solution TEXT, status TEXT
-        )
-    """)
+    cursor.execute(CANONICAL_SWARM_EVENTS)
+    cursor.execute(CANONICAL_ERROR_PATTERNS)
+    cursor.execute(CANONICAL_LESSONS_LEARNED)
     conn.commit()
     conn.close()
+
+
+@pytest.fixture
+def temp_db():
+    """Database temporaneo con schema canonico completo."""
+    temp_file = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
+    db_path = Path(temp_file.name)
+    temp_file.close()
+    _create_canonical_db(db_path)
     yield db_path
     db_path.unlink()
 
 
 @pytest.fixture
 def retro_db():
-    """Database con schema completo per modulo retro (include tutte le colonne)."""
+    """Database per modulo retro (stesso schema canonico di temp_db)."""
     temp_file = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
     db_path = Path(temp_file.name)
     temp_file.close()
-
-    conn = sqlite3.connect(db_path)
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
-
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS swarm_events (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            timestamp TEXT NOT NULL,
-            agent_name TEXT,
-            task_description TEXT,
-            project TEXT,
-            success INTEGER DEFAULT 0,
-            event_type TEXT DEFAULT 'task',
-            duration_ms INTEGER DEFAULT 0
-        )
-    """)
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS error_patterns (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            pattern_name TEXT NOT NULL,
-            severity_level TEXT DEFAULT 'MEDIUM',
-            occurrence_count INTEGER DEFAULT 1,
-            status TEXT DEFAULT 'ACTIVE',
-            root_cause TEXT,
-            mitigation TEXT
-        )
-    """)
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS lessons_learned (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            trigger TEXT,
-            context TEXT,
-            problem TEXT,
-            root_cause TEXT,
-            solution TEXT,
-            prevention TEXT,
-            example TEXT,
-            severity TEXT DEFAULT 'MEDIUM',
-            agents_involved TEXT,
-            tags TEXT,
-            pattern TEXT,
-            confidence REAL DEFAULT 0.5,
-            times_applied INTEGER DEFAULT 0,
-            project TEXT,
-            status TEXT DEFAULT 'ACTIVE',
-            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-            occurrence_count INTEGER DEFAULT 1
-        )
-    """)
-    conn.commit()
-    conn.close()
+    _create_canonical_db(db_path)
     yield db_path
     db_path.unlink()
 
