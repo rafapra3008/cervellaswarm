@@ -1,54 +1,44 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-10 - Sessione 346
-> **STATUS:** Coverage 86%! 831 test. Obiettivo 85% SUPERATO!
+> **Ultimo aggiornamento:** 2026-02-10 - Sessione 347
+> **STATUS:** Coverage 92%! 897 test. Push da 86% a 92% in una sessione!
 
 ---
 
-## SESSIONE 346 - Coverage 81% -> 86% (+87 test)
+## SESSIONE 347 - Coverage 86% -> 92% (+66 test)
 
 ```
 +================================================================+
-|   S346: OBIETTIVO 85% SUPERATO!                                 |
-|   831 test PASS (era 744 = +87 test)                            |
-|   Coverage: 81% -> 86% (+5 punti)                               |
-|   Guardiana: 9-9.5/10 ogni step                                 |
+|   S347: 92% COVERAGE!                                           |
+|   897 test PASS (era 831 = +66 test)                            |
+|   Coverage: 86% -> 92% (+6 punti)                               |
+|   Guardiana: 9.5/10 ogni step                                   |
 +================================================================+
 ```
 
 ### Cosa fatto
 | Step | Azione | Dettaglio |
 |------|--------|-----------|
-| 1 | retro/cli.py | +15 test, 63%->98% |
-| 2 | treesitter_parser, dependency_graph | Max pratico (solo __main__) |
-| 3b | dashboard/data.py | +13 test, 89%->93% |
-| 3b | task_classifier.py | +2 test, 84%->85% |
-| 3c | architect_flow.py | +6 test, 91%->97% |
-| 4 | measure_context_tokens.py | +30 test, 0%->99% |
-| 5 | repo_mapper_cli.py | +25 test, 0%->96% |
+| 1 | impact_analyzer_cli.py | +15 test, 0%->98% |
+| 2 | semantic_search_cli.py | +22 test, 0%->99% |
+| 3 | semantic_search.py | +29 test, 17%->97% (unit tests con mock) |
 
-### Scoperta chiave
-treesitter_parser (75%), dependency_graph (65%), symbol_extractor (72%) hanno TUTTE le linee mancanti in `__main__` o ImportError. Max pratico per policy.
-
-### Stato Coverage (86%)
-- **86% totale** (3992 stmts, 564 missing)
-- 99%: measure_context_tokens (era 0%)
-- 98%: retro/cli.py (era 63%)
-- 97%: architect_flow (era 91%)
-- 96%: repo_mapper_cli (era 0%)
-- 93%: dashboard/data (era 89%)
-- Gap rimasti: semantic_search 17%, impact_analyzer_cli 0%, semantic_search_cli 0%
+### Stato Coverage (92%)
+- **92% totale** (3992 stmts, 305 missing)
+- 99%: measure_context_tokens, semantic_search_cli
+- 98%: impact_analyzer_cli, retro/cli.py
+- 97%: semantic_search (era 17%!), architect_flow, sections
+- 96%: repo_mapper_cli, dashboard/data, task_manager
+- Gap rimasti: convert_agents (0%, 76 stmts), helpers.py (72%), dependency_graph (65% max pratico)
 
 ---
 
 ## TODO PROSSIMA SESSIONE
 
-- [ ] Push verso 90% (impact_analyzer_cli, semantic_search_cli)
-- [ ] semantic_search.py (115 stmts missing, 17%) - il gap piu grande
+- [ ] Push verso 95%? (convert_agents 76 stmts, helpers.py 8 stmts, load_context 8 stmts)
 - [ ] test_python_extractor.py a 494 righe - borderline, monitorare
 - [ ] test_typescript_extractor.py a 492 righe - borderline, monitorare
 - [ ] 3 `__init__.py` in test dirs (pre-esistenti) - rischio shadowing latente
-- [ ] Semantic search test fail (ordine risultati non deterministico)
 - [ ] ResourceWarning unclosed database in test_retro_cli.py
 
 ---
@@ -67,8 +57,9 @@ treesitter_parser (75%), dependency_graph (65%), symbol_extractor (72%) hanno TU
 | S344 | FASE 5.2 repo_mapper+types 73%->77% (+57 test, 704 totali) |
 | S345 | FASE 5.3 paths+output+schema 77%->81% (+40 test, 744 totali) |
 | S346 | Coverage push 81%->86% (+87 test, 831 totali) |
+| S347 | Coverage push 86%->92% (+66 test, 897 totali) |
 
 ---
 
 *"Ultrapassar os proprios limites!"*
-*Sessione 346 - Cervella & Rafa*
+*Sessione 347 - Cervella & Rafa*
