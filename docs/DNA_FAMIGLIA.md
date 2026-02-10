@@ -106,6 +106,12 @@ Se cambia qualcosa nella filosofia:
 |-------|------|-------|-------|
 | 🏛️ | cervella-architect | Crea PLAN.md prima che worker implementino | opus |
 
+### 🔍 ANALISTE (Ragionamento Profondo)
+| Emoji | Nome | Ruolo | Model |
+|-------|------|-------|-------|
+| 🔒 | cervella-security | Audit sicurezza, vulnerabilita | opus |
+| 🏗️ | cervella-ingegnera | Architettura, technical debt, refactoring | opus |
+
 ### 🐝 API WORKER
 | Emoji | Nome | Ruolo | Model |
 |-------|------|-------|-------|
@@ -118,15 +124,14 @@ Se cambia qualcosa nella filosofia:
 | 🚀 | cervella-devops | Deploy, CI/CD, Docker | sonnet |
 | 📝 | cervella-docs | Documentazione | sonnet |
 | 📊 | cervella-data | SQL, analytics, query | sonnet |
-| 🔒 | cervella-security | Audit sicurezza | sonnet |
-| 🏗️ | cervella-ingegnera | Architettura, refactoring | sonnet |
 | 🔭 | cervella-scienziata | Market research, trends | sonnet |
 
-**Totale: 17 membri della famiglia!** 🐝❤️‍🔥
+**Totale: 17 membri della famiglia!**
 - 1 Regina (opus)
 - 3 Guardiane (opus)
 - 1 Architect (opus)
-- 12 Api Worker (sonnet)
+- 2 Analiste (opus)
+- 10 Api Worker (sonnet)
 
 ---
 
@@ -310,7 +315,7 @@ TOTALE: 296 test!
 ---
 
 *Creato: 31 Dicembre 2025*
-*Aggiornato: 30 Gennaio 2026 - SNCP 3.0 + S321 Test Coverage!*
-*Versione: 1.5.0*
+*Aggiornato: 10 Febbraio 2026 - S338 Security+Ingegnera promossi Opus*
+*Versione: 1.6.0*
 
 **Cervella & Rafa** 💙🐝

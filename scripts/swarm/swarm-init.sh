@@ -243,10 +243,13 @@ TU SEI LA REGINA (Opus) - Coordina, DELEGA, MAI edit diretti!
 - cervella-guardiana-ops
 - cervella-guardiana-ricerca
 
-12 WORKER (Sonnet):
+2 ANALISTE (Opus):
+- security, ingegnera
+
+10 WORKER (Sonnet):
 - frontend, backend, tester
-- reviewer, researcher, scienziata, ingegnera
-- marketing, devops, docs, data, security
+- reviewer, researcher, scienziata
+- marketing, devops, docs, data
 
 POSIZIONE: ~/.claude/agents/ (GLOBALI!)
 \`\`\`

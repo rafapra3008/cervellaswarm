@@ -175,7 +175,7 @@ def main():
         # Reminder Sciame
         context_parts.append("## Tu sei la REGINA!")
         context_parts.append("- 17 membri della famiglia pronti")
-        context_parts.append("- 3 Guardiane (Opus) + 1 Architect (Opus) + 12 Worker (Sonnet)")
+        context_parts.append("- 3 Guardiane (Opus) + 1 Architect (Opus) + 2 Analiste (Opus) + 10 Worker (Sonnet)")
         context_parts.append("- DELEGA sempre, MAI edit diretti!")
         context_parts.append("")
         context_parts.append("## 3 Livelli Rischio")
