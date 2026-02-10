@@ -247,6 +247,46 @@ def test_generate_recommendations_stable_system(retro_db):
     conn.close()
 
 
+def test_generate_recommendations_many_active_lessons(retro_db):
+    """generate_recommendations segnala se > 5 lezioni ACTIVE."""
+    conn = sqlite3.connect(retro_db)
+    conn.row_factory = sqlite3.Row
+
+    # Inserisci 6 lezioni ACTIVE
+    for i in range(6):
+        conn.execute(
+            "INSERT INTO lessons_learned (pattern, status) VALUES (?, 'ACTIVE')",
+            (f"lesson_{i}",)
+        )
+    conn.commit()
+
+    metrics = {'total': 50, 'successes': 48, 'failures': 2, 'success_rate': 96.0}
+    recs = generate_recommendations(metrics, conn)
+
+    assert any("6 lezioni ACTIVE" in rec for rec in recs)
+    conn.close()
+
+
+def test_generate_recommendations_many_active_patterns(retro_db):
+    """generate_recommendations segnala se > 3 pattern ACTIVE."""
+    conn = sqlite3.connect(retro_db)
+    conn.row_factory = sqlite3.Row
+
+    # Inserisci 4 pattern ACTIVE
+    for i in range(4):
+        conn.execute(
+            "INSERT INTO error_patterns (pattern_name, status) VALUES (?, 'ACTIVE')",
+            (f"pattern_{i}",)
+        )
+    conn.commit()
+
+    metrics = {'total': 50, 'successes': 48, 'failures': 2, 'success_rate': 96.0}
+    recs = generate_recommendations(metrics, conn)
+
+    assert any("4 pattern ACTIVE" in rec for rec in recs)
+    conn.close()
+
+
 def test_generate_next_steps_with_active_patterns(populated_retro_db):
     """generate_next_steps suggerisce review pattern se ci sono pattern attivi."""
     conn = sqlite3.connect(populated_retro_db)

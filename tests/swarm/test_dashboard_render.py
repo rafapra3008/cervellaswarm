@@ -343,3 +343,51 @@ def test_integration_json_pipeline(sample_tasks):
     assert data['timestamp']
     assert len(data['workers']) > 0
     assert isinstance(data['queue_stats'], dict)
+
+
+# ========== Edge case branches ==========
+
+def test_render_workers_long_task_name():
+    """Test troncamento task name > 40 caratteri (line 99)."""
+    long_task = [{'task_id': 'TASK_001', 'agent': 'cervella-backend',
+                  'status': 'working', 'created_at': time.time(),
+                  'description': 'A' * 50}]
+    with patch('scripts.swarm.dashboard.render.get_worker_status',
+               return_value={'status': 'active',
+                             'current_task': 'X' * 50}):
+        output = render_workers(long_task)
+        # Il task deve essere troncato a 37 + '...'
+        assert '...' in output
+
+
+def test_render_activity_started_action():
+    """Test colorizzazione azione 'Started' (lines 181-182)."""
+    tasks = [{'task_id': 'TASK_001', 'agent': 'cervella-backend',
+              'status': 'working', 'created_at': time.time()}]
+    started_activity = [{'timestamp': time.time(), 'agent': 'backend',
+                         'action': 'Started', 'task_id': 'TASK_001'}]
+    with patch('scripts.swarm.dashboard.render.get_recent_activity',
+               return_value=started_activity):
+        output = render_activity(tasks)
+        assert 'Started' in output
+
+
+def test_render_activity_unknown_action():
+    """Test colorizzazione azione sconosciuta (lines 183-184)."""
+    tasks = [{'task_id': 'TASK_001', 'agent': 'cervella-backend',
+              'status': 'working', 'created_at': time.time()}]
+    other_activity = [{'timestamp': time.time(), 'agent': 'backend',
+                       'action': 'Queued', 'task_id': 'TASK_001'}]
+    with patch('scripts.swarm.dashboard.render.get_recent_activity',
+               return_value=other_activity):
+        output = render_activity(tasks)
+        assert 'Queued' in output
+
+
+def test_render_alerts_short_stuck_time():
+    """Test formattazione tempo < 60s per worker stuck (line 258)."""
+    stuck_worker = [{'worker': 'cervella-backend', 'last_seen_sec': 45}]
+    with patch('scripts.swarm.dashboard.render.get_stuck_workers',
+               return_value=stuck_worker):
+        output = render_alerts()
+        assert '45s' in output

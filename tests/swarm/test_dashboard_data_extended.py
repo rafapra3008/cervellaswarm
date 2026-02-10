@@ -18,6 +18,7 @@ from scripts.swarm.dashboard.data import (
     get_stuck_workers,
     get_live_activity_from_heartbeat,
     get_task_description,
+    get_system_resources,
 )
 
 
@@ -236,3 +237,41 @@ def test_get_task_description_exception(temp_tasks_dir):
         with patch('pathlib.Path.read_text', mock_read_text):
             desc = get_task_description('TASK_999')
             assert desc == "Error reading task"
+
+
+# ========== get_system_resources - psutil branch ==========
+
+def test_get_system_resources_psutil_available():
+    """Test get_system_resources con psutil disponibile (lines 248-258)."""
+    mock_mem = MagicMock()
+    mock_mem.used = 8 * (1024**3)  # 8 GB
+    mock_mem.total = 16 * (1024**3)  # 16 GB
+    mock_mem.percent = 50.0
+
+    mock_psutil = MagicMock()
+    mock_psutil.cpu_percent.return_value = 25.0
+    mock_psutil.virtual_memory.return_value = mock_mem
+
+    with patch('scripts.swarm.dashboard.data.PSUTIL_AVAILABLE', True), \
+         patch('scripts.swarm.dashboard.data.psutil', mock_psutil, create=True):
+        result = get_system_resources()
+
+    assert result['cpu_percent'] == 25.0
+    assert result['memory_used_gb'] == pytest.approx(8.0)
+    assert result['memory_total_gb'] == pytest.approx(16.0)
+    assert result['memory_percent'] == 50.0
+
+
+def test_get_system_resources_psutil_exception():
+    """Test get_system_resources fallback quando psutil lancia eccezione."""
+    mock_psutil = MagicMock()
+    mock_psutil.cpu_percent.side_effect = RuntimeError("psutil error")
+
+    with patch('scripts.swarm.dashboard.data.PSUTIL_AVAILABLE', True), \
+         patch('scripts.swarm.dashboard.data.psutil', mock_psutil, create=True), \
+         patch('subprocess.check_output', side_effect=Exception("no shell")):
+        result = get_system_resources()
+
+    # Fallback returns zeros on all failures
+    assert 'cpu_percent' in result
+    assert result['cpu_percent'] == 0
