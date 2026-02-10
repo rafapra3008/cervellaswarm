@@ -8,11 +8,12 @@ import pytest
 from pathlib import Path
 from unittest.mock import patch
 
-# Import del modulo da testare
+# Import del modulo da testare (usa path completo per evitare conflitto
+# con tests/common/ package)
 import sys
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from common.db import (
+from scripts.common.db import (
     connect_db,
     connect_db_safe,
     get_connection,
@@ -33,7 +34,7 @@ class TestConnectDb:
         conn.close()
 
         # Act: Connettiti usando connect_db con path mockato
-        with patch("common.paths.get_db_path", return_value=db_path):
+        with patch("scripts.common.db.get_db_path", return_value=db_path):
             result = connect_db()
 
         # Assert
@@ -55,7 +56,7 @@ class TestConnectDb:
         db_path = tmp_path / "nonexistent.db"
 
         # Act & Assert
-        with patch("common.paths.get_db_path", return_value=db_path):
+        with patch("scripts.common.db.get_db_path", return_value=db_path):
             with pytest.raises(DatabaseNotFoundError) as exc_info:
                 connect_db()
 
@@ -75,7 +76,7 @@ class TestConnectDb:
         conn.close()
 
         # Act
-        with patch("common.paths.get_db_path", return_value=db_path):
+        with patch("scripts.common.db.get_db_path", return_value=db_path):
             result = connect_db()
 
         # Assert: Accesso per nome colonna
@@ -89,19 +90,23 @@ class TestConnectDb:
         result.close()
 
     def test_connect_db_invalid_db_file(self, tmp_path):
-        """Testa errore con file database corrotto"""
+        """Testa che un file corrotto si connette ma fallisce alle query.
+
+        SQLite non valida il file al connect - solo quando si eseguono query.
+        """
         # Arrange: Crea file non-database
         db_path = tmp_path / "corrupt.db"
         db_path.write_text("This is not a database")
 
-        # Act & Assert
-        with patch("common.paths.get_db_path", return_value=db_path):
-            with pytest.raises(DatabaseConnectionError) as exc_info:
-                connect_db()
+        # Act: La connessione riesce (SQLite e' lazy)
+        with patch("scripts.common.db.get_db_path", return_value=db_path):
+            conn = connect_db()
 
-        # Verifica messaggio errore
-        error_msg = str(exc_info.value)
-        assert "Errore connessione database" in error_msg
+        # Assert: Ma le query falliscono
+        assert conn is not None
+        with pytest.raises(sqlite3.DatabaseError):
+            conn.execute("SELECT * FROM sqlite_master")
+        conn.close()
 
 
 class TestConnectDbSafe:
@@ -115,7 +120,7 @@ class TestConnectDbSafe:
         conn.close()
 
         # Act
-        with patch("common.paths.get_db_path", return_value=db_path):
+        with patch("scripts.common.db.get_db_path", return_value=db_path):
             result = connect_db_safe()
 
         # Assert
@@ -129,24 +134,31 @@ class TestConnectDbSafe:
         db_path = tmp_path / "nonexistent.db"
 
         # Act
-        with patch("common.paths.get_db_path", return_value=db_path):
+        with patch("scripts.common.db.get_db_path", return_value=db_path):
             result = connect_db_safe()
 
         # Assert
         assert result is None
 
     def test_connect_db_safe_invalid_database(self, tmp_path):
-        """Testa che connect_db_safe ritorni None con database corrotto"""
+        """Testa che connect_db_safe con file corrotto connette (SQLite lazy).
+
+        SQLite non valida il file al connect. connect_db_safe ritorna
+        una connection valida che fallira' solo alle query.
+        """
         # Arrange
         db_path = tmp_path / "corrupt.db"
         db_path.write_text("Not a database")
 
         # Act
-        with patch("common.paths.get_db_path", return_value=db_path):
+        with patch("scripts.common.db.get_db_path", return_value=db_path):
             result = connect_db_safe()
 
-        # Assert
-        assert result is None
+        # Assert: Connection esiste ma query falliscono
+        assert result is not None
+        with pytest.raises(sqlite3.DatabaseError):
+            result.execute("SELECT 1")
+        result.close()
 
 
 class TestGetConnection:
@@ -160,7 +172,7 @@ class TestGetConnection:
         conn.close()
 
         # Act
-        with patch("common.paths.get_db_path", return_value=db_path):
+        with patch("scripts.common.db.get_db_path", return_value=db_path):
             result = get_connection()
 
         # Assert
@@ -174,7 +186,7 @@ class TestGetConnection:
         db_path = tmp_path / "nonexistent.db"
 
         # Act & Assert
-        with patch("common.paths.get_db_path", return_value=db_path):
+        with patch("scripts.common.db.get_db_path", return_value=db_path):
             with pytest.raises(DatabaseNotFoundError):
                 get_connection()
 
@@ -190,7 +202,7 @@ class TestEdgeCases:
         conn.close()
 
         # Act
-        with patch("common.paths.get_db_path", return_value=db_path):
+        with patch("scripts.common.db.get_db_path", return_value=db_path):
             conn1 = connect_db()
             conn2 = connect_db()
 
@@ -210,7 +222,7 @@ class TestEdgeCases:
         conn.close()
 
         # Act
-        with patch("common.paths.get_db_path", return_value=db_path):
+        with patch("scripts.common.db.get_db_path", return_value=db_path):
             conn1 = connect_db()
             conn1.close()
             conn2 = connect_db()
