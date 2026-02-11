@@ -1,0 +1,43 @@
+1767796696|TASK_HARDTEST_COMUNICAZIONE_V2|Inizio HARDTEST - leggo protocolli
+1767796718|TASK_HARDTEST_COMUNICAZIONE_V2|Verificando template e script esistenti
+1767796745|TASK_HARDTEST_COMUNICAZIONE_V2|Avviando Test 1 - Scenario Standard
+1767796803|TASK_HARDTEST_COMUNICAZIONE_V2|Test 1: Worker backend spawnato, monitorando...
+1767796892|TASK_HARDTEST_COMUNICAZIONE_V2|Test 1 COMPLETATO con successo! Avvio Test 2
+1767796975|TASK_HARDTEST_COMUNICAZIONE_V2|Test 2: Worker frontend spawnato, monitorando feedback...
+1767797065|TASK_HARDTEST_COMUNICAZIONE_V2|Test 2: Feedback ricevuto! Preparo risposta...
+1767797216|TASK_HARDTEST_COMUNICAZIONE_V2|Test 2 COMPLETATO! Feedback loop funziona!
+1767797228|TASK_HARDTEST_COMUNICAZIONE_V2|Test 3: Verifico stuck detection (documented approach)
+1767797264|TASK_HARDTEST_COMUNICAZIONE_V2|Test 4: Avvio multi-worker parallelo
+1767797434|TASK_HARDTEST_COMUNICAZIONE_V2|Test 4 COMPLETATO! Tutti e 3 worker hanno finito!
+1767797446|TASK_HARDTEST_COMUNICAZIONE_V2|Creando report finale...
+1767797669|TASK_HARDTEST_COMUNICAZIONE_V2|COMPLETATO - Score 9/10, 4/4 test passati!
+1767848913|HT_PARALLEL_TESTER|Scrivendo output
+1767848953|TASK_HARDTEST_COMUNICAZIONE_V2|Iniziando hardtest comunicazione
+1767848977|TASK_HARDTEST_COMUNICAZIONE_V2|Analizzando infrastruttura esistente
+1767849027|TASK_HARDTEST_COMUNICAZIONE_V2|Inizio HARDTEST - leggendo documentazione
+1767849057|TASK_HARDTEST_COMUNICAZIONE_V2|Inizio Test 1 - Scenario Standard
+1767849065|NESSUN_TASK|Nessun task per tester, terminando
+1767849094|TASK_HARDTEST_COMUNICAZIONE_V2|Test 1 PASS - Inizio Test 2 Feedback Loop
+1767849122|TASK_HARDTEST_COMUNICAZIONE_V2|Test 2 PASS - Inizio Test 3 Stuck Detection
+1767849176|TASK_HARDTEST_COMUNICAZIONE_V2|Test 3 e 4 GIA PASSATI - Verifico test parallelo recente
+1767849199|TASK_HARDTEST_COMUNICAZIONE_V2|Creo output finale - Validazione HARDTEST
+1767849244|TASK_HARDTEST_COMUNICAZIONE_V2|COMPLETATO - Validazione PASS 9/10
+1767869593|TASK_VERIFICA_LEZIONI_v123|Completata verifica integrità DB - 15 lezioni OK
+1767869670|TASK_VERIFICA_LEZIONI_v123|Test suggestions.py - tutti i test PASS!
+1767869722|TASK_VERIFICA_LEZIONI_v123|Tutti i test completati - RATING 10/10
+1767874301|TASK_HARDTEST_REALTIME_v124|Iniziando HARDTEST output realtime spawn-workers v3.2.0
+1767874337|TASK_HARDTEST_REALTIME_v124|Setup completato. Inizio Test 1
+1767874510|TASK_HARDTEST_REALTIME_v124|Test 1 in corso - monitor attivo per 3 minuti
+1767874764|TASK_HARDTEST_REALTIME_v124|Test 2 completato - output incompleto (solo 46 righe)
+1767874828|TASK_HARDTEST_REALTIME_v124|Identificato problema - claude -p non supporta output progressivo
+1767874979|TASK_HARDTEST_REALTIME_v124|Test 5 PASS - watcher integration OK
+1767875146|TASK_HARDTEST_REALTIME_v124|COMPLETATO - Rating 4/10 - Richiede ripensamento
+1768022326|TASK_PARALLEL_tester|Inizio esecuzione task parallelo
+1768022337|TASK_PARALLEL_tester|Task completato con successo
+1768022359|TASK_TEST_001|Esecuzione test spawn
+1768022368|TASK_TEST_001|Completato
+1768022387|TASK_HARDTEST_REALTIME_v124|Handoff creato - task richiede esecuzione manuale
+1768022407|SESSION_END|Completati 2 task, 1 handoff. Exit.
+1768040657|TASK_TEST_FAMIGLIA|Inizio test funzionalita famiglia
+1768040680|TASK_TEST_FAMIGLIA|Test SNCP, CLI, notifiche, tmux OK - verifico watcher
+1768040724|TASK_TEST_FAMIGLIA|COMPLETATO - 9/9 test passati

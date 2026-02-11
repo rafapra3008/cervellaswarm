@@ -1,0 +1,54 @@
+1767617953|TASK_RICERCA_AUTO_SVEGLIA_REGINA|Analizzando settings.json e hook
+1767618015|TASK_RICERCA_AUTO_SVEGLIA_REGINA|Trovato! Hook UserPromptSubmit aggiunge contesto ma NON sveglia
+1767618118|TASK_RICERCA_AUTO_SVEGLIA_REGINA|MCP bidirezionale ma Claude deve chiamare - no push
+1767618220|TASK_RICERCA_AUTO_SVEGLIA_REGINA|Trovato headless mode! Studiando...
+1767618332|TASK_RICERCA_AUTO_SVEGLIA_REGINA|Cercando soluzioni creative AppleScript
+1767618347|TASK_RICERCA_AUTO_SVEGLIA_REGINA|Scrivendo output finale con raccomandazioni
+1767618445|TASK_RICERCA_AUTO_SVEGLIA_REGINA|COMPLETATO! Output scritto
+1767723440|TASK_STUDIO_ARCHITETTURA_IDE|Iniziando ricerca architettura Cursor/Windsurf
+1767723521|TASK_STUDIO_ARCHITETTURA_IDE|Analizzando VS Code Extension API e alternative
+1767723605|TASK_STUDIO_ARCHITETTURA_IDE|Completando ricerca, iniziando scrittura report
+1767723736|TASK_STUDIO_ARCHITETTURA_IDE|COMPLETATO - Report scritto in docs/studio/STUDIO_ARCHITETTURA_IDE.md
+1767727319|TASK_STUDIO_DASHBOARD_TECH|Iniziando ricerca tecnologie dashboard
+1767727380|TASK_STUDIO_DASHBOARD_TECH|Completata ricerca framework e realtime
+1767727467|TASK_STUDIO_DASHBOARD_TECH|Completata ricerca hosting, ora scrivo studio
+1767727610|TASK_STUDIO_DASHBOARD_TECH|COMPLETATO - Studio scritto 490+ righe
+1767727951|TASK_STUDIO_OPENAI_SWARM|Inizio ricerca web OpenAI Swarm
+1767728051|TASK_STUDIO_OPENAI_SWARM|Completata ricerca web, analizzo dati
+1767728145|TASK_STUDIO_OPENAI_SWARM|Scrivo studio docs/studio/STUDIO_OPENAI_SWARM.md
+1767728269|TASK_STUDIO_OPENAI_SWARM|COMPLETATO - Studio scritto in docs/studio/STUDIO_OPENAI_SWARM.md
+1767766599|TASK_COMUNICAZIONE_FASE1_RICERCA|Iniziando ricerca protocolli multi-agent
+1767766737|TASK_COMUNICAZIONE_FASE1_RICERCA|Completata ricerca protocolli, inizio context transfer
+1767766842|TASK_COMUNICAZIONE_FASE1_RICERCA|Completato context transfer, inizio status tracking
+1767766932|TASK_COMUNICAZIONE_FASE1_RICERCA|Completato status tracking, inizio error handling
+1767767045|TASK_COMUNICAZIONE_FASE1_RICERCA|Tutte le ricerche complete! Inizio sintesi e scrittura
+1767767482|TASK_COMUNICAZIONE_FASE1_RICERCA|COMPLETATO! Studio 1100 righe pronto in docs/studio/
+1767809417|TASK_RICERCA_STORIA_FINESTRE|Inizio ricerca storia problema finestre
+1767809462|TASK_RICERCA_STORIA_FINESTRE|Cercando studi multi-finestra
+1767809475|TASK_RICERCA_STORIA_FINESTRE|Cercando in DNA agenti
+1767809507|TASK_RICERCA_STORIA_FINESTRE|Cercando roadmap sveglia regina
+1767809838|TASK_RICERCA_STORIA_FINESTRE|Creando report finale
+1767809888|TASK_RICERCA_STORIA_FINESTRE|COMPLETATO - Report creato in docs/studio/
+1767848844|TASK_RICERCA_STORIA_FINESTRE|Inizio ricerca nella git history
+1767848873|TASK_RICERCA_STORIA_FINESTRE|Trovati commit chiave, cerco dettagli specifici
+1767848934|TASK_RICERCA_EDGE_CASES|Inizio ricerca edge cases multi-agent
+1767849009|TASK_RICERCA_EDGE_CASES|Ricerca web completata, analizzando SWARM_RULES
+1767849031|TASK_RICERCA_EDGE_CASES|Scrivendo output finale
+1767867747|TASK_RICERCA_LEZIONI_v123|Analizzando PROMPT_RIPRESA, ROADMAP_SACRA, NORD per sessioni 119-122
+1767867915|TASK_RICERCA_LEZIONI_v123|Analisi completata! 18 lezioni identificate, file output creato
+1767871762|TASK_RICERCA_UNBUFFERED_v124|Iniziando ricerca tecnica unbuffered output
+1767871781|TASK_RICERCA_UNBUFFERED_v124|Letto contesto - inizio ricerca tecnica web
+1767871856|TASK_RICERCA_UNBUFFERED_v124|Completata ricerca web stdbuf e tmux - continuo con Python
+1767871900|TASK_RICERCA_UNBUFFERED_v124|Ricerca web completata - cerco alternative a stdbuf
+1767871931|TASK_RICERCA_UNBUFFERED_v124|Completata ricerca alternative - inizio scrittura documento
+1767872145|TASK_RICERCA_UNBUFFERED_v124|Documento completato - 734 righe!
+1767872211|TASK_RICERCA_UNBUFFERED_v124|COMPLETATO - 734 righe ricerca!
+1768022089|TASK_RESEARCHER_TEST|Inizio task test write verification
+1768022105|TASK_RESEARCHER_TEST|Task completato con successo
+1768022116|IDLE|Nessun altro task, esco
+1768040662|TASK_ANALISI_SNCP|Inizio analisi SNCP
+1768040685|TASK_ANALISI_SNCP|Contando file per cartella
+1768040717|TASK_ANALISI_SNCP|Analizzando decisioni e idee
+1768040741|TASK_ANALISI_SNCP|Analizzando gaps
+1768040775|TASK_ANALISI_SNCP|Scrivendo report finale
+1768040870|TASK_ANALISI_SNCP|COMPLETATO

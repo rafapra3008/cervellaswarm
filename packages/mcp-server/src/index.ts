@@ -25,10 +25,11 @@ import {
   getTier,
 } from "./config/manager.js";
 import { getUsageTracker, QuotaStatus } from "./billing/usage.js";
+import { registerSncpTools } from "./sncp/tools.js";
 
 // Server metadata
 const SERVER_NAME = "cervellaswarm";
-const SERVER_VERSION = "0.2.3";
+const SERVER_VERSION = "0.3.0";
 
 // Create MCP server instance
 const server = new McpServer({
@@ -323,14 +324,16 @@ server.tool(
 );
 
 // ============================================
+// SNCP TOOLS - Project Memory Access
+// ============================================
+
+registerSncpTools(server);
+
+// ============================================
 // RESOURCES
 // ============================================
 
-// TODO(#1): Add SNCP resources in future versions
-// https://github.com/rafapra3008/cervellaswarm-internal/issues/1
-// - Project state (.sncp/progetti/*/stato.md)
-// - Session history
-// - Worker reports
+// Future: Add MCP resources for structured data access
 
 // ============================================
 // PROMPTS

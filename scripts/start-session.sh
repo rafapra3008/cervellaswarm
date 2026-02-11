@@ -7,7 +7,7 @@
 #      start-session --list
 #
 # Progetti supportati:
-#   cervellaswarm, miracollo, contabilita, cervellacostruzione
+#   cervellaswarm, miracollo, contabilita, cervellacostruzione, cervellabrasil
 #
 # ==============================================================================
 
@@ -34,6 +34,7 @@ get_project_path() {
         miracollo)         echo "/Users/rafapra/Developer/miracollogeminifocus" ;;
         contabilita)       echo "/Users/rafapra/Developer/ContabilitaAntigravity" ;;
         cervellacostruzione) echo "/Users/rafapra/Developer/cervellacostruzione" ;;
+        cervellabrasil)    echo "/Users/rafapra/Developer/CervellaBrasil" ;;
         *)                 echo "" ;;
     esac
 }
@@ -44,12 +45,13 @@ get_project_desc() {
         miracollo)         echo "Sistema alberghiero + Miracollook + Room" ;;
         contabilita)       echo "Sistema contabilita" ;;
         cervellacostruzione) echo "Business costruzione case Brasile" ;;
+        cervellabrasil)    echo "Projeto financeiro estrategico IT->BR" ;;
         *)                 echo "" ;;
     esac
 }
 
 # Lista progetti
-PROJECTS="cervellaswarm miracollo contabilita cervellacostruzione"
+PROJECTS="cervellaswarm miracollo contabilita cervellacostruzione cervellabrasil"
 
 # ==============================================================================
 # FUNCTIONS

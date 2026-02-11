@@ -2,7 +2,7 @@
 
 > **"Prima di costruire per altri, costruisci il MEGLIO per te."** - Rafa
 > **Data creazione:** 10 Febbraio 2026 - Sessione 349
-> **Ultima modifica:** 10 Febbraio 2026 - S351
+> **Ultima modifica:** 10 Febbraio 2026 - S352
 
 ---
 
@@ -156,10 +156,10 @@ La Guardiana accumula conoscenza tra sessioni su:
 
 ## STEP B.1: Audit e Riduzione CLAUDE.md
 
-**Stato:** [STUDIATO]
+**Stato:** [FATTO] - S352, Score 9/10
 **Tempo stimato:** 4h
 **Dipende da:** A.1 (async hooks - per non rallentare)
-**Output:** CLAUDE.md ottimizzato < 300 righe
+**Output:** CLAUDE.md ottimizzato 373 -> 151 righe (-59%)
 
 **PROBLEMA:**
 ~/.claude/CLAUDE.md ha 372 righe. Molte sezioni sono ridondanti
@@ -183,10 +183,10 @@ o servono solo in contesti specifici. TUTTO viene caricato SEMPRE.
 
 ## STEP B.2: Skills con Dynamic Context Injection
 
-**Stato:** [STUDIATO]
+**Stato:** [FATTO] - S352, Score 9.5/10
 **Tempo stimato:** 4h
 **Dipende da:** B.1
-**Output:** 3-5 Skills con dati LIVE
+**Output:** 5 Skills con dati LIVE (swarm-tools, sncp-scripts, swarm-status, swarm-context, swarm-health)
 
 **PROBLEMA:**
 Il contesto caricato a inizio sessione e STATICO. Non sa lo stato
@@ -226,10 +226,10 @@ Creare Skills che iniettano dati LIVE con sintassi `!command`:
 
 ## STEP B.3: SessionStart Smart Loading
 
-**Stato:** [DA FARE]
+**Stato:** [FATTO] - S352, Score 9/10
 **Tempo stimato:** 2h
 **Dipende da:** B.1, B.2
-**Output:** Hook SessionStart che carica solo il necessario
+**Output:** Hook v3.0.0 - rimosso COSTITUZIONE+NORD (-42% contesto)
 
 **PROBLEMA:**
 Oggi SessionStart carica TUTTO (COSTITUZIONE + NORD + PROMPT_RIPRESA +
@@ -280,10 +280,10 @@ Creare script `verify-hooks.sh` che:
 
 ## STEP C.2: MCP Server Health Monitor
 
-**Stato:** [DA FARE]
+**Stato:** [FATTO] - S352, Score 8.5/10
 **Tempo stimato:** 2h
 **Dipende da:** Nulla
-**Output:** Monitor che rileva MCP server down
+**Output:** scripts/mcp/health_check.py - 8 check + hook SessionStart
 
 **PROBLEMA:**
 Il MCP server puo crashare silenziosamente. Lo scopriamo solo
@@ -302,10 +302,10 @@ Aggiungere check MCP nel SessionStart hook:
 
 ## STEP C.3: LaunchAgent Health Check
 
-**Stato:** [DA FARE]
+**Stato:** [FATTO] - S352, Score 9/10
 **Tempo stimato:** 2h
 **Dipende da:** C.1
-**Output:** Verifica automatica dei job background
+**Output:** scripts/mcp/launchagent_health.py - 7 agent monitorati, plutil fallback
 
 **PROBLEMA:**
 I LaunchAgent possono fallire silenziosamente (come Miracollook backend).
@@ -330,10 +330,10 @@ Aggiungere al sncp_daily_maintenance.sh:
 
 ## STEP D.1: Agent Teams - Parallelismo Reale
 
-**Stato:** [DA STUDIARE]
+**Stato:** [FATTO] - S352, Score 9/10
 **Tempo stimato:** 4h
 **Dipende da:** A.3 (persistent memory)
-**Output:** Agenti che lavorano in parallelo vero
+**Output:** Studio completo + PoC parallelo (2 agenti, 1.6x speedup) + Agent Teams abilitato
 
 **PROBLEMA:**
 Oggi gli agenti lavorano in serie (Task tool, uno alla volta) o
@@ -357,10 +357,10 @@ Esplorare Agent Teams (Opus 4.6):
 
 ## STEP D.2: MCP Server Custom - SNCP come Servizio
 
-**Stato:** [DA STUDIARE]
+**Stato:** [FATTO] - S352, Score 9/10
 **Tempo stimato:** 2h (studio) + 4h (implementazione)
 **Dipende da:** C.2
-**Output:** SNCP accessibile via MCP
+**Output:** 4 tool MCP SNCP (read_ripresa, read_stato, list_projects, search) - Server v0.3.0
 
 **PROBLEMA:**
 SNCP e accessibile solo via filesystem. Gli agenti devono sapere i path.
@@ -399,9 +399,9 @@ FASE C: Sicurezza/Robustezza   [####################] 100%   ~6h
   C.2 MCP Health Monitor         2h    FATTO (S352, 8.5/10)
   C.3 LaunchAgent Health         2h    FATTO (S352, 9/10)
 
-FASE D: Evoluzione Agenti      [....................] 0%    ~10h
-  D.1 Agent Teams (studio)       4h    DA STUDIARE
-  D.2 SNCP come MCP              6h    DA STUDIARE
+FASE D: Evoluzione Agenti      [####################] 100%  ~10h
+  D.1 Agent Teams (studio+PoC)   4h    FATTO (S352, 9/10)
+  D.2 SNCP come MCP              6h    FATTO (S352, 9/10)
 
 TOTALE: 11 step, ~34 ore
 ORDINE: A -> B -> C -> D (ma A e C possono andare in parallelo)
@@ -430,8 +430,7 @@ D.2 (dopo C.2)
 | S350 | A.1 + A.2 | ~6h | FATTO! Async hooks + Bash validator |
 | S351 | A.3 + C.1 | ~4h | FATTO! A.3 (9/10) + C.1 (9.5/10) |
 | S352 | B.1+B.2+B.3+C.2+C.3 | ~14h | FATTO! 5 step in 1 sessione! Score medio 9.0/10 |
-| S356 | D.1 | ~4h | Agent Teams studio + PoC |
-| S357 | D.2 | ~6h | SNCP MCP server |
+| S352 | D.1 + D.2 | ~10h | FATTO! Agent Teams (9/10) + SNCP MCP (9/10) |
 
 ---
 
@@ -444,6 +443,6 @@ Un passo al giorno. Score alto. Sempre.
 **"Ultrapassar os proprios limites!"**
 
 *Creata: 10 Febbraio 2026 - Sessione 349*
-*Aggiornata: 10 Febbraio 2026 - Sessione 352 (B.1+B.2+B.3+C.2+C.3 FATTO)*
+*Aggiornata: 10 Febbraio 2026 - Sessione 352 (COMPLETA! 11/11 step! B.1+B.2+B.3+C.2+C.3+D.1+D.2)*
 *Aggiornata: 10 Febbraio 2026 - Sessione 350 (A.1 + A.2 FATTO)*
 *Cervella & Rafa*
