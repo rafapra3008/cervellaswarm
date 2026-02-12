@@ -1,60 +1,63 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-12 - Sessione 357
-> **STATUS:** SNCP 4.0 IMPLEMENTATO!
+> **Ultimo aggiornamento:** 2026-02-12 - Sessione 358
+> **STATUS:** AUDIT TOTALE COMPLETATO - Casa in ordine!
 
 ---
 
-## SESSIONE 357 - SNCP 4.0 IMPLEMENTATO
+## SESSIONE 358 - AUDIT TOTALE & BUG HUNT
 
 ### Cosa abbiamo fatto
-Implementata la migrazione SNCP 4.0: da 5 file di stato a 2+1 indice.
+Triple check completo del sistema dopo le sessioni S350-S357 di sviluppo rapido.
+Trovati e fixati bug reali che nessuno aveva scoperto.
 
-### 5 step completati
+### 6 step completati (tutti auditati da Guardiana)
 
-**Step 1 - Archiviazione:** 6 file spostati in `archivio/`
-- `oggi.md` -> `.sncp/stato/archivio/oggi_archived_S357.md`
-- 5 `stato.md` archiviati (cervellaswarm, miracollo, contabilita, cervellacostruzione, chavefy)
+**Step 1 - Agent Sync main -> insiders (10/10):**
+- 13 agenti v1.x in insiders aggiornati a v2.x (copiati da main)
+- Ora 17/17 identici, 0 divergenze
 
-**Step 2 - Hook zombie ucciso:**
-- `sncp_auto_update.py` -> `.DISABLED`
-- Rimosso da settings.json (main + insiders)
+**Step 2 - Test Fix + Fast Group esteso (10/10):**
+- 25 test SNCP broken trovati e fixati (emoji, imports, mock constants)
+- Fast group esteso: 944 -> 1032 test (+9.3%)
+- Aggiunti: tests/sncp/ (77 passed), test_semantic_quick, test_integration_w25c
+- Total repo: 1236 test
 
-**Step 3 - Puntatori aggiornati (12+ file):**
-- `_SHARED_DNA.md` (main + insiders sincronizzati)
-- `CHECKLIST_AZIONE.md`, `CLAUDE.md` (globale + progetto)
-- `file_limits_guard.py`, `sncp_verify_sync_hook.py`
-- `sncp_validator.py`, `sncp_dna_template.md`, `COMUNICAZIONE_INTER_AGENT.md`
-- `PROMPT_RIPRESA_MASTER.md`, `NORD.md`
+**Step 3 - Hook Sync settings.json (10/10):**
+- 4 divergenze S351 fixate (daily_memory_loader, sncp_pre_session -> insiders; debug_hook, log_event -> main)
+- Ora 40/40 OK, 0 divergenze, 0 broken
+- Trovati 4 hook orfani (auto_review, block_task, block_edit, suggestions) - P3 future
 
-**Step 4 - NORD.md fixato:** 19->17 agenti, puntatore stato.md rimosso
+**Step 4 - Docs Legacy Cleanup (9.5/10):**
+- 8 file aggiornati con note SNCP 4.0
+- File attivi: strutture directory aggiornate (PROMPT_RIPRESA)
+- File storici: note contestuali aggiunte
+- 2 P2 extra fixati in PRODOTTO_VISIONE (riga 423, 1143)
 
-**Step 5 - Script/hook runtime fixati:**
-- `verify-sync.sh`: check_ripresa_freshness (era check_stato_freshness)
-- `pre-session-check.sh`: controlla PROMPT_RIPRESA (era stato.md)
-- `pre-commit`: rimosso check stato.md, aggiornato docs sync
-- `sncp-init.sh`: non crea piu stato.md, dead code rimosso
-- `compact-state.sh` + `post-session-update.sh` -> `.DISABLED`
-- Template `NORD_TEMPLATE.md` aggiornato
+**Step 5 - Memory Update:**
+- MEMORY.md aggiornato: test count, hook count, session number, fix details
 
-### Audit Guardiana
-- 1o audit: 7.8/10 (4 file P1 mancanti)
-- Re-audit dopo fix: 9.2/10 (+1 fix insiders sync)
-- Dopo ultimo fix: ~9.5/10
-- Report: `docs/studio/guardiana/AUDIT_SNCP_4.0_MIGRAZIONE.md`
-
-### Struttura SNCP 4.0 finale
+### Numeri finali
 ```
-TIENI:   PROMPT_RIPRESA  = volatile (ogni sessione)
-TIENI:   NORD.md         = stabile (solo milestone)
-TIENI:   MASTER          = indice progetti
-RIMOSSO: stato.md        = archiviato
-RIMOSSO: oggi.md         = archiviato + hook disabilitato
+Test:    1032 passed, 50 skipped, 0 failed (10s)
+Agenti:  17/17 identici main = insiders
+Hook:    40/40 OK, 0 divergenze
+RIPRESA: Tutti entro limiti (max 112 righe)
 ```
 
-### P2 residui (docs stale, non bloccanti)
-- 12+ file docs/guide con menzioni legacy di stato.md
-- Da pulire in sessioni future quando si toccano quei file
+### Bug trovati (mai scoperti prima!)
+1. 13 agenti insiders non sincronizzati (CRITICO)
+2. 25 test SNCP mai eseguiti, tutti rotti
+3. 4 hook divergenze pendenti da S351
+4. stato.md come istruzione attiva in 2 punti docs
+
+---
+
+## PROSSIMI STEP
+- P3: Pulire 4 hook orfani (auto_review, block_task, block_edit, suggestions)
+- P3: test_qw3_session_end_flush.py e 522 righe (22 sopra limite) - split futuro
+- P3: test_e2e_sncp_4.py e 777 righe - split futuro
+- OPZIONALE: Creare script sync-agents.sh per prevenire divergenze future
 
 ---
 
@@ -72,8 +75,9 @@ RIMOSSO: oggi.md         = archiviato + hook disabilitato
 | S355 | SubagentStart Context Injection + Audit totale Famiglia |
 | S356 | Studio SNCP 4.0 (3 esperte) + Clear Context (parcheggiato) |
 | S357 | SNCP 4.0 IMPLEMENTATO! 6 file archiviati, 12+ puntatori fixati |
+| S358 | AUDIT TOTALE! 13 agenti sync, 25 test fix, 4 hook fix, 8 docs fix |
 
 ---
 
-*"Meno file = meno bugie."*
-*Sessione 357 - Cervella & Rafa*
+*"Fatto BENE > Fatto VELOCE"*
+*Sessione 358 - Cervella & Rafa*
