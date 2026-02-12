@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - Contabilita
 
-> **Ultimo aggiornamento:** 12 Febbraio 2026 - Sessione 3 (terza)
+> **Ultimo aggiornamento:** 12 Febbraio 2026 - Sessione 7
 > **Per SOLO questo progetto!**
 
 ---
@@ -9,84 +9,93 @@
 
 | Cosa | Stato |
 |------|-------|
-| **Produzione** | v2.10.0 LIVE (parser v1.9.0) |
+| **Produzione** | v2.10.0 LIVE (parser v1.9.0) - NON TOCCARE |
 | **IP** | 35.193.39.185 STATICO |
-| **Branch attivo** | lab-v2 (8 commit avanti a origin) |
-| **Score** | 9.0/10 (target 9.5) |
-| **Test** | 31/31 parser PASS |
-| **Lab 2.0** | Porta 8001 |
-| **Telegram** | Solo produzione |
+| **Lab 2.0** | Branch lab-v2, 19 commit avanti a main |
+| **Score lab** | ~9.2/10 (Guardiana audit) |
+| **Test** | 281/281 PASS |
+| **Telegram** | Solo produzione (locale/lab disabilitato) |
 
 ---
 
-## SESSIONE 12 FEBBRAIO (terza) - FATTO REALE
+## 3 AMBIENTI
 
-### FASE D: Hardening (COMPLETATA - score 8.5 -> 9.0)
-- D.1: Rimossi 8 dipendenze fantasma (PyPDF2, xlrd, sqlalchemy, alembic, psycopg2-binary, pandas, xlsxwriter, pydantic-settings)
-- D.1: Rimosso libpq-dev dal Dockerfile
-- D.1: Sincronizzati requirements.txt e requirements-prod.txt
-- D.2: Docker USER non-root (contabilita UID 1000)
-- D.2: Dockerfile usa requirements-prod.txt (no test deps in prod)
-- D.3: CSP documentato (unsafe-inline necessario per JS inline)
-- Guardiana: APPROVED 9.0/10
-
-### FASE C Parte 1: Split main.py (COMPLETATA!)
-main.py splittato da **3427 -> 408 righe (-88%)**:
-
-| Router | Righe | Endpoint |
-|--------|-------|----------|
-| auth.py | 139 | 2 (validate-code, verify) |
-| export.py | 417 | 6 (Excel, Spring files) |
-| processing.py | 310 | 2 (upload, process-pdf) |
-| admin.py | 369 | 8 (health, vacuum, merge, scheduler, stats) |
-| transactions.py | 807 | 11 (CRUD, POS, update, report, historical) |
-| pareggi.py | 1137 | 18 (calcolo, parking, fase4, puzzle, CRUD) |
-
-Anche creato:
-- backend/dependencies.py (61 righe) - limiter, get_portal_from_request, api_metrics condivisi
-- Fix qualita: rimossi import inline, debug code, import duplicati
-
-### Commits su lab-v2 (8 totali):
-1. f3d7587 FASE D: Hardening completo
-2. 6df1e0c FASE C.1: auth.py
-3. 54e20b3 FASE C.2: export.py + get_portal_from_request
-4. cc085da FASE C.3: processing.py
-5. 7e4e44b FASE C.4: admin.py
-6. 0d45e22 FASE C.5: transactions.py
-7. 93f667b FASE C.6: pareggi.py
-8. cc91111 Cleanup: ultimi endpoint + fix qualita
-
----
-
-## PROSSIMA SESSIONE
-
-### Da fare (in ordine):
-1. **Push lab-v2** a origin (8 commit da pushare)
-2. **FASE C Parte 2**: Split database.py (4372 righe -> 5 moduli db/)
-3. **FASE C Parte 3**: Split pareggi.js (4796 righe -> 4 moduli)
-4. Audit Guardiana dopo ogni parte
-5. Quando score >= 9.5: merge lab-v2 -> main
-
-### Note Guardiana ultimo audit:
-- pareggi.py (1137 righe) e' ancora grande - valutare split futuro
-- /{portal}/api/historical rimane in main.py (bridge pattern necessario)
-- CSP: TODO estrarre JS inline da index.html in file esterno
+| Ambiente | Porta | Branch | Scopo |
+|----------|-------|--------|-------|
+| Produzione | VM :8000 | main | Famiglia USA il sistema. NON TOCCARE |
+| Locale | :8000 | main | Uguale produzione. Prove, bug fix |
+| Lab 2.0 | :8001 | lab-v2 | Sviluppo v2.0. Tutto il lavoro nuovo |
 
 ---
 
 ## MAPPA v2.0
 
-| Fase | Stato |
-|------|-------|
-| 0 Occhi Nuovi | COMPLETATA |
-| A Fondamenta | COMPLETATA |
-| B Pulizia | COMPLETATA (8.5/10) |
-| D Hardening | COMPLETATA (9.0/10) |
-| C.1 Split main.py | COMPLETATA (main.py 3427->408) |
-| C.2 Split database.py | DA FARE |
-| C.3 Split pareggi.js | DA FARE |
-| 1 Landing deploy | DA FARE |
-| 2-4 Stagioni, SPRING, v2.0 | DA FARE |
+### Qualita (COMPLETATE - sessioni 1-6)
+
+| Fase | Cosa | Score |
+|------|------|-------|
+| 0 | Occhi Nuovi (review) | - |
+| A | Fondamenta (IP statico, Lab, security) | - |
+| B | Pulizia (console.log, TODO, DB, backups) | 8.5/10 |
+| D | Hardening (deps fantasma, Docker user, MIME, CSP) | 9.0/10 |
+| C.1 | Split main.py (3427 -> 408 righe, 6 router) | - |
+| FIX | Test suite 281/281 PASS | - |
+| C.2 | Split database.py (4372 -> 5 file, Mixin pattern) | 9.2/10 |
+| C.3 | Split pareggi.js (4796 -> 6 file) | 9.0/10 |
+
+### Fix & Hardening (PROSSIMO STEP)
+
+| Fase | Cosa | Stato |
+|------|------|-------|
+| G | **Bug Fix** (report fatto, audit tables, bare except, js-min) | DA FARE |
+| H | **Hardening fatto/sig.sergio** + dedup manual_edits | DA FARE |
+
+Dettagli: `SUBROADMAP_FIX_v2.md` nel progetto
+
+### Feature v2.0 (DA FARE - dopo G+H)
+
+| Fase | Cosa | Stato |
+|------|------|-------|
+| E | **Chiusura Stagioni** - gestione fine stagione, riconciliazione finale | DA PIANIFICARE |
+| F | **Confronto SPRING per portale** - validazione file SPRING generati | DA PIANIFICARE |
+
+### Parcheggiati (NON v2.0)
+
+- Landing page (`landing/`) - Sprint 1-3 completati, parcheggiata
+
+### Deploy v2.0
+
+- Merge lab-v2 -> main + deploy SOLO DOPO fasi G + H + E + F
+- FORTEZZA MODE obbligatorio
+
+---
+
+## ARCHITETTURA LAB (post serie C)
+
+### Backend (Python/FastAPI)
+- `main.py` (408 righe) - hub: middleware, config, root routes
+- `routers/` - 6 file (auth, export, processing, admin, transactions, pareggi)
+- `database/` - package con 4 Mixin (core, transactions, pareggi, edits)
+- `dependencies.py` (61 righe) - limiter, get_portal_from_request, api_metrics
+- `matching.py` (2150 righe) - algoritmo matching (NON toccare)
+
+### Frontend (Vanilla JS)
+- `pareggi-*.js` - 6 file (core, display, parking, fase4, manual, puzzle)
+- `event-delegation.js` - dispatch centralizzato (data-action pattern)
+- NO ES modules, NO bundler - scope globale, script tag
+
+---
+
+## DECISIONI CHIAVE
+
+| Decisione | Perche |
+|-----------|--------|
+| Backend Mixin pattern (non Repository) | ZERO modifiche consumer |
+| Frontend split scope globale (no ES modules) | Progetto senza bundler |
+| formatDateForInput in manual.js | Caricato prima di puzzle, evita duplicati |
+| Telegram solo APP_ENV=production | Locale/Lab non sporcano il canale |
+| Landing page parcheggiata | Focus su v2.0, non prioritaria |
+| Deploy DOPO fasi G+H+E+F | v2.0 completa = fix + hardening + feature |
 
 ---
 
@@ -97,9 +106,9 @@ Anche creato:
 | Host | contabilitafamigliapra.it |
 | IP | 35.193.39.185 (STATICO) |
 | Path | /opt/contabilita-system/ |
-| VM | cervello-contabilita (us-central1-c) |
+| VM | cervello-contabilita (us-central1-c, g1-small) |
 | Tag Git | vm-deployed-v2.10.0 |
 
 ---
 
-*FASE D + C.1 completate! Prossimo: C.2 (split database.py) nel Lab.*
+*Prossimo: FASE G (bug fix) + FASE H (hardening fatto/sig.sergio). Poi fasi E + F.*

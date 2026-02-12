@@ -97,16 +97,20 @@ Regina (orchestrator)
 
 **CHIAVE: SNCP (Memoria Persistente)**
 
+> **Nota SNCP 4.0 (S357):** stato.md è stato archiviato. Il sistema usa ora PROMPT_RIPRESA + NORD.md.
+
 ```
 PROBLEMA: AI dimentica tra sessioni
 SOLUZIONE: SNCP = Sistema Nervoso Centrale Progetti
 
 .sncp/progetti/{progetto}/
-├── stato.md              # Dove siamo
-├── decisioni/            # Perché abbiamo deciso X
-├── idee/                 # Ricerche, analisi
-├── roadmaps/             # Piano futuro
-└── memoria/              # Contesto persistente
+├── PROMPT_RIPRESA_{progetto}.md  # Ripresa sessioni (dove siamo)
+├── decisioni/                    # Perché abbiamo deciso X
+├── idee/                         # Ricerche, analisi
+├── roadmaps/                     # Piano futuro
+└── archivio/                     # Storico archiviato
+
+NORD.md (root progetto)           # Direzione strategica
 
 RISULTATO: AI che "ricorda" tutto, sempre.
 ```

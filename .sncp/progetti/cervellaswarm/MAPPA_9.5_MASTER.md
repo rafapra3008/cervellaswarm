@@ -3,6 +3,8 @@
 > **Data:** 14 Gennaio 2026 - Sessione 203 (AGGIORNATA!)
 > **Obiettivo:** Portare TUTTI gli score a 9.5 minimo
 > **Filosofia:** "Su carta != Reale" - Solo cose USATE contano!
+>
+> **Nota SNCP 4.0 (S357):** Questo documento menziona stato.md e oggi.md, che sono stati archiviati in S357. Il sistema usa ora solo PROMPT_RIPRESA + NORD.md.
 
 ---
 

@@ -351,10 +351,10 @@ Noi lanciamo con:
 │ MEMORY LAYER (SNCP)                         │
 │ ┌─────────────────────────────────────────┐ │
 │ │ Persistent Memory                       │ │
-│ │ • stato.md (current state)              │ │
+│ │ • PROMPT_RIPRESA_{progetto}.md (state)  │ │
+│ │ • NORD.md (strategic direction)         │ │
 │ │ • decisioni/ (decisions log)            │ │
 │ │ • reports/ (task reports)               │ │
-│ │ • PROMPT_RIPRESA.md (session resume)    │ │
 │ └─────────────────────────────────────────┘ │
 └─────────────────────────────────────────────┘
               ↓
@@ -420,26 +420,27 @@ MULTI-AGENT PATH (Regina):
   8. Return to user
         ↓
 MEMORY UPDATE:
-  • stato.md updated with changes
+  • PROMPT_RIPRESA.md updated with changes
   • reports/ gets task report
   • decisioni/ logs key decisions
-  • PROMPT_RIPRESA.md updated for next session
 ```
 
 ### Struttura File Sistema (Post-Init)
 
 ```
 my-app/
+├── NORD.md                         # Direzione strategica (root progetto)
+│
 ├── .sncp/                          # Memoria SNCP (auto-creata)
 │   ├── progetti/
 │   │   └── my-app/
-│   │       ├── stato.md            # Stato corrente
-│   │       ├── PROMPT_RIPRESA.md   # Resume sessione
-│   │       ├── decisioni/          # Log decisioni
-│   │       ├── reports/            # Task reports
-│   │       ├── idee/               # Ricerche, idee
-│   │       └── roadmaps/           # Piani progetto
-│   └── config.json                 # Config swarm
+│   │       ├── PROMPT_RIPRESA_my-app.md  # Resume sessione
+│   │       ├── decisioni/                # Log decisioni
+│   │       ├── reports/                  # Task reports
+│   │       ├── idee/                     # Ricerche, idee
+│   │       ├── roadmaps/                 # Piani progetto
+│   │       └── archivio/                 # File archiviati
+│   └── config.json                       # Config swarm
 │
 ├── src/                            # Codice utente
 ├── tests/                          # Test utente
@@ -1138,7 +1139,7 @@ A: Bootstrap to profitability → freedom geografica. No rush per exit. Se acqui
 **DOCUMENTI INTERNI:**
 - `.sncp/progetti/cervellaswarm/ricerche/20260114_CURSOR_STORIA_LEZIONI.md` - Ricerca Cursor
 - `.sncp/progetti/cervellaswarm/roadmaps/ROADMAP_2026_PRODOTTO.md` - Roadmap 2026
-- `.sncp/progetti/cervellaswarm/stato.md` - Stato attuale
+- `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` - Stato attuale
 - `~/.claude/COSTITUZIONE.md` - DNA famiglia
 - `README.md` - Docs pubbliche (current state)
 

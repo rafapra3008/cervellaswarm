@@ -92,8 +92,8 @@ class TestMarkdownOutput:
 
         # Check markdown structure
         assert "# Daily Memory - testproject" in output
-        assert "## 📅 Today" in output
-        assert "## 📅 Yesterday" in output
+        assert "## Today" in output
+        assert "## Yesterday" in output
         assert "---" in output
 
     def test_markdown_with_today_only(self, mock_daily_logs_today):
@@ -111,8 +111,8 @@ class TestMarkdownOutput:
         assert result.returncode == 0
         output = result.stdout
 
-        assert "## 📅 Today" in output
-        assert "## 📅 Yesterday" in output
+        assert "## Today" in output
+        assert "## Yesterday" in output
         assert "*No daily log for yesterday" in output  # Partial match for period variance
 
     def test_markdown_with_no_logs(self, mock_daily_logs_empty):

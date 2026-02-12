@@ -61,29 +61,30 @@
 
 ---
 
-## RUOLI FILE (v5.0 - Chiarimento!)
+## RUOLI FILE (v5.0 - SNCP 4.0 Aggiornato!)
+
+> **Nota SNCP 4.0 (S357):** stato.md e oggi.md sono stati archiviati. Il sistema usa ora solo PROMPT_RIPRESA + NORD.md.
 
 ```
 +------------------------------------------------------------------+
-|   stato.md (MAX 500 righe)                                       |
-|   └── Verita COMPLETA progetto (architettura, decisioni, stack)  |
-|   └── Aggiornare: ogni sessione significativa                    |
-|   └── Leggere: quando serve contesto PROFONDO                    |
-|                                                                  |
 |   PROMPT_RIPRESA_{progetto}.md (MAX 150 righe)                   |
 |   └── Context ripresa VELOCE (ultima sessione, next, blockers)   |
 |   └── Aggiornare: OGNI sessione                                  |
 |   └── Leggere: SEMPRE a inizio sessione                          |
+|                                                                  |
+|   NORD.md (nella root del progetto)                              |
+|   └── Direzione strategica + milestone + architettura            |
+|   └── Aggiornare: solo a milestone importanti                    |
+|   └── Leggere: quando serve visione d'insieme                    |
 |                                                                  |
 |   PROMPT_RIPRESA_MASTER.md (MAX 50 righe)                        |
 |   └── INDICE puro (tabella link progetti)                        |
 |   └── Aggiornare: quando cambia progetto                         |
 |   └── Leggere: quando switch progetto                            |
 |                                                                  |
-|   oggi.md                                                        |
-|   └── DEPRECATO (Sessione 296) - NON USARE                       |
-|   └── Motivo: ridondante con PROMPT_RIPRESA                      |
-|   └── Rimozione: 27 Gennaio 2026                                 |
+|   ARCHIVIATI (S357):                                             |
+|   - stato.md → .sncp/*/archivio/*_archived_S357.md               |
+|   - oggi.md  → .sncp/stato/archivio/oggi_archived_S357.md        |
 +------------------------------------------------------------------+
 ```
 
@@ -95,14 +96,15 @@ Ogni progetto ha la stessa struttura:
 
 ```
 .sncp/progetti/{nome}/
-├── stato.md          # UNICA fonte di verita per il progetto
-├── CONFIG.md         # Configurazione (stack, path, convenzioni)
-├── decisioni/        # Decisioni specifiche del progetto
-├── idee/             # Idee specifiche
-├── reports/          # Report e audit
-├── roadmaps/         # Piani attivi
-├── workflow/         # Protocolli specifici
-└── moduli/           # Sotto-moduli (es: room_manager)
+├── PROMPT_RIPRESA_{nome}.md  # Ripresa sessioni (MAX 150 righe)
+├── CONFIG.md                 # Configurazione (stack, path, convenzioni)
+├── decisioni/                # Decisioni specifiche del progetto
+├── idee/                     # Idee specifiche
+├── reports/                  # Report e audit
+├── roadmaps/                 # Piani attivi
+├── workflow/                 # Protocolli specifici
+├── moduli/                   # Sotto-moduli (es: room_manager)
+└── archivio/                 # File archiviati (stato.md vecchi, ecc)
 ```
 
 ---
@@ -117,8 +119,8 @@ Hook pre-session fa:
 3. Warning se docs vecchi
 
 Tu fai:
-1. Leggi progetti/{nome}/stato.md del progetto
-2. Leggi PROMPT_RIPRESA.md per contesto
+1. Leggi progetti/{nome}/PROMPT_RIPRESA_{nome}.md
+2. Leggi NORD.md (nella root progetto) per visione strategica
 ```
 
 ### DURANTE SESSIONE
@@ -134,12 +136,12 @@ Tu fai:
 ```
 Hook post-session fa:
 1. Verifica coerenza docs/codice
-2. Warning se stato.md non aggiornato
+2. Warning se PROMPT_RIPRESA non aggiornato
 3. Reminder per commit
 
 Tu fai:
-1. Aggiorna progetti/{nome}/stato.md
-2. Aggiorna PROMPT_RIPRESA.md (se lavoro significativo)
+1. Aggiorna progetti/{nome}/PROMPT_RIPRESA_{nome}.md
+2. Aggiorna NORD.md (solo se milestone importante)
 3. Commit
 ```
 
@@ -202,11 +204,11 @@ sncp-init --help
 **Cosa crea:**
 ```
 .sncp/progetti/{nome}/
-├── stato.md          <- UNICA fonte di verita
-├── CONFIG.md         <- Configurazione progetto
-├── decisioni/        <- Decisioni importanti
-├── roadmaps/         <- Piani attivi
-└── handoff/          <- Sessioni parallele
+├── PROMPT_RIPRESA_{nome}.md  <- Context ripresa sessioni
+├── CONFIG.md                 <- Configurazione progetto
+├── decisioni/                <- Decisioni importanti
+├── roadmaps/                 <- Piani attivi
+└── archivio/                 <- File archiviati
 ```
 
 ### verify-sync - Verifica coerenza docs/codice
@@ -223,7 +225,7 @@ verify-sync --verbose
 ```
 
 **Cosa controlla:**
-- stato.md aggiornato di recente
+- PROMPT_RIPRESA aggiornato di recente
 - Commit recenti documentati
 - Migrations menzionate
 - File grandi modificati

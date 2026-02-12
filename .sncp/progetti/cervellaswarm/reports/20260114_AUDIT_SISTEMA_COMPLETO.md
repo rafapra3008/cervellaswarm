@@ -4,6 +4,8 @@
 **Eseguito da:** Cervella Ingegnera
 **Obiettivo:** Identificare cosa FUNZIONA REALE vs cosa è SU CARTA
 
+> **Nota SNCP 4.0 (S357):** Questo audit pre-migrazione menziona stato.md e oggi.md, che sono stati successivamente archiviati. Il sistema finale usa PROMPT_RIPRESA + NORD.md.
+
 ---
 
 ## EXECUTIVE SUMMARY

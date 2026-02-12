@@ -30,7 +30,7 @@ CADA STEP TEM:
 ## VISAO GERAL
 
 ```
-FASE 0: Validacao Online     [EM CURSO]  ██████████.......... 40%
+FASE 0: Validacao Online     [EM CURSO]  ██████████████...... 50%
   (55 dias pre-Brasil)
 
 FASE 1: Validacao no Brasil  [A FAZER]   .................... 0%
@@ -121,13 +121,20 @@ FASE 5: Escala               [A FAZER]   .................... 0%
 
 ## STEP 0.4: Blog SEO (Pain Points)
 
-**Estado:** [A FAZER]
-**Pesquisa feita:** Go-to-market strategy S354
+**Estado:** [EM CURSO] - Infraestrutura blog completa + 1/5 artigos prontos
+**Pesquisa feita:** Go-to-market strategy S354, SEO Keywords BR 2026
 **Depende de:** 0.3 (landing page)
 **Output:** 5 artigos SEO publicados
 
+**O QUE JA FOI FEITO (S354+++):**
+- [x] Infraestrutura blog: React Router + BlogHome + BlogArticle + BlogLayout
+- [x] SEO tecnico: meta tags dinamicas (OG/Twitter/canonical), Schema.org (Article + FAQPage JSON-LD)
+- [x] Sitemap.xml + robots.txt + _redirects (Netlify SPA)
+- [x] 1o artigo: "Como Gerenciar Aluguel por Temporada" (~3.200 palavras, 13 min leitura)
+- [x] Auditoria guardiana: 9.4/10 (todas P1 corrigidas)
+
 **ARTIGOS PLANEJADOS:**
-1. "Como gerenciar aluguel por temporada sem perder a cabeca em 2026"
+1. ~~"Como gerenciar aluguel por temporada sem perder a cabeca em 2026"~~ [FEITO]
 2. "Stays.net alternativa: o que os hosts brasileiros realmente precisam"
 3. "WhatsApp para aluguel por temporada: guia completo"
 4. "Pricing dinamico Airbnb: como cobrar o preco certo automaticamente"

@@ -4,6 +4,8 @@
 > **Ricercatrice:** Cervella Researcher
 > **Data:** 16 Gennaio 2026
 > **Obiettivo:** Score minimo 9.5/10 - Ogni punto chiaro e documentato
+>
+> **Nota SNCP 4.0 (S357):** Questo documento storico fa riferimento a stato.md, che è stato archiviato. Il sistema usa ora PROMPT_RIPRESA + NORD.md.
 
 ---
 

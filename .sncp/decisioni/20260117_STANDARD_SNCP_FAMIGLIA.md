@@ -2,6 +2,8 @@
 
 > Decisioni prese dalla Guardiana Qualita con la Regina
 > "Fatto BENE > Fatto VELOCE"
+>
+> **Nota SNCP 4.0 (S357):** Questo documento storico descrive decisioni su stato.md, che è stato completamente archiviato in S357. Il sistema usa ora solo PROMPT_RIPRESA + NORD.md.
 
 ---
 

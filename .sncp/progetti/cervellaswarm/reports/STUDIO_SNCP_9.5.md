@@ -4,6 +4,8 @@
 > **Data:** 14 Gennaio 2026
 > **Obiettivo:** Portare SNCP da 7/10 a 9.5/10
 > **Effort ricerca:** 2.5 ore (30+ fonti analizzate)
+>
+> **Nota SNCP 4.0 (S357):** Questo studio ha portato alla migrazione SNCP 4.0, dove stato.md e oggi.md sono stati archiviati. Il sistema finale usa PROMPT_RIPRESA + NORD.md.
 
 ---
 

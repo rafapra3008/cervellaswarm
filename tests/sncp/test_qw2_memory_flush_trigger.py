@@ -82,29 +82,33 @@ class TestCooldownLogic:
     def test_should_flush_first_time(self):
         """Should allow flush on first call."""
         # Mock get_last_flush_time to return old time
-        with patch('context_monitor.get_last_flush_time') as mock_get:
+        with patch.object(context_monitor, 'get_last_flush_time') as mock_get:
             mock_get.return_value = datetime(2000, 1, 1)
             assert context_monitor.should_flush() is True
 
     def test_should_not_flush_within_cooldown(self):
         """Should NOT flush within 10 minutes."""
         # Mock get_last_flush_time to return recent time
-        with patch('context_monitor.get_last_flush_time') as mock_get:
+        with patch.object(context_monitor, 'get_last_flush_time') as mock_get:
             mock_get.return_value = datetime.now() - timedelta(seconds=300)  # 5 min ago
             assert context_monitor.should_flush() is False
 
     def test_should_flush_after_cooldown(self):
         """Should flush after 10 minutes."""
-        with patch('context_monitor.get_last_flush_time') as mock_get:
+        with patch.object(context_monitor, 'get_last_flush_time') as mock_get:
             mock_get.return_value = datetime.now() - timedelta(seconds=601)  # >10 min ago
             assert context_monitor.should_flush() is True
 
     def test_cooldown_boundary_exact(self):
         """Test exact boundary (600 seconds)."""
-        with patch('context_monitor.get_last_flush_time') as mock_get:
-            mock_get.return_value = datetime.now() - timedelta(seconds=600)
-            # At exactly 600s, should NOT flush (need >600)
-            assert context_monitor.should_flush() is False
+        # Fix the current time to avoid race conditions
+        fixed_now = datetime(2026, 2, 12, 12, 0, 0)
+        with patch.object(context_monitor, 'get_last_flush_time') as mock_get:
+            with patch.object(context_monitor, 'datetime') as mock_dt:
+                mock_dt.now.return_value = fixed_now
+                mock_get.return_value = fixed_now - timedelta(seconds=600)
+                # At exactly 600s, should NOT flush (need >600)
+                assert context_monitor.should_flush() is False
 
 
 # ============================================================================
@@ -149,9 +153,9 @@ class TestProjectDetection:
 class TestTriggerMechanism:
     """Test memory flush trigger integration."""
 
-    @patch('context_monitor.subprocess.run')
-    @patch('context_monitor.should_flush')
-    @patch('context_monitor.detect_project')
+    @patch.object(context_monitor.subprocess, 'run')
+    @patch.object(context_monitor, 'should_flush')
+    @patch.object(context_monitor, 'detect_project')
     def test_triggers_at_threshold(self, mock_detect, mock_should_flush, mock_subprocess):
         """Should trigger flush at 75% threshold."""
         mock_detect.return_value = "cervellaswarm"
@@ -166,9 +170,9 @@ class TestTriggerMechanism:
         call_args = mock_subprocess.call_args_list[0][0][0]
         assert "memory-flush.sh" in str(call_args)
 
-    @patch('context_monitor.subprocess.run')
-    @patch('context_monitor.should_flush')
-    @patch('context_monitor.detect_project')
+    @patch.object(context_monitor.subprocess, 'run')
+    @patch.object(context_monitor, 'should_flush')
+    @patch.object(context_monitor, 'detect_project')
     def test_no_trigger_below_threshold(self, mock_detect, mock_should_flush, mock_subprocess):
         """Should NOT trigger below 75%."""
         mock_detect.return_value = "cervellaswarm"
@@ -181,9 +185,9 @@ class TestTriggerMechanism:
         # This test verifies trigger_memory_flush is only called at >= 75%
         # The function itself doesn't check threshold, main() does
 
-    @patch('context_monitor.subprocess.run')
-    @patch('context_monitor.should_flush')
-    @patch('context_monitor.detect_project')
+    @patch.object(context_monitor.subprocess, 'run')
+    @patch.object(context_monitor, 'should_flush')
+    @patch.object(context_monitor, 'detect_project')
     def test_respects_cooldown(self, mock_detect, mock_should_flush, mock_subprocess):
         """Should respect cooldown period."""
         mock_detect.return_value = "cervellaswarm"
@@ -194,9 +198,9 @@ class TestTriggerMechanism:
         # Should NOT call subprocess (cooldown)
         mock_subprocess.assert_not_called()
 
-    @patch('context_monitor.subprocess.run')
-    @patch('context_monitor.should_flush')
-    @patch('context_monitor.detect_project')
+    @patch.object(context_monitor.subprocess, 'run')
+    @patch.object(context_monitor, 'should_flush')
+    @patch.object(context_monitor, 'detect_project')
     def test_no_trigger_unknown_project(self, mock_detect, mock_should_flush, mock_subprocess):
         """Should NOT trigger for unknown project."""
         mock_detect.return_value = None  # Unknown project
@@ -207,10 +211,10 @@ class TestTriggerMechanism:
         # Should not call subprocess
         mock_subprocess.assert_not_called()
 
-    @patch('context_monitor.subprocess.run')
-    @patch('context_monitor.should_flush')
-    @patch('context_monitor.detect_project')
-    @patch('context_monitor.save_flush_time')
+    @patch.object(context_monitor.subprocess, 'run')
+    @patch.object(context_monitor, 'should_flush')
+    @patch.object(context_monitor, 'detect_project')
+    @patch.object(context_monitor, 'save_flush_time')
     def test_saves_flush_time_on_success(self, mock_save, mock_detect, mock_should_flush, mock_subprocess):
         """Should save flush time after successful flush."""
         mock_detect.return_value = "cervellaswarm"
@@ -231,9 +235,9 @@ class TestTriggerMechanism:
 class TestMainFlowIntegration:
     """Test main() function flow with trigger."""
 
-    @patch('context_monitor.calculate_context_from_transcript')
-    @patch('context_monitor.trigger_memory_flush')
-    @patch('context_monitor.send_notification')
+    @patch.object(context_monitor, 'calculate_context_from_transcript')
+    @patch.object(context_monitor, 'trigger_memory_flush')
+    @patch.object(context_monitor, 'send_notification')
     @patch('sys.stdin')
     def test_main_triggers_at_75_percent(self, mock_stdin, mock_notify, mock_trigger, mock_calc):
         """Main should trigger flush at 75%."""
@@ -261,8 +265,8 @@ class TestMainFlowIntegration:
         call_percentage = mock_trigger.call_args[0][0]
         assert call_percentage == 75.0
 
-    @patch('context_monitor.calculate_context_from_transcript')
-    @patch('context_monitor.trigger_memory_flush')
+    @patch.object(context_monitor, 'calculate_context_from_transcript')
+    @patch.object(context_monitor, 'trigger_memory_flush')
     @patch('sys.stdin')
     def test_main_no_trigger_below_75(self, mock_stdin, mock_trigger, mock_calc):
         """Main should NOT trigger flush below 75%."""
@@ -275,8 +279,8 @@ class TestMainFlowIntegration:
         # Should not trigger
         mock_trigger.assert_not_called()
 
-    @patch('context_monitor.calculate_context_from_transcript')
-    @patch('context_monitor.trigger_memory_flush')
+    @patch.object(context_monitor, 'calculate_context_from_transcript')
+    @patch.object(context_monitor, 'trigger_memory_flush')
     @patch('sys.stdin')
     def test_main_triggers_above_75(self, mock_stdin, mock_trigger, mock_calc):
         """Main should trigger flush above 75%."""
@@ -298,26 +302,29 @@ class TestMainFlowIntegration:
 class TestEdgeCases:
     """Test edge cases and error handling."""
 
-    @patch('context_monitor.subprocess.run')
-    @patch('context_monitor.should_flush')
-    @patch('context_monitor.detect_project')
+    @patch.object(context_monitor.subprocess, 'run')
+    @patch.object(context_monitor, 'should_flush')
+    @patch.object(context_monitor, 'detect_project')
     def test_handles_script_not_found(self, mock_detect, mock_should_flush, mock_subprocess):
         """Should handle missing memory-flush.sh gracefully."""
         mock_detect.return_value = "cervellaswarm"
         mock_should_flush.return_value = True
 
-        # Mock script not found
-        with patch('context_monitor.MEMORY_FLUSH_SCRIPT') as mock_script:
-            mock_script.exists.return_value = False
+        # Mock both scripts not found
+        with patch.object(context_monitor, 'MEMORY_FLUSH_SCRIPT') as mock_script:
+            with patch.object(context_monitor, 'DAILY_LOG_SCRIPT') as mock_daily:
+                mock_script.exists.return_value = False
+                mock_daily.exists.return_value = False
 
-            # Should not crash
-            context_monitor.trigger_memory_flush(75.0)
+                # Should not crash
+                context_monitor.trigger_memory_flush(75.0)
 
-            mock_subprocess.assert_not_called()
+                # Neither script called
+                mock_subprocess.assert_not_called()
 
-    @patch('context_monitor.subprocess.run')
-    @patch('context_monitor.should_flush')
-    @patch('context_monitor.detect_project')
+    @patch.object(context_monitor.subprocess, 'run')
+    @patch.object(context_monitor, 'should_flush')
+    @patch.object(context_monitor, 'detect_project')
     def test_handles_subprocess_timeout(self, mock_detect, mock_should_flush, mock_subprocess):
         """Should handle subprocess timeout gracefully."""
         import subprocess as sp
@@ -332,9 +339,9 @@ class TestEdgeCases:
         except sp.TimeoutExpired:
             pytest.fail("Should catch TimeoutExpired")
 
-    @patch('context_monitor.subprocess.run')
-    @patch('context_monitor.should_flush')
-    @patch('context_monitor.detect_project')
+    @patch.object(context_monitor.subprocess, 'run')
+    @patch.object(context_monitor, 'should_flush')
+    @patch.object(context_monitor, 'detect_project')
     def test_handles_subprocess_error(self, mock_detect, mock_should_flush, mock_subprocess):
         """Should handle subprocess errors gracefully."""
         mock_detect.return_value = "cervellaswarm"
@@ -356,9 +363,9 @@ class TestEdgeCases:
 class TestPerformance:
     """Test performance requirements."""
 
-    @patch('context_monitor.subprocess.run')
-    @patch('context_monitor.should_flush')
-    @patch('context_monitor.detect_project')
+    @patch.object(context_monitor.subprocess, 'run')
+    @patch.object(context_monitor, 'should_flush')
+    @patch.object(context_monitor, 'detect_project')
     def test_trigger_is_fast(self, mock_detect, mock_should_flush, mock_subprocess):
         """Trigger should complete in <100ms."""
         mock_detect.return_value = "cervellaswarm"
@@ -386,7 +393,7 @@ class TestStateManagement:
         assert state_file.parent == Path.home() / ".claude"
         assert state_file.name == ".context-monitor-state.json"
 
-    @patch('context_monitor.NOTIFICATION_STATE_FILE')
+    @patch.object(context_monitor, 'NOTIFICATION_STATE_FILE')
     def test_save_flush_time_creates_file(self, mock_state_file):
         """Should create state file if missing."""
         mock_file = Mock()
@@ -400,7 +407,7 @@ class TestStateManagement:
             # Verify file was opened for writing
             mock_open.assert_called()
 
-    @patch('context_monitor.NOTIFICATION_STATE_FILE')
+    @patch.object(context_monitor, 'NOTIFICATION_STATE_FILE')
     def test_get_last_flush_time_default(self, mock_state_file):
         """Should return default time if no state file."""
         mock_state_file.exists.return_value = False
