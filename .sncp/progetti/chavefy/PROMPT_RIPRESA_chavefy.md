@@ -1,77 +1,90 @@
 # PROMPT RIPRESA - Chavefy
 
-> **Ultima atualizacao:** 2026-02-12 - Sessao 354+++ (quarta sessao)
-> **STATUS:** FASE 0 - Step 0.4 EM CURSO (blog infra + 1/5 artigos), Step 0.3 aguardando deploy
+> **Ultima atualizacao:** 2026-02-12 - Sessao S354+++ (checkpoint final)
+> **STATUS:** FASE 0 - Step 0.4 EM CURSO (blog infra + 1o artigo pronto, faltam 4 artigos)
 
 ---
 
 ## O QUE E CHAVEFY
 
-**SaaS de gestao para property managers brasileiros** (aluguel por temporada).
+SaaS de gestao para property managers brasileiros (aluguel por temporada).
 - Target: hosts profissionais com 3-15 imoveis no Brasil
 - Diferencial: WhatsApp nativo + AI auto-reply + compliance BR
 - Pricing: R$ 97-397/mes (a ser validado com clientes reais)
 - Stack: FastAPI + React + PostgreSQL (multi-tenant RLS)
 - Titular: Filho do Rafa (MEI no Brasil)
-- Rafa: developer + produto (da Italia ou Brasil)
-- Cervelle: constroem TUDO
 
-## O QUE FOI FEITO (HISTORICO)
+## HISTORICO DE SESSOES
 
-### S354: Pesquisas base (9 pesquisas mercado + 4 tecnicas)
-### S354+: Estrutura projeto + SNCP
-### S354++: Landing page construida (nota 9.5 pos-correcoes)
-### S354+++: Blog SEO - infraestrutura + primeiro artigo
+| Sessao | O que foi feito |
+|--------|----------------|
+| S354 | 9 pesquisas base mercado + go-to-market + keywords SEO |
+| S354+ | 4 pesquisas tecnicas + estrutura projeto + SNCP + audit 9.5/10 |
+| S354++ | Landing page completa (9 secoes, waitlist, LGPD, SEO, audit 9.5) |
+| S354+++ | Blog SEO: infra completa + 1o artigo + auditorias + correcoees docs |
 
-**Step 0.4 - Blog SEO: EM CURSO**
+## ESTADO ATUAL DO CODIGO
 
-Processo seguido:
-1. Pesquisa SEO keywords BR 2026 (768 linhas de analise)
-2. Infra blog: React Router DOM + lazy loading + code splitting
-3. Cervella-marketing escreveu artigo (~3.200 palavras, 13 min)
-4. Convertido para JSX completo com Schema.org
-5. Auditoria guardiana: 8.7/10 -> correcoes -> re-auditoria: 9.4/10
+### Landing Page (Step 0.3: CONSTRUIDA, falta deploy)
+- `landing/` = Vite 7.3 + React 19 + TailwindCSS v4
+- 9 secoes: Header, Hero, ParaQuem, PainPoints, Features, SocialProof, WaitlistCTA, FAQ, Footer
+- Formulario waitlist (6 campos + LGPD) salva em localStorage (temporario)
+- SEO: title, meta desc, OG, Twitter Card, Schema.org (Organization + Software + FAQ)
+- Build OK: ~273KB JS + 31KB CSS (gzip ~86KB + 6KB)
 
-**O que o blog tem:**
-- React Router: / (landing), /blog (index), /blog/:slug (artigos)
-- BlogHome: lista artigos com meta tags OG/Twitter/canonical dinamicas
-- BlogArticle: lazy loading, Article JSON-LD, FAQPage JSON-LD, meta tags dinamicas, cleanup
-- BlogLayout: breadcrumbs com titulo artigo (Chavefy / Blog / Titulo)
-- 1o artigo: "Como Gerenciar Aluguel por Temporada Sem Perder a Cabeca em 2026"
-  - 6 secoes H2, 7 desafios, tabela financeira, 6 FAQ, 3 links internos, CTA
-- Sitemap.xml (3 URLs), robots.txt, _redirects (Netlify SPA)
-- Header e Footer atualizados com Link para /blog
+### Blog (Step 0.4: EM CURSO, 1/5 artigos)
+- React Router DOM: `/` (landing), `/blog` (index), `/blog/:slug` (artigos)
+- Lazy loading com React.lazy + Suspense (code splitting por artigo)
+- Meta tags OG/Twitter/canonical DINAMICAS via useEffect + cleanup
+- Schema.org: Article JSON-LD + FAQPage JSON-LD (injetados dinamicamente)
+- Breadcrumbs: Chavefy / Blog / [titulo do artigo]
+- 1o artigo pronto: "Como Gerenciar Aluguel por Temporada" (~3.200 palavras, 13 min)
 
-**Auditoria geral (guardiana): 8.3/10**
-- Issues corrigidas: data inconsistente Hero/WaitlistCTA, docs desatualizados
-- Issues pendentes pre-deploy: og-image.png, apple-touch-icon.png, cores Tailwind v4 incompletas, href="#" no Footer
+### Como adicionar novo artigo:
+1. Criar JSX em `landing/src/data/articles/NomeArtigo.jsx`
+2. Adicionar metadata em `landing/src/data/articles.js` (slug, title, metaDescription, faq...)
+3. Registrar lazy import em `landing/src/pages/BlogArticle.jsx` (articleComponents)
+4. Adicionar URL no `landing/public/sitemap.xml`
+
+## ISSUES CONHECIDAS (pre-deploy)
+
+| Issue | Prioridade | Onde | O que fazer |
+|-------|-----------|------|-------------|
+| og-image.png nao existe | ALTA | `landing/public/` | Criar 1200x630, share social quebrado sem isso |
+| apple-touch-icon.png | ALTA | `landing/public/` | Criar 180x180, iOS home screen |
+| 5x href="#" no Footer | ALTA | `Footer.jsx` L30,35,57,65,73 | Privacidade e Termos precisam de paginas reais |
+| href="#" Privacidade no WaitlistForm | ALTA | `WaitlistForm.jsx` L298 | LGPD exige link funcional |
+| Cores Tailwind v4 incompletas | MEDIA | `index.css` @theme | Faltam primary-100/200/300/400 |
+| Conflito @theme vs tailwind.config.js | MEDIA | Ambos definem cores | Manter so @theme (Tailwind v4 way) |
+| primary-600 = primary-700 (#1E3A8A) | BAIXA | `index.css` L7-8 | Diferenciar (ex: 700=#172554) |
+| Crawlers sociais nao executam JS | INFO | Blog meta tags | WhatsApp/Facebook mostrarao meta da landing, nao do artigo |
 
 ## PROGRESSO FASE 0
 
 | Step | O que | Estado | Nota |
 |------|-------|--------|------|
-| 0.1 | Registro dominios + redes | AGUARDANDO RAFA | Blocker para deploy |
-| 0.2 | Testar Stays.net trial | ESTUDADO | Desk research feita |
-| 0.3 | Landing page + waitlist | CONSTRUIDA | Falta deploy (depende 0.1) |
-| 0.4 | Blog SEO (5 artigos) | EM CURSO (1/5) | Infra + 1o artigo prontos, 9.4/10 |
+| 0.1 | Registro dominios + redes | AGUARDANDO RAFA | **Blocker** para deploy |
+| 0.2 | Testar Stays.net trial | ESTUDADO | Desk research feita, falta testar produto |
+| 0.3 | Landing page + waitlist | CONSTRUIDA | Codigo pronto, falta deploy |
+| 0.4 | Blog SEO (5 artigos) | EM CURSO (1/5) | Infra + 1o artigo prontos, nota 9.4/10 |
 | 0.5 | Comunidades BR | A FAZER | |
 | 0.6 | Outreach 20 PMs | A FAZER | Roteiro pronto (SUBMAPPA) |
 | 0.7 | GO/NO-GO pre-Brasil | A FAZER | |
 
-## PROXIMA SESSAO - O QUE FAZER
+## PROXIMA SESSAO
 
-**Cervelle (em ordem de prioridade):**
-1. Criar og-image.png (1200x630) para share social
-2. Pagina politica de privacidade (resolver href="#" + LGPD)
-3. Corrigir cores Tailwind v4 (adicionar primary-100/200/300/400, limpar conflito @theme vs config)
-4. Se Rafa registrou dominio: deploy landing + blog
-5. Step 0.4 continuacao: proximo artigo "Stays.net alternativa"
+**Cervelle (prioridade):**
+1. og-image.png (1200x630) + apple-touch-icon.png (180x180)
+2. Pagina politica de privacidade (resolver todos os href="#" + LGPD)
+3. Cores Tailwind v4 (primary-100/200/300/400 + limpar conflito config)
+4. Se dominio pronto: deploy Netlify/Vercel
+5. Proximo artigo SEO: "Stays.net alternativa: o que os hosts brasileiros precisam"
 
 **Rafa/filho:**
-1. **Step 0.1:** Registrar chavefy.com.br + chavefy.com
-2. Criar @chavefy nas redes sociais
-3. Email profissional: contato@chavefy.com.br
-4. **Step 0.2:** Criar trial Stays.net e testar produto real
+1. Registrar chavefy.com.br (registro.br) + chavefy.com
+2. Criar @chavefy nas redes (Instagram, X, LinkedIn, Facebook, TikTok)
+3. Email: contato@chavefy.com.br
+4. Testar Stays.net trial (produto real)
 
 ## DECISOES TOMADAS
 
@@ -79,37 +92,40 @@ Processo seguido:
 |---------|---------|
 | Nome: Chavefy | "Chave" + "-fy", brasileiro, soa tech, dominio livre |
 | Brasil-first | 3.5x mercado, 10x menos saturado |
-| FastAPI + React | Stack que Rafa domina |
-| WhatsApp nativo | Diferencial killer (nenhum competitor tem) |
-| Landing React+Tailwind | Stack consistente, performance boa |
-| Blog SPA (React Router) | Integrado na landing, lazy loading, SEO via meta tags dinamicas |
-| Data lancamento: Marco 2026 | Padronizada em todas as secoes |
+| Blog integrado na landing (React Router) | Mesmo stack, lazy loading, SEO dinamico |
+| Data lancamento: Marco 2026 | Padronizada em Hero + WaitlistCTA |
+| Processo: marketing escreve -> frontend implementa -> guardiana audita | Formula Magica aplicada |
 
 ## PONTO ESTRATEGICO ABERTO
 
-**Custo WhatsApp BSP ($50/cliente/mes)** pode ser 45% da receita no plano Starter R$99.
-**Decisao:** Apos validacao com clientes reais (Fase 1).
+**Custo WhatsApp BSP ($50/cliente/mes)** pode ser 45% da receita Starter R$99.
+Decisao adiada para validacao com clientes reais (Fase 1).
 
-## PESQUISAS (13 completas)
-
-9 base (S354) + 4 tecnicas (S354+). Ver `docs/pesquisa/` para arquivos completos.
-
-## FILES
+## FILES IMPORTANTES
 
 | O que | Onde |
 |-------|------|
-| Projeto | ~/Developer/Chavefy/ |
-| Landing + blog (codigo) | ~/Developer/Chavefy/landing/ |
-| Specs landing | ~/Developer/Chavefy/docs/produto/LANDING_PAGE_SPECS.md |
-| Keywords SEO | ~/Developer/Chavefy/docs/pesquisa/mercado/PESQUISA_SEO_KEYWORDS_BR_2026.md |
-| Audit landing | ~/Developer/Chavefy/reports/AUDIT_LANDING_PAGE.md |
-| Audit blog SEO | ~/Developer/Chavefy/reports/AUDIT_BLOG_SEO.md |
-| SNCP | CervellaSwarm/.sncp/progetti/chavefy/ |
-| MAPPA | CervellaSwarm/.sncp/progetti/chavefy/MAPPA_CHAVEFY.md |
-| SUBMAPPA Validacao | CervellaSwarm/.sncp/progetti/chavefy/SUBMAPPA_VALIDACAO.md |
-| SUBMAPPA MVP | CervellaSwarm/.sncp/progetti/chavefy/SUBMAPPA_MVP.md |
+| Projeto | `~/Developer/Chavefy/` |
+| Landing + blog | `~/Developer/Chavefy/landing/` |
+| 1o artigo (JSX) | `landing/src/data/articles/ComoGerenciarAluguelTemporada.jsx` |
+| 1o artigo (fonte MD) | `landing/src/data/articles/como-gerenciar-aluguel-temporada.md` |
+| Registry artigos | `landing/src/data/articles.js` |
+| Specs landing | `docs/produto/LANDING_PAGE_SPECS.md` |
+| Keywords SEO | `docs/pesquisa/mercado/PESQUISA_SEO_KEYWORDS_BR_2026.md` |
+| Audit landing | `reports/AUDIT_LANDING_PAGE.md` |
+| Audit blog | `reports/AUDIT_BLOG_SEO.md` |
+| MAPPA | `CervellaSwarm/.sncp/progetti/chavefy/MAPPA_CHAVEFY.md` |
+
+## AUDITORIAS
+
+| O que | Nota | Arquivo |
+|-------|------|---------|
+| Landing page | 9.5/10 (estimada pos-correcoes) | `reports/AUDIT_LANDING_PAGE.md` |
+| Blog SEO (1a) | 8.7/10 -> corrigido | `reports/AUDIT_BLOG_SEO.md` |
+| Blog SEO (re-audit) | 9.4/10 | (nao salvo em arquivo) |
+| Auditoria geral | 8.3/10 (docs desatualizados + cores Tailwind) | (nao salvo) |
 
 ---
 
-*"A chave do sucesso e a validacao antes da construcao."*
-*Sessao 354+++ - Blog SEO EM CURSO (1/5) - La Famiglia*
+*"Fatto BENE > Fatto VELOCE" - La Famiglia*
+*S354+++ checkpoint - Blog SEO 1/5 artigos - 12 Fev 2026*
