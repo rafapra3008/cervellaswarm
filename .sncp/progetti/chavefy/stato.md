@@ -1,14 +1,14 @@
 # Estado Chavefy - Detalhado
 
-> Ultima atualizacao: 12 Fevereiro 2026 - Sessao 354+
+> Ultima atualizacao: 12 Fevereiro 2026 - Sessao 354++ (terceira sessao)
 
 ---
 
 ## STATUS ATUAL
 
 **FASE:** 0 - Validacao Online (pre-Brasil)
-**STEP ATUAL:** 0.1 (Registro dominios/marca) - aguardando acao Rafa/filho
-**PROXIMO:** Step 0.3 (Landing page) - pre-requisitos de pesquisa PRONTOS
+**STEP ATUAL:** 0.3 CONSTRUIDO (landing page pronta, falta deploy) + 0.1 aguardando Rafa
+**PROXIMO:** Step 0.4 (Blog SEO) - Cervelle fazem na proxima sessao
 **DIAS PRE-BRASIL:** ~55
 
 ---
@@ -17,10 +17,10 @@
 
 | Step | Descricao | Estado | Nota |
 |------|-----------|--------|------|
-| 0.1 | Registro dominios e marca | EM CURSO | Aguarda acao Rafa/filho |
+| 0.1 | Registro dominios e marca | AGUARDANDO RAFA | Blocker para deploy landing |
 | 0.2 | Pesquisa profunda Stays.net + competitors | ESTUDADO | Desk research FEITA. Falta testar trial real |
-| 0.3 | Landing page + waitlist | A FAZER | LGPD + SEO keywords prontos |
-| 0.4 | Blog SEO (5 artigos) | A FAZER | Keywords mapeadas, ordem definida |
+| 0.3 | Landing page + waitlist | CONSTRUIDA | Codigo pronto, auditado (8.8->~9.5). Falta deploy (depende 0.1) |
+| 0.4 | Blog SEO (5 artigos) | A FAZER | Keywords prontas. PROXIMO STEP Cervelle |
 | 0.5 | Comunidades (grupos WhatsApp/Facebook) | A FAZER | |
 | 0.6 | Outreach 20 property managers | A FAZER | Roteiro entrevista pronto (SUBMAPPA) |
 | 0.7 | GO/NO-GO pre-Brasil | A FAZER | Depende de 0.1-0.6 |
@@ -103,14 +103,26 @@
 
 ---
 
+## LANDING PAGE - DETALHES
+
+**Specs:** `docs/produto/LANDING_PAGE_SPECS.md` (~1000 linhas, criado por cervella-marketing)
+**Codigo:** `landing/` (Vite + React + TailwindCSS v4)
+**Audit:** `reports/AUDIT_LANDING_PAGE.md` (nota 8.8, corrigido para ~9.5)
+**Componentes:** Header, Hero, ParaQuem, PainPoints, Features, SocialProof, WaitlistCTA, FAQ, Footer, CheckIcon
+**Build:** 224KB JS + 28KB CSS (gzip 70KB + 5.6KB)
+**Para deploy falta:** dominio (0.1), og-image.png, politica privacidade real, hosting
+
+---
+
 ## HISTORICO SESSOES
 
 | Sessao | Data | O que foi feito |
 |--------|------|-----------------|
 | S354 | 12/02/26 | Projeto criado. 9 pesquisas base. NORD, CLAUDE, MAPPA, SUBMAPPAs. Git init. |
 | S354+ | 12/02/26 | 4 pesquisas tecnicas. 11 fixes docs. Audit 8.4->9.5. Estrutura docs/. .gitignore. Branch main. |
+| S354++ | 12/02/26 | Landing page CONSTRUIDA: specs (marketing) + implementacao (frontend) + audit (guardiana) + correcoes (regina). 11 issues corrigidas. |
 
 ---
 
-*Chavefy - estado.md - S354+*
+*Chavefy - estado.md - S354++*
 *"A chave do sucesso e a validacao antes da construcao."*

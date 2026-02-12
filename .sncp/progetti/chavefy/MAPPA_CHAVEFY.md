@@ -30,7 +30,7 @@ CADA STEP TEM:
 ## VISAO GERAL
 
 ```
-FASE 0: Validacao Online     [EM CURSO]  ████................ 20%
+FASE 0: Validacao Online     [EM CURSO]  ██████████.......... 40%
   (55 dias pre-Brasil)
 
 FASE 1: Validacao no Brasil  [A FAZER]   .................... 0%

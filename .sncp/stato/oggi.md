@@ -116,3 +116,27 @@ W6 Day 5: Test Famiglia (16 agenti)
 - **Progetto**: CervellaSwarm
 - **Evento**: session_end
 - **Generato da**: sncp_auto_update.py v2.0.0
+
+---
+
+## AUTO-CHECKPOINT: 2026-02-12 13:19 (session_end)
+
+- **Progetto**: CervellaSwarm
+- **Evento**: session_end
+- **Generato da**: sncp_auto_update.py v2.0.0
+
+---
+
+## AUTO-CHECKPOINT: 2026-02-12 16:57 (session_end)
+
+- **Progetto**: CervellaSwarm
+- **Evento**: session_end
+- **Generato da**: sncp_auto_update.py v2.0.0
+
+---
+
+## AUTO-CHECKPOINT: 2026-02-12 17:29 (session_end)
+
+- **Progetto**: CervellaSwarm
+- **Evento**: session_end
+- **Generato da**: sncp_auto_update.py v2.0.0
