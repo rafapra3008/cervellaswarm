@@ -1,63 +1,55 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-12 - Sessione 358
-> **STATUS:** AUDIT TOTALE COMPLETATO - Casa in ordine!
+> **Ultimo aggiornamento:** 2026-02-12 - Sessione 359
+> **STATUS:** PULIZIA CHIRURGICA COMPLETATA - Tutti P3 di S358 risolti!
 
 ---
 
-## SESSIONE 358 - AUDIT TOTALE & BUG HUNT
+## SESSIONE 359 - PULIZIA CHIRURGICA (4 step)
 
 ### Cosa abbiamo fatto
-Triple check completo del sistema dopo le sessioni S350-S357 di sviluppo rapido.
-Trovati e fixati bug reali che nessuno aveva scoperto.
+Completati tutti i P3 pendenti da S358: hook orfani, test oversized, script prevenzione.
 
-### 6 step completati (tutti auditati da Guardiana)
+### 4 step completati (tutti auditati da Guardiana)
 
-**Step 1 - Agent Sync main -> insiders (10/10):**
-- 13 agenti v1.x in insiders aggiornati a v2.x (copiati da main)
-- Ora 17/17 identici, 0 divergenze
+**Step 1 - Hook Orfani (10/10):**
+- 3 hook + 1 backup rinominati a .DISABLED: auto_review_hook, block_edit_non_whitelist, block_task_for_agents, BACKUP_PreToolUse_config
+- Confermati orfani (non in settings.json)
+- Totale .DISABLED in hooks/: 7 file
 
-**Step 2 - Test Fix + Fast Group esteso (10/10):**
-- 25 test SNCP broken trovati e fixati (emoji, imports, mock constants)
-- Fast group esteso: 944 -> 1032 test (+9.3%)
-- Aggiunti: tests/sncp/ (77 passed), test_semantic_quick, test_integration_w25c
-- Total repo: 1236 test
+**Step 2 - Split test_qw3 (10/10):**
+- test_qw3_session_end_flush.py (522 righe) -> eliminato
+- test_qw3_session_end_flush_core.py (249 righe) - unit tests
+- test_qw3_session_end_flush_integration.py (311 righe) - integration/safety
+- 29 test preservati, 0 persi
 
-**Step 3 - Hook Sync settings.json (10/10):**
-- 4 divergenze S351 fixate (daily_memory_loader, sncp_pre_session -> insiders; debug_hook, log_event -> main)
-- Ora 40/40 OK, 0 divergenze, 0 broken
-- Trovati 4 hook orfani (auto_review, block_task, block_edit, suggestions) - P3 future
+**Step 3 - Split test_e2e (9.0/10 -> 9.5 post-fix):**
+- test_e2e_sncp_4.py (777 righe) -> eliminato
+- test_e2e_sncp_4_phases.py (455 righe) - test fasi individuali
+- test_e2e_sncp_4_workflow.py (500 righe) - workflow completo + edge cases
+- 14 test preservati, 0 persi
 
-**Step 4 - Docs Legacy Cleanup (9.5/10):**
-- 8 file aggiornati con note SNCP 4.0
-- File attivi: strutture directory aggiornate (PROMPT_RIPRESA)
-- File storici: note contestuali aggiunte
-- 2 P2 extra fixati in PRODOTTO_VISIONE (riga 423, 1143)
-
-**Step 5 - Memory Update:**
-- MEMORY.md aggiornato: test count, hook count, session number, fix details
+**Step 4 - sync-agents.sh (9.0/10 -> 9.5 post-fix):**
+- Nuovo script: scripts/sncp/sync-agents.sh
+- Compara ~/.claude/agents/ vs ~/.claude-insiders/agents/
+- Flag: --sync (auto-fix), --verbose, --help
+- Previene bug S358 (13 agenti desincronizzati)
+- P2 fixati: unknown arg handling, messaggio sync migliorato
 
 ### Numeri finali
 ```
 Test:    1032 passed, 50 skipped, 0 failed (10s)
-Agenti:  17/17 identici main = insiders
-Hook:    40/40 OK, 0 divergenze
-RIPRESA: Tutti entro limiti (max 112 righe)
+Hook:    7 .DISABLED files (orfani + legacy)
+Agenti:  19/19 sincronizzati (verificato da sync-agents.sh)
+Test file: tutti sotto 500 righe
 ```
-
-### Bug trovati (mai scoperti prima!)
-1. 13 agenti insiders non sincronizzati (CRITICO)
-2. 25 test SNCP mai eseguiti, tutti rotti
-3. 4 hook divergenze pendenti da S351
-4. stato.md come istruzione attiva in 2 punti docs
 
 ---
 
 ## PROSSIMI STEP
-- P3: Pulire 4 hook orfani (auto_review, block_task, block_edit, suggestions)
-- P3: test_qw3_session_end_flush.py e 522 righe (22 sopra limite) - split futuro
-- P3: test_e2e_sncp_4.py e 777 righe - split futuro
-- OPZIONALE: Creare script sync-agents.sh per prevenire divergenze future
+- Nessun P3 pendente per CervellaSwarm
+- Possibile: integrare sync-agents.sh in SessionEnd hook (auto-verifica)
+- Possibile: registrare mark pytest "integration" per evitare warning
 
 ---
 
@@ -76,8 +68,9 @@ RIPRESA: Tutti entro limiti (max 112 righe)
 | S356 | Studio SNCP 4.0 (3 esperte) + Clear Context (parcheggiato) |
 | S357 | SNCP 4.0 IMPLEMENTATO! 6 file archiviati, 12+ puntatori fixati |
 | S358 | AUDIT TOTALE! 13 agenti sync, 25 test fix, 4 hook fix, 8 docs fix |
+| S359 | PULIZIA CHIRURGICA! 4 hook disabled, 2 test split, sync-agents.sh |
 
 ---
 
 *"Fatto BENE > Fatto VELOCE"*
-*Sessione 358 - Cervella & Rafa*
+*Sessione 359 - Cervella & Rafa*
