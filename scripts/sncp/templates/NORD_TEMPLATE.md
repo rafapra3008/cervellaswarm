@@ -63,7 +63,7 @@ DETTAGLI:
 | Cosa | Dove |
 |------|------|
 | **PROMPT_RIPRESA** | `.sncp/progetti/{{nome_progetto}}/PROMPT_RIPRESA_{{nome_progetto}}.md` |
-| **Stato progetto** | `.sncp/progetti/{{nome_progetto}}/stato.md` |
+| **DNA Famiglia** | `docs/DNA_FAMIGLIA.md` |
 | {{PUNTATORE_EXTRA_1}} | `{{PATH_1}}` |
 | {{PUNTATORE_EXTRA_2}} | `{{PATH_2}}` |
 

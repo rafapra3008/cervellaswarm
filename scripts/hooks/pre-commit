@@ -53,13 +53,7 @@ for pr in .sncp/progetti/*/PROMPT_RIPRESA_*.md; do
     [ -f "$pr" ] && check_line_limit "$pr" 150 "$(basename "$pr")"
 done
 
-# oggi.md DEPRECATO (SNCP 2.0 - Sessione 297)
-# Non controlliamo più oggi.md
-
-# stato.md (max 500)
-for stato in .sncp/progetti/*/stato.md; do
-    [ -f "$stato" ] && check_line_limit "$stato" 500 "$(basename $(dirname "$stato"))/stato.md"
-done
+# SNCP 4.0 (S357): oggi.md e stato.md eliminati. Solo PROMPT_RIPRESA.
 
 # =================================================================
 # 2. VERIFICA NAMING CONVENTION (WARNING + BLOCCANTE)
@@ -114,34 +108,13 @@ done
 echo ""
 echo ">> Verificando docs sync..."
 
-# Check if code files are being committed
-CODE_CHANGED=$(echo "$STAGED_FILES" | grep -E "^packages/|^src/" || true)
+# SNCP 4.0: docs sync tramite PROMPT_RIPRESA (non piu stato.md)
+CODE_CHANGED=$(echo "$STAGED_FILES" | grep -E "^packages/|^src/|^scripts/" || true)
 
 if [ -n "$CODE_CHANGED" ]; then
-    STATO_FILE=".sncp/progetti/cervellaswarm/stato.md"
-    TODAY=$(date +%Y-%m-%d)
-
-    # Check if stato.md is in staged files
-    STATO_STAGED=$(echo "$STAGED_FILES" | grep "stato.md" || true)
-
-    if [ -z "$STATO_STAGED" ] && [ -f "$STATO_FILE" ]; then
-        # stato.md not staged, check last modification date
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            STATO_DATE=$(stat -f "%Sm" -t "%Y-%m-%d" "$STATO_FILE")
-        else
-            STATO_DATE=$(date -r "$STATO_FILE" +%Y-%m-%d)
-        fi
-
-        if [ "$STATO_DATE" != "$TODAY" ]; then
-            echo -e "${YELLOW}WARNING:${NC} Codice modificato ma stato.md non aggiornato oggi!"
-            echo "        Aggiorna .sncp/progetti/cervellaswarm/stato.md"
-            echo "        Descrivi cosa hai fatto in questa sessione"
-            ((WARNINGS++))
-        else
-            echo -e "${GREEN}OK:${NC} stato.md aggiornato oggi"
-        fi
-    else
-        echo -e "${GREEN}OK:${NC} stato.md incluso nel commit"
+    RIPRESA_STAGED=$(echo "$STAGED_FILES" | grep "PROMPT_RIPRESA" || true)
+    if [ -n "$RIPRESA_STAGED" ]; then
+        echo -e "${GREEN}OK:${NC} PROMPT_RIPRESA incluso nel commit"
     fi
 fi
 

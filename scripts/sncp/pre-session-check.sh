@@ -4,7 +4,7 @@
 # ==============================================================================
 #
 # Esegue controlli SNCP prima di iniziare una sessione:
-# - Verifica stato.md aggiornato oggi
+# - Verifica PROMPT_RIPRESA aggiornato
 # - Controlla file size limits
 # - Mostra warning se problemi
 #
@@ -93,12 +93,13 @@ check_project() {
 
     local issues=0
 
-    # Check stato.md
-    if [ -f "$project_dir/stato.md" ]; then
-        check_file_updated_today "$project_dir/stato.md" "stato.md" || ((issues++))
-        check_file_size "$project_dir/stato.md" "stato.md" 300 || ((issues++))
+    # Check PROMPT_RIPRESA (SNCP 4.0 - stato.md eliminato)
+    local normalized=$(echo "$project" | tr '-' '_' | tr '[:upper:]' '[:lower:]')
+    local ripresa_file="$project_dir/PROMPT_RIPRESA_${normalized}.md"
+    if [ -f "$ripresa_file" ]; then
+        check_file_size "$ripresa_file" "PROMPT_RIPRESA" 150 || ((issues++))
     else
-        echo -e "  ${YELLOW}[!]${NC} stato.md: NON ESISTE"
+        echo -e "  ${YELLOW}[!]${NC} PROMPT_RIPRESA: NON ESISTE"
         ((issues++))
     fi
 

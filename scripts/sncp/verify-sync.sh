@@ -104,19 +104,20 @@ log_error() {
 }
 
 # ------------------------------------------------------------------------------
-# Check 1: stato.md aggiornato di recente
+# Check 1: PROMPT_RIPRESA aggiornato di recente (SNCP 4.0 - stato.md eliminato)
 # ------------------------------------------------------------------------------
-check_stato_freshness() {
+check_ripresa_freshness() {
     local project="$1"
-    local stato_file="$SNCP_ROOT/progetti/$project/stato.md"
+    local normalized=$(echo "$project" | tr '-' '_' | tr '[:upper:]' '[:lower:]')
+    local ripresa_file="$SNCP_ROOT/progetti/$project/PROMPT_RIPRESA_${normalized}.md"
 
-    if [ ! -f "$stato_file" ]; then
-        log_error "$project: stato.md NON ESISTE"
+    if [ ! -f "$ripresa_file" ]; then
+        log_error "$project: PROMPT_RIPRESA NON ESISTE"
         return 1
     fi
 
     # Get file modification date
-    local file_date=$(stat -f "%Sm" -t "%Y-%m-%d" "$stato_file" 2>/dev/null)
+    local file_date=$(stat -f "%Sm" -t "%Y-%m-%d" "$ripresa_file" 2>/dev/null)
 
     # Calculate days since last update
     local file_epoch=$(date -j -f "%Y-%m-%d" "$file_date" +%s 2>/dev/null)
@@ -124,13 +125,13 @@ check_stato_freshness() {
     local days_diff=$(( (today_epoch - file_epoch) / 86400 ))
 
     if [ "$days_diff" -eq 0 ]; then
-        log_ok "$project: stato.md aggiornato oggi"
+        log_ok "$project: PROMPT_RIPRESA aggiornato oggi"
         return 0
     elif [ "$days_diff" -le 2 ]; then
-        log_warn "$project: stato.md non aggiornato da $days_diff giorni"
+        log_warn "$project: PROMPT_RIPRESA non aggiornato da $days_diff giorni"
         return 1
     else
-        log_error "$project: stato.md STALE ($days_diff giorni fa!)"
+        log_error "$project: PROMPT_RIPRESA STALE ($days_diff giorni fa!)"
         return 1
     fi
 }
@@ -141,7 +142,6 @@ check_stato_freshness() {
 check_undocumented_commits() {
     local project="$1"
     local project_path="$(get_project_path "$project")"
-    local stato_file="$SNCP_ROOT/progetti/$project/stato.md"
 
     if [ -z "$project_path" ] || [ ! -d "$project_path" ]; then
         if [ "$VERBOSE" = true ]; then
@@ -157,34 +157,16 @@ check_undocumented_commits() {
         return 0
     fi
 
-    # Get recent commits (last 5)
-    local recent_commits=$(cd "$project_path" && git log --oneline -5 --format="%h %s" 2>/dev/null)
+    # Get recent commits count (last 24h)
+    local recent_count=$(cd "$project_path" && git log --oneline --since="24 hours ago" 2>/dev/null | wc -l | tr -d ' ')
 
-    if [ -z "$recent_commits" ]; then
-        return 0
-    fi
-
-    # Check if any commit hash is mentioned in stato.md
-    local undocumented=0
-    local stato_content=$(cat "$stato_file" 2>/dev/null || echo "")
-
-    while IFS= read -r commit; do
-        local hash=$(echo "$commit" | cut -d' ' -f1)
-        if ! echo "$stato_content" | grep -q "$hash" 2>/dev/null; then
-            ((undocumented++))
-            if [ "$VERBOSE" = true ]; then
-                echo -e "    ${CYAN}Commit non in docs:${NC} $commit"
-            fi
+    if [ "$recent_count" -gt 0 ]; then
+        if [ "$VERBOSE" = true ]; then
+            log_ok "$project: $recent_count commit nelle ultime 24h"
         fi
-    done <<< "$recent_commits"
-
-    if [ "$undocumented" -gt 0 ]; then
-        log_warn "$project: $undocumented commit recenti non in stato.md"
-        return 1
-    else
-        log_ok "$project: Commit documentati in stato.md"
-        return 0
     fi
+
+    return 0
 }
 
 # ------------------------------------------------------------------------------
@@ -193,7 +175,6 @@ check_undocumented_commits() {
 check_migrations() {
     local project="$1"
     local project_path="$(get_project_path "$project")"
-    local stato_file="$SNCP_ROOT/progetti/$project/stato.md"
 
     if [ -z "$project_path" ] || [ ! -d "$project_path" ]; then
         return 0
@@ -219,25 +200,11 @@ check_migrations() {
     # Count migrations
     local migration_count=$(find "$migrations_dir" -name "*.sql" -o -name "*.py" 2>/dev/null | wc -l | tr -d ' ')
 
-    if [ "$migration_count" -eq 0 ]; then
-        return 0
+    if [ "$VERBOSE" = true ] && [ "$migration_count" -gt 0 ]; then
+        log_ok "$project: $migration_count migrations trovate"
     fi
 
-    # Check if migration count is mentioned in stato.md
-    local stato_content=$(cat "$stato_file" 2>/dev/null || echo "")
-
-    # Look for migration mentions
-    local doc_migrations=$(echo "$stato_content" | grep -ci "migration" || echo "0")
-
-    if [ "$doc_migrations" -eq 0 ]; then
-        log_warn "$project: $migration_count migrations ma nessuna menzionata in stato.md"
-        return 1
-    else
-        if [ "$VERBOSE" = true ]; then
-            log_ok "$project: Migrations menzionate in stato.md"
-        fi
-        return 0
-    fi
+    return 0
 }
 
 # ------------------------------------------------------------------------------
@@ -282,7 +249,7 @@ check_project() {
 
     local project_issues=0
 
-    check_stato_freshness "$project" || ((project_issues++))
+    check_ripresa_freshness "$project" || ((project_issues++))
     check_undocumented_commits "$project" || ((project_issues++))
     check_migrations "$project" || ((project_issues++))
     check_recent_large_changes "$project" || ((project_issues++))
@@ -315,9 +282,9 @@ print_summary() {
 
     if [ "$TOTAL_WARNINGS" -gt 0 ] || [ "$TOTAL_ERRORS" -gt 0 ]; then
         echo -e "${CYAN}Suggerimenti:${NC}"
-        echo "  1. Aggiorna stato.md con le modifiche recenti"
+        echo "  1. Aggiorna PROMPT_RIPRESA con lo stato corrente"
         echo "  2. Documenta i commit importanti"
-        echo "  3. Verifica che le migrations siano menzionate"
+        echo "  3. Verifica coerenza docs/codice"
         echo ""
     fi
 }

@@ -96,18 +96,24 @@ FASE 5: Escala               [A FAZER]   .................... 0%
 
 ## STEP 0.3: Landing Page + Waitlist
 
-**Estado:** [A FAZER]
-**Pesquisa feita:** Go-to-market strategy S354
-**Depende de:** 0.1 (dominio)
+**Estado:** [CONSTRUIDA] - Codigo pronto, aguardando deploy (depende 0.1)
+**Pesquisa feita:** Go-to-market strategy S354, LGPD, SEO Keywords
+**Depende de:** 0.1 (dominio) para deploy
 **Output:** chavefy.com.br LIVE com formulario waitlist
 
 **ACOES:**
-- [ ] Escolher stack landing (React simples ou Webflow)
-- [ ] Copy: "A chave digital do host brasileiro"
-- [ ] Formulario waitlist (nome + email + quantos imoveis)
-- [ ] Pagina "Em breve" com value proposition clara
+- [x] Escolher stack landing: Vite + React + TailwindCSS v4
+- [x] Copy completo por cervella-marketing (specs 1000+ linhas)
+- [x] Formulario waitlist (nome, email, WhatsApp, cidade, qtd imoveis, software atual)
+- [x] 9 secoes implementadas (Header, Hero, ParaQuem, PainPoints, Features, SocialProof, WaitlistCTA, FAQ, Footer)
+- [x] LGPD compliance (checkboxes, consentimento, metadados)
+- [x] SEO completo (meta tags, OG, Twitter Card, Schema.org, canonical)
+- [x] Acessibilidade (skip-to-content, aria-expanded, labels, focus)
+- [x] Auditoria guardiana (8.8/10 -> ~9.5 apos 11 correcoes)
+- [ ] Criar og-image.png (1200x630) para share social
+- [ ] Pagina politica de privacidade real
 - [ ] Analytics (Plausible ou GA4)
-- [ ] LGPD compliance basica (politica privacidade)
+- [ ] Deploy (apos dominio registrado)
 
 **Criterio conclusao:** Pagina LIVE + formulario funcionando + analytics
 

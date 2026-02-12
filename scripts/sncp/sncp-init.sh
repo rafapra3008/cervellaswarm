@@ -8,7 +8,7 @@
 #   sncp-init nome-progetto --analyze  # Analizza codebase e genera CONFIG.md smart
 #
 # Crea:
-#   - stato.md (stato attuale progetto)
+#   - PROMPT_RIPRESA (stato sessione)
 #   - CONFIG.md (configurazione progetto)
 #   - decisioni/
 #   - roadmaps/
@@ -82,9 +82,9 @@ create_prompt_ripresa() {
             -e "s/{{TITOLO_SESSIONE}}/Setup Iniziale/g" \
             -e "s/{{TASK_1}}/Setup SNCP/g" \
             -e "s/{{NOTE_1}}/Struttura creata/g" \
-            -e "s/{{TASK_2}}/Compilare stato.md/g" \
+            -e "s/{{TASK_2}}/Compilare PROMPT_RIPRESA/g" \
             -e "s/{{NOTE_2}}/Da fare/g" \
-            -e "s|{{PATH_FILE_1}}|.sncp/progetti/${normalized_name}/stato.md|g" \
+            -e "s|{{PATH_FILE_1}}|.sncp/progetti/${normalized_name}/PROMPT_RIPRESA_${normalized_name}.md|g" \
             -e "s/{{RIGHE_1}}/~80/g" \
             -e "s/{{DESC_1}}/Stato iniziale/g" \
             -e "s/{{DECISIONE_1}}/Stack tecnico/g" \
@@ -96,7 +96,7 @@ create_prompt_ripresa() {
             -e "s/{{PERCENTUALE_2}}/0/g" \
             -e "s/{{FASE_O_FILONE_3}}/DEPLOY/g" \
             -e "s/{{PERCENTUALE_3}}/0/g" \
-            -e "s/{{STEP_1}}/Completare stato.md/g" \
+            -e "s/{{STEP_1}}/Completare PROMPT_RIPRESA/g" \
             -e "s/{{DESC_STEP_1}}/Info reali progetto/g" \
             -e "s/{{STEP_2}}/Definire roadmap/g" \
             -e "s/{{DESC_STEP_2}}/Obiettivi e milestone/g" \
@@ -281,95 +281,6 @@ detect_deploy() {
     echo "$deploy"
 }
 
-create_stato_md() {
-    local project_name="$1"
-    local base_path="$2"
-    local stack="$3"
-    local deploy="$4"
-
-    cat > "$base_path/stato.md" << EOF
-# Stato - $project_name
-
-> **Ultimo aggiornamento:** $TODAY
-> **Score:** [?/10] - Da valutare
-> **Sessione:** 1 - Setup SNCP
-
----
-
-## TL;DR
-
-[Cosa fa questo progetto in 2-3 righe]
-
----
-
-## STACK
-
-| Tipo | Tecnologia |
-|------|------------|
-| Backend | $stack |
-| Frontend | [?] |
-| Database | [?] |
-| Deploy | $deploy |
-
----
-
-## STATO ATTUALE
-
-\`\`\`
-+================================================================+
-|                                                                |
-|   PROGETTO APPENA INIZIALIZZATO CON SNCP                       |
-|                                                                |
-|   - Struttura SNCP creata                                      |
-|   - stato.md pronto                                            |
-|   - CONFIG.md da compilare                                     |
-|                                                                |
-+================================================================+
-\`\`\`
-
-### Cosa Funziona
-
-- [ ] [feature 1]
-- [ ] [feature 2]
-
-### Cosa Manca
-
-- [ ] [todo 1]
-- [ ] [todo 2]
-
----
-
-## PROSSIMI STEP
-
-1. [ ] Compilare questo stato.md con info reali
-2. [ ] Compilare CONFIG.md
-3. [ ] Definire roadmap
-4. [ ] Iniziare lavoro!
-
----
-
-## DECISIONI CHIAVE
-
-| Data | Decisione | Perche | Link |
-|------|-----------|--------|------|
-| $TODAY | Setup SNCP | Memoria persistente | - |
-
----
-
-## NOTE SESSION
-
-### $TODAY - Setup
-
-- Struttura SNCP inizializzata con sncp-init
-- Da compilare: stack, stato, roadmap
-
----
-
-*"SNCP funziona solo se lo VIVIAMO!"*
-
-EOF
-}
-
 create_config_md() {
     local project_name="$1"
     local base_path="$2"
@@ -475,7 +386,7 @@ $project_name/
 1. Regina analizza task
 2. Delega a Worker specializzato
 3. Guardiana verifica qualita
-4. Update stato.md
+4. Update PROMPT_RIPRESA
 
 ---
 
@@ -581,9 +492,7 @@ mkdir -p "$BASE_PATH/ricerche"
 
 echo -e "${GREEN}[OK]${NC} Cartelle create (6 totali)"
 
-# Create stato.md
-create_stato_md "$PROJECT_NAME" "$BASE_PATH" "$STACK" "$DEPLOY"
-echo -e "${GREEN}[OK]${NC} stato.md creato"
+# SNCP 4.0: stato.md eliminato. Solo PROMPT_RIPRESA + NORD.md
 
 # Create CONFIG.md
 create_config_md "$PROJECT_NAME" "$BASE_PATH" "$PROJECT_PATH" "$STACK" "$DEPLOY"
@@ -617,7 +526,6 @@ echo -e "${GREEN}Struttura SNCP creata:${NC}"
 echo ""
 echo "  $BASE_PATH/"
 echo "  ├── PROMPT_RIPRESA_${NORMALIZED_NAME}.md  <- Stato sessioni (LEGGI QUESTO!)"
-echo "  ├── stato.md                        <- Stato tecnico progetto"
 echo "  ├── CONFIG.md                       <- Configurazione e convenzioni"
 echo "  ├── decisioni/                      <- Decisioni importanti"
 echo "  ├── roadmaps/                       <- Piani e subroadmap"
@@ -633,7 +541,7 @@ fi
 echo -e "${CYAN}PROSSIMI STEP:${NC}"
 echo "  1. Leggi e compila PROMPT_RIPRESA_${NORMALIZED_NAME}.md"
 echo "  2. Compila NORD.md con la visione del progetto"
-echo "  3. Aggiorna stato.md con info tecniche"
+echo "  3. Inizia a documentare in PROMPT_RIPRESA"
 echo "  4. Inizia a lavorare!"
 echo ""
 echo -e "${BLUE}Comandi utili:${NC}"

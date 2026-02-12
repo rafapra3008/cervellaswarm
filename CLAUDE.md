@@ -8,14 +8,17 @@
 ```
 CervellaSwarm/.sncp/
 ├── progetti/
-│   ├── cervellaswarm/    # PROMPT_RIPRESA, stato.md
-│   ├── miracollo/        # PROMPT_RIPRESA, stato.md
-│   └── contabilita/      # PROMPT_RIPRESA, stato.md
-├── handoff/              # Handoff sessioni (SNCP 2.0)
+│   ├── cervellaswarm/    # PROMPT_RIPRESA
+│   ├── miracollo/        # PROMPT_RIPRESA
+│   ├── contabilita/      # PROMPT_RIPRESA
+│   ├── chavefy/          # PROMPT_RIPRESA
+│   ├── cervellabrasil/   # PROMPT_RIPRESA
+│   └── cervellacostruzione/ # PROMPT_RIPRESA
+├── handoff/              # Handoff sessioni
 └── roadmaps/             # Piani lavoro
 ```
 
-> **SNCP 2.0 (Sessione 297):** oggi.md deprecato. Usa PROMPT_RIPRESA + handoff.
+> **SNCP 4.0 (S357):** Solo PROMPT_RIPRESA + NORD.md. stato.md e oggi.md eliminati.
 
 **INIZIO SESSIONE:** Leggi `.sncp/progetti/{progetto}/PROMPT_RIPRESA_{progetto}.md`
 
@@ -24,14 +27,14 @@ CervellaSwarm/.sncp/
 | Hook | Cosa Fa |
 |------|---------|
 | session_start_swarm.py | Carica COSTITUZIONE + PROMPT_RIPRESA |
-| file_limits_guard.py | Verifica limiti (150/500 righe) |
-| subagent_start_costituzione.py | Inietta COSTITUZIONE agli agenti |
+| file_limits_guard.py | Verifica limiti PROMPT_RIPRESA (max 300 righe) |
+| subagent_context_inject.py | Inietta FATOS + PROMPT_RIPRESA agli agenti |
 
 ## La Famiglia
 
 17 agenti in `~/.claude/agents/`:
-- 1 Regina (opus) + 3 Guardiane (opus) + 1 Architect (opus)
-- 12 Api Worker (sonnet)
+- 1 Regina (opus) + 3 Guardiane (opus) + 1 Architect (opus) + 2 Analiste (opus)
+- 10 Worker (sonnet)
 
 Dettagli: `docs/DNA_FAMIGLIA.md`
 

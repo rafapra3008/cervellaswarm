@@ -1,24 +1,60 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-12 - Sessione 356
-> **STATUS:** MAPPA 100% + SubagentStart Context Injection LIVE
+> **Ultimo aggiornamento:** 2026-02-12 - Sessione 357
+> **STATUS:** SNCP 4.0 IMPLEMENTATO!
 
 ---
 
-## SESSIONE 356 - SESSIONE BREVE
+## SESSIONE 357 - SNCP 4.0 IMPLEMENTATO
 
-### Ricerca: "Clear Context" in Plan Mode
-Claude Code ha una nuova feature: quando approvi un piano in plan mode, l'opzione 1 ("Yes, clear context and auto-accept edits") cancella la conversazione ma mantiene il piano. Context window pulito per implementare.
+### Cosa abbiamo fatto
+Implementata la migrazione SNCP 4.0: da 5 file di stato a 2+1 indice.
 
-### Decisione: PARCHEGGIATO
-**NON implementiamo** perche il nostro workflow gia risolve il problema:
-- Ogni subagent parte con context fresco (by design)
-- La Regina delega, non implementa direttamente
-- L'Architect ha gia tool limitati (Read/Glob/Grep)
-- Friction manuale (selezione opzione a mano) per beneficio nullo
+### 5 step completati
 
-### Report salvato
-`docs/studio/researcher/RICERCA_CLEAR_CONTEXT_PLAN_MODE.md` (780 righe, completo) - consultare se serve in futuro.
+**Step 1 - Archiviazione:** 6 file spostati in `archivio/`
+- `oggi.md` -> `.sncp/stato/archivio/oggi_archived_S357.md`
+- 5 `stato.md` archiviati (cervellaswarm, miracollo, contabilita, cervellacostruzione, chavefy)
+
+**Step 2 - Hook zombie ucciso:**
+- `sncp_auto_update.py` -> `.DISABLED`
+- Rimosso da settings.json (main + insiders)
+
+**Step 3 - Puntatori aggiornati (12+ file):**
+- `_SHARED_DNA.md` (main + insiders sincronizzati)
+- `CHECKLIST_AZIONE.md`, `CLAUDE.md` (globale + progetto)
+- `file_limits_guard.py`, `sncp_verify_sync_hook.py`
+- `sncp_validator.py`, `sncp_dna_template.md`, `COMUNICAZIONE_INTER_AGENT.md`
+- `PROMPT_RIPRESA_MASTER.md`, `NORD.md`
+
+**Step 4 - NORD.md fixato:** 19->17 agenti, puntatore stato.md rimosso
+
+**Step 5 - Script/hook runtime fixati:**
+- `verify-sync.sh`: check_ripresa_freshness (era check_stato_freshness)
+- `pre-session-check.sh`: controlla PROMPT_RIPRESA (era stato.md)
+- `pre-commit`: rimosso check stato.md, aggiornato docs sync
+- `sncp-init.sh`: non crea piu stato.md, dead code rimosso
+- `compact-state.sh` + `post-session-update.sh` -> `.DISABLED`
+- Template `NORD_TEMPLATE.md` aggiornato
+
+### Audit Guardiana
+- 1o audit: 7.8/10 (4 file P1 mancanti)
+- Re-audit dopo fix: 9.2/10 (+1 fix insiders sync)
+- Dopo ultimo fix: ~9.5/10
+- Report: `docs/studio/guardiana/AUDIT_SNCP_4.0_MIGRAZIONE.md`
+
+### Struttura SNCP 4.0 finale
+```
+TIENI:   PROMPT_RIPRESA  = volatile (ogni sessione)
+TIENI:   NORD.md         = stabile (solo milestone)
+TIENI:   MASTER          = indice progetti
+RIMOSSO: stato.md        = archiviato
+RIMOSSO: oggi.md         = archiviato + hook disabilitato
+```
+
+### P2 residui (docs stale, non bloccanti)
+- 12+ file docs/guide con menzioni legacy di stato.md
+- Da pulire in sessioni future quando si toccano quei file
 
 ---
 
@@ -34,9 +70,10 @@ Claude Code ha una nuova feature: quando approvi un piano in plan mode, l'opzion
 | S353 | CervellaBrasil nasceu! 7 pesquisas, 10k+ linhas |
 | S354 | Chavefy nasceu! SaaS Property Management Brasil |
 | S355 | SubagentStart Context Injection + Audit totale Famiglia |
-| S356 | Ricerca Clear Context Plan Mode -> PARCHEGGIATO |
+| S356 | Studio SNCP 4.0 (3 esperte) + Clear Context (parcheggiato) |
+| S357 | SNCP 4.0 IMPLEMENTATO! 6 file archiviati, 12+ puntatori fixati |
 
 ---
 
-*"Lavoriamo in pace! Senza casino! Dipende da noi!"*
-*Sessione 356 - Cervella & Rafa*
+*"Meno file = meno bugie."*
+*Sessione 357 - Cervella & Rafa*

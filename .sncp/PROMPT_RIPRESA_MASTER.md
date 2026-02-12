@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - MASTER (Globale)
 
-> **Ultimo aggiornamento:** 12 Febbraio 2026 - Sessione 355
+> **Ultimo aggiornamento:** 12 Febbraio 2026 - Sessione 357
 > **Tabella ecosistema condivisa - SOLO link ai file specifici**
 
 ---
@@ -9,7 +9,7 @@
 
 | Progetto | PROMPT_RIPRESA | Aggiornato | TL;DR |
 |----------|----------------|------------|-------|
-| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-02-12 | MAPPA 100% + SubagentStart hook v1.0.0 |
+| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-02-12 | SNCP 4.0 IMPLEMENTATO! |
 | **CervellaBrasil** | `.sncp/progetti/cervellabrasil/PROMPT_RIPRESA_cervellabrasil.md` | 2026-02-12 | FASE 0-2.5 completas, pronto FASE 3 (Execucao) |
 | **Chavefy** | `.sncp/progetti/chavefy/PROMPT_RIPRESA_chavefy.md` | 2026-02-12 | FASE 0: 13 pesquisas, pronto validacao online |
 | **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-30 | In pausa (Cache Layer v2.1.0 completato) |
@@ -37,9 +37,6 @@ FINE SESSIONE:
 
 ```
 PROMPT_RIPRESA: max 150 righe
-stato.md: max 500 righe
-
-(oggi.md: DEPRECATO - non usare)
 ```
 
 ---

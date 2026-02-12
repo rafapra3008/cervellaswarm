@@ -85,7 +85,7 @@ FASE 4: Scala                   [....................] PARCHEGGIATO
 ```
 STATO ATTUALE:
   ✓ CLI + MCP su npm              cervellaswarm@2.0.0-beta.1
-  ✓ FAMIGLIA COMPLETA             19 agenti (1 Regina + 3 Guardiane + 1 Architect + 14 Worker)
+  ✓ FAMIGLIA COMPLETA             17 agenti (1 Regina + 3 Guardiane + 1 Architect + 12 Worker)
   ✓ API Fly.io                    ONLINE
   ✓ cervellaswarm.com             LIVE
   ✓ Repo Pubblico                 github.com/rafapra3008/cervellaswarm
@@ -122,7 +122,6 @@ STATO ATTUALE:
 | **PHRASEBOOK** | `.sncp/roadmaps/SUBROADMAP_PHRASEBOOK.md` |
 | **FAMIGLIA COMPLETA MCP (100%!)** | `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_FAMIGLIA_COMPLETA_MCP.md` |
 | Roadmap visiva | `.sncp/progetti/cervellaswarm/roadmaps/ROADMAP_2026_PRODOTTO.md` |
-| Stato dettagliato | `.sncp/progetti/cervellaswarm/stato.md` |
 | DNA Famiglia (17 membri!) | `docs/DNA_FAMIGLIA.md` |
 
 ---
