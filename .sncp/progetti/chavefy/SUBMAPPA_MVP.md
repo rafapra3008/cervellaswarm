@@ -47,8 +47,10 @@ Construir o MINIMO que resolve o MAXIMO de dor dos property managers brasileiros
 ### FUTURO (v2.0+)
 11. API Partner Airbnb (beyond iCal)
 12. API Partner Booking.com
-13. Compliance automatizada (normas locais)
+13. Compliance AUTOMATIZADA (relatorios, normas por municipio)
 14. App mobile (React Native)
+
+> **Nota Compliance:** MVP v1.0 inclui compliance BASICA (cadastro hospede, dados obrigatorios). Compliance AUTOMATIZADA (normas locais, relatorios fiscais) e v2.0+.
 
 ---
 
@@ -61,8 +63,8 @@ Mes 3: Dashboard + gestao propriedades
 Mes 4: WhatsApp integration
 Mes 5: AI auto-reply + gestao limpeza
 Mes 6: Pagamentos + onboarding flow
-Mes 7: Polish + testes + bug fixes
-Mes 8: Beta launch (5 clientes)
+Mes 7: Testes (unit + integration + E2E) + CI/CD pipeline
+Mes 8: Polish + bug fixes + beta launch (5 clientes)
 ```
 
 ---
@@ -74,11 +76,13 @@ Mes 8: Beta launch (5 clientes)
 | Fly.io (hosting) | $25 | $300 |
 | PostgreSQL (managed) | $15 | $180 |
 | Redis (managed) | $10 | $120 |
-| WhatsApp Business API | $50 | $600 |
+| WhatsApp Business API | $50-57* | $600-684 |
 | Claude API | $30 | $360 |
 | Stripe fees | 2.9% + R$0.50/tx | variavel |
 | Dominio + email | $5 | $60 |
-| **TOTAL fixo** | **~$135/mes** | **~$1.620/ano** |
+| **TOTAL fixo** | **~$135-167/mes** | **~$1.620-2.004/ano** |
+
+*\* WhatsApp API: BSP 360dialog $50/numero/mes + Meta cobra per-message (service msgs GRATIS dentro 24h, utility $0.0068/msg, marketing $0.0625/msg). Estimativa baseada em ~200 msgs/mes. Ver pesquisa completa: docs/pesquisa/tecnico/PESQUISA_WHATSAPP_API_2026.md*
 
 **Custo marketing (Fase 0-1):** ~$600/6 meses
 **TOTAL Ano 1 estimado:** ~$3.000-5.000 (~EUR 2.700-4.500)

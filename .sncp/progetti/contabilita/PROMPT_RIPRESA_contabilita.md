@@ -1,89 +1,92 @@
 # PROMPT RIPRESA - Contabilita
 
-> **Ultimo aggiornamento:** 9 Febbraio 2026 - Sessione pomeriggio
+> **Ultimo aggiornamento:** 12 Febbraio 2026 - Sessione 3 (terza)
 > **Per SOLO questo progetto!**
 
 ---
 
 ## STATO ATTUALE
 
-```
-+================================================================+
-|   CONTABILITA ANTIGRAVITY                                       |
-|   Produzione: v2.9.0 LIVE (parser v1.8.0)                      |
-|   Locale: parser v1.9.0 (testato, DA DEPLOYARE)                |
-|   Rating: 9.9/10                                                |
-+================================================================+
-```
+| Cosa | Stato |
+|------|-------|
+| **Produzione** | v2.10.0 LIVE (parser v1.9.0) |
+| **IP** | 35.193.39.185 STATICO |
+| **Branch attivo** | lab-v2 (8 commit avanti a origin) |
+| **Score** | 9.0/10 (target 9.5) |
+| **Test** | 31/31 parser PASS |
+| **Lab 2.0** | Porta 8001 |
+| **Telegram** | Solo produzione |
 
 ---
 
-## SISTEMA LIVE
+## SESSIONE 12 FEBBRAIO (terza) - FATTO REALE
 
-| Componente | Versione LIVE | Versione Locale |
-|------------|--------------|-----------------|
-| Backend | v1.12.0 | v1.12.0 |
-| PDF Parser | **v1.8.0** | **v1.9.0** (da deployare) |
-| Security | v1.1.0 | v1.1.0 |
-| FORTEZZA MODE | v4.3.0 | v4.3.0 |
-| Landing Page | - | v1.0.0 (locale) |
+### FASE D: Hardening (COMPLETATA - score 8.5 -> 9.0)
+- D.1: Rimossi 8 dipendenze fantasma (PyPDF2, xlrd, sqlalchemy, alembic, psycopg2-binary, pandas, xlsxwriter, pydantic-settings)
+- D.1: Rimosso libpq-dev dal Dockerfile
+- D.1: Sincronizzati requirements.txt e requirements-prod.txt
+- D.2: Docker USER non-root (contabilita UID 1000)
+- D.2: Dockerfile usa requirements-prod.txt (no test deps in prod)
+- D.3: CSP documentato (unsafe-inline necessario per JS inline)
+- Guardiana: APPROVED 9.0/10
 
----
+### FASE C Parte 1: Split main.py (COMPLETATA!)
+main.py splittato da **3427 -> 408 righe (-88%)**:
 
-## SESSIONE 9 FEBBRAIO - COSA FATTO
+| Router | Righe | Endpoint |
+|--------|-------|----------|
+| auth.py | 139 | 2 (validate-code, verify) |
+| export.py | 417 | 6 (Excel, Spring files) |
+| processing.py | 310 | 2 (upload, process-pdf) |
+| admin.py | 369 | 8 (health, vacuum, merge, scheduler, stats) |
+| transactions.py | 807 | 11 (CRUD, POS, update, report, historical) |
+| pareggi.py | 1137 | 18 (calcolo, parking, fase4, puzzle, CRUD) |
 
-### 1. Deploy parser v1.8.0 (COMPLETATO)
-- FORTEZZA MODE 10/10 step OK
-- Tag: `vm-deployed-v2.9.0`
-- Fix: page break duplicati, PR docs, apostrofo nomi
+Anche creato:
+- backend/dependencies.py (61 righe) - limiter, get_portal_from_request, api_metrics condivisi
+- Fix qualita: rimossi import inline, debug code, import duplicati
 
-### 2. Fix parser v1.9.0 (LOCALE, da deployare)
-- **Bug**: Nomi con parentesi (tour operator) non riconosciuti
-- **Caso**: "Jarosch Bettina (Paartour) - [3602]" → nome ereditato dal cliente precedente (Catalina Cazacu)
-- **Fix**: Aggiunto `(?:\s*\([^)]*\))*` in 3 punti regex per saltare parentesi prima di ` - [ID]`
-- **Risultato**: nome = "Jarosch Bettina", id = 3602 (corretto!)
-- **Test**: 31/31 PASS (8 nuovi in sezione F: TestNomiConParentesi)
-- **Guardiana**: APPROVED 9/10 (due audit: pre-fix + post-fix)
-- **Prova reale**: PDF SHE 29_1_2026 riprocessato, 17/17 caparre OK, totale 7.882,60
-
----
-
-## PROSSIMA SESSIONE: DEPLOY + ALTRO
-
-### DEPLOY FORTEZZA MODE
-```
-COSA DEPLOYARE:
-- backend/processors/pdf_parser.py (v1.8.0 → v1.9.0)
-
-UN SOLO FILE. Vale per TUTTI i portali (HP, NL, SHE).
-```
-
-### ALTRE COSE DA FARE
-Rafa aveva menzionato 2-3 altre cose oltre al fix parentesi.
-Non specificate - chiedere a Rafa all'inizio sessione.
+### Commits su lab-v2 (8 totali):
+1. f3d7587 FASE D: Hardening completo
+2. 6df1e0c FASE C.1: auth.py
+3. 54e20b3 FASE C.2: export.py + get_portal_from_request
+4. cc085da FASE C.3: processing.py
+5. 7e4e44b FASE C.4: admin.py
+6. 0d45e22 FASE C.5: transactions.py
+7. 93f667b FASE C.6: pareggi.py
+8. cc91111 Cleanup: ultimi endpoint + fix qualita
 
 ---
 
-## DECISIONI CHIAVE
+## PROSSIMA SESSIONE
 
-| Decisione | Perche |
-|-----------|--------|
-| `*` invece di `?` per parentesi | Gestisce anche parentesi multiple (improbabile ma sicuro) |
-| NON aggiunto `()` al char class | Rischio catturare info stanza - troppo pericoloso |
-| Nome senza parentesi | "Jarosch Bettina" (senza "(Paartour)") - sufficiente per matching |
-| DB SHE pulito e riprocessato | Verificato fix con dati reali prima di deploy |
+### Da fare (in ordine):
+1. **Push lab-v2** a origin (8 commit da pushare)
+2. **FASE C Parte 2**: Split database.py (4372 righe -> 5 moduli db/)
+3. **FASE C Parte 3**: Split pareggi.js (4796 righe -> 4 moduli)
+4. Audit Guardiana dopo ogni parte
+5. Quando score >= 9.5: merge lab-v2 -> main
+
+### Note Guardiana ultimo audit:
+- pareggi.py (1137 righe) e' ancora grande - valutare split futuro
+- /{portal}/api/historical rimane in main.py (bridge pattern necessario)
+- CSP: TODO estrarre JS inline da index.html in file esterno
 
 ---
 
-## PUNTATORI
+## MAPPA v2.0
 
-| Cosa | Dove |
-|------|------|
-| Backup DB SHE | `db_test_local/contabilita_she_BACKUP_20260209.db` |
-| Backup DB HP | `db_test_local/contabilita_hp_BACKUP_20260209.db` |
-| Hardtests | `tests/test_pdf_parser_hp.py` (31 test) |
-| PDF test parentesi | Desktop: `29_1_2026 (1).pdf` (file SHE) |
-| Git tag produzione | `vm-deployed-v2.9.0` |
+| Fase | Stato |
+|------|-------|
+| 0 Occhi Nuovi | COMPLETATA |
+| A Fondamenta | COMPLETATA |
+| B Pulizia | COMPLETATA (8.5/10) |
+| D Hardening | COMPLETATA (9.0/10) |
+| C.1 Split main.py | COMPLETATA (main.py 3427->408) |
+| C.2 Split database.py | DA FARE |
+| C.3 Split pareggi.js | DA FARE |
+| 1 Landing deploy | DA FARE |
+| 2-4 Stagioni, SPRING, v2.0 | DA FARE |
 
 ---
 
@@ -92,10 +95,11 @@ Non specificate - chiedere a Rafa all'inizio sessione.
 | Cosa | Valore |
 |------|--------|
 | Host | contabilitafamigliapra.it |
-| User | root |
+| IP | 35.193.39.185 (STATICO) |
 | Path | /opt/contabilita-system/ |
-| Tag Git | vm-deployed-v2.9.0 |
+| VM | cervello-contabilita (us-central1-c) |
+| Tag Git | vm-deployed-v2.10.0 |
 
 ---
 
-*Parser v1.9.0 pronto per deploy! Un solo file, FORTEZZA MODE.*
+*FASE D + C.1 completate! Prossimo: C.2 (split database.py) nel Lab.*

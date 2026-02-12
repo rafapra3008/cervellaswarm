@@ -304,9 +304,11 @@ FASE 5: Escala               [A FAZER]   .................... 0%
 
 ## STEP 2.7: Compliance BR Basica
 
-**Estado:** [A FAZER]
+**Estado:** [A ESTUDAR]
+**Pesquisa feita:** NENHUMA (precisa pesquisa regulamentacao por municipio)
 **Depende de:** 2.2
-**Output:** Gestao obrigacoes locais (cadastro hospede, etc)
+**Output:** Cadastro hospede, dados obrigatorios, formularios basicos
+**Nota:** Compliance BASICA (cadastro, dados) no MVP. Compliance AUTOMATIZADA (normas locais, relatorios) em v2.0+.
 
 ---
 
@@ -320,36 +322,67 @@ FASE 5: Escala               [A FAZER]   .................... 0%
 
 # FASE 3: BETA + ITERACAO (3 meses)
 
+> **[SKELETAL]** Sera detalhada apos GO na Fase 1. Steps abaixo sao indicativos.
+
 ---
 
 ## STEP 3.1: Beta 5 Clientes
+**Estado:** [A FAZER] | **Depende de:** Fase 2 completa | **Output:** 5 clientes usando o produto
+
 ## STEP 3.2: Feedback Loop Semanal
+**Estado:** [A FAZER] | **Depende de:** 3.1 | **Output:** Processo feedback estruturado
+
 ## STEP 3.3: Iteracao MVP (bugs + features)
+**Estado:** [A FAZER] | **Depende de:** 3.2 | **Output:** MVP melhorado com base em feedback real
+
 ## STEP 3.4: Beta 10 Clientes
+**Estado:** [A FAZER] | **Depende de:** 3.3 | **Output:** Expansao beta, validacao escalabilidade
+
 ## STEP 3.5: Product-Market Fit Assessment
+**Estado:** [A FAZER] | **Depende de:** 3.4 | **Output:** Documento PMF com metricas (NPS, churn, retention)
 
 ---
 
 # FASE 4: LANCAMENTO + GROWTH (6 meses)
 
+> **[SKELETAL]** Sera detalhada apos Fase 3. Steps abaixo sao indicativos.
+
 ---
 
 ## STEP 4.1: Lancamento Publico
+**Estado:** [A FAZER] | **Depende de:** Fase 3 completa | **Output:** Produto aberto ao publico
+
 ## STEP 4.2: Marketing Engine (SEO + Google Ads)
+**Estado:** [A FAZER] | **Depende de:** 4.1 | **Output:** Pipeline marketing ativo
+
 ## STEP 4.3: Parcerias (Contadores + Agencias)
+**Estado:** [A FAZER] | **Depende de:** 4.1 | **Output:** 5+ parceiros ativos
+
 ## STEP 4.4: Scale 50 Clientes
+**Estado:** [A FAZER] | **Depende de:** 4.2, 4.3 | **Output:** 50 clientes pagantes
+
 ## STEP 4.5: Scale 100 Clientes
+**Estado:** [A FAZER] | **Depende de:** 4.4 | **Output:** 100 clientes pagantes (~R$ 20k/mes)
 
 ---
 
 # FASE 5: ESCALA (ongoing)
 
+> **[SKELETAL]** Sera detalhada apos Fase 4. Steps abaixo sao indicativos.
+
 ---
 
 ## STEP 5.1: Features Avancadas (pricing ML, analytics)
+**Estado:** [A FAZER] | **Depende de:** Fase 4 completa | **Output:** Features v2.0
+
 ## STEP 5.2: API Partner Airbnb/Booking
+**Estado:** [A FAZER] | **Depende de:** 5.1 | **Output:** Integracao direta (alem de iCal)
+
 ## STEP 5.3: Mercado Italia? (avaliacao)
+**Estado:** [A FAZER] | **Depende de:** 5.1 | **Output:** Estudo viabilidade expansao Europa
+
 ## STEP 5.4: Target 300+ Clientes (60k+ EUR/ano)
+**Estado:** [A FAZER] | **Depende de:** 5.2 | **Output:** Meta financeira de liberdade geografica
 
 ---
 
