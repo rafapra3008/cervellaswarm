@@ -1,10 +1,11 @@
 #!/bin/bash
 # sync-agents.sh - Verifica e sincronizza agenti main <-> insiders
 # Previene bug S358: 13 agenti insiders non sincronizzati
-# Usage: ./scripts/sncp/sync-agents.sh [--sync] [--verbose]
+# Usage: ./scripts/sncp/sync-agents.sh [--sync] [--dry-run] [--verbose]
 #
 # Senza flag: solo report divergenze
 # --sync: copia agenti da main a insiders (main e la fonte di verita)
+# --dry-run: mostra cosa farebbe --sync senza eseguire
 # --verbose: mostra dettagli per ogni agente
 
 set -euo pipefail
@@ -12,17 +13,20 @@ set -euo pipefail
 MAIN_DIR="$HOME/.claude/agents"
 INSIDERS_DIR="$HOME/.claude-insiders/agents"
 SYNC_MODE=false
+DRY_RUN=false
 VERBOSE=false
 
 # Parse args
 for arg in "$@"; do
     case "$arg" in
         --sync) SYNC_MODE=true ;;
+        --dry-run) DRY_RUN=true ;;
         --verbose) VERBOSE=true ;;
         -h|--help)
-            echo "Usage: $0 [--sync] [--verbose]"
+            echo "Usage: $0 [--sync] [--dry-run] [--verbose]"
             echo ""
             echo "  --sync     Copia agenti da main a insiders"
+            echo "  --dry-run  Mostra cosa farebbe --sync senza eseguire"
             echo "  --verbose  Mostra dettagli per ogni agente"
             echo ""
             echo "Main ($MAIN_DIR) e la fonte di verita."
@@ -67,7 +71,9 @@ for agent_file in "$MAIN_DIR"/*.md; do
         MISSING_INSIDERS=$((MISSING_INSIDERS + 1))
         echo "MISSING in insiders: $filename"
 
-        if $SYNC_MODE; then
+        if $DRY_RUN; then
+            echo "  -> [DRY-RUN] COPIEREBBE a insiders"
+        elif $SYNC_MODE; then
             cp "$agent_file" "$insiders_file"
             SYNCED=$((SYNCED + 1))
             echo "  -> COPIATO a insiders"
@@ -82,7 +88,9 @@ for agent_file in "$MAIN_DIR"/*.md; do
             echo "DIVERGENT: $filename"
         fi
 
-        if $SYNC_MODE; then
+        if $DRY_RUN; then
+            echo "  -> [DRY-RUN] SINCRONIZZEREBBE da main"
+        elif $SYNC_MODE; then
             cp "$agent_file" "$insiders_file"
             SYNCED=$((SYNCED + 1))
             echo "  -> SINCRONIZZATO da main"

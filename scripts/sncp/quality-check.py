@@ -21,11 +21,14 @@ __version_date__ = "2026-02-02"
 
 import argparse
 import json
+import logging
 import re
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict, List, Tuple
+
+logger = logging.getLogger(__name__)
 
 # Costanti
 SNCP_BASE = Path(".sncp/progetti")
@@ -349,13 +352,19 @@ def main():
 
     args = parser.parse_args()
 
+    logging.basicConfig(
+        level=logging.WARNING,
+        format="%(levelname)s: %(message)s",
+        stream=sys.stderr,
+    )
+
     # Determina progetti da analizzare
     if args.project:
         projects = [args.project]
     else:
         # Trova tutti i progetti in .sncp/progetti/
         if not SNCP_BASE.exists():
-            print(f"ERROR: {SNCP_BASE} not found!", file=sys.stderr)
+            logger.error("%s not found!", SNCP_BASE)
             sys.exit(1)
 
         projects = [
@@ -364,7 +373,7 @@ def main():
         ]
 
     if not projects:
-        print("ERROR: No projects found!", file=sys.stderr)
+        logger.error("No projects found!")
         sys.exit(1)
 
     # Analizza progetti

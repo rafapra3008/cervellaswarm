@@ -1,55 +1,64 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-12 - Sessione 359
-> **STATUS:** PULIZIA CHIRURGICA COMPLETATA - Tutti P3 di S358 risolti!
+> **Ultimo aggiornamento:** 2026-02-13 - Sessione 360
+> **STATUS:** POLISH + CODE REVIEW - 5 step, score medio 9.62/10
 
 ---
 
-## SESSIONE 359 - PULIZIA CHIRURGICA (4 step)
+## SESSIONE 360 - POLISH & CODE REVIEW (5 step)
 
 ### Cosa abbiamo fatto
-Completati tutti i P3 pendenti da S358: hook orfani, test oversized, script prevenzione.
+Completati 2 opzionali da S359 + Code Review settimanale + 2 P2 dalla review. Tutti auditati dalla Guardiana.
 
-### 4 step completati (tutti auditati da Guardiana)
+### 5 step completati
 
-**Step 1 - Hook Orfani (10/10):**
-- 3 hook + 1 backup rinominati a .DISABLED: auto_review_hook, block_edit_non_whitelist, block_task_for_agents, BACKUP_PreToolUse_config
-- Confermati orfani (non in settings.json)
-- Totale .DISABLED in hooks/: 7 file
+**Step 1 - sync-agents.sh in SessionEnd hook (9.7/10):**
+- Nuovo hook: `~/.claude/hooks/session_end_sync_agents.py` (v1.0.0)
+- Aggiunto a SessionEnd in ENTRAMBI settings.json (main + insiders), async, timeout 15s
+- Chiama `sync-agents.sh --sync` automaticamente a fine sessione
+- Solo in CervellaSwarm (CWD check), skip silenzioso per altri progetti
+- Previene automaticamente bug S358 (agenti desincronizzati)
+- verify-hooks.sh: 42/42 OK (+2 dal nuovo hook)
 
-**Step 2 - Split test_qw3 (10/10):**
-- test_qw3_session_end_flush.py (522 righe) -> eliminato
-- test_qw3_session_end_flush_core.py (249 righe) - unit tests
-- test_qw3_session_end_flush_integration.py (311 righe) - integration/safety
-- 29 test preservati, 0 persi
+**Step 2 - pytest marker "integration" (10/10):**
+- Aggiunto `pytest_configure` in `tests/conftest.py` (+6 righe)
+- Registra marker: slow, integration, unit
+- Elimina warning `PytestUnknownMarkWarning` quando si gira dalla root
+- Marker coerenti con `cervella/pyproject.toml` (identici)
 
-**Step 3 - Split test_e2e (9.0/10 -> 9.5 post-fix):**
-- test_e2e_sncp_4.py (777 righe) -> eliminato
-- test_e2e_sncp_4_phases.py (455 righe) - test fasi individuali
-- test_e2e_sncp_4_workflow.py (500 righe) - workflow completo + edge cases
-- 14 test preservati, 0 persi
+**Step 3 - Code Review settimanale (9.2/10):**
+- Reviewer ha analizzato S357-S360
+- Technical debt: PRATICAMENTE ZERO
+- Security: 9.5/10, test health: 9.8/10
+- 0 P1, 3 P2 (2 gia risolti da Step 1+2, 1 valido = debug prints)
 
-**Step 4 - sync-agents.sh (9.0/10 -> 9.5 post-fix):**
-- Nuovo script: scripts/sncp/sync-agents.sh
-- Compara ~/.claude/agents/ vs ~/.claude-insiders/agents/
-- Flag: --sync (auto-fix), --verbose, --help
-- Previene bug S358 (13 agenti desincronizzati)
-- P2 fixati: unknown arg handling, messaggio sync migliorato
+**Step 4 - print() -> logging in SNCP scripts (9.6/10):**
+- `verify-hooks.py`: 2 print diagnostici -> `logger.warning()` / `logger.error()`
+- `quality-check.py`: 2 errori -> `logger.error()`
+- Report output resta `print()` (standard CLI, stdout separato da stderr)
+- Pattern consistente: `logging.basicConfig(stream=sys.stderr)` in entrambi
+
+**Step 5 - --dry-run per sync-agents.sh (9.6/10):**
+- Nuovo flag `--dry-run`: mostra cosa farebbe --sync senza copiare
+- Output: "[DRY-RUN] COPIEREBBE/SINCRONIZZEREBBE"
+- dry-run ha priorita su --sync (sicurezza: if/elif)
+- Testato con divergenza reale: funziona
 
 ### Numeri finali
 ```
 Test:    1032 passed, 50 skipped, 0 failed (10s)
-Hook:    7 .DISABLED files (orfani + legacy)
-Agenti:  19/19 sincronizzati (verificato da sync-agents.sh)
-Test file: tutti sotto 500 righe
+Hook:    42/42 OK (6 SessionEnd hooks ora)
+Agenti:  19/19 sincronizzati
+Score:   9.62/10 medio sessione
 ```
 
 ---
 
 ## PROSSIMI STEP
-- Nessun P3 pendente per CervellaSwarm
-- Possibile: integrare sync-agents.sh in SessionEnd hook (auto-verifica)
-- Possibile: registrare mark pytest "integration" per evitare warning
+- Nessun P1/P2/P3 pendente per CervellaSwarm
+- Opzionale: aggiungere `logger.debug()` in verify-hooks.py (predisposto, non usato)
+- Opzionale: registrare mark pytest "integration" in SessionEnd (auto-verifica)
+- Oppure: passare a un altro progetto (Miracollo, Chavefy, Contabilita)
 
 ---
 
@@ -69,8 +78,9 @@ Test file: tutti sotto 500 righe
 | S357 | SNCP 4.0 IMPLEMENTATO! 6 file archiviati, 12+ puntatori fixati |
 | S358 | AUDIT TOTALE! 13 agenti sync, 25 test fix, 4 hook fix, 8 docs fix |
 | S359 | PULIZIA CHIRURGICA! 4 hook disabled, 2 test split, sync-agents.sh |
+| S360 | POLISH + CODE REVIEW! 5 step, sync hook, logging, dry-run |
 
 ---
 
 *"Fatto BENE > Fatto VELOCE"*
-*Sessione 359 - Cervella & Rafa*
+*Sessione 360 - Cervella & Rafa*

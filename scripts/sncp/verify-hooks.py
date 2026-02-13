@@ -13,9 +13,12 @@ Exit code: 0 = tutto OK, 1 = problemi trovati
 """
 
 import json
+import logging
 import os
 import sys
 from typing import Optional
+
+logger = logging.getLogger(__name__)
 
 # Paths
 MAIN_SETTINGS = os.path.expanduser("~/.claude/settings.json")
@@ -108,19 +111,25 @@ def check_file(path: str) -> str:
 def main() -> int:
     verbose = "--verbose" in sys.argv or "-v" in sys.argv
 
+    logging.basicConfig(
+        level=logging.DEBUG if verbose else logging.WARNING,
+        format="%(levelname)s: %(message)s",
+        stream=sys.stderr,
+    )
+
     results = {}
     all_paths_by_source = {}
 
     for label, settings_path in [("main", MAIN_SETTINGS), ("insiders", INSIDERS_SETTINGS)]:
         if not os.path.exists(settings_path):
-            print(f"  [SKIP] {label}: settings.json non trovato")
+            logger.warning("%s: settings.json non trovato, skipping", label)
             continue
 
         try:
             with open(settings_path) as f:
                 data = json.load(f)
         except json.JSONDecodeError as e:
-            print(f"  [ERROR] {label}: settings.json malformato: {e}")
+            logger.error("%s: settings.json malformato: %s", label, e)
             continue
 
         files = extract_hook_files(data)
