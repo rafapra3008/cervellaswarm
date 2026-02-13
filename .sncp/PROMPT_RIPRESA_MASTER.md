@@ -13,7 +13,7 @@
 | **CervellaBrasil** | `.sncp/progetti/cervellabrasil/PROMPT_RIPRESA_cervellabrasil.md` | 2026-02-12 | FASE 0-2.5 completas, pronto FASE 3 (Execucao) |
 | **Chavefy** | `.sncp/progetti/chavefy/PROMPT_RIPRESA_chavefy.md` | 2026-02-12 | FASE 0: 13 pesquisas, pronto validacao online |
 | **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-30 | In pausa (Cache Layer v2.1.0 completato) |
-| **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-02-13 | Sessione 12: isolamento ambienti COMPLETATO, deploy FEST prossimo |
+| **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-02-13 | Sessione 16: v2.11.0 LIVE! Deploy + cron backup + FORTEZZA v4.5.0 |
 | **CervellaCostruzione** | `.sncp/progetti/cervellacostruzione/PROMPT_RIPRESA_cervellacostruzione.md` | 2026-02-04 | Costituzione digitale |
 
 ---
