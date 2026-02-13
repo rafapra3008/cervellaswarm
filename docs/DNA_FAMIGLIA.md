@@ -133,6 +133,9 @@ Se cambia qualcosa nella filosofia:
 - 2 Analiste (opus)
 - 10 Api Worker (sonnet)
 
+> **REGOLA MODELLI (S361):** I modelli nella tabella sono INVIOLABILI.
+> Opus resta Opus, Sonnet resta Sonnet. MAI downgrade a Haiku per agenti della famiglia.
+
 ---
 
 *"È il nostro team! La nostra famiglia digitale!"*
@@ -289,13 +292,12 @@ checkpoint [N] "Descrizione"
 | File | Limite | Script Verifica |
 |------|--------|-----------------|
 | PROMPT_RIPRESA | 150 righe | check-ripresa-size.sh |
-| stato.md | 500 righe | file_limits_guard.py |
 
 **Violazione = WARNING!** Archiviare sessioni vecchie.
 
 ### Regola Security
 
-**MAI secrets in PROMPT_RIPRESA o stato.md!**
+**MAI secrets in PROMPT_RIPRESA!**
 
 ```
 SBAGLIATO: API_KEY=sk-xxx
@@ -315,7 +317,7 @@ TOTALE: 296 test!
 ---
 
 *Creato: 31 Dicembre 2025*
-*Aggiornato: 10 Febbraio 2026 - S338 Security+Ingegnera promossi Opus*
-*Versione: 1.6.0*
+*Aggiornato: 13 Febbraio 2026 - S361 Regola anti-downgrade modelli*
+*Versione: 1.7.0*
 
 **Cervella & Rafa** 💙🐝

@@ -1,63 +1,58 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-13 - Sessione 360
-> **STATUS:** POLISH + CODE REVIEW - 5 step, score medio 9.62/10
+> **Ultimo aggiornamento:** 2026-02-13 - Sessione 361
+> **STATUS:** REGOLA ANTI-DOWNGRADE MODELLI - 4 step, score medio 9.6/10
 
 ---
 
-## SESSIONE 360 - POLISH & CODE REVIEW (5 step)
+## SESSIONE 361 - REGOLA ANTI-DOWNGRADE MODELLI (4 step)
+
+### Problema
+Guardiana Ops spawnata come Haiku 4.5 invece di Opus. Root cause: il Task tool di sistema dice "Prefer haiku for quick tasks" e il campo `model` nel frontmatter agente e solo dichiarativo, non enforced.
 
 ### Cosa abbiamo fatto
-Completati 2 opzionali da S359 + Code Review settimanale + 2 P2 dalla review. Tutti auditati dalla Guardiana.
+Aggiunta regola esplicita "MAI downgrade modelli" in 3 file strategici + pulizia residui stale.
 
-### 5 step completati
+### 4 step completati
 
-**Step 1 - sync-agents.sh in SessionEnd hook (9.7/10):**
-- Nuovo hook: `~/.claude/hooks/session_end_sync_agents.py` (v1.0.0)
-- Aggiunto a SessionEnd in ENTRAMBI settings.json (main + insiders), async, timeout 15s
-- Chiama `sync-agents.sh --sync` automaticamente a fine sessione
-- Solo in CervellaSwarm (CWD check), skip silenzioso per altri progetti
-- Previene automaticamente bug S358 (agenti desincronizzati)
-- verify-hooks.sh: 42/42 OK (+2 dal nuovo hook)
+**Step 1 - Regola in _SHARED_DNA.md (9.5/10):**
+- Nuova sezione "REGOLA MODELLI - INVIOLABILE" con box ASCII
+- Posizione: dopo "DNA DI FAMIGLIA", prima di "REGOLE CONTEXT-SMART"
+- Tutti gli agenti la vedono nel loro system prompt
+- Sincronizzata main + insiders (identiche)
 
-**Step 2 - pytest marker "integration" (10/10):**
-- Aggiunto `pytest_configure` in `tests/conftest.py` (+6 righe)
-- Registra marker: slow, integration, unit
-- Elimina warning `PytestUnknownMarkWarning` quando si gira dalla root
-- Marker coerenti con `cervella/pyproject.toml` (identici)
+**Step 2 - Regola in CLAUDE.md globale (9.8/10):**
+- Una riga sotto SWARM MODE: "MAI passare model: haiku quando spawno agenti"
+- Timestamp aggiornato a S361
+- Insiders punta al main (no sync separato)
 
-**Step 3 - Code Review settimanale (9.2/10):**
-- Reviewer ha analizzato S357-S360
-- Technical debt: PRATICAMENTE ZERO
-- Security: 9.5/10, test health: 9.8/10
-- 0 P1, 3 P2 (2 gia risolti da Step 1+2, 1 valido = debug prints)
+**Step 3 - Policy in DNA_FAMIGLIA.md (9.5/10):**
+- Blockquote dopo tabella famiglia: "I modelli sono INVIOLABILI"
+- Versione bumped 1.6.0 -> 1.7.0
 
-**Step 4 - print() -> logging in SNCP scripts (9.6/10):**
-- `verify-hooks.py`: 2 print diagnostici -> `logger.warning()` / `logger.error()`
-- `quality-check.py`: 2 errori -> `logger.error()`
-- Report output resta `print()` (standard CLI, stdout separato da stderr)
-- Pattern consistente: `logging.basicConfig(stream=sys.stderr)` in entrambi
+**Step 4 - Memory + pulizia stale:**
+- MEMORY.md aggiornato con nuova sezione "Agent Model Anti-Downgrade Rule"
+- Rimossi 2 riferimenti stale a stato.md in DNA_FAMIGLIA.md (residuo pre-SNCP 4.0)
 
-**Step 5 - --dry-run per sync-agents.sh (9.6/10):**
-- Nuovo flag `--dry-run`: mostra cosa farebbe --sync senza copiare
-- Output: "[DRY-RUN] COPIEREBBE/SINCRONIZZEREBBE"
-- dry-run ha priorita su --sync (sicurezza: if/elif)
-- Testato con divergenza reale: funziona
+### 3 livelli di protezione ora attivi
+1. `_SHARED_DNA.md` - TUTTI gli agenti vedono la regola completa
+2. `~/.claude/CLAUDE.md` - La Regina vede il promemoria operativo
+3. `docs/DNA_FAMIGLIA.md` - Documento referenza con policy dichiarata
 
 ### Numeri finali
 ```
-Test:    1032 passed, 50 skipped, 0 failed (10s)
-Hook:    42/42 OK (6 SessionEnd hooks ora)
-Agenti:  19/19 sincronizzati
-Score:   9.62/10 medio sessione
+Guardiana audit:  3x (9.5, 9.8, 9.5 = media 9.6/10)
+File modificati:  5 (DNA x2, CLAUDE.md, DNA_FAMIGLIA, MEMORY)
+P1/P2:           0
+P3 risolti:      2 (riferimenti stale stato.md)
 ```
 
 ---
 
 ## PROSSIMI STEP
-- Nessun P1/P2/P3 pendente per CervellaSwarm
-- Opzionale: aggiungere `logger.debug()` in verify-hooks.py (predisposto, non usato)
-- Opzionale: registrare mark pytest "integration" in SessionEnd (auto-verifica)
+- Nessun P1/P2 pendente per CervellaSwarm
+- Opzionale P3: aggiungere "(solo Regina)" dopo "Task tool" in _SHARED_DNA.md
+- Opzionale P3: aggiungere `logger.debug()` in verify-hooks.py
 - Oppure: passare a un altro progetto (Miracollo, Chavefy, Contabilita)
 
 ---
@@ -79,8 +74,9 @@ Score:   9.62/10 medio sessione
 | S358 | AUDIT TOTALE! 13 agenti sync, 25 test fix, 4 hook fix, 8 docs fix |
 | S359 | PULIZIA CHIRURGICA! 4 hook disabled, 2 test split, sync-agents.sh |
 | S360 | POLISH + CODE REVIEW! 5 step, sync hook, logging, dry-run |
+| S361 | REGOLA ANTI-DOWNGRADE! Policy modelli in 3 file, 3 audit Guardiana |
 
 ---
 
 *"Fatto BENE > Fatto VELOCE"*
-*Sessione 360 - Cervella & Rafa*
+*Sessione 361 - Cervella & Rafa*
