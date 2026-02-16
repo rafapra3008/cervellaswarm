@@ -1,59 +1,75 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-13 - Sessione 361
-> **STATUS:** REGOLA ANTI-DOWNGRADE MODELLI - 4 step, score medio 9.6/10
+> **Ultimo aggiornamento:** 2026-02-16 - Sessione 362
+> **STATUS:** OPEN SOURCE STRATEGY - Subroadmap creata, 3 ricerche, 2 audit Guardiana (8.4 -> 9.5/10)
 
 ---
 
-## SESSIONE 361 - REGOLA ANTI-DOWNGRADE MODELLI (4 step)
+## SESSIONE 362 - CERVELLASWARM OPEN SOURCE (brainstorm + ricerca + piano)
 
-### Problema
-Guardiana Ops spawnata come Haiku 4.5 invece di Opus. Root cause: il Task tool di sistema dice "Prefer haiku for quick tasks" e il campo `model` nel frontmatter agente e solo dichiarativo, non enforced.
+### Contesto
+Rafa ha proposto di rendere CervellaSwarm open source, ispirato dal caso OpenClaw (175k stars, assunto da OpenAI). Obiettivo: dare al mondo il nostro framework multi-agent, guadagnare visibilita, contribuire alla community.
 
 ### Cosa abbiamo fatto
-Aggiunta regola esplicita "MAI downgrade modelli" in 3 file strategici + pulizia residui stale.
 
-### 4 step completati
+**3 ricerche in parallelo:**
 
-**Step 1 - Regola in _SHARED_DNA.md (9.5/10):**
-- Nuova sezione "REGOLA MODELLI - INVIOLABILE" con box ASCII
-- Posizione: dopo "DNA DI FAMIGLIA", prima di "REGOLE CONTEXT-SMART"
-- Tutti gli agenti la vedono nel loro system prompt
-- Sincronizzata main + insiders (identiche)
+1. **Scienziata (landscape competitivo):**
+   - AutoGen 51.8k stars, CrewAI 44.2k, LangGraph 24.7k - nessuno risolve i nostri 3 gap
+   - GAP 1: Session Continuity (SNCP) - NESSUN competitor la ha
+   - GAP 2: Orchestrazione gerarchica reale (3+ livelli) - nessuno
+   - GAP 3: Hook system first-class - nessuno
+   - Report: `.sncp/progetti/cervellaswarm/reports/SCIENTIST_20260216_AI_AGENT_FRAMEWORKS_LANDSCAPE.md`
 
-**Step 2 - Regola in CLAUDE.md globale (9.8/10):**
-- Una riga sotto SWARM MODE: "MAI passare model: haiku quando spawno agenti"
-- Timestamp aggiornato a S361
-- Insiders punta al main (no sync separato)
+2. **Ingegnera (audit tecnico):**
+   - 56.800 righe Python, 16.600 Bash, 1.236 test, 95% coverage
+   - Top componente: AST Pipeline (zero dati personali, 400+ test)
+   - Proposta 3 onde: AST first (~10h), Agent Framework (~50h), SNCP (~54h)
 
-**Step 3 - Policy in DNA_FAMIGLIA.md (9.5/10):**
-- Blockquote dopo tabella famiglia: "I modelli sono INVIOLABILI"
-- Versione bumped 1.6.0 -> 1.7.0
+3. **Researcher (autocompact + session memory):**
+   - Autocompact 2026 molto migliorato (buffer 33K, -84% consumo)
+   - SNCP complementare (non sostituibile): Memory=RAM, SNCP=Disco
+   - Sessioni continue 4-6h ora viabili, overhead riducibile -75%
+   - Report: `.swarm/research/RESEARCH_AUTOCOMPACT_SESSION_MEMORY_2026.md`
 
-**Step 4 - Memory + pulizia stale:**
-- MEMORY.md aggiornato con nuova sezione "Agent Model Anti-Downgrade Rule"
-- Rimossi 2 riferimenti stale a stato.md in DNA_FAMIGLIA.md (residuo pre-SNCP 4.0)
+**Subroadmap creata + 2 audit Guardiana:**
+- `.sncp/roadmaps/SUBROADMAP_OPENSOURCE.md`
+- Primo audit: 8.4/10 (2 P1, 4 P2, 4 P3)
+- Tutti i 10 finding risolti
+- Re-audit: **9.5/10** - APPROVATA!
 
-### 3 livelli di protezione ora attivi
-1. `_SHARED_DNA.md` - TUTTI gli agenti vedono la regola completa
-2. `~/.claude/CLAUDE.md` - La Regina vede il promemoria operativo
-3. `docs/DNA_FAMIGLIA.md` - Documento referenza con policy dichiarata
+### Decisioni prese (con PERCHE)
 
-### Numeri finali
-```
-Guardiana audit:  3x (9.5, 9.8, 9.5 = media 9.6/10)
-File modificati:  5 (DNA x2, CLAUDE.md, DNA_FAMIGLIA, MEMORY)
-P1/P2:           0
-P3 risolti:      2 (riferimenti stale stato.md)
-```
+| Decisione | Perche |
+|-----------|--------|
+| Apache 2.0 (non MIT) | Gia nei package.json, protezione brevetti, enterprise-friendly |
+| Nome: CervellaSwarm | Marca esistente, memorabile, @cervellaswarm npm gia registrato |
+| Claude-first (non multi-LLM day-1) | Hooks sono Claude-specific, meglio dominare un nicho che essere mediocri su tutti |
+| AST Pipeline come primo pacchetto | Zero dati personali, 400+ test, alto valore, quick win |
+| Lancio in 5 fasi | F0 prep -> F1 AST -> F2 agents -> F3 SNCP -> F4 lancio |
+
+### Piano (SUBROADMAP_OPENSOURCE.md)
+
+| Fase | Cosa | Sessioni | Ore |
+|------|------|----------|-----|
+| F0 | Preparazione repo (cleanup 29 scripts, 105 paths) | 3-4 | ~20h |
+| F1 | AST Pipeline pip package (quick win) | 2-3 | ~10h |
+| F2 | Agent Framework (hooks, agents, orchestration) | 8-12 | ~50h |
+| F3 | Session Memory SNCP (differenziale unico) | 9-13 | ~54h |
+| F4 | Lancio + Community | ongoing | ongoing |
+| **Totale** | | **~25-33** | **~134h** |
+
+### Punto chiave storico
+CervellaSwarm ha fatto multi-agent orchestration PRIMA di Anthropic Agent SDK e Claude Code Teams. 361 sessioni, 17 agenti, 1032 test -- nato dalla necessita, non dalla teoria.
 
 ---
 
 ## PROSSIMI STEP
-- Nessun P1/P2 pendente per CervellaSwarm
-- Opzionale P3: aggiungere "(solo Regina)" dopo "Task tool" in _SHARED_DNA.md
-- Opzionale P3: aggiungere `logger.debug()` in verify-hooks.py
-- Oppure: passare a un altro progetto (Miracollo, Chavefy, Contabilita)
+- **Prossima sessione:** Iniziare FASE 0 (preparazione repo open source)
+- F0.1: Struttura repo, branch opensource, .gitignore
+- F0.2: Licenza Apache 2.0, README killer, CONTRIBUTING.md
+- F0.3: Audit secrets (29 scripts con paths hardcoded, git-filter-repo)
+- P3 residui roadmap: fixare diagramma dipendenze, "361 sessions" dinamico
 
 ---
 
@@ -75,8 +91,8 @@ P3 risolti:      2 (riferimenti stale stato.md)
 | S359 | PULIZIA CHIRURGICA! 4 hook disabled, 2 test split, sync-agents.sh |
 | S360 | POLISH + CODE REVIEW! 5 step, sync hook, logging, dry-run |
 | S361 | REGOLA ANTI-DOWNGRADE! Policy modelli in 3 file, 3 audit Guardiana |
+| S362 | OPEN SOURCE STRATEGY! 3 ricerche, subroadmap, 2 audit (9.5/10) |
 
 ---
 
-*"Fatto BENE > Fatto VELOCE"*
-*Sessione 361 - Cervella & Rafa*
+*"Ultrapassar os proprios limites!" - Rafa & Cervella, S362*

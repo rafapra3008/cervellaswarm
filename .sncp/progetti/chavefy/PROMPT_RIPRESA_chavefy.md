@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - Chavefy
 
-> **Ultima atualizacao:** 2026-02-12 - Sessao S354+++ (checkpoint final)
-> **STATUS:** FASE 0 - Step 0.4 EM CURSO (blog infra + 1o artigo pronto, faltam 4 artigos)
+> **Ultima atualizacao:** 2026-02-13 - Sessao S355 (checkpoint)
+> **STATUS:** FASE 0 - Step 0.4 EM CURSO (2/5 artigos prontos)
 
 ---
 
@@ -11,7 +11,8 @@ SaaS de gestao para property managers brasileiros (aluguel por temporada).
 - Target: hosts profissionais com 3-15 imoveis no Brasil
 - Diferencial: WhatsApp nativo + AI auto-reply + compliance BR
 - Pricing: R$ 97-397/mes (a ser validado com clientes reais)
-- Stack: FastAPI + React + PostgreSQL (multi-tenant RLS)
+- Stack landing: Vite 7.3 + React 19 + TailwindCSS v4 + React Router DOM
+- Stack produto: FastAPI + React + PostgreSQL (multi-tenant RLS)
 - Titular: Filho do Rafa (MEI no Brasil)
 
 ## HISTORICO DE SESSOES
@@ -21,24 +22,38 @@ SaaS de gestao para property managers brasileiros (aluguel por temporada).
 | S354 | 9 pesquisas base mercado + go-to-market + keywords SEO |
 | S354+ | 4 pesquisas tecnicas + estrutura projeto + SNCP + audit 9.5/10 |
 | S354++ | Landing page completa (9 secoes, waitlist, LGPD, SEO, audit 9.5) |
-| S354+++ | Blog SEO: infra completa + 1o artigo + auditorias + correcoees docs |
+| S354+++ | Blog SEO: infra completa + 1o artigo + auditorias + correcoes docs |
+| S355 | 4 etapas: cores Tailwind, LGPD pages, OG images, 2o artigo SEO |
 
 ## ESTADO ATUAL DO CODIGO
 
-### Landing Page (Step 0.3: CONSTRUIDA, falta deploy)
+### Landing Page (Step 0.3: PRONTA para deploy)
 - `landing/` = Vite 7.3 + React 19 + TailwindCSS v4
 - 9 secoes: Header, Hero, ParaQuem, PainPoints, Features, SocialProof, WaitlistCTA, FAQ, Footer
 - Formulario waitlist (6 campos + LGPD) salva em localStorage (temporario)
 - SEO: title, meta desc, OG, Twitter Card, Schema.org (Organization + Software + FAQ)
-- Build OK: ~273KB JS + 31KB CSS (gzip ~86KB + 6KB)
+- **ZERO href="#"** em todo o codebase (todos resolvidos na S355)
+- Build OK: ~294KB JS + 32KB CSS (gzip ~91KB + 6KB)
 
-### Blog (Step 0.4: EM CURSO, 1/5 artigos)
-- React Router DOM: `/` (landing), `/blog` (index), `/blog/:slug` (artigos)
+### Blog (Step 0.4: EM CURSO, 2/5 artigos)
+- React Router DOM: `/`, `/blog`, `/blog/:slug`, `/politica-privacidade`, `/termos-uso`
 - Lazy loading com React.lazy + Suspense (code splitting por artigo)
 - Meta tags OG/Twitter/canonical DINAMICAS via useEffect + cleanup
 - Schema.org: Article JSON-LD + FAQPage JSON-LD (injetados dinamicamente)
 - Breadcrumbs: Chavefy / Blog / [titulo do artigo]
-- 1o artigo pronto: "Como Gerenciar Aluguel por Temporada" (~3.200 palavras, 13 min)
+- **Artigo 1:** "Como Gerenciar Aluguel por Temporada" (~3.200 palavras, 13 min)
+- **Artigo 2:** "Melhores Alternativas ao Stays.net em 2026" (~3.800 palavras, 15 min)
+
+### Paginas Legais (NOVAS na S355)
+- `/politica-privacidade` = PoliticaPrivacidade.jsx (12 secoes, LGPD Art. 18 completo)
+- `/termos-uso` = TermosUso.jsx (11 secoes, foro CDC Art. 101)
+- Cross-links entre as duas paginas
+
+### Imagens (NOVAS na S355)
+- `landing/public/og-image.png` (1200x630, 62KB) - share social
+- `landing/public/apple-touch-icon.png` (180x180, 2.8KB) - iOS
+- `landing/public/favicon-32x32.png` + `favicon-16x16.png` - PNG fallbacks
+- Geradas via `scripts/generate-images.mjs` (Sharp + SVG, sem Puppeteer)
 
 ### Como adicionar novo artigo:
 1. Criar JSX em `landing/src/data/articles/NomeArtigo.jsx`
@@ -46,27 +61,34 @@ SaaS de gestao para property managers brasileiros (aluguel por temporada).
 3. Registrar lazy import em `landing/src/pages/BlogArticle.jsx` (articleComponents)
 4. Adicionar URL no `landing/public/sitemap.xml`
 
-## ISSUES CONHECIDAS (pre-deploy)
+## O QUE FOI RESOLVIDO NA S355
 
-| Issue | Prioridade | Onde | O que fazer |
-|-------|-----------|------|-------------|
-| og-image.png nao existe | ALTA | `landing/public/` | Criar 1200x630, share social quebrado sem isso |
-| apple-touch-icon.png | ALTA | `landing/public/` | Criar 180x180, iOS home screen |
-| 5x href="#" no Footer | ALTA | `Footer.jsx` L30,35,57,65,73 | Privacidade e Termos precisam de paginas reais |
-| href="#" Privacidade no WaitlistForm | ALTA | `WaitlistForm.jsx` L298 | LGPD exige link funcional |
-| Cores Tailwind v4 incompletas | MEDIA | `index.css` @theme | Faltam primary-100/200/300/400 |
-| Conflito @theme vs tailwind.config.js | MEDIA | Ambos definem cores | Manter so @theme (Tailwind v4 way) |
-| primary-600 = primary-700 (#1E3A8A) | BAIXA | `index.css` L7-8 | Diferenciar (ex: 700=#172554) |
-| Crawlers sociais nao executam JS | INFO | Blog meta tags | WhatsApp/Facebook mostrarao meta da landing, nao do artigo |
+| Issue | Como resolvida |
+|-------|---------------|
+| og-image.png | Gerada (1200x630, Sharp+SVG) |
+| apple-touch-icon.png | Gerada (180x180) + favicon PNGs |
+| 5x href="#" no Footer | 2 viraram Link, 3 social viraram span |
+| href="#" Privacidade no WaitlistForm | Link para /politica-privacidade |
+| Cores Tailwind v4 incompletas | primary-100/200/300/400 adicionadas no @theme |
+| Conflito @theme vs tailwind.config.js | tailwind.config.js deletado (dead code em v4) |
+| primary-600 = primary-700 | primary-700 corrigida para #172554 |
+
+## ISSUES REMANESCENTES
+
+| Issue | Prioridade | Nota |
+|-------|-----------|------|
+| Crawlers sociais nao executam JS | INFO | Meta tags dinamicas nao funcionam para preview WhatsApp/Facebook |
+| Faltam 3 artigos SEO | MEDIA | Step 0.4 = 2/5 artigos |
+| Deploy pendente (sem dominio) | BLOQUEADO | Aguardando Rafa registrar dominios |
 
 ## PROGRESSO FASE 0
 
 | Step | O que | Estado | Nota |
 |------|-------|--------|------|
 | 0.1 | Registro dominios + redes | AGUARDANDO RAFA | **Blocker** para deploy |
-| 0.2 | Testar Stays.net trial | ESTUDADO | Desk research feita, falta testar produto |
-| 0.3 | Landing page + waitlist | CONSTRUIDA | Codigo pronto, falta deploy |
-| 0.4 | Blog SEO (5 artigos) | EM CURSO (1/5) | Infra + 1o artigo prontos, nota 9.4/10 |
+| 0.2 | Testar Stays.net trial | ESTUDADO | Desk research feita |
+| 0.3 | Landing page + waitlist | **PRONTA** | Todos issues pre-deploy resolvidos |
+| 0.4 | Blog SEO (5 artigos) | EM CURSO (2/5) | 2 artigos + LGPD pages prontos |
 | 0.5 | Comunidades BR | A FAZER | |
 | 0.6 | Outreach 20 PMs | A FAZER | Roteiro pronto (SUBMAPPA) |
 | 0.7 | GO/NO-GO pre-Brasil | A FAZER | |
@@ -74,11 +96,11 @@ SaaS de gestao para property managers brasileiros (aluguel por temporada).
 ## PROXIMA SESSAO
 
 **Cervelle (prioridade):**
-1. og-image.png (1200x630) + apple-touch-icon.png (180x180)
-2. Pagina politica de privacidade (resolver todos os href="#" + LGPD)
-3. Cores Tailwind v4 (primary-100/200/300/400 + limpar conflito config)
+1. 3o artigo SEO: "Precificacao Dinamica Airbnb" (PESQUISA PRONTA - 55+ fontes, salva em docs/pesquisa/)
+   - Marketing escreve JSX -> guardiana audita -> corrige ate 9.5
+2. 4o artigo SEO: "WhatsApp para aluguel por temporada" (pesquisa a fazer)
+3. 5o artigo SEO: "Gestao de limpeza e check-in" (pesquisa a fazer)
 4. Se dominio pronto: deploy Netlify/Vercel
-5. Proximo artigo SEO: "Stays.net alternativa: o que os hosts brasileiros precisam"
 
 **Rafa/filho:**
 1. Registrar chavefy.com.br (registro.br) + chavefy.com
@@ -94,12 +116,10 @@ SaaS de gestao para property managers brasileiros (aluguel por temporada).
 | Brasil-first | 3.5x mercado, 10x menos saturado |
 | Blog integrado na landing (React Router) | Mesmo stack, lazy loading, SEO dinamico |
 | Data lancamento: Marco 2026 | Padronizada em Hero + WaitlistCTA |
-| Processo: marketing escreve -> frontend implementa -> guardiana audita | Formula Magica aplicada |
-
-## PONTO ESTRATEGICO ABERTO
-
-**Custo WhatsApp BSP ($50/cliente/mes)** pode ser 45% da receita Starter R$99.
-Decisao adiada para validacao com clientes reais (Fase 1).
+| Processo: marketing escreve -> guardiana audita -> corrige | Formula Magica |
+| tailwind.config.js deletado | Dead code em Tailwind v4, so @theme funciona |
+| Sharp+SVG para imagens | Leve (sem Puppeteer), reusavel via script |
+| LGPD: consentimento granular | 2 checkboxes separados no waitlist form |
 
 ## FILES IMPORTANTES
 
@@ -107,25 +127,16 @@ Decisao adiada para validacao com clientes reais (Fase 1).
 |-------|------|
 | Projeto | `~/Developer/Chavefy/` |
 | Landing + blog | `~/Developer/Chavefy/landing/` |
-| 1o artigo (JSX) | `landing/src/data/articles/ComoGerenciarAluguelTemporada.jsx` |
-| 1o artigo (fonte MD) | `landing/src/data/articles/como-gerenciar-aluguel-temporada.md` |
+| 1o artigo | `landing/src/data/articles/ComoGerenciarAluguelTemporada.jsx` |
+| 2o artigo | `landing/src/data/articles/AlternativasStaysNet.jsx` |
 | Registry artigos | `landing/src/data/articles.js` |
-| Specs landing | `docs/produto/LANDING_PAGE_SPECS.md` |
-| Keywords SEO | `docs/pesquisa/mercado/PESQUISA_SEO_KEYWORDS_BR_2026.md` |
-| Audit landing | `reports/AUDIT_LANDING_PAGE.md` |
-| Audit blog | `reports/AUDIT_BLOG_SEO.md` |
+| Politica Privacidade | `landing/src/pages/PoliticaPrivacidade.jsx` |
+| Termos de Uso | `landing/src/pages/TermosUso.jsx` |
+| Gerador imagens | `landing/scripts/generate-images.mjs` |
 | MAPPA | `CervellaSwarm/.sncp/progetti/chavefy/MAPPA_CHAVEFY.md` |
 
-## AUDITORIAS
-
-| O que | Nota | Arquivo |
-|-------|------|---------|
-| Landing page | 9.5/10 (estimada pos-correcoes) | `reports/AUDIT_LANDING_PAGE.md` |
-| Blog SEO (1a) | 8.7/10 -> corrigido | `reports/AUDIT_BLOG_SEO.md` |
-| Blog SEO (re-audit) | 9.4/10 | (nao salvo em arquivo) |
-| Auditoria geral | 8.3/10 (docs desatualizados + cores Tailwind) | (nao salvo) |
+## AUDITORIAS S355
+Todas aprovadas: Cores Tailwind (9.5), LGPD pages (9.4), OG images (9.3), Artigo 2 (8.6->9.5+).
 
 ---
-
-*"Fatto BENE > Fatto VELOCE" - La Famiglia*
-*S354+++ checkpoint - Blog SEO 1/5 artigos - 12 Fev 2026*
+*"Fatto BENE > Fatto VELOCE" - S355 checkpoint - 13 Fev 2026*

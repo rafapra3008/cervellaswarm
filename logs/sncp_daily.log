@@ -1589,3 +1589,184 @@
 [2026-02-12 08:30:05] 
 [2026-02-12 08:30:05] Manutenzione completata!
 [2026-02-12 08:30:05] ============================================
+[2026-02-13 08:30:05] 
+[2026-02-13 08:30:05] ============================================
+[2026-02-13 08:30:05] SNCP DAILY MAINTENANCE - 2026-02-13
+[2026-02-13 08:30:05] ============================================
+[2026-02-13 08:30:05] === SNCP Daily Health Check ===
+[2026-02-13 08:30:05] Health check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/health_2026-02-13.txt
+[2026-02-13 08:30:05] Tutto OK!
+[2026-02-13 08:30:05] === Cleanup file temporanei ===
+[2026-02-13 08:30:05] Cleanup completato
+[2026-02-13 08:30:05] === Verifica dimensioni file ===
+[2026-02-13 08:30:05] Dimensioni file OK
+[2026-02-13 08:30:05] === Compliance Check ===
+[2026-02-13 08:30:05] Compliance check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/compliance_2026-02-13.txt
+[2026-02-13 08:30:05] Compliance OK!
+[2026-02-13 08:30:05] === Statistiche SNCP ===
+[2026-02-13 08:30:05]   cervellabrasil: 1 file
+[2026-02-13 08:30:05]   cervellacostruzione: 38 file
+[2026-02-13 08:30:05]   cervellaswarm: 167 file
+[2026-02-13 08:30:05]   chavefy: 5 file
+[2026-02-13 08:30:05]   contabilita: 12 file
+[2026-02-13 08:30:05]   miracollo: 378 file
+[2026-02-13 08:30:05]   Dimensione totale SNCP:  13M
+[2026-02-13 08:30:05] 
+[2026-02-13 08:30:05] Manutenzione completata!
+[2026-02-13 08:30:05] ============================================
+[2026-02-14 07:56:08] 
+[2026-02-14 07:56:08] ============================================
+[2026-02-14 07:56:08] SNCP DAILY MAINTENANCE - 2026-02-14
+[2026-02-14 07:56:08] ============================================
+[2026-02-14 07:56:08] === SNCP Daily Health Check ===
+[2026-02-14 07:56:08] Health check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/health_2026-02-14.txt
+[2026-02-14 07:56:08] Tutto OK!
+[2026-02-14 07:56:08] === Cleanup file temporanei ===
+[2026-02-14 07:56:08] Cleanup completato
+[2026-02-14 07:56:08] === Verifica dimensioni file ===
+[2026-02-14 07:56:08] WARNING: chavefy/PROMPT_RIPRESA ha 151 righe (max 150)
+[2026-02-14 07:56:08] WARNING: 1 file sopra limite (ma sotto auto-compact)
+[2026-02-14 07:56:08] === Compliance Check ===
+[2026-02-14 07:56:08] Compliance check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/compliance_2026-02-14.txt
+[2026-02-14 07:56:08] Compliance OK!
+[2026-02-14 07:56:08] === Statistiche SNCP ===
+[2026-02-14 07:56:08]   cervellabrasil: 1 file
+[2026-02-14 07:56:08]   cervellacostruzione: 38 file
+[2026-02-14 07:56:08]   cervellaswarm: 168 file
+[2026-02-14 07:56:08]   chavefy: 6 file
+[2026-02-14 07:56:08]   contabilita: 14 file
+[2026-02-14 07:56:08]   miracollo: 378 file
+[2026-02-14 07:56:08]   Dimensione totale SNCP:  13M
+[2026-02-14 07:56:08] 
+[2026-02-14 07:56:08] Manutenzione completata!
+[2026-02-14 07:56:08] ============================================
+[2026-02-14 08:30:01] 
+[2026-02-14 08:30:01] ============================================
+[2026-02-14 08:30:01] SNCP DAILY MAINTENANCE - 2026-02-14
+[2026-02-14 08:30:01] ============================================
+[2026-02-14 08:30:01] === SNCP Daily Health Check ===
+[2026-02-14 08:30:01] Health check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/health_2026-02-14.txt
+[2026-02-14 08:30:01] Tutto OK!
+[2026-02-14 08:30:01] === Cleanup file temporanei ===
+[2026-02-14 08:30:01] Cleanup completato
+[2026-02-14 08:30:01] === Verifica dimensioni file ===
+[2026-02-14 08:30:01] WARNING: chavefy/PROMPT_RIPRESA ha 151 righe (max 150)
+[2026-02-14 08:30:01] WARNING: 1 file sopra limite (ma sotto auto-compact)
+[2026-02-14 08:30:01] === Compliance Check ===
+[2026-02-14 08:30:01] Compliance check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/compliance_2026-02-14.txt
+[2026-02-14 08:30:01] Compliance OK!
+[2026-02-14 08:30:01] === Statistiche SNCP ===
+[2026-02-14 08:30:01]   cervellabrasil: 1 file
+[2026-02-14 08:30:01]   cervellacostruzione: 38 file
+[2026-02-14 08:30:01]   cervellaswarm: 168 file
+[2026-02-14 08:30:01]   chavefy: 6 file
+[2026-02-14 08:30:01]   contabilita: 14 file
+[2026-02-14 08:30:01]   miracollo: 378 file
+[2026-02-14 08:30:01]   Dimensione totale SNCP:  13M
+[2026-02-14 08:30:01] 
+[2026-02-14 08:30:01] Manutenzione completata!
+[2026-02-14 08:30:01] ============================================
+[2026-02-15 08:30:04] 
+[2026-02-15 08:30:04] ============================================
+[2026-02-15 08:30:04] SNCP DAILY MAINTENANCE - 2026-02-15
+[2026-02-15 08:30:04] ============================================
+[2026-02-15 08:30:04] === SNCP Daily Health Check ===
+[2026-02-15 08:30:04] Health check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/health_2026-02-15.txt
+[2026-02-15 08:30:04] Tutto OK!
+[2026-02-15 08:30:04] === Cleanup file temporanei ===
+[2026-02-15 08:30:04] Cleanup completato
+[2026-02-15 08:30:04] === Verifica dimensioni file ===
+[2026-02-15 08:30:04] WARNING: chavefy/PROMPT_RIPRESA ha 151 righe (max 150)
+[2026-02-15 08:30:04] WARNING: 1 file sopra limite (ma sotto auto-compact)
+[2026-02-15 08:30:04] === Compliance Check ===
+[2026-02-15 08:30:04] Compliance check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/compliance_2026-02-15.txt
+[2026-02-15 08:30:04] Compliance OK!
+[2026-02-15 08:30:04] === Statistiche SNCP ===
+[2026-02-15 08:30:04]   cervellabrasil: 1 file
+[2026-02-15 08:30:04]   cervellacostruzione: 38 file
+[2026-02-15 08:30:04]   cervellaswarm: 168 file
+[2026-02-15 08:30:04]   chavefy: 6 file
+[2026-02-15 08:30:04]   contabilita: 17 file
+[2026-02-15 08:30:04]   miracollo: 378 file
+[2026-02-15 08:30:04]   Dimensione totale SNCP:  13M
+[2026-02-15 08:30:04] 
+[2026-02-15 08:30:04] Manutenzione completata!
+[2026-02-15 08:30:04] ============================================
+[2026-02-15 21:05:12] 
+[2026-02-15 21:05:12] ============================================
+[2026-02-15 21:05:12] SNCP DAILY MAINTENANCE - 2026-02-15
+[2026-02-15 21:05:12] ============================================
+[2026-02-15 21:05:12] === SNCP Daily Health Check ===
+[2026-02-15 21:05:12] Health check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/health_2026-02-15.txt
+[2026-02-15 21:05:12] Tutto OK!
+[2026-02-15 21:05:12] === Cleanup file temporanei ===
+[2026-02-15 21:05:12] Cleanup completato
+[2026-02-15 21:05:12] === Verifica dimensioni file ===
+[2026-02-15 21:05:12] WARNING: chavefy/PROMPT_RIPRESA ha 151 righe (max 150)
+[2026-02-15 21:05:12] WARNING: 1 file sopra limite (ma sotto auto-compact)
+[2026-02-15 21:05:12] === Compliance Check ===
+[2026-02-15 21:05:12] Compliance check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/compliance_2026-02-15.txt
+[2026-02-15 21:05:12] Compliance OK!
+[2026-02-15 21:05:12] === Statistiche SNCP ===
+[2026-02-15 21:05:12]   cervellabrasil: 1 file
+[2026-02-15 21:05:12]   cervellacostruzione: 38 file
+[2026-02-15 21:05:12]   cervellaswarm: 168 file
+[2026-02-15 21:05:12]   chavefy: 6 file
+[2026-02-15 21:05:12]   contabilita: 18 file
+[2026-02-15 21:05:12]   miracollo: 378 file
+[2026-02-15 21:05:12]   Dimensione totale SNCP:  13M
+[2026-02-15 21:05:12] 
+[2026-02-15 21:05:12] Manutenzione completata!
+[2026-02-15 21:05:12] ============================================
+[2026-02-16 08:30:05] 
+[2026-02-16 08:30:05] ============================================
+[2026-02-16 08:30:05] SNCP DAILY MAINTENANCE - 2026-02-16
+[2026-02-16 08:30:05] ============================================
+[2026-02-16 08:30:05] === SNCP Daily Health Check ===
+[2026-02-16 08:30:05] Health check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/health_2026-02-16.txt
+[2026-02-16 08:30:05] Tutto OK!
+[2026-02-16 08:30:05] === Cleanup file temporanei ===
+[2026-02-16 08:30:05] Cleanup completato
+[2026-02-16 08:30:05] === Verifica dimensioni file ===
+[2026-02-16 08:30:05] WARNING: chavefy/PROMPT_RIPRESA ha 151 righe (max 150)
+[2026-02-16 08:30:05] WARNING: 1 file sopra limite (ma sotto auto-compact)
+[2026-02-16 08:30:05] === Compliance Check ===
+[2026-02-16 08:30:05] Compliance check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/compliance_2026-02-16.txt
+[2026-02-16 08:30:05] Compliance OK!
+[2026-02-16 08:30:05] === Statistiche SNCP ===
+[2026-02-16 08:30:05]   cervellabrasil: 1 file
+[2026-02-16 08:30:05]   cervellacostruzione: 38 file
+[2026-02-16 08:30:05]   cervellaswarm: 168 file
+[2026-02-16 08:30:05]   chavefy: 6 file
+[2026-02-16 08:30:05]   contabilita: 20 file
+[2026-02-16 08:30:05]   miracollo: 378 file
+[2026-02-16 08:30:05]   Dimensione totale SNCP:  13M
+[2026-02-16 08:30:05] 
+[2026-02-16 08:30:05] Manutenzione completata!
+[2026-02-16 08:30:05] ============================================
+[2026-02-16 11:40:10] 
+[2026-02-16 11:40:10] ============================================
+[2026-02-16 11:40:10] SNCP DAILY MAINTENANCE - 2026-02-16
+[2026-02-16 11:40:10] ============================================
+[2026-02-16 11:40:10] === SNCP Daily Health Check ===
+[2026-02-16 11:40:10] Health check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/health_2026-02-16.txt
+[2026-02-16 11:40:10] Tutto OK!
+[2026-02-16 11:40:10] === Cleanup file temporanei ===
+[2026-02-16 11:40:10] Cleanup completato
+[2026-02-16 11:40:10] === Verifica dimensioni file ===
+[2026-02-16 11:40:10] WARNING: chavefy/PROMPT_RIPRESA ha 151 righe (max 150)
+[2026-02-16 11:40:10] WARNING: 1 file sopra limite (ma sotto auto-compact)
+[2026-02-16 11:40:10] === Compliance Check ===
+[2026-02-16 11:40:10] Compliance check salvato: /Users/rafapra/Developer/CervellaSwarm/.sncp/reports/daily/compliance_2026-02-16.txt
+[2026-02-16 11:40:10] Compliance OK!
+[2026-02-16 11:40:10] === Statistiche SNCP ===
+[2026-02-16 11:40:10]   cervellabrasil: 1 file
+[2026-02-16 11:40:10]   cervellacostruzione: 38 file
+[2026-02-16 11:40:10]   cervellaswarm: 168 file
+[2026-02-16 11:40:10]   chavefy: 6 file
+[2026-02-16 11:40:10]   contabilita: 20 file
+[2026-02-16 11:40:10]   miracollo: 378 file
+[2026-02-16 11:40:10]   Dimensione totale SNCP:  13M
+[2026-02-16 11:40:10] 
+[2026-02-16 11:40:10] Manutenzione completata!
+[2026-02-16 11:40:10] ============================================
