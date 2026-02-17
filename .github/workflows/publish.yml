@@ -3,7 +3,7 @@
 # Triggered on version tags (v0.1.0, v1.0.0, etc.)
 # Uses Trusted Publishing (OIDC) - no NPM_TOKEN needed!
 #
-# "Un passo alla volta verso la LIBERTA GEOGRAFICA!"
+# Quality is not negotiable.
 
 name: Publish to npm
 
@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
-    # Environment with manual approval (Rafa must approve)
+    # Environment with manual approval (maintainer must approve)
     environment:
       name: production
       url: https://www.npmjs.com/package/cervellaswarm
@@ -105,9 +105,9 @@ jobs:
 
             **Links:**
             - [npm package](https://www.npmjs.com/package/cervellaswarm)
-            - [Documentation](https://github.com/rafapra3008/CervellaSwarm#readme)
+            - [Documentation](https://github.com/rafapra3008/cervellaswarm#readme)
 
             ---
-            *"17 agenti. 1 comando. Il tuo team AI."*
+            *"17 agents. 1 command. Your AI development team."*
           draft: false
           prerelease: ${{ contains(github.ref_name, 'beta') || contains(github.ref_name, 'alpha') }}

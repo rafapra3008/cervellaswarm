@@ -5,19 +5,19 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "cervella"
 version = "0.1.0"
-description = "AI Team per Developer Professionali - 17 agenti specializzati orchestrati da una Regina"
+description = "Multi-agent orchestration system for Claude Code - 17 specialized AI agents"
 readme = "README.md"
-license = {text = "MIT"}
+license = {text = "Apache-2.0"}
 requires-python = ">=3.10"
 authors = [
-    {name = "Rafa & Cervella", email = "hello@cervellaswarm.com"}
+    {name = "CervellaSwarm Contributors", email = "hello@cervellaswarm.com"}
 ]
 keywords = ["ai", "agents", "cli", "development", "automation", "claude"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Console",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",

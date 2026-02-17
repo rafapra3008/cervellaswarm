@@ -104,11 +104,15 @@
 - **Score:** Guardiana 8.3 -> 9.5/10 (2 round)
 - **Residui P3:** hero image da ricreare pulita, badges dinamici con CI, CHANGELOG Go/Rust
 
-**F0.5 - .github/ templates** -- TODO
-- [ ] Issue template (bug report, feature request)
-- [ ] PR template
-- [ ] GitHub Actions CI base (lint, test, badge update)
-- [ ] Dynamic badges (tests, coverage)
+**F0.5 - .github/ templates** -- DONE (S366)
+- [x] Issue templates YAML form-based (bug report 7 campi, feature request 6 campi)
+- [x] PR template (summary + type + test plan + checklist)
+- [x] dependabot.yml (7 entry: 3 npm + 2 pip + github-actions, grouped)
+- [x] CODEOWNERS + FUNDING.yml + stale.yml workflow
+- [x] Sanitizzazione 5 file esistenti (CLAUDE.md, weekly-maintenance, publish, claude-review, ci+test)
+- [x] cervella/pyproject.toml: MIT -> Apache-2.0, description + author genericizzati
+- [ ] Dynamic badges (Codecov) -- DEFERRED to F1 (needs CI running on public repo)
+- **Score:** Guardiana 9.0 -> 9.3/10 (2 round)
 
 **F0.6 - Content scanner esteso** -- TODO
 - [ ] Scan *.html, *.css, *.txt

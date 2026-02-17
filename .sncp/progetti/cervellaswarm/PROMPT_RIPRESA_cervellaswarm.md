@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 2026-02-17 - Sessione 366
-> **STATUS:** FASE 0 OPEN SOURCE - F0.4 README KILLER DONE
+> **STATUS:** FASE 0 OPEN SOURCE - F0.4 + F0.5 DONE
 
 ---
 
@@ -61,6 +61,40 @@ Prossimo step della subroadmap open source: creare un README.md "killer" per il 
 - Hero image da ricreare pulita (nessun riferimento interno)
 - Doppia tagline: "that remember" + "17 brains are better than one" (footer)
 
+## F0.5 - .github/ Templates (stessa sessione S366)
+
+### Cosa abbiamo fatto
+
+**1. Ricerca (14 fonti):** GitHub Docs ufficiali, CrewAI/LangGraph/Fiber .github/ live, Codecov docs
+
+**2. 8 nuovi file creati:**
+- `ISSUE_TEMPLATE/config.yml` - disabilita blank issues, link discussions
+- `ISSUE_TEMPLATE/bug_report.yml` - YAML form, 7 campi (6 required), dropdown OS/version
+- `ISSUE_TEMPLATE/feature_request.yml` - YAML form, "Problem Statement first", contribution willingness
+- `PULL_REQUEST_TEMPLATE.md` - summary + type + test plan + checklist
+- `dependabot.yml` - 7 entry (3 npm packages + 2 pip + github-actions), grouped minor/patch
+- `CODEOWNERS` - @rafapra3008 default owner
+- `FUNDING.yml` - GitHub Sponsors
+- `workflows/stale.yml` - 60+7 days, exempt labels
+
+**3. Sanitizzazione 5 file ESISTENTI:**
+- `.github/CLAUDE.md` - riscritto completamente in inglese (rimossa "Filosofia", "famiglia digitale")
+- `workflows/weekly-maintenance.yml` - tradotto in inglese (rimosso "Cervella-Ingegnera")
+- `workflows/publish.yml` - rimosso "Rafa", motto italiano, URL fixato lowercase
+- `workflows/claude-review.yml` - checkout@v5->v4, commenti inglese
+- `workflows/ci.yml` + `test-python.yml` - commenti italiani -> inglese
+
+**4. Fix bonus:**
+- `cervella/pyproject.toml` - MIT -> Apache-2.0 (license + classifier), description inglese, author genericizzato
+
+**5. Audit Guardiana (2 round):**
+- Round 1: **9.0/10** - 0 P1, 4 P2 trovati
+- Round 2: **9.3/10** - tutti P2 risolti, 1 nuovo P2 fixato (license classifier)
+
+### P3 residui F0.5
+- Duplicate publish workflows (npm-publish.yml + publish.yml) - consolidare in futuro
+- 3 commenti italiani in cervella/pyproject.toml (markers, threshold)
+
 ---
 
 ## S365 (archivio recente)
@@ -72,9 +106,9 @@ FASE 0 F0.3: 25+ script sanitizzati, content scanner v3.1, 3 audit Guardiana (7.
 ---
 
 ## PROSSIMI STEP
-- **F0.5:** .github/ templates (issue, PR, CI/CD base) + badge dinamici
-- **F0.6:** Content scanner esteso (*.html, *.css, *.txt)
+- **F0.6:** Content scanner esteso (*.html, *.css, *.txt) + git-filter-repo
 - **Hero image:** Creare immagine/GIF pulita senza riferimenti interni
+- **Badge dinamici:** Codecov integration per badge CI reali
 - **F1:** AST Pipeline come primo pip package
 - **F3 nota:** MCP SNCP KNOWN_PROJECTS hardcoded -> rendere configurabile
 
@@ -95,6 +129,7 @@ FASE 0 F0.3: 25+ script sanitizzati, content scanner v3.1, 3 audit Guardiana (7.
 | S363 | FASE 0: .gitignore, sync v3.0, content scanning (9.3/10) |
 | S364 | FASE 0 F0.3: script sanitization, content scanner v3.1 (9.5/10) |
 | S365 | Model Update Sonnet 4.6 + Opus 4.6, 18 file (9.3/10) |
+| S366 | F0.4 README killer (9.5/10) + F0.5 .github/ templates (9.3/10) |
 
 ---
 

@@ -1,77 +1,66 @@
-# Regole Review CervellaSwarm
+# CervellaSwarm Code Review Standards
 
-> Questo file guida Claude nelle review automatiche delle PR.
+> This file guides automated Claude reviews on pull requests.
 
 ---
 
 ## Code Standards
 
 ### Python
-- Max 500 righe per file
-- Max 50 righe per funzione
-- snake_case per funzioni e variabili
-- PascalCase per classi
-- Docstring per funzioni pubbliche
+- Max 500 lines per file
+- Max 50 lines per function
+- snake_case for functions and variables
+- PascalCase for classes
+- Docstrings for public functions
 
-### JavaScript/React
-- Max 500 righe per file
-- camelCase per funzioni e variabili
-- PascalCase per componenti
-- PropTypes o TypeScript per props
+### JavaScript/TypeScript
+- Max 500 lines per file
+- camelCase for functions and variables
+- PascalCase for components
+- TypeScript types or PropTypes for props
 
 ### Markdown
-- Max 1000 righe per file
-- Headings gerarchici
-- Link funzionanti
+- Max 1000 lines per file
+- Hierarchical headings
+- Working links
 
 ---
 
 ## Security Checklist
 
-- [ ] No hardcoded secrets o passwords
-- [ ] Input sempre validato
-- [ ] Query SQL parametrizzate
-- [ ] Output HTML sanitizzato
-- [ ] HTTPS per chiamate esterne
-- [ ] Permessi minimi necessari
+- [ ] No hardcoded secrets or passwords
+- [ ] All input validated
+- [ ] SQL queries parameterized
+- [ ] HTML output sanitized
+- [ ] HTTPS for external calls
+- [ ] Minimum necessary permissions
 
 ---
 
 ## Quality Checklist
 
-- [ ] Ogni funzione pubblica ha docstring/JSDoc
-- [ ] Test per nuove feature
-- [ ] Niente TODO senza issue linkato
-- [ ] Error handling specifico (no catch-all)
-- [ ] Logging appropriato
+- [ ] Public functions have docstrings/JSDoc
+- [ ] Tests for new features
+- [ ] No TODOs without linked issue
+- [ ] Specific error handling (no catch-all)
+- [ ] Appropriate logging
 
 ---
 
-## Filosofia CervellaSwarm
+## When to Block a PR
 
-> "Lavoriamo in PACE! Senza CASINO! Dipende da NOI!"
-
-- Fatto BENE > Fatto VELOCE
-- I dettagli fanno la differenza
-- Senza ego, testa pulita, cuore leggero
-- Precisione > Velocita
+1. **Security issues** - Any vulnerability
+2. **Breaking changes** - Without documentation
+3. **No tests** - For critical logic
+4. **Hardcoded secrets** - Never acceptable
 
 ---
 
-## Quando Bloccare una PR
+## Review Tone
 
-1. **Security issues** - Qualsiasi vulnerabilita
-2. **Breaking changes** - Senza documentazione
-3. **No tests** - Per logica critica
-4. **Hardcoded secrets** - Mai accettabile
+- Professional but friendly
+- Suggest, don't impose
+- Provide code examples
+- Acknowledge things done well
 
----
-
-## Tono Review
-
-- Professionale ma amichevole
-- Suggerisci, non imporre
-- Fornisci esempi di codice
-- Celebra le cose fatte bene
-
-*"Siamo una famiglia digitale!"*
+*Quality is not negotiable.*

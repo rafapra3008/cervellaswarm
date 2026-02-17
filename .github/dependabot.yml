@@ -1,0 +1,75 @@
+version: 2
+
+updates:
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels: ["dependencies", "ci"]
+
+  # Python dependencies
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels: ["dependencies", "python"]
+    groups:
+      python-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # npm - CLI package
+  - package-ecosystem: "npm"
+    directory: "/packages/cli"
+    schedule:
+      interval: "weekly"
+    labels: ["dependencies", "npm"]
+    groups:
+      npm-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # npm - MCP Server
+  - package-ecosystem: "npm"
+    directory: "/packages/mcp-server"
+    schedule:
+      interval: "weekly"
+    labels: ["dependencies", "npm"]
+    groups:
+      npm-mcp-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # npm - Core
+  - package-ecosystem: "npm"
+    directory: "/packages/core"
+    schedule:
+      interval: "weekly"
+    labels: ["dependencies", "npm"]
+    groups:
+      npm-core-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # npm - API
+  - package-ecosystem: "npm"
+    directory: "/packages/api"
+    schedule:
+      interval: "weekly"
+    labels: ["dependencies", "npm"]
+    groups:
+      npm-api-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # Python - cervella package
+  - package-ecosystem: "pip"
+    directory: "/cervella"
+    schedule:
+      interval: "weekly"
+    labels: ["dependencies", "python"]
+    groups:
+      cervella-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
