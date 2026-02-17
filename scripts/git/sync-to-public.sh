@@ -106,6 +106,7 @@ BLACKLIST_DIRS=(
 BLACKLIST_CONTENT_PATTERNS=(
     "/Users/rafapra"
     "~/Developer/"
+    "rafapra3008"
     "@gmail.com"
     "192.168."
     "acct_1"
@@ -115,6 +116,8 @@ BLACKLIST_CONTENT_PATTERNS=(
     "CervellaBrasil"
     "cervellabrasil"
     "chavefy"
+    "cervellacostruzione"
+    "contabilita"
 )
 
 cleanup() {
