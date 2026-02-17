@@ -22,8 +22,8 @@ Prima sessione operativa di FASE 0 (preparazione repo per open source). Rafa: "a
 - `git rm --cached` su 1006 file (restano su disco, zero impatto La Famiglia)
 
 **3. sync-to-public.sh v3.0 (content scanning):**
-- Check 5 NUOVO: scansione contenuto file per 11 pattern sensibili
-- Pattern: `/Users/rafapra`, `~/Developer/`, `@gmail.com`, `192.168.`, project names
+- Check 5 NUOVO: scansione contenuto file per 14 pattern sensibili
+- Pattern: `/Users/rafapra`, `rafapra3008`, `~/Developer/`, `@gmail.com`, `192.168.`, tutti i nomi progetti privati
 - Blacklist espansa: +5 root paths, +5 filename patterns, +1 dir
 - `--dry-run` aggiunto
 
