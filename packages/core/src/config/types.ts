@@ -10,7 +10,11 @@
 /**
  * Supported Claude models
  */
-export type ClaudeModel = 'claude-sonnet-4-20250514' | 'claude-opus-4-5-20251101';
+export type ClaudeModel =
+  | 'claude-sonnet-4-6'
+  | 'claude-opus-4-6'
+  | 'claude-sonnet-4-20250514'
+  | 'claude-opus-4-5-20251101';
 
 /**
  * Subscription tiers
@@ -66,6 +70,8 @@ export interface ConfigSummary {
  * Valid models list
  */
 export const VALID_MODELS: ClaudeModel[] = [
+  'claude-sonnet-4-6',
+  'claude-opus-4-6',
   'claude-sonnet-4-20250514',
   'claude-opus-4-5-20251101'
 ];

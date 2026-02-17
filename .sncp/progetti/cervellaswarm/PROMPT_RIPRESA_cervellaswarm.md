@@ -1,86 +1,92 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-17 - Sessione 364
-> **STATUS:** FASE 0 OPEN SOURCE - F0.3 sanitizzazione scripts COMPLETATA, 3 audit Guardiana (7.8 -> 8.8 -> 9.5/10)
+> **Ultimo aggiornamento:** 2026-02-17 - Sessione 365
+> **STATUS:** FASE 0 OPEN SOURCE - F0.3 DONE + Model Update Sonnet 4.6/Opus 4.6 COMPLETATO
 
 ---
 
-## SESSIONE 364 - FASE 0 OPEN SOURCE (sanitizzazione scripts)
+## SESSIONE 365 - Model Update Sonnet 4.6 + Opus 4.6
 
 ### Contesto
-Seconda sessione operativa di FASE 0. Rafa: "facciamo tutto come abbiamo pianificato, un punto alla volta, con calma." Strategia Guardiana: audit dopo ogni step, target 9.5/10.
+Anthropic ha rilasciato Sonnet 4.6 (17 Feb 2026). Stesso prezzo di Sonnet 4.5, ma "Opus-level" coding, adaptive thinking, training data Jan 2026. Rafa: aggiorniamo la famiglia!
 
 ### Cosa abbiamo fatto
 
-**1. Mappatura completa (Ingegnera + grep):**
-- 26 file .sh con `/Users/rafapra` hardcoded
-- 8 file .md/.cron/.plist con path personali in docs
-- 1 file .py (convert_agents) con Path() hardcoded
+**1. Ricerca Sonnet 4.6:**
+- API ID: `claude-sonnet-4-6` (+ `claude-opus-4-6`)
+- $3/$15 MTok (stesso prezzo), 200K context (1M beta)
+- Adaptive thinking NUOVO (Sonnet 4.5 non lo aveva)
+- OSWorld: 72.5% vs 61.4% (+11pp)
+- Training data: Jan 2026 vs Jul 2025 (+6 mesi)
 
-**2. Sanitizzazione scripts/sncp/ (12 file):**
-- Pattern: `SCRIPT_DIR -> REPO_ROOT -> ${VAR:-$REPO_ROOT/relative}`
-- sncp-init.sh, verify-sync.sh, pre-session-check.sh, health-check.sh, consolidate-ripresa.sh, expand-daily.sh, load-daily-memory.sh, compact-state.sh.DISABLED, post-session-update.sh.DISABLED, compliance-check.sh, auto-summary.sh, memory-persist.sh
+**2. Aggiornamento packages JS/TS (8 file):**
+- `packages/core/src/config/types.ts` - ClaudeModel union + VALID_MODELS
+- `packages/core/src/config/schema.ts` - enum + default `claude-sonnet-4-6`
+- `packages/mcp-server/src/config/manager.ts` - enum + default + API test call
+- `packages/cli/src/config/schema.js` - enum + default
+- `packages/cli/src/config/settings.js` - validModels array
+- `packages/cli/src/config/diagnostics.js` - API test call
+- `packages/core/test/config.test.js` - 4 assert aggiornati
+- `packages/cli/README.md` - esempio model
 
-**3. Sanitizzazione scripts/cron/ (4 file):**
-- weekly_retro_cron.sh, log_rotate_cron.sh, sncp_daily_maintenance.sh, sncp_weekly_archive.sh
-- Pattern: `SCRIPT_DIR -> SWARM_DIR`
+**3. Aggiornamento Python + scripts + docs (10 file):**
+- `cervella/api/client.py` - DEFAULT_MODEL + OPUS_MODEL
+- `.github/workflows/weekly-maintenance.yml` - --model flag
+- `scripts/utils/worker_attribution.json` - tutti model + v1.2.0
+- `scripts/convert_agents_to_agent_hq.py` - MODEL_MAPPING + fallback
+- `scripts/utils/git_worker_commit.sh` - 3 fallback
+- `docs/GIT_ATTRIBUTION.md` - attribution examples
+- `docs/roadmap/SUB_ROADMAP_QUICKWINS.md` - YAML example
+- `tests/tools/test_convert_agents.py` - 3 assert fixati
+- `tests/tools/TEST_REPORT_convert_agents.md` - doc model
 
-**4. Sanitizzazione scripts restanti (7 file):**
-- start-session.sh: SNCP_ROOT + get_project_path() con DEVELOPER_ROOT
-- update-roadmap.sh: PROGETTI con DEVELOPER_ROOT
-- swarm-report.sh, task-new.sh, swarm-session-check.sh, swarm-roadmaps.sh, swarm-helper.sh
-- convert_agents_to_agent_hq.py: `Path(__file__).resolve()` al posto di hardcoded
+**4. Strategia backward compatibility:**
+- Nuovi modelli AGGIUNTI, non sostituiti
+- Vecchi model ID restano nel enum (`claude-sonnet-4-20250514`, `claude-opus-4-5-20251101`)
+- Utenti con config esistente non si rompono
 
-**5. Sanitizzazione docs (8 file):**
-- README.md, .cron, .plist.example in scripts/cron/, scripts/swarm/, scripts/learning/, scripts/engineer/
+**5. Audit Guardiana (3 round):**
+- Round 1: **9.3/10** (P2: Python client, P3: workflow + attribution + docs)
+- Round 2: **9.0/10** (P1: test stale in convert_agents trovati)
+- Round 3: **9.3/10** (P2: fallback stale in convert_agents + git_worker_commit)
+- Tutti fix applicati -> score atteso 9.5+
 
-**6. Content scanner v3.1 (sync-to-public.sh):**
-- Aggiunto `$HOME/Developer` ai content patterns
-- Rimosso `rafapra3008` (username GitHub PUBBLICO, non sensibile)
-- Rimosso `contabilita` (parola generica, "ContabilitaAntigravity" gia copre)
-- Cambiato `cervellacostruzione` -> `progetti/cervellacostruzione` (evita self-blocking su codice MCP)
-- Commenti esplicativi aggiunti per ogni scelta
+**6. Test TUTTI VERDI:**
+- 1032/1032 Python fast suite PASS
+- 17/17 core config + 20/20 workers + 30/30 convert_agents PASS
+- TypeScript build OK (core + mcp-server, zero errori)
 
-**7. Audit Guardiana (3 round):**
-- Round 1: **7.8/10** (3 sncp/ mancati, 5 swarm/, update-roadmap, scanner gap)
-- Round 2: **8.8/10** (tutti P1/P2 fixati, scoperto self-blocking rafapra3008)
-- Round 3: **9.5/10** (self-blocking fixato, pattern scanner ottimizzati)
-
-### Decisioni S364
+### Decisioni S365
 
 | Decisione | Perche |
 |-----------|--------|
-| Pattern SCRIPT_DIR uniforme | Portabilita: funziona ovunque, non solo su macchina Rafa |
-| DEVELOPER_ROOT env variable | Multi-utente: `export DEVELOPER_ROOT=/my/path` sovrascrive |
-| rafapra3008 NON in blacklist | E username GitHub PUBBLICO, URL del repo. @gmail.com copre email |
-| contabilita NON in blacklist | Parola italiana generica (=accounting). "ContabilitaAntigravity" copre il repo |
-| cervellacostruzione -> path-specific | `"progetti/cervellacostruzione"` cattura SNCP paths ma non array in codice MCP |
-| P3 cosmetic accettati | Commenti crontab, ~/Developer in echo/help = zero rischio |
+| Backward compat (vecchi ID nel enum) | Utenti con config salvata non si rompono |
+| Default cambiato a sonnet-4-6 | Nuovo modello e meglio a stesso prezzo |
+| Agent files NON modificati | Usano `model: sonnet` (alias) - Claude Code risolve automaticamente |
+| Worker attribution aggiornata | Commit signatures devono riflettere il modello reale |
 
-### Stato residuo
+### Stato agenti famiglia
 
-| Cosa | Status | Quando |
-|------|--------|--------|
-| P3: commenti crontab con $HOME/Developer | ACCETTATO | Non in whitelist pubblica |
-| P3: ~/Developer in echo/help ~13 script | ACCETTATO | Non in whitelist pubblica |
-| MCP KNOWN_PROJECTS hardcoded | TODO F3 | Rendere configurabile prima di F3 |
+- 10 Worker Sonnet: `model: sonnet` nel frontmatter -> auto-risolto a Sonnet 4.6 da Claude Code
+- 7 Opus: `model: opus` -> auto-risolto a Opus 4.6
+- Nessun cambio nei file agente necessario
 
 ---
 
-## S363 (archivio recente)
-.gitignore hardening (1006 file untracked), sync-to-public.sh v3.0 (content scanning con 14 pattern), community files, docs sanitizzati. 3 audit Guardiana (8.8 -> 9.3/10).
+## S364 (archivio recente)
+FASE 0 F0.3: 25+ script sanitizzati, content scanner v3.1, 3 audit Guardiana (7.8 -> 8.8 -> 9.5/10).
 
-## S362 (archivio recente)
-Brainstorm open source. 3 ricerche parallele (Scienziata/Ingegnera/Researcher). Subroadmap 5 fasi creata. 3 gap unici confermati.
+## S363 (archivio recente)
+.gitignore hardening, sync-to-public.sh v3.0 (content scanning), community files, docs sanitizzati. 3 audit (9.3/10).
 
 ---
 
 ## PROSSIMI STEP
 - **F0.4:** README.md killer per repo pubblico (hero section, examples, badges)
 - **F0.5:** .github/ templates (issue, PR, CI/CD base)
-- **F0.6:** Content scanner esteso (aggiungere *.html, *.css, *.txt per completezza)
-- **F1:** AST Pipeline come primo pip package (dopo F0 completata)
-- **F3 nota:** MCP SNCP code ha KNOWN_PROJECTS hardcoded -> rendere configurabile
+- **F0.6:** Content scanner esteso (*.html, *.css, *.txt)
+- **F1:** AST Pipeline come primo pip package
+- **F3 nota:** MCP SNCP KNOWN_PROJECTS hardcoded -> rendere configurabile
 
 ---
 
@@ -94,10 +100,11 @@ Brainstorm open source. 3 ricerche parallele (Scienziata/Ingegnera/Researcher). 
 | S353-S354 | CervellaBrasil + Chavefy nasceu! |
 | S355-S356 | SubagentStart Context Injection + Studio SNCP 4.0 |
 | S357-S360 | SNCP 4.0 + AUDIT TOTALE + PULIZIA + POLISH |
-| S361 | REGOLA ANTI-DOWNGRADE! Policy modelli in 3 file |
-| S362 | OPEN SOURCE STRATEGY! 3 ricerche, subroadmap, 2 audit (9.5/10) |
-| S363 | FASE 0 OPEN SOURCE! .gitignore, sync v3.0, content scanning (9.3/10) |
+| S361 | REGOLA ANTI-DOWNGRADE modelli in 3 file |
+| S362 | OPEN SOURCE STRATEGY! 3 ricerche, subroadmap (9.5/10) |
+| S363 | FASE 0: .gitignore, sync v3.0, content scanning (9.3/10) |
+| S364 | FASE 0 F0.3: script sanitization, content scanner v3.1 (9.5/10) |
 
 ---
 
-*"Ultrapassar os proprios limites!" - Rafa & Cervella, S362*
+*"Ultrapassar os proprios limites!" - Rafa & Cervella, S365*

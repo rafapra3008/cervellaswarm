@@ -30,9 +30,9 @@ TOOL_MAPPING = {
 
 # Model mapping
 MODEL_MAPPING = {
-    "sonnet": "claude-sonnet-4-5",
-    "opus": "claude-opus-4-5",
-    "haiku": "claude-haiku-3-5",
+    "sonnet": "claude-sonnet-4-6",
+    "opus": "claude-opus-4-6",
+    "haiku": "claude-haiku-4-5",
 }
 
 # Guardians that can receive handoffs
@@ -127,7 +127,7 @@ def convert_agent(source_file: Path) -> None:
         "name": agent_name,
         "description": description,
         "tools": convert_tools(tools_str),
-        "model": MODEL_MAPPING.get(model, "claude-sonnet-4-5"),
+        "model": MODEL_MAPPING.get(model, "claude-sonnet-4-6"),
         "target": "vscode",
         "infer": True,
     }

@@ -159,7 +159,7 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           trigger: "pull_request"
-          model: "claude-sonnet-4-5-20251101"
+          model: "claude-sonnet-4-6"
 ```
 
 ### Funzionalita Disponibili

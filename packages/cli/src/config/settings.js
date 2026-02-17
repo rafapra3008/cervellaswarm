@@ -26,7 +26,7 @@ export function getDefaultModel() {
  * Set default model
  */
 export function setDefaultModel(model) {
-  const validModels = ['claude-sonnet-4-20250514', 'claude-opus-4-5-20251101'];
+  const validModels = ['claude-sonnet-4-6', 'claude-opus-4-6', 'claude-sonnet-4-20250514', 'claude-opus-4-5-20251101'];
   if (!validModels.includes(model)) {
     throw new Error(`Invalid model. Choose from: ${validModels.join(', ')}`);
   }

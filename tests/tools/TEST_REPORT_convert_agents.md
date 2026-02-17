@@ -39,7 +39,7 @@
 - ✅ Basic conversion with mocked filesystem
 - ✅ With handoffs (frontend agent)
 - ✅ No handoffs (guardian agent)
-- ✅ Model mapping (opus → claude-opus-4-5)
+- ✅ Model mapping (opus → claude-opus-4-6)
 - ✅ Default values when no frontmatter
 - ✅ Destination filename format
 

@@ -37,6 +37,8 @@ describe('Config Module', () => {
   describe('Types & Constants', () => {
     it('should export valid models', () => {
       assert.ok(Array.isArray(VALID_MODELS));
+      assert.ok(VALID_MODELS.includes('claude-sonnet-4-6'));
+      assert.ok(VALID_MODELS.includes('claude-opus-4-6'));
       assert.ok(VALID_MODELS.includes('claude-sonnet-4-20250514'));
       assert.ok(VALID_MODELS.includes('claude-opus-4-5-20251101'));
     });
@@ -73,12 +75,12 @@ describe('Config Module', () => {
 
   describe('Default Model', () => {
     it('should have correct default', () => {
-      assert.strictEqual(getDefaultModel(), 'claude-sonnet-4-20250514');
+      assert.strictEqual(getDefaultModel(), 'claude-sonnet-4-6');
     });
 
     it('should allow setting valid model', () => {
-      setDefaultModel('claude-opus-4-5-20251101');
-      assert.strictEqual(getDefaultModel(), 'claude-opus-4-5-20251101');
+      setDefaultModel('claude-opus-4-6');
+      assert.strictEqual(getDefaultModel(), 'claude-opus-4-6');
     });
 
     it('should reject invalid model', () => {

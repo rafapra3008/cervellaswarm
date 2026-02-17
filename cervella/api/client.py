@@ -40,8 +40,8 @@ class ClaudeClient:
     """
 
     # Modelli configurabili via env vars (future-proofing)
-    DEFAULT_MODEL = os.environ.get("CERVELLA_DEFAULT_MODEL", "claude-sonnet-4-20250514")
-    OPUS_MODEL = os.environ.get("CERVELLA_OPUS_MODEL", "claude-opus-4-0-20250514")
+    DEFAULT_MODEL = os.environ.get("CERVELLA_DEFAULT_MODEL", "claude-sonnet-4-6")
+    OPUS_MODEL = os.environ.get("CERVELLA_OPUS_MODEL", "claude-opus-4-6")
 
     def __init__(self, api_key: Optional[str] = None):
         """Inizializza il client.

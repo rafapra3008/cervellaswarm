@@ -20,8 +20,8 @@ export const globalSchema = {
   },
   defaultModel: {
     type: 'string',
-    enum: ['claude-sonnet-4-20250514', 'claude-opus-4-5-20251101'] as ClaudeModel[],
-    default: 'claude-sonnet-4-20250514' as ClaudeModel
+    enum: ['claude-sonnet-4-6', 'claude-opus-4-6', 'claude-sonnet-4-20250514', 'claude-opus-4-5-20251101'] as ClaudeModel[],
+    default: 'claude-sonnet-4-6' as ClaudeModel
   },
   timeout: {
     type: 'number',
@@ -71,7 +71,7 @@ export const globalSchema = {
  */
 export const DEFAULT_CONFIG: ConfigSchema = {
   apiKey: '',
-  defaultModel: 'claude-sonnet-4-20250514',
+  defaultModel: 'claude-sonnet-4-6',
   timeout: 120000,
   maxRetries: 3,
   verbose: false,

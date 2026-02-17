@@ -248,7 +248,7 @@ Agent instructions here."""
     assert frontmatter["name"] == "test-agent"
     assert frontmatter["description"] == "Test agent"
     assert set(frontmatter["tools"]) == {"read", "edit"}
-    assert frontmatter["model"] == "claude-sonnet-4-5"
+    assert frontmatter["model"] == "claude-sonnet-4-6"
     assert frontmatter["target"] == "vscode"
     assert frontmatter["infer"] is True
     assert body == "Agent instructions here."
@@ -336,7 +336,7 @@ Body."""
     written_content = dest_file.write_text.call_args[0][0]
     frontmatter, _ = parse_frontmatter(written_content)
 
-    assert frontmatter["model"] == "claude-opus-4-5"
+    assert frontmatter["model"] == "claude-opus-4-6"
 
 
 @patch("scripts.convert_agents_to_agent_hq.DEST_DIR")
@@ -363,7 +363,7 @@ def test_convert_agent_default_values(mock_dest_dir, tmp_path):
     # Should use default tools (Read, Glob, Grep -> read, search)
     assert set(frontmatter["tools"]) == {"read", "search"}
     # Should use default model
-    assert frontmatter["model"] == "claude-sonnet-4-5"
+    assert frontmatter["model"] == "claude-sonnet-4-6"
 
 
 @patch("scripts.convert_agents_to_agent_hq.DEST_DIR")

@@ -90,14 +90,14 @@ get_worker_attribution() {
     if ! command -v jq &>/dev/null; then
         # Fallback se jq non disponibile
         print_warning "jq non installato - usando fallback attribution"
-        echo "worker/claude-sonnet-4-5"
+        echo "worker/claude-sonnet-4-6"
         return
     fi
 
     # Verifica che il JSON esista
     if [ ! -f "$ATTRIBUTION_JSON" ]; then
         print_warning "Attribution JSON non trovato: $ATTRIBUTION_JSON"
-        echo "worker/claude-sonnet-4-5"
+        echo "worker/claude-sonnet-4-6"
         return
     fi
 
@@ -122,7 +122,7 @@ get_worker_attribution() {
 
     # Se ancora non trovato, usa default
     if [ -z "$role" ] || [ -z "$model" ]; then
-        echo "worker/claude-sonnet-4-5"
+        echo "worker/claude-sonnet-4-6"
     else
         echo "${role}/${model}"
     fi

@@ -11,7 +11,7 @@
 cervellaswarm task "Add user authentication"
 
   Agent: cervella-backend
-  Model: claude-sonnet-4-20250514
+  Model: claude-sonnet-4-6
 
   Working...
 

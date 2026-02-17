@@ -13,8 +13,8 @@ const schema = {
     apiKey: { type: "string", default: "" },
     defaultModel: {
         type: "string",
-        enum: ["claude-sonnet-4-20250514", "claude-opus-4-5-20251101"],
-        default: "claude-sonnet-4-20250514",
+        enum: ["claude-sonnet-4-6", "claude-opus-4-6", "claude-sonnet-4-20250514", "claude-opus-4-5-20251101"],
+        default: "claude-sonnet-4-6",
     },
     timeout: {
         type: "number",
@@ -46,7 +46,7 @@ function getConfig() {
             schema,
             defaults: {
                 apiKey: "",
-                defaultModel: "claude-sonnet-4-20250514",
+                defaultModel: "claude-sonnet-4-6",
                 timeout: 120000,
                 maxRetries: 3,
                 verbose: false,
@@ -161,7 +161,7 @@ export async function validateApiKey(key = null) {
         const client = new Anthropic({ apiKey: testKey });
         // Minimal test call - just check if key works
         await client.messages.create({
-            model: "claude-sonnet-4-20250514",
+            model: "claude-sonnet-4-6",
             max_tokens: 10,
             messages: [{ role: "user", content: "hi" }],
         });

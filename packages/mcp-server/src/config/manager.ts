@@ -25,8 +25,8 @@ const schema = {
   apiKey: { type: "string" as const, default: "" },
   defaultModel: {
     type: "string" as const,
-    enum: ["claude-sonnet-4-20250514", "claude-opus-4-5-20251101"],
-    default: "claude-sonnet-4-20250514",
+    enum: ["claude-sonnet-4-6", "claude-opus-4-6", "claude-sonnet-4-20250514", "claude-opus-4-5-20251101"],
+    default: "claude-sonnet-4-6",
   },
   timeout: {
     type: "number" as const,
@@ -60,7 +60,7 @@ function getConfig(): Conf<ConfigSchema> {
       schema,
       defaults: {
         apiKey: "",
-        defaultModel: "claude-sonnet-4-20250514",
+        defaultModel: "claude-sonnet-4-6",
         timeout: 120000,
         maxRetries: 3,
         verbose: false,
@@ -218,7 +218,7 @@ export async function validateApiKey(
 
     // Minimal test call - just check if key works
     await client.messages.create({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-4-6",
       max_tokens: 10,
       messages: [{ role: "user", content: "hi" }],
     });
