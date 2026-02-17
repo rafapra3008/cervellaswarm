@@ -77,6 +77,9 @@ docs/SNCP_GUIDE.md
 docs/SEMANTIC_SEARCH.md
 docs/ARCHITECT_PATTERN.md
 docs/GIT_ATTRIBUTION.md
+docs/DUAL_REPO_STRATEGY.md
+CODE_OF_CONDUCT.md
+SECURITY.md
 ```
 
 ## File Privati (Blacklist)

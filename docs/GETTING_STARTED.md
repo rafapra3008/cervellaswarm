@@ -181,13 +181,13 @@ Queen:
 
 Make sure you're in the CervellaSwarm directory:
 ```bash
-cd ~/Developer/CervellaSwarm
+cd ~/your-project
 ./spawn-workers --list  # Use ./ prefix
 ```
 
 Or add to your PATH:
 ```bash
-export PATH="$PATH:~/Developer/CervellaSwarm"
+export PATH="$PATH:~/your-project"
 ```
 
 ### "Claude not authenticated"

@@ -1,75 +1,71 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-16 - Sessione 362
-> **STATUS:** OPEN SOURCE STRATEGY - Subroadmap creata, 3 ricerche, 2 audit Guardiana (8.4 -> 9.5/10)
+> **Ultimo aggiornamento:** 2026-02-17 - Sessione 363
+> **STATUS:** FASE 0 OPEN SOURCE - Sicurezza repo completata, 3 audit Guardiana (8.8 -> 9.3/10)
 
 ---
 
-## SESSIONE 362 - CERVELLASWARM OPEN SOURCE (brainstorm + ricerca + piano)
+## SESSIONE 363 - FASE 0 OPEN SOURCE (sicurezza + docs + infra)
 
 ### Contesto
-Rafa ha proposto di rendere CervellaSwarm open source, ispirato dal caso OpenClaw (175k stars, assunto da OpenAI). Obiettivo: dare al mondo il nostro framework multi-agent, guadagnare visibilita, contribuire alla community.
+Prima sessione operativa di FASE 0 (preparazione repo per open source). Rafa: "attenzione per non toccare nulla che possa fare qualcosa per noi" - La Famiglia continua localmente come sempre.
 
 ### Cosa abbiamo fatto
 
-**3 ricerche in parallelo:**
+**1. Audit completo (Ingegnera + Security in parallelo):**
+- Ingegnera: 848 occorrenze path personali in 342 file (mappatura completa)
+- Security: Score 4/10 privato, 8/10 pubblico. 21 finding. Report: `.sncp/progetti/cervellaswarm/reports/SECURITY_20260217.md`
+- packages/ PULITO: zero dati personali (confermato da entrambi)
 
-1. **Scienziata (landscape competitivo):**
-   - AutoGen 51.8k stars, CrewAI 44.2k, LangGraph 24.7k - nessuno risolve i nostri 3 gap
-   - GAP 1: Session Continuity (SNCP) - NESSUN competitor la ha
-   - GAP 2: Orchestrazione gerarchica reale (3+ livelli) - nessuno
-   - GAP 3: Hook system first-class - nessuno
-   - Report: `.sncp/progetti/cervellaswarm/reports/SCIENTIST_20260216_AI_AGENT_FRAMEWORKS_LANDSCAPE.md`
+**2. .gitignore hardening (1006 file untracked, zero impatto locale):**
+- Aggiunti: `.swarm/`, `data/`, `logs/`, `reports/`, `.mcp.json`, `.vscode/`, `config/claude-hooks/`, `cervellaswarm-extension/`, `RESEARCH_*.md`, `RICERCA_*.md`, `PASSAGGIO_CONSEGNA_*.txt`, `*.db`, `*.sqlite`
+- `git rm --cached` su 1006 file (restano su disco, zero impatto La Famiglia)
 
-2. **Ingegnera (audit tecnico):**
-   - 56.800 righe Python, 16.600 Bash, 1.236 test, 95% coverage
-   - Top componente: AST Pipeline (zero dati personali, 400+ test)
-   - Proposta 3 onde: AST first (~10h), Agent Framework (~50h), SNCP (~54h)
+**3. sync-to-public.sh v3.0 (content scanning):**
+- Check 5 NUOVO: scansione contenuto file per 11 pattern sensibili
+- Pattern: `/Users/rafapra`, `~/Developer/`, `@gmail.com`, `192.168.`, project names
+- Blacklist espansa: +5 root paths, +5 filename patterns, +1 dir
+- `--dry-run` aggiunto
 
-3. **Researcher (autocompact + session memory):**
-   - Autocompact 2026 molto migliorato (buffer 33K, -84% consumo)
-   - SNCP complementare (non sostituibile): Memory=RAM, SNCP=Disco
-   - Sessioni continue 4-6h ora viabili, overhead riducibile -75%
-   - Report: `.swarm/research/RESEARCH_AUTOCOMPACT_SESSION_MEMORY_2026.md`
+**4. Community files:**
+- CODE_OF_CONDUCT.md (Contributor Covenant 2.1)
+- SECURITY.md (responsible disclosure, cervellaswarm@pm.me)
+- LICENSE, CONTRIBUTING.md, NOTICE gia esistenti e OK
 
-**Subroadmap creata + 2 audit Guardiana:**
-- `.sncp/roadmaps/SUBROADMAP_OPENSOURCE.md`
-- Primo audit: 8.4/10 (2 P1, 4 P2, 4 P3)
-- Tutti i 10 finding risolti
-- Re-audit: **9.5/10** - APPROVATA!
+**5. Fix sicurezza:**
+- `.claude/settings.json`: path hardcoded -> `$CLAUDE_PROJECT_DIR`
+- `docs/SEMANTIC_SEARCH.md`: 14 path personali sanitizzati
+- `docs/GETTING_STARTED.md`: 2 path personali sanitizzati
+- `docs/DUAL_REPO_STRATEGY.md`: whitelist docs aggiornata (+3 file)
 
-### Decisioni prese (con PERCHE)
+**6. Audit Guardiana (3 round):**
+- Round 1 (.gitignore): 8.8/10 (3 P2: data/retro, .vscode, settings hardcoded)
+- Fix P2 -> tutte risolte
+- Round 2 (finale): **9.3/10** (2 P2 self-blocking docs, 5 P3)
+- P2 self-blocking risolti (SEMANTIC_SEARCH + GETTING_STARTED sanitizzati)
+
+### Decisioni S363
 
 | Decisione | Perche |
 |-----------|--------|
-| Apache 2.0 (non MIT) | Gia nei package.json, protezione brevetti, enterprise-friendly |
-| Nome: CervellaSwarm | Marca esistente, memorabile, @cervellaswarm npm gia registrato |
-| Claude-first (non multi-LLM day-1) | Hooks sono Claude-specific, meglio dominare un nicho che essere mediocri su tutti |
-| AST Pipeline come primo pacchetto | Zero dati personali, 400+ test, alto valore, quick win |
-| Lancio in 5 fasi | F0 prep -> F1 AST -> F2 agents -> F3 SNCP -> F4 lancio |
+| Whitelist approach (non ristrutturare repo) | La Famiglia resta identica, zero rischio |
+| Content scanning nel sync | Defense-in-depth, cattura leak anche se whitelist sbaglia |
+| git rm --cached (non delete) | File restano su disco, solo rimossi da tracking |
+| .gitignore copre runtime data | data/, logs/, reports/ = operativi, non codice |
 
-### Piano (SUBROADMAP_OPENSOURCE.md)
+---
 
-| Fase | Cosa | Sessioni | Ore |
-|------|------|----------|-----|
-| F0 | Preparazione repo (cleanup 29 scripts, 105 paths) | 3-4 | ~20h |
-| F1 | AST Pipeline pip package (quick win) | 2-3 | ~10h |
-| F2 | Agent Framework (hooks, agents, orchestration) | 8-12 | ~50h |
-| F3 | Session Memory SNCP (differenziale unico) | 9-13 | ~54h |
-| F4 | Lancio + Community | ongoing | ongoing |
-| **Totale** | | **~25-33** | **~134h** |
-
-### Punto chiave storico
-CervellaSwarm ha fatto multi-agent orchestration PRIMA di Anthropic Agent SDK e Claude Code Teams. 361 sessioni, 17 agenti, 1032 test -- nato dalla necessita, non dalla teoria.
+## S362 (archivio recente)
+Brainstorm open source. 3 ricerche parallele (Scienziata/Ingegnera/Researcher). Subroadmap 5 fasi creata. 3 gap unici confermati (SNCP, Orchestrazione gerarchica, Hook system). Audit 8.4 -> 9.5/10.
 
 ---
 
 ## PROSSIMI STEP
-- **Prossima sessione:** Iniziare FASE 0 (preparazione repo open source)
-- F0.1: Struttura repo, branch opensource, .gitignore
-- F0.2: Licenza Apache 2.0, README killer, CONTRIBUTING.md
-- F0.3: Audit secrets (29 scripts con paths hardcoded, git-filter-repo)
-- P3 residui roadmap: fixare diagramma dipendenze, "361 sessions" dinamico
+- **F0 continua:** Sanitizzare 29 scripts con path hardcoded (Ingegnera ha mappato 848 occorrenze)
+- **F0.4:** README.md killer per repo pubblico (hero section, examples, badges)
+- **F0.5:** .github/ templates (issue, PR, CI/CD base)
+- **F0.6:** Content scanner esteso (aggiungere *.html, *.css, *.txt per completezza)
+- **F1:** AST Pipeline come primo pip package (dopo F0 completata)
 
 ---
 
@@ -92,6 +88,7 @@ CervellaSwarm ha fatto multi-agent orchestration PRIMA di Anthropic Agent SDK e 
 | S360 | POLISH + CODE REVIEW! 5 step, sync hook, logging, dry-run |
 | S361 | REGOLA ANTI-DOWNGRADE! Policy modelli in 3 file, 3 audit Guardiana |
 | S362 | OPEN SOURCE STRATEGY! 3 ricerche, subroadmap, 2 audit (9.5/10) |
+| S363 | FASE 0 OPEN SOURCE! .gitignore hardening, sync v3.0, content scanning, 3 audit (9.3/10) |
 
 ---
 
