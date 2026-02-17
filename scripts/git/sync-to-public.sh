@@ -107,7 +107,8 @@ BLACKLIST_CONTENT_PATTERNS=(
     "/Users/rafapra"
     "~/Developer/"
     '$HOME/Developer'
-    "rafapra3008"
+    # NOTE: rafapra3008 is the PUBLIC GitHub username (repo URL) - NOT blacklisted
+    # Email is already caught by @gmail.com, local paths by /Users/rafapra
     "@gmail.com"
     "192.168."
     "acct_1"
@@ -117,8 +118,10 @@ BLACKLIST_CONTENT_PATTERNS=(
     "CervellaBrasil"
     "cervellabrasil"
     "chavefy"
-    "cervellacostruzione"
-    "contabilita"
+    "progetti/cervellacostruzione"
+    # NOTE: "contabilita" removed - common Italian word (=accounting), repo name
+    # "ContabilitaAntigravity" (above) already catches the private repo name.
+    # MCP code uses "contabilita" as SNCP project alias - will be made configurable in F3.
 )
 
 cleanup() {
