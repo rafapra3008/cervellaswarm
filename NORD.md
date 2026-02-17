@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 10 Febbraio 2026 - S349 (Audit reale + chiarezza FASI)
+> Aggiornato: 17 Febbraio 2026 - S364 (FASE 0 Open Source - F0.3 completata)
 
 ```
 +==================================================================+
@@ -78,6 +78,25 @@ FASE 2: MVP Prodotto            [###################.] 98%
   (2.20 v1.0 Release non formale - prodotto in beta)
 FASE 3: Primi Utenti            [....................] PARCHEGGIATO
 FASE 4: Scala                   [....................] PARCHEGGIATO
+```
+
+### OPEN SOURCE - IN CORSO (S362-S364)
+
+```
+SUBROADMAP: .sncp/roadmaps/SUBROADMAP_OPENSOURCE.md
+
+FASE 0: Preparazione Repo        [################....] ~75%
+  F0.1 .gitignore hardening       DONE (S363) - 1006 file untracked
+  F0.2 Community files             DONE (S363) - LICENSE, CONTRIBUTING, SECURITY, CoC
+  F0.3 Script sanitization         DONE (S364) - 25+ script, Guardiana 9.5/10
+  F0.4 README killer               TODO
+  F0.5 .github/ templates          TODO
+  F0.6 Content scanner esteso      TODO
+
+FASE 1: AST Pipeline (pip)       [....................] TODO
+FASE 2: Agent Framework           [....................] TODO
+FASE 3: SNCP (session memory)     [....................] TODO
+FASE 4: Launch                    [....................] TODO
 ```
 
 ### INFRASTRUTTURA REALE
