@@ -1,116 +1,88 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-17 - Sessione 366
-> **STATUS:** FASE 0 OPEN SOURCE - F0.4 + F0.5 DONE
+> **Ultimo aggiornamento:** 2026-02-17 - Sessione 367
+> **STATUS:** FASE 0 OPEN SOURCE - COMPLETA! (6/6) -> pronta per FASE 1
 
 ---
 
-## SESSIONE 366 - F0.4 README Killer
+## SESSIONE 367 - F0.6 Extended Content Scanner (FASE 0 CHIUSA!)
 
 ### Contesto
-Prossimo step della subroadmap open source: creare un README.md "killer" per il repo pubblico. Metodo: ricerca competitor + best practices -> scrittura -> audit Guardiana iterativo.
+Ultimo step della FASE 0 open source: estendere il content scanner, risolvere git-filter-repo, fixare P3 residui da S366. Metodo: ricerca -> implementa -> Guardiana -> fix -> Guardiana round 2.
 
 ### Cosa abbiamo fatto
 
-**1. Ricerca (2 researcher in parallelo):**
-- Competitor README analysis (AutoGen 5/10, CrewAI 7.5/10, LangGraph 8/10)
-- Best practices README killer 2026 (12 fonti: FOSDEM, awesome-readme, Daytona, etc.)
-- Gap trovato: NESSUN competitor ha GIF demo, comparison table, o session continuity claim
-- Reports salvati in `.sncp/progetti/cervellaswarm/reports/`
+**1. Content Scanner v3.2 (sync-to-public.sh):**
+- Da whitelist 9 estensioni a `grep -rI` (scansiona TUTTI i file di testo, salta binari automaticamente)
+- Aggiunto Check 5: file config sensibili (.env, secrets.*, credentials.*)
+- Aggiunto .env a filename blacklist
+- Aggiunto "famiglia digitale" a content patterns
+- COSTITUZIONE e NORD.md NON nel content scan (self-blocking bug, protetti da root-path check)
+- Co-Authored-By: `noreply@users.noreply.github.com` (era cervellaswarm.com inesistente)
+- Tutti messaggi E commenti tradotti da italiano a inglese
+- 7 security checks (6 numbered + content scanning loop)
 
-**2. README.md scritto (239 righe):**
-- Tagline: "Build AI agent teams that remember."
-- Hero: ASCII flow diagram (no immagine - vedi F1 sotto)
-- Struttura: Problem -> Solution -> Quick Start -> Team -> Features -> Comparison -> Docs -> Battle-tested
-- Comparison table onesta (ammette: competitors hanno ecosistema piu grande + multi-LLM)
-- "Honest note" che costruisce fiducia
-- Quick Start: clone from source (npm package non ancora pubblicato)
-- Social proof: "365+ sessions", "1,032 tests (95% coverage)", "17 agents"
+**2. git-filter-repo: VALUTATO NON NECESSARIO**
+- Public repo ha solo 3 commit, storia orfana (non fork del privato)
+- sync-to-public.sh v3.2 previene leak automaticamente
+- R4 risk aggiornato nella subroadmap da "OBBLIGATORIO" a "NOT NEEDED"
 
-**3. Audit Guardiana (2 round):**
-- Round 1: **8.3/10** - 2 P1 + 5 P2 trovati
-- Round 2: **9.5/10** - tutti risolti + 1 nuovo P2 fixato
+**3. P3 Residuals Fixati:**
+- CHANGELOG.md: "5 languages (Go, Rust)" -> "3 languages (Python, TypeScript, JavaScript)"
+- pyproject.toml: commenti italiani -> inglese, URLs fixati a GitHub reale, email rimossa
+- .egg-info: rimosso dal tracking git (conteneva "Rafa & Cervella" stale), aggiunto a .gitignore
 
-**Fix applicati:**
-| Fix | Cosa | Perche |
-|-----|------|--------|
-| F1 (P1) | Hero image rimossa | `cli_workflow_en.png` conteneva "CONSTITUTION" e "[REGINA]" (termini interni) |
-| F2 (P1) | GitHub URL fixato | Da `CervellaSwarm` a `cervellaswarm` (repo pubblico lowercase) |
-| F3 (P2) | Go/Rust rimosso | treesitter_parser.py supporta solo .py/.ts/.js - claim era falso |
-| F4 (P2) | Quick Start da source | npm package non pubblicato ancora, git clone + npm link |
-| F5 (P2) | Opus/Sonnet precisato | "Guardians and critical analysts on Opus, most Workers on Sonnet" |
-| F6 (P2) | Roadmap link rimosso | CHANGELOG != roadmap, cambiato in "planned" |
-| F7 (P2) | "4 projects" genericizzato | Numeri specifici invitano domande senza risposta |
-| N1 (P2) | "8 months" corretto | Era ~3 mesi, cambiato in "since December 2025" |
+**4. Audit Guardiana (2 round):**
+- Round 1: **8.8/10** - 1 P1 (COSTITUZIONE self-blocking!) + 5 P2
+- Round 2: **9.5/10** - tutti fix verificati
 
-### Decisioni S366
+### Decisioni S367
 
 | Decisione | Perche |
 |-----------|--------|
-| No hero image (per ora) | Entrambe le immagini (cli_workflow_en.png, collaboration_flow.png) hanno dati interni. ASCII diagram pulito per ora |
-| Clone from source nel Quick Start | npm package non pubblicato. Onesta > aspettativa falsa |
-| Tagline "that remember" (non "that check") | Session memory e il gap #1, quality gates e il gap #2. Scelto il differenziale piu forte |
-| Comparison table con "Honest note" | Best practice: ammettere limiti costruisce fiducia (ricerca 2026 conferma) |
+| grep -rI invece di whitelist estensioni | Piu sicuro e futuro-proof. Non serve mantenere lista estensioni |
+| git-filter-repo NOT NEEDED | Storia orfana pulita + sync script = doppia protezione |
+| COSTITUZIONE/NORD.md fuori da content patterns | Self-blocking su file legittimi (packages/cli, docs). Gia protetti da root-path check |
 
 ### P3 residui (non bloccanti, per sessioni future)
-- N2: CHANGELOG.md riga 88 dice "5 languages (Go, Rust)" - da allineare
-- N3: package.json URLs usano `CervellaSwarm` capitalized (GitHub case-insensitive, funzionale)
-- N4: `cervellaswarm.com` non esiste (referenziato in CLI help)
-- N5: Line counts (56,800/16,600) diventeranno stale
-- Badges test/coverage sono statici (da rendere dinamici con CI in F0.5)
-- Hero image da ricreare pulita (nessun riferimento interno)
-- Doppia tagline: "that remember" + "17 brains are better than one" (footer)
-
-## F0.5 - .github/ Templates (stessa sessione S366)
-
-### Cosa abbiamo fatto
-
-**1. Ricerca (14 fonti):** GitHub Docs ufficiali, CrewAI/LangGraph/Fiber .github/ live, Codecov docs
-
-**2. 8 nuovi file creati:**
-- `ISSUE_TEMPLATE/config.yml` - disabilita blank issues, link discussions
-- `ISSUE_TEMPLATE/bug_report.yml` - YAML form, 7 campi (6 required), dropdown OS/version
-- `ISSUE_TEMPLATE/feature_request.yml` - YAML form, "Problem Statement first", contribution willingness
-- `PULL_REQUEST_TEMPLATE.md` - summary + type + test plan + checklist
-- `dependabot.yml` - 7 entry (3 npm packages + 2 pip + github-actions), grouped minor/patch
-- `CODEOWNERS` - @rafapra3008 default owner
-- `FUNDING.yml` - GitHub Sponsors
-- `workflows/stale.yml` - 60+7 days, exempt labels
-
-**3. Sanitizzazione 5 file ESISTENTI:**
-- `.github/CLAUDE.md` - riscritto completamente in inglese (rimossa "Filosofia", "famiglia digitale")
-- `workflows/weekly-maintenance.yml` - tradotto in inglese (rimosso "Cervella-Ingegnera")
-- `workflows/publish.yml` - rimosso "Rafa", motto italiano, URL fixato lowercase
-- `workflows/claude-review.yml` - checkout@v5->v4, commenti inglese
-- `workflows/ci.yml` + `test-python.yml` - commenti italiani -> inglese
-
-**4. Fix bonus:**
-- `cervella/pyproject.toml` - MIT -> Apache-2.0 (license + classifier), description inglese, author genericizzato
-
-**5. Audit Guardiana (2 round):**
-- Round 1: **9.0/10** - 0 P1, 4 P2 trovati
-- Round 2: **9.3/10** - tutti P2 risolti, 1 nuovo P2 fixato (license classifier)
-
-### P3 residui F0.5
-- Duplicate publish workflows (npm-publish.yml + publish.yml) - consolidare in futuro
-- 3 commenti italiani in cervella/pyproject.toml (markers, threshold)
+- cervellaswarm.com in 10+ file packages/ (dominio non attivo)
+- Co-Authored-By email incoerente tra sync-to-public.sh e git_worker_commit.sh
+- DUAL_REPO_STRATEGY.md stale (v3.0, "Rafa" a riga 153)
+- Hero image da ricreare pulita
+- Badge dinamici (Codecov) -> F1
 
 ---
 
-## S365 (archivio recente)
-Model Update Sonnet 4.6 + Opus 4.6: 18 file aggiornati, backward compat, 3 audit Guardiana (9.3/10), 1032 test PASS. 1M context research PARCHEGGIATO.
+## S366 (archivio recente)
+F0.4 README killer (9.5/10) + F0.5 .github/ templates (9.3/10). 8 nuovi file, 5 sanitizzati.
 
-## S364 (archivio recente)
-FASE 0 F0.3: 25+ script sanitizzati, content scanner v3.1, 3 audit Guardiana (7.8 -> 8.8 -> 9.5/10).
+## S365 (archivio recente)
+Model Update Sonnet 4.6 + Opus 4.6: 18 file, backward compat, 1032 test PASS.
 
 ---
 
 ## PROSSIMI STEP
-- **F0.6:** Content scanner esteso (*.html, *.css, *.txt) + git-filter-repo
+- **FASE 1: AST Pipeline** - primo pacchetto pip pubblicabile!
+  - F1.1: Estrarre AST Pipeline in `packages/code-intelligence/`
+  - F1.2: Test suite standalone (400+ test)
+  - F1.3: Documentazione + tutorial
+  - F1.4: Pubblicazione PyPI `cervellaswarm-code-intelligence`
 - **Hero image:** Creare immagine/GIF pulita senza riferimenti interni
-- **Badge dinamici:** Codecov integration per badge CI reali
-- **F1:** AST Pipeline come primo pip package
 - **F3 nota:** MCP SNCP KNOWN_PROJECTS hardcoded -> rendere configurabile
+
+---
+
+## FASE 0 - RIEPILOGO COMPLETO
+
+| Step | Score | Sessione |
+|------|-------|----------|
+| F0.1 .gitignore hardening | 9.3/10 | S363 |
+| F0.2 Licenza + docs base | 9.3/10 | S363 |
+| F0.3 Script sanitization | 9.5/10 | S363-S364 |
+| F0.4 README killer | 9.5/10 | S366 |
+| F0.5 .github/ templates | 9.3/10 | S366 |
+| F0.6 Content scanner esteso | 9.5/10 | S367 |
+| **MEDIA** | **9.4/10** | |
 
 ---
 
@@ -119,18 +91,16 @@ FASE 0 F0.3: 25+ script sanitizzati, content scanner v3.1, 3 audit Guardiana (7.
 | Sessione | Cosa |
 |----------|------|
 | S337-S348 | Coverage push 41% -> 95% (968 test) |
-| S349 | Audit reale + Pulizia + MAPPA MIGLIORAMENTI |
-| S350-S352 | MAPPA MIGLIORAMENTI A+B+C+D completata |
-| S353-S354 | CervellaBrasil + Chavefy nasceu! |
-| S355-S356 | SubagentStart Context Injection + Studio SNCP 4.0 |
-| S357-S360 | SNCP 4.0 + AUDIT TOTALE + PULIZIA + POLISH |
-| S361 | REGOLA ANTI-DOWNGRADE modelli in 3 file |
-| S362 | OPEN SOURCE STRATEGY! 3 ricerche, subroadmap (9.5/10) |
-| S363 | FASE 0: .gitignore, sync v3.0, content scanning (9.3/10) |
-| S364 | FASE 0 F0.3: script sanitization, content scanner v3.1 (9.5/10) |
-| S365 | Model Update Sonnet 4.6 + Opus 4.6, 18 file (9.3/10) |
-| S366 | F0.4 README killer (9.5/10) + F0.5 .github/ templates (9.3/10) |
+| S349-S352 | MAPPA MIGLIORAMENTI A+B+C+D completata |
+| S353-S354 | CervellaBrasil + Chavefy |
+| S355-S360 | SubagentStart, SNCP 4.0, AUDIT TOTALE, POLISH |
+| S361 | REGOLA ANTI-DOWNGRADE modelli |
+| S362 | OPEN SOURCE STRATEGY! subroadmap 5 fasi |
+| S363-S364 | FASE 0: F0.1+F0.2+F0.3 (9.3-9.5/10) |
+| S365 | Model Update Sonnet 4.6 + Opus 4.6 (9.3/10) |
+| S366 | F0.4 README killer + F0.5 .github/ (9.3-9.5/10) |
+| S367 | F0.6 Content scanner esteso - FASE 0 CHIUSA! (9.5/10) |
 
 ---
 
-*"Ultrapassar os proprios limites!" - Rafa & Cervella, S366*
+*"Ultrapassar os proprios limites!" - Rafa & Cervella, S367*

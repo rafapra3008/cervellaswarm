@@ -1,7 +1,0 @@
-agents
-api
-cli
-config
-sncp
-tests
-tier

@@ -89,7 +89,7 @@
 - [x] Pattern SCRIPT_DIR portabile uniforme in tutti gli script
 - [x] DEVELOPER_ROOT env var per multi-utente
 - [x] docs/SEMANTIC_SEARCH.md + GETTING_STARTED.md sanitizzati
-- [ ] git-filter-repo per storia pulita (365 sessioni) -- DEFERRED (F0.6+)
+- [x] git-filter-repo: assessed NOT NEEDED in F0.6 (S367) - public repo uses orphaned clean history
 - **Score:** Guardiana 7.8 -> 8.8 -> 9.5/10 (3 round)
 - **Nota F3:** MCP KNOWN_PROJECTS hardcoded -> rendere configurabile
 
@@ -114,9 +114,16 @@
 - [ ] Dynamic badges (Codecov) -- DEFERRED to F1 (needs CI running on public repo)
 - **Score:** Guardiana 9.0 -> 9.3/10 (2 round)
 
-**F0.6 - Content scanner esteso** -- TODO
-- [ ] Scan *.html, *.css, *.txt
-- [ ] git-filter-repo per storia pulita (365 sessioni)
+**F0.6 - Extended content scanner** -- DONE (S367)
+- [x] Content scanner v3.2: scan ALL text files via `grep -rI` (was: 9 specific extensions)
+- [x] Added "famiglia digitale" content pattern (COSTITUZIONE/NORD.md protected by root-path check, not content scan - avoids self-blocking)
+- [x] Added Check 5: sensitive config files (.env, secrets.*, credentials.*)
+- [x] Added .env to filename blacklist patterns
+- [x] Fixed Co-Authored-By email (was cervellaswarm.com, now noreply@users.noreply.github.com)
+- [x] All script messages AND comments translated to English (was Italian)
+- [x] git-filter-repo: ASSESSED NOT NEEDED (public repo has orphaned clean history, sync script prevents leaks)
+- [x] P3 fixes: CHANGELOG Go/Rust, pyproject.toml Italian->English + URLs, .egg-info removed from git
+- **Score:** Guardiana 8.8 -> 9.5/10 (2 rounds, 1 P1 + 5 P2 fixed)
 
 **Audit Guardiana dopo F0** -> target 9.5/10
 
@@ -281,7 +288,7 @@
 | R1 | Claude Agent SDK aggiunge session memory nativa -> gap #1 scompare | MEDIA | ALTO | Differenziarsi su trasparenza (plaintext, git-native, auditabile). SNCP e piu di memory -- e compliance-ready |
 | R2 | Bus factor = 1 (solo Rafa) | ALTA | ALTO | Community building ASAP (FASE 4.2). Documentazione eccellente riduce dipendenza. Contributor onboarding prioritario |
 | R3 | Lock-in perceptivo "solo Claude" | MEDIA | MEDIO | Comunicazione chiara: "Claude-first, not Claude-only". Adapter pattern in roadmap (F4.3). AST Pipeline gia e LLM-agnostico |
-| R4 | Git history leak di dati personali | MEDIA | ALTO | git-filter-repo OBBLIGATORIO in F0.3. Repo pubblico fresh (non fork del privato). Audit automatico pre-push |
+| R4 | Git history leak di dati personali | BASSA | ALTO | git-filter-repo assessed NOT NEEDED (S367): orphaned clean history. Sync script content scanning prevents leaks at push time. Repo pubblico fresh (non fork del privato) |
 | R5 | Giganti copiano (Anthropic, Microsoft) | BASSA | ALTO | Speed-to-market + community loyalty. Precedente OpenClaw: community value > corporate copy |
 | R6 | Complessita tecnica spaventa nuovi utenti | MEDIA | MEDIO | DX killer: quickstart in 5 min, tutorial video, esempi minimal (3 agenti). Progressive disclosure |
 

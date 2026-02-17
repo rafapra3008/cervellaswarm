@@ -10,7 +10,7 @@ readme = "README.md"
 license = {text = "Apache-2.0"}
 requires-python = ">=3.10"
 authors = [
-    {name = "CervellaSwarm Contributors", email = "hello@cervellaswarm.com"}
+    {name = "CervellaSwarm Contributors"}
 ]
 keywords = ["ai", "agents", "cli", "development", "automation", "claude"]
 classifiers = [
@@ -44,9 +44,9 @@ dev = [
 cervella = "cli:main"
 
 [project.urls]
-Homepage = "https://cervellaswarm.com"
-Repository = "https://github.com/cervellaswarm/cervella"
-Documentation = "https://docs.cervellaswarm.com"
+Homepage = "https://github.com/rafapra3008/cervellaswarm"
+Repository = "https://github.com/rafapra3008/cervellaswarm"
+Issues = "https://github.com/rafapra3008/cervellaswarm/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
@@ -61,7 +61,6 @@ select = ["E", "F", "W", "I", "N", "UP", "B", "C4"]
 ignore = ["E501"]
 
 # === PYTEST CONFIGURATION ===
-# "Fatto BENE > Fatto VELOCE" - CervellaSwarm
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
@@ -73,11 +72,11 @@ addopts = [
     "--cov-report=term-missing",
     "--cov-report=html",
     "--cov-report=xml",
-    "--cov-fail-under=55",  # S342: coverage 60%, soglia protettiva 55%
+    "--cov-fail-under=55",  # Protective threshold (actual coverage: 95%)
     "-v",
 ]
 
-# Markers per categorizzare test
+# Test markers for categorization
 markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
     "integration: marks tests as integration tests",

@@ -85,7 +85,7 @@ Major release with semantic code understanding, intelligent planning, and improv
 
 ### Technical
 
-- Tree-sitter queries for 5 languages (Python, TypeScript, JavaScript, Go, Rust)
+- Tree-sitter queries for 3 languages (Python, TypeScript, JavaScript)
 - 152x speedup with reference caching
 - Risk score algorithm based on dependent count and change frequency
 

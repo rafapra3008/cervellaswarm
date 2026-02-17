@@ -1,4 +1,5 @@
 __pycache__/
+*.egg-info/
 
 # Data directory (operational data, logs, database, retro reports)
 data/
