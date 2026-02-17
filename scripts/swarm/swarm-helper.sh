@@ -183,7 +183,7 @@ task_create() {
     if [[ ! -f "$template_path" ]]; then
         echo -e "${RED}[X]${NC} Template non trovato: $template_path"
         echo -e "${YELLOW}[!]${NC} Copia template da CervellaSwarm con:"
-        echo "    cp ~/Developer/CervellaSwarm/.swarm/templates/* .swarm/templates/"
+        echo "    cp /path/to/CervellaSwarm/.swarm/templates/* .swarm/templates/"
         return 1
     fi
 

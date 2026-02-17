@@ -10,13 +10,13 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>/Users/rafapra/Developer/CervellaSwarm/scripts/archive_old_reports.sh</string>
+        <string>/path/to/CervellaSwarm/scripts/archive_old_reports.sh</string>
         <string>7</string>
     </array>
 
     <!-- Working Directory -->
     <key>WorkingDirectory</key>
-    <string>/Users/rafapra/Developer/CervellaSwarm</string>
+    <string>/path/to/CervellaSwarm</string>
 
     <!-- Schedule: Ogni Domenica alle 04:00 -->
     <key>StartCalendarInterval</key>
@@ -31,9 +31,9 @@
 
     <!-- Logs: dove salvare output -->
     <key>StandardOutPath</key>
-    <string>/Users/rafapra/Developer/CervellaSwarm/logs/archive_reports_launchd.log</string>
+    <string>/path/to/CervellaSwarm/logs/archive_reports_launchd.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/rafapra/Developer/CervellaSwarm/logs/archive_reports_launchd.err</string>
+    <string>/path/to/CervellaSwarm/logs/archive_reports_launchd.err</string>
 
     <!-- Environment -->
     <key>EnvironmentVariables</key>
@@ -83,6 +83,6 @@ ALTERNATIVE:
 Se preferisci cron (Linux-style):
 crontab -e
 # Aggiungi:
-0 4 * * 0 cd /Users/rafapra/Developer/CervellaSwarm && ./scripts/archive_old_reports.sh 7
+0 4 * * 0 cd /path/to/CervellaSwarm && ./scripts/archive_old_reports.sh 7
 
 -->

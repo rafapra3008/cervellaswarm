@@ -16,7 +16,7 @@ PATH=/usr/local/bin:/usr/bin:/bin
 
 # Weekly Retrospective - Ogni venerdì alle 18:00
 # Min Hour Day Month DayOfWeek Command
-0 18 * * 5 cd /Users/rafapra/Developer/CervellaSwarm && python3 -m scripts.memory.retro.cli --save --quiet >> /Users/rafapra/Developer/CervellaSwarm/data/logs/weekly_retro.log 2>&1
+0 18 * * 5 cd $HOME/Developer/CervellaSwarm && python3 -m scripts.memory.retro.cli --save --quiet >> $HOME/Developer/CervellaSwarm/data/logs/weekly_retro.log 2>&1
 
 # Note:
 # - Min: 0 (minuto 0)
@@ -30,10 +30,10 @@ PATH=/usr/local/bin:/usr/bin:/bin
 # Alternative schedules (commentate):
 
 # Ogni lunedì alle 9:00
-# 0 9 * * 1 cd /Users/rafapra/Developer/CervellaSwarm && python3 -m scripts.memory.retro.cli --save --quiet
+# 0 9 * * 1 cd $HOME/Developer/CervellaSwarm && python3 -m scripts.memory.retro.cli --save --quiet
 
 # Ogni giorno alle 23:00 (daily retro)
-# 0 23 * * * cd /Users/rafapra/Developer/CervellaSwarm && python3 -m scripts.memory.retro.cli -d 1 --save --quiet
+# 0 23 * * * cd $HOME/Developer/CervellaSwarm && python3 -m scripts.memory.retro.cli -d 1 --save --quiet
 
 # Ogni primo del mese alle 10:00 (monthly retro)
-# 0 10 1 * * cd /Users/rafapra/Developer/CervellaSwarm && python3 -m scripts.memory.retro.cli -d 30 --save --quiet
+# 0 10 1 * * cd $HOME/Developer/CervellaSwarm && python3 -m scripts.memory.retro.cli -d 30 --save --quiet

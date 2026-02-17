@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - Contabilita
 
-> **Ultimo aggiornamento:** 17 Febbraio 2026 - Sessione 61
+> **Ultimo aggiornamento:** 17 Febbraio 2026 - Sessione 63
 > **Per SOLO questo progetto!**
 
 ---
@@ -12,12 +12,12 @@
 | **Produzione** | v2.11.0 LIVE (deployato sessione 16) |
 | **IP** | 35.193.39.185 STATICO |
 | **Main** | d5d10f8 - cron v2.0.0 (pushato + tag vm-deployed-v2.11.0) |
-| **Lab 2.0** | branch lab-v2 - S61 Verifica Diamante SPRING |
+| **Lab 2.0** | branch lab-v2 - S63 Filtro Periodo SPRING |
 | **Locale** | ISOLATO! :8000=main (baked), :8001=lab-v2 (mount) |
-| **Test** | 935/935 PASS (0 warnings, 0 fail) |
+| **Test** | 957/957 PASS (0 warnings, 0 fail) |
 | **Database pkg** | v2.15.0 - 5 Mixin (core, transactions, pareggi, edits, seasons v2.1.0) |
 | **Migrations** | v9 (v4-v6=stagione GIR/POS, v7=season_metadata, v8=originated_from_season, v9=INVERNO doppio anno) |
-| **SPRING Stack** | Parser v1.0.0 + Matcher v1.0.0 + Router v1.1.0 + UI v1.1.0 + Analysis v1.0.0 |
+| **SPRING Stack** | Parser v1.0.0 + Matcher v1.0.0 + Router v1.1.0 + UI v1.2.0 + Analysis v1.0.0 |
 | **DB LAB** | DATI PRODUZIONE REALI! (sync 16 Feb 2026) - 1,240 cap + 885 GIR + 232 POS |
 | **Telegram VM** | FUNZIONANTE! Nuovo token configurato S59 |
 | **NO deploy/merge** | Lab v2 resta separato, deploy parallelo quando pronto |
@@ -34,29 +34,36 @@
 
 ## ULTIME 3 SESSIONI
 
-### S61 - Verifica Diamante SPRING Step 1 (9.3/10)
+### S63 - Filtro Periodo SPRING Step 3 (9.5/10)
 
-**Rafa ha testato nel browser:** SPRING funziona! 95.8% match, upload/delete/multi-file tutto OK.
+**Cosa:** Aggiunto filtro per periodo temporale alla riconciliazione SPRING. Idea di Rafa per lavorare mese per mese con Sergio.
 
-**Decisione Rafa:** Prima di dichiarare lab-v2 completo, fare sessioni di LOGICA, REVIEW, ANALISI per verificare che i dati siano di fiducia. "Enriquecer os dados do diamante."
+**Backend** (`backend/routers/spring.py`):
+- `ReconcileRequest` con `data_da`/`data_a` opzionali (YYYY-MM-DD)
+- 3 helper: `_parse_date_param`, `_filter_spring_by_date`, `_filter_db_records_by_date`
+- Validazione date invertite (400 se data_da > data_a)
+- Filtro applicato sia a record SPRING che DB prima del matching
+- Campo `filtro_periodo` nella risposta JSON quando attivo
 
-**Idea Rafa:** Filtro per periodo (mese/trimestre/custom) per analisi mirata.
+**Frontend** (`spring-reconcile.js` v1.2.0 + `index.html`):
+- 2 date picker `<input type="date">` nel pannello controlli
+- Bottone "Tutti i periodi" per reset (nascosto quando filtro non attivo)
+- Indicatore visuale periodo attivo (label verde)
+- Event delegation: `spring-period-changed` (change) + `clear-spring-period` (click)
 
-**Step 1 completato:**
-- Script `scripts/spring_analysis.py` v1.0.0 creato (--portal NL/HP/SHE --audit-matches)
-- Report NL: `docs/SPRING_ANALYSIS_NL.md` (4181 righe)
-- Risultati NL: 390/418 cap (93.3%), 348/352 GIR (98.9%), 724/738 match con confidence 0.95+
-- 9 match sospetti (1 falso positivo confermato: Drewek/Narty WEAK)
-- 28 cap DB senza match (rimborsi, nomi composti, dati vecchi)
-- 187 cap SPRING senza match (mesi Gen-Set 2025, DB parte da Ott)
-- Guardiana: 9.3/10 -> fix P2 DRY + P2 params + 4 P3
+**Test** (`test_spring_api.py` v1.1.0): 22 nuovi test (15 helper + 7 API)
+**Guardiana:** 9.5/10 - 0 P0/P1/P2, 3 P3 fixati (dead code, date invertite, test mancante)
 
-### S60 - SPRING File Management (media 9.5/10)
-- Multi-file checkbox, upload POST, delete DELETE, data modifica
-- 17 nuovi test API. spring-reconcile.js v1.1.0, spring.py 2 endpoint
+### S62 - Verifica Diamante Step 2: Audit Match Confidence (9.5/10)
+- 18 match sospetti analizzati: 16 TRUE MATCH (88.9%), 2 FALSE POSITIVE (0.1%)
+- FP: Drewek/Narty (NL), Di Renzo/Ruscitti (HP) - entrambi WEAK
+- Pattern: FEST prefix (4), cognome-only (6), parser artifacts (3)
+- 6 fix mirati proposti per Step 7
 
-### S59 - Fix Telegram + Footer Cleanup (9.3/10)
-- Telegram: nuovo token. Footer: CAPARRE, VS, hide TICKET+Totali
+### S61 - Verifica Diamante Step 1: Analisi Unmatched NL (9.3/10)
+- Rafa testato browser: SPRING funziona!
+- spring_analysis.py v1.0.0, report NL: 390/418 cap (93.3%), 348/352 GIR (98.9%)
+- 9 match sospetti, 1 FP confermato
 
 ---
 
@@ -64,27 +71,26 @@
 
 | Step | Cosa | Stato |
 |------|------|-------|
-| 1 | Analisi Unmatched NL (script + report) | COMPLETATO (9.3/10) |
-| **2** | **Audit Match Confidence (falsi positivi in dettaglio)** | **PROSSIMO** |
-| 3 | Filtro Periodo (data_da/data_a backend + UI date picker) | - |
-| 4 | Cross-Portal HP + SHE (analisi comparativa) | - |
+| 1 | Analisi Unmatched NL (script + report) | COMPLETATO S61 (9.3/10) |
+| 2 | Audit Match Confidence (cross-portal) | COMPLETATO S62 (9.5/10) |
+| 3 | Filtro Periodo (data_da/data_a + UI date picker) | COMPLETATO S63 (9.5/10) |
+| **4** | **Cross-Portal HP + SHE (analisi comparativa)** | **PROSSIMO** |
 | 5 | Hard Test Edge Case (+20 test da finding reali) | - |
-| 6 | Test Endpoint Reconcile API (+10 test, gap 0->10) | - |
-| 7 | Fix Mirati (SOLO con evidenza concreta, test red->green) | - |
-| 8 | Report Diamante (metriche finali per portale, livello fiducia) | - |
+| 6 | Test Endpoint Reconcile API (+10 test) | - |
+| 7 | Fix Mirati (6 fix proposti con evidenza concreta) | - |
+| 8 | Report Diamante (metriche finali per portale) | - |
 
-**Finding da investigare:**
-- P1: Falso positivo Drewek Konrad <-> Narty Marek (WEAK, nome_sim 0.50)
-- P2: Radnic Vittorio score 90/100 ma non matchato (consumato da altro?)
-- P2: Nomi con "/" (Vernino/Cavallo) non matchano
-- P3: client_name "NO SHOW" in GIR DB (dato sporco)
-- Info: Caparre negative (-25, -356.4) = rimborsi, legittimo non matchare
+**Finding da Step 1+2:**
+- P1: 2 FP confermati (Drewek/Narty NL, Di Renzo/Ruscitti HP) - entrambi WEAK
+- Fix proposti Step 7: P1 strip FEST (4 match), P2 doppio NL (1), P3 suffix HP (1)
+- Caparre negative = rimborsi (legittimo)
+- Nomi "/" e "NO SHOW" = dato sporco alla fonte
 
 ---
 
 ## NOTE IMPORTANTI
 - **Telegram VM**: FUNZIONANTE con nuovo token (17 Feb 2026)
-- **SPRING Stack completo**: Parser + Matcher + Router + UI + File Management + Analysis
+- **SPRING Stack completo**: Parser + Matcher + Router + UI v1.2.0 + File Management + Analysis
 - **DB LAB**: dati PRODUZIONE REALI (sync 16 Feb 2026)
 - **FASE 4 tab**: NASCOSTO (logica matching INTATTA!)
 - **TICKET tab**: NASCOSTO (funzione attiva)

@@ -13,7 +13,7 @@ from pathlib import Path
 
 # Source and destination directories
 SOURCE_DIR = Path.home() / ".claude" / "agents"
-DEST_DIR = Path("/Users/rafapra/Developer/CervellaSwarm/.github/agents")
+DEST_DIR = Path(__file__).resolve().parent.parent / ".github" / "agents"
 
 # Tool mapping from our format to Agent HQ format
 TOOL_MAPPING = {

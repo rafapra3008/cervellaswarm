@@ -35,7 +35,7 @@
 ### Path
 
 ```
-/Users/rafapra/Developer/CervellaSwarm/scripts/swarm/
+$HOME/Developer/CervellaSwarm/scripts/swarm/
 ├── dashboard/            # ✓ Modulo principale
 │   ├── cli.py
 │   ├── render.py

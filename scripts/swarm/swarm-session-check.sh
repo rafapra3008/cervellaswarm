@@ -21,7 +21,7 @@ NC='\033[0m'
 VERSION="1.0.0"
 
 # Progetti conosciuti
-PROJECTS_BASE="$HOME/Developer"
+PROJECTS_BASE="${DEVELOPER_ROOT:-$HOME/Developer}"
 PROJECTS=("miracollogeminifocus" "CervellaSwarm" "ContabilitaAntigravity")
 
 print_header() {

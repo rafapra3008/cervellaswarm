@@ -15,7 +15,9 @@
 
 set -e
 
-SNCP_ROOT="${SNCP_ROOT:-/Users/rafapra/Developer/CervellaSwarm/.sncp}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+SNCP_ROOT="${SNCP_ROOT:-$REPO_ROOT/.sncp}"
 TODAY=$(date +%Y-%m-%d)
 PROJECT="${1:-all}"
 

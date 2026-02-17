@@ -8,15 +8,16 @@
 #
 # SETUP CRON:
 #   crontab -e
-#   # Aggiungi questa riga (ogni giorno alle 3:00):
-#   0 3 * * * /Users/rafapra/Developer/CervellaSwarm/scripts/cron/log_rotate_cron.sh
+#   # Aggiungi questa riga (aggiorna il path al tuo repo):
+#   0 3 * * * $HOME/Developer/CervellaSwarm/scripts/cron/log_rotate_cron.sh
 #
 # Creato: 14 Gennaio 2026 - Sessione 201
 
 set -e
 
-# Path di base
-SWARM_DIR="/Users/rafapra/Developer/CervellaSwarm"
+# Path di base (computed from script location)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SWARM_DIR="${SWARM_DIR:-$(cd "$SCRIPT_DIR/../.." && pwd)}"
 LOG_FILE="$SWARM_DIR/data/logs/log_rotate_cron.log"
 
 # Configurazione

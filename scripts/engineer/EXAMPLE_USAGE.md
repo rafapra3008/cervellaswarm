@@ -15,7 +15,7 @@ cat miracollo_engineering.md
 **Output Atteso:**
 ```markdown
 # 🔧 ENGINEERING REPORT - 01/01/2026 19:00
-## Progetto: /Users/rafapra/Developer/miracollogeminifocus
+## Progetto: ~/Developer/my-project
 
 ### 📊 Summary
 - File analizzati: 156
@@ -54,7 +54,7 @@ Rafa: Analizza il progetto Miracollo e crea task di refactoring
 
 Orchestratrice: 👑 Perfetto! Delego a L'Ingegnera:
 
-@engineer analizza /Users/rafapra/Developer/miracollogeminifocus
+@engineer analizza ~/Developer/my-project
 
 [L'Ingegnera esegue analyze_codebase.py]
 

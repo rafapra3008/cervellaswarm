@@ -38,11 +38,12 @@ echo -e "${PURPLE}════════════════════�
 echo ""
 
 # Progetti conosciuti
+DEVELOPER_ROOT="${DEVELOPER_ROOT:-$HOME/Developer}"
 declare -A PROGETTI
-PROGETTI["miracollo"]="$HOME/Developer/miracollogeminifocus"
-PROGETTI["contabilita"]="$HOME/Developer/ContabilitaAntigravity"
-PROGETTI["cervellaswarm"]="$HOME/Developer/CervellaSwarm"
-PROGETTI["libertaio"]="$HOME/Developer/million-dollar-ideas"
+PROGETTI["miracollo"]="$DEVELOPER_ROOT/miracollogeminifocus"
+PROGETTI["contabilita"]="$DEVELOPER_ROOT/ContabilitaAntigravity"
+PROGETTI["cervellaswarm"]="$DEVELOPER_ROOT/CervellaSwarm"
+PROGETTI["libertaio"]="$DEVELOPER_ROOT/million-dollar-ideas"
 
 # Funzione per mostrare progetti disponibili
 show_projects() {

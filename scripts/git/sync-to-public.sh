@@ -106,6 +106,7 @@ BLACKLIST_DIRS=(
 BLACKLIST_CONTENT_PATTERNS=(
     "/Users/rafapra"
     "~/Developer/"
+    '$HOME/Developer'
     "rafapra3008"
     "@gmail.com"
     "192.168."

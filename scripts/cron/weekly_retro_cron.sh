@@ -6,8 +6,8 @@
 #
 # SETUP CRON:
 #   crontab -e
-#   # Aggiungi questa riga:
-#   0 8 * * 1 /Users/rafapra/Developer/CervellaSwarm/scripts/cron/weekly_retro_cron.sh
+#   # Aggiungi questa riga (aggiorna il path al tuo repo):
+#   0 8 * * 1 $HOME/Developer/CervellaSwarm/scripts/cron/weekly_retro_cron.sh
 #
 # FORMATO CRON: minuto ora giorno-mese mese giorno-settimana
 #   0 8 * * 1 = ogni lunedì alle 8:00
@@ -16,8 +16,9 @@
 
 set -e
 
-# Path di base
-SWARM_DIR="/Users/rafapra/Developer/CervellaSwarm"
+# Path di base (computed from script location)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SWARM_DIR="${SWARM_DIR:-$(cd "$SCRIPT_DIR/../.." && pwd)}"
 # NOTA: Refactoring S335 - ora usa modulo Python
 LOG_FILE="$SWARM_DIR/data/logs/weekly_retro_cron.log"
 

@@ -64,14 +64,14 @@ Archivia automaticamente i log e status file vecchi per prevenire accumulo.
 
 ```bash
 # Ogni lunedì alle 03:00
-0 3 * * 1 cd /Users/rafapra/Developer/CervellaSwarm && ./scripts/swarm/cleanup-logs.sh --execute
+0 3 * * 1 cd $HOME/Developer/CervellaSwarm && ./scripts/swarm/cleanup-logs.sh --execute
 ```
 
 ### Opzione 2: Monthly
 
 ```bash
 # Primo giorno del mese alle 02:00
-0 2 1 * * cd /Users/rafapra/Developer/CervellaSwarm && ./scripts/swarm/cleanup-logs.sh --execute
+0 2 1 * * cd $HOME/Developer/CervellaSwarm && ./scripts/swarm/cleanup-logs.sh --execute
 ```
 
 ### Installazione

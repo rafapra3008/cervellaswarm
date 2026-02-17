@@ -215,7 +215,7 @@ $ git commit -m "Add new feature"
  3 files changed, 150 insertions(+)
 
 🔍 Analisi codebase in corso...
-   Progetto: /Users/rafapra/Developer/MioProgetto
+   Progetto: ~/Developer/my-project
    Report: reports/engineer_report_20260101_120000.json
 
 ============================================================

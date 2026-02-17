@@ -34,12 +34,13 @@ mkdir -p "$CONFIG_DIR"
 
 # Inizializza con progetti default se non esiste
 if [[ ! -f "$PROJECTS_FILE" ]]; then
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
     cat > "$PROJECTS_FILE" << EOF
 # Lista progetti CervellaSwarm
 # Un progetto per riga (path assoluto)
-$HOME/Developer/CervellaSwarm
-$HOME/Developer/miracollogeminifocus
-$HOME/Developer/ContabilitaAntigravity
+# Modifica con i path dei tuoi progetti
+$REPO_ROOT
 EOF
 fi
 

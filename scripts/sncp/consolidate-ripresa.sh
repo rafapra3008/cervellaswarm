@@ -19,8 +19,9 @@
 set -euo pipefail
 
 # === CONFIGURATION ===
-SNCP_ROOT="${SNCP_ROOT:-/Users/rafapra/Developer/CervellaSwarm/.sncp/progetti}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+SNCP_ROOT="${SNCP_ROOT:-$REPO_ROOT/.sncp/progetti}"
 
 # Thresholds
 LIMIT=150          # Maximum allowed lines
@@ -321,7 +322,7 @@ consolidate_project() {
     echo "  Original archived: $archived_file"
 
     # Log the consolidation
-    local log_dir="/Users/rafapra/Developer/CervellaSwarm/.swarm/logs"
+    local log_dir="$REPO_ROOT/.swarm/logs"
     mkdir -p "$log_dir"
     local log_file="$log_dir/consolidation_$(date +%Y%m%d_%H%M%S).log"
 

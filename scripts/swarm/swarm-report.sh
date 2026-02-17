@@ -21,11 +21,14 @@ NC='\033[0m'
 VERSION="1.0.0"
 
 # Trova directory task
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
 find_tasks_dir() {
     if [ -d ".swarm/tasks" ]; then
         echo ".swarm/tasks"
-    elif [ -d "$HOME/Developer/CervellaSwarm/.swarm/tasks" ]; then
-        echo "$HOME/Developer/CervellaSwarm/.swarm/tasks"
+    elif [ -d "$REPO_ROOT/.swarm/tasks" ]; then
+        echo "$REPO_ROOT/.swarm/tasks"
     else
         echo ""
     fi

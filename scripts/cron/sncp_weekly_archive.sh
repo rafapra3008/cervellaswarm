@@ -6,8 +6,8 @@
 # Eseguito da cron ogni Lunedi alle 6:00
 # Archivia file vecchi (> 30 giorni) per mantenere SNCP pulito
 #
-# Crontab entry:
-#   0 6 * * 1 /Users/rafapra/Developer/CervellaSwarm/scripts/cron/sncp_weekly_archive.sh
+# Crontab entry (aggiorna il path al tuo repo):
+#   0 6 * * 1 $HOME/Developer/CervellaSwarm/scripts/cron/sncp_weekly_archive.sh
 #
 # Versione: 1.0.0
 # Data: 14 Gennaio 2026
@@ -16,11 +16,13 @@
 
 set -e
 
-# === CONFIGURAZIONE ===
+# === CONFIGURAZIONE (computed from script location) ===
 
-SNCP_ROOT="/Users/rafapra/Developer/CervellaSwarm/.sncp"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SWARM_DIR="${SWARM_DIR:-$(cd "$SCRIPT_DIR/../.." && pwd)}"
+SNCP_ROOT="$SWARM_DIR/.sncp"
 ARCHIVE_DIR="$SNCP_ROOT/archivio"
-LOG_FILE="/Users/rafapra/Developer/CervellaSwarm/logs/sncp_weekly.log"
+LOG_FILE="$SWARM_DIR/logs/sncp_weekly.log"
 
 TODAY=$(date +%Y-%m-%d)
 WEEK=$(date +%Y-W%V)

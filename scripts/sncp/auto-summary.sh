@@ -26,8 +26,10 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-# Path base
-SNCP_BASE="$HOME/Developer/CervellaSwarm/.sncp"
+# Path base (computed from script location)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+SNCP_BASE="${SNCP_BASE:-$REPO_ROOT/.sncp}"
 PROGETTI_DIR="$SNCP_BASE/progetti"
 
 # Funzione: Mostra help

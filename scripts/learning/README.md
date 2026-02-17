@@ -16,7 +16,7 @@ Il Learning Wizard è un'interfaccia CLI guidata per documentare lezioni apprese
 ### Esecuzione Base
 
 ```bash
-cd /Users/rafapra/Developer/CervellaSwarm
+cd ~/Developer/CervellaSwarm
 python3 scripts/learning/wizard.py
 ```
 

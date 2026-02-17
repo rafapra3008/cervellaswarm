@@ -19,7 +19,9 @@
 set -uo pipefail
 
 # === CONFIGURATION ===
-SNCP_ROOT="${SNCP_ROOT:-/Users/rafapra/Developer/CervellaSwarm/.sncp/progetti}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+SNCP_ROOT="${SNCP_ROOT:-$REPO_ROOT/.sncp/progetti}"
 SUMMARY_LINES=20  # Lines to show in summary mode (progressive disclosure)
 
 # Parse arguments

@@ -21,8 +21,11 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
-# SNCP root
-SNCP_ROOT="/Users/rafapra/Developer/CervellaSwarm/.sncp/progetti"
+# SNCP root (computed from script location)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+SNCP_ROOT="${SNCP_ROOT:-$REPO_ROOT/.sncp/progetti}"
+DEVELOPER_ROOT="${DEVELOPER_ROOT:-$HOME/Developer}"
 
 # ==============================================================================
 # PROGETTI - Funzioni per ottenere path e descrizioni
@@ -30,12 +33,12 @@ SNCP_ROOT="/Users/rafapra/Developer/CervellaSwarm/.sncp/progetti"
 
 get_project_path() {
     case "$1" in
-        cervellaswarm)     echo "/Users/rafapra/Developer/CervellaSwarm" ;;
-        miracollo)         echo "/Users/rafapra/Developer/miracollogeminifocus" ;;
-        contabilita)       echo "/Users/rafapra/Developer/ContabilitaAntigravity" ;;
-        cervellacostruzione) echo "/Users/rafapra/Developer/cervellacostruzione" ;;
-        cervellabrasil)    echo "/Users/rafapra/Developer/CervellaBrasil" ;;
-        chavefy)           echo "/Users/rafapra/Developer/Chavefy" ;;
+        cervellaswarm)     echo "$DEVELOPER_ROOT/CervellaSwarm" ;;
+        miracollo)         echo "$DEVELOPER_ROOT/miracollogeminifocus" ;;
+        contabilita)       echo "$DEVELOPER_ROOT/ContabilitaAntigravity" ;;
+        cervellacostruzione) echo "$DEVELOPER_ROOT/cervellacostruzione" ;;
+        cervellabrasil)    echo "$DEVELOPER_ROOT/CervellaBrasil" ;;
+        chavefy)           echo "$DEVELOPER_ROOT/Chavefy" ;;
         *)                 echo "" ;;
     esac
 }

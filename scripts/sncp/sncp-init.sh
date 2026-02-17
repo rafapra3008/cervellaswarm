@@ -31,8 +31,10 @@ set -e
 # CONFIG
 # ==============================================================================
 
-SNCP_ROOT="${SNCP_ROOT:-/Users/rafapra/Developer/CervellaSwarm/.sncp}"
-TEMPLATES_PATH="${SNCP_ROOT}/../scripts/sncp/templates"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+SNCP_ROOT="${SNCP_ROOT:-$REPO_ROOT/.sncp}"
+TEMPLATES_PATH="${TEMPLATES_PATH:-$SCRIPT_DIR/templates}"
 TODAY=$(date +%Y-%m-%d)
 VERSION="2.0.0"
 
@@ -456,9 +458,10 @@ if [ -d "$BASE_PATH" ]; then
 fi
 
 # Try to find project path for analysis
+DEVELOPER_ROOT="${DEVELOPER_ROOT:-$HOME/Developer}"
 PROJECT_PATH=""
-if [ -d "$HOME/Developer/$PROJECT_NAME" ]; then
-    PROJECT_PATH="$HOME/Developer/$PROJECT_NAME"
+if [ -d "$DEVELOPER_ROOT/$PROJECT_NAME" ]; then
+    PROJECT_PATH="$DEVELOPER_ROOT/$PROJECT_NAME"
 elif [ -d "$(pwd)/$PROJECT_NAME" ]; then
     PROJECT_PATH="$(pwd)/$PROJECT_NAME"
 elif [ -d "$(pwd)" ] && [ "$(basename "$(pwd)")" == "$PROJECT_NAME" ]; then

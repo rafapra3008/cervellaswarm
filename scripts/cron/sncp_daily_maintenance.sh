@@ -6,8 +6,8 @@
 # Eseguito da cron ogni giorno alle 8:00
 # Genera report stato SNCP e pulisce file temporanei
 #
-# Crontab entry:
-#   0 8 * * * /Users/rafapra/Developer/CervellaSwarm/scripts/cron/sncp_daily_maintenance.sh
+# Crontab entry (aggiorna il path al tuo repo):
+#   0 8 * * * $HOME/Developer/CervellaSwarm/scripts/cron/sncp_daily_maintenance.sh
 #
 # Versione: 1.0.0
 # Data: 14 Gennaio 2026
@@ -16,14 +16,16 @@
 
 set -e
 
-# === CONFIGURAZIONE ===
+# === CONFIGURAZIONE (computed from script location) ===
 
-SNCP_ROOT="/Users/rafapra/Developer/CervellaSwarm/.sncp"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SWARM_DIR="${SWARM_DIR:-$(cd "$SCRIPT_DIR/../.." && pwd)}"
+SNCP_ROOT="$SWARM_DIR/.sncp"
 REPORTS_DIR="$SNCP_ROOT/reports/daily"
-LOG_FILE="/Users/rafapra/Developer/CervellaSwarm/logs/sncp_daily.log"
-HEALTH_CHECK="/Users/rafapra/Developer/CervellaSwarm/scripts/sncp/health-check.sh"
-COMPLIANCE_CHECK="/Users/rafapra/Developer/CervellaSwarm/scripts/sncp/compliance-check.sh"
-COMPACT_SCRIPT="/Users/rafapra/Developer/CervellaSwarm/scripts/sncp/compact-state.sh"
+LOG_FILE="$SWARM_DIR/logs/sncp_daily.log"
+HEALTH_CHECK="$SWARM_DIR/scripts/sncp/health-check.sh"
+COMPLIANCE_CHECK="$SWARM_DIR/scripts/sncp/compliance-check.sh"
+COMPACT_SCRIPT="$SWARM_DIR/scripts/sncp/compact-state.sh"
 
 # Limiti per auto-compaction
 AUTO_COMPACT_TRIGGER=400  # Compatta automaticamente se > 400 righe

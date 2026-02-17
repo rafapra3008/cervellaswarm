@@ -20,10 +20,13 @@ TEMPLATES_DIR="$HOME/.claude/scripts/templates"
 VERSION="1.0.0"
 
 # Determina directory task
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
 if [ -d ".swarm/tasks" ]; then
     TASKS_DIR=".swarm/tasks"
-elif [ -d "$HOME/Developer/CervellaSwarm/.swarm/tasks" ]; then
-    TASKS_DIR="$HOME/Developer/CervellaSwarm/.swarm/tasks"
+elif [ -d "$REPO_ROOT/.swarm/tasks" ]; then
+    TASKS_DIR="$REPO_ROOT/.swarm/tasks"
 else
     TASKS_DIR=".swarm/tasks"
     mkdir -p "$TASKS_DIR"

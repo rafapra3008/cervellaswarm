@@ -15,7 +15,7 @@ Report settimanale automatico con analisi metriche e suggerimenti.
 crontab -e
 
 # Aggiungi questa riga (venerdì alle 18:00)
-0 18 * * 5 cd /Users/rafapra/Developer/CervellaSwarm && python3 -m scripts.memory.retro.cli --save --quiet >> /Users/rafapra/Developer/CervellaSwarm/data/logs/weekly_retro.log 2>&1
+0 18 * * 5 cd $HOME/Developer/CervellaSwarm && python3 -m scripts.memory.retro.cli --save --quiet >> $HOME/Developer/CervellaSwarm/data/logs/weekly_retro.log 2>&1
 ```
 
 ### Verifica Cron Attivi
@@ -80,7 +80,7 @@ Health check automatico + cleanup file temporanei.
 
 ```bash
 # Ogni giorno alle 8:30
-30 8 * * * /Users/rafapra/Developer/CervellaSwarm/scripts/cron/sncp_daily_maintenance.sh
+30 8 * * * $HOME/Developer/CervellaSwarm/scripts/cron/sncp_daily_maintenance.sh
 ```
 
 **Cosa fa:**
@@ -91,7 +91,7 @@ Health check automatico + cleanup file temporanei.
 
 **Test manuale:**
 ```bash
-/Users/rafapra/Developer/CervellaSwarm/scripts/cron/sncp_daily_maintenance.sh
+$HOME/Developer/CervellaSwarm/scripts/cron/sncp_daily_maintenance.sh
 ```
 
 ### Weekly Archive
@@ -100,7 +100,7 @@ Archivia file vecchi (> 30 giorni) per mantenere SNCP pulito.
 
 ```bash
 # Ogni Lunedi alle 6:00
-0 6 * * 1 /Users/rafapra/Developer/CervellaSwarm/scripts/cron/sncp_weekly_archive.sh
+0 6 * * 1 $HOME/Developer/CervellaSwarm/scripts/cron/sncp_weekly_archive.sh
 ```
 
 **Cosa fa:**
@@ -111,7 +111,7 @@ Archivia file vecchi (> 30 giorni) per mantenere SNCP pulito.
 
 **Test manuale:**
 ```bash
-/Users/rafapra/Developer/CervellaSwarm/scripts/cron/sncp_weekly_archive.sh
+$HOME/Developer/CervellaSwarm/scripts/cron/sncp_weekly_archive.sh
 ```
 
 ### LAUNCHD (Raccomandato - Nativo Apple)
@@ -145,22 +145,22 @@ launchctl load ~/Library/LaunchAgents/com.cervellaswarm.sncp.daily.plist
 # Copia e incolla tutto nel crontab (crontab -e)
 
 # CervellaSwarm Weekly Retro - ogni lunedi alle 8:00
-0 8 * * 1 /Users/rafapra/Developer/CervellaSwarm/scripts/cron/weekly_retro_cron.sh
+0 8 * * 1 $HOME/Developer/CervellaSwarm/scripts/cron/weekly_retro_cron.sh
 
 # CervellaSwarm Log Rotation - ogni giorno alle 3:00
-0 3 * * * /Users/rafapra/Developer/CervellaSwarm/scripts/cron/log_rotate_cron.sh
+0 3 * * * $HOME/Developer/CervellaSwarm/scripts/cron/log_rotate_cron.sh
 
 # SNCP Daily Maintenance - ogni giorno alle 8:30
-30 8 * * * /Users/rafapra/Developer/CervellaSwarm/scripts/cron/sncp_daily_maintenance.sh
+30 8 * * * $HOME/Developer/CervellaSwarm/scripts/cron/sncp_daily_maintenance.sh
 
 # SNCP Weekly Archive - ogni lunedi alle 6:00
-0 6 * * 1 /Users/rafapra/Developer/CervellaSwarm/scripts/cron/sncp_weekly_archive.sh
+0 6 * * 1 $HOME/Developer/CervellaSwarm/scripts/cron/sncp_weekly_archive.sh
 
 # Cleanup swarm logs - ogni giorno alle 3:00
-0 3 * * * cd /Users/rafapra/Developer/CervellaSwarm && ./scripts/swarm/cleanup-logs.sh --execute
+0 3 * * * cd $HOME/Developer/CervellaSwarm && ./scripts/swarm/cleanup-logs.sh --execute
 
 # Archive old reports - ogni domenica alle 4:00
-0 4 * * 0 cd /Users/rafapra/Developer/CervellaSwarm && ./scripts/archive_old_reports.sh 7
+0 4 * * 0 cd $HOME/Developer/CervellaSwarm && ./scripts/archive_old_reports.sh 7
 ```
 
 ---

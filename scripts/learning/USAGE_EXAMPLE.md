@@ -13,7 +13,7 @@ Hai appena risolto un bug critico in cui un modal non si chiudeva correttamente 
 ## 🚀 ESECUZIONE
 
 ```bash
-cd /Users/rafapra/Developer/CervellaSwarm
+cd ~/Developer/CervellaSwarm
 python3 scripts/learning/wizard.py
 ```
 

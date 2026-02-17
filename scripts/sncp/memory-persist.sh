@@ -32,8 +32,10 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-# Path base
-SNCP_BASE="$HOME/Developer/CervellaSwarm/.sncp"
+# Path base (computed from script location)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+SNCP_BASE="${SNCP_BASE:-$REPO_ROOT/.sncp}"
 PROGETTI_DIR="$SNCP_BASE/progetti"
 
 # Progetti disponibili
@@ -89,9 +91,9 @@ persist_project() {
     # Ultimo commit git
     local GIT_COMMIT=""
     local GIT_MESSAGE=""
-    if [ -d "$HOME/Developer/CervellaSwarm/.git" ]; then
-        GIT_COMMIT=$(cd "$HOME/Developer/CervellaSwarm" && git rev-parse --short HEAD 2>/dev/null || echo "unknown")
-        GIT_MESSAGE=$(cd "$HOME/Developer/CervellaSwarm" && git log -1 --format="%s" 2>/dev/null || echo "unknown")
+    if [ -d "$REPO_ROOT/.git" ]; then
+        GIT_COMMIT=$(cd "$REPO_ROOT" && git rev-parse --short HEAD 2>/dev/null || echo "unknown")
+        GIT_MESSAGE=$(cd "$REPO_ROOT" && git log -1 --format="%s" 2>/dev/null || echo "unknown")
     fi
 
     # Crea JSON

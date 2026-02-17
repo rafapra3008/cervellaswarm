@@ -10,13 +10,13 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>/Users/rafapra/Developer/CervellaSwarm/scripts/swarm/cleanup-logs.sh</string>
+        <string>/path/to/CervellaSwarm/scripts/swarm/cleanup-logs.sh</string>
         <string>--execute</string>
     </array>
 
     <!-- Working Directory -->
     <key>WorkingDirectory</key>
-    <string>/Users/rafapra/Developer/CervellaSwarm</string>
+    <string>/path/to/CervellaSwarm</string>
 
     <!-- Schedule: Ogni giorno alle 03:00 -->
     <key>StartCalendarInterval</key>
@@ -29,9 +29,9 @@
 
     <!-- Logs: dove salvare output -->
     <key>StandardOutPath</key>
-    <string>/Users/rafapra/Developer/CervellaSwarm/.swarm/logs/cleanup_launchd.log</string>
+    <string>/path/to/CervellaSwarm/.swarm/logs/cleanup_launchd.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/rafapra/Developer/CervellaSwarm/.swarm/logs/cleanup_launchd.err</string>
+    <string>/path/to/CervellaSwarm/.swarm/logs/cleanup_launchd.err</string>
 
     <!-- Environment -->
     <key>EnvironmentVariables</key>
@@ -81,6 +81,6 @@ ALTERNATIVE:
 Se preferisci cron (Linux-style):
 crontab -e
 # Aggiungi:
-0 3 * * * cd /Users/rafapra/Developer/CervellaSwarm && ./scripts/swarm/cleanup-logs.sh --execute
+0 3 * * * cd /path/to/CervellaSwarm && ./scripts/swarm/cleanup-logs.sh --execute
 
 -->
