@@ -1,6 +1,7 @@
 # Dual Repo Strategy - CervellaSwarm
 
 > **SOLUZIONE DEFINITIVA**: Sessione 304+ - Metodo Worktree!
+> **v3.0 (S363):** Content scanning aggiunto - verifica pattern sensibili dentro i file.
 > Problema risolto dopo 3 tentativi falliti.
 
 ---

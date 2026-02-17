@@ -1,20 +1,19 @@
 #!/bin/bash
 # =============================================================================
-# sync-to-public-v2.sh - Sync DEFINITIVO da privato a pubblico
+# sync-to-public.sh - Sync SICURO da repo privato a pubblico
 # =============================================================================
-#
-# SOLUZIONE AL PROBLEMA:
-# Usa git worktree per creare una copia ISOLATA del repo pubblico.
-# I file privati (.sncp/, NORD.md, etc.) NON interferiscono mai.
+# Version: 3.0.0 (S363 - Open Source hardening)
 #
 # COME FUNZIONA:
 # 1. Crea worktree temporaneo da public/main
-# 2. Copia SOLO file pubblici nella worktree (NO node_modules)
-# 3. Commit e push dalla worktree
-# 4. Rimuove worktree
+# 2. Copia SOLO file pubblici nella worktree (whitelist)
+# 3. Verifica sicurezza: blacklist + CONTENT SCANNING
+# 4. Commit e push dalla worktree
+# 5. Rimuove worktree
 #
 # USO:
-#   ./scripts/git/sync-to-public-v2.sh [commit-message]
+#   ./scripts/git/sync-to-public.sh [commit-message]
+#   ./scripts/git/sync-to-public.sh --dry-run    # Preview senza push
 #
 # =============================================================================
 
@@ -33,6 +32,15 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 WORKTREE_DIR="/tmp/cervellaswarm-public-sync-$$"
 WORKTREE_BRANCH="public-sync-temp-$$"
+DRY_RUN=0
+
+# Parse arguments
+for arg in "$@"; do
+    if [ "$arg" = "--dry-run" ]; then
+        DRY_RUN=1
+        shift
+    fi
+done
 
 # File/cartelle PUBBLICHE (whitelist - SOLO questi vanno nel public)
 PUBLIC_FILES=(
@@ -42,6 +50,8 @@ PUBLIC_FILES=(
     "LICENSE"
     "NOTICE"
     "CONTRIBUTING.md"
+    "CODE_OF_CONDUCT.md"
+    "SECURITY.md"
     ".github"
     ".gitignore"
     "docs/AGENTS_REFERENCE.md"
@@ -51,16 +61,22 @@ PUBLIC_FILES=(
     "docs/SEMANTIC_SEARCH.md"
     "docs/ARCHITECT_PATTERN.md"
     "docs/GIT_ATTRIBUTION.md"
+    "docs/DUAL_REPO_STRATEGY.md"
 )
 
 # File che NON DEVONO MAI apparire nella ROOT (blacklist precisa)
 BLACKLIST_ROOT_PATHS=(
     ".sncp"
+    ".swarm"
+    ".mcp.json"
     "NORD.md"
     "COSTITUZIONE.md"
     "MANIFESTO.md"
     "data"
     "reports"
+    "logs"
+    "config"
+    "cervellaswarm-extension"
 )
 
 # Pattern che non devono apparire da NESSUNA parte nel nome file
@@ -69,6 +85,11 @@ BLACKLIST_FILENAME_PATTERNS=(
     "MAPPA_"
     "_PRIVATO"
     "_INTERNO"
+    "RESEARCH_"
+    "RICERCA_"
+    "PASSAGGIO_CONSEGNA"
+    "HANDOFF_"
+    "CREDENZIALI"
 )
 
 # Directory che non devono esistere
@@ -77,6 +98,23 @@ BLACKLIST_DIRS=(
     "scripts/memory"
     "scripts/learning"
     "scripts/engineer"
+    "scripts/cron"
+)
+
+# Content patterns that must NOT appear in any published file
+# These are scanned INSIDE file content, not filenames
+BLACKLIST_CONTENT_PATTERNS=(
+    "/Users/rafapra"
+    "~/Developer/"
+    "@gmail.com"
+    "192.168."
+    "acct_1"
+    "data-frame-476309"
+    "miracollogeminifocus"
+    "ContabilitaAntigravity"
+    "CervellaBrasil"
+    "cervellabrasil"
+    "chavefy"
 )
 
 cleanup() {
@@ -107,7 +145,10 @@ copy_excluding() {
 
 echo -e "${BOLD}${CYAN}"
 echo "=============================================="
-echo "  SYNC TO PUBLIC - v2 (Worktree Method)"
+echo "  SYNC TO PUBLIC - v3.0 (Content Scanning)"
+if [ "$DRY_RUN" -eq 1 ]; then
+    echo -e "  ${YELLOW}[DRY RUN - no push]${CYAN}"
+fi
 echo "=============================================="
 echo -e "${NC}"
 
@@ -210,15 +251,32 @@ if find . -type d -name "node_modules" 2>/dev/null | /usr/bin/grep -q .; then
     SECURITY_FAIL=1
 fi
 
+# Check 5: CONTENT SCANNING - cerca pattern sensibili DENTRO i file
+echo -e "  ${CYAN}Scanning contenuto file per pattern sensibili...${NC}"
+for pattern in "${BLACKLIST_CONTENT_PATTERNS[@]}"; do
+    # Search all text files, exclude .git and node_modules
+    matches=$(/usr/bin/grep -rl "$pattern" . --include='*.md' --include='*.ts' --include='*.js' --include='*.json' --include='*.py' --include='*.sh' --include='*.toml' --include='*.yaml' --include='*.yml' 2>/dev/null | /usr/bin/grep -v '.git/' || true)
+    if [ -n "$matches" ]; then
+        echo -e "  ${RED}CONTENUTO SENSIBILE TROVATO: '${pattern}'${NC}"
+        echo "$matches" | head -5
+        match_count=$(echo "$matches" | wc -l | tr -d ' ')
+        if [ "$match_count" -gt 5 ]; then
+            echo "  ... e altri $((match_count - 5)) file"
+        fi
+        SECURITY_FAIL=1
+    fi
+done
+
 if [ "$SECURITY_FAIL" -eq 1 ]; then
     echo ""
     echo -e "${RED}=============================================="
     echo -e "  SICUREZZA FALLITA! Sync annullato."
+    echo -e "  Correggere i file sopra prima di sync."
     echo -e "==============================================${NC}"
     exit 1
 fi
 
-echo -e "  ${GREEN}OK - Nessun file privato trovato${NC}"
+echo -e "  ${GREEN}OK - Nessun file privato o contenuto sensibile trovato${NC}"
 
 # =============================================================================
 # STEP 4: Mostra diff e chiedi conferma
@@ -276,6 +334,16 @@ fi
 
 echo -e "Commit message: ${CYAN}${COMMIT_MSG}${NC}"
 echo ""
+
+if [ "$DRY_RUN" -eq 1 ]; then
+    echo -e "${YELLOW}=============================================="
+    echo -e "  DRY RUN COMPLETATO"
+    echo -e "  $CHANGES file pronti per sync"
+    echo -e "  Sicurezza: PASS (5 check superati)"
+    echo -e "==============================================${NC}"
+    exit 0
+fi
+
 read -p "Vuoi procedere? (yes/no): " confirm
 
 if [ "$confirm" != "yes" ]; then
@@ -307,8 +375,7 @@ echo -e "${GREEN}=============================================="
 echo -e "  SYNC COMPLETATO!"
 echo -e "==============================================${NC}"
 echo ""
-echo "Il repo pubblico e stato aggiornato:"
-echo "  https://github.com/rafapra3008/cervellaswarm"
+echo "Il repo pubblico e stato aggiornato."
 echo ""
 echo "Prossimi step (se release):"
 echo "  1. Verifica su GitHub"

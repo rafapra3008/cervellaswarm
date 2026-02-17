@@ -11,7 +11,7 @@
           },
           {
             "type": "command",
-            "command": "python3 /Users/rafapra/Developer/CervellaSwarm/.claude/hooks/memory_flush_auto.py",
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/memory_flush_auto.py",
             "timeout": 10
           }
         ]

@@ -1,22 +1,37 @@
 __pycache__/
 
-# Data files with potential secrets
-data/logs/
-data/swarm_memory.db
+# Data directory (operational data, logs, database, retro reports)
+data/
+*.db
+*.sqlite
 
 # Environment
 .env
 *.env
 
-# Swarm temporary files
-.swarm/tasks/*.working
-.swarm/tasks/*.lock
-.swarm/locks/
-.swarm/logs/
-.swarm/status/
-# Keep tracked: .swarm/README.md, .swarm/tasks/*.md, .swarm/handoff/
+# Swarm operational data (personal data, IPs, emails, infra details)
+# S363: entire .swarm/ has sensitive data in handoff, security, tasks
+.swarm/
 CREDENZIALI_OAUTH.md
-packages/cli/node_modules/
+
+# Logs and reports (hardcoded paths and operational data)
+logs/
+reports/
+
+# MCP config (local paths)
+.mcp.json
+
+# IDE config (personal paths)
+.vscode/
+
+# Personal research files at root
+RESEARCH_*.md
+RICERCA_*.md
+PASSAGGIO_CONSEGNA_*.txt
+
+# Node modules
+packages/*/node_modules/
+node_modules/
 
 # Coverage reports
 htmlcov/
@@ -30,3 +45,9 @@ coverage.xml
 .sncp/
 NORD.md
 docs/studio/
+
+# Config with local paths
+config/claude-hooks/
+
+# VS Code extension with personal config
+cervellaswarm-extension/

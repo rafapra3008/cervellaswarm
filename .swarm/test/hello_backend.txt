@@ -1,3 +1,0 @@
-Hello from cervella-backend!
-Timestamp: 2026-01-07 19:20:48
-Task ID: TEST_SCENARIO_STANDARD
