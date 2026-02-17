@@ -71,6 +71,15 @@ Anthropic ha rilasciato Sonnet 4.6 (17 Feb 2026). Stesso prezzo di Sonnet 4.5, m
 - 7 Opus: `model: opus` -> auto-risolto a Opus 4.6
 - Nessun cambio nei file agente necessario
 
+### Ricerca 1M Token Context Window
+
+- Disponibile per Opus 4.6, Sonnet 4.6 (beta)
+- Richiede: header `anthropic-beta: context-1m-2025-08-07` + Usage Tier 4
+- Pricing: 2x input, 1.5x output oltre 200K tokens
+- Per Claude Code: NON serve, Anthropic gestisce internamente con compaction
+- Per CervellaSwarm prodotto: aggiungere supporto beta header in F2/F3
+- Decisione: NON urgente ora, arriveremo quando sara il momento
+
 ---
 
 ## S364 (archivio recente)

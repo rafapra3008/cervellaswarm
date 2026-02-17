@@ -73,6 +73,13 @@ piu intelligenti. Se noti differenze nella qualita degli output dei worker, e pe
 
 Anche: training data cutoff Jan 2026 (vs Jul 2025 per Sonnet 4.5) = 6 mesi in piu di conoscenza.
 
+### 1M Token Context - PARCHEGGIATO
+
+Abbiamo studiato il 1M token context window (beta). Richiede header
+`anthropic-beta: context-1m-2025-08-07` + Usage Tier 4 + pricing 2x/1.5x oltre 200K.
+Per Claude Code non serve (compaction automatica). Per CervellaSwarm prodotto,
+aggiungere in F2/F3 come feature configurabile. Non urgente ora.
+
 ---
 
 *"Ultrapassar os proprios limites!" - Rafa & Cervella, S365*
