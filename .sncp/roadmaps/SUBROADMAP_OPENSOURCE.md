@@ -76,7 +76,7 @@
 
 **F0.2 - Licenza e docs base** -- DONE (S363)
 - [x] LICENSE (Apache 2.0 - gia esistente)
-- [ ] README.md killer (storia, badges, quickstart in 5 min) -- MOVED to F0.4
+- [x] README.md killer -- DONE in F0.4 (S366)
 - [x] CONTRIBUTING.md (come contribuire)
 - [x] CODE_OF_CONDUCT.md (Contributor Covenant 2.1)
 - [x] SECURITY.md (responsible disclosure, cervellaswarm@pm.me)
@@ -92,6 +92,27 @@
 - [ ] git-filter-repo per storia pulita (365 sessioni) -- DEFERRED (F0.6+)
 - **Score:** Guardiana 7.8 -> 8.8 -> 9.5/10 (3 round)
 - **Nota F3:** MCP KNOWN_PROJECTS hardcoded -> rendere configurabile
+
+**F0.4 - README killer** -- DONE (S366)
+- [x] Ricerca competitor (AutoGen, CrewAI, LangGraph) + best practices (12 fonti)
+- [x] README.md 239 righe: hero, problem, quickstart, comparison table, docs
+- [x] Tagline: "Build AI agent teams that remember."
+- [x] Honest comparison table (ammette competitor piu grandi + multi-LLM)
+- [x] Quick Start da source (clone + npm link)
+- [x] Hero image rimossa (conteneva dati interni) -> ASCII diagram
+- [x] Fix Go/Rust false claim, npm install, Opus/Sonnet, duration
+- **Score:** Guardiana 8.3 -> 9.5/10 (2 round)
+- **Residui P3:** hero image da ricreare pulita, badges dinamici con CI, CHANGELOG Go/Rust
+
+**F0.5 - .github/ templates** -- TODO
+- [ ] Issue template (bug report, feature request)
+- [ ] PR template
+- [ ] GitHub Actions CI base (lint, test, badge update)
+- [ ] Dynamic badges (tests, coverage)
+
+**F0.6 - Content scanner esteso** -- TODO
+- [ ] Scan *.html, *.css, *.txt
+- [ ] git-filter-repo per storia pulita (365 sessioni)
 
 **Audit Guardiana dopo F0** -> target 9.5/10
 

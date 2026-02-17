@@ -1,182 +1,239 @@
+<div align="center">
+
 # CervellaSwarm
 
-> **17 AI Agents. 1 Command. Your AI Development Team.**
+**Build AI agent teams that remember.**
 
-<p align="center">
-  <img src="docs/demo/cli_workflow_en.png" alt="CervellaSwarm - AI Team Workflow" width="800">
-</p>
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![Tests: 1032 passing](https://img.shields.io/badge/tests-1032_passing-brightgreen.svg)](tests/)
+[![Coverage: 95%](https://img.shields.io/badge/coverage-95%25-brightgreen.svg)](tests/)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-native-blueviolet.svg)](https://claude.ai/code)
 
-<p align="center">
-  <em>Regina coordinates, Workers execute, Guardians verify. The only AI coding team that checks its own work.</em>
-</p>
+```
+   You ──> Queen ──> Architect ──> Workers ──> Guardians ──> Done
+                                     |            |
+                                  Frontend    Quality ✓
+                                  Backend     Security ✓
+                                  Tester      Standards ✓
+```
 
-A multi-agent orchestration system for Claude Code. Instead of one AI assistant, get a team of 17 specialized AI agents working together on your codebase.
+*17 specialized AI agents. Persistent memory across sessions. Quality gates built in.*
 
-## What Problem Does This Solve?
+</div>
 
-Single AI assistants forget context, lack specialization, and can't divide work. CervellaSwarm gives you:
+---
 
-- **Specialized Agents** - Frontend, Backend, Testing, Security, DevOps experts
-- **Persistent Memory** - SNCP system remembers across sessions
-- **Parallel Work** - Multiple agents working simultaneously
-- **Quality Gates** - Guardian agents review before merge
+## The Problem
+
+Your AI coding sessions forget everything when you close the terminal. Context is lost, decisions vanish, and the next session starts from zero.
+
+Single AI assistants also can't specialize. They try to be frontend engineers, security auditors, and architects all at once -- and do none of it well.
+
+**CervellaSwarm fixes both.**
+
+## How It Works
+
+CervellaSwarm is a multi-agent orchestration system for [Claude Code](https://claude.ai/code). Instead of one AI assistant, you get a coordinated team of 17 specialized agents:
+
+```
+You: "Refactor the authentication module"
+
+   Queen (orchestrator)
+     |
+     +-- Architect: creates a 4-phase plan
+     +-- Backend: implements the refactored code
+     +-- Tester: writes and runs tests
+     +-- Guardian: reviews quality before merge
+     +-- SNCP: saves everything for next session
+```
+
+Three things no other framework does:
+
+| Capability | What it means |
+|---|---|
+| **Session Continuity** (SNCP) | Your team remembers project state, decisions, and context across sessions. Plain text, git-native, auditable. |
+| **Hierarchical Orchestration** | Queen coordinates Guardians who oversee Workers. 3+ levels, not flat. |
+| **Hook System** | 15+ lifecycle hooks (pre-session, post-commit, file guards). Quality gates are automatic, not optional. |
 
 ## Quick Start
 
 ```bash
-# 1. Install globally
-npm install -g cervellaswarm
+# Clone and install
+git clone https://github.com/rafapra3008/cervellaswarm.git
+cd cervellaswarm/packages/cli && npm install && npm link
 
-# 2. Initialize in your project
+# Initialize in your project
+cd ~/your-project
 cervellaswarm init
 
-# 3. Give tasks to your AI team
-cervellaswarm task "add login page"         # Auto-routes to frontend
-cervellaswarm task "create REST API"        # Auto-routes to backend
-cervellaswarm task "find security issues"   # Auto-routes to security
+# Give a task to your AI team
+cervellaswarm task "add user authentication with OAuth"
 ```
 
+The Queen automatically routes your task to the right agents, coordinates their work, and has Guardians review the output.
 
-## The Team (17 Agents)
+> **Requirements:** macOS or Linux, Node.js >= 18, [Claude Code CLI](https://claude.ai/code), Claude API key
 
-| Role | Agent | Specialty |
-|------|-------|-----------|
-| **Queen** | cervella-orchestrator | Coordinates all agents |
-| **Architect** | cervella-architect | Strategic planning, system design |
-| **Guardian** | cervella-guardiana-qualita | Code quality review |
-| **Guardian** | cervella-guardiana-ops | DevOps & infrastructure |
-| **Guardian** | cervella-guardiana-ricerca | Research validation |
-| **Worker** | cervella-frontend | React, CSS, UI/UX |
-| **Worker** | cervella-backend | Python, FastAPI, APIs |
-| **Worker** | cervella-tester | Testing, QA, debugging |
-| **Worker** | cervella-data | SQL, analytics, databases |
-| **Worker** | cervella-security | Security audits |
-| **Worker** | cervella-devops | Deploy, CI/CD, Docker |
-| **Worker** | cervella-researcher | Technical research |
-| **Worker** | cervella-docs | Documentation |
-| **Worker** | cervella-marketing | UX strategy, copy |
-| **Worker** | cervella-ingegnera | Architecture, refactoring |
-| **Worker** | cervella-scienziata | Market research, trends |
-| **Worker** | cervella-reviewer | Code review |
+For detailed setup, see the [Getting Started guide](docs/GETTING_STARTED.md).
+
+## The Team
+
+| Role | Agent | What they do |
+|---|---|---|
+| **Queen** | `cervella-orchestrator` | Coordinates all agents, delegates, decides |
+| **Architect** | `cervella-architect` | Plans complex tasks before implementation |
+| **Guardian** | `cervella-guardiana-qualita` | Code quality, standards, test coverage |
+| **Guardian** | `cervella-guardiana-ops` | Infrastructure, deploy safety, security |
+| **Guardian** | `cervella-guardiana-ricerca` | Validates research quality and sources |
+| **Worker** | `cervella-frontend` | React, CSS, Tailwind, UI/UX |
+| **Worker** | `cervella-backend` | Python, FastAPI, REST APIs |
+| **Worker** | `cervella-tester` | Testing, QA, debugging |
+| **Worker** | `cervella-data` | SQL, analytics, database design |
+| **Worker** | `cervella-security` | Security audits, vulnerability scanning |
+| **Worker** | `cervella-devops` | CI/CD, Docker, deployment |
+| **Worker** | `cervella-researcher` | Technical research, best practices |
+| **Worker** | `cervella-docs` | Documentation, guides, tutorials |
+| **Worker** | `cervella-marketing` | UX strategy, copywriting |
+| **Worker** | `cervella-ingegnera` | Architecture analysis, refactoring |
+| **Worker** | `cervella-scienziata` | Market research, competitor analysis |
+| **Worker** | `cervella-reviewer` | Code review, best practices |
+
+Guardians and critical analysts run on Claude Opus for deeper reasoning. Most Workers run on Claude Sonnet for speed. The Queen decides who works on what.
+
+See [Agents Reference](docs/AGENTS_REFERENCE.md) for detailed capabilities and examples.
 
 ## Key Features
 
-**SNCP - Persistent Memory**
+### SNCP -- Persistent Memory
+
+Your AI team remembers across sessions. No more re-explaining your project.
+
 ```
-Your AI team remembers everything:
-- Project state across sessions
-- Decisions and their reasoning
-- Research findings
-- Roadmaps and progress
+Session 1: "We decided to use JWT for auth because..."
+  [session ends]
+Session 2: Queen loads context -> knows the JWT decision -> continues from there
 ```
 
-**Automatic Hooks**
-```
-Quality gates built-in:
-- Pre-session: Load context automatically
-- Post-session: Verify consistency
-- File limits: Prevent accumulation
-```
+SNCP stores project state as plain markdown files in your repo. Git-native, human-readable, auditable. No databases, no cloud services, no vendor lock-in.
 
-**Parallel Execution**
-```
-Multiple agents working together:
-- Frontend + Backend simultaneously
-- Guardian reviews completed work
-- Queen orchestrates the flow
-```
+### Automatic Quality Gates
 
-## Use Cases
+Three Guardian agents review every significant change:
 
-**1. Complex Feature Development**
+- **Quality Guardian** -- checks code standards, test coverage, architectural consistency
+- **Ops Guardian** -- validates infrastructure, security, deploy safety
+- **Research Guardian** -- verifies sources and methodology for research tasks
+
+Work doesn't ship until Guardians approve. Like having senior reviewers on every PR, but AI.
+
+### Parallel Execution
+
+Multiple agents work simultaneously:
+
 ```bash
-cervellaswarm task "Build user authentication with OAuth"
-# Regina coordinates frontend + backend + tester automatically
+cervellaswarm task "Build a dashboard with user analytics"
+
+# Queen spawns in parallel:
+#   Frontend: React components + Tailwind styling
+#   Backend: FastAPI endpoints + SQL queries
+#   Tester: writes tests as code is produced
+#   Guardian: reviews completed modules
 ```
 
-**2. Code Review & Refactoring**
-```bash
-cervellaswarm task "Review the authentication module" -a reviewer
-# Reviewer analyzes code and suggests improvements
-```
+### Intelligent Task Routing
 
-**3. Research Before Implementation**
-```bash
-cervellaswarm task "How do enterprise apps handle rate limiting?" -a researcher
-# Researcher investigates best practices before you code
-```
+The Architect agent classifies task complexity and routes automatically:
 
-## Requirements
+- **Simple tasks** (typo fix, small change) -> direct to Worker
+- **Medium tasks** (new endpoint, component) -> Worker + Guardian review
+- **Complex tasks** (new feature, refactor) -> Architect plan -> Workers -> Guardian audit
 
-- macOS or Linux
-- Claude Code CLI installed
-- Claude API key (Pro subscription recommended)
+### Code Intelligence (AST Pipeline)
+
+Built-in tree-sitter powered code understanding:
+
+- `find_symbol("UserAuth")` -- locate any symbol across languages
+- `find_callers("validate_token")` -- who calls this function?
+- `estimate_impact("auth.py")` -- risk score before you refactor
+- Supports Python, TypeScript, JavaScript
+
+## Why CervellaSwarm?
+
+| Feature | CervellaSwarm | AutoGen | CrewAI | LangGraph |
+|---|:---:|:---:|:---:|:---:|
+| Session memory (native) | **SNCP 4.0** | -- | -- | -- |
+| Agent hierarchy (3+ levels) | **Queen/Guardian/Worker** | Basic | Basic | Manual |
+| Hook system (lifecycle events) | **15+ hooks** | -- | -- | -- |
+| Quality gates (built-in review) | **3 Guardians** | -- | -- | -- |
+| Claude Code native | **Yes** | -- | -- | -- |
+| Code intelligence (AST) | **Tree-sitter** | -- | -- | -- |
+| Multi-LLM support | Claude only* | Multi | Multi | Multi |
+| Ecosystem size | Growing | Large | Large | Large |
+
+*Multi-LLM adapter is planned. CervellaSwarm is Claude-first, not Claude-only.
+
+> **Honest note:** AutoGen, CrewAI, and LangGraph have larger ecosystems and multi-LLM support today. CervellaSwarm's edge is session continuity, hierarchical quality control, and deep Claude Code integration. Choose what fits your workflow.
 
 ## Documentation
 
-| Doc | Description |
-|-----|-------------|
-| [Getting Started](docs/GETTING_STARTED.md) | Full setup tutorial |
-| [Agents Reference](docs/AGENTS_REFERENCE.md) | All 17 agents detailed |
-| [SNCP Guide](docs/SNCP_GUIDE.md) | Memory system explained |
-| [Architecture](docs/ARCHITECTURE.md) | How it all works |
+| Guide | Description |
+|---|---|
+| [Getting Started](docs/GETTING_STARTED.md) | Full setup tutorial (prerequisites to first task) |
+| [Agents Reference](docs/AGENTS_REFERENCE.md) | All 17 agents: capabilities, when to use, examples |
+| [SNCP Guide](docs/SNCP_GUIDE.md) | Session memory system explained |
+| [Architecture](docs/ARCHITECTURE.md) | System design, task flow, integrations |
+| [Semantic Search](docs/SEMANTIC_SEARCH.md) | Code intelligence API reference |
+| [Architect Pattern](docs/ARCHITECT_PATTERN.md) | AI planning before implementation |
+| [Git Attribution](docs/GIT_ATTRIBUTION.md) | Multi-agent commit tracking |
 
-## Project Status
+## Battle-Tested
 
 ```
-PHASE 1: Foundation     [##########] 100%
-PHASE 2: MVP            [##########] 100%
-PHASE 3: Alpha Users    [##........] 20%
-PHASE 4: Scale          [..........] 0%
+365+ sessions of daily use since December 2025
+1,032 tests passing (95% coverage)
+17 agents used daily across real production codebases
+56,800 lines of Python + 16,600 lines of Bash
+Built before multi-agent was a buzzword
 ```
 
-CLI and MCP Server live on npm. Public launch January 2026.
+This isn't a demo project. CervellaSwarm has been our daily development tool since December 2025, managing real codebases with real deadlines.
 
-## Philosophy
+## Project Structure
 
-> **"The only AI coding team that checks its own work"**
-
-We're honest about our limitations. AI tools today aren't perfect - context gets lost, code quality varies, mistakes happen.
-
-Our solution? **Built-in quality guardians.** Three dedicated agents whose only job is to review and verify the work of other agents. Like having senior developers on every PR, but AI.
-
-> "Sometimes it feels like magic." - That's our promise. Not always, but when it works... it really works.
-
-**Our values:**
-- "Fatto BENE > Fatto VELOCE" (Done RIGHT > Done FAST)
-- Honest about limitations
-- Quality over speed
-- Growing with the community
+```
+packages/
+  core/           # Core library (@cervellaswarm/core)
+  cli/            # CLI tool (@cervellaswarm/cli)
+  mcp-server/     # MCP integration (@cervellaswarm/mcp-server)
+  api/            # API client (@cervellaswarm/api)
+scripts/
+  swarm/          # Agent orchestration
+  utils/          # AST pipeline, semantic search, impact analysis
+  common/         # Shared utilities (db, config, colors)
+tests/            # 1,032 tests (pytest)
+docs/             # Comprehensive documentation
+```
 
 ## Contributing
 
-Interested in contributing? See [CONTRIBUTING.md](CONTRIBUTING.md) (coming soon).
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-## Support
-
-- Issues: [GitHub Issues](https://github.com/rafapra3008/CervellaSwarm/issues)
-- Discussions: Coming soon
+- **Bug reports:** [GitHub Issues](https://github.com/rafapra3008/cervellaswarm/issues)
+- **Security:** See [SECURITY.md](SECURITY.md) for responsible disclosure
+- **Code of Conduct:** [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 
 ## License
 
-Copyright 2026 Rafa & Cervella
+Apache License 2.0 -- see [LICENSE](LICENSE) for full text.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-See [LICENSE](LICENSE) for full text.
+Copyright 2025-2026 CervellaSwarm Contributors.
 
 ---
 
-**CervellaSwarm** - Built with love by Cervella & Rafa
+<div align="center">
 
-*"17 brains are better than one."*
+**CervellaSwarm** -- *17 brains are better than one.*
+
+[Getting Started](docs/GETTING_STARTED.md) | [Documentation](docs/) | [Contributing](CONTRIBUTING.md) | [Changelog](CHANGELOG.md)
+
+</div>
