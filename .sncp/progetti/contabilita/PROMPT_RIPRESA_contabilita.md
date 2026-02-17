@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - Contabilita
 
-> **Ultimo aggiornamento:** 16 Febbraio 2026 - Sessione 57
+> **Ultimo aggiornamento:** 17 Febbraio 2026 - Sessione 61
 > **Per SOLO questo progetto!**
 
 ---
@@ -12,14 +12,14 @@
 | **Produzione** | v2.11.0 LIVE (deployato sessione 16) |
 | **IP** | 35.193.39.185 STATICO |
 | **Main** | d5d10f8 - cron v2.0.0 (pushato + tag vm-deployed-v2.11.0) |
-| **Lab 2.0** | branch lab-v2 - S57 SPRING Matcher v1.0.0 |
+| **Lab 2.0** | branch lab-v2 - S61 Verifica Diamante SPRING |
 | **Locale** | ISOLATO! :8000=main (baked), :8001=lab-v2 (mount) |
-| **Test** | 914/914 PASS (0 warnings, 0 fail) |
+| **Test** | 935/935 PASS (0 warnings, 0 fail) |
 | **Database pkg** | v2.15.0 - 5 Mixin (core, transactions, pareggi, edits, seasons v2.1.0) |
 | **Migrations** | v9 (v4-v6=stagione GIR/POS, v7=season_metadata, v8=originated_from_season, v9=INVERNO doppio anno) |
-| **SPRING Parser** | v1.0.0 (12 regex, 70 test, 9.5/10) |
-| **SPRING Matcher** | v1.0.0 (4 fasi matching, 63 test, 9.2/10) |
+| **SPRING Stack** | Parser v1.0.0 + Matcher v1.0.0 + Router v1.1.0 + UI v1.1.0 + Analysis v1.0.0 |
 | **DB LAB** | DATI PRODUZIONE REALI! (sync 16 Feb 2026) - 1,240 cap + 885 GIR + 232 POS |
+| **Telegram VM** | FUNZIONANTE! Nuovo token configurato S59 |
 | **NO deploy/merge** | Lab v2 resta separato, deploy parallelo quando pronto |
 
 ---
@@ -34,63 +34,63 @@
 
 ## ULTIME 3 SESSIONI
 
-### S57 - SPRING Matcher v1.0.0 (9.2/10)
+### S61 - Verifica Diamante SPRING Step 1 (9.3/10)
 
-**Step 4 Subroadmap SPRING: Matching Engine**
-1. **Core Module** (`backend/processors/spring_matcher.py`, 583 righe)
-   - 4 fasi: EXACT (num_mov+importo) -> STRONG (nome>=0.85+importo+data<=7gg) -> MEDIUM (nome>=0.70+importo, capped 0.80) -> WEAK (importo+data<=14gg+nome>=0.50)
-   - Greedy 1:1 assignment, MatchConfig/MatchResult/ReconciliationReport dataclass
-   - Riuso calculate_name_similarity, parse_amount, extract_name_from_caparra/gir da matching.py
-2. **63 test** (`tests/test_spring_matcher.py`): tutte le fasi + greedy + report + edge
-3. **Router** (`backend/routers/spring.py`): GET /api/spring/files + POST /api/spring/reconcile
-4. **Risultati REALI**: NL 93.3%/98.9%, HP 79.4%/91.0%, SHE 84.5%/99.2% (1,916 match su 2,125 DB)
-5. **Guardiana**: 9.2/10 x2 APPROVED (4 P2 fixati)
+**Rafa ha testato nel browser:** SPRING funziona! 95.8% match, upload/delete/multi-file tutto OK.
 
-### S56 - Sync DB Produzione -> Lab v2 (9.7/10)
-- 3 DB copiati da backup giornaliero VM, v3->v9 migrazioni
-- NL 418cap+352gir+232pos, HP 441cap+279gir, SHE 381cap+254gir
+**Decisione Rafa:** Prima di dichiarare lab-v2 completo, fare sessioni di LOGICA, REVIEW, ANALISI per verificare che i dati siano di fiducia. "Enriquecer os dados do diamante."
 
-### S55 - SPRING Parser v1.0.0 (9.5/10)
-- 6 file Sergio (NL/HP/SHE x 2025/2026), 12 regex, 70 test
+**Idea Rafa:** Filtro per periodo (mese/trimestre/custom) per analisi mirata.
 
----
+**Step 1 completato:**
+- Script `scripts/spring_analysis.py` v1.0.0 creato (--portal NL/HP/SHE --audit-matches)
+- Report NL: `docs/SPRING_ANALYSIS_NL.md` (4181 righe)
+- Risultati NL: 390/418 cap (93.3%), 348/352 GIR (98.9%), 724/738 match con confidence 0.95+
+- 9 match sospetti (1 falso positivo confermato: Drewek/Narty WEAK)
+- 28 cap DB senza match (rimborsi, nomi composti, dati vecchi)
+- 187 cap SPRING senza match (mesi Gen-Set 2025, DB parte da Ott)
+- Guardiana: 9.3/10 -> fix P2 DRY + P2 params + 4 P3
 
-## SUBROADMAP: "SPRING Riconciliazione & Dati Reali"
+### S60 - SPRING File Management (media 9.5/10)
+- Multi-file checkbox, upload POST, delete DELETE, data modifica
+- 17 nuovi test API. spring-reconcile.js v1.1.0, spring.py 2 endpoint
 
-| Step | Cosa | Sessione | Stato |
-|------|------|----------|-------|
-| **S1** | Studio file SPRING commercialista | S54 | COMPLETATO |
-| **S2** | Analisi 6 file + Parser SPRING v1.0.0 | S55 | COMPLETATO (9.5/10) |
-| **S3** | Sync DB produzione -> Lab v2 | S56 | COMPLETATO (9.7/10) |
-| **S4** | Matching engine (SPRING vs portale DB) | S57 | COMPLETATO (9.2/10) |
-| **S5** | UI riconciliazione (pagina web report) | S58 | PROSSIMO |
-| **S6** | Test reali avanzati | S58+ | - |
-| **S7-S10** | Polish, deploy | Futuro | - |
+### S59 - Fix Telegram + Footer Cleanup (9.3/10)
+- Telegram: nuovo token. Footer: CAPARRE, VS, hide TICKET+Totali
 
 ---
 
-## PROSSIMA SESSIONE (S58)
+## SUBROADMAP: "Verifica Diamante SPRING" (S61+)
 
-### Step 5: UI Riconciliazione
-- Seleziona file SPRING + portale (da GET /api/spring/files)
-- Lancia riconciliazione (POST /api/spring/reconcile)
-- Mostra risultati: matched, solo-SPRING, solo-DB con filtri e ordinamento
-- Summary cards con percentuali e conteggi
-- Pattern UI esistente (tabs, filtri, cards) da riusare
+| Step | Cosa | Stato |
+|------|------|-------|
+| 1 | Analisi Unmatched NL (script + report) | COMPLETATO (9.3/10) |
+| **2** | **Audit Match Confidence (falsi positivi in dettaglio)** | **PROSSIMO** |
+| 3 | Filtro Periodo (data_da/data_a backend + UI date picker) | - |
+| 4 | Cross-Portal HP + SHE (analisi comparativa) | - |
+| 5 | Hard Test Edge Case (+20 test da finding reali) | - |
+| 6 | Test Endpoint Reconcile API (+10 test, gap 0->10) | - |
+| 7 | Fix Mirati (SOLO con evidenza concreta, test red->green) | - |
+| 8 | Report Diamante (metriche finali per portale, livello fiducia) | - |
+
+**Finding da investigare:**
+- P1: Falso positivo Drewek Konrad <-> Narty Marek (WEAK, nome_sim 0.50)
+- P2: Radnic Vittorio score 90/100 ma non matchato (consumato da altro?)
+- P2: Nomi con "/" (Vernino/Cavallo) non matchano
+- P3: client_name "NO SHOW" in GIR DB (dato sporco)
+- Info: Caparre negative (-25, -356.4) = rimborsi, legittimo non matchare
 
 ---
 
 ## NOTE IMPORTANTI
-- **SPRING Matcher**: v1.0.0, VALIDATO su dati reali, 1,916 match su 2,125 record DB
+- **Telegram VM**: FUNZIONANTE con nuovo token (17 Feb 2026)
+- **SPRING Stack completo**: Parser + Matcher + Router + UI + File Management + Analysis
 - **DB LAB**: dati PRODUZIONE REALI (sync 16 Feb 2026)
 - **FASE 4 tab**: NASCOSTO (logica matching INTATTA!)
+- **TICKET tab**: NASCOSTO (funzione attiva)
 - **Dark mode**: NASCOSTO (forza tema light)
-- **CSP ready**: index.html + landing.html hanno 0 inline scripts
-- **VM = SOLO LETTURA**: mai modificare, solo backup + download
-
-### P3 residui (opzionali)
-- `reconcile_spring_file()` convenience function senza test
-- `contabilita.db` nella root: file orfano
+- **CSP ready**: 0 inline scripts
+- **Nota merge**: unificare APP_ENV -> ENVIRONMENT prima del merge
 
 ---
 

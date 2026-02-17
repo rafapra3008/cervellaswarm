@@ -13,7 +13,7 @@
 | **CervellaBrasil** | `.sncp/progetti/cervellabrasil/PROMPT_RIPRESA_cervellabrasil.md` | 2026-02-12 | FASE 0-2.5 completas, pronto FASE 3 (Execucao) |
 | **Chavefy** | `.sncp/progetti/chavefy/PROMPT_RIPRESA_chavefy.md` | 2026-02-12 | FASE 0: 13 pesquisas, pronto validacao online |
 | **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-30 | In pausa (Cache Layer v2.1.0 completato) |
-| **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-02-14 | Sessione 21: v2.11.0 LIVE, lab-v2 score 9.3-9.6/10, prossima fase U (Hard Tests) |
+| **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-02-17 | Sessione 61: Verifica Diamante SPRING avviata (8 step), Step 1 analisi NL 93.3% cap + 98.9% GIR, 935 test |
 | **CervellaCostruzione** | `.sncp/progetti/cervellacostruzione/PROMPT_RIPRESA_cervellacostruzione.md` | 2026-02-04 | Costituzione digitale |
 
 ---
