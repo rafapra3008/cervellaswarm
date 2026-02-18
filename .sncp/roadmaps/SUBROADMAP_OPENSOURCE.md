@@ -174,12 +174,19 @@
 
 > Il cuore: definizioni di agenti, hooks, task orchestration.
 
-**F2.1 - Hook System pubblicabile**
-- [ ] `packages/agent-hooks/` con hooks generici
-- [ ] bash_validator.py (gia 100% generico)
-- [ ] Template per: context_inject, file_limits, session_end
-- [ ] Docs: "Create your own hooks"
-- **Criterio:** Hook installabile e configurabile in < 5 min
+**F2.1 - Hook System pubblicabile** -- DONE (S370)
+- [x] `packages/agent-hooks/` con 5 hooks generici + CLI + config system
+- [x] bash_validator.py (PreToolUse: block/ask/auto-fix) - zero deps
+- [x] git_reminder.py (Stop: desktop notification) - zero deps
+- [x] file_limits.py (SessionEnd: configurable size/count limits)
+- [x] context_inject.py (SubagentStart: inject facts + state)
+- [x] session_checkpoint.py (SessionEnd: auto-save git state)
+- [x] Config: YAML config (project/user/env var), sensible defaults
+- [x] CLI: `cervella-hooks setup` genera config + settings.json snippet
+- [x] Docs: README with "Create your own hooks" guide + hook event reference
+- [x] 227 tests, 98% coverage, 0.12s
+- **Criterio:** Hook installabile e configurabile in < 5 min - SODDISFATTO
+- **Score:** Guardiana 9.1 -> 9.5/10 (2 round, 4 P2 fixed)
 
 **F2.2 - Agent Definitions come templates**
 - [ ] Template agents: coordinator, quality-gate, architect, worker
@@ -237,6 +244,15 @@
 - [ ] GETTING_STARTED.md (from zero to swarm in 30 min)
 - [ ] MIGRATION.md (per chi gia usa CrewAI/AutoGen)
 - **Criterio:** Dev migra da CrewAI in < 1 ora
+
+**F3.5 - Auto-Handoff Miglioramento** (ricerca S370)
+- [ ] Rimuovere logica "apri nuova finestra" dall'auto-handoff
+- [ ] PreCompact hook: aggiorna PROMPT_RIPRESA automaticamente prima del compact
+- [ ] Configurare `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=85` per threshold ottimale
+- [ ] Handoff diventa archivio storico, non trigger per nuova sessione
+- **Criterio:** Zero nuove finestre durante sessione, PROMPT_RIPRESA sempre aggiornato
+- **Ricerca:** `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260218_auto_handoff_improvements.md`
+- **Nota:** Community conferma antipattern (14 fonti). SNCP e autocompact sono complementari.
 
 **Audit Guardiana dopo F3** -> target 9.5/10
 

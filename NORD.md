@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 18 Febbraio 2026 - S369 (FASE 1 Open Source COMPLETA! Package LIVE su PyPI)
+> Aggiornato: 18 Febbraio 2026 - S370 (FASE 2 F2.1 DONE! Hook System + Auto-Handoff Research)
 
 ```
 +==================================================================+
@@ -99,7 +99,8 @@ FASE 1: AST Pipeline (pip)       [####################] 100% COMPLETA!
   F1.3 README + CHANGELOG          DONE (S368) - 225 righe, Guardiana 9.5/10
   F1.4 PyPI publication            DONE (S369) - LIVE su pypi.org!
 
-FASE 2: Agent Framework           [....................] TODO
+FASE 2: Agent Framework           [#####...............] 25% IN CORSO
+  F2.1 Hook System pubblicabile    DONE (S370) - 5 hooks, 227 test, Guardiana 9.5/10
 FASE 3: SNCP (session memory)     [....................] TODO
 FASE 4: Launch                    [....................] TODO
 ```

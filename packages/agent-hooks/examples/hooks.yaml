@@ -1,0 +1,68 @@
+# CervellaSwarm Agent Hooks - Configuration
+#
+# Place this file in one of:
+#   1. .cervella/hooks.yaml   (project-level, recommended)
+#   2. ~/.claude/hooks.yaml   (user-level default)
+#   3. Set CERVELLA_HOOKS_CONFIG=/path/to/hooks.yaml
+#
+# All sections are optional. Hooks use sensible defaults when omitted.
+
+# ---------------------------------------------------------------------------
+# File Limits - Prevent file bloat (SessionEnd hook)
+# ---------------------------------------------------------------------------
+file_limits:
+  checks:
+    - pattern: "SESSION_STATE.md"
+      name: "Session state file"
+      max_lines: 300
+      action: "Archive old sessions to .archive/"
+
+    - pattern: "reports/*.json"
+      name: "Report files"
+      max_count: 50
+      action: "Archive old reports"
+
+# ---------------------------------------------------------------------------
+# Context Injection - Inject project context into subagents (SubagentStart)
+# ---------------------------------------------------------------------------
+context_inject:
+  # File with verified facts that agents should never contradict
+  facts_file: "docs/FACTS.md"
+  facts_max_lines: 100
+
+  # File with current project state (session resume)
+  state_file: "SESSION_STATE.md"
+  state_max_lines: 50
+
+# ---------------------------------------------------------------------------
+# Session Checkpoint - Auto-save state at session end (SessionEnd/PreCompact)
+# ---------------------------------------------------------------------------
+session_checkpoint:
+  state_file: "SESSION_STATE.md"
+  include_git_status: true
+  include_recent_commits: true
+  max_lines: 200
+
+# ---------------------------------------------------------------------------
+# Git Reminder - Notify about uncommitted files (Stop hook)
+# ---------------------------------------------------------------------------
+git_reminder:
+  interval_minutes: 30
+
+# ---------------------------------------------------------------------------
+# Bash Validator - Extra patterns (PreToolUse hook)
+# ---------------------------------------------------------------------------
+bash_validator:
+  # Add your own blocked command patterns (regex)
+  extra_blocked:
+    # - pattern: "kubectl delete namespace production"
+    #   reason: "Never delete production namespace"
+
+  # Add your own risky command patterns (regex)
+  extra_risky:
+    # - pattern: "terraform destroy"
+    #   reason: "terraform destroy removes infrastructure"
+
+  # Add your own safe rm -rf targets (regex)
+  extra_safe_rm:
+    # - ".angular/?"
