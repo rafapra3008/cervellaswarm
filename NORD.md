@@ -93,11 +93,11 @@ FASE 0: Preparazione Repo        [####################] 100% COMPLETA! (media 9.
   F0.5 .github/ templates          DONE (S366) - Guardiana 9.3/10
   F0.6 Content scanner esteso      DONE (S367) - grep -rI, Guardiana 9.5/10
 
-FASE 1: AST Pipeline (pip)       [###############.....] 75%
+FASE 1: AST Pipeline (pip)       [####################] 100% COMPLETA!
   F1.1 Package skeleton            DONE (S368) - 14 moduli, Guardiana 9.6/10
   F1.2 Test suite standalone       DONE (S368) - 396 test, 395 passed, 0.47s
   F1.3 README + CHANGELOG          DONE (S368) - 225 righe, Guardiana 9.5/10
-  F1.4 PyPI publication            IN CORSO (S369) - Trusted Publishing
+  F1.4 PyPI publication            DONE (S369) - LIVE su pypi.org!
 
 FASE 2: Agent Framework           [....................] TODO
 FASE 3: SNCP (session memory)     [....................] TODO

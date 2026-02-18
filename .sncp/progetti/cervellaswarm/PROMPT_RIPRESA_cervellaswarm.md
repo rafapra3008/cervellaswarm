@@ -1,91 +1,65 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-18 - Sessione 368
-> **STATUS:** FASE 1 OPEN SOURCE - F1.1+F1.2+F1.3 COMPLETATE! Prossimo: F1.4 (PyPI publish)
+> **Ultimo aggiornamento:** 2026-02-18 - Sessione 369
+> **STATUS:** FASE 1 OPEN SOURCE COMPLETA! Package LIVE su PyPI. Prossimo: FASE 2 (Agent Framework)
 
 ---
 
-## SESSIONE 368 - FASE 1: AST Pipeline Standalone Package
+## SESSIONE 369 - F1.4: PyPI Publication
 
 ### Contesto
-Prima sessione FASE 1. Obiettivo: estrarre il pipeline AST (14 moduli, 396 test) come pacchetto pip standalone `cervellaswarm-code-intelligence`. Metodo: step-by-step con Guardiana audit dopo ogni step (target 9.5/10).
+Seconda sessione FASE 1. Obiettivo: pubblicare `cervellaswarm-code-intelligence` v0.1.0 su PyPI con Trusted Publishing. Primo package open source di CervellaSwarm.
 
 ### Cosa abbiamo fatto
 
-**F1.1 - Package skeleton + source files (9.6/10):**
-- Creato `packages/code-intelligence/` con layout Hatchling + src/
-- Copiato 14 moduli da scripts/utils/ con import normalizzati (relative imports)
-- 3 CLI entry points: cervella-search, cervella-impact, cervella-map
-- pip install -e . funziona, smoke test OK, wheel build OK
-- SPDX headers Apache-2.0 su tutti i 14 file
-- Fix: LICENSE "Rafa & Cervella" -> "CervellaSwarm Contributors"
-- Fix: __main__ blocks con import corretti dal package
+**NORD.md aggiornato:**
+- FASE 0: 100% COMPLETA (era ~75%)
+- FASE 1: 100% COMPLETA (era TODO)
+- Test suite: 1032 (era 968)
 
-**F1.2 - Test suite standalone (9.5/10):**
-- Copiato 20 test files + conftest.py (6774 linee)
-- Transformation script bulk: `scripts.utils.xxx` -> `cervellaswarm_code_intelligence.xxx`
-- Mock path tutti allineati al package
-- File path (real file tests) corretti a `src/cervellaswarm_code_intelligence/`
-- Docstring aggiornati (rimossi riferimenti a scripts/utils)
-- **396 test raccolti, 395 passed, 1 skipped, 0 failed, 0.47s**
+**Workflow GitHub Actions creati:**
+- `publish-pypi.yml`: Trusted Publishing OIDC, TestPyPI + PyPI + GitHub Release
+- `ci-code-intelligence.yml`: Python 3.10-3.13 matrix, build+install verify
 
-**F1.3 - README killer + CHANGELOG (9.5/10):**
-- README 225 righe: architettura ASCII, API reference, limitazioni oneste, CLI examples
-- Research pattern tree-sitter (benchmark per dev tools)
-- CHANGELOG.md per v0.1.0
-- ImpactResult aggiunto a __init__.py exports
-- Fix P1 Guardiana: CLI args ordine corretto, --repo-path per cervella-map
+**Fix durante CI:**
+- `scipy>=1.10.0` aggiunto come dipendenza (networkx PageRank richiede scipy)
+- Repository name fix: `cervellaswarm-internal` (non `cervellaswarm`) su PyPI config
+- README: "3 dependencies" -> "4 dependencies"
 
-### Decisioni S368
+**Risultato: PACKAGE LIVE SU PyPI!**
+- URL: https://pypi.org/project/cervellaswarm-code-intelligence/
+- `pip install cervellaswarm-code-intelligence` funziona
+- Attestazioni digitali PEP 740 (Sigstore) automatiche
+- GitHub Release creato
+
+**Ricerca:** Report Trusted Publishing con 10 fonti (`.sncp/progetti/cervellaswarm/reports/RESEARCH_20260218_pypi_trusted_publishing.md`)
+
+### Decisioni S369
 
 | Decisione | Perche |
 |-----------|--------|
-| Hatchling build backend | PyPA recommended, PEP 639 support |
-| Flat layout (no sub-packages) | 14 file non giustificano sub-packages |
-| `cervellaswarm_code_intelligence` (underscore) | Python module convention |
-| Relative imports | Standard per package standalone, no sys.path hacks |
-| Escludere test_generate_worker_context | Non fa parte del pipeline AST |
-| Escludere test_semantic_search.py (slow) | Integration test che scansiona tutto il repo |
+| Tag `code-intelligence-v*` | Separato da CLI `v*` per monorepo |
+| scipy come dipendenza | networkx PageRank richiede scipy per risultati non-uniformi |
+| Trusted Publishing OIDC | Zero API tokens, sicurezza massima, best practice 2026 |
+| Publish da repo privato | cervellaswarm-internal (non public) - workflow file deve matchare |
+| Environment protection PyPI | Manual approval da rafapra3008 per publish produzione |
 
-### Struttura Package
-
-```
-packages/code-intelligence/
-  pyproject.toml          # Hatchling, PEP 639, Apache-2.0
-  README.md               # 225 righe, killer
-  CHANGELOG.md            # v0.1.0
-  LICENSE + NOTICE
-  src/cervellaswarm_code_intelligence/
-    __init__.py            # 8 exports (Symbol, ..., ImpactResult, RepoMapper)
-    symbol_types.py        # Layer 0: Symbol dataclass
-    language_builtins.py   # Layer 0: builtin names
-    symbol_cache.py        # Layer 0: LRU cache
-    treesitter_parser.py   # Layer 0: AST parsing
-    python_extractor.py    # Layer 1: Python symbols
-    typescript_extractor.py # Layer 1: TS/JS symbols
-    symbol_extractor.py    # Layer 2: orchestrator
-    dependency_graph.py    # Layer 3: PageRank graph
-    semantic_search.py     # Layer 4: code navigation
-    repo_mapper.py         # Layer 4: token-budgeted maps
-    impact_analyzer.py     # Layer 4: risk assessment
-    cli/                   # 3 CLI entry points
-  tests/                   # 20 test files + conftest.py
-```
-
-### P3 residui (non bloccanti)
-- "Author: Cervella Backend" nei docstring dei moduli (nome agente interno, non personale)
-- CHANGELOG minimal (OK per v0.1.0)
-- cervellaswarm.com in packages/ (dominio non attivo)
-- Hero image da ricreare pulita
+### Lezioni apprese S369
+- **networkx PageRank**: richiede scipy (non solo numpy). Test passano localmente perche scipy gia installato
+- **PyPI Trusted Publisher**: il repository name deve matchare ESATTAMENTE (cervellaswarm-internal, non cervellaswarm)
+- **PyPI immutabile**: una volta pubblicata una versione, non si puo sovrascrivere. Fix = bump version
 
 ---
 
 ## PROSSIMI STEP
-- **F1.4: PyPI publication** - Trusted Publishing (GitHub Actions workflow)
-  - Serve: account PyPI, workflow publish.yml, tag v0.1.0
-  - Verificare su macchina pulita prima della pubblicazione
+- **FASE 2: Agent Framework** - Hook system, agent templates, task orchestration
+  - F2.1: Hook System pubblicabile
+  - F2.2: Agent Definitions come templates
+  - F2.3: Task Orchestration
+  - F2.4: Spawn Workers portabile
 - **Hero image:** Creare immagine/GIF pulita senza riferimenti interni
 - **F3 nota:** MCP SNCP KNOWN_PROJECTS hardcoded -> rendere configurabile
+- **Post lancio:** Reddit r/ClaudeAI, r/Python, Twitter/X (quando pronto con FASE 2)
 
 ---
 
@@ -99,7 +73,8 @@ packages/code-intelligence/
 | S362 | OPEN SOURCE STRATEGY! subroadmap 5 fasi |
 | S363-S367 | **FASE 0 COMPLETA** (6/6 step, media 9.4/10) |
 | S368 | **FASE 1: F1.1+F1.2+F1.3** (9.6+9.5+9.5/10) |
+| S369 | **FASE 1: F1.4 PyPI LIVE!** Package sul mondo! |
 
 ---
 
-*"Ultrapassar os proprios limites!" - Rafa & Cervella, S368*
+*"Ultrapassar os proprios limites!" - Rafa & Cervella, S369*

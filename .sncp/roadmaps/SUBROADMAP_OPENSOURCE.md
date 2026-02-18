@@ -155,14 +155,16 @@
 - [x] ImpactResult aggiunto a __init__.py exports
 - **Score:** Guardiana 9.5/10
 
-**F1.4 - Pubblicazione** -- IN CORSO (S369)
+**F1.4 - Pubblicazione** -- DONE (S369)
 - [x] GitHub Actions workflow `publish-pypi.yml` (Trusted Publishing OIDC)
-- [ ] Configurare Trusted Publishing su PyPI (account + pending publisher)
-- [ ] Configurare Trusted Publishing su TestPyPI
-- [ ] Tag `code-intelligence-v0.1.0` e primo publish
-- [ ] GitHub release con CHANGELOG
-- [ ] Post su Reddit r/ClaudeAI, r/Python, Twitter/X
-- **Criterio:** Installabile via `pip install cervellaswarm-code-intelligence`, 0 errori
+- [x] CI workflow `ci-code-intelligence.yml` (Python 3.10-3.13 matrix)
+- [x] Configurato Trusted Publishing su PyPI + TestPyPI (cervellaswarm-internal)
+- [x] GitHub Environments: testpypi (auto) + pypi (manual approval)
+- [x] Fix: scipy dipendenza per PageRank + repo name mismatch
+- [x] Tag `code-intelligence-v0.1.0` -> **LIVE su PyPI!**
+- [x] GitHub Release con attestazioni PEP 740 (Sigstore)
+- [ ] Post su Reddit r/ClaudeAI, r/Python, Twitter/X -- DEFERRED to F4.1
+- **Score:** Guardiana audit in corso
 
 **Audit Guardiana dopo F1** -> target 9.5/10
 
