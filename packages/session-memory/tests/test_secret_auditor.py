@@ -1,8 +1,16 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Tests for cervellaswarm_session_memory.secret_auditor."""
+"""Tests for cervellaswarm_session_memory.secret_auditor.
 
+NOTE: audit_file and audit_directory skip files whose full path contains
+"test", "mock", or "fixture". pytest's tmp_path always has "test" in it
+(e.g. test_xxx0/). We therefore use tempfile.mkdtemp() for tests that
+exercise detection logic, so the path stays clean.
+"""
+
+import shutil
+import tempfile
 from pathlib import Path
 from unittest.mock import patch
 
@@ -17,6 +25,18 @@ from cervellaswarm_session_memory.secret_auditor import (
     is_sanitized,
     should_skip_file,
 )
+
+
+@pytest.fixture
+def clean_dir():
+    """Temporary directory whose path does NOT contain 'test' or 'mock'.
+
+    Uses tempfile.mkdtemp() with a neutral prefix so that should_skip_file
+    does not wrongly skip files inside it.
+    """
+    d = Path(tempfile.mkdtemp(prefix="cerv_scan_"))
+    yield d
+    shutil.rmtree(d, ignore_errors=True)
 
 
 # ---------------------------------------------------------------------------
@@ -105,54 +125,54 @@ def test_is_sanitized_real_secret():
 # ---------------------------------------------------------------------------
 
 
-def test_audit_file_openai_key(tmp_path):
+def test_audit_file_openai_key(clean_dir):
     """OpenAI/Anthropic sk- keys trigger CRITICAL finding."""
-    f = tmp_path / "state.md"
+    f = clean_dir / "state.md"
     f.write_text("api_key=sk-abcdefghijklmnopqrstu\n", encoding="utf-8")
     result = audit_file(f)
     assert result.critical_count >= 1
     assert any("OpenAI" in x.pattern_name or "Anthropic" in x.pattern_name for x in result.findings)
 
 
-def test_audit_file_github_token(tmp_path):
+def test_audit_file_github_token(clean_dir):
     """GitHub Personal Access Tokens (ghp_...) trigger CRITICAL finding."""
-    f = tmp_path / "state.md"
+    f = clean_dir / "state.md"
     f.write_text("token=ghp_" + "a" * 36 + "\n", encoding="utf-8")
     result = audit_file(f)
     assert result.critical_count >= 1
     assert any("GitHub" in x.pattern_name for x in result.findings)
 
 
-def test_audit_file_google_key(tmp_path):
+def test_audit_file_google_key(clean_dir):
     """Google API keys (AIza...) trigger CRITICAL finding."""
-    f = tmp_path / "state.md"
+    f = clean_dir / "state.md"
     f.write_text("key=AIza" + "a" * 35 + "\n", encoding="utf-8")
     result = audit_file(f)
     assert result.critical_count >= 1
     assert any("Google" in x.pattern_name for x in result.findings)
 
 
-def test_audit_file_stripe_key(tmp_path):
+def test_audit_file_stripe_key(clean_dir):
     """Stripe secret keys (sk_live_...) trigger CRITICAL finding."""
-    f = tmp_path / "state.md"
+    f = clean_dir / "state.md"
     f.write_text("key=sk_live_" + "a" * 24 + "\n", encoding="utf-8")
     result = audit_file(f)
     assert result.critical_count >= 1
     assert any("Stripe" in x.pattern_name for x in result.findings)
 
 
-def test_audit_file_private_key(tmp_path):
+def test_audit_file_private_key(clean_dir):
     """BEGIN PRIVATE KEY headers trigger CRITICAL finding."""
-    f = tmp_path / "state.md"
+    f = clean_dir / "state.md"
     f.write_text("-----BEGIN RSA PRIVATE KEY-----\n", encoding="utf-8")
     result = audit_file(f)
     assert result.critical_count >= 1
     assert any("Private Key" in x.pattern_name for x in result.findings)
 
 
-def test_audit_file_aws_key(tmp_path):
+def test_audit_file_aws_key(clean_dir):
     """AWS access key IDs (AKIA...) trigger CRITICAL finding."""
-    f = tmp_path / "state.md"
+    f = clean_dir / "state.md"
     f.write_text("aws_key=AKIA" + "A" * 16 + "\n", encoding="utf-8")
     result = audit_file(f)
     assert result.critical_count >= 1
@@ -164,27 +184,27 @@ def test_audit_file_aws_key(tmp_path):
 # ---------------------------------------------------------------------------
 
 
-def test_audit_file_password(tmp_path):
+def test_audit_file_password(clean_dir):
     """password=xxx assignments trigger HIGH finding."""
-    f = tmp_path / "state.md"
+    f = clean_dir / "state.md"
     f.write_text("password=supersecretpass\n", encoding="utf-8")
     result = audit_file(f)
     assert result.high_count >= 1
     assert any("Password" in x.pattern_name for x in result.findings)
 
 
-def test_audit_file_secret_assignment(tmp_path):
+def test_audit_file_secret_assignment(clean_dir):
     """secret=xxx assignments trigger HIGH finding."""
-    f = tmp_path / "state.md"
+    f = clean_dir / "state.md"
     f.write_text("Secret=mybigsecretvalue\n", encoding="utf-8")
     result = audit_file(f)
     assert result.high_count >= 1
     assert any("Secret" in x.pattern_name for x in result.findings)
 
 
-def test_audit_file_token_assignment(tmp_path):
+def test_audit_file_token_assignment(clean_dir):
     """token=xxx assignments trigger HIGH finding."""
-    f = tmp_path / "state.md"
+    f = clean_dir / "state.md"
     f.write_text("Token=abcdefghijklmnop\n", encoding="utf-8")
     result = audit_file(f)
     assert result.high_count >= 1
@@ -196,18 +216,18 @@ def test_audit_file_token_assignment(tmp_path):
 # ---------------------------------------------------------------------------
 
 
-def test_audit_file_clean(tmp_path):
+def test_audit_file_clean(clean_dir):
     """A file with no secrets returns a clean result."""
-    f = tmp_path / "state.md"
+    f = clean_dir / "state.md"
     f.write_text("# My Session\n\nNo secrets here.\n", encoding="utf-8")
     result = audit_file(f)
     assert result.clean is True
     assert result.scanned_files == 1
 
 
-def test_audit_file_sanitized_ignored(tmp_path):
+def test_audit_file_sanitized_ignored(clean_dir):
     """Lines containing sanitized markers are not flagged."""
-    f = tmp_path / "state.md"
+    f = clean_dir / "state.md"
     f.write_text("api_key=[stored in .env as OPENAI_API_KEY]\n", encoding="utf-8")
     result = audit_file(f)
     assert result.clean is True
@@ -221,17 +241,22 @@ def test_audit_file_missing():
 
 
 def test_audit_file_skip_test(tmp_path):
-    """Files with 'test' in the name are skipped (scanned_files=1, no findings)."""
-    f = tmp_path / "test_secrets.md"
+    """Files with 'test' in their name are skipped (scanned_files=1, no findings).
+
+    Uses tmp_path here because the path contains 'test', which is exactly what
+    we want to verify is correctly skipped.
+    """
+    f = tmp_path / "state.md"
     f.write_text("sk-abcdefghijklmnopqrstu\n", encoding="utf-8")
+    # tmp_path path contains 'test' -> should_skip_file returns True
     result = audit_file(f)
     assert result.scanned_files == 1
     assert result.critical_count == 0
 
 
-def test_audit_file_binary_ignored(tmp_path):
+def test_audit_file_binary_ignored(clean_dir):
     """Files that raise UnicodeDecodeError are gracefully handled."""
-    f = tmp_path / "state.md"
+    f = clean_dir / "state.md"
     f.write_bytes(b"\xff\xfe\x00binary data\x00")
     result = audit_file(f)
     # Should not raise; returns with 1 scanned file and no findings
@@ -239,9 +264,9 @@ def test_audit_file_binary_ignored(tmp_path):
     assert result.clean is True
 
 
-def test_audit_file_extra_patterns(tmp_path):
+def test_audit_file_extra_patterns(clean_dir):
     """Custom extra_patterns are detected."""
-    f = tmp_path / "state.md"
+    f = clean_dir / "state.md"
     f.write_text("custom_token=MYTOKEN123\n", encoding="utf-8")
     result = audit_file(f, extra_patterns=[(r"MYTOKEN\d+", "Custom Token")])
     assert result.high_count >= 1
@@ -253,24 +278,24 @@ def test_audit_file_extra_patterns(tmp_path):
 # ---------------------------------------------------------------------------
 
 
-def test_audit_directory_recursive(tmp_path):
+def test_audit_directory_recursive(clean_dir):
     """audit_directory scans all matching files recursively."""
-    sub = tmp_path / "subdir"
+    sub = clean_dir / "subdir"
     sub.mkdir()
     (sub / "file.md").write_text("# Clean file\n", encoding="utf-8")
-    (tmp_path / "top.md").write_text("# Also clean\n", encoding="utf-8")
+    (clean_dir / "top.md").write_text("# Also clean\n", encoding="utf-8")
 
-    result = audit_directory(tmp_path)
+    result = audit_directory(clean_dir)
     assert result.scanned_files == 2
     assert result.clean is True
 
 
-def test_audit_directory_multiple_findings(tmp_path):
+def test_audit_directory_multiple_findings(clean_dir):
     """audit_directory aggregates findings from multiple files."""
-    (tmp_path / "a.md").write_text("sk-abcdefghijklmnopqrstu\n", encoding="utf-8")
-    (tmp_path / "b.md").write_text("ghp_" + "z" * 36 + "\n", encoding="utf-8")
+    (clean_dir / "a.md").write_text("sk-abcdefghijklmnopqrstu\n", encoding="utf-8")
+    (clean_dir / "b.md").write_text("ghp_" + "z" * 36 + "\n", encoding="utf-8")
 
-    result = audit_directory(tmp_path)
+    result = audit_directory(clean_dir)
     assert result.critical_count >= 2
     assert result.scanned_files >= 2
 
@@ -289,29 +314,29 @@ def test_audit_directory_missing():
     assert result.clean is True
 
 
-def test_audit_directory_custom_extensions(tmp_path):
+def test_audit_directory_custom_extensions(clean_dir):
     """Only files with the specified extensions are scanned."""
-    (tmp_path / "keep.md").write_text("sk-abcdefghijklmnopqrstu\n", encoding="utf-8")
-    (tmp_path / "skip.txt").write_text("sk-abcdefghijklmnopqrstu\n", encoding="utf-8")
+    (clean_dir / "keep.md").write_text("sk-abcdefghijklmnopqrstu\n", encoding="utf-8")
+    (clean_dir / "skip.txt").write_text("sk-abcdefghijklmnopqrstu\n", encoding="utf-8")
 
-    result = audit_directory(tmp_path, extensions={".md"})
+    result = audit_directory(clean_dir, extensions={".md"})
     assert result.scanned_files == 1  # only .md
 
 
-def test_audit_directory_skip_files(tmp_path):
+def test_audit_directory_skip_files(clean_dir):
     """Files matching skip_files patterns are excluded."""
-    (tmp_path / "important.md").write_text("sk-abcdefghijklmnopqrstu\n", encoding="utf-8")
-    (tmp_path / "skip_me.md").write_text("sk-abcdefghijklmnopqrstu\n", encoding="utf-8")
+    (clean_dir / "important.md").write_text("sk-abcdefghijklmnopqrstu\n", encoding="utf-8")
+    (clean_dir / "skip_me.md").write_text("sk-abcdefghijklmnopqrstu\n", encoding="utf-8")
 
-    result = audit_directory(tmp_path, skip_files=["skip_me"])
-    # skip_me.md should be excluded; important.md should be scanned
+    result = audit_directory(clean_dir, skip_files=["skip_me"])
+    # skip_me.md is excluded; important.md is scanned
     assert result.scanned_files == 1
     assert result.critical_count >= 1
 
 
-def test_audit_directory_config_extra(tmp_path):
+def test_audit_directory_config_extra(clean_dir):
     """Extra patterns from config are applied during directory audit."""
-    (tmp_path / "notes.md").write_text("MY_SPECIAL_KEY=abc123def456\n", encoding="utf-8")
+    (clean_dir / "notes.md").write_text("MY_SPECIAL_KEY=abc123def456\n", encoding="utf-8")
 
     config_patch = {
         "secrets": {
@@ -323,7 +348,7 @@ def test_audit_directory_config_extra(tmp_path):
     with patch(
         "cervellaswarm_session_memory.secret_auditor.load_config", return_value=config_patch
     ):
-        result = audit_directory(tmp_path)
+        result = audit_directory(clean_dir)
 
     assert result.high_count >= 1
     assert any("Custom Secret" in f.pattern_name for f in result.findings)
@@ -334,9 +359,9 @@ def test_audit_directory_config_extra(tmp_path):
 # ---------------------------------------------------------------------------
 
 
-def test_finding_has_no_content(tmp_path):
+def test_finding_has_no_content(clean_dir):
     """Finding dataclass does not store the secret value itself."""
-    f = tmp_path / "state.md"
+    f = clean_dir / "state.md"
     secret = "sk-abcdefghijklmnopqrstu"
     f.write_text(f"key={secret}\n", encoding="utf-8")
 

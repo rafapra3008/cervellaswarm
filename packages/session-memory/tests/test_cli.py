@@ -1,9 +1,17 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Tests for cervellaswarm_session_memory.cli."""
+"""Tests for cervellaswarm_session_memory.cli.
+
+NOTE: audit_directory (called by main_audit) skips files whose full path
+contains "test". pytest's tmp_path always embeds the test name (e.g.
+test_audit_with_secret0). We use tempfile.mkdtemp() for audit tests that
+need real secret detection.
+"""
 
 import json
+import shutil
+import tempfile
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
@@ -17,6 +25,18 @@ from cervellaswarm_session_memory.cli import (
     main_list,
     main_sync,
 )
+
+
+@pytest.fixture
+def clean_dir():
+    """Temporary directory whose path does NOT contain 'test' or 'mock'.
+
+    audit_directory skips paths with those substrings. Using a neutral
+    prefix keeps detection tests reliable.
+    """
+    d = Path(tempfile.mkdtemp(prefix="cerv_cli_"))
+    yield d
+    shutil.rmtree(d, ignore_errors=True)
 
 
 # ---------------------------------------------------------------------------
@@ -101,6 +121,7 @@ def test_init_duplicate_json_error(tmp_path, monkeypatch, capsys):
     """Duplicate project with --json outputs JSON error and exits with code 1."""
     monkeypatch.chdir(tmp_path)
     main_init(["my-project"])
+    capsys.readouterr()  # clear output from first init
     with pytest.raises(SystemExit) as exc:
         main_init(["my-project", "--json"])
     assert exc.value.code == 1
@@ -175,31 +196,31 @@ def test_check_project_not_found(tmp_path, monkeypatch, capsys):
 # ---------------------------------------------------------------------------
 
 
-def test_audit_clean_dir(tmp_path, capsys):
+def test_audit_clean_dir(clean_dir, capsys):
     """audit on a directory with no secrets exits with code 0."""
-    (tmp_path / "state.md").write_text("# Clean state\n\nNo secrets here.\n", encoding="utf-8")
+    (clean_dir / "state.md").write_text("# Clean state\n\nNo secrets here.\n", encoding="utf-8")
     with pytest.raises(SystemExit) as exc:
-        main_audit([str(tmp_path)])
+        main_audit([str(clean_dir)])
     assert exc.value.code == 0
 
 
-def test_audit_with_secret(tmp_path, capsys):
+def test_audit_with_secret(clean_dir, capsys):
     """audit detecting a secret exits with code 1."""
-    (tmp_path / "state.md").write_text(
+    (clean_dir / "state.md").write_text(
         "api_key=sk-abcdefghijklmnopqrstu\n", encoding="utf-8"
     )
     with pytest.raises(SystemExit) as exc:
-        main_audit([str(tmp_path)])
+        main_audit([str(clean_dir)])
     assert exc.value.code == 1
 
 
-def test_audit_json_output(tmp_path, capsys):
+def test_audit_json_output(clean_dir, capsys):
     """audit --json outputs valid JSON with findings info."""
-    (tmp_path / "state.md").write_text(
+    (clean_dir / "state.md").write_text(
         "api_key=sk-abcdefghijklmnopqrstu\n", encoding="utf-8"
     )
     with pytest.raises(SystemExit):
-        main_audit([str(tmp_path), "--json"])
+        main_audit([str(clean_dir), "--json"])
     out = capsys.readouterr().out
     data = json.loads(out)
     assert "scanned_files" in data
@@ -208,10 +229,10 @@ def test_audit_json_output(tmp_path, capsys):
     assert isinstance(data["findings"], list)
 
 
-def test_audit_default_path(tmp_path, monkeypatch, capsys):
+def test_audit_default_path(clean_dir, monkeypatch, capsys):
     """audit with no path argument defaults to current directory."""
-    monkeypatch.chdir(tmp_path)
-    (tmp_path / "notes.md").write_text("# Just notes\n", encoding="utf-8")
+    monkeypatch.chdir(clean_dir)
+    (clean_dir / "notes.md").write_text("# Just notes\n", encoding="utf-8")
     with pytest.raises(SystemExit) as exc:
         main_audit([])
     # Directory is clean so exit 0
