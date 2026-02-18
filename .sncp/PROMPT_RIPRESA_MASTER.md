@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - MASTER (Globale)
 
-> **Ultimo aggiornamento:** 18 Febbraio 2026 - Sessione 368
+> **Ultimo aggiornamento:** 18 Febbraio 2026 - Sessione 369
 > **Tabella ecosistema condivisa - SOLO link ai file specifici**
 
 ---
@@ -9,7 +9,7 @@
 
 | Progetto | PROMPT_RIPRESA | Aggiornato | TL;DR |
 |----------|----------------|------------|-------|
-| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-02-18 | FASE 1 OPEN SOURCE! F1.1+F1.2+F1.3 done (9.5-9.6/10). Package `cervellaswarm-code-intelligence` v0.1.0 pronto. Next: F1.4 PyPI publish |
+| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-02-18 | FASE 1 COMPLETA! Package `cervellaswarm-code-intelligence` v0.1.0 LIVE su PyPI. Next: FASE 2 Agent Framework |
 | **CervellaBrasil** | `.sncp/progetti/cervellabrasil/PROMPT_RIPRESA_cervellabrasil.md` | 2026-02-12 | FASE 0-2.5 completas, pronto FASE 3 (Execucao) |
 | **Chavefy** | `.sncp/progetti/chavefy/PROMPT_RIPRESA_chavefy.md` | 2026-02-12 | FASE 0: 13 pesquisas, pronto validacao online |
 | **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-30 | In pausa (Cache Layer v2.1.0 completato) |

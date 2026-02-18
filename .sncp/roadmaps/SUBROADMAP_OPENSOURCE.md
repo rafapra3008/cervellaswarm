@@ -164,7 +164,7 @@
 - [x] Tag `code-intelligence-v0.1.0` -> **LIVE su PyPI!**
 - [x] GitHub Release con attestazioni PEP 740 (Sigstore)
 - [ ] Post su Reddit r/ClaudeAI, r/Python, Twitter/X -- DEFERRED to F4.1
-- **Score:** Guardiana audit in corso
+- **Score:** Guardiana 9.5/10
 
 **Audit Guardiana dopo F1** -> target 9.5/10
 

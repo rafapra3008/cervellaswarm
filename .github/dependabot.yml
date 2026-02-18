@@ -63,6 +63,17 @@ updates:
         patterns: ["*"]
         update-types: ["minor", "patch"]
 
+  # Python - code-intelligence package
+  - package-ecosystem: "pip"
+    directory: "/packages/code-intelligence"
+    schedule:
+      interval: "weekly"
+    labels: ["dependencies", "python"]
+    groups:
+      code-intelligence-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
   # Python - cervella package
   - package-ecosystem: "pip"
     directory: "/cervella"
