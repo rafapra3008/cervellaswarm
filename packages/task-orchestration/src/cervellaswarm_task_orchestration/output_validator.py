@@ -157,6 +157,9 @@ def validate_output(output_file: Path, logs_dir: Optional[Path] = None) -> Valid
         result.warnings.append(f"Log contains errors: {log_check['error_summary']}")
         result.score -= 10
 
+    # Clamp score to 0-100 range
+    result.score = max(0, min(100, result.score))
+
     # Score-based retry decision
     if result.score < 50:
         result.retry_needed = True

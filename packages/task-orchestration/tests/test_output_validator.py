@@ -236,12 +236,12 @@ def test_validate_output_score_perfect_clean(tmp_path):
 
 
 def test_validate_output_retry_needed_when_score_below_50(tmp_path):
-    # Error marker causes score drop >= 40
-    content = LONG_OK + "\nError: bad thing\nTraceback\nFAILED\n"
+    # Error markers (-40) + incomplete marker (-15) = score 45 < 50
+    content = LONG_OK + "\nError: bad thing\nTraceback\nFAILED\nTODO: fix this\n"
     f = write_output(tmp_path / "TASK_001_output.md", content)
     result = validate_output(f)
-    if result.score < 50:
-        assert result.retry_needed is True
+    assert result.score < 50, f"Expected score < 50 but got {result.score}"
+    assert result.retry_needed is True
 
 
 def test_validate_output_with_warnings_valid_still_true(tmp_path):

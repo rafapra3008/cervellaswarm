@@ -201,13 +201,19 @@
 - **Criterio:** Dev crea un agent custom in < 10 min - SODDISFATTO (`cervella-agent init worker --specialty backend`)
 - **Score:** Guardiana 9.3 -> 9.5/10 (2 round, 4 P2 fixed)
 
-**F2.3 - Task Orchestration**
-- [ ] task_classifier.py (zero dati personali)
-- [ ] architect_flow.py (zero dati personali)
-- [ ] task_manager.py (zero dati personali)
-- [ ] output_validator.py (zero dati personali)
-- [ ] Docs: "Automatic task routing"
-- **Criterio:** Pipeline classify -> route -> validate funziona standalone
+**F2.3 - Task Orchestration** -- DONE (S372)
+- [x] `packages/task-orchestration/` con pyproject.toml (Hatchling, PEP 639, ZERO dependencies!)
+- [x] task_classifier.py: rule-based complexity scoring (17 keywords, 4 levels, fast-path)
+- [x] architect_flow.py: routing + plan validation + 3-level fallback escalation
+- [x] task_manager.py: file-based state machine with atomic race protection (`open(f, 'x')`)
+- [x] output_validator.py: reflection pattern scoring 0-100 with retry logic
+- [x] cli.py: 6 entry points (cervella-classify/route/validate-plan/validate-output/task/orchestrate)
+- [x] 273 tests, 0.13s, zero external dependencies
+- [x] Research: 18 sources, 5 frameworks confirmed NO competitor has deterministic task routing
+- [x] README killer with comparison table + honest note
+- [x] dependabot.yml entry added
+- **Criterio:** Pipeline classify -> route -> validate funziona standalone - SODDISFATTO
+- **Score:** Guardiana 9.2 -> 9.5/10 (2 round, 4 P2 + 1 P3 fixed)
 
 **F2.4 - Spawn Workers (versione portabile)**
 - [ ] spawn-workers.sh adattato per config-driven (no paths hardcoded)

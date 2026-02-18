@@ -26,11 +26,17 @@ from cervellaswarm_task_orchestration.task_manager import (
     mark_ready,
     mark_working,
     mark_done,
+    ack_received,
+    ack_understood,
     get_task_status,
+    validate_task_id,
     cleanup_task,
 )
 from cervellaswarm_task_orchestration.output_validator import (
+    ValidationResult,
     validate_output,
+    find_last_output,
+    find_task_output,
 )
 
 __all__ = [
@@ -53,8 +59,14 @@ __all__ = [
     "mark_ready",
     "mark_working",
     "mark_done",
+    "ack_received",
+    "ack_understood",
     "get_task_status",
+    "validate_task_id",
     "cleanup_task",
     # output_validator
+    "ValidationResult",
     "validate_output",
+    "find_last_output",
+    "find_task_output",
 ]
