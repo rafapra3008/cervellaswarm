@@ -14,7 +14,7 @@ from cervellaswarm_code_intelligence.treesitter_parser import TreesitterParser
 from cervellaswarm_code_intelligence.symbol_extractor import SymbolExtractor
 from cervellaswarm_code_intelligence.dependency_graph import DependencyGraph
 from cervellaswarm_code_intelligence.semantic_search import SemanticSearch
-from cervellaswarm_code_intelligence.impact_analyzer import ImpactAnalyzer
+from cervellaswarm_code_intelligence.impact_analyzer import ImpactAnalyzer, ImpactResult
 from cervellaswarm_code_intelligence.repo_mapper import RepoMapper
 
 __all__ = [
@@ -24,5 +24,6 @@ __all__ = [
     "DependencyGraph",
     "SemanticSearch",
     "ImpactAnalyzer",
+    "ImpactResult",
     "RepoMapper",
 ]
