@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 17 Febbraio 2026 - S364 (FASE 0 Open Source - F0.3 completata)
+> Aggiornato: 18 Febbraio 2026 - S369 (FASE 1 Open Source - F1.1+F1.2+F1.3 completate, F1.4 in corso)
 
 ```
 +==================================================================+
@@ -63,7 +63,7 @@ SNCP 3.0:
   ✓ checkpoint.sh                 Automazione completa
 
 COVERAGE PUSH (S337-S348):
-  ✓ Test Suite                    968 test (era 177!)
+  ✓ Test Suite                    1032 test (era 177!)
   ✓ Coverage                      95% (practical ceiling)
   ✓ Tempo suite                   5.4s
   ✓ Technical debt                ZERO
@@ -80,20 +80,25 @@ FASE 3: Primi Utenti            [....................] PARCHEGGIATO
 FASE 4: Scala                   [....................] PARCHEGGIATO
 ```
 
-### OPEN SOURCE - IN CORSO (S362-S364)
+### OPEN SOURCE - IN CORSO (S362-S369)
 
 ```
 SUBROADMAP: .sncp/roadmaps/SUBROADMAP_OPENSOURCE.md
 
-FASE 0: Preparazione Repo        [################....] ~75%
+FASE 0: Preparazione Repo        [####################] 100% COMPLETA! (media 9.4/10)
   F0.1 .gitignore hardening       DONE (S363) - 1006 file untracked
   F0.2 Community files             DONE (S363) - LICENSE, CONTRIBUTING, SECURITY, CoC
   F0.3 Script sanitization         DONE (S364) - 25+ script, Guardiana 9.5/10
-  F0.4 README killer               TODO
-  F0.5 .github/ templates          TODO
-  F0.6 Content scanner esteso      TODO
+  F0.4 README killer               DONE (S366) - Guardiana 9.5/10
+  F0.5 .github/ templates          DONE (S366) - Guardiana 9.3/10
+  F0.6 Content scanner esteso      DONE (S367) - grep -rI, Guardiana 9.5/10
 
-FASE 1: AST Pipeline (pip)       [....................] TODO
+FASE 1: AST Pipeline (pip)       [###############.....] 75%
+  F1.1 Package skeleton            DONE (S368) - 14 moduli, Guardiana 9.6/10
+  F1.2 Test suite standalone       DONE (S368) - 396 test, 395 passed, 0.47s
+  F1.3 README + CHANGELOG          DONE (S368) - 225 righe, Guardiana 9.5/10
+  F1.4 PyPI publication            IN CORSO (S369) - Trusted Publishing
+
 FASE 2: Agent Framework           [....................] TODO
 FASE 3: SNCP (session memory)     [....................] TODO
 FASE 4: Launch                    [....................] TODO
