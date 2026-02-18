@@ -150,7 +150,7 @@ Source Files (.py, .ts, .tsx, .js, .jsx)
 SemanticSearch  RepoMapper  ImpactAnalyzer
 ```
 
-**5 layers, 14 modules, 3 external dependencies.**
+**5 layers, 14 modules, 4 external dependencies.**
 
 ## Supported Languages
 
