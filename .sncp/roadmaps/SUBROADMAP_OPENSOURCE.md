@@ -188,12 +188,18 @@
 - **Criterio:** Hook installabile e configurabile in < 5 min - SODDISFATTO
 - **Score:** Guardiana 9.1 -> 9.5/10 (2 round, 4 P2 fixed)
 
-**F2.2 - Agent Definitions come templates**
-- [ ] Template agents: coordinator, quality-gate, architect, worker
-- [ ] _SHARED_DNA.md come esempio (senza filosofia personale)
-- [ ] Frontmatter YAML documentato (name, model, tools, version)
-- [ ] Esempi: team di 3 (minimal), team di 7 (standard), team di 17 (full)
-- **Criterio:** Dev crea un agent custom in < 10 min
+**F2.2 - Agent Definitions come templates** -- DONE (S371)
+- [x] Template agents: coordinator, quality-gate, architect, worker
+- [x] _SHARED_DNA.md come esempio (senza filosofia personale)
+- [x] Frontmatter YAML documentato (name, model, tools, version, role, permissionMode, maxTurns)
+- [x] Esempi: team di 3 (minimal), team di 7 (standard), team di 17 (full)
+- [x] CLI: `cervella-agent init/init-team/list/validate`
+- [x] team.yaml composition format (no competitor has this!)
+- [x] Worker specialties: backend, frontend, tester, researcher, devops, docs, generic
+- [x] 188 tests, 0.16s
+- [x] Research: 18 sources, 5 frameworks compared (CrewAI, AutoGen, LangGraph, Claude Code, OpenAI SDK)
+- **Criterio:** Dev crea un agent custom in < 10 min - SODDISFATTO (`cervella-agent init worker --specialty backend`)
+- **Score:** Guardiana 9.3 -> 9.5/10 (2 round, 4 P2 fixed)
 
 **F2.3 - Task Orchestration**
 - [ ] task_classifier.py (zero dati personali)

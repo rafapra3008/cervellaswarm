@@ -1,0 +1,69 @@
+name: my-project
+version: 1.0.0
+description: Full 17-agent team with all specialist roles
+agents:
+- name: lead
+  type: coordinator
+  role: lead
+- name: planner
+  type: architect
+  role: planner
+- name: qa-code
+  type: quality-gate
+  role: validator
+- name: qa-ops
+  type: quality-gate
+  role: validator
+- name: qa-research
+  type: quality-gate
+  role: validator
+- name: backend
+  type: worker
+  specialty: backend
+  role: worker
+- name: frontend
+  type: worker
+  specialty: frontend
+  role: worker
+- name: tester
+  type: worker
+  specialty: tester
+  role: worker
+- name: researcher
+  type: worker
+  specialty: researcher
+  role: worker
+- name: devops
+  type: worker
+  specialty: devops
+  role: worker
+- name: docs
+  type: worker
+  specialty: docs
+  role: worker
+- name: data
+  type: worker
+  specialty: generic
+  role: worker
+- name: security
+  type: worker
+  specialty: generic
+  role: worker
+- name: marketing
+  type: worker
+  specialty: generic
+  role: worker
+- name: reviewer
+  type: worker
+  specialty: generic
+  role: worker
+- name: scientist
+  type: worker
+  specialty: generic
+  role: worker
+- name: engineer
+  type: worker
+  specialty: generic
+  role: worker
+entry_point: lead
+process: hierarchical

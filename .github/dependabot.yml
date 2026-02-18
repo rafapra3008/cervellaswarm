@@ -74,6 +74,28 @@ updates:
         patterns: ["*"]
         update-types: ["minor", "patch"]
 
+  # Python - agent-hooks package
+  - package-ecosystem: "pip"
+    directory: "/packages/agent-hooks"
+    schedule:
+      interval: "weekly"
+    labels: ["dependencies", "python"]
+    groups:
+      agent-hooks-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # Python - agent-templates package
+  - package-ecosystem: "pip"
+    directory: "/packages/agent-templates"
+    schedule:
+      interval: "weekly"
+    labels: ["dependencies", "python"]
+    groups:
+      agent-templates-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
   # Python - cervella package
   - package-ecosystem: "pip"
     directory: "/cervella"
