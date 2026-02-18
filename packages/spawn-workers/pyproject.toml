@@ -1,0 +1,60 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 CervellaSwarm Contributors
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cervellaswarm-spawn-workers"
+version = "0.1.0"
+description = "Config-driven worker spawning for multi-agent systems. tmux + nohup backends, signal handling, health checks."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.10"
+authors = [
+    { name = "CervellaSwarm Contributors" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries",
+]
+keywords = ["multi-agent", "ai-agents", "worker-spawning", "tmux", "process-management"]
+dependencies = [
+    "pyyaml",
+]
+
+[project.urls]
+Homepage = "https://github.com/rafapra3008/cervellaswarm"
+Repository = "https://github.com/rafapra3008/cervellaswarm/tree/main/packages/spawn-workers"
+Issues = "https://github.com/rafapra3008/cervellaswarm/issues"
+
+[project.scripts]
+cervella-spawn = "cervellaswarm_spawn_workers.cli:main"
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.coverage.run]
+source = ["cervellaswarm_spawn_workers"]
+
+[tool.coverage.report]
+show_missing = true
+
+[tool.hatch.build.targets.sdist]
+include = ["src/", "LICENSE", "NOTICE", "README.md", "CHANGELOG.md"]
