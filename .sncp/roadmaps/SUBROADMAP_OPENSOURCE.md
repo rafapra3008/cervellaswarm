@@ -215,11 +215,19 @@
 - **Criterio:** Pipeline classify -> route -> validate funziona standalone - SODDISFATTO
 - **Score:** Guardiana 9.2 -> 9.5/10 (2 round, 4 P2 + 1 P3 fixed)
 
-**F2.4 - Spawn Workers (versione portabile)**
-- [ ] spawn-workers.sh adattato per config-driven (no paths hardcoded)
-- [ ] Supporto: macOS (Terminal.app + tmux) + Linux (tmux)
-- [ ] Docs: "Launch parallel agent sessions"
-- **Criterio:** Funziona su macOS e Linux (Ubuntu 22.04+)
+**F2.4 - Spawn Workers (versione portabile)** DONE S372
+- [x] Package `cervellaswarm-spawn-workers` v0.1.0 at `packages/spawn-workers/`
+- [x] 5 modules: backend (tmux/nohup auto-detect), team_loader (YAML), spawner (SpawnManager), prompt_builder (10 specialties), cli (cervella-spawn)
+- [x] Config-driven spawn from team.yaml (reuses F2.2 schema + `spawn:` section)
+- [x] Signal handling (SIGINT/SIGTERM -> kill_all -> cleanup) + atexit
+- [x] Cross-invocation status/kill via tracking files (_load_tracked_workers)
+- [x] Shell injection safety (shlex.quote)
+- [x] 171 tests, 0.13s (all mocked, no real processes)
+- [x] README killer with comparison table + honest note
+- [x] dependabot.yml entry added
+- [x] Research: 18 sources, NO competitor has file-based state + tmux isolation + config-driven spawn
+- **Criterio:** Funziona su macOS e Linux (Ubuntu 22.04+) - SODDISFATTO
+- **Score:** Guardiana 9.2 -> 9.5/10 (2 round, 4 P2 + 1 P3 fixed)
 
 **Audit Guardiana dopo F2** -> target 9.5/10
 

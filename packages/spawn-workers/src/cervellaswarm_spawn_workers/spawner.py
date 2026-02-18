@@ -11,6 +11,7 @@ processes across tmux and nohup backends with signal handling.
 import atexit
 import logging
 import os
+import shlex
 import shutil
 import signal
 import time
@@ -108,6 +109,44 @@ class SpawnManager:
             signal.signal(signal.SIGTERM, self._signal_handler)
             atexit.register(self.cleanup)
 
+        # Load existing workers from status directory (for --status/--kill)
+        self._load_tracked_workers()
+
+    def _load_tracked_workers(self) -> None:
+        """Load previously tracked workers from status directory files."""
+        if not self.status_dir.exists():
+            return
+
+        # Find all worker start files to discover tracked workers
+        for start_file in self.status_dir.glob("worker_*.start"):
+            name = start_file.stem.removeprefix("worker_")
+
+            session_file = self.status_dir / f"worker_{name}.session"
+            pid_file = self.status_dir / f"worker_{name}.pid"
+
+            session_name = None
+            pid = None
+            start_time = float(start_file.read_text().strip())
+
+            if session_file.exists():
+                session_name = session_file.read_text().strip()
+            if pid_file.exists():
+                try:
+                    pid = int(pid_file.read_text().strip())
+                except ValueError:
+                    pass
+
+            backend = "tmux" if session_name else "nohup"
+
+            worker = WorkerInfo(
+                name=name,
+                backend=backend,
+                session_name=session_name,
+                pid=pid,
+                start_time=start_time,
+            )
+            self.workers.append(worker)
+
     def _signal_handler(self, signum: int, frame: object) -> None:
         """Handle SIGINT/SIGTERM by killing all workers."""
         logger.info("Signal %d received, shutting down workers...", signum)
@@ -165,12 +204,12 @@ class SpawnManager:
         prompt_file = prompts_dir / f"worker_{name}.txt"
         prompt_file.write_text(system_prompt)
 
-        # Build claude command
+        # Build claude command (shlex.quote for shell injection safety)
         command = (
             f'CERVELLASWARM_WORKER=1 '
-            f'{self.claude_bin} -p '
-            f'--append-system-prompt "$(cat {prompt_file})" '
-            f'"{initial_prompt}"'
+            f'{shlex.quote(self.claude_bin)} -p '
+            f'--append-system-prompt "$(cat {shlex.quote(str(prompt_file))})" '
+            f'{shlex.quote(initial_prompt)}'
         )
 
         timestamp = int(time.time())

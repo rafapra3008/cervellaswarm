@@ -136,7 +136,7 @@ def load_team_string(content: str) -> TeamConfig:
 def get_spawnables(team: TeamConfig) -> list[AgentConfig]:
     """Get agents that should be spawned.
 
-    Returns agents where spawn_on_start is True and type is 'worker'.
+    Returns agents where spawn_on_start is True and type is 'worker' or 'guardian'.
 
     Args:
         team: TeamConfig to filter.

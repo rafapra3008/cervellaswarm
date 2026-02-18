@@ -3,7 +3,9 @@
 
 """CervellaSwarm Spawn Workers - Config-driven worker spawning for multi-agent systems."""
 
-__version__ = "0.1.0"
+from importlib.metadata import version as _version
+
+__version__ = _version("cervellaswarm-spawn-workers")
 
 from cervellaswarm_spawn_workers.backend import (
     ProcessInfo,
@@ -31,6 +33,7 @@ from cervellaswarm_spawn_workers.spawner import (
     WorkerStatus,
 )
 from cervellaswarm_spawn_workers.prompt_builder import (
+    SPECIALTIES,
     build_base_prompt,
     build_worker_prompt,
 )
@@ -59,6 +62,7 @@ __all__ = [
     "WorkerInfo",
     "WorkerStatus",
     # prompt_builder
+    "SPECIALTIES",
     "build_base_prompt",
     "build_worker_prompt",
 ]

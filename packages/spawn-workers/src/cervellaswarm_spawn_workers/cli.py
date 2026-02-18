@@ -118,13 +118,13 @@ def _cmd_team(args: argparse.Namespace) -> None:
 
     manager = _make_manager(args)
 
-    # Apply team spawn config
-    if team.spawn.tasks_dir != ".swarm/tasks":
-        manager.tasks_dir = Path(team.spawn.tasks_dir)
-    if team.spawn.logs_dir != ".swarm/logs":
-        manager.logs_dir = Path(team.spawn.logs_dir)
-    if team.spawn.max_workers != 5:
-        manager.max_workers = team.spawn.max_workers
+    # Apply team spawn config (override CLI defaults with team.yaml values)
+    manager.tasks_dir = Path(team.spawn.tasks_dir)
+    manager.logs_dir = Path(team.spawn.logs_dir)
+    manager.status_dir = Path(team.spawn.status_dir)
+    manager.max_workers = team.spawn.max_workers
+    if team.spawn.backend:
+        manager.backend = team.spawn.backend
 
     result = manager.spawn_team(team)
 
