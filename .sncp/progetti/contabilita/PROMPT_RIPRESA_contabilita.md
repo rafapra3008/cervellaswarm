@@ -1,89 +1,111 @@
 # PROMPT RIPRESA - Contabilita Antigravity
 
-> **Ultimo aggiornamento:** 18 Febbraio 2026 - Sessione 76
-> **Branch:** lab-v2
+> **Ultimo aggiornamento:** 19 Febbraio 2026 - Sessione 81
+> **Branch attivo:** lab-v3 (sviluppo V3) + lab-v2 (intoccato) + main (produzione)
 
 ---
 
-## Stato Attuale - Subroadmap "Perfezione Pre-Merge" Step 5 COMPLETATO
+## Stato Attuale - FASE B Studio Trasformazione COMPLETATA
 
 | Cosa | Stato |
 |------|-------|
 | **Produzione** | v2.11.0 LIVE su contabilitafamigliapra.it (INTATTA, zero modifiche) |
-| **Lab v2 VM** | v1.13.0 LIVE su lab.contabilitafamigliapra.it (HTTPS, 12 headers) |
-| **Main** | 278f9f9 - Fix deployati su VM |
-| **Test lab-v2** | 1036/1036 PASS locale (0 warnings) |
-| **VM** | e2-medium (2 vCPU, 4GB RAM, 40GB disco) |
-| **Migrations VM** | v10 su tutti e 3 i DB (NL, HP, SHE) |
+| **Lab v2 VM** | v1.13.0 LIVE su lab.contabilitafamigliapra.it (HTTPS, DB v10) |
+| **Lab v2 locale** | INTOCCATO, 1079/1079 PASS, branch lab-v2, porta 8001 |
+| **Lab V3 locale** | branch lab-v3, porta 8003, Docker healthy, 1079/1079 PASS |
+| **Prerequisiti NL** | 4/4 PASS (admin, HTTPS Google, HTTPS sito, V3 endpoint) |
+| **FASE B** | COMPLETATA - Studio Trasformazione (mappatura + architettura) |
 
 ---
 
-## Sessione 76 - Step 5 Deploy VM COMPLETATO
+## Sessione 81 - FASE B Studio Trasformazione
 
-### Subroadmap 6 Step
+### Step 4: Mappatura Formati Ericsoft -> Portale (Guardiana 9.2/10)
 
-| Step | Cosa | Score | Stato |
-|------|------|-------|-------|
-| 1 | Auth Fix (config.js v1.3.0) | 9.5/10 | COMPLETATO S75 |
-| 2 | Migration v10 + Fatto | 9.5/10 | COMPLETATO S75 |
-| 3 | Sync Script v1.2.0 | 9.7/10 | COMPLETATO S75 |
-| 4 | Review VM (3 Cervelle + Fix P2) | 9.6/10 | COMPLETATO S75 |
-| 5 | Deploy VM + Sync DB | 9.5/10 | **COMPLETATO S76** |
-| **6** | **Prova Reale Chiusura Stagione** | - | **PROSSIMO** |
+Documento completo: `docs/V3_FASE_B_STUDIO_TRASFORMAZIONE.md` (370 righe, 12 sezioni)
 
-### Step 5: Cosa e stato fatto
+Mappatura copre:
+- **6 tipi movimento**: CAP->caparra, INC->gir, RES->caparra negativa, CAPAT/RAC->skip, CAP-MR->caparra
+- **13 codici pagamento NL**: BK->MASTERCARD/BOOKING, CON->CONTANTI, POS->POS, BONC->BONIFICO Cortina, BONU->BONIFICO Unicredit, U100V->VISA/Unicredit100, U100M->MASTERCARD/Unicredit100, VOU->VOUCHER, etc.
+- **Conversioni date**: ISO (2026-01-24) -> DDMMYYYY (24012026) e DD/MM/YYYY (24/01/2026)
+- **Nome ospite**: "{PORTAL} {SCHEDA_ID} {COGNOME} {NOME} - {CIRCUITO}"
+- **Stagione**: calcolata da check_in (CAP/RES) o data_movimento (INC)
+- **Casi speciali**: multi-ospite, soft-delete, INC 2 dettagli, CAP senza nome, pagamenti sconosciuti
 
-**Triple Check pre-deploy** (3 Guardiane parallelo):
-- Guardiana Qualita: 9.6/10 (0 P0, 0 P1, 0 P2, 9 P3) - GO
-- Guardiana Ops: 8.8/10 (1 P2 deploy.sh branch guard) - GO
-- Security: 9.2/10 (0 P0, 0 P1, 0 P2, 2 P3) - GO
+P2 fixati: totale TEXT (non REAL), checkout_date aggiunto, nota ericsoft_transformer.py NUOVO modulo
 
-**Deploy 5 fasi:**
-1. Pre-flight: SSH, disco 21GB, RAM 13%, health prod+lab OK, DB prod=v3, lab=v9
-2. Deploy codebase: rsync 7 file, fix permessi migrations.py 600->644
-3. Restart service: contabilita-lab restart pulito, zero errori
-4. Sync DB: 2 bug trovati e fixati nel sync script (v1.2.0->v1.3.0):
-   - Bug 1: `mktemp` crea file 600 (root), www-data non legge -> `chmod 644`
-   - Bug 2: Python sys.path non include CWD per script assoluto -> `PYTHONPATH=$LAB_DIR`
-   - Rollback automatico funzionato perfettamente nei 2 tentativi falliti
-   - Terzo tentativo: SUCCESSO! 3/3 DB v3->v10, 7 migrazioni applicate
-5. Verification: prod INTATTA (v3), lab v10, zero errori log
+### Step 5: Decisione Architettura (Guardiana 9.0/10)
 
-### DB Lab VM aggiornati (sync 18 Feb 2026)
+**3 opzioni valutate, Option C SCELTA:**
 
-| DB | Versione | Caparre | GIR |
-|----|----------|---------|-----|
-| NL | v10 | 4,909 | 2,532 |
-| HP | v10 | 2,342 | 1,146 |
-| SHE | v10 | 2,638 | 1,278 |
+| Opzione | Verdict |
+|---------|---------|
+| A: Transform & Insert (no source) | SCARTATA - confronto impossibile |
+| B: Tabelle separate | SCARTATA - troppo costosa (DRY violation) |
+| **C: Source column + ericsoft_ref_id** | **SCELTA** - confronto, zero duplicazione, transizione pulita |
 
-### Architettura VM
+Colonne nuove:
+- `source TEXT DEFAULT 'pdf'` su caparra + gir (valori: 'pdf', 'ericsoft', 'manual', 'merged')
+- `ericsoft_ref_id INTEGER` su caparra + gir (FK verso movimenti_ericsoft)
 
-```
-VM cervello-contabilita (e2-medium, 35.193.39.185)
-+-- Nginx (80/443)
-|   +-- contabilitafamigliapra.it     -> contabilita-api (:8000) [PROD]
-|   +-- lab.contabilitafamigliapra.it -> contabilita-lab (:8001) [LAB]
-+-- /opt/contabilita-system/  [PROD - NON TOCCARE] DB v3
-+-- /opt/contabilita-lab/     [LAB v2] DB v10, sync_db v1.3.0
-+-- Cron root 3AM: cron_backup_db.sh v2.0.0 (solo prod)
-```
+P2 fixati: totale normalizzazione, 3 INSERT point mancanti aggiunti al piano
 
 ---
 
-## Cosa Fare Prossima Sessione (Step 6)
+## Piano FASE C - Implementazione (7 step)
 
-### Step 6: Prova Reale Chiusura Stagione
-1. Rafa apre https://lab.contabilitafamigliapra.it/nl/ (codice portale NL: 2024)
-2. Verifica: login popup appare, dati caricano, colonne "fatto" normalizzate
-3. Wizard chiusura stagione: pre-close stats, conferma, celebrazione
-4. Post-chiusura: carry-forward, read-only, faldone storico, export Excel
-5. Zero errori nel journalctl
+1. **Migration v12**: source + ericsoft_ref_id + UNIQUE con source + indici
+2. **ericsoft_transformer.py** (NUOVO): lookup pagamento, date ISO->portale, nome, stagione
+3. **EricsoftMixin.ingest_to_portale()**: trasforma + inserisce con source='ericsoft'
+4. **add_transactions()**: source='pdf' (retrocompatibile)
+5. **create_transaction()**: source='manual'
+6. **merge_transactions()**: eredita source
+7. **find_duplicates()**: source nel GROUP BY
 
-### Dopo Step 6
-- Se tutto OK: Subroadmap Perfezione COMPLETATA, valutare merge
-- Se trovati bug: fixare e re-deployare
+### File da modificare
+
+| File | Cosa |
+|------|------|
+| `backend/migrations.py` | v12: colonne + UNIQUE + indici |
+| `backend/processors/ericsoft_transformer.py` | NUOVO modulo |
+| `backend/database/ericsoft.py` | ingest_to_portale() |
+| `backend/database/transactions.py` | source in tutti INSERT |
+| `backend/database/core.py` | UNIQUE update |
 
 ---
 
-*"Ultrapassar os proprios limites!" - Step 5 REALE, non su carta!*
+## Subroadmap V3 - Ericsoft -> Portale
+
+| Fase | Step | Cosa | Status |
+|------|------|------|--------|
+| **A** | 1-3 | Setup Lab V3 locale | **COMPLETATA S80** |
+| **B** | 4-5 | Studio Trasformazione | **COMPLETATA S81** |
+| **C** | 6-8 | Transformer + Migration v12 + Test | PROSSIMA |
+| **D** | 9-11 | Agent Python + Delta sync + Test reali NL | PENDING |
+| **E** | 12-14 | Deploy VM + Agent su NL + E2E | PENDING |
+| **F** | 15-16 | Confronto Ericsoft vs PDF + Decisione | PENDING |
+
+---
+
+## 4 ambienti locali
+
+| Porta | Ambiente | Branch | Status |
+|-------|----------|--------|--------|
+| 8000 | Produzione locale | main (baked) | healthy |
+| 8001 | Lab v2 | lab-v2 (mount) | healthy, INTOCCATO |
+| 8003 | Lab V3 | lab-v3 (mount) | healthy |
+| VM:8000 | Produzione LIVE | main | INTATTA |
+| VM:8001 | Lab v2 VM | lab-v2 | LIVE |
+
+---
+
+## Decisioni Rafa (S80, confermato S81)
+
+- **Strategia**: Aggiungere Ericsoft al portale gradualmente, poi decidere cosa tenere
+- **Ambiente**: Lab V3 SEPARATO (lab-v2 intoccato)
+- **Approccio**: NL prima, HP+SHE dopo
+- **Architettura**: Option C (source column) - confronto PDF vs Ericsoft
+
+---
+
+*"Ultrapassar os proprios limites!" - FASE B completata, la strada verso FASE C e' tracciata!*
