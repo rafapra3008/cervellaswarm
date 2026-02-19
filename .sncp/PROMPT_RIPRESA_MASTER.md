@@ -13,7 +13,7 @@
 | **CervellaBrasil** | `.sncp/progetti/cervellabrasil/PROMPT_RIPRESA_cervellabrasil.md` | 2026-02-12 | FASE 0-2.5 completas, pronto FASE 3 (Execucao) |
 | **Chavefy** | `.sncp/progetti/chavefy/PROMPT_RIPRESA_chavefy.md` | 2026-02-12 | FASE 0: 13 pesquisas, pronto validacao online |
 | **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-30 | In pausa (Cache Layer v2.1.0 completato) |
-| **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-02-19 | S81: FASE B Studio Trasformazione V3 COMPLETATA (9.5/10). Subroadmap V3 2/6 fasi. Prossimo: FASE C Implementazione Transformer |
+| **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-02-19 | S88: CR+BugHunt+StudioLogica V3 COMPLETATA (33 fix, 9.3/10). 1265 test. Prossimo: FASE D Agent Python |
 | **CervellaCostruzione** | `.sncp/progetti/cervellacostruzione/PROMPT_RIPRESA_cervellacostruzione.md` | 2026-02-04 | Costituzione digitale |
 
 ---
