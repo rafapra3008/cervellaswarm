@@ -311,4 +311,4 @@ Apache-2.0
 
 *Sometimes it feels like magic.*
 
-*Built with love by Cervella & Rafa*
+*Built with love by the CervellaSwarm team*

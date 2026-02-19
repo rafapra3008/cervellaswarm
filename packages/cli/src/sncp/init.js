@@ -83,7 +83,6 @@ sessions/*.json
 
 # But track important files
 !COSTITUZIONE.md
-!stato.md
 !PROMPT_RIPRESA_*.md
 `;
 

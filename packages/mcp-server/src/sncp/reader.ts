@@ -3,13 +3,14 @@
  *
  * Provides access to SNCP project files:
  * - PROMPT_RIPRESA (session context)
- * - stato.md (project state)
+ * - MEMORY.md (project memory)
  * - roadmaps and other docs
  *
  * Version: 1.0.0
  * Date: 2026-02-10 - Sessione 352 (Step D.2)
  */
 
+import { existsSync } from "node:fs";
 import { readFile, readdir, stat } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -32,10 +33,29 @@ export type SncpFileType = keyof typeof FILE_TYPES;
 
 /**
  * Find the SNCP root directory.
- * Strategy: go up from compiled dist/ to project root, find .sncp/progetti/
+ * Strategy: env var > walk up from CWD > fall back to relative from module.
  */
 export function getSncpRoot(): string {
-  // From dist/sncp/reader.js → go up 4 levels to CervellaSwarm/
+  // Priority 1: Environment variable (most reliable for MCP servers)
+  const envRoot = process.env.CERVELLASWARM_SNCP_ROOT;
+  if (envRoot) {
+    return resolve(envRoot, "progetti");
+  }
+
+  // Priority 2: Walk up from CWD looking for .sncp/progetti/
+  let dir = process.cwd();
+  for (let i = 0; i < 10; i++) {
+    const candidate = join(dir, ".sncp", "progetti");
+    if (existsSync(candidate)) {
+      return candidate;
+    }
+    const parent = dirname(dir);
+    if (parent === dir) break;
+    dir = parent;
+  }
+
+  // Priority 3: Fall back to relative path from module location
+  // From dist/sncp/reader.js -> go up 4 levels to CervellaSwarm/
   return resolve(__dirname, "..", "..", "..", "..", ".sncp", "progetti");
 }
 
@@ -71,7 +91,8 @@ export async function listProjects(): Promise<
   Array<{
     name: string;
     hasPromptRipresa: boolean;
-    hasStato: boolean;
+    /** @deprecated stato.md eliminated in SNCP 4.0 - always false */
+    hasStato: false;
     hasMemory: boolean;
     files: string[];
   }>
@@ -80,7 +101,8 @@ export async function listProjects(): Promise<
   const results: Array<{
     name: string;
     hasPromptRipresa: boolean;
-    hasStato: boolean;
+    /** @deprecated stato.md eliminated in SNCP 4.0 - always false */
+    hasStato: false;
     hasMemory: boolean;
     files: string[];
   }> = [];

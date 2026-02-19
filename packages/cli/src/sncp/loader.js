@@ -10,7 +10,7 @@
  */
 
 import { readFile, access, readdir } from 'fs/promises';
-import { join } from 'path';
+import { join, basename } from 'path';
 
 export async function loadProjectContext() {
   const projectPath = process.cwd();
@@ -24,13 +24,20 @@ export async function loadProjectContext() {
   }
 
   try {
-    // Find project folder (first one found)
+    // Find project folder - prefer CWD name match over alphabetical first
     const projects = await readdir(projectsPath);
     if (projects.length === 0) {
       return null;
     }
 
-    const projectName = projects[0];
+    const cwdName = basename(projectPath).toLowerCase();
+    let projectName = projects[0]; // Default: first alphabetically
+    for (const p of projects) {
+      if (p.toLowerCase() === cwdName) {
+        projectName = p;
+        break;
+      }
+    }
     const projectSncpPath = join(projectsPath, projectName);
 
     // Try to load project.json (optional - graceful degradation if missing)

@@ -41,7 +41,7 @@ export async function createTempDir(t, prefix = 'cervellaswarm-test-') {
  * await createFileStructure(tempDir, {
  *   'package.json': '{"name":"test"}',
  *   'src/index.js': 'console.log("hi");',
- *   '.sncp/stato.md': '# Stato'
+ *   '.sncp/PROMPT_RIPRESA_test.md': '# PROMPT RIPRESA'
  * });
  */
 export async function createFileStructure(baseDir, structure) {

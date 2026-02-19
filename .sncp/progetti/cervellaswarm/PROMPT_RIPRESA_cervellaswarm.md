@@ -1,47 +1,61 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-19 - Sessione 377
-> **STATUS:** CACCIA BUG #4+#5+#6 COMPLETATE. 3 package in una sessione! Prossimo: CLI+MCP (ultimo).
+> **Ultimo aggiornamento:** 2026-02-19 - Sessione 378
+> **STATUS:** CACCIA BUG 7/7 COMPLETATA! Tutti i package open-source validati. Prossimo: Lingua Universale Fase A.
 
 ---
 
-## SESSIONE 377 - CACCIA BUG #4+#5+#6
+## SESSIONE 378 - CACCIA BUG #7: CLI+MCP (ULTIMO!)
 
-### Caccia #4: session-memory (10 bug, 5 fix, 193 test, Guardiana 9.5/10)
-- MEDIUM: except Exception broad x3, archive_state path traversal, extra_patterns regex crash
-- Regression: 16 test
+### Risultati: 16 bug trovati, 14 fixati, Guardiana 9.0 -> 9.5/10
 
-### Caccia #5: agent-hooks (7 bug, 3 fix, 236 test, Guardiana 9.5/10)
-- MEDIUM: config.py except Exception, bash_validator regex validation (blocked+risky+safe_rm)
-- Guardiana found incoerenza extra_safe_rm - fixata
+**SNCP 4.0 Compliance (6 fix):**
+- init.js: rimosso template stato.md + !stato.md da .gitignore
+- writer.js: rimossa funzione updateStato()
+- loader.js: progress da PROMPT_RIPRESA (non piu stato.md)
+- housekeeping.js: rimosso stato check/display/compactFiles
+- reader.ts: rimosso stato da FILE_TYPES
+- tools.ts: sncp_read_stato -> deprecation notice
 
-### Caccia #6: agent-templates (4 bug, 1 fix, 192 test, Guardiana 9.5/10)
-- MEDIUM: validator.py unprotected read_text()
-- Package piu pulito della famiglia
+**Project Selection (1 fix):**
+- loader.js: CWD basename match per progetto (era projects[0] alfabetico)
+
+**Security (1 fix):**
+- usage.ts: CHECKSUM_SECRET con hostname+getuid (non solo USER env)
+
+**Path Resolution (1 fix):**
+- reader.ts: getSncpRoot() env var + CWD walk-up + fallback relative
+
+**Open Source (5 fix):**
+- CLI LICENSE: MIT -> Apache 2.0
+- Copyright "CervellaSwarm Contributors" in 40+ file (src, bin, LICENSE, package.json, README)
+- Template constitution.js e help text puliti da stato.md
+- Test e docstring aggiornati da stato.md a PROMPT_RIPRESA
+
+### Test: 134 PASS (zero regressioni)
 
 ---
 
-## VISIONE "LA LINGUA UNIVERSALE" (S375)
+## RIEPILOGO CACCIA BUG COMPLETA (7/7)
 
-Piano A -> B -> C -> D confermato. 95 fonti, 5 report.
-Fase A = Verified Agent Protocol dentro CervellaSwarm. Dopo caccia bug completata.
+| # | Package | Bug | Fix | Test | Score |
+|---|---------|-----|-----|------|-------|
+| 1 | code-intelligence | 21 | 8 | 398 | 9.5 |
+| 2 | task-orchestration | 12 | 9 | 305 | 9.5 |
+| 3 | spawn-workers | 10 | 8 | 191 | 9.5 |
+| 4 | session-memory | 10 | 5 | 193 | 9.5 |
+| 5 | agent-hooks | 7 | 3 | 236 | 9.5 |
+| 6 | agent-templates | 4 | 1 | 192 | 9.5 |
+| 7 | CLI+MCP | 16 | 14 | 134 | 9.5 |
+| **TOTALE** | **7 packages** | **80** | **48** | **1649** | **9.5 media** |
 
 ---
 
 ## PROSSIMI STEP
 
-### Caccia bug (in coda)
-1. ~~`code-intelligence`~~ -- FATTO S374 (8 fix, 398 test)
-2. ~~`task-orchestration`~~ -- FATTO S376 (9 fix, 305 test)
-3. ~~`spawn-workers`~~ -- FATTO S376 (8 fix, 191 test)
-4. ~~`session-memory`~~ -- FATTO S377 (5 fix, 193 test)
-5. ~~`agent-hooks`~~ -- FATTO S377 (3 fix, 236 test)
-6. ~~`agent-templates`~~ -- FATTO S377 (1 fix, 192 test)
-7. **CLI+MCP** -- PROSSIMO (ULTIMO!)
-
-### Dopo caccia bug (7/7 completata)
 1. **Studiare Session Types** - Fase A della Lingua Universale
 2. **Prototipo Lean 4** - verificare proprieta del task routing
+3. **Nota:** core/ e api/ hanno ancora "Rafa & Cervella" (18 file) - cleanup separato
 
 ---
 
@@ -58,7 +72,8 @@ Fase A = Verified Agent Protocol dentro CervellaSwarm. Dopo caccia bug completat
 | S374 | **CACCIA BUG #1: code-intelligence** (8 fix, 398 test, 9.5/10) |
 | S375 | **LA LINGUA UNIVERSALE** (95 fonti, 5 report, visione A->B->C->D) |
 | S376 | **CACCIA BUG #2+#3: task-orchestration + spawn-workers** (17 fix, 496 test) |
-| S377 | **CACCIA BUG #4+#5+#6: session-memory + agent-hooks + agent-templates** (9 fix, 621 test, 3x 9.5/10) |
+| S377 | **CACCIA BUG #4+#5+#6: session-memory + agent-hooks + agent-templates** (9 fix, 621 test) |
+| S378 | **CACCIA BUG #7: CLI+MCP** (14 fix, 134 test, 9.5/10) - TUTTI COMPLETATI! |
 
 ---
 

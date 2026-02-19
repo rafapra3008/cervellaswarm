@@ -18,9 +18,9 @@ import { loadProjectContext } from '../sncp/loader.js';
 import { CervellaError, displayError } from '../utils/errors.js';
 
 // File limits (in lines)
+// NOTE: stato.md eliminated in SNCP 4.0 (S357). Only PROMPT_RIPRESA checked.
 const LIMITS = {
   PROMPT_RIPRESA: 150,
-  STATO: 500,
   REPORT_DAYS: 30
 };
 
@@ -63,7 +63,6 @@ async function getFileAgeDays(filePath) {
 async function checkHealth(context) {
   const results = {
     promptRipresa: { lines: 0, limit: LIMITS.PROMPT_RIPRESA, status: 'ok' },
-    stato: { lines: 0, limit: LIMITS.STATO, status: 'ok' },
     reports: { total: 0, old: 0, status: 'ok' }
   };
 
@@ -76,15 +75,6 @@ async function checkHealth(context) {
     results.promptRipresa.status = 'error';
   } else if (results.promptRipresa.lines > LIMITS.PROMPT_RIPRESA * 0.8) {
     results.promptRipresa.status = 'warning';
-  }
-
-  // Check stato.md
-  const statoPath = join(sncpPath, 'stato.md');
-  results.stato.lines = await countLines(statoPath);
-  if (results.stato.lines > LIMITS.STATO) {
-    results.stato.status = 'error';
-  } else if (results.stato.lines > LIMITS.STATO * 0.8) {
-    results.stato.status = 'warning';
   }
 
   // Check reports folder
@@ -124,11 +114,6 @@ function displayHealth(results) {
   const prPercent = Math.round((results.promptRipresa.lines / results.promptRipresa.limit) * 100);
   console.log(`  PROMPT_RIPRESA: ${results.promptRipresa.lines} lines [${prStatus}] (${prPercent}% of limit)`);
 
-  // stato.md
-  const stStatus = ICONS[results.stato.status];
-  const stPercent = Math.round((results.stato.lines / results.stato.limit) * 100);
-  console.log(`  stato.md:       ${results.stato.lines} lines [${stStatus}] (${stPercent}% of limit)`);
-
   // reports
   const rpStatus = ICONS[results.reports.status];
   console.log(`  reports/:       ${results.reports.total} files (${results.reports.old} > ${LIMITS.REPORT_DAYS} days) [${rpStatus}]`);
@@ -146,10 +131,6 @@ function displaySuggestions(results) {
     suggestions.push(`Archive old sessions from PROMPT_RIPRESA (${results.promptRipresa.lines}/${results.promptRipresa.limit} lines)`);
   }
 
-  if (results.stato.status !== 'ok') {
-    suggestions.push(`Compact stato.md with: cervellaswarm housekeeping --compact`);
-  }
-
   if (results.reports.old > 0) {
     suggestions.push(`Archive ${results.reports.old} old reports with: cervellaswarm housekeeping --archive`);
   }
@@ -162,72 +143,6 @@ function displaySuggestions(results) {
     console.log(chalk.green('  Everything looks good! Casa pulita!'));
     console.log('');
   }
-}
-
-/**
- * Compact oversized files
- */
-async function compactFiles(context, results) {
-  console.log('');
-  console.log(chalk.cyan.bold('  Compacting files...'));
-  console.log('');
-
-  let compacted = 0;
-
-  // Compact stato.md if needed
-  if (results.stato.status !== 'ok') {
-    const statoPath = join(context.sncpPath, 'stato.md');
-    const archivePath = join(context.sncpPath, 'archivio');
-
-    try {
-      await mkdir(archivePath, { recursive: true });
-
-      const timestamp = new Date().toISOString().split('T')[0].replace(/-/g, '');
-      const backupName = `stato_backup_${timestamp}.md`;
-
-      await rename(statoPath, join(archivePath, backupName));
-
-      // Create fresh stato.md
-      const freshStato = `# ${context.name} - Stato Attuale
-
-<!-- LIMITI: Questo file deve restare < 500 righe -->
-<!-- Se cresce troppo, usa: cervellaswarm housekeeping -->
-
-> **Ultimo aggiornamento:** ${new Date().toISOString().split('T')[0]}
-> **Fase:** Continuazione
-
----
-
-## COSA STA SUCCEDENDO
-
-*Stato compattato. Vedi archivio per storico.*
-
----
-
-## PROSSIMI PASSI
-
-1. [ ] Continua dal punto precedente
-
----
-
-*Previous stato archived to: ${backupName}*
-`;
-
-      const { writeFile } = await import('fs/promises');
-      await writeFile(statoPath, freshStato, 'utf8');
-
-      console.log(chalk.green(`  stato.md: Archived and reset (backup: ${backupName})`));
-      compacted++;
-    } catch (error) {
-      console.log(chalk.red(`  stato.md: Failed to compact - ${error.message}`));
-    }
-  }
-
-  if (compacted === 0) {
-    console.log(chalk.gray('  No files needed compacting.'));
-  }
-
-  console.log('');
 }
 
 /**
@@ -297,16 +212,15 @@ export async function housekeepingCommand(options) {
     displayHealth(results);
 
     // Handle options
-    if (options.auto) {
-      // Auto mode: compact and archive if needed
-      await compactFiles(context, results);
+    if (options.auto || options.archive) {
+      // Auto/archive mode: archive old reports
       await archiveReports(context, results);
-      console.log(chalk.green('  Auto housekeeping complete!'));
+      console.log(chalk.green('  Housekeeping complete!'));
       console.log('');
     } else if (options.compact) {
-      await compactFiles(context, results);
-    } else if (options.archive) {
-      await archiveReports(context, results);
+      // NOTE: stato.md compaction eliminated in SNCP 4.0 (S357)
+      console.log(chalk.gray('  Compact is no longer needed (stato.md eliminated in SNCP 4.0).'));
+      console.log('');
     } else {
       // Just show suggestions
       displaySuggestions(results);

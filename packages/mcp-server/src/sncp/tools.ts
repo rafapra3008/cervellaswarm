@@ -147,7 +147,6 @@ export function registerSncpTools(server: McpServer): void {
         for (const p of projects) {
           const indicators = [
             p.hasPromptRipresa ? "RIPRESA" : "",
-            p.hasStato ? "STATO" : "",
             p.hasMemory ? "MEMORY" : "",
           ]
             .filter(Boolean)
@@ -158,7 +157,7 @@ export function registerSncpTools(server: McpServer): void {
           output += `Files: ${p.files.join(", ")}\n\n`;
         }
 
-        output += `\nUse \`sncp_read_ripresa\` or \`sncp_read_stato\` to read specific files.`;
+        output += `\nUse \`sncp_read_ripresa\` to read session context for a project.`;
 
         return {
           content: [{ type: "text", text: output }],
@@ -184,7 +183,7 @@ export function registerSncpTools(server: McpServer): void {
   server.tool(
     "sncp_search",
     "Search across all CervellaSwarm SNCP project files for a query string. " +
-      "Searches PROMPT_RIPRESA, stato.md, roadmaps, and other .md files.",
+      "Searches PROMPT_RIPRESA, roadmaps, and other .md files.",
     {
       query: z.string().min(1).describe("Search query (case-insensitive)"),
       project: z
