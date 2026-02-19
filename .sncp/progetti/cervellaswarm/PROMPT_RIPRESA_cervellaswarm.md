@@ -38,10 +38,30 @@
 ---
 
 ## PROSSIMI STEP
+
+### PRIORITA IMMEDIATA: CACCIA BUG + CODE REVIEW + STUDIO LOGICA
+> Rafa ha deciso: prima di andare avanti con F3.2+, facciamo sessioni dedicate a:
+> 1. **CACCIA BUG** - Cercare bug nascosti in TUTTI i 7 packages (1.8k+ test ma ci sono angoli?)
+> 2. **CODE REVIEW** - Revisione approfondita della logica di ogni package
+> 3. **STUDIO LOGICA** - Capire se la logica e corretta, se ci sono edge case non coperti
+>
+> Questo e coerente con la nostra filosofia: "Fatto BENE > Fatto VELOCE"
+> Prima consolidare, poi avanzare.
+
+### DOPO il consolidamento:
 - **F3.2:** SQLite Event Database (event logging, querying, pattern detection)
 - **F3.3:** Integration Tools (verify-hooks, sync-agents portati)
 - **F3.4:** Documentation package (ARCHITECTURE.md, GETTING_STARTED.md)
 - **F3.5:** Auto-Handoff improvements (soft handoff, no new windows)
+
+### I 7 PACKAGES da revisionare:
+1. `cervellaswarm-code-intelligence` v0.1.0 (396 test) - packages/code-intelligence/
+2. `cervellaswarm-agent-hooks` v0.1.0 (227 test) - packages/agent-hooks/
+3. `cervellaswarm-agent-templates` v0.1.0 (188 test) - packages/agent-templates/
+4. `cervellaswarm-task-orchestration` v0.1.0 (273 test) - packages/task-orchestration/
+5. `cervellaswarm-spawn-workers` v0.1.0 (171 test) - packages/spawn-workers/
+6. `cervellaswarm-session-memory` v0.1.0 (177 test) - packages/session-memory/
+7. `cervellaswarm` CLI + MCP - packages/cli/ + packages/mcp-server/
 
 ---
 

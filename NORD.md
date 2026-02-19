@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 18 Febbraio 2026 - S370 (FASE 2 F2.1 DONE! Hook System + Auto-Handoff Research)
+> Aggiornato: 19 Febbraio 2026 - S373 (FASE 2 COMPLETA! FASE 3 F3.1 DONE! Session Memory 9.6/10)
 
 ```
 +==================================================================+
@@ -99,9 +99,19 @@ FASE 1: AST Pipeline (pip)       [####################] 100% COMPLETA!
   F1.3 README + CHANGELOG          DONE (S368) - 225 righe, Guardiana 9.5/10
   F1.4 PyPI publication            DONE (S369) - LIVE su pypi.org!
 
-FASE 2: Agent Framework           [#####...............] 25% IN CORSO
-  F2.1 Hook System pubblicabile    DONE (S370) - 5 hooks, 227 test, Guardiana 9.5/10
-FASE 3: SNCP (session memory)     [....................] TODO
+FASE 2: Agent Framework           [####################] 100% COMPLETA! (media 9.5/10)
+  F2.1 Hook System                 DONE (S370) - 5 hooks, 227 test, 9.5/10
+  F2.2 Agent Templates             DONE (S371) - 4 template + 7 specialty, 188 test, 9.5/10
+  F2.3 Task Orchestration          DONE (S372) - 5 moduli, ZERO deps, 273 test, 9.5/10
+  F2.4 Spawn Workers               DONE (S372) - 5 moduli, tmux/nohup, 171 test, 9.5/10
+
+FASE 3: Session Memory System     [####................] 20% IN CORSO
+  F3.1 Session Memory Package      DONE (S373) - 6 moduli, 177 test, 9.6/10
+  F3.2 SQLite Event Database       TODO
+  F3.3 Integration Tools           TODO
+  F3.4 Documentation               TODO
+  F3.5 Auto-Handoff                TODO
+
 FASE 4: Launch                    [....................] TODO
 ```
 
