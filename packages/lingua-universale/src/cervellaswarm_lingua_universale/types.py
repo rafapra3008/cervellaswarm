@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 CervellaSwarm Contributors
+
 """Core types for CervellaSwarm agent communication.
 
 Every message in the swarm has exactly one type.

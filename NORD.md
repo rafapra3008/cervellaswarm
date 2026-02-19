@@ -115,7 +115,7 @@ FASE 3: Session Memory System     [########............] 40% IN CORSO
 FASE 4: Launch                    [....................] TODO
 ```
 
-### LA STELLA POLARE - LINGUA UNIVERSALE (S375 + S380)
+### LA STELLA POLARE - LINGUA UNIVERSALE (S375 + S380 + S381)
 
 ```
 +==================================================================+
@@ -132,7 +132,7 @@ FASE 4: Launch                    [....................] TODO
 |                                                                  |
 |   Fase A -> B -> C -> MONDO                                      |
 |   NORD completo: packages/lingua-universale/NORD.md              |
-|   153 fonti, 153 test, campo vergine in Python                   |
+|   179 fonti, 284 test, DSL pronto, campo vergine in Python       |
 |                                                                  |
 +==================================================================+
 ```

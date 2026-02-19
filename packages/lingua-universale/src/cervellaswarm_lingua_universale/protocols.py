@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 CervellaSwarm Contributors
+
 """Protocol definitions for CervellaSwarm agent communication.
 
 Each protocol is a state machine that defines the valid sequence

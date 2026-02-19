@@ -211,9 +211,10 @@ FASE D: PER TUTTI                                   4-7 anni
 ```
 S375  [DONE]  Visione + Ricerca iniziale (95 fonti, 5 report)
 S380  [DONE]  Tipi + Protocolli + Checker Runtime (153 test, 9.5/10)
-S381  [NEXT]  DSL Notation - la SINTASSI della lingua
-S382  [PLAN]  Protocol Monitor - osservabilita in tempo reale
-S383  [PLAN]  Lean 4 Bridge - le PRIME prove formali
+S381  [DONE]  DSL Notation (4o modulo, 26 fonti, 131 test nuovi, 9.5/10)
+S382  [NEXT]  Code Review + Bug Hunt (solidificare prima di Lean 4)
+S383  [PLAN]  Protocol Monitor - osservabilita in tempo reale
+S384  [PLAN]  Lean 4 Bridge - le PRIME prove formali
 S384  [PLAN]  Integration - i 17 agenti USANO la lingua davvero
 S385+ [PLAN]  Confidence Types - l'incertezza come tipo
 S386+ [PLAN]  Trust Composition - la fiducia che si compone
@@ -227,7 +228,7 @@ Fatto BENE > Fatto VELOCE.
 
 ## IL CAMPO VERGINE
 
-153 fonti consultate. La verita:
+179 fonti consultate (153 S375+S380 + 26 S381). La verita:
 
 - **Python ha ZERO librerie di session types** (campo totalmente vergine)
 - **Nessun framework AI** usa session types formali (AutoGen, CrewAI, LangGraph, MCP, A2A)

@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 CervellaSwarm Contributors
+
 """Runtime session type checker for CervellaSwarm protocols.
 
 The SessionChecker tracks the state of a protocol session and
