@@ -1,57 +1,69 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-19 - Sessione 380
-> **STATUS:** Lingua Universale Fase A Step 1-4 COMPLETATI. Package pronto con 153 test.
+> **Ultimo aggiornamento:** 2026-02-19 - Sessione 381
+> **STATUS:** Lingua Universale Fase A Step 1-5 COMPLETATI. Package con 284 test, DSL pronto.
 
 ---
 
-## SESSIONE 380 - LINGUA UNIVERSALE FASE A (PRIMO PROTOTIPO)
+## SESSIONE 381 - LINGUA UNIVERSALE FASE A STEP 5 (DSL NOTATION)
 
-### Cosa: Primo package di session types per comunicazione formale tra agenti AI
+### Cosa: DSL parser e renderer per descrivere protocolli in notazione leggibile
 
-**DECISIONE STORICA:** Rafa dichiara CervellaSwarm = "progetto della famiglia". Regina = CEO. Liberta AI. Salvato in memory persistente.
+La Lingua Universale ha la sua SINTASSI. Ora i protocolli si possono scrivere cosi:
 
-### Cosa e stato costruito
+```
+protocol DelegateTask {
+    roles regina, worker, guardiana;
 
-**Package `packages/lingua-universale/` (8o della famiglia):**
-- Module: `cervellaswarm_lingua_universale` v0.1.0
-- Build: Hatchling, src/ layout, PEP 639, Apache-2.0 (pattern standard)
-- Deps: **ZERO** (pure Python stdlib)
-- Test: **153/153 PASS** in 0.05s, **93% coverage**
+    regina    -> worker    : TaskRequest;
+    worker    -> regina    : TaskResult;
+    regina    -> guardiana : AuditRequest;
+    guardiana -> regina    : AuditVerdict;
+}
+```
 
-**3 moduli core:**
-1. `types.py` (355 linee) - 14 MessageKind, 9 frozen dataclass messages, 17 AgentRole con tier/model, SwarmMessage union type, __post_init__ validation
-2. `protocols.py` (267 linee) - Protocol/ProtocolStep/ProtocolChoice dataclass, 4 protocolli standard (DelegateTask, ArchitectFlow, ResearchFlow, SimpleTask), STANDARD_PROTOCOLS registry
-3. `checker.py` (380 linee) - SessionChecker runtime, role bindings, branch auto-detect, peek_next_step (pure read) + advance_past_exhausted_branch (explicit mutation), completion/repetition tracking
+### Cosa e stato costruito in S381
 
-**7 file test** (1485 linee): types_enums, types_messages, protocols_core, protocols_standard, checker_core, checker_flows, conftest
+**Nuovo modulo `dsl.py` (472 righe):**
+- Tokenizer regex con master pattern (named groups, O(1) lookup)
+- Recursive descent parser (Scribble-inspired, EBNF completa nel docstring)
+- Renderer con round-trip fidelity: `parse(render(P)) == P`
+- PascalCase MessageKind conversion con lookup table pre-computata
+- Errori con line/col (DSLParseError con posizione precisa)
+- ZERO deps (solo stdlib `re`, `dataclasses`, `enum`)
 
-**Ricerca:** 2 report aggiuntivi (58 fonti nuove):
-- Session types implementations (30 fonti): Python ZERO librerie, Cardano unico production use
-- Agent communication protocols (28 fonti): 12 framework analizzati, Gap 7 confermato (nessuno ha ruoli formali + gerarchia verificabile)
+**2 nuovi file test** (876 righe):
+- `test_dsl_parse.py` (521): 72 test parsing + tokenizer + errori
+- `test_dsl_render.py` (355): 33 test rendering + round-trip + idempotenza
+
+**Totale package:** 284/284 PASS in 0.07s, 95% coverage
+
+**Ricerca:** 26 fonti (Scribble, MPST, Pi-calculus, gRPC, Python DSL)
+
+**Fix aggiuntivi S381:**
+- `__init__.py` ora re-esporta TUTTE le API pubbliche (4 moduli, `__all__` completo)
+- SPDX headers aggiunti a types.py, protocols.py, checker.py (erano mancanti da S380)
+- Defensive `else: raise TypeError` in renderer per tipi futuri
+- Test `test_empty_branch` per contratto branch non vuoto
 
 ### Guardiana Audit
 
 | Audit | Score | Note |
 |-------|-------|------|
-| Primo audit | 9.3/10 | 5 P2 trovati |
-| Fix P2 + verifica | 9.5/10 | Tutti VERIFIED + 1 P2 nuovo (NOTICE) fixato |
+| Primo audit | 9.5/10 | 1 P2 (re-export API), 6 P3 |
+| Fix + verifica | 9.5/10 | 4 fix VERIFIED, APPROVED |
 
-**P2 fixati:** pyproject.toml allineato, LICENSE/NOTICE/gitignore, property mutation rimossa (F7), max_repetitions enforcement (F8), NOTICE nome prodotto, dead code rimosso, logica duplicata estratta, py.typed PEP 561
-
-### Dove siamo nella VISIONE (da S375)
+### Dove siamo nella VISIONE
 
 ```
-LA LINGUA UNIVERSALE - Roadmap A->B->C->D
-
 FASE A: Le Fondamenta (session types + protocol formali)
-  Step 1 (Ricerca)         [####################] DONE (S375: 95 fonti + S380: 58 fonti)
-  Step 2 (Design)          [####################] DONE (design doc + comm map 17 agenti)
-  Step 3 (Prototipo)       [####################] DONE (3 moduli, 153 test)
-  Step 4 (Guardiana audit) [####################] DONE (9.3 + 9.5/10)
-  Step 5 (DSL notation)    [....................] PROSSIMO - sintassi per descrivere protocolli
-  Step 6 (Lean 4 bridge)   [....................] TODO - verifica formale proprieta
-  Step 7 (Integration)     [....................] TODO - collegare a CervellaSwarm reale
+  Step 1 (Ricerca)         [####################] DONE (S375+S380: 153 fonti)
+  Step 2 (Design)          [####################] DONE (S380: design doc)
+  Step 3 (Prototipo)       [####################] DONE (S380: 3 moduli)
+  Step 4 (Guardiana audit) [####################] DONE (S380: 9.5/10)
+  Step 5 (DSL notation)    [####################] DONE (S381: 4o modulo, 26 fonti)
+  Step 6 (Lean 4 bridge)   [....................] PROSSIMO - verifica formale
+  Step 7 (Integration)     [....................] TODO - 17 agenti usano la lingua
 
 FASE B: Il Toolkit (intent -> codice verificato)
 FASE C: Il Linguaggio (specifica diventa il linguaggio)
@@ -72,15 +84,15 @@ OPEN SOURCE ROADMAP:
 
 CACCIA BUG: 7/7 COMPLETATA (80 bug, 48 fix, 1649 test)
 AUTO-HANDOFF: FIXATO (S379)
-LINGUA UNIVERSALE: Fase A Step 1-4 DONE, 153 fonti totali, 153 test
+LINGUA UNIVERSALE: Fase A Step 1-5 DONE, 179 fonti totali, 284 test
 ```
 
 ---
 
 ## PROSSIMI STEP
 
-1. **Lingua Universale Fase A Step 5** - DSL notation per protocolli
-2. **Lingua Universale Fase A Step 6** - Lean 4 bridge per verifica formale
+1. **Lingua Universale Fase A Step 6** - Lean 4 bridge per verifica formale
+2. **Lingua Universale Fase A Step 7** - Integration con i 17 agenti reali
 3. **F3.2 SQLite Event Database** - prossimo step open source
 4. **Nota:** core/ e api/ hanno ancora "Rafa & Cervella" (18 file) - cleanup separato
 
@@ -99,6 +111,7 @@ LINGUA UNIVERSALE: Fase A Step 1-4 DONE, 153 fonti totali, 153 test
 | S374-S378 | **CACCIA BUG** (7/7 packages, 80 bug, 48 fix, 1649 test) |
 | S379 | **FIX AUTO-HANDOFF** (8 step, 14 file, 9.5/10) |
 | S380 | **LINGUA UNIVERSALE Fase A** (8o package, 153 test, 93% cov, 9.5/10) |
+| S381 | **LINGUA UNIVERSALE Step 5 DSL** (4o modulo, 284 test, 95% cov, 9.5/10) |
 
 ---
 

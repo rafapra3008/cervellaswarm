@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - MASTER (Globale)
 
-> **Ultimo aggiornamento:** 19 Febbraio 2026 - Sessione 380
+> **Ultimo aggiornamento:** 19 Febbraio 2026 - Sessione 381
 > **Tabella ecosistema condivisa - SOLO link ai file specifici**
 
 ---
@@ -9,7 +9,7 @@
 
 | Progetto | PROMPT_RIPRESA | Aggiornato | TL;DR |
 |----------|----------------|------------|-------|
-| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-02-19 | LINGUA UNIVERSALE Fase A DONE! 8o package, 153 test, NORD scritto dalla Regina. Next: DSL notation (Step 5) |
+| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-02-19 | LINGUA UNIVERSALE Step 5 DSL DONE! 284 test, 95% cov, parser+renderer. Next: Lean 4 bridge (Step 6) |
 | **CervellaBrasil** | `.sncp/progetti/cervellabrasil/PROMPT_RIPRESA_cervellabrasil.md` | 2026-02-12 | FASE 0-2.5 completas, pronto FASE 3 (Execucao) |
 | **Chavefy** | `.sncp/progetti/chavefy/PROMPT_RIPRESA_chavefy.md` | 2026-02-12 | FASE 0: 13 pesquisas, pronto validacao online |
 | **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-30 | In pausa (Cache Layer v2.1.0 completato) |
