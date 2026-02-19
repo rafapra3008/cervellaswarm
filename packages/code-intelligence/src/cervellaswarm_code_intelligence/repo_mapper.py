@@ -230,10 +230,17 @@ class RepoMapper:
 
         found_files = []
 
+        def should_exclude_path(path: Path) -> bool:
+            """Check if path contains an excluded directory."""
+            for part in path.parts:
+                if part in exclude_dirs or part.endswith(".egg-info"):
+                    return True
+            return False
+
         for pattern in patterns:
             for file_path in self.repo_path.glob(pattern):
                 # Skip if in excluded directory
-                if any(excluded in file_path.parts for excluded in exclude_dirs):
+                if should_exclude_path(file_path):
                     continue
 
                 # Skip if not a file

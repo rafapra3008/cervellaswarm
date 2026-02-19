@@ -197,7 +197,7 @@ def test_build_index_extracts_symbols_and_builds_graph(tmp_path, mock_dependenci
     sym1 = mock_symbol(name="func1", file=str(tmp_path / "test.py"), line=1, references=["ref_a", "ref_b"])
     sym2 = mock_symbol(name="func2", file=str(tmp_path / "test.py"), line=5)
     mock_dependencies['extractor'].extract_symbols.return_value = [sym1, sym2]
-    mock_dependencies['graph']._get_symbol_id.side_effect = lambda s: f"{s.file}:{s.name}"
+    mock_dependencies['graph']._get_symbol_id.side_effect = lambda s: f"{s.file}:{s.line}:{s.name}"
 
     search = SemanticSearch(str(tmp_path))
 
@@ -302,8 +302,8 @@ def test_find_callers_caller_in_graph_nodes(search_no_index, mock_symbol):
 
     # Setup graph to return caller_id
     caller_sym = mock_symbol(name="caller", file="/test/caller.py", line=5)
-    search_no_index.graph.get_symbol_referenced_by.return_value = ["/test/caller.py:caller"]
-    search_no_index.graph.nodes = {"/test/caller.py:caller": caller_sym}
+    search_no_index.graph.get_symbol_referenced_by.return_value = ["/test/caller.py:5:caller"]
+    search_no_index.graph.nodes = {"/test/caller.py:5:caller": caller_sym}
 
     result = search_no_index.find_callers("target")
     assert result == [("/test/caller.py", 5, "caller")]
@@ -314,8 +314,8 @@ def test_find_callers_caller_not_in_graph_nodes(search_no_index, mock_symbol):
     sym = mock_symbol(name="target", file="/test/target.py", line=10)
     search_no_index.symbol_index["target"] = [sym]
 
-    # Caller not in nodes
-    search_no_index.graph.get_symbol_referenced_by.return_value = ["/test/caller.py:caller"]
+    # Caller not in nodes - uses fallback parsing from symbol_id
+    search_no_index.graph.get_symbol_referenced_by.return_value = ["/test/caller.py:5:caller"]
     search_no_index.graph.nodes = {}
 
     result = search_no_index.find_callers("target")
@@ -377,8 +377,8 @@ def test_find_references_extracts_file_line_from_callers(search_no_index, mock_s
     search_no_index.symbol_index["target"] = [sym]
 
     caller_sym = mock_symbol(name="caller", file="/test/caller.py", line=5)
-    search_no_index.graph.get_symbol_referenced_by.return_value = ["/test/caller.py:caller"]
-    search_no_index.graph.nodes = {"/test/caller.py:caller": caller_sym}
+    search_no_index.graph.get_symbol_referenced_by.return_value = ["/test/caller.py:5:caller"]
+    search_no_index.graph.nodes = {"/test/caller.py:5:caller": caller_sym}
 
     result = search_no_index.find_references("target")
     assert result == [("/test/caller.py", 5)]

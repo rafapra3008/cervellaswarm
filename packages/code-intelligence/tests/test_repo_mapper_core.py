@@ -131,6 +131,25 @@ def test_discover_skips_non_files(temp_repo):
     assert "fake_module.py" not in {f.name for f in files}
 
 
+def test_discover_excludes_egg_info(temp_repo):
+    """Test that .egg-info directories are excluded.
+
+    Bug M6: *.egg-info in exclude_dirs was compared as literal string,
+    but actual dirs have names like 'mypackage.egg-info'. The fix uses
+    endswith('.egg-info') instead of exact match.
+    """
+    egg_dir = temp_repo / "mypackage.egg-info"
+    egg_dir.mkdir()
+    (egg_dir / "PKG-INFO").write_text("name: mypackage")
+    (egg_dir / "setup.py").write_text("# egg setup")
+
+    mapper = RepoMapper(str(temp_repo))
+    files = mapper._discover_source_files()
+
+    for f in files:
+        assert ".egg-info" not in str(f), f"egg-info file should be excluded: {f}"
+
+
 # --- Test _estimate_tokens() ---
 
 def test_estimate_tokens_basic():

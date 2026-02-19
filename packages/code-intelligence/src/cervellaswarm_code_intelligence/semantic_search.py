@@ -185,7 +185,7 @@ class SemanticSearch:
                         symbol_id = self.graph._get_symbol_id(symbol)
                         self.graph.add_reference(symbol_id, ref)
 
-            except Exception as e:
+            except (OSError, ValueError, UnicodeDecodeError) as e:
                 logger.warning(f"Failed to extract symbols from {file_path}: {e}")
                 continue
 
@@ -280,19 +280,19 @@ class SemanticSearch:
 
             # Convert symbol IDs to (file, line, caller_name)
             for caller_id in caller_ids:
-                # Parse symbol_id format: "file:name"
-                parts = caller_id.split(":", 1)
-                if len(parts) == 2:
-                    caller_file, caller_name = parts
-
-                    # Try to get the Symbol object to get line number
-                    if caller_id in self.graph.nodes:
-                        caller_symbol = self.graph.nodes[caller_id]
-                        all_callers.append((caller_symbol.file, caller_symbol.line, caller_symbol.name))
-                    else:
-                        # Fallback: no line number available
-                        logger.warning(f"Caller symbol not in graph: {caller_id}")
-                        all_callers.append((caller_file, 0, caller_name))
+                # Parse symbol_id format: "file:line:name"
+                # Try to get the Symbol object first (preferred)
+                if caller_id in self.graph.nodes:
+                    caller_symbol = self.graph.nodes[caller_id]
+                    all_callers.append((caller_symbol.file, caller_symbol.line, caller_symbol.name))
+                elif ":" in caller_id:
+                    # Fallback: extract file and name from ID
+                    # Use rsplit to handle filenames with colons
+                    parts = caller_id.rsplit(":", 1)
+                    caller_name = parts[-1]
+                    caller_file = parts[0].rsplit(":", 1)[0] if ":" in parts[0] else parts[0]
+                    logger.warning(f"Caller symbol not in graph: {caller_id}")
+                    all_callers.append((caller_file, 0, caller_name))
 
         logger.debug(f"Found {len(all_callers)} callers for: {symbol_name}")
         return all_callers

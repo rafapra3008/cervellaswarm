@@ -64,7 +64,7 @@ class TestAddSymbol:
         graph.add_symbol(symbol)
 
         assert len(graph.nodes) == 1
-        symbol_id = "app.py:my_function"
+        symbol_id = "app.py:10:my_function"
         assert symbol_id in graph.nodes
         assert graph.nodes[symbol_id] == symbol
 
@@ -79,8 +79,8 @@ class TestAddSymbol:
         graph.add_symbol(symbol2)
 
         assert len(graph.nodes) == 2
-        assert "app.py:func1" in graph.nodes
-        assert "app.py:func2" in graph.nodes
+        assert "app.py:10:func1" in graph.nodes
+        assert "app.py:20:func2" in graph.nodes
 
     def test_add_symbols_different_files(self):
         """Test adding symbols from different files."""
@@ -94,8 +94,8 @@ class TestAddSymbol:
 
         # Same name, different files = different IDs
         assert len(graph.nodes) == 2
-        assert "app.py:func" in graph.nodes
-        assert "utils.py:func" in graph.nodes
+        assert "app.py:10:func" in graph.nodes
+        assert "utils.py:10:func" in graph.nodes
 
     def test_add_symbol_overwrites_existing(self):
         """Test adding symbol with same ID overwrites."""
@@ -108,7 +108,26 @@ class TestAddSymbol:
         graph.add_symbol(symbol2)
 
         assert len(graph.nodes) == 1
-        assert graph.nodes["app.py:func"].signature == "def func(): # updated"
+        assert graph.nodes["app.py:10:func"].signature == "def func(): # updated"
+
+    def test_add_symbol_same_name_different_lines_no_collision(self):
+        """Test same name at different lines are stored separately.
+
+        Bug H4: Old format 'file:name' caused __init__ in multiple classes
+        to collide. New format 'file:line:name' prevents this.
+        """
+        graph = DependencyGraph()
+
+        init1 = Symbol("__init__", "function", "models.py", 5, "def __init__(self):")
+        init2 = Symbol("__init__", "function", "models.py", 25, "def __init__(self):")
+
+        graph.add_symbol(init1)
+        graph.add_symbol(init2)
+
+        # Both should be stored (different line numbers = different IDs)
+        assert len(graph.nodes) == 2
+        assert "models.py:5:__init__" in graph.nodes
+        assert "models.py:25:__init__" in graph.nodes
 
 
 class TestAddReference:
@@ -124,8 +143,8 @@ class TestAddReference:
         graph.add_symbol(symbol1)
         graph.add_symbol(symbol2)
 
-        from_id = "app.py:caller"
-        to_id = "app.py:callee"
+        from_id = "app.py:10:caller"
+        to_id = "app.py:20:callee"
         graph.add_reference(from_id, to_id)
 
         assert len(graph.edges) == 1
@@ -142,10 +161,10 @@ class TestAddReference:
         graph.add_symbol(symbol2)
 
         # Reference by name (without ":"), should resolve to full ID
-        graph.add_reference("app.py:caller", "callee")
+        graph.add_reference("app.py:10:caller", "callee")
 
         assert len(graph.edges) == 1
-        assert ("app.py:caller", "app.py:callee") in graph.edges
+        assert ("app.py:10:caller", "app.py:20:callee") in graph.edges
 
     def test_add_reference_no_duplicate(self):
         """Test adding same reference twice doesn't create duplicate."""
@@ -154,8 +173,8 @@ class TestAddReference:
         symbol = Symbol("func", "function", "app.py", 10, "def func():")
         graph.add_symbol(symbol)
 
-        graph.add_reference("app.py:func", "other")
-        graph.add_reference("app.py:func", "other")
+        graph.add_reference("app.py:10:func", "other")
+        graph.add_reference("app.py:10:func", "other")
 
         assert len(graph.edges) == 1
 
@@ -171,9 +190,9 @@ class TestAddReference:
         graph.add_symbol(s2)
         graph.add_symbol(s3)
 
-        graph.add_reference("app.py:a", "app.py:b")
-        graph.add_reference("app.py:a", "app.py:c")
-        graph.add_reference("app.py:b", "app.py:c")
+        graph.add_reference("app.py:10:a", "app.py:20:b")
+        graph.add_reference("app.py:10:a", "app.py:30:c")
+        graph.add_reference("app.py:20:b", "app.py:30:c")
 
         assert len(graph.edges) == 3
 
@@ -185,11 +204,11 @@ class TestAddReference:
         graph.add_symbol(symbol)
 
         # Reference to symbol not in graph (won't resolve)
-        graph.add_reference("app.py:caller", "unknown_function")
+        graph.add_reference("app.py:10:caller", "unknown_function")
 
         assert len(graph.edges) == 1
         # Edge stored with unresolved name
-        assert ("app.py:caller", "unknown_function") in graph.edges
+        assert ("app.py:10:caller", "unknown_function") in graph.edges
 
 
 class TestComputeImportance:
@@ -214,9 +233,9 @@ class TestComputeImportance:
         scores = graph.compute_importance()
 
         assert len(scores) == 1
-        assert "app.py:func" in scores
+        assert "app.py:10:func" in scores
         # Single node gets score of 1.0
-        assert scores["app.py:func"] == pytest.approx(1.0, abs=0.01)
+        assert scores["app.py:10:func"] == pytest.approx(1.0, abs=0.01)
 
     def test_compute_importance_two_nodes_with_reference(self):
         """Test importance: referenced symbol should rank higher."""
@@ -227,12 +246,12 @@ class TestComputeImportance:
 
         graph.add_symbol(caller)
         graph.add_symbol(callee)
-        graph.add_reference("app.py:caller", "app.py:callee")
+        graph.add_reference("app.py:10:caller", "app.py:20:callee")
 
         scores = graph.compute_importance()
 
         # Callee (referenced) should have higher score than caller
-        assert scores["app.py:callee"] > scores["app.py:caller"]
+        assert scores["app.py:20:callee"] > scores["app.py:10:caller"]
 
     def test_compute_importance_multiple_references(self):
         """Test importance: symbol referenced by many ranks highest."""
@@ -248,16 +267,16 @@ class TestComputeImportance:
         graph.add_symbol(caller2)
         graph.add_symbol(caller3)
 
-        graph.add_reference("app.py:caller1", "app.py:hub")
-        graph.add_reference("app.py:caller2", "app.py:hub")
-        graph.add_reference("app.py:caller3", "app.py:hub")
+        graph.add_reference("app.py:20:caller1", "app.py:10:hub")
+        graph.add_reference("app.py:30:caller2", "app.py:10:hub")
+        graph.add_reference("app.py:40:caller3", "app.py:10:hub")
 
         scores = graph.compute_importance()
 
-        hub_score = scores["app.py:hub"]
-        assert hub_score > scores["app.py:caller1"]
-        assert hub_score > scores["app.py:caller2"]
-        assert hub_score > scores["app.py:caller3"]
+        hub_score = scores["app.py:10:hub"]
+        assert hub_score > scores["app.py:20:caller1"]
+        assert hub_score > scores["app.py:30:caller2"]
+        assert hub_score > scores["app.py:40:caller3"]
 
     def test_compute_importance_isolated_node(self):
         """Test isolated node gets low importance."""
@@ -271,11 +290,11 @@ class TestComputeImportance:
         graph.add_symbol(connected2)
         graph.add_symbol(isolated)
 
-        graph.add_reference("app.py:c1", "app.py:c2")
+        graph.add_reference("app.py:10:c1", "app.py:20:c2")
 
         scores = graph.compute_importance()
 
-        assert scores["app.py:isolated"] < scores["app.py:c2"]
+        assert scores["app.py:30:isolated"] < scores["app.py:20:c2"]
 
     def test_compute_importance_pagerank_failure_fallback(self):
         """Test fallback when PageRank computation fails."""
@@ -293,8 +312,8 @@ class TestComputeImportance:
             scores = graph.compute_importance()
 
             assert len(scores) == 2
-            assert scores["app.py:func1"] == pytest.approx(0.5)
-            assert scores["app.py:func2"] == pytest.approx(0.5)
+            assert scores["app.py:10:func1"] == pytest.approx(0.5)
+            assert scores["app.py:20:func2"] == pytest.approx(0.5)
 
 
 class TestGetTopSymbols:
@@ -335,8 +354,8 @@ class TestGetTopSymbols:
         graph.add_symbol(caller1)
         graph.add_symbol(caller2)
 
-        graph.add_reference("app.py:caller1", "app.py:hub")
-        graph.add_reference("app.py:caller2", "app.py:hub")
+        graph.add_reference("app.py:20:caller1", "app.py:10:hub")
+        graph.add_reference("app.py:30:caller2", "app.py:10:hub")
 
         graph.compute_importance()
         top = graph.get_top_symbols(n=3)
@@ -354,6 +373,32 @@ class TestGetTopSymbols:
         top = graph.get_top_symbols(n=3)
 
         assert len(top) == 3
+
+    def test_get_top_symbols_with_phantom_nodes(self):
+        """Test get_top_symbols filters out phantom nodes from edges.
+
+        Bug H3: add_edges_from() in NetworkX adds implicit nodes for
+        unresolved references. PageRank computes scores for these phantom
+        nodes, but they don't exist in self.nodes, causing KeyError.
+        """
+        graph = DependencyGraph()
+
+        sym1 = Symbol("foo", "function", "a.py", 1, "def foo():")
+        sym2 = Symbol("bar", "function", "a.py", 10, "def bar():")
+        graph.add_symbol(sym1)
+        graph.add_symbol(sym2)
+
+        # Add edge to a symbol NOT in the graph (phantom node)
+        graph.add_reference("a.py:1:foo", "nonexistent_function")
+
+        graph.compute_importance()
+
+        # Should NOT raise KeyError
+        top = graph.get_top_symbols(10)
+        assert len(top) == 2
+        # All returned symbols should be real Symbol objects
+        for sym in top:
+            assert isinstance(sym, Symbol)
 
 
 class TestGetSymbolImportance:

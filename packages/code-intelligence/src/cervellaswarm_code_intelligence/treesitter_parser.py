@@ -242,14 +242,16 @@ class TreesitterParser:
             return None
 
     def clear_cache(self) -> None:
-        """Clear all cached parsers and trees.
+        """Clear cached AST trees.
 
-        Useful when you need to free memory or force re-parsing.
+        Clears only the tree cache, not parser or language caches
+        (which are lightweight and reusable). Use this to free memory
+        from parsed ASTs or to force re-parsing of files.
 
         Example:
             >>> parser = TreesitterParser()
             >>> parser.parse_file("app.py")
-            >>> parser.clear_cache()  # Free memory
+            >>> parser.clear_cache()  # Free AST memory
         """
         self.trees.clear()
         logger.info("Cleared AST cache")

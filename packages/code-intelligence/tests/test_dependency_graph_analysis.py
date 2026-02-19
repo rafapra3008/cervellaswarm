@@ -41,12 +41,12 @@ class TestGetSymbolReferences:
 
         graph.add_symbol(caller)
         graph.add_symbol(callee)
-        graph.add_reference("app.py:caller", "app.py:callee")
+        graph.add_reference("app.py:10:caller", "app.py:20:callee")
 
         refs = graph.get_symbol_references(caller)
 
         assert len(refs) == 1
-        assert "app.py:callee" in refs
+        assert "app.py:20:callee" in refs
 
     def test_get_symbol_references_multiple(self):
         """Test symbol referencing multiple symbols."""
@@ -60,14 +60,14 @@ class TestGetSymbolReferences:
         graph.add_symbol(callee1)
         graph.add_symbol(callee2)
 
-        graph.add_reference("app.py:caller", "app.py:callee1")
-        graph.add_reference("app.py:caller", "app.py:callee2")
+        graph.add_reference("app.py:10:caller", "app.py:20:callee1")
+        graph.add_reference("app.py:10:caller", "app.py:30:callee2")
 
         refs = graph.get_symbol_references(caller)
 
         assert len(refs) == 2
-        assert "app.py:callee1" in refs
-        assert "app.py:callee2" in refs
+        assert "app.py:20:callee1" in refs
+        assert "app.py:30:callee2" in refs
 
 
 class TestGetSymbolReferencedBy:
@@ -93,12 +93,12 @@ class TestGetSymbolReferencedBy:
 
         graph.add_symbol(caller)
         graph.add_symbol(callee)
-        graph.add_reference("app.py:caller", "app.py:callee")
+        graph.add_reference("app.py:10:caller", "app.py:20:callee")
 
         refs = graph.get_symbol_referenced_by(callee)
 
         assert len(refs) == 1
-        assert "app.py:caller" in refs
+        assert "app.py:10:caller" in refs
 
     def test_get_symbol_referenced_by_multiple(self):
         """Test symbol referenced by multiple symbols (hub)."""
@@ -112,14 +112,14 @@ class TestGetSymbolReferencedBy:
         graph.add_symbol(caller1)
         graph.add_symbol(caller2)
 
-        graph.add_reference("app.py:caller1", "app.py:hub")
-        graph.add_reference("app.py:caller2", "app.py:hub")
+        graph.add_reference("app.py:20:caller1", "app.py:10:hub")
+        graph.add_reference("app.py:30:caller2", "app.py:10:hub")
 
         refs = graph.get_symbol_referenced_by(hub)
 
         assert len(refs) == 2
-        assert "app.py:caller1" in refs
-        assert "app.py:caller2" in refs
+        assert "app.py:20:caller1" in refs
+        assert "app.py:30:caller2" in refs
 
 
 class TestGetStats:
@@ -159,7 +159,7 @@ class TestGetStats:
 
         graph.add_symbol(s1)
         graph.add_symbol(s2)
-        graph.add_reference("app.py:func1", "app.py:func2")
+        graph.add_reference("app.py:10:func1", "app.py:20:func2")
 
         stats = graph.get_stats()
 
@@ -179,7 +179,7 @@ class TestGetStats:
         graph.add_symbol(connected2)
         graph.add_symbol(isolated)
 
-        graph.add_reference("app.py:c1", "app.py:c2")
+        graph.add_reference("app.py:10:c1", "app.py:20:c2")
 
         stats = graph.get_stats()
 
@@ -192,14 +192,14 @@ class TestGetSymbolId:
     """Test symbol ID generation."""
 
     def test_get_symbol_id_format(self):
-        """Test symbol ID format is file:name."""
+        """Test symbol ID format is file:line:name."""
         graph = DependencyGraph()
 
         symbol = Symbol("my_func", "function", "app/auth.py", 42, "def my_func():")
 
         symbol_id = graph._get_symbol_id(symbol)
 
-        assert symbol_id == "app/auth.py:my_func"
+        assert symbol_id == "app/auth.py:42:my_func"
 
     def test_get_symbol_id_unique_per_file(self):
         """Test same name in different files gets different IDs."""
@@ -212,8 +212,8 @@ class TestGetSymbolId:
         id2 = graph._get_symbol_id(symbol2)
 
         assert id1 != id2
-        assert id1 == "auth.py:login"
-        assert id2 == "admin.py:login"
+        assert id1 == "auth.py:10:login"
+        assert id2 == "admin.py:10:login"
 
 
 class TestBuildDependencyGraph:
@@ -246,7 +246,7 @@ class TestBuildDependencyGraph:
         graph = build_dependency_graph([symbol])
 
         assert len(graph.nodes) == 1
-        assert "app.py:func" in graph.nodes
+        assert "app.py:10:func" in graph.nodes
 
     def test_build_dependency_graph_with_references(self):
         """Test building graph with references (callee added first)."""
@@ -261,8 +261,8 @@ class TestBuildDependencyGraph:
         assert len(graph.nodes) == 2
         assert len(graph.edges) == 1
         edge = graph.edges[0]
-        assert edge[0] == "app.py:caller"
-        assert edge[1] == "app.py:callee"
+        assert edge[0] == "app.py:10:caller"
+        assert edge[1] == "app.py:20:callee"
 
     def test_build_dependency_graph_cross_file_references(self):
         """Test building graph with cross-file references."""
@@ -276,8 +276,8 @@ class TestBuildDependencyGraph:
 
         assert len(graph.nodes) == 2
         edge = graph.edges[0]
-        assert edge[0] == "file1.py:func1"
-        assert edge[1] == "file2.py:func2"
+        assert edge[0] == "file1.py:10:func1"
+        assert edge[1] == "file2.py:10:func2"
 
 
 class TestExportGraphviz:
@@ -321,7 +321,7 @@ class TestExportGraphviz:
 
         graph.add_symbol(s1)
         graph.add_symbol(s2)
-        graph.add_reference("app.py:func1", "app.py:func2")
+        graph.add_reference("app.py:10:func1", "app.py:20:func2")
 
         with tempfile.NamedTemporaryFile(suffix=".dot", delete=False) as f:
             output_path = f.name
@@ -363,7 +363,7 @@ class TestExportGraphviz:
 
         graph.add_symbol(s1)
         graph.add_symbol(s2)
-        graph.add_reference("app.py:func1", "app.py:func2")
+        graph.add_reference("app.py:10:func1", "app.py:20:func2")
 
         with tempfile.NamedTemporaryFile(suffix=".dot", delete=False) as f:
             output_path = f.name

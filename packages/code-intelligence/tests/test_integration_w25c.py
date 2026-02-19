@@ -70,7 +70,7 @@ class TestPageRankVariance:
         for s in [common, helper, main, isolated]:
             graph.add_symbol(s)
             for ref in s.references:
-                graph.add_reference(f"{s.file}:{s.name}", ref)
+                graph.add_reference(f"{s.file}:{s.line}:{s.name}", ref)
 
         # Compute importance
         scores = graph.compute_importance()
@@ -87,7 +87,7 @@ class TestPageRankVariance:
         assert variance > 0.001, f"Variance {variance} should be > 0.001"
 
         # common_util should have highest score (most referenced)
-        common_id = "common.py:common_util"
+        common_id = "common.py:1:common_util"
         assert common_id in scores
         assert scores[common_id] == max(scores.values()), \
             "common_util should have highest PageRank score"
@@ -189,7 +189,7 @@ class TestFileOrdering:
         for s in [z_func, a_func, b_func]:
             graph.add_symbol(s)
             for ref in s.references:
-                graph.add_reference(f"{s.file}:{s.name}", ref)
+                graph.add_reference(f"{s.file}:{s.line}:{s.name}", ref)
 
         # Compute importance
         graph.compute_importance()
@@ -241,7 +241,7 @@ class TestFileOrdering:
         for s in [core, service, api, util]:
             graph.add_symbol(s)
             for ref in s.references:
-                graph.add_reference(f"{s.file}:{s.name}", ref)
+                graph.add_reference(f"{s.file}:{s.line}:{s.name}", ref)
 
         graph.compute_importance()
         top = graph.get_top_symbols(n=4)

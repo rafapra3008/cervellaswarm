@@ -44,8 +44,8 @@ class SymbolCache:
     Features:
         - LRU eviction: oldest unused entries removed first
         - mtime validation: returns None if file changed
-        - Thread-safe for basic operations
         - Configurable maxsize (default 1000)
+        - Not thread-safe: use external locking for concurrent access
 
     Attributes:
         maxsize: Maximum number of entries to cache

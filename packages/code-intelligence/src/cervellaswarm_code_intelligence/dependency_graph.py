@@ -74,8 +74,8 @@ class DependencyGraph:
     def add_symbol(self, symbol: Symbol) -> None:
         """Add a symbol as node in the graph.
 
-        The symbol ID is constructed as "{file}:{name}" to ensure uniqueness
-        across files.
+        The symbol ID is constructed as "{file}:{line}:{name}" to ensure
+        uniqueness, even for same-named symbols in the same file.
 
         Args:
             symbol: Symbol object to add
@@ -134,7 +134,7 @@ class DependencyGraph:
             >>> graph = DependencyGraph()
             >>> # ... add symbols and references ...
             >>> scores = graph.compute_importance()
-            >>> print(scores["auth.py:verify_credentials"])
+            >>> print(scores["auth.py:15:verify_credentials"])
             0.15  # High score = important
         """
         if not self.nodes:
@@ -202,8 +202,10 @@ class DependencyGraph:
             self.compute_importance()
 
         # Sort symbol IDs by importance score
+        # Filter to only include nodes registered in self.nodes
+        # (PageRank may include phantom nodes added implicitly via edges)
         sorted_ids = sorted(
-            self.importance.items(),
+            ((k, v) for k, v in self.importance.items() if k in self.nodes),
             key=lambda x: x[1],
             reverse=True
         )[:n]
@@ -292,7 +294,10 @@ class DependencyGraph:
     def _get_symbol_id(self, symbol: Symbol) -> str:
         """Generate unique ID for a symbol.
 
-        Format: "{file}:{name}"
+        Format: "{file}:{line}:{name}"
+
+        This format ensures uniqueness even when the same name appears
+        multiple times in the same file (e.g., __init__ in different classes).
 
         Args:
             symbol: Symbol object
@@ -303,9 +308,9 @@ class DependencyGraph:
         Example:
             >>> id = graph._get_symbol_id(symbol)
             >>> print(id)
-            'app/auth.py:login'
+            'app/auth.py:42:login'
         """
-        return f"{symbol.file}:{symbol.name}"
+        return f"{symbol.file}:{symbol.line}:{symbol.name}"
 
     def export_graphviz(self, output_path: str, top_n: Optional[int] = None) -> None:
         """Export graph to GraphViz DOT format for visualization.
