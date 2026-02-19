@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 19 Febbraio 2026 - S379 (F3.5 Auto-Handoff DONE + CACCIA BUG 7/7 COMPLETATA)
+> Aggiornato: 19 Febbraio 2026 - S380 (Lingua Universale Fase A + NORD della Regina)
 
 ```
 +==================================================================+
@@ -115,23 +115,24 @@ FASE 3: Session Memory System     [########............] 40% IN CORSO
 FASE 4: Launch                    [....................] TODO
 ```
 
-### LA STELLA POLARE (S375)
+### LA STELLA POLARE - LINGUA UNIVERSALE (S375 + S380)
 
 ```
 +==================================================================+
 |                                                                  |
-|   "La domanda e la risposta nello STESSO linguaggio."            |
-|                                          - Rafa, 19 Febbraio 2026|
+|   "Non fare le cose PIU VELOCE.                                  |
+|    Farle PIU SICURE.                                              |
+|    Con prove matematiche, non con speranze."                      |
+|                                          - La Regina, S380        |
 |                                                                  |
-|   VISIONE: Ogni persona puo creare software                     |
-|   parlando nella sua lingua.                                     |
+|   3 PILASTRI:                                                     |
+|     1. Incertezza come tipo (non stringa)                        |
+|     2. Fiducia componibile (trust composition)                   |
+|     3. Protocolli che si provano da soli (Lean 4)                |
 |                                                                  |
-|   Due liberta: quella umana e quella dell'AI.                    |
-|   Venire piu vicini. Creare INSIEME.                             |
-|                                                                  |
-|   Roadmap: A (agent protocol) -> B (toolkit) -> C (linguaggio)  |
-|   Report: reports/VISION_20260219_lingua_universale.md           |
-|   Ricerche: 95 fonti, 5 report in reports/                      |
+|   Fase A -> B -> C -> MONDO                                      |
+|   NORD completo: packages/lingua-universale/NORD.md              |
+|   153 fonti, 153 test, campo vergine in Python                   |
 |                                                                  |
 +==================================================================+
 ```
