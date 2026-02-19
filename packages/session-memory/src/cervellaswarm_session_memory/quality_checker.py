@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 
-from cervellaswarm_session_memory.config import DEFAULTS, load_config, get_memory_dir
+from cervellaswarm_session_memory.config import DEFAULTS, load_config
 
 # Patterns that indicate actionable content
 ACTIONABILITY_PATTERNS = [

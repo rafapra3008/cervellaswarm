@@ -14,7 +14,7 @@ from datetime import datetime
 from enum import Enum
 from pathlib import Path
 
-from cervellaswarm_session_memory.config import DEFAULTS, load_config, get_memory_dir
+from cervellaswarm_session_memory.config import DEFAULTS, load_config
 
 
 class CheckStatus(Enum):
@@ -190,7 +190,7 @@ def verify_project(
     Returns:
         SyncResult with all check results.
     """
-    from cervellaswarm_session_memory.project_manager import get_project, normalize_name
+    from cervellaswarm_session_memory.project_manager import get_project
 
     if config is None:
         config = load_config()

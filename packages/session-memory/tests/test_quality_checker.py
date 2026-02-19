@@ -338,8 +338,9 @@ def test_check_quality_suggestions_actionability(tmp_path):
     content = "\n".join(["just vague text with maybe nothing to do"] * 50)
     f = _make_file(tmp_path, content, age_days=0)
     result = check_quality(f)
-    if result.scores.get("actionability", 10) < 7.0:
-        assert any("TODO" in s or "NEXT" in s for s in result.suggestions)
+    assert "actionability" in result.scores
+    assert result.scores["actionability"] < 7.0
+    assert any("TODO" in s or "NEXT" in s for s in result.suggestions)
 
 
 def test_check_quality_suggestions_specificity(tmp_path):
@@ -347,8 +348,9 @@ def test_check_quality_suggestions_specificity(tmp_path):
     content = "\n".join(["maybe soon probably eventually various"] * 50)
     f = _make_file(tmp_path, content, age_days=0)
     result = check_quality(f)
-    if result.scores.get("specificity", 10) < 7.0:
-        assert any("vague" in s.lower() or "date" in s.lower() for s in result.suggestions)
+    assert "specificity" in result.scores
+    assert result.scores["specificity"] < 7.0
+    assert any("vague" in s.lower() or "date" in s.lower() for s in result.suggestions)
 
 
 def test_check_quality_suggestions_freshness(tmp_path):
@@ -356,8 +358,9 @@ def test_check_quality_suggestions_freshness(tmp_path):
     content = "\n".join(["TODO: item v1.2.3 2026-02-19"] * 20)
     f = _make_file(tmp_path, content, age_days=60)
     result = check_quality(f)
-    if result.scores.get("freshness", 10) < 7.0:
-        assert any("stale" in s.lower() or "update" in s.lower() for s in result.suggestions)
+    assert "freshness" in result.scores
+    assert result.scores["freshness"] < 7.0
+    assert any("stale" in s.lower() or "update" in s.lower() for s in result.suggestions)
 
 
 def test_check_quality_custom_weights(tmp_path):
@@ -372,9 +375,9 @@ def test_check_quality_custom_weights(tmp_path):
         "conciseness": 0.10,
     }
     custom_result = check_quality(f, weights=custom_weights)
-    # Both produce a float total; with different weights totals differ
+    # Both produce a float total; with different weights totals may differ
     assert isinstance(custom_result.total, float)
-    assert custom_result.total != default_result.total or True  # may coincide
+    assert isinstance(default_result.total, float)
 
 
 def test_check_quality_total_calculation(tmp_path):

@@ -46,6 +46,7 @@ cervella-session-init = "cervellaswarm_session_memory.cli:main_init"
 cervella-session-check = "cervellaswarm_session_memory.cli:main_check"
 cervella-session-audit = "cervellaswarm_session_memory.cli:main_audit"
 cervella-session-sync = "cervellaswarm_session_memory.cli:main_sync"
+cervella-session-list = "cervellaswarm_session_memory.cli:main_list"
 
 [project.urls]
 Homepage = "https://github.com/rafapra3008/cervellaswarm"
