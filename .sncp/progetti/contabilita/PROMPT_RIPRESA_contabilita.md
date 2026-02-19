@@ -1,60 +1,60 @@
 # PROMPT RIPRESA - Contabilita Antigravity
 
-> **Ultimo aggiornamento:** 19 Febbraio 2026 - Sessione 99
+> **Ultimo aggiornamento:** 19 Febbraio 2026 - Sessione 102
 > **Branch attivo:** lab-v3 (sviluppo V3) + lab-v2 (intoccato) + main (produzione)
 > **Versione canonica:** `CervellaSwarm/.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md`
 
 ---
 
-## Stato Attuale - S99 COMPLETATA (FASE E.6 - Endpoint Reprocess)
+## Stato Attuale - S102: Fix 429 Multi-Cell Save
 
 | Cosa | Stato |
 |------|-------|
 | **Produzione** | v2.11.0 LIVE su contabilitafamigliapra.it (INTATTA, zero modifiche) |
-| **Lab v2 VM** | v1.13.0 LIVE su lab.contabilitafamigliapra.it (HTTPS, DB v10, sync auto ATTIVO) |
-| **V3 VM** | **LIVE su https://v3.contabilitafamigliapra.it** (SSL, 12 headers, Health OK) |
-| **Lab v2 locale** | INTOCCATO, branch lab-v2, porta 8001 |
-| **Lab V3 locale** | branch lab-v3, porta 8003, Docker healthy |
-| **FASE E.6** | **COMPLETATA S99** - POST /api/v3/reprocess + get_stuck_movimenti, Guardiana 9.6/10 |
+| **Lab v2 VM** | v1.13.0 LIVE su lab.contabilitafamigliapra.it (HTTPS, sync auto ATTIVO) |
+| **V3 VM** | **LIVE** su v3.contabilitafamigliapra.it (health OK, watermark 3857) |
+| **Agent hotel NL** | **AUTOMATICO!** Task Scheduler ogni ora, background |
+| **FASE E.10** | IN CORSO - Task Scheduler OK, watermark 3857 (attesa chiusura cassa) |
 | **Test** | 1522/1522 PASS (0 warnings) - 1286 portale + 236 agent |
-| **Prossimo** | **FASE E.7 - Prerequisiti hotel NL (Rafa)** |
+| **Prossimo** | Endpoint batch backend (fix definitivo) + audit + deploy V3 |
 
 ---
 
-## S99 - Cosa e stato fatto
+## S102 - Fix 429 Rate Limit Multi-Cell Save
 
-### FASE E.6 - Endpoint Reprocess Movimenti Stuck
+| Cosa | Dettaglio |
+|------|-----------|
+| **Bug** | Multi-cell select + "s" causava 429 (Nginx V3 rate limit 60r/m burst=20) |
+| **Fix** | `batchedSave()` batch da 10 + merge fatto+sig_sergio in 1 call + fix selezione mista |
+| **Guardiana** | R1: 9.3 -> R2: **9.5/10 APPROVED** |
+| **File** | `frontend/js/selection.js` v1.3.0, commit `ae4af2a` |
+| **NON deployato** | Fix solo locale, deploy nella prossima sessione |
 
-| File | Modifica |
-|------|----------|
-| `backend/database/ericsoft.py` | EricsoftMixin v1.3.0: +get_stuck_movimenti(portale, limit=1000) |
-| `backend/routers/ericsoft.py` | Router v1.3.0: +POST /api/v3/reprocess (auth Bearer, try/except, portale_ok) |
-| `backend/main.py` | PUBLIC_ENDPOINTS: +/api/v3/reprocess |
-| `tests/test_ericsoft.py` | +15 test (8 mixin + 7 router) = 152 ericsoft totali |
+## S101 - Task Scheduler + Timing Ericsoft
 
-### Guardiana QA
+| Cosa | Dettaglio |
+|------|-----------|
+| **Task Scheduler** | ContabilitaSync-NL, ogni 1 ora, background (anche senza login) |
+| **Scoperta timing** | Movimenti visibili in UI Ericsoft ma NON nel DB SQL Server fino a chiusura cassa |
+| **Delay reale** | Max 12-18 ore, completamente automatico (zero intervento umano) |
 
-| Round | Score | Fix |
-|-------|-------|-----|
-| R1 | 9.3/10 | 1 P2 (try/except) + 5 P3 (LIMIT, docstring, test manual, test error) |
-| R2 | 9.6/10 | Tutti fix verificati, APPROVED |
+## S100 - PRIMO SYNC REALE ERICSOFT (STORICA!)
+
+| Metrica | Valore |
+|---------|--------|
+| **Movimenti** | 2114 (3 batch: 1000+1000+114), 0 errori |
+| **Caparre** | 1081 (source='ericsoft') |
+| **Giroconti** | 1033 (source='ericsoft') |
+| **Watermark** | 3857 |
 
 ---
 
-## Subroadmap FASE E
+## Prossimi step
 
-| Step | Cosa | Status |
-|------|------|--------|
-| **E.1** | Studio + File deploy | **COMPLETATO S95** |
-| **E.2** | DNS record A | **COMPLETATO S97** |
-| **E.3** | Deploy V3 backend | **COMPLETATO S97** |
-| **E.4** | SSL + Nginx + HTTPS | **COMPLETATO S97** |
-| **E.5** | Script .bat Windows + README agent | **COMPLETATO S98** |
-| **E.6** | Endpoint reprocess (movimenti stuck) | **COMPLETATO S99** |
-| **E.7** | Prerequisiti hotel NL (Rafa) | **PROSSIMO** |
-| **E.8** | Deploy agent su NL + dry-run | PENDING |
-| **E.9** | Prima sync REALE E2E | PENDING |
-| **E.10** | Verifica nel portale + audit finale | PENDING |
+1. **Endpoint batch backend** - `POST /api/batch-update-transactions` (fix definitivo, con calma)
+2. **Verifica watermark** - controllare se > 3857 (chiusura cassa)
+3. **Deploy fix 429 su V3** - dopo audit endpoint batch
+4. **FASE F** - Confronto Ericsoft vs PDF
 
 ---
 
@@ -62,12 +62,10 @@
 
 | Cosa | File (lab-v3 worktree) |
 |------|------|
-| **Endpoint reprocess** | `backend/routers/ericsoft.py` (POST /api/v3/reprocess) |
-| **get_stuck_movimenti** | `backend/database/ericsoft.py` (EricsoftMixin) |
-| **Script Windows** | `agent/scripts/` (4 file .bat/.py) |
-| **Guida Windows** | `agent/README_WINDOWS.md` |
-| **Script deploy** | `scripts/deploy_v3_setup.sh` + `scripts/deploy_v3_nginx.sh` |
+| **selection.js v1.3.0** | `frontend/js/selection.js` |
 | Agent (8 moduli) | `agent/` directory |
+| Feedback doc riuso | `docs/FEEDBACK_AGENT_WINDOWS_SQLSERVER.md` |
+| Router V3 | `backend/routers/ericsoft.py` |
 
 ---
 
