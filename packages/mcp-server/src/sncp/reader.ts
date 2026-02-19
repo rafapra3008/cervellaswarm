@@ -23,9 +23,9 @@ const KNOWN_PROJECTS = ["cervellaswarm", "miracollo", "contabilita", "cervellaco
 export type SncpProject = (typeof KNOWN_PROJECTS)[number];
 
 // File types available per project
+// NOTE: stato.md eliminated in SNCP 4.0 (S357). Only PROMPT_RIPRESA and MEMORY survive.
 const FILE_TYPES = {
   PROMPT_RIPRESA: "PROMPT_RIPRESA",
-  stato: "stato",
   MEMORY: "MEMORY",
 } as const;
 export type SncpFileType = keyof typeof FILE_TYPES;
@@ -52,9 +52,6 @@ export async function readProjectFile(
   switch (fileType) {
     case "PROMPT_RIPRESA":
       fileName = `PROMPT_RIPRESA_${project}.md`;
-      break;
-    case "stato":
-      fileName = "stato.md";
       break;
     case "MEMORY":
       fileName = "MEMORY.md";
@@ -116,7 +113,7 @@ export async function listProjects(): Promise<
       hasPromptRipresa: projectFiles.some((f) =>
         f.startsWith("PROMPT_RIPRESA_")
       ),
-      hasStato: projectFiles.includes("stato.md"),
+      hasStato: false, // stato.md eliminated in SNCP 4.0 (S357)
       hasMemory: projectFiles.includes("MEMORY.md"),
       files: projectFiles.filter((f) => f.endsWith(".md")),
     });

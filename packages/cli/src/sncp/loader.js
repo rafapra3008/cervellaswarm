@@ -4,7 +4,7 @@
  * Loads project context from .sncp folder.
  * Reads the project's constitution and state.
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0
  */
@@ -45,15 +45,7 @@ export async function loadProjectContext() {
       projectData = { projectName };
     }
 
-    // Try to load stato.md for progress (optional)
-    let statoContent = null;
-    try {
-      const statoPath = join(projectSncpPath, 'stato.md');
-      statoContent = await readFile(statoPath, 'utf8');
-    } catch {
-      // Graceful degradation: stato.md is optional
-      // Progress will default to 0% if not found
-    }
+    // NOTE: stato.md eliminated in SNCP 4.0 (S357). Progress comes from PROMPT_RIPRESA.
 
     // Try to load PROMPT_RIPRESA for last session (optional)
     let promptRipresa = null;
@@ -65,22 +57,15 @@ export async function loadProjectContext() {
       // lastSession will be null if not found
     }
 
-    // Parse progress from stato.md
+    // Progress and next step from PROMPT_RIPRESA (stato.md eliminated in SNCP 4.0)
     let progress = 0;
     let nextStep = 'Run your first task with: cervellaswarm task "description"';
 
-    if (statoContent) {
-      // Count completed checkboxes
-      const completed = (statoContent.match(/\[x\]/gi) || []).length;
-      const total = (statoContent.match(/\[ \]/gi) || []).length + completed;
-      if (total > 0) {
-        progress = Math.round((completed / total) * 100);
-      }
-
-      // Extract next step from unchecked items
-      const unchecked = statoContent.match(/\[ \] ([^\n]+)/);
-      if (unchecked) {
-        nextStep = unchecked[1];
+    if (promptRipresa) {
+      // Extract next steps from PROMPT_RIPRESA
+      const nextStepMatch = promptRipresa.match(/## PROSSIM[IO] STEP[S]?\n+(?:[-*] )?(.+)/i);
+      if (nextStepMatch) {
+        nextStep = nextStepMatch[1].replace(/^\*+|\*+$/g, '').trim();
       }
     }
 

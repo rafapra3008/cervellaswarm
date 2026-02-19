@@ -5,7 +5,7 @@
  * 17 AI agents exposed as MCP tools for Claude Code integration.
  * "Not an assistant - a TEAM."
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0
  */

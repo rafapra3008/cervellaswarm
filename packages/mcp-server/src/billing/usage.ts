@@ -8,13 +8,14 @@
  * - Serialized writes (race condition safe)
  * - Lazy monthly reset
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  */
 
 import * as fs from "fs";
 import * as path from "path";
 import * as crypto from "crypto";
+import * as os from "os";
 import { z } from "zod";
 import {
   type UsageData,
@@ -42,8 +43,10 @@ import {
 export { QuotaStatus };
 
 // Checksum secret (machine-specific)
+// Uses hostname + uid for better uniqueness than just USER env var
 const CHECKSUM_SECRET =
-  process.env.CERVELLASWARM_SECRET || `cs-${process.env.USER || "user"}-local`;
+  process.env.CERVELLASWARM_SECRET ||
+  `cs-${process.env.USER || "user"}-${os.hostname()}-${process.getuid?.() ?? 0}`;
 
 // Zod schema for validation
 const BillingPeriodSchema = z.object({

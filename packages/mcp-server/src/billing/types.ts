@@ -4,7 +4,7 @@
  * Type definitions for usage tracking and tier management.
  * Schema designed for local JSON storage with future-proofing.
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  */
 

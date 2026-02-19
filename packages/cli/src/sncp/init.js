@@ -6,7 +6,7 @@
  *
  * "MINIMO in memoria, MASSIMO su disco"
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0
  */
@@ -34,42 +34,7 @@ export async function initSNCP(answers) {
     await mkdir(join(sncpPath, folder), { recursive: true });
   }
 
-  // Create initial stato.md
-  const statoContent = `# ${answers.projectName} - Stato Attuale
-
-<!-- LIMITI: Questo file deve restare < 500 righe -->
-<!-- Se cresce troppo, usa: cervellaswarm housekeeping -->
-
-> **Ultimo aggiornamento:** ${new Date().toISOString().split('T')[0]}
-> **Fase:** Inizializzazione
-
----
-
-## COSA STA SUCCEDENDO
-
-Progetto appena inizializzato con CervellaSwarm.
-
----
-
-## PROSSIMI PASSI
-
-1. [ ] Primo task con \`cervellaswarm task\`
-2. [ ] Esplorare il progetto
-3. [ ] Definire la prima feature
-
----
-
-## NOTE
-
-*Questo file viene aggiornato automaticamente dallo sciame.*
-*Ogni sessione lascia traccia qui.*
-
----
-
-*"Un progresso al giorno = 365 progressi all'anno"*
-`;
-
-  await writeFile(join(sncpPath, 'stato.md'), statoContent, 'utf8');
+  // NOTE: stato.md eliminated in SNCP 4.0 (S357). Only PROMPT_RIPRESA survives.
 
   // Create initial PROMPT_RIPRESA
   const promptRipresaContent = `# PROMPT RIPRESA - ${answers.projectName}

@@ -6,7 +6,7 @@
  *
  * Philosophy: "Full control over your subscription."
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  */
 

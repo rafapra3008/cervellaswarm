@@ -13,7 +13,7 @@
  *
  * Philosophy: "Keep your tools updated, but never interrupt the flow."
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0
  */

@@ -4,7 +4,7 @@
  * Launches specialized agents via Anthropic API.
  * Uses @cervellaswarm/core for prompts and worker definitions.
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  */
 

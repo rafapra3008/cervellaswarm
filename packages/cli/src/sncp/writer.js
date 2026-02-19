@@ -4,7 +4,7 @@
  * Writes reports and updates to .sncp folder.
  * Memoria esterna - "MINIMO in memoria, MASSIMO su disco"
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0
  */
@@ -92,8 +92,7 @@ export async function saveTaskReport(description, agent, result) {
     // Write JSON report
     writeFileSync(filepath, JSON.stringify(report, null, 2));
 
-    // Update stato.md with last task
-    await updateStato(sncpDir, description, agent, result);
+    // NOTE: stato.md eliminated in SNCP 4.0 (S357). Reports are self-contained.
 
     console.log(`  Report saved: ${filename}`);
     return filepath;
@@ -103,60 +102,6 @@ export async function saveTaskReport(description, agent, result) {
     console.log(`  (Could not save report: ${error.message})`);
     return null;
   }
-}
-
-/**
- * Update stato.md with last task info
- */
-async function updateStato(sncpDir, description, agent, result) {
-  const statoPath = join(sncpDir, 'stato.md');
-
-  if (!existsSync(statoPath)) {
-    // Create minimal stato.md if doesn't exist
-    const initialStato = `# Stato Progetto
-
-> Ultimo aggiornamento: ${getHumanDate()}
-
-## Ultimo Task
-
-- **Descrizione:** ${description}
-- **Agente:** ${agent}
-- **Risultato:** ${result.success ? 'Completato' : 'Errore'}
-- **Data:** ${getHumanDate()}
-`;
-    writeFileSync(statoPath, initialStato);
-    return;
-  }
-
-  // Read existing stato
-  let stato = readFileSync(statoPath, 'utf8');
-
-  // Update "Ultimo Task" section
-  const lastTaskSection = `## Ultimo Task
-
-- **Descrizione:** ${description}
-- **Agente:** ${agent}
-- **Risultato:** ${result.success ? 'Completato' : 'Errore'}
-- **Data:** ${getHumanDate()}
-`;
-
-  // Replace existing "Ultimo Task" section or add at the end
-  if (stato.includes('## Ultimo Task')) {
-    stato = stato.replace(
-      /## Ultimo Task[\s\S]*?(?=##|$)/,
-      lastTaskSection + '\n'
-    );
-  } else {
-    stato += '\n' + lastTaskSection;
-  }
-
-  // Update timestamp
-  stato = stato.replace(
-    /> Ultimo aggiornamento:.*$/m,
-    `> Ultimo aggiornamento: ${getHumanDate()}`
-  );
-
-  writeFileSync(statoPath, stato);
 }
 
 /**

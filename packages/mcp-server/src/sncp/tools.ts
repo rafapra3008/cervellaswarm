@@ -77,7 +77,8 @@ export function registerSncpTools(server: McpServer): void {
 
   /**
    * Tool: sncp_read_stato
-   * Read stato.md for a project (detailed state)
+   * DEPRECATED: stato.md was eliminated in SNCP 4.0 (S357).
+   * Kept for backward compatibility - returns deprecation notice.
    */
   server.tool(
     "sncp_read_stato",
@@ -96,30 +97,18 @@ export function registerSncpTools(server: McpServer): void {
       openWorldHint: false,
     },
     async ({ project }) => {
-      try {
-        const { content, path } = await readProjectFile(project, "stato");
-        return {
-          content: [
-            {
-              type: "text",
-              text:
-                `# Stato - ${project}\n` +
-                `Source: ${path}\n\n---\n\n` +
-                content,
-            },
-          ],
-        };
-      } catch (error) {
-        return {
-          content: [
-            {
-              type: "text",
-              text: `Error reading stato.md for ${project}: ${error instanceof Error ? error.message : "File not found"}`,
-            },
-          ],
-          isError: true,
-        };
-      }
+      return {
+        content: [
+          {
+            type: "text",
+            text:
+              `# stato.md - DEPRECATED\n\n` +
+              `stato.md was eliminated in SNCP 4.0 (S357).\n` +
+              `Use \`sncp_read_ripresa\` instead to read the PROMPT_RIPRESA for ${project}.\n` +
+              `PROMPT_RIPRESA contains: session state, decisions, next steps.`,
+          },
+        ],
+      };
     }
   );
 

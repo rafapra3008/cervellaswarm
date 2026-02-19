@@ -4,7 +4,7 @@
  * Re-exports all config functions for backward compatibility.
  * Import from here: import { getApiKey } from './config/index.js'
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  */
 

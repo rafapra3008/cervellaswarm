@@ -6,7 +6,7 @@
  *
  * "17 agenti. 1 comando. Il tuo team AI."
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0
  */
