@@ -109,11 +109,11 @@ def create_task(
             f"Invalid task ID: {task_id}. Use only alphanumeric, underscore, dash (max 50 chars)."
         )
 
+    if risk_level not in (1, 2, 3):
+        raise ValueError(f"Invalid risk_level: {risk_level}. Must be 1, 2, or 3.")
+
     tasks_path = ensure_tasks_dir(tasks_dir)
     task_file = tasks_path / f"{task_id}.md"
-
-    if task_file.exists():
-        raise FileExistsError(f"Task {task_id} already exists!")
 
     risk_map = {
         1: "LOW - new file, no risk",
@@ -126,7 +126,7 @@ def create_task(
 ## METADATA
 - ID: {task_id}
 - Assigned to: {agent}
-- Risk level: {risk_level} ({risk_map.get(risk_level, "UNDEFINED")})
+- Risk level: {risk_level} ({risk_map[risk_level]})
 - Timeout: 15 minutes
 - Created: {datetime.now().strftime("%Y-%m-%d %H:%M")}
 
@@ -146,7 +146,13 @@ Quality gate (Level {risk_level} - {'functional check' if risk_level == 1 else '
 [Detailed task description]
 """
 
-    task_file.write_text(template)
+    # ATOMIC: 'x' mode = exclusive create, prevents TOCTOU race condition
+    try:
+        with open(task_file, "x") as f:
+            f.write(template)
+    except FileExistsError:
+        raise FileExistsError(f"Task {task_id} already exists!")
+
     return str(task_file)
 
 
@@ -163,7 +169,12 @@ def list_tasks(tasks_dir: Optional[str] = None) -> list[dict]:
     tasks_path = ensure_tasks_dir(tasks_dir)
     tasks: list[dict] = []
 
-    for task_file in sorted(tasks_path.glob("TASK_*.md")):
+    # Match all .md files that aren't marker files (e.g. TASK_001.ready)
+    # Previously hardcoded to TASK_*.md but create_task accepts any valid task_id
+    marker_suffixes = {".ready", ".working", ".done", ".ack_received", ".ack_understood"}
+    for task_file in sorted(tasks_path.glob("*.md")):
+        if task_file.suffix in marker_suffixes:
+            continue
         task_id = task_file.stem
         status = get_task_status(task_id, tasks_dir)
         ack = get_ack_status(task_id, tasks_dir)

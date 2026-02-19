@@ -126,14 +126,23 @@ class SpawnManager:
 
             session_name = None
             pid = None
-            start_time = float(start_file.read_text().strip())
 
-            if session_file.exists():
-                session_name = session_file.read_text().strip()
+            try:
+                start_time = float(start_file.read_text().strip())
+            except (ValueError, OSError) as e:
+                logger.warning("Cannot read start file %s: %s", start_file, e)
+                continue
+
+            try:
+                if session_file.exists():
+                    session_name = session_file.read_text().strip()
+            except OSError as e:
+                logger.warning("Cannot read session file %s: %s", session_file, e)
+
             if pid_file.exists():
                 try:
                     pid = int(pid_file.read_text().strip())
-                except ValueError:
+                except (ValueError, OSError):
                     pass
 
             backend = "tmux" if session_name else "nohup"
@@ -205,10 +214,12 @@ class SpawnManager:
         prompt_file.write_text(system_prompt)
 
         # Build claude command (shlex.quote for shell injection safety)
+        # Use shlex.quote for prompt content instead of $(cat file) to prevent
+        # shell interpretation of $, `, " characters in the prompt
         command = (
             f'CERVELLASWARM_WORKER=1 '
             f'{shlex.quote(self.claude_bin)} -p '
-            f'--append-system-prompt "$(cat {shlex.quote(str(prompt_file))})" '
+            f'--append-system-prompt {shlex.quote(system_prompt)} '
             f'{shlex.quote(initial_prompt)}'
         )
 
@@ -266,7 +277,7 @@ class SpawnManager:
                 )
                 result.workers.append(worker)
                 result.spawned += 1
-            except RuntimeError as e:
+            except (RuntimeError, OSError) as e:
                 result.errors.append(f"{agent.name}: {e}")
                 result.failed += 1
                 logger.error("Failed to spawn %s: %s", agent.name, e)
@@ -341,12 +352,24 @@ class SpawnManager:
         return False
 
     def cleanup(self) -> None:
-        """Remove stale tracking files from status directory."""
+        """Remove tracking files only for dead workers (not alive ones)."""
         if not self.status_dir.exists():
             return
 
+        # Determine which workers are alive so we don't orphan them
+        alive_names: set[str] = set()
+        for status in self.get_status():
+            if status.alive:
+                alive_names.add(status.name)
+
         for pattern in ("worker_*.pid", "worker_*.session", "worker_*.start"):
             for f in self.status_dir.glob(pattern):
+                # Extract worker name: worker_myname.pid -> myname
+                stem = f.stem  # worker_myname
+                suffix_map = {".pid": ".pid", ".session": ".session", ".start": ".start"}
+                worker_name = stem.removeprefix("worker_")
+                if worker_name in alive_names:
+                    continue
                 try:
                     f.unlink()
                 except OSError:

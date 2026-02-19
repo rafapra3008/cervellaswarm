@@ -154,8 +154,11 @@ def is_alive_pid(pid: int) -> bool:
     try:
         os.kill(pid, 0)
         return True
-    except (ProcessLookupError, PermissionError):
+    except ProcessLookupError:
         return False
+    except PermissionError:
+        # PermissionError means the process EXISTS but we can't signal it
+        return True
 
 
 def kill_tmux(session_name: str) -> bool:
@@ -187,6 +190,9 @@ def kill_pid(pid: int, graceful_timeout: float = 3.0) -> bool:
         os.kill(pid, signal.SIGTERM)
     except ProcessLookupError:
         return False
+    except PermissionError:
+        logger.warning("No permission to SIGTERM PID %d", pid)
+        return False
 
     deadline = time.time() + graceful_timeout
     while time.time() < deadline:
@@ -198,8 +204,8 @@ def kill_pid(pid: int, graceful_timeout: float = 3.0) -> bool:
     try:
         os.kill(pid, signal.SIGKILL)
         return True
-    except ProcessLookupError:
-        return True
+    except (ProcessLookupError, PermissionError):
+        return not is_alive_pid(pid)
 
 
 def list_tmux_sessions(prefix: str = "swarm_") -> list[str]:

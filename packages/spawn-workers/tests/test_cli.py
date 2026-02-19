@@ -349,7 +349,7 @@ def test_cmd_team_exits_1_on_invalid_yaml(tmp_path, capsys):
 
 
 def test_cmd_team_applies_all_spawn_config_fields(capsys):
-    """_cmd_team applies status_dir and backend from team.yaml (F1 fix)."""
+    """_cmd_team creates manager with team.yaml dirs from the start (not post-override)."""
     from cervellaswarm_spawn_workers.team_loader import TeamConfig, SpawnConfig
 
     mock_team = TeamConfig(
@@ -367,15 +367,17 @@ def test_cmd_team_applies_all_spawn_config_fields(capsys):
     mock_manager.backend = "nohup"
     mock_manager.spawn_team.return_value = SpawnResult(spawned=0)
 
-    with patch("cervellaswarm_spawn_workers.cli.SpawnManager", return_value=mock_manager), \
+    with patch("cervellaswarm_spawn_workers.cli.SpawnManager", return_value=mock_manager) as MockMgr, \
          patch("cervellaswarm_spawn_workers.cli.load_team", return_value=mock_team):
         _cmd_team(_make_args(team="/fake/team.yaml"))
 
-    assert mock_manager.tasks_dir == Path("/custom/tasks")
-    assert mock_manager.logs_dir == Path("/custom/logs")
-    assert mock_manager.status_dir == Path("/custom/status")
-    assert mock_manager.max_workers == 3
-    assert mock_manager.backend == "nohup"
+    # Verify SpawnManager was created with team's dirs (not default then overridden)
+    call_kwargs = MockMgr.call_args[1]
+    assert call_kwargs["tasks_dir"] == "/custom/tasks"
+    assert call_kwargs["logs_dir"] == "/custom/logs"
+    assert call_kwargs["status_dir"] == "/custom/status"
+    assert call_kwargs["max_workers"] == 3
+    assert call_kwargs["backend"] == "nohup"
 
 
 # ---------------------------------------------------------------------------

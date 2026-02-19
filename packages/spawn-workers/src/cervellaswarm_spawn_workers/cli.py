@@ -116,15 +116,16 @@ def _cmd_team(args: argparse.Namespace) -> None:
         print(f"Error loading team config: {e}", file=sys.stderr)
         sys.exit(1)
 
-    manager = _make_manager(args)
-
-    # Apply team spawn config (override CLI defaults with team.yaml values)
-    manager.tasks_dir = Path(team.spawn.tasks_dir)
-    manager.logs_dir = Path(team.spawn.logs_dir)
-    manager.status_dir = Path(team.spawn.status_dir)
-    manager.max_workers = team.spawn.max_workers
-    if team.spawn.backend:
-        manager.backend = team.spawn.backend
+    # Create manager with team's directories from the start
+    # (previously created with defaults then overridden, causing stale worker list)
+    manager = SpawnManager(
+        tasks_dir=team.spawn.tasks_dir,
+        logs_dir=team.spawn.logs_dir,
+        status_dir=team.spawn.status_dir,
+        max_workers=team.spawn.max_workers,
+        backend=team.spawn.backend or args.backend,
+        claude_bin=args.claude_bin,
+    )
 
     result = manager.spawn_team(team)
 

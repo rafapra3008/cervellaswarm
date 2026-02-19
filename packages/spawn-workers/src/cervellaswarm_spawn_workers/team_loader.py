@@ -115,6 +115,8 @@ def load_team_string(content: str) -> TeamConfig:
         )
 
     spawn_data = data.get("spawn", {})
+    if not isinstance(spawn_data, dict):
+        raise ValueError(f"'spawn' must be a mapping, got: {type(spawn_data).__name__}")
     spawn = SpawnConfig(
         backend=spawn_data.get("backend"),
         max_workers=spawn_data.get("max_workers", 5),

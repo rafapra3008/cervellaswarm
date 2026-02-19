@@ -34,7 +34,6 @@ INCOMPLETE_MARKERS: list[str] = [
     "FIXME:",
     "XXX:",
     "HACK:",
-    "...",
 ]
 
 # Minimum valid output length (characters)
@@ -95,7 +94,7 @@ def validate_output(output_file: Path, logs_dir: Optional[Path] = None) -> Valid
     # CHECK 2: File readable and not empty
     try:
         content = output_file.read_text()
-    except Exception as e:
+    except (OSError, PermissionError, UnicodeDecodeError) as e:
         result.valid = False
         result.errors.append(f"Cannot read output: {e}")
         result.retry_needed = True
@@ -132,13 +131,20 @@ def validate_output(output_file: Path, logs_dir: Optional[Path] = None) -> Valid
         result.score -= 40
 
     # CHECK 5: Incomplete markers (outside code blocks)
+    # Check ALL occurrences, not just the first one
     incomplete_found: list[str] = []
     for marker in INCOMPLETE_MARKERS:
-        if marker in content:
-            before_marker = content.split(marker)[0]
+        idx = 0
+        while True:
+            idx = content.find(marker, idx)
+            if idx == -1:
+                break
+            before_marker = content[:idx]
             code_blocks = before_marker.count("```")
             if code_blocks % 2 == 0:  # Even count = outside code block
                 incomplete_found.append(marker)
+                break  # One match outside code block is enough
+            idx += len(marker)
 
     if incomplete_found:
         result.warnings.append(
@@ -146,8 +152,10 @@ def validate_output(output_file: Path, logs_dir: Optional[Path] = None) -> Valid
         )
         result.score -= 15
 
-    # CHECK 6: Success indicators (bonus)
-    success_count = sum(1 for ind in SUCCESS_INDICATORS if ind in content)
+    # CHECK 6: Success indicators (bonus) - use word boundary to avoid false positives
+    success_count = sum(
+        1 for ind in SUCCESS_INDICATORS if re.search(rf"\b{re.escape(ind)}\b", content)
+    )
     if success_count > 0:
         result.score = min(100, result.score + 5)
 
@@ -259,6 +267,10 @@ def find_task_output(task_id: str, tasks_dir: Optional[Path] = None) -> Optional
     Returns:
         Path to the file or None.
     """
+    # Validate task_id to prevent path traversal (e.g. "../../etc")
+    if not task_id or ".." in task_id or "/" in task_id or "\\" in task_id:
+        return None
+
     search_dir = tasks_dir or Path(".swarm/tasks")
     output_file = search_dir / f"{task_id}_output.md"
     return output_file if output_file.exists() else None

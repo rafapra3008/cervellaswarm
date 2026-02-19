@@ -297,11 +297,11 @@ def test_is_alive_pid_returns_false_on_process_lookup_error():
         assert is_alive_pid(9999) is False
 
 
-def test_is_alive_pid_returns_false_on_permission_error():
-    """Returns False on PermissionError (process exists but no permission)."""
+def test_is_alive_pid_returns_true_on_permission_error():
+    """Returns True on PermissionError - process exists but no permission to signal."""
     with patch("cervellaswarm_spawn_workers.backend.os.kill",
                side_effect=PermissionError):
-        assert is_alive_pid(9999) is False
+        assert is_alive_pid(9999) is True
 
 
 # ---------------------------------------------------------------------------

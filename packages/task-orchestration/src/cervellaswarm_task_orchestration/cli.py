@@ -301,22 +301,37 @@ def main_task(argv: list[str] | None = None) -> None:
             ok = mark_ready(tid)
             if ok:
                 print(f"Task {tid} marked as READY")
+            else:
+                print(f"ERROR: Failed to mark {tid} as READY (invalid ID or task not found)", file=sys.stderr)
+                sys.exit(1)
         elif args.command == "working":
             ok = mark_working(tid)
             if ok:
                 print(f"Task {tid} marked as WORKING")
+            else:
+                print(f"ERROR: Failed to mark {tid} as WORKING (invalid ID, not found, or already claimed)", file=sys.stderr)
+                sys.exit(1)
         elif args.command == "done":
             ok = mark_done(tid)
             if ok:
                 print(f"Task {tid} marked as DONE")
+            else:
+                print(f"ERROR: Failed to mark {tid} as DONE (invalid ID or task not found)", file=sys.stderr)
+                sys.exit(1)
         elif args.command == "ack-received":
             ok = ack_received(tid)
             if ok:
                 print(f"Task {tid} - ACK_RECEIVED confirmed")
+            else:
+                print(f"ERROR: Failed to ACK_RECEIVED {tid} (invalid ID or task not found)", file=sys.stderr)
+                sys.exit(1)
         elif args.command == "ack-understood":
             ok = ack_understood(tid)
             if ok:
                 print(f"Task {tid} - ACK_UNDERSTOOD confirmed")
+            else:
+                print(f"ERROR: Failed to ACK_UNDERSTOOD {tid} (invalid ID or task not found)", file=sys.stderr)
+                sys.exit(1)
         elif args.command == "status":
             st = get_task_status(tid)
             ack = get_ack_status(tid)
