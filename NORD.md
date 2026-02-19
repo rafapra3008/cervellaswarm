@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 19 Febbraio 2026 - S373 (FASE 2 COMPLETA! FASE 3 F3.1 DONE! Session Memory 9.6/10)
+> Aggiornato: 19 Febbraio 2026 - S375 (FASE 3 F3.1 DONE + VISIONE "LINGUA UNIVERSALE")
 
 ```
 +==================================================================+
@@ -113,6 +113,27 @@ FASE 3: Session Memory System     [####................] 20% IN CORSO
   F3.5 Auto-Handoff                TODO
 
 FASE 4: Launch                    [....................] TODO
+```
+
+### LA STELLA POLARE (S375)
+
+```
++==================================================================+
+|                                                                  |
+|   "La domanda e la risposta nello STESSO linguaggio."            |
+|                                          - Rafa, 19 Febbraio 2026|
+|                                                                  |
+|   VISIONE: Ogni persona puo creare software                     |
+|   parlando nella sua lingua.                                     |
+|                                                                  |
+|   Due liberta: quella umana e quella dell'AI.                    |
+|   Venire piu vicini. Creare INSIEME.                             |
+|                                                                  |
+|   Roadmap: A (agent protocol) -> B (toolkit) -> C (linguaggio)  |
+|   Report: reports/VISION_20260219_lingua_universale.md           |
+|   Ricerche: 95 fonti, 5 report in reports/                      |
+|                                                                  |
++==================================================================+
 ```
 
 ### INFRASTRUTTURA REALE

@@ -13,7 +13,7 @@
 | **CervellaBrasil** | `.sncp/progetti/cervellabrasil/PROMPT_RIPRESA_cervellabrasil.md` | 2026-02-12 | FASE 0-2.5 completas, pronto FASE 3 (Execucao) |
 | **Chavefy** | `.sncp/progetti/chavefy/PROMPT_RIPRESA_chavefy.md` | 2026-02-12 | FASE 0: 13 pesquisas, pronto validacao online |
 | **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-30 | In pausa (Cache Layer v2.1.0 completato) |
-| **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-02-19 | S89: FASE D Studio Agent Python COMPLETATO (9.1/10). pymssql+TaskScheduler+CircuitBreaker+tenacity. 1265 test. Prossimo: S90 Triple Check + implementazione |
+| **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-02-19 | S97: V3 LIVE su https://v3.contabilitafamigliapra.it! Deploy eseguito (setup+SSL+Nginx). 3 servizi VM attivi. 1506 test. Prossimo: E.5 Agent Windows |
 | **CervellaCostruzione** | `.sncp/progetti/cervellacostruzione/PROMPT_RIPRESA_cervellacostruzione.md` | 2026-02-04 | Costituzione digitale |
 
 ---

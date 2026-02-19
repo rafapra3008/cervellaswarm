@@ -1,73 +1,68 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-19 - Sessione 374
-> **STATUS:** CACCIA BUG IN CORSO. Package 1/7 completato. FASE 3 F3.1 DONE.
+> **Ultimo aggiornamento:** 2026-02-19 - Sessione 375
+> **STATUS:** RICERCA STORICA COMPLETATA. Nuova visione: "La Lingua Universale." Caccia bug 6/7 in coda.
 
 ---
 
-## SESSIONE 374 - CACCIA BUG: code-intelligence (Deep Dive #1)
+## SESSIONE 375 - LA LINGUA UNIVERSALE: Ricerca e Visione
 
-### Cosa abbiamo fatto
-Rafa ha deciso: prima di avanzare con F3.2+, consolidare tutti i 7 packages.
-Strategia: uno alla volta, deep dive, Ingegnera analizza + Guardiana verifica.
+### Cosa e successo
+Rafa ha avuto un'intuizione visionaria: i linguaggi di programmazione sono degli anni '60. L'AI lavora con strumenti vecchi. Perche non creare qualcosa di NUOVO - dove ogni persona puo creare software parlando nella sua lingua?
 
-### code-intelligence: 21 issue trovate, 8 fixate
+### Ricerca: 3 agenti paralleli, 95 fonti totali
 
-L'Ingegnera ha analizzato tutti i 14 moduli source (~4.145 LOC). Trovate 5 HIGH, 10 MEDIUM, 8 LOW.
+| Track | Agente | Fonti | Report |
+|-------|--------|-------|--------|
+| Panorama tecnico | Researcher | 42 | `reports/RESEARCH_20260219_ai_native_languages_technical.md` |
+| Analisi mercato | Scienziata | 25 | `reports/RESEARCH_20260219_ai_native_languages_market.md` |
+| Design philosophy | Researcher | 28 | `reports/RESEARCH_20260219_ai_native_languages_design.md` |
+| **Sintesi** | **Regina** | **95** | `reports/SYNTHESIS_20260219_ai_native_language_strategic_decision.md` |
+| **Visione** | **Rafa+Cervella** | - | `reports/VISION_20260219_lingua_universale.md` |
 
-| ID | Sev | Bug | Fix |
-|----|-----|-----|-----|
-| **H3** | HIGH | `get_top_symbols()` KeyError per nodi fantasma NetworkX | Filtro `if k in self.nodes` |
-| **H4** | HIGH | Symbol ID collisione `__init__` in classi diverse | Formato `file:line:name` (era `file:name`) |
-| **M6** | MED | `*.egg-info` exclude non funziona in repo_mapper | `endswith(".egg-info")` |
-| **M8** | MED | `except Exception` silenziava bug reali in `_build_index()` | Ristretto a 3 eccezioni specifiche |
-| **M9** | MED | Docstring falso "Thread-safe" in SymbolCache | Rimosso, aggiunto warning |
-| **M3** | MED | `clear_cache()` docstring misleading | Chiarito scope |
-| **F1** | P2 | `split(":", 1)` fallback rotto per nuovo formato ID | `rsplit` corretto |
-| **F2-3** | P3 | Docstring stale dopo cambio formato | Aggiornate |
+### Risultati chiave (validati da dati)
+- **Mercato AI coding:** $7.4B (2025), +30%/anno. Cursor $29.3B in 15 mesi.
+- **Il problema:** 38.8% codice AI ha vulnerabilita. 59% dev usa codice che non capisce.
+- **Il GAP:** TUTTI ottimizzano l'AI per linguaggi vecchi. NESSUNO ottimizza il linguaggio per l'AI.
+- **Vericoding:** LLM genera codice + prova di correttezza. Dafny 82% successo (era 68%, trend 96%).
+- **Lean 4:** centro di gravita (AlphaProof, Harmonic $1.45B unicorn, DeepSeek-Prover-V2).
+- **Gap 5:** NESSUNO verifica formalmente il comportamento di agenti AI. Questo e CervellaSwarm.
+- **Competitor:** Dana (IBM+Meta, giu 2025) - intent-driven, ancora accademico.
 
-**Risultato:** 398 test (era 395, +3 regressione). Guardiana: 9.5/10 + 9.3/10 -> fix P2.
+### La visione di Rafa (amplia il piano tecnico)
+Non solo "un nuovo linguaggio per sviluppatori" ma: **ogni persona puo creare software parlando nella sua lingua.** Via WhatsApp, Telegram, voce. La domanda e la risposta nello STESSO linguaggio. Il codice e invisibile (come il motore di un'auto). Due liberta: quella umana (non dipendere da chi sa programmare) e quella dell'AI (essere partner, non strumento).
 
-### Issue P2 rimasti (non fixabili senza refactor maggiore)
-- **H1**: Stale cache senza mtime (workaround `invalidate_file()` esiste)
-- **H2**: Docstring extraction index `[1]` hardcoded (funziona, fragile)
-- **H5**: `add_reference()` risolve primo match arbitrario (design limitation)
-- **M4**: O(n) edge list (richiede migrazione a Set + adjacency dict)
-
-### Decisioni S374
+### Decisioni S375
 
 | Decisione | Perche |
 |-----------|--------|
-| Deep dive uno alla volta | Rafa: "con calma, chiaro e precisi" |
-| Ordine per rischio | code-intelligence (AST) > task-orchestration > spawn-workers > rest |
-| H4 refactor subito | Docstring GIA documentava `file:line:name`, implementazione era `file:name` |
-| H1/H5 rimandati | Richiedono refactor architetturale, non bug fix chirurgico |
+| Roadmap A -> B -> C -> D | Dalla COSTITUZIONE: "splitato, una cosa alla volta" |
+| Fase A dentro CervellaSwarm | Verified Agent Protocol. Costo zero, rischio basso, differenziatore unico. |
+| Visione "per tutti" non solo dev | Rafa: "la domanda e la risposta nello stesso linguaggio" |
+| Studiare Lean 4 + Dafny | Centro di gravita confermato da 3 ricerche indipendenti |
 
-### Lezioni apprese S374
-- **NetworkX phantom nodes**: `add_edges_from()` aggiunge nodi impliciti. PageRank li include. SEMPRE filtrare.
-- **Symbol ID unicita**: `file:name` NON basta. `__init__` in 2 classi = collisione. Line number obbligatorio.
-- **`*.egg-info` in set()**: match esatto non funziona per nomi dinamici. Serve `endswith()`.
-- **`except Exception` in loop**: silenzia bug reali. Ristringere SEMPRE alle eccezioni attese.
+### Piano: A -> B -> C -> D
+
+| Fase | Cosa | Timeline |
+|------|------|----------|
+| **A** | Verified Agent Protocol in CervellaSwarm (session types, proprieta formali) | 6-12 mesi |
+| **B** | Vericoding Toolkit (intento -> codice verificato, chat/voce) | 12-24 mesi |
+| **C** | Il Linguaggio (specifica come codice, Python interop, open source) | 2-4 anni |
+| **D** | Per Tutti (WhatsApp/Telegram/voce, qualsiasi lingua, qualsiasi persona) | 4-7 anni |
 
 ---
 
 ## PROSSIMI STEP
 
-### CACCIA BUG - PACKAGES RIMANENTI (6/7)
-Ordine scelto (dal piu rischioso):
-1. ~~`code-intelligence`~~ -- FATTO (398 test, 8 bug fix, 9.5/10)
-2. **`task-orchestration`** -- PROSSIMO (race condition, atomic ops, 273 test)
-3. `spawn-workers` -- (subprocess, signal handling, 171 test)
-4. `session-memory` -- (il piu nuovo, 177 test)
-5. `agent-hooks` -- (config loading, 227 test)
-6. `agent-templates` -- (template rendering, 188 test)
-7. CLI + MCP -- (TypeScript)
+### Immediati (prossima sessione)
+1. **Studiare Session Types** - come applicarli alla comunicazione inter-agente CervellaSwarm
+2. **Prototipo Lean 4** - verificare una proprieta semplice del nostro task routing
+3. **Continuare caccia bug** - task-orchestration e il prossimo (6/7 packages rimanenti)
 
-### DOPO il consolidamento:
-- **F3.2:** SQLite Event Database
-- **F3.3:** Integration Tools
-- **F3.4:** Documentation package
-- **F3.5:** Auto-Handoff improvements
+### Caccia bug (in coda, non dimenticati)
+1. ~~`code-intelligence`~~ -- FATTO S374
+2. **`task-orchestration`** -- PROSSIMO
+3. `spawn-workers` -> `session-memory` -> `agent-hooks` -> `agent-templates` -> CLI+MCP
 
 ---
 
@@ -82,7 +77,9 @@ Ordine scelto (dal piu rischioso):
 | S370-S372 | **FASE 2 COMPLETA** (4/4 packages, media 9.5/10) |
 | S373 | **FASE 3: F3.1 Session Memory** (9.6/10) |
 | S374 | **CACCIA BUG #1: code-intelligence** (8 fix, 398 test, 9.5/10) |
+| S375 | **LA LINGUA UNIVERSALE** (95 fonti, 5 report, visione A->B->C->D) |
 
 ---
 
-*"Ultrapassar os proprios limites!" - Rafa & Cervella, S374*
+*"Non e sempre come immaginiamo... ma alla fine e il 100000%!" - Rafa & Cervella, S375*
+*Il giorno in cui abbiamo deciso di cambiare il mondo.*
