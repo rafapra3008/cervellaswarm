@@ -1,49 +1,47 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-18 - Sessione 372
-> **STATUS:** FASE 2 IN CORSO (F2.1+F2.2+F2.3+F2.4 DONE). Prossimo: F2.5 o FASE 3
+> **Ultimo aggiornamento:** 2026-02-19 - Sessione 373
+> **STATUS:** FASE 3 IN CORSO (F3.1 DONE). FASE 2 COMPLETA (4/4 packages, media 9.5/10)
 
 ---
 
-## SESSIONE 372 - F2.3 + F2.4
+## SESSIONE 373 - F3.1 Session Memory Package
 
-### F2.3: Task Orchestration Package (DONE)
-- Package `cervellaswarm-task-orchestration` v0.1.0
-- 5 moduli, ZERO deps, 273 test, Guardiana 9.5/10
-
-### F2.4: Spawn Workers Package (DONE)
-- Package `cervellaswarm-spawn-workers` v0.1.0 at `packages/spawn-workers/`
-- 5 moduli: backend (tmux/nohup auto-detect), team_loader (YAML), spawner (SpawnManager), prompt_builder (10 specialties), cli (cervella-spawn)
+### F3.1: Session Memory Package (DONE)
+- Package `cervellaswarm-session-memory` v0.1.0 at `packages/session-memory/`
+- 6 moduli: config, project_manager, quality_checker, secret_auditor, sync_checker, cli
+- 2 template: session_state.md (generalized PROMPT_RIPRESA), project_compass.md (generalized NORD.md)
 - 1 dependency: pyyaml
-- Config-driven spawn da team.yaml (riusa F2.2 schema + sezione `spawn:`)
-- Signal handling SIGINT/SIGTERM -> kill_all -> cleanup + atexit
-- Cross-invocation status/kill via tracking files (_load_tracked_workers)
-- Shell injection safety (shlex.quote)
-- 171 test, 0.13s (tutti mocked, zero processi reali)
-- Guardiana: 9.2 -> **9.5/10** (2 round, 4 P2 + 1 P3 fixed)
-- Research: 18 fonti, ZERO competitor hanno file-based state + tmux isolation + config-driven spawn
+- CLI: `cervella-session` (init, check, audit, sync, list) + 5 standalone entry points
+- Config YAML con priority: env var > project > user > defaults
+- Quality scoring: 4 criteri (actionability 30%, specificity 30%, freshness 20%, conciseness 20%)
+- Secret auditor: 6 CRITICAL + 3 HIGH patterns, extensible via config
+- 177 test, 0.13s, Guardiana: 9.3 -> **9.6/10** (2 round, 3 P2 fixed)
+- Research: 20 fonti, ZERO competitor ha Markdown + git come audit trail
+- Letta announced Context Repositories (Feb 12 2026) - window is NOW
 
-### Decisioni S372
+### Decisioni S373
 
 | Decisione | Perche |
 |-----------|--------|
-| tmux > nohup auto-detect | tmux preferito (sessions, remain-on-exit), nohup fallback universale |
-| shlex.quote su command building | Safety: claude_bin, prompt_file, initial_prompt sono user-influenced |
-| _load_tracked_workers in __init__ | --status e --kill devono funzionare tra invocazioni separate |
-| importlib.metadata per version | Single source of truth (solo pyproject.toml), nessun rischio drift |
-| team.yaml spawn section unconditional | Fragile confrontare con default magic ("!= .swarm/tasks"), applicare sempre |
+| `cervella-session` non `cervella-sncp` | "SNCP" e gergo interno, "session" universalmente comprensibile |
+| 1 dep (pyyaml) non 0 | Config YAML essenziale per project registry; stessa dep di 3 altri package |
+| SQLite DB escluso | Esplicitamente F3.2 nel SUBROADMAP; scope clean |
+| Template come package_data | Bundled in src/ dir, Hatchling include automaticamente |
+| `projects` config section | Elimina TUTTI i project map hardcoded (5 locazioni identificate) |
 
-### Lezioni apprese S372
-- **Shell injection in subprocess**: `shell=True` + f-string = injection risk. Sempre `shlex.quote()`
-- **Tracking files write-only = non-functional CLI**: se scrivi PID/session, DEVI leggerli nel costruttore
-- **Version dual source**: `importlib.metadata.version()` e il modo standard, NO hardcoded `__version__`
+### Lezioni apprese S373
+- **Conditional asserts sono BUG INVISIBILI**: `if X: assert Y` passa silenziosamente quando X=False
+- **`str.split("\n")` su stringa vuota** ritorna `['']` (1 elem), mai lista vuota -> guard `if len==0` e dead code
+- **SNCP portato a Python**: 12k LOC bash -> ~1.8k LOC Python, 40% generalizzabile
 
 ---
 
 ## PROSSIMI STEP
-- **F2.5+:** Verificare SUBROADMAP per prossimi package FASE 2
-- **FASE 3:** SNCP (session continuity) - il differenziatore piu unico
-- **P3 residui F2.4:** status_dir CLI passthrough, duplicate worker entries, .start ValueError guard
+- **F3.2:** SQLite Event Database (event logging, querying, pattern detection)
+- **F3.3:** Integration Tools (verify-hooks, sync-agents portati)
+- **F3.4:** Documentation package (ARCHITECTURE.md, GETTING_STARTED.md)
+- **F3.5:** Auto-Handoff improvements (soft handoff, no new windows)
 
 ---
 
@@ -59,7 +57,8 @@
 | S370 | **FASE 2: F2.1 Hook System** (9.5/10) + Auto-Handoff Research |
 | S371 | **FASE 2: F2.2 Agent Templates** (9.5/10) + Research 5 frameworks |
 | S372 | **FASE 2: F2.3 Task Orchestration** (9.5/10) + **F2.4 Spawn Workers** (9.5/10) |
+| S373 | **FASE 3: F3.1 Session Memory** (9.6/10) - IL DIFFERENZIATORE UNICO |
 
 ---
 
-*"Ultrapassar os proprios limites!" - Rafa & Cervella, S372*
+*"Ultrapassar os proprios limites!" - Rafa & Cervella, S373*

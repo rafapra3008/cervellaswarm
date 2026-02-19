@@ -237,13 +237,16 @@
 
 > Il differenziale: nessun competitor ha questo.
 
-**F3.1 - SNCP come pacchetto**
-- [ ] `packages/session-memory/` con SNCP generalizzato
-- [ ] Template: PROMPT_RIPRESA, NORD.md
-- [ ] Scripts: sncp-init, quality-check, verify-sync
-- [ ] audit-secrets (generico, non legato ai nostri progetti)
-- [ ] Refactor tutti i paths hardcoded -> config file
-- **Criterio:** `cervella-sncp init my-project` crea struttura completa
+**F3.1 - SNCP come pacchetto** DONE (S373, 9.6/10)
+- [x] `packages/session-memory/` con SNCP generalizzato (6 moduli, 1.8k LOC)
+- [x] Template: session_state.md (PROMPT_RIPRESA), project_compass.md (NORD.md)
+- [x] Scripts portati: sncp-init -> project_manager, quality-check -> quality_checker, verify-sync -> sync_checker
+- [x] audit-secrets -> secret_auditor (generico, 6 CRITICAL + 3 HIGH patterns, extensible)
+- [x] Refactor tutti i paths hardcoded -> config YAML con project registry
+- [x] CLI: `cervella-session init my-project` crea struttura completa
+- [x] 177 test, 0.13s, Guardiana 9.3 -> 9.6/10 (2 round, 3 P2 fixed)
+- [x] Research: 20 sources, Letta Context Repositories (Feb 12 2026) - finestra aperta ORA
+- **Criterio:** `cervella-session init my-project` crea struttura completa - SODDISFATTO
 
 **F3.2 - Memory Database**
 - [ ] SQLite memory system (init_db, log_event, query_events)
