@@ -91,7 +91,7 @@ def load_config() -> dict:
     try:
         with open(config_file, "r", encoding="utf-8") as f:
             user_config = yaml.safe_load(f) or {}
-    except Exception:
+    except (OSError, yaml.YAMLError):
         return dict(DEFAULTS)
 
     # Merge: user config overrides defaults (shallow per section)

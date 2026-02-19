@@ -33,19 +33,30 @@ def _load_extra_patterns() -> tuple[list, list, list]:
         from .config import get_hook_config
 
         cfg = get_hook_config("bash_validator")
-        extra_blocked = [
-            (p["pattern"], p["reason"])
-            for p in cfg.get("extra_blocked", [])
-            if isinstance(p, dict) and "pattern" in p and "reason" in p
-        ]
-        extra_risky = [
-            (p["pattern"], p["reason"])
-            for p in cfg.get("extra_risky", [])
-            if isinstance(p, dict) and "pattern" in p and "reason" in p
-        ]
-        extra_safe = cfg.get("extra_safe_rm", [])
-        if not isinstance(extra_safe, list):
-            extra_safe = []
+        extra_blocked = []
+        for p in cfg.get("extra_blocked", []):
+            if isinstance(p, dict) and "pattern" in p and "reason" in p:
+                try:
+                    re.compile(p["pattern"])
+                    extra_blocked.append((p["pattern"], p["reason"]))
+                except re.error:
+                    pass  # Skip invalid regex silently (hook must not crash)
+        extra_risky = []
+        for p in cfg.get("extra_risky", []):
+            if isinstance(p, dict) and "pattern" in p and "reason" in p:
+                try:
+                    re.compile(p["pattern"])
+                    extra_risky.append((p["pattern"], p["reason"]))
+                except re.error:
+                    pass  # Skip invalid regex silently
+        extra_safe = []
+        for s in cfg.get("extra_safe_rm", []):
+            if isinstance(s, str):
+                try:
+                    re.compile(s)
+                    extra_safe.append(s)
+                except re.error:
+                    pass  # Skip invalid regex silently
         return extra_blocked, extra_risky, extra_safe
     except Exception:
         return [], [], []

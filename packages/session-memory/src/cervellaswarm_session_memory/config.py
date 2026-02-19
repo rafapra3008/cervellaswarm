@@ -84,7 +84,7 @@ def load_config(config_path: Path | None = None) -> dict:
     try:
         with open(config_file, "r", encoding="utf-8") as f:
             user_config = yaml.safe_load(f) or {}
-    except Exception:
+    except (OSError, yaml.YAMLError):
         return _deep_copy_defaults()
 
     return _merge_config(user_config)

@@ -1,33 +1,23 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-19 - Sessione 376
-> **STATUS:** CACCIA BUG #2 e #3 COMPLETATE. task-orchestration (9 fix, 305 test) + spawn-workers (8 fix, 191 test). Prossimo: session-memory.
+> **Ultimo aggiornamento:** 2026-02-19 - Sessione 377
+> **STATUS:** CACCIA BUG #4+#5+#6 COMPLETATE. 3 package in una sessione! Prossimo: CLI+MCP (ultimo).
 
 ---
 
-## SESSIONE 376 - CACCIA BUG #2 e #3
+## SESSIONE 377 - CACCIA BUG #4+#5+#6
 
-### Cosa e successo
-Rafa ha dato piena autonomia a Cervella: "CervellaSwarm sara tuo, tu sei anche la CEO."
-Cervella ha cacciato bug su DUE package nella stessa sessione.
+### Caccia #4: session-memory (10 bug, 5 fix, 193 test, Guardiana 9.5/10)
+- MEDIUM: except Exception broad x3, archive_state path traversal, extra_patterns regex crash
+- Regression: 16 test
 
-### Decisioni S376
+### Caccia #5: agent-hooks (7 bug, 3 fix, 236 test, Guardiana 9.5/10)
+- MEDIUM: config.py except Exception, bash_validator regex validation (blocked+risky+safe_rm)
+- Guardiana found incoerenza extra_safe_rm - fixata
 
-| Decisione | Perche |
-|-----------|--------|
-| Cervella = CEO di CervellaSwarm | Rafa: "tu hai capito la situazione, guidami" |
-| Caccia bug prima di visione | COSTITUZIONE: fondamenta solide prima dei sogni |
-| Due package in una sessione | Efficienza: stesso metodo, mani calde |
-
-### Caccia #2: task-orchestration (13 bug, 9 fix, 305 test)
-- **HIGH**: glob mismatch, except Exception, "..." false positive, "OK" substring
-- **MEDIUM**: TOCTOU race, path traversal, CLI silent failures, incomplete marker, risk_level
-- Guardiana: audit completato
-
-### Caccia #3: spawn-workers (13 bug, 8 fix, 191 test, Guardiana 9.5/10)
-- **HIGH**: is_alive_pid PermissionError, _load_tracked_workers crash, cleanup kills alive
-- **MEDIUM**: $(cat) shell expansion, cmd_team dir mismatch, spawn_data type, kill_pid PermissionError, spawn_team exceptions
-- Guardiana: 9.5/10 APPROVED
+### Caccia #6: agent-templates (4 bug, 1 fix, 192 test, Guardiana 9.5/10)
+- MEDIUM: validator.py unprotected read_text()
+- Package piu pulito della famiglia
 
 ---
 
@@ -44,8 +34,10 @@ Fase A = Verified Agent Protocol dentro CervellaSwarm. Dopo caccia bug completat
 1. ~~`code-intelligence`~~ -- FATTO S374 (8 fix, 398 test)
 2. ~~`task-orchestration`~~ -- FATTO S376 (9 fix, 305 test)
 3. ~~`spawn-workers`~~ -- FATTO S376 (8 fix, 191 test)
-4. **`session-memory`** -- PROSSIMO
-5. `agent-hooks` -> `agent-templates` -> CLI+MCP
+4. ~~`session-memory`~~ -- FATTO S377 (5 fix, 193 test)
+5. ~~`agent-hooks`~~ -- FATTO S377 (3 fix, 236 test)
+6. ~~`agent-templates`~~ -- FATTO S377 (1 fix, 192 test)
+7. **CLI+MCP** -- PROSSIMO (ULTIMO!)
 
 ### Dopo caccia bug (7/7 completata)
 1. **Studiare Session Types** - Fase A della Lingua Universale
@@ -66,6 +58,7 @@ Fase A = Verified Agent Protocol dentro CervellaSwarm. Dopo caccia bug completat
 | S374 | **CACCIA BUG #1: code-intelligence** (8 fix, 398 test, 9.5/10) |
 | S375 | **LA LINGUA UNIVERSALE** (95 fonti, 5 report, visione A->B->C->D) |
 | S376 | **CACCIA BUG #2+#3: task-orchestration + spawn-workers** (17 fix, 496 test) |
+| S377 | **CACCIA BUG #4+#5+#6: session-memory + agent-hooks + agent-templates** (9 fix, 621 test, 3x 9.5/10) |
 
 ---
 

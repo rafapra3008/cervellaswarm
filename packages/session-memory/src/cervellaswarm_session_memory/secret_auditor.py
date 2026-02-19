@@ -8,12 +8,15 @@ Scans Markdown and text files for accidentally committed secrets
 like API keys, tokens, passwords, and private keys.
 """
 
+import logging
 import re
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 
 from cervellaswarm_session_memory.config import load_config
+
+logger = logging.getLogger(__name__)
 
 
 class Severity(Enum):
@@ -227,7 +230,14 @@ def audit_directory(
     all_extra = list(extra_patterns or [])
     for ep in config_extra:
         if isinstance(ep, dict) and "pattern" in ep and "name" in ep:
-            all_extra.append((ep["pattern"], ep["name"]))
+            try:
+                re.compile(ep["pattern"])
+                all_extra.append((ep["pattern"], ep["name"]))
+            except re.error as exc:
+                logger.warning(
+                    "Skipping invalid regex in extra_patterns: %r (%s)",
+                    ep["pattern"], exc,
+                )
 
     total_files = 0
     total_critical = 0

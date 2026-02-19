@@ -129,7 +129,14 @@ def validate_agent(path: str | Path) -> ValidationResult:
         )
 
     # Read and parse
-    content = path.read_text(encoding="utf-8")
+    try:
+        content = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as e:
+        return ValidationResult(
+            path=str(path),
+            valid=False,
+            issues=[ValidationIssue("error", "file", f"Cannot read file: {e}")],
+        )
     frontmatter = parse_frontmatter(content)
 
     if frontmatter is None:

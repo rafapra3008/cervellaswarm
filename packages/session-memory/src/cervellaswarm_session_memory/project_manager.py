@@ -238,7 +238,13 @@ def archive_state(
     project.archive_dir.mkdir(parents=True, exist_ok=True)
 
     today = date_type.today().isoformat()
-    suffix = f"_{reason}" if reason else ""
+    # Sanitize reason to prevent path traversal or illegal filename chars
+    if reason:
+        import re
+        safe_reason = re.sub(r"[^a-zA-Z0-9_-]", "_", reason)
+        suffix = f"_{safe_reason}"
+    else:
+        suffix = ""
     archive_name = f"{project.state_file.stem}_archived_{today}{suffix}.md"
     archive_path = project.archive_dir / archive_name
 

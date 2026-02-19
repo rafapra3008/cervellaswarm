@@ -253,7 +253,7 @@ def check_quality(
 
     try:
         content = file_path.read_text(encoding="utf-8")
-    except Exception as e:
+    except (OSError, UnicodeDecodeError) as e:
         return QualityResult(
             project=project_name,
             file=str(file_path),

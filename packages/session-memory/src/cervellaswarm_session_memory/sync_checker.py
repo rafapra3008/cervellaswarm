@@ -94,7 +94,7 @@ def check_file_size(
 
     try:
         content = file_path.read_text(encoding="utf-8")
-    except Exception as e:
+    except (OSError, UnicodeDecodeError) as e:
         return CheckStatus.ERROR, f"Cannot read file: {e}"
 
     line_count = len(content.split("\n"))
