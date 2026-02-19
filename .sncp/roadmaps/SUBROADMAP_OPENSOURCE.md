@@ -268,14 +268,15 @@
 - [ ] MIGRATION.md (per chi gia usa CrewAI/AutoGen)
 - **Criterio:** Dev migra da CrewAI in < 1 ora
 
-**F3.5 - Auto-Handoff Miglioramento** (ricerca S370)
-- [ ] Rimuovere logica "apri nuova finestra" dall'auto-handoff
-- [ ] PreCompact hook: aggiorna PROMPT_RIPRESA automaticamente prima del compact
-- [ ] Configurare `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=85` per threshold ottimale
-- [ ] Handoff diventa archivio storico, non trigger per nuova sessione
-- **Criterio:** Zero nuove finestre durante sessione, PROMPT_RIPRESA sempre aggiornato
+**F3.5 - Auto-Handoff Miglioramento** -- DONE (S379, 3/4 criteri)
+- [x] Rimuovere logica "apri nuova finestra" dall'auto-handoff (VS Code spawn rimosso da anti-compact.sh v2.0.0)
+- [x] PreCompact hook: aggiorna PROMPT_RIPRESA automaticamente prima del compact (update_prompt_ripresa.py v2.0.0 in PreCompact manual+auto)
+- [ ] Configurare `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=85` -- NOT NEEDED: autocompact 2026 handles threshold internally, statusline CTX:XX% provides awareness
+- [x] Handoff diventa archivio storico, non trigger per nuova sessione (180 handoff archiviati in .swarm/handoff/archive/, context_check.py DISABLED)
+- **Criterio:** Zero nuove finestre durante sessione, PROMPT_RIPRESA sempre aggiornato -- SODDISFATTO
 - **Ricerca:** `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260218_auto_handoff_improvements.md`
 - **Nota:** Community conferma antipattern (14 fonti). SNCP e autocompact sono complementari.
+- **Extra S379:** Security A1 (no transcript reading), Security A2 (no git add -A), snapshot rotation (max 50), hooks modernizzati v3.0.0, 6 progetti KNOWN
 
 **Audit Guardiana dopo F3** -> target 9.5/10
 

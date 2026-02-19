@@ -1,61 +1,93 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-19 - Sessione 378
-> **STATUS:** CACCIA BUG 7/7 COMPLETATA! Tutti i package open-source validati. Prossimo: Lingua Universale Fase A.
+> **Ultimo aggiornamento:** 2026-02-19 - Sessione 379
+> **STATUS:** Auto-Handoff System fixato (S379). Prossimo: Lingua Universale Fase A.
 
 ---
 
-## SESSIONE 378 - CACCIA BUG #7: CLI+MCP (ULTIMO!)
+## SESSIONE 379 - FIX AUTO-HANDOFF SYSTEM (FINALE)
 
-### Risultati: 16 bug trovati, 14 fixati, Guardiana 9.0 -> 9.5/10
+### Cosa: Pulizia sistema anti-compact/auto-handoff (13+ hook/script legacy da S79-S99)
 
-**SNCP 4.0 Compliance (6 fix):**
-- init.js: rimosso template stato.md + !stato.md da .gitignore
-- writer.js: rimossa funzione updateStato()
-- loader.js: progress da PROMPT_RIPRESA (non piu stato.md)
-- housekeeping.js: rimosso stato check/display/compactFiles
-- reader.ts: rimosso stato da FILE_TYPES
-- tools.ts: sncp_read_stato -> deprecation notice
+8 step eseguiti, Guardiana audit dopo ogni blocco: media 9.5/10
 
-**Project Selection (1 fix):**
-- loader.js: CWD basename match per progetto (era projects[0] alfabetico)
+### Cosa e cambiato
 
-**Security (1 fix):**
-- usage.ts: CHECKSUM_SECRET con hostname+getuid (non solo USER env)
+**Settings.json (main + insiders):**
+- Rimosso `anti-compact.sh` da PreCompact "auto" (causa commit ANTI-COMPACT automatici)
+- Rimosso `UserPromptSubmit` (context_check.py 100% ridondante con statusline CTX:XX%)
 
-**Path Resolution (1 fix):**
-- reader.ts: getSncpRoot() env var + CWD walk-up + fallback relative
+**Hook disabilitati:**
+- `context_check.py` -> `.DISABLED` (main + insiders) + state file eliminato
+- `pre-compact.sh` -> `.DISABLED` (main + insiders)
 
-**Open Source (5 fix):**
-- CLI LICENSE: MIT -> Apache 2.0
-- Copyright "CervellaSwarm Contributors" in 40+ file (src, bin, LICENSE, package.json, README)
-- Template constitution.js e help text puliti da stato.md
-- Test e docstring aggiornati da stato.md a PROMPT_RIPRESA
+**Hook modernizzati (v3.0.0):**
+- `pre_compact_save.py` + `session_end_save.py` (4 file: main + insiders)
+  - Snapshot in `~/.claude/snapshots/` (era iCloud)
+  - SECURITY A1: rimosso `read_transcript_summary()` (transcript puo contenere secrets)
+  - Rotazione max 50 file per dir
+  - 6 progetti KNOWN (era 4): +Chavefy, +CervellaCostruzione, +CervellaBrasil
+  - Rimosso `million-dollar-ideas` + `ultimo_lavoro` (legacy)
+  - `bare except:` -> typed exceptions
 
-### Test: 134 PASS (zero regressioni)
+**Deploy update_prompt_ripresa.py v2.0.0:**
+- Sorgente repo aggiornato (`config/claude-hooks/update_prompt_ripresa.py`)
+- 6 progetti con path SNCP 4.0 corretti
+- Deployato a main + insiders
+
+**anti-compact.sh v2.0.0 (uso manuale):**
+- SNCP 4.0: detect progetto da CWD con `SNCP_MAP`
+- SECURITY A2: `git add -A` -> `git add .sncp/ docs/ NORD.md` esplicito
+- Spawn VS Code RIMOSSO (confermato antipattern, 14 fonti S370)
+- `--no-spawn` silently ignored (backward compat)
+
+**Archivio + cleanup:**
+- 180 file HANDOFF_*.md -> `.swarm/handoff/archive/`
+- `memory-flush.sh`: rimosso riferimento a `stato.md` (bug SNCP 4.0)
+- SUBROADMAP F3.5 marcato DONE (3/4 criteri)
+
+### Guardiana Audit Trail
+
+| Blocco | Score |
+|--------|-------|
+| Step 1 (settings.json) | 9.7/10 |
+| Steps 3-4 (hooks v3.0.0) | 9.5/10 |
+| Steps 5-8 (legacy + anti-compact + archive) | 9.5/10 |
+| **Media** | **9.5/10** |
+
+### Debito P3 (futuro, non bloccante)
+
+- `context-monitor.py`: path hardcoded (funzionale, modernizzare dopo)
+- Unificazione in `session_checkpoint.py` (proposta Ingegnera)
+- 9 docs nel repo con "anti-compact" stale (OVERVIEW_FAMIGLIA, README_QUICK_WINS, etc)
+- `settings.local.json`: permission stale per `pre-compact.sh`
+- 1345 snapshot legacy in iCloud REGOLE_GLOBALI (da archiviare)
 
 ---
 
-## RIEPILOGO CACCIA BUG COMPLETA (7/7)
+## MAPPA SITUAZIONE
 
-| # | Package | Bug | Fix | Test | Score |
-|---|---------|-----|-----|------|-------|
-| 1 | code-intelligence | 21 | 8 | 398 | 9.5 |
-| 2 | task-orchestration | 12 | 9 | 305 | 9.5 |
-| 3 | spawn-workers | 10 | 8 | 191 | 9.5 |
-| 4 | session-memory | 10 | 5 | 193 | 9.5 |
-| 5 | agent-hooks | 7 | 3 | 236 | 9.5 |
-| 6 | agent-templates | 4 | 1 | 192 | 9.5 |
-| 7 | CLI+MCP | 16 | 14 | 134 | 9.5 |
-| **TOTALE** | **7 packages** | **80** | **48** | **1649** | **9.5 media** |
+```
+OPEN SOURCE ROADMAP:
+  FASE 0  [####################] 100% (S362-S367)
+  FASE 1  [####################] 100% (S368-S369, PyPI LIVE!)
+  FASE 2  [####################] 100% (S370-S372, 4 packages)
+  FASE 3  [####................] 25% (F3.1 DONE, F3.5 DONE)
+  FASE 4  [....................] TODO
+
+CACCIA BUG: 7/7 COMPLETATA (80 bug, 48 fix, 1649 test, 9.5 media)
+AUTO-HANDOFF: FIXATO (S379, 8 step, 9.5/10)
+LINGUA UNIVERSALE: 95 fonti, 5 report, visione A->B->C->D (S375)
+```
 
 ---
 
 ## PROSSIMI STEP
 
-1. **Studiare Session Types** - Fase A della Lingua Universale
+1. **Lingua Universale Fase A** - Session Types per agent protocol
 2. **Prototipo Lean 4** - verificare proprieta del task routing
-3. **Nota:** core/ e api/ hanno ancora "Rafa & Cervella" (18 file) - cleanup separato
+3. **F3.2 SQLite Event Database** - prossimo step open source
+4. **Nota:** core/ e api/ hanno ancora "Rafa & Cervella" (18 file) - cleanup separato
 
 ---
 
@@ -74,8 +106,9 @@
 | S376 | **CACCIA BUG #2+#3: task-orchestration + spawn-workers** (17 fix, 496 test) |
 | S377 | **CACCIA BUG #4+#5+#6: session-memory + agent-hooks + agent-templates** (9 fix, 621 test) |
 | S378 | **CACCIA BUG #7: CLI+MCP** (14 fix, 134 test, 9.5/10) - TUTTI COMPLETATI! |
+| S379 | **FIX AUTO-HANDOFF** (8 step, 14 file, 180 handoff archiviati, 9.5/10) |
 
 ---
 
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
-*Il giorno in cui Cervella e diventata CEO.*
+*"Lavoriamo in pace! Senza casino! Dipende da noi!"*

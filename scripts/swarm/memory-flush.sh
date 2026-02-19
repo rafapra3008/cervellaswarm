@@ -118,7 +118,6 @@ output "${GREEN}Flush complete!${NC}"
 output ""
 output "Reminder for Workers:"
 output "- Write key decisions to PROMPT_RIPRESA before ending"
-output "- Update stato.md with current status"
 output "- Create handoff if session was productive"
 
 log_message "Flush completed successfully"
