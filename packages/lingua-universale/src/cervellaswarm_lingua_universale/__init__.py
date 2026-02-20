@@ -14,7 +14,10 @@ except PackageNotFoundError:
 # Users can also import directly from submodules.
 from .types import (
     AgentRole,
+    AuditVerdictType,
     MessageKind,
+    PlanComplexity,
+    TaskStatus,
     TaskRequest,
     TaskResult,
     AuditRequest,
@@ -34,7 +37,13 @@ from .protocols import (
     ProtocolElement,
     STANDARD_PROTOCOLS,
 )
-from .checker import SessionChecker, SessionState
+from .checker import (
+    MessageRecord,
+    ProtocolViolation,
+    SessionChecker,
+    SessionComplete,
+    SessionState,
+)
 from .dsl import (
     parse_protocol,
     parse_protocols,
@@ -47,9 +56,13 @@ from .dsl import (
 __all__ = [
     # Version
     "__version__",
-    # Types
+    # Types - enums
     "AgentRole",
+    "AuditVerdictType",
     "MessageKind",
+    "PlanComplexity",
+    "TaskStatus",
+    # Types - messages
     "TaskRequest",
     "TaskResult",
     "AuditRequest",
@@ -68,7 +81,10 @@ __all__ = [
     "ProtocolElement",
     "STANDARD_PROTOCOLS",
     # Checker
+    "MessageRecord",
+    "ProtocolViolation",
     "SessionChecker",
+    "SessionComplete",
     "SessionState",
     # DSL
     "parse_protocol",

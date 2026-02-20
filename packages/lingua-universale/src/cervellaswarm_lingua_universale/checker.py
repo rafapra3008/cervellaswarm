@@ -90,20 +90,23 @@ class SessionState:
         elements = self.protocol.elements
 
         # If we're in a branch, look up current branch step
+        # using step_index to find the CORRECT ProtocolChoice
         if self.branch is not None:
-            for elem in elements:
-                if isinstance(elem, ProtocolChoice):
-                    branch_steps = elem.branches.get(self.branch, ())
-                    if self.branch_step_index < len(branch_steps):
-                        return branch_steps[self.branch_step_index]
-                    # Branch exhausted - next element is after the choice
-                    next_idx = self.step_index + 1
-                    if next_idx >= len(elements):
-                        return None  # protocol will complete
-                    next_elem = elements[next_idx]
-                    if isinstance(next_elem, ProtocolStep):
-                        return next_elem
-                    return None
+            if self.step_index >= len(elements):
+                return None
+            elem = elements[self.step_index]
+            if isinstance(elem, ProtocolChoice):
+                branch_steps = elem.branches.get(self.branch, ())
+                if self.branch_step_index < len(branch_steps):
+                    return branch_steps[self.branch_step_index]
+                # Branch exhausted - next element is after the choice
+                next_idx = self.step_index + 1
+                if next_idx >= len(elements):
+                    return None  # protocol will complete
+                next_elem = elements[next_idx]
+                if isinstance(next_elem, ProtocolStep):
+                    return next_elem
+                return None
             return None
 
         if self.step_index >= len(elements):
@@ -130,14 +133,14 @@ class SessionState:
     def advance_past_exhausted_branch(self) -> None:
         """Advance state when current branch is exhausted. Called by checker."""
         if self.branch is not None:
-            for elem in self.protocol.elements:
+            if self.step_index < len(self.protocol.elements):
+                elem = self.protocol.elements[self.step_index]
                 if isinstance(elem, ProtocolChoice):
                     branch_steps = elem.branches.get(self.branch, ())
                     if self.branch_step_index >= len(branch_steps):
                         self.branch = None
                         self.branch_step_index = 0
                         self.step_index += 1
-                    break
         self._check_completion_or_repeat()
 
     @property
@@ -180,6 +183,8 @@ class SessionChecker:
         # role_bindings maps protocol roles to actual agent names
         # e.g., {"worker": "cervella-backend", "guardiana": "cervella-guardiana-qualita"}
         self._role_bindings: dict[str, str] = role_bindings or {}
+        # Mark complete immediately if protocol has no elements
+        self._state._check_completion_or_repeat()
 
     @property
     def session_id(self) -> str:
@@ -309,15 +314,14 @@ class SessionChecker:
         # Advance state
         if self._state.branch is not None:
             self._state.branch_step_index += 1
-            # Check if branch is exhausted
-            for elem in self._state.protocol.elements:
-                if isinstance(elem, ProtocolChoice):
-                    branch_steps = elem.branches.get(self._state.branch, ())
-                    if self._state.branch_step_index >= len(branch_steps):
-                        self._state.branch = None
-                        self._state.branch_step_index = 0
-                        self._state.step_index += 1
-                    break
+            # Check if branch is exhausted using step_index (not iterating)
+            elem = self._state.protocol.elements[self._state.step_index]
+            if isinstance(elem, ProtocolChoice):
+                branch_steps = elem.branches.get(self._state.branch, ())
+                if self._state.branch_step_index >= len(branch_steps):
+                    self._state.branch = None
+                    self._state.branch_step_index = 0
+                    self._state.step_index += 1
         else:
             self._state.step_index += 1
 
@@ -344,10 +348,16 @@ class SessionChecker:
         receiver: str,
         kind: MessageKind,
     ) -> Optional[str]:
-        """Auto-detect which branch matches the incoming message."""
+        """Auto-detect which branch matches the incoming message.
+
+        Returns the branch name ONLY if exactly one branch matches.
+        Returns None if zero or multiple branches match (ambiguous),
+        requiring an explicit choose_branch() call.
+        """
         resolved_sender = self._resolve_role(sender)
         resolved_receiver = self._resolve_role(receiver)
 
+        matches: list[str] = []
         for branch_name, steps in choice.branches.items():
             if steps:
                 first = steps[0]
@@ -356,7 +366,10 @@ class SessionChecker:
                     and first.receiver == resolved_receiver
                     and first.message_kind == kind
                 ):
-                    return branch_name
+                    matches.append(branch_name)
+        if len(matches) == 1:
+            return matches[0]
+        # Ambiguous or no match - require explicit choose_branch
         return None
 
     def summary(self) -> dict:

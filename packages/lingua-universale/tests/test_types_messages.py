@@ -252,8 +252,12 @@ class TestResearchReport:
             ResearchReport(query_id="", topic="AI", sources_consulted=5)
 
     def test_negative_sources_raises(self):
-        with pytest.raises(ValueError, match="sources_consulted cannot be negative"):
+        with pytest.raises(ValueError, match="sources_consulted must be at least 1"):
             ResearchReport(query_id="Q001", topic="AI", sources_consulted=-1)
+
+    def test_zero_sources_raises(self):
+        with pytest.raises(ValueError, match="sources_consulted must be at least 1"):
+            ResearchReport(query_id="Q001", topic="AI", sources_consulted=0)
 
     def test_kind_is_research_report(self, research_report):
         assert research_report.KIND == MessageKind.RESEARCH_REPORT

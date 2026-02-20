@@ -13,7 +13,7 @@ This package provides:
 - **Typed messages**: every agent message has a schema
 - **Session protocols**: communication sequences are formally defined
 - **Runtime checking**: protocol violations detected at runtime
-- **Protocol monitor**: track state of all active conversations
+- **DSL notation**: human-readable protocol definitions
 
 ## Quick Start
 
@@ -26,25 +26,25 @@ from cervellaswarm_lingua_universale.checker import SessionChecker
 request = TaskRequest(
     task_id="T001",
     description="Fix the login bug",
-    target_files=["src/auth.py"],
-    constraints=["No breaking changes"],
+    target_files=("src/auth.py",),
+    constraints=("No breaking changes",),
 )
 
 # Start a protocol session
 checker = SessionChecker(DelegateTask)
-checker.send("regina", "backend", request)  # OK
+checker.send("regina", "worker", request)  # OK
 
 # Worker responds
 result = TaskResult(
     task_id="T001",
     status=TaskStatus.OK,
     summary="Fixed null check in auth handler",
-    files_modified=["src/auth.py"],
+    files_modified=("src/auth.py",),
 )
-checker.send("backend", "regina", result)  # OK
+checker.send("worker", "regina", result)  # OK
 
 # Trying to send wrong message type = ProtocolViolation
-# checker.send("backend", "regina", request)  # RAISES!
+# checker.send("worker", "regina", request)  # RAISES!
 ```
 
 ## License

@@ -434,9 +434,14 @@ protocol T {
             parse_protocol(source)
 
     def test_single_role(self):
-        """Protocol requires at least 2 roles (enforced by Protocol.__post_init__)."""
-        with pytest.raises(ValueError, match="at least 2 roles"):
+        """Protocol with 1 role: step has sender == receiver -> rejected."""
+        with pytest.raises(ValueError, match="sender and receiver cannot be the same"):
             parse_protocol("protocol T { roles a; a -> a : Dm; }")
+
+    def test_single_role_different_step_targets(self):
+        """Protocol with 1 role but step targets another -> role check fails."""
+        with pytest.raises(ValueError, match="at least 2 roles"):
+            parse_protocol("protocol T { roles a; a -> b : Dm; }")
 
     def test_role_not_in_protocol(self):
         """Sender/receiver not in roles (enforced by Protocol.__post_init__)."""

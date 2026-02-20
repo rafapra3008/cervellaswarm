@@ -335,8 +335,8 @@ class ResearchReport:
             raise ValueError("query_id cannot be empty")
         if not self.topic:
             raise ValueError("topic cannot be empty")
-        if self.sources_consulted < 0:
-            raise ValueError("sources_consulted cannot be negative")
+        if self.sources_consulted < 1:
+            raise ValueError("sources_consulted must be at least 1")
 
 
 # Type alias for any swarm message

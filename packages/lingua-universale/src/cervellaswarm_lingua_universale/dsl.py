@@ -345,6 +345,7 @@ for _kind in MessageKind:
     _name = "".join(part.capitalize() for part in _kind.value.split("_"))
     _NAME_TO_KIND[_name] = _kind
     _KIND_TO_NAME[_kind] = _name
+del _kind, _name  # prevent namespace pollution
 
 
 def _message_kind_from_name(

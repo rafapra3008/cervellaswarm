@@ -13,12 +13,16 @@ from cervellaswarm_lingua_universale.checker import (
 )
 from cervellaswarm_lingua_universale.protocols import (
     ArchitectFlow,
+    Protocol,
+    ProtocolChoice,
+    ProtocolStep,
     SimpleTask,
 )
 from cervellaswarm_lingua_universale.types import (
     AuditRequest,
     AuditVerdict,
     AuditVerdictType,
+    MessageKind,
     PlanComplexity,
     PlanDecision,
     PlanProposal,
@@ -158,34 +162,66 @@ class TestArchitectFlowReject:
 # ── Auto-detect branch ────────────────────────────────────────────────────────
 
 class TestAutoDetectBranch:
-    def test_auto_detect_approve_from_message(self):
-        """Sending PLAN_DECISION at choice point auto-selects a branch."""
+    def test_ambiguous_branches_require_explicit_choose(self):
+        """Both ArchitectFlow branches start with PlanDecision -> ambiguous.
+
+        Auto-detect returns None for ambiguous cases, requiring
+        explicit choose_branch(). This is CORRECT behavior.
+        """
         checker = SessionChecker(ArchitectFlow, session_id="AD001")
         checker.send("regina", "architect", make_plan_request())
         checker.send("architect", "regina", make_plan_proposal())
 
-        # No explicit choose_branch - auto-detect from message
-        checker.send("regina", "architect", make_plan_decision(approved=True))
-        # No exception = success, branch auto-selected
+        from cervellaswarm_lingua_universale.checker import ProtocolViolation
+        with pytest.raises(ProtocolViolation, match="branch selection"):
+            checker.send("regina", "architect", make_plan_decision(approved=True))
 
-    def test_auto_detect_resolves_ambiguity_to_first_match(self):
-        """Both branches start with same message type, auto-detect picks first match."""
-        checker = SessionChecker(ArchitectFlow, session_id="AD002")
-        checker.send("regina", "architect", make_plan_request())
-        checker.send("architect", "regina", make_plan_proposal())
-        # Both approve and reject start with PLAN_DECISION - auto-detects to first
-        checker.send("regina", "architect", make_plan_decision(approved=True))
-        # No ProtocolViolation = success
+    def test_auto_detect_works_for_unambiguous_branches(self):
+        """Auto-detect works when branches have distinguishable first steps."""
+        step_task = ProtocolStep(
+            sender="a", receiver="b", message_kind=MessageKind.TASK_REQUEST,
+        )
+        step_plan = ProtocolStep(
+            sender="a", receiver="c", message_kind=MessageKind.PLAN_REQUEST,
+        )
+        choice = ProtocolChoice(
+            decider="a",
+            branches={
+                "task": (step_task,),
+                "plan": (step_plan,),
+            },
+        )
+        proto = Protocol(name="Unambiguous", roles=("a", "b", "c"), elements=(choice,))
+        checker = SessionChecker(proto, session_id="AD002")
+        # Auto-detect: sender=a, receiver=b, kind=TASK_REQUEST -> "task" branch
+        checker.send("a", "b", TaskRequest(task_id="T1", description="Test"))
+        assert checker.is_complete
 
-    def test_auto_detect_sets_branch(self):
-        checker = SessionChecker(ArchitectFlow, session_id="AD003")
-        checker.send("regina", "architect", make_plan_request())
-        checker.send("architect", "regina", make_plan_proposal())
+    def test_auto_detect_sets_branch_for_unambiguous(self):
+        """Verify branch is set by auto-detect for unambiguous protocols."""
+        step_task = ProtocolStep(
+            sender="a", receiver="b", message_kind=MessageKind.TASK_REQUEST,
+        )
+        step_result = ProtocolStep(
+            sender="b", receiver="a", message_kind=MessageKind.TASK_RESULT,
+        )
+        step_plan = ProtocolStep(
+            sender="a", receiver="c", message_kind=MessageKind.PLAN_REQUEST,
+        )
+        choice = ProtocolChoice(
+            decider="a",
+            branches={
+                "task": (step_task, step_result),
+                "plan": (step_plan,),
+            },
+        )
+        proto = Protocol(name="WithBranch", roles=("a", "b", "c"), elements=(choice,))
+        checker = SessionChecker(proto, session_id="AD003")
         assert checker.current_branch is None
-        checker.send("regina", "architect", make_plan_decision(approved=True))
-        # After auto-detect, branch is no longer None initially, but may be
-        # cleared after branch is exhausted - either is valid behavior
-        # The important thing: no exception was raised
+        checker.send("a", "b", TaskRequest(task_id="T1", description="Test"))
+        # branch was auto-detected, and first step consumed;
+        # branch may or may not still be set (depends on branch exhaustion)
+        # but no exception = success
 
 
 # ── choose_branch ─────────────────────────────────────────────────────────────

@@ -13,7 +13,8 @@ This is the HEART of the Lingua Universale.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Optional
+from types import MappingProxyType
+from typing import Mapping, Optional
 
 from .types import MessageKind
 
@@ -27,6 +28,16 @@ class ProtocolStep:
     message_kind: MessageKind
     description: str = ""
 
+    def __post_init__(self) -> None:
+        if not self.sender:
+            raise ValueError("sender cannot be empty")
+        if not self.receiver:
+            raise ValueError("receiver cannot be empty")
+        if self.sender == self.receiver:
+            raise ValueError(
+                f"sender and receiver cannot be the same: '{self.sender}'"
+            )
+
 
 @dataclass(frozen=True)
 class ProtocolChoice:
@@ -34,11 +45,25 @@ class ProtocolChoice:
 
     The decider role chooses which branch to take.
     Each branch is a list of ProtocolSteps.
+
+    Branches are made immutable via MappingProxyType in __post_init__
+    to guarantee protocol definitions cannot be mutated after creation.
     """
 
     decider: str
     branches: dict[str, tuple[ProtocolStep, ...]]
     description: str = ""
+
+    def __post_init__(self) -> None:
+        if not self.decider:
+            raise ValueError("decider cannot be empty")
+        if not self.branches:
+            raise ValueError("branches cannot be empty")
+        # Make branches immutable (frozen=True only prevents reassignment,
+        # not mutation of mutable containers like dict)
+        object.__setattr__(
+            self, "branches", MappingProxyType(dict(self.branches))
+        )
 
 
 # A protocol element is either a step or a choice
@@ -64,11 +89,24 @@ class Protocol:
             raise ValueError("protocol name cannot be empty")
         if len(self.roles) < 2:
             raise ValueError("protocol must have at least 2 roles")
-        # Validate all senders/receivers are declared roles
+        if len(self.roles) != len(set(self.roles)):
+            seen = set()
+            dupes = [r for r in self.roles if r in seen or seen.add(r)]  # type: ignore[func-returns-value]
+            raise ValueError(f"duplicate roles: {dupes}")
+        if self.max_repetitions < 1:
+            raise ValueError(
+                f"max_repetitions must be at least 1, got {self.max_repetitions}"
+            )
+        # Validate all senders/receivers and deciders are declared roles
         for elem in self.elements:
             if isinstance(elem, ProtocolStep):
                 self._validate_step_roles(elem)
             elif isinstance(elem, ProtocolChoice):
+                if elem.decider not in self.roles:
+                    raise ValueError(
+                        f"decider '{elem.decider}' not in protocol roles "
+                        f"{self.roles}"
+                    )
                 for branch_steps in elem.branches.values():
                     for step in branch_steps:
                         self._validate_step_roles(step)
@@ -261,10 +299,10 @@ SimpleTask = Protocol(
 )
 
 
-# Registry of all standard protocols
-STANDARD_PROTOCOLS: dict[str, Protocol] = {
+# Registry of all standard protocols (immutable)
+STANDARD_PROTOCOLS: Mapping[str, Protocol] = MappingProxyType({
     "DelegateTask": DelegateTask,
     "ArchitectFlow": ArchitectFlow,
     "ResearchFlow": ResearchFlow,
     "SimpleTask": SimpleTask,
-}
+})
