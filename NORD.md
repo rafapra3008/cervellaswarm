@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 19 Febbraio 2026 - S380 (Lingua Universale Fase A + NORD della Regina)
+> Aggiornato: 21 Febbraio 2026 - S389 (Lingua Universale v0.1.0 LIVE su PyPI!)
 
 ```
 +==================================================================+
@@ -115,7 +115,7 @@ FASE 3: Session Memory System     [########............] 40% IN CORSO
 FASE 4: Launch                    [....................] TODO
 ```
 
-### LA STELLA POLARE - LINGUA UNIVERSALE (S375-S385)
+### LA STELLA POLARE - LINGUA UNIVERSALE (S375-S389)
 
 ```
 +==================================================================+
@@ -130,15 +130,16 @@ FASE 4: Launch                    [....................] TODO
 |     2. Fiducia componibile (trust composition)                   |
 |     3. Protocolli che si provano da soli (Lean 4)                |
 |                                                                  |
-|   FASE A: COMPLETA! (S385) 7 moduli, 967 test, 98% cov          |
-|   Fase B -> C -> MONDO                                            |
+|   FASE A: COMPLETA + HARDENED (S380-S386)                        |
+|   FASE B: 80% (S387 - confidence, trust, thread safety)          |
+|   PyPI: LIVE! pip install cervellaswarm-lingua-universale (S389) |
+|   9 moduli, 1273 test, 84 API symbols, ZERO deps                |
 |   NORD completo: packages/lingua-universale/NORD.md              |
-|   242 fonti, 17 agenti integrati, ZERO deps                      |
 |                                                                  |
 +==================================================================+
 ```
 
-### AUTO-LEARNING - L'Idea di Rafa (S385)
+### AUTO-LEARNING - L'Idea di Rafa (S385-S387)
 
 ```
 +==================================================================+
@@ -146,10 +147,10 @@ FASE 4: Launch                    [....................] TODO
 |   "Potete auto-svilupparvi? Auto-learning?"                      |
 |                                          - Rafa, S385             |
 |                                                                  |
-|   RICERCA IN CORSO (Scienziata, 30+ fonti)                       |
-|   3 livelli: immediato / guidato / VM persistente                |
-|   Idea: .sncp/idee/20260221_AUTO_LEARNING_SELF_IMPROVEMENT.md    |
-|   Report: .sncp/reports/RESEARCH_20260221_auto_learning_*.md      |
+|   LIVELLO 1 (Reflexion): COMPLETATO (S387)                       |
+|     20 pattern validati da ~50 audit formali                     |
+|     Pattern repository: ~/.claude/patterns/validated_patterns.md |
+|   LIVELLO 2 (Batch Analysis): FUTURO                             |
 |                                                                  |
 +==================================================================+
 ```
@@ -162,6 +163,7 @@ STATO ATTUALE:
   ✓ FAMIGLIA COMPLETA             17 agenti (1 Regina + 3 Guardiane + 1 Architect + 12 Worker)
   ✓ API Fly.io                    ONLINE
   ✓ cervellaswarm.com             LIVE
+  ✓ PyPI (2 packages!)            cervellaswarm-code-intelligence + lingua-universale
   ✓ Repo Pubblico                 github.com/rafapra3008/cervellaswarm
   ✓ Scripts                       135+ file, ~20,000+ righe
   ✓ Hooks                         14+ hooks su 6 trigger points
