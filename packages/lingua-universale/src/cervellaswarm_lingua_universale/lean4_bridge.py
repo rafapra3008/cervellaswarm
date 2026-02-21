@@ -152,8 +152,15 @@ def _safe_lean_ident(name: str) -> str:
     """Sanitize a string into a valid Lean 4 identifier.
 
     Replaces any character that is not alphanumeric or underscore with ``_``.
+    Prefixes with ``_`` if the result starts with a digit.
+    Raises ``ValueError`` if the input is empty.
     """
-    return re.sub(r"[^A-Za-z0-9_]", "_", name)
+    if not name:
+        raise ValueError("cannot create Lean 4 identifier from empty string")
+    result = re.sub(r"[^A-Za-z0-9_]", "_", name)
+    if result[0].isdigit():
+        result = f"_{result}"
+    return result
 
 
 def _validate_lean_name(name: str) -> None:
@@ -585,6 +592,11 @@ def generate_lean4_multi(protocols: Sequence[Protocol]) -> str:
     """
     if not protocols:
         raise ValueError("protocols cannot be empty")
+
+    names = [p.name for p in protocols]
+    if len(set(names)) != len(names):
+        dupes = [n for n in names if names.count(n) > 1]
+        raise ValueError(f"duplicate protocol names: {sorted(set(dupes))}")
 
     for p in protocols:
         _validate_lean_name(p.name)

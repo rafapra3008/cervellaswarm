@@ -245,7 +245,8 @@ class TestChooseBranch:
         checker = SessionChecker(SimpleTask, session_id="CB003")
         with pytest.raises(ProtocolViolation) as exc_info:
             checker.choose_branch("approve")
-        assert "not at a choice point" in exc_info.value.expected
+        assert "at a choice point" in exc_info.value.expected
+        assert "not at a choice point" in exc_info.value.got
 
     def test_choose_branch_when_not_at_choice_contains_protocol(self):
         checker = SessionChecker(SimpleTask, session_id="CB003")

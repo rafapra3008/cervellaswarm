@@ -51,7 +51,7 @@ class ProtocolChoice:
     """
 
     decider: str
-    branches: dict[str, tuple[ProtocolStep, ...]]
+    branches: Mapping[str, tuple[ProtocolStep, ...]]
     description: str = ""
 
     def __post_init__(self) -> None:

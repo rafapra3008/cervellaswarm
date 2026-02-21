@@ -41,8 +41,9 @@ Syntax overview::
 
 Grammar (EBNF)::
 
-    protocol_decl  ::= 'protocol' IDENT '{' roles_decl element* '}'
+    protocol_decl  ::= 'protocol' IDENT '{' roles_decl max_rep? element* '}'
     roles_decl     ::= 'roles' IDENT (',' IDENT)* ';'
+    max_rep        ::= 'max_repetitions' NUMBER ';'
     element        ::= step | choice
     step           ::= IDENT '->' IDENT ':' IDENT ';'
     choice         ::= 'choice' 'at' IDENT '{' branch+ '}'
@@ -96,6 +97,7 @@ class DSLParseError(DSLError):
 class _TokenKind(Enum):
     KEYWORD = auto()
     IDENT = auto()
+    NUMBER = auto()
     ARROW = auto()
     COLON = auto()
     SEMICOLON = auto()
@@ -105,7 +107,7 @@ class _TokenKind(Enum):
     EOF = auto()
 
 
-_KEYWORDS = frozenset({"protocol", "roles", "choice", "at"})
+_KEYWORDS = frozenset({"protocol", "roles", "choice", "at", "max_repetitions"})
 
 
 @dataclass(frozen=True)
@@ -125,6 +127,7 @@ _TOKEN_SPEC = [
     ("COLON", r":"),
     ("COMMA", r","),
     ("IDENT", r"[A-Za-z_][A-Za-z0-9_]*"),
+    ("NUMBER", r"[0-9]+"),
     ("NEWLINE", r"\n"),
     ("WS", r"[ \t\r]+"),
     ("ERROR", r"."),
@@ -217,15 +220,30 @@ class _Parser:
         self._expect(_TokenKind.LBRACE)
 
         roles = self._parse_roles()
+        max_rep = self._parse_max_repetitions()
         elements = self._parse_elements()
 
         self._expect(_TokenKind.RBRACE)
 
-        return Protocol(
-            name=name_tok.value,
-            roles=tuple(roles),
-            elements=tuple(elements),
-        )
+        kwargs: dict = {
+            "name": name_tok.value,
+            "roles": tuple(roles),
+            "elements": tuple(elements),
+        }
+        if max_rep is not None:
+            kwargs["max_repetitions"] = max_rep
+        return Protocol(**kwargs)
+
+    def _parse_max_repetitions(self) -> int | None:
+        """Parse optional: ``max_repetitions`` INT ``;``"""
+        tok = self.peek()
+        if tok.kind == _TokenKind.KEYWORD and tok.value == "max_repetitions":
+            self._advance()
+            val_tok = self._expect(_TokenKind.NUMBER)
+            value = int(val_tok.value)
+            self._expect(_TokenKind.SEMICOLON)
+            return value
+        return None
 
     def _parse_roles(self) -> list[str]:
         """Parse: ``roles`` IDENT (``,`` IDENT)* ``;``"""
@@ -382,6 +400,8 @@ def render_protocol(protocol: Protocol) -> str:
     lines: list[str] = []
     lines.append(f"protocol {protocol.name} {{")
     lines.append(f"    roles {', '.join(protocol.roles)};")
+    if protocol.max_repetitions != 1:
+        lines.append(f"    max_repetitions {protocol.max_repetitions};")
 
     if protocol.elements:
         lines.append("")

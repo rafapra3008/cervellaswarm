@@ -36,6 +36,10 @@ from .protocols import (
     ProtocolChoice,
     ProtocolElement,
     STANDARD_PROTOCOLS,
+    DelegateTask,
+    ArchitectFlow,
+    ResearchFlow,
+    SimpleTask,
 )
 from .checker import (
     MessageRecord,
@@ -118,6 +122,10 @@ __all__ = [
     "ProtocolChoice",
     "ProtocolElement",
     "STANDARD_PROTOCOLS",
+    "DelegateTask",
+    "ArchitectFlow",
+    "ResearchFlow",
+    "SimpleTask",
     # Checker
     "MessageRecord",
     "ProtocolViolation",

@@ -269,12 +269,16 @@ def create_session(
     bindings: Optional[dict[str, str]] = None,
     session_id: str = "",
     monitor: Optional[ProtocolMonitor] = None,
+    catalog: Optional[Mapping[AgentRole, AgentInfo]] = None,
 ) -> SessionChecker:
     """Create a SessionChecker with real agent name bindings.
 
     The ``bindings`` dict maps protocol roles to real agent names.
     The "regina" role is automatically bound to "cervella-orchestrator"
     if not explicitly provided.
+
+    If ``catalog`` is provided, agent names are validated against it
+    instead of the global ``AGENT_CATALOG``.
 
     Example::
 
@@ -291,10 +295,13 @@ def create_session(
     Raises ValueError if a binding references an unknown agent name
     or if a binding role is not in the protocol.
     """
-    bindings = bindings or {}
+    cat = catalog if catalog is not None else AGENT_CATALOG
+    name_index = {info.agent_name: info for info in cat.values()}
+
+    bindings = dict(bindings) if bindings else {}
     # Auto-bind regina if not provided
     if "regina" in protocol.roles and "regina" not in bindings:
-        bindings = {**bindings, "regina": "cervella-orchestrator"}
+        bindings["regina"] = "cervella-orchestrator"
 
     # Validate binding roles exist in protocol
     for role in bindings:
@@ -306,11 +313,11 @@ def create_session(
 
     # Validate binding agent names exist in catalog
     for role, agent_name in bindings.items():
-        info = agent_by_name(agent_name)
+        info = name_index.get(agent_name)
         if info is None:
             raise ValueError(
                 f"unknown agent name '{agent_name}' for role '{role}'. "
-                f"Known agents: {sorted(_NAME_TO_AGENT.keys())}"
+                f"Known agents: {sorted(name_index.keys())}"
             )
         if not info.can_play(role):
             raise ValueError(

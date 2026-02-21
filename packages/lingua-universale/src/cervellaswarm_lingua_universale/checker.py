@@ -62,7 +62,7 @@ class SessionComplete(Exception):
         )
 
 
-@dataclass
+@dataclass(frozen=True)
 class MessageRecord:
     """A recorded message in the session log."""
 
@@ -85,7 +85,9 @@ class SessionState:
     completed: bool = False
     repetition_count: int = 0
     started_at: float = field(default_factory=time.time)
+    started_at_mono: float = field(default_factory=time.monotonic)
     completed_at: Optional[float] = None
+    completed_at_mono: Optional[float] = None
     log: list[MessageRecord] = field(default_factory=list)
 
     def peek_next_step(self) -> Optional[ProtocolStep]:
@@ -134,6 +136,7 @@ class SessionState:
             if self.repetition_count >= self.protocol.max_repetitions:
                 self.completed = True
                 self.completed_at = time.time()
+                self.completed_at_mono = time.monotonic()
             else:
                 self.step_index = 0
                 self.branch = None
@@ -192,7 +195,7 @@ class SessionChecker:
         )
         # role_bindings maps protocol roles to actual agent names
         # e.g., {"worker": "cervella-backend", "guardiana": "cervella-guardiana-qualita"}
-        self._role_bindings: dict[str, str] = role_bindings or {}
+        self._role_bindings: dict[str, str] = dict(role_bindings) if role_bindings else {}
         self._monitor = monitor
         # Mark complete immediately if protocol has no elements
         self._state._check_completion_or_repeat()
@@ -244,14 +247,14 @@ class SessionChecker:
         if choice is None:
             self._emit_violation(
                 step=self._state.step_index,
-                expected="not at a choice point",
-                got=f"choose_branch('{branch_name}')",
+                expected="at a choice point",
+                got=f"not at a choice point (step_index={self._state.step_index})",
             )
             raise ProtocolViolation(
                 protocol=self.protocol_name,
                 session_id=self.session_id,
-                expected="not at a choice point",
-                got=f"choose_branch('{branch_name}')",
+                expected="at a choice point",
+                got=f"not at a choice point (step_index={self._state.step_index})",
                 step=self._state.step_index,
             )
         if branch_name not in choice.branches:
@@ -427,13 +430,16 @@ class SessionChecker:
 
         if self._monitor is not None:
             if self._state.completed:
+                assert self._state.completed_at is not None
+                assert self._state.completed_at_mono is not None
                 self._monitor.emit(SessionEnded(
                     session_id=self.session_id,
                     protocol_name=self.protocol_name,
                     timestamp=self._state.completed_at,
                     total_messages=len(self._state.log),
                     duration_ms=(
-                        self._state.completed_at - self._state.started_at
+                        self._state.completed_at_mono
+                        - self._state.started_at_mono
                     ) * 1000.0,
                     repetitions=self._state.repetition_count,
                 ))
