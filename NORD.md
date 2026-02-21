@@ -115,7 +115,7 @@ FASE 3: Session Memory System     [########............] 40% IN CORSO
 FASE 4: Launch                    [....................] TODO
 ```
 
-### LA STELLA POLARE - LINGUA UNIVERSALE (S375 + S380 + S381)
+### LA STELLA POLARE - LINGUA UNIVERSALE (S375-S385)
 
 ```
 +==================================================================+
@@ -130,9 +130,26 @@ FASE 4: Launch                    [....................] TODO
 |     2. Fiducia componibile (trust composition)                   |
 |     3. Protocolli che si provano da soli (Lean 4)                |
 |                                                                  |
-|   Fase A -> B -> C -> MONDO                                      |
+|   FASE A: COMPLETA! (S385) 7 moduli, 967 test, 98% cov          |
+|   Fase B -> C -> MONDO                                            |
 |   NORD completo: packages/lingua-universale/NORD.md              |
-|   242 fonti, 776 test, DSL + Monitor + Lean 4 Bridge             |
+|   242 fonti, 17 agenti integrati, ZERO deps                      |
+|                                                                  |
++==================================================================+
+```
+
+### AUTO-LEARNING - L'Idea di Rafa (S385)
+
+```
++==================================================================+
+|                                                                  |
+|   "Potete auto-svilupparvi? Auto-learning?"                      |
+|                                          - Rafa, S385             |
+|                                                                  |
+|   RICERCA IN CORSO (Scienziata, 30+ fonti)                       |
+|   3 livelli: immediato / guidato / VM persistente                |
+|   Idea: .sncp/idee/20260221_AUTO_LEARNING_SELF_IMPROVEMENT.md    |
+|   Report: .sncp/reports/RESEARCH_20260221_auto_learning_*.md      |
 |                                                                  |
 +==================================================================+
 ```

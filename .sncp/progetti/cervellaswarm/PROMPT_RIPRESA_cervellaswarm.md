@@ -1,72 +1,70 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-21 - Sessione 384
-> **STATUS:** Lingua Universale Fase A Step 7 DONE - Lean 4 Bridge. 776 test, 98% cov, 9.7/10.
+> **Ultimo aggiornamento:** 2026-02-21 - Sessione 385
+> **STATUS:** Lingua Universale Fase A Step 8 DONE - Integration! 967 test, 98% cov, 9.5/10.
 
 ---
 
-## SESSIONE 384 - LEAN 4 BRIDGE (6o MODULO)
+## SESSIONE 385 - INTEGRATION (7o MODULO)
 
-### Cosa: Generatore Python -> Lean 4 per verifica formale dei protocolli
+### Cosa: Il PONTE tra la Lingua Universale e i 17 agenti reali
 
-**Nuovo modulo `lean4_bridge.py`** - Il 6o modulo della Lingua Universale.
-"Il PONTE verso la matematica" - genera codice Lean 4 da protocolli Python, verificabile formalmente.
+**Nuovo modulo `integration.py`** - Il 7o modulo della Lingua Universale.
+"Il ponte tra teoria e pratica" - mappa tutti i 17 agenti ai protocolli formali.
 
-**Campo vergine:** nessuno ha mai fatto un bridge Python -> Lean 4 per protocolli multi-agent AI.
+**Prima volta al mondo:** nessuno ha mai mappato session types a agenti AI reali.
 
 **Architettura:**
-- VerificationProperty (Enum): 7 proprieta verificabili (senders/receivers/no_self_loop/min_roles/non_empty/branches/decider)
-- VerificationResult + VerificationReport: frozen dataclass con risultati
-- Lean4Generator: Protocol -> codice Lean 4 (template-based, pure string, ZERO deps)
-- Lean4Verifier: esegue `lean --json` via subprocess (OPZIONALE, solo se Lean 4 installato)
-- `_validate_lean_name()`: guard che nomi protocollo siano identificatori Lean validi
-- `_safe_lean_ident()`: sanitizza branch name (centralizzato, DRY)
-- `generate_lean4()` / `generate_lean4_multi()`: convenience functions
-- ZERO deps esterne (solo stdlib), generator funziona senza Lean installato
+- AgentInfo (frozen dataclass): role, agent_name, protocol_roles, can_play()
+- AGENT_CATALOG (MappingProxyType): tutti 17 agenti, O(1) lookup per role
+- _NAME_TO_AGENT: reverse index pre-computato, O(1) lookup per nome
+- agent_by_name() / agent_by_role(): lookup helpers
+- agents_for_protocol(): per ogni ruolo protocollo, quali agenti possono coprirlo
+- create_session(): factory con binding agenti reali + auto-bind regina
+- SwarmValidationResult: frozen result di validate_swarm()
+- validate_swarm(): verifica completezza sciame per protocolli dati
+- resolve_bindings(): auto-assegna agenti ai ruoli (deterministico)
+- ZERO deps esterne (solo stdlib)
 
-**5 teoremi per protocollo flat** (DelegateTask, SimpleTask, ResearchFlow):
-- senders_valid, receivers_valid, no_self_loop, min_roles, non_empty
-- Tutti dimostrabili con `by decide` (decidibili, zero prove manuali)
-
-**7 teoremi per protocollo con choice** (ArchitectFlow):
-- I 5 sopra + branches_non_empty + decider_in_roles
-
-**Ricerca:** 31 fonti (Lean 4 core, lean-interact, MPST Coq/Agda, Mathlib DFA, LeanCopilot). Report: `.sncp/reports/RESEARCH_20260221_lean4_bridge.md`
+**Mapping reale:**
+- 1 regina, 3 guardiane, 1 architect, 2 researcher, 13 worker
+- Tutti i 4 protocolli standard coperti al 100%
+- Architect puo anche fare worker, Researcher e Scienziata anche researcher
 
 ### Numeri
 
-- Test: 454 -> 776 (+322 lean4_bridge tests)
-- Coverage: 97% -> 98% (lean4_bridge.py = 100%)
-- Source modules: 5 -> 6
-- Guardiana: 9.3/10 -> fix P2 -> 9.7/10 APPROVED (0 P1, 0 P2, 1 P3 residuo)
-- Tempo test: 0.20s
+- Test: 776 -> 967 (+191 integration tests)
+- Coverage: 98% (integration.py = 100%)
+- Source modules: 6 -> 7
+- __all__ symbols: 52 -> 61
+- Guardiana: 9.5/10 APPROVED (0 P1, P2 fixato: custom catalog validation)
+- Tempo test: 0.25s
 
 ### Processo usato
 
-1. Ricerca (Ricercatrice: 31 fonti, 7 aree)
-2. Design architettura (basata su ricerca)
-3. Implementazione lean4_bridge.py (Regina: ~240 righe)
-4. Update __init__.py (10 re-exports, 52 totali)
-5. Test (Tester: 291 test, 100% coverage lean4_bridge.py)
-6. Guardiana audit #1: 9.3/10 (2 P2: name validation + branch sanitization)
-7. Fix P2: _validate_lean_name, _safe_lean_ident, docstring, f-string
-8. +31 test per le fix
-9. Guardiana audit #2: 9.7/10 APPROVED
+1. Studio architettura esistente (6 moduli + 17 agenti + DNA condiviso)
+2. Design integration.py (Regina)
+3. Implementazione (Regina: ~490 righe)
+4. Update __init__.py (9 nuovi re-export, 61 totali)
+5. Test (Tester: 189 test, 100% coverage)
+6. Guardiana audit: 9.5/10 (1 P2: custom catalog)
+7. Fix P2 + 2 test aggiuntivi -> 9.5/10 APPROVED
 
 ### Dove siamo nella VISIONE
 
 ```
 FASE A: Le Fondamenta
-  Step 1 (Ricerca)          [####################] DONE
-  Step 2 (Design)           [####################] DONE
-  Step 3 (Prototipo)        [####################] DONE
-  Step 4 (Guardiana audit)  [####################] DONE
-  Step 5 (DSL notation)     [####################] DONE
-  Step 5b (Code Review)     [####################] DONE (S382)
-  Step 6 (Protocol Monitor) [####################] DONE (S383)
-  Step 7 (Lean 4 bridge)    [####################] DONE (S384!)
-  Step 8 (Integration)      [....................] PROSSIMO
+  Step 1-7                    [####################] DONE (S375-S384)
+  Step 8 (Integration)        [####################] DONE (S385!)
 ```
+
+**FASE A COMPLETA!** Le fondamenta della Lingua Universale sono pronte.
+
+### Ricerca Auto-Learning (lanciata S385)
+
+Rafa ha proposto: "Potete auto-svilupparvi? Auto-learning?"
+Scienziata sta ricercando: self-improving AI, safety guardrails, architetture pratiche.
+Report: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260221_auto_learning_self_improvement.md`
 
 ---
 
@@ -81,15 +79,16 @@ OPEN SOURCE ROADMAP:
   FASE 4  [....................] TODO
 
 CACCIA BUG: 8/8 COMPLETATA (92 bug, 60 fix, 1969 test totali)
-LINGUA UNIVERSALE: Fase A Step 1-7 DONE, 776 test, 98% cov
+LINGUA UNIVERSALE: FASE A COMPLETA! 7 moduli, 967 test, 98% cov
 ```
 
 ---
 
 ## PROSSIMI STEP
 
-1. **Lingua Universale Fase A Step 8** - Integration con i 17 agenti reali
-2. **F3.2 SQLite Event Database** - prossimo step open source
+1. **Auto-Learning Research** - Report dalla Scienziata (in corso)
+2. **Lingua Universale Fase B** - Confidence Types, Trust Composition
+3. **F3.2 SQLite Event Database** - prossimo step open source
 
 ---
 
@@ -110,6 +109,7 @@ LINGUA UNIVERSALE: Fase A Step 1-7 DONE, 776 test, 98% cov
 | S382 | **CODE REVIEW + BUG HUNT #8** (12 bug, 12 fix, 320 test, 9.5/10) |
 | S383 | **PROTOCOL MONITOR** (5o modulo, 134 test, 454 totali, 9.6/10) |
 | S384 | **LEAN 4 BRIDGE** (6o modulo, 322 test, 776 totali, 9.7/10) |
+| S385 | **INTEGRATION** (7o modulo, 191 test, 967 totali, 9.5/10) - **FASE A COMPLETA!** |
 
 ---
 

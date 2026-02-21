@@ -79,6 +79,17 @@ from .lean4_bridge import (
     FLAT_PROPERTIES,
     ALL_PROPERTIES,
 )
+from .integration import (
+    AgentInfo,
+    AGENT_CATALOG,
+    agent_by_name,
+    agent_by_role,
+    agents_for_protocol,
+    create_session,
+    SwarmValidationResult,
+    validate_swarm,
+    resolve_bindings,
+)
 
 __all__ = [
     # Version
@@ -145,4 +156,14 @@ __all__ = [
     "generate_lean4_multi",
     "FLAT_PROPERTIES",
     "ALL_PROPERTIES",
+    # Integration
+    "AgentInfo",
+    "AGENT_CATALOG",
+    "agent_by_name",
+    "agent_by_role",
+    "agents_for_protocol",
+    "create_session",
+    "SwarmValidationResult",
+    "validate_swarm",
+    "resolve_bindings",
 ]

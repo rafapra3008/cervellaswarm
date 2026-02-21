@@ -9,7 +9,7 @@
 
 | Progetto | PROMPT_RIPRESA | Aggiornato | TL;DR |
 |----------|----------------|------------|-------|
-| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-02-21 | S384: Lean 4 Bridge (6o modulo) DONE! 776 test, 98% cov, 9.7/10. Next: Integration (Step 8) |
+| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-02-21 | S385: Integration (7o modulo) DONE! FASE A COMPLETA! 967 test, 98% cov, 9.5/10. Next: Auto-Learning Research + Fase B |
 | **CervellaBrasil** | `.sncp/progetti/cervellabrasil/PROMPT_RIPRESA_cervellabrasil.md` | 2026-02-12 | FASE 0-2.5 completas, pronto FASE 3 (Execucao) |
 | **Chavefy** | `.sncp/progetti/chavefy/PROMPT_RIPRESA_chavefy.md` | 2026-02-12 | FASE 0: 13 pesquisas, pronto validacao online |
 | **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-30 | In pausa (Cache Layer v2.1.0 completato) |
