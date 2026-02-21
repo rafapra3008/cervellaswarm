@@ -67,6 +67,18 @@ from .monitor import (
     LoggingListener,
     EventCollector,
 )
+from .lean4_bridge import (
+    VerificationProperty,
+    VerificationResult,
+    VerificationReport,
+    Lean4Generator,
+    Lean4Verifier,
+    lean4_available,
+    generate_lean4,
+    generate_lean4_multi,
+    FLAT_PROPERTIES,
+    ALL_PROPERTIES,
+)
 
 __all__ = [
     # Version
@@ -122,4 +134,15 @@ __all__ = [
     "ProtocolMonitor",
     "LoggingListener",
     "EventCollector",
+    # Lean 4 Bridge
+    "VerificationProperty",
+    "VerificationResult",
+    "VerificationReport",
+    "Lean4Generator",
+    "Lean4Verifier",
+    "lean4_available",
+    "generate_lean4",
+    "generate_lean4_multi",
+    "FLAT_PROPERTIES",
+    "ALL_PROPERTIES",
 ]

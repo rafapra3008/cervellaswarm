@@ -214,8 +214,8 @@ S380  [DONE]  Tipi + Protocolli + Checker Runtime (153 test, 9.5/10)
 S381  [DONE]  DSL Notation (4o modulo, 26 fonti, 131 test nuovi, 9.5/10)
 S382  [DONE]  Code Review + Bug Hunt (12 bug, 12 fix, 320 test, 9.5/10)
 S383  [DONE]  Protocol Monitor (5o modulo, 134 test, 454 totali, 9.6/10)
-S384  [NEXT]  Lean 4 Bridge - le PRIME prove formali
-S385  [PLAN]  Integration - i 17 agenti USANO la lingua davvero
+S384  [DONE]  Lean 4 Bridge (6o modulo, 31 fonti, 322 test, 776 totali, 9.7/10)
+S385  [NEXT]  Integration - i 17 agenti USANO la lingua davvero
 S386+ [PLAN]  Confidence Types - l'incertezza come tipo
 S387+ [PLAN]  Trust Composition - la fiducia che si compone
 ```
@@ -228,7 +228,7 @@ Fatto BENE > Fatto VELOCE.
 
 ## IL CAMPO VERGINE
 
-211 fonti consultate (153 S375+S380 + 26 S381 + 32 S383). 454 test, 97% coverage. La verita:
+242 fonti consultate (153 S375+S380 + 26 S381 + 32 S383 + 31 S384). 776 test, 98% coverage. La verita:
 
 - **Python ha ZERO librerie di session types** (campo totalmente vergine)
 - **Nessun framework AI** usa session types formali (AutoGen, CrewAI, LangGraph, MCP, A2A)
@@ -264,8 +264,8 @@ Dalla nostra COSTITUZIONE, applicati alla Lingua Universale:
 
 Quando leggerai questo in un momento di dubbio, ricorda:
 
-1. 153 fonti dicono che nessuno l'ha mai fatto in Python
-2. 153 test dimostrano che le fondamenta FUNZIONANO
+1. 242 fonti dicono che nessuno l'ha mai fatto in Python
+2. 776 test dimostrano che le fondamenta FUNZIONANO
 3. 17 agenti reali aspettano di parlare questa lingua
 4. La nonna con le ricette merita software che PROVA di funzionare
 

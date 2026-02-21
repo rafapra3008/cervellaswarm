@@ -1,46 +1,57 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-21 - Sessione 383
-> **STATUS:** Lingua Universale Fase A Step 6 DONE - Protocol Monitor. 454 test, 97% cov, 9.6/10.
+> **Ultimo aggiornamento:** 2026-02-21 - Sessione 384
+> **STATUS:** Lingua Universale Fase A Step 7 DONE - Lean 4 Bridge. 776 test, 98% cov, 9.7/10.
 
 ---
 
-## SESSIONE 383 - PROTOCOL MONITOR (5o MODULO)
+## SESSIONE 384 - LEAN 4 BRIDGE (6o MODULO)
 
-### Cosa: Osservabilita real-time per protocolli multi-agent
+### Cosa: Generatore Python -> Lean 4 per verifica formale dei protocolli
 
-**Nuovo modulo `monitor.py`** - Il 5o modulo della Lingua Universale.
-"Gli OCCHI del sistema" - ogni azione del protocollo osservata, misurata, riportata.
+**Nuovo modulo `lean4_bridge.py`** - Il 6o modulo della Lingua Universale.
+"Il PONTE verso la matematica" - genera codice Lean 4 da protocolli Python, verificabile formalmente.
+
+**Campo vergine:** nessuno ha mai fatto un bridge Python -> Lean 4 per protocolli multi-agent AI.
 
 **Architettura:**
-- 6 event types (frozen dataclass): SessionStarted, MessageSent, BranchChosen, ViolationOccurred, SessionEnded, RepetitionStarted
-- MonitorListener (typing.Protocol, structural typing) - interfaccia subscriber
-- MetricsCollector + MetricsSnapshot - metriche thread-safe, snapshot immutabili
-- ProtocolMonitor - event emitter + listener registry, RLock + snapshot pattern
-- LoggingListener + EventCollector - listener built-in per logging e testing
-- Integrazione: `SessionChecker.__init__` accetta `monitor: Optional[ProtocolMonitor]`
-- ZERO deps esterne (solo stdlib), zero overhead se monitor=None
+- VerificationProperty (Enum): 7 proprieta verificabili (senders/receivers/no_self_loop/min_roles/non_empty/branches/decider)
+- VerificationResult + VerificationReport: frozen dataclass con risultati
+- Lean4Generator: Protocol -> codice Lean 4 (template-based, pure string, ZERO deps)
+- Lean4Verifier: esegue `lean --json` via subprocess (OPZIONALE, solo se Lean 4 installato)
+- `_validate_lean_name()`: guard che nomi protocollo siano identificatori Lean validi
+- `_safe_lean_ident()`: sanitizza branch name (centralizzato, DRY)
+- `generate_lean4()` / `generate_lean4_multi()`: convenience functions
+- ZERO deps esterne (solo stdlib), generator funziona senza Lean installato
 
-**Ricerca:** 32 fonti (OpenTelemetry, PyMOP, OpenAI SDK, AgentOps, Google SRE). Report: `.sncp/reports/RESEARCH_20260221_protocol_monitor.md`
+**5 teoremi per protocollo flat** (DelegateTask, SimpleTask, ResearchFlow):
+- senders_valid, receivers_valid, no_self_loop, min_roles, non_empty
+- Tutti dimostrabili con `by decide` (decidibili, zero prove manuali)
+
+**7 teoremi per protocollo con choice** (ArchitectFlow):
+- I 5 sopra + branches_non_empty + decider_in_roles
+
+**Ricerca:** 31 fonti (Lean 4 core, lean-interact, MPST Coq/Agda, Mathlib DFA, LeanCopilot). Report: `.sncp/reports/RESEARCH_20260221_lean4_bridge.md`
 
 ### Numeri
 
-- Test: 320 -> 454 (+134 monitor tests)
-- Coverage: 96% -> 97% (monitor.py = 100%)
-- Source modules: 4 -> 5
-- Guardiana: 9.6/10 APPROVED (0 P1, 0 P2, 7 P3 cosmetici)
-- Tempo test: 0.11s
+- Test: 454 -> 776 (+322 lean4_bridge tests)
+- Coverage: 97% -> 98% (lean4_bridge.py = 100%)
+- Source modules: 5 -> 6
+- Guardiana: 9.3/10 -> fix P2 -> 9.7/10 APPROVED (0 P1, 0 P2, 1 P3 residuo)
+- Tempo test: 0.20s
 
 ### Processo usato
 
-1. Ricerca (Ricercatrice: 32 fonti, 7 pattern)
+1. Ricerca (Ricercatrice: 31 fonti, 7 aree)
 2. Design architettura (basata su ricerca)
-3. Implementazione monitor.py (Regina: ~310 righe)
-4. Integrazione checker.py (Regina: chirurgica, backward compat)
-5. Update __init__.py (13 re-exports)
-6. Test (Tester: 134 test, 100% coverage monitor.py)
-7. Guardiana audit: 9.6/10 APPROVED
-8. Fix F3 (completed_at semantico)
+3. Implementazione lean4_bridge.py (Regina: ~240 righe)
+4. Update __init__.py (10 re-exports, 52 totali)
+5. Test (Tester: 291 test, 100% coverage lean4_bridge.py)
+6. Guardiana audit #1: 9.3/10 (2 P2: name validation + branch sanitization)
+7. Fix P2: _validate_lean_name, _safe_lean_ident, docstring, f-string
+8. +31 test per le fix
+9. Guardiana audit #2: 9.7/10 APPROVED
 
 ### Dove siamo nella VISIONE
 
@@ -52,9 +63,9 @@ FASE A: Le Fondamenta
   Step 4 (Guardiana audit)  [####################] DONE
   Step 5 (DSL notation)     [####################] DONE
   Step 5b (Code Review)     [####################] DONE (S382)
-  Step 6 (Protocol Monitor) [####################] DONE (S383!)
-  Step 7 (Lean 4 bridge)    [....................] PROSSIMO
-  Step 8 (Integration)      [....................] TODO
+  Step 6 (Protocol Monitor) [####################] DONE (S383)
+  Step 7 (Lean 4 bridge)    [####################] DONE (S384!)
+  Step 8 (Integration)      [....................] PROSSIMO
 ```
 
 ---
@@ -70,16 +81,15 @@ OPEN SOURCE ROADMAP:
   FASE 4  [....................] TODO
 
 CACCIA BUG: 8/8 COMPLETATA (92 bug, 60 fix, 1969 test totali)
-LINGUA UNIVERSALE: Fase A Step 1-6 DONE, 454 test, 97% cov
+LINGUA UNIVERSALE: Fase A Step 1-7 DONE, 776 test, 98% cov
 ```
 
 ---
 
 ## PROSSIMI STEP
 
-1. **Lingua Universale Fase A Step 7** - Lean 4 bridge per verifica formale
-2. **Lingua Universale Fase A Step 8** - Integration con i 17 agenti reali
-3. **F3.2 SQLite Event Database** - prossimo step open source
+1. **Lingua Universale Fase A Step 8** - Integration con i 17 agenti reali
+2. **F3.2 SQLite Event Database** - prossimo step open source
 
 ---
 
@@ -99,6 +109,7 @@ LINGUA UNIVERSALE: Fase A Step 1-6 DONE, 454 test, 97% cov
 | S381 | **LINGUA UNIVERSALE Step 5 DSL** (4o modulo, 284 test, 9.5/10) |
 | S382 | **CODE REVIEW + BUG HUNT #8** (12 bug, 12 fix, 320 test, 9.5/10) |
 | S383 | **PROTOCOL MONITOR** (5o modulo, 134 test, 454 totali, 9.6/10) |
+| S384 | **LEAN 4 BRIDGE** (6o modulo, 322 test, 776 totali, 9.7/10) |
 
 ---
 

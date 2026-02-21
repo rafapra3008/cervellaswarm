@@ -132,7 +132,7 @@ FASE 4: Launch                    [....................] TODO
 |                                                                  |
 |   Fase A -> B -> C -> MONDO                                      |
 |   NORD completo: packages/lingua-universale/NORD.md              |
-|   211 fonti, 454 test, DSL + Monitor, campo vergine in Python    |
+|   242 fonti, 776 test, DSL + Monitor + Lean 4 Bridge             |
 |                                                                  |
 +==================================================================+
 ```
