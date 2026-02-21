@@ -1,94 +1,95 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 2026-02-21 - Sessione 385
-> **STATUS:** Lingua Universale Fase A Step 8 DONE - Integration! 967 test, 98% cov, 9.5/10.
+> **STATUS:** Lingua Universale FASE A COMPLETA! 7 moduli, 967 test, 98% cov. Auto-Learning ricerca DONE (34 fonti).
 
 ---
 
-## SESSIONE 385 - INTEGRATION (7o MODULO)
+## SESSIONE 385 - Cosa e successo
 
-### Cosa: Il PONTE tra la Lingua Universale e i 17 agenti reali
+### Integration Module (7o modulo) - FASE A COMPLETA!
 
-**Nuovo modulo `integration.py`** - Il 7o modulo della Lingua Universale.
-"Il ponte tra teoria e pratica" - mappa tutti i 17 agenti ai protocolli formali.
+**`integration.py`** - Il ponte tra teoria e pratica. Mappa tutti i 17 agenti reali ai protocolli formali.
 
-**Prima volta al mondo:** nessuno ha mai mappato session types a agenti AI reali.
+Componenti: AgentInfo (frozen), AGENT_CATALOG (17 agenti, MappingProxyType), agent_by_name/role (O(1) lookup), agents_for_protocol(), create_session() (factory + auto-bind regina), validate_swarm(), resolve_bindings() (deterministico). ZERO deps.
 
-**Architettura:**
-- AgentInfo (frozen dataclass): role, agent_name, protocol_roles, can_play()
-- AGENT_CATALOG (MappingProxyType): tutti 17 agenti, O(1) lookup per role
-- _NAME_TO_AGENT: reverse index pre-computato, O(1) lookup per nome
-- agent_by_name() / agent_by_role(): lookup helpers
-- agents_for_protocol(): per ogni ruolo protocollo, quali agenti possono coprirlo
-- create_session(): factory con binding agenti reali + auto-bind regina
-- SwarmValidationResult: frozen result di validate_swarm()
-- validate_swarm(): verifica completezza sciame per protocolli dati
-- resolve_bindings(): auto-assegna agenti ai ruoli (deterministico)
-- ZERO deps esterne (solo stdlib)
+- Test: 776 -> 967 (+191), Coverage: 98%, integration.py = 100%
+- Guardiana: 9.5/10 APPROVED (P2 fixato: custom catalog validation)
+- Git: `0c4bba5` pushato su main
 
-**Mapping reale:**
-- 1 regina, 3 guardiane, 1 architect, 2 researcher, 13 worker
-- Tutti i 4 protocolli standard coperti al 100%
-- Architect puo anche fare worker, Researcher e Scienziata anche researcher
+### Auto-Learning Research - COMPLETATA
 
-### Numeri
+Rafa: "Potete auto-svilupparvi? Auto-learning?" -> Scienziata: 34 fonti, report completo.
 
-- Test: 776 -> 967 (+191 integration tests)
-- Coverage: 98% (integration.py = 100%)
-- Source modules: 6 -> 7
-- __all__ symbols: 52 -> 61
-- Guardiana: 9.5/10 APPROVED (0 P1, P2 fixato: custom catalog validation)
-- Tempo test: 0.25s
+**Risultato:** Si, CervellaSwarm PUO auto-migliorarsi come SISTEMA (prompt, regole, pattern). 3 livelli: immediato (pattern validati, costo zero), medio (cron job + proposte, $0.10-0.50/sett), lungo (18o membro "Analista Notturna").
 
-### Processo usato
-
-1. Studio architettura esistente (6 moduli + 17 agenti + DNA condiviso)
-2. Design integration.py (Regina)
-3. Implementazione (Regina: ~490 righe)
-4. Update __init__.py (9 nuovi re-export, 61 totali)
-5. Test (Tester: 189 test, 100% coverage)
-6. Guardiana audit: 9.5/10 (1 P2: custom catalog)
-7. Fix P2 + 2 test aggiuntivi -> 9.5/10 APPROVED
-
-### Dove siamo nella VISIONE
-
-```
-FASE A: Le Fondamenta
-  Step 1-7                    [####################] DONE (S375-S384)
-  Step 8 (Integration)        [####################] DONE (S385!)
-```
-
-**FASE A COMPLETA!** Le fondamenta della Lingua Universale sono pronte.
-
-### Ricerca Auto-Learning (lanciata S385)
-
-Rafa ha proposto: "Potete auto-svilupparvi? Auto-learning?"
-Scienziata sta ricercando: self-improving AI, safety guardrails, architetture pratiche.
 Report: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260221_auto_learning_self_improvement.md`
+Idea: `.sncp/idee/20260221_AUTO_LEARNING_SELF_IMPROVEMENT.md`
+
+---
+
+## S386 - PROSSIMA SESSIONE: CODE REVIEW + BUG HUNT #9
+
+> **Obiettivo:** Analisi logica e codice MIRATA sulla Lingua Universale completa (7 moduli).
+> **Pattern:** Come S382 (Bug Hunt #8) che ha trovato 12 bug e 12 fix.
+
+### Cosa Analizzare
+
+```
+packages/lingua-universale/src/cervellaswarm_lingua_universale/
+  types.py          (359 righe)  - Tipi base, enum, message dataclass
+  protocols.py      (309 righe)  - 4 protocolli standard, ProtocolStep/Choice
+  checker.py        (519 righe)  - SessionChecker runtime, state machine
+  dsl.py            (409 righe)  - Parser + renderer DSL notation
+  monitor.py        (458 righe)  - Eventi, metriche, listener
+  lean4_bridge.py   (637 righe)  - Generatore Lean 4, verifier
+  integration.py    (490 righe)  - NUOVO: agent-protocol bridge
+  __init__.py       (158 righe)  - 61 re-export
+```
+
+### Dove Guardare (focus mirato)
+
+1. **Cross-module interactions** - integration.py usa checker.py, protocols.py, types.py. Le interfacce sono coerenti?
+2. **Edge case integration** - create_session + ArchitectFlow (branch ambigui), validate_swarm con cataloghi parziali
+3. **Immutabilita** - Tutti i MappingProxyType sono davvero immutabili? Nessun leak?
+4. **Thread safety** - monitor.py ha threading, integration.py no. Interagiscono correttamente?
+5. **Error messages** - Tutti i ValueError hanno messaggi chiari e utili?
+6. **DSL round-trip** - parse(render(P)) per tutti i protocolli + integration mapping
+
+### Processo
+
+1. **Ingegnera** analizza codebase (legge, non modifica) -> lista issue
+2. **Tester** scrive test di regressione per ogni bug trovato
+3. **Regina** applica fix
+4. **Guardiana** audit finale -> target 9.5/10
 
 ---
 
 ## MAPPA SITUAZIONE
 
 ```
-OPEN SOURCE ROADMAP:
-  FASE 0  [####################] 100% (S362-S367)
-  FASE 1  [####################] 100% (S368-S369, PyPI LIVE!)
-  FASE 2  [####################] 100% (S370-S372, 4 packages)
-  FASE 3  [####................] 25% (F3.1 DONE, F3.5 DONE)
-  FASE 4  [....................] TODO
+LINGUA UNIVERSALE:
+  FASE A: LE FONDAMENTA     [####################] 100% COMPLETA! (S375-S385)
+    7 moduli | 967 test | 98% cov | 61 API symbols | ZERO deps
+  FASE B: IL TOOLKIT         [....................] DOPO review
+    Confidence Types | Trust Composition
 
-CACCIA BUG: 8/8 COMPLETATA (92 bug, 60 fix, 1969 test totali)
-LINGUA UNIVERSALE: FASE A COMPLETA! 7 moduli, 967 test, 98% cov
+OPEN SOURCE ROADMAP:
+  FASE 0-2                   [####################] 100%
+  FASE 3                     [####................] 25%
+
+CACCIA BUG: 8/8 COMPLETATA (92 bug, 60 fix)
+AUTO-LEARNING: Ricerca DONE (34 fonti), Livello 1 pronto da implementare
 ```
 
 ---
 
-## PROSSIMI STEP
+## PROSSIMI STEP (in ordine)
 
-1. **Auto-Learning Research** - Report dalla Scienziata (in corso)
-2. **Lingua Universale Fase B** - Confidence Types, Trust Composition
-3. **F3.2 SQLite Event Database** - prossimo step open source
+1. **S386: Code Review + Bug Hunt #9** - Lingua Universale completa (7 moduli)
+2. **Auto-Learning Livello 1** - Pattern validati, lezioni apprese strutturate
+3. **Lingua Universale Fase B** - Confidence Types, Trust Composition
+4. **F3.2 SQLite Event Database** - prossimo step open source
 
 ---
 
@@ -96,20 +97,12 @@ LINGUA UNIVERSALE: FASE A COMPLETA! 7 moduli, 967 test, 98% cov
 
 | Sessione | Cosa |
 |----------|------|
-| S337-S348 | Coverage push 41% -> 95% (968 test) |
-| S349-S361 | MAPPA MIGLIORAMENTI + SNCP 4.0 + POLISH + ANTI-DOWNGRADE |
-| S362-S367 | **FASE 0 COMPLETA** (6/6 step, media 9.4/10) |
-| S368-S369 | **FASE 1 COMPLETA** (F1.1-F1.4, PyPI LIVE!) |
-| S370-S372 | **FASE 2 COMPLETA** (4/4 packages, media 9.5/10) |
+| S337-S372 | Coverage push + SNCP 4.0 + FASE 0-2 open source |
 | S373 | **FASE 3: F3.1 Session Memory** (9.6/10) |
-| S374-S378 | **CACCIA BUG 1-7** (7 packages, 80 bug, 48 fix, 1649 test) |
+| S374-S378 | **CACCIA BUG 1-7** (7 packages, 80 bug, 48 fix) |
 | S379 | **FIX AUTO-HANDOFF** (8 step, 14 file, 9.5/10) |
-| S380 | **LINGUA UNIVERSALE Fase A** (8o package, 153 test, 9.5/10) |
-| S381 | **LINGUA UNIVERSALE Step 5 DSL** (4o modulo, 284 test, 9.5/10) |
-| S382 | **CODE REVIEW + BUG HUNT #8** (12 bug, 12 fix, 320 test, 9.5/10) |
-| S383 | **PROTOCOL MONITOR** (5o modulo, 134 test, 454 totali, 9.6/10) |
-| S384 | **LEAN 4 BRIDGE** (6o modulo, 322 test, 776 totali, 9.7/10) |
-| S385 | **INTEGRATION** (7o modulo, 191 test, 967 totali, 9.5/10) - **FASE A COMPLETA!** |
+| S380-S384 | **LINGUA UNIVERSALE** Steps 1-7 (6 moduli, 776 test, 9.5-9.7/10) |
+| S385 | **INTEGRATION + AUTO-LEARNING** (7o modulo, FASE A COMPLETA! 967 test, 9.5/10) |
 
 ---
 
