@@ -1,63 +1,45 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-21 - Sessione 387
-> **STATUS:** Auto-Learning L1 + Lingua Universale Fase B IMPLEMENTATI! 1273 test, 84 API symbols.
+> **Ultimo aggiornamento:** 2026-02-21 - Sessione 389
+> **STATUS:** Lingua Universale v0.1.0 PUBBLICATA SU PYPI! `pip install cervellaswarm-lingua-universale`
 
 ---
 
-## SESSIONE 387 - Cosa e successo
+## SESSIONE 389 - Cosa e successo
 
-### Parte 1: Auto-Learning Livello 1 (Reflexion + Pattern Repository)
+### PyPI Publish COMPLETATO!
 
-Implementato il primo livello di auto-apprendimento basato su Reflexion (NeurIPS 2023).
+Rafa ha configurato il Trusted Publisher su pypi.org. La Regina ha creato il tag `lingua-universale-v0.1.0` e il workflow ha pubblicato automaticamente.
 
-**3 deliverable:**
-1. `~/.claude/patterns/validated_patterns.md` - 20 pattern validati da ~50 audit (S337-S387)
-2. `~/.claude/docs/LEZIONI_APPRESE_GUIDA.md` - Template e processo per lezioni apprese
-3. `~/.claude/CLAUDE.md` aggiornato - Sezione AUTO-LEARNING integrata nel workflow
+**Risultato:** `cervellaswarm-lingua-universale` v0.1.0 e LIVE su PyPI!
+- `pip install cervellaswarm-lingua-universale` funziona
+- GitHub Release creata automaticamente
+- Trusted Publishing OIDC (zero secrets nel repo)
 
-**Guardiana:** R1 9.3/10 -> Fix 3 P2 (numeri inflated) -> R2 **9.5/10 APPROVED**
+### Pipeline completa (tutto automatico dopo il tag)
 
-### Parte 2: Lingua Universale Fase B (Confidence + Trust + Thread Safety)
-
-6 step implementati con ricerca preventiva (28 fonti, report salvato):
-
-| Step | Cosa | Impatto |
-|------|------|---------|
-| 1. 5 MessageKind dataclass | DirectMessage, Broadcast, ShutdownRequest, ShutdownAck, ContextInject | API completa (14/14 tipi) |
-| 2. EventCollector thread safety | Lock + snapshot copy su events/clear/of_type | Safe per Python 3.13+ no-GIL |
-| 3. MetricsCollector Welford | Online mean senza liste unbounded | Memoria O(1) vs O(n) |
-| 4. **confidence.py** (NUOVO) | ConfidenceScore, Confident[T] generic, 3 strategie composizione | PRIMO in Python! |
-| 5. **trust.py** (NUOVO) | TrustScore, TrustTier, compose transitivo, privilege attenuation | PRIMO in Python! |
-| 6. Lean4 branch dedup | Funzione condivisa branches+theorems, test collision | Codice Lean corretto |
-
-**Guardiana:** R1 9.3/10 -> Fix 2 P2 + 2 P3 -> test dedup -> pronto per R2
-
-### Numeri finali S387
-
-| Metrica | Prima | Dopo | Delta |
-|---------|-------|------|-------|
-| Test | 997 | **1273** | +276 |
-| API symbols | 65 | **84** | +19 |
-| Moduli | 7 | **9** | +2 |
-| Dependencies | 0 | **0** | ZERO! |
+```
+✓ Build & Verify    28s  - test passati, wheel verificato
+✓ Publish to PyPI   19s  - LIVE su pypi.org
+✓ GitHub Release     9s  - Release con artifacts
+```
 
 ---
 
-## Lezioni Apprese (Sessione 387)
+## Lezioni Apprese (Sessione 389)
 
 ### Cosa ha funzionato bene
-- Ricerca PRIMA di implementare (28 fonti): ha guidato il design di confidence + trust
-- Worker paralleli per task indipendenti: 5 dataclass + tests in un colpo solo
-- Guardiana rigorosa sui numeri: ha trovato claim inflated in Auto-Learning E logica desincronizzata in Lean4
+- CEO decision: consultare 4 esperte in parallelo prima di decidere la direzione
+- Guardiana ha trovato 3 P1 nel README (esempi rotti!) - senza lei, primo developer = errore
+- Researcher ha dato struttura vincente (beartype pattern: mostra l'ERRORE, non il meccanismo)
 
 ### Cosa non ha funzionato
-- Lean4 branch dedup non sincronizzato con theorems (P2 trovato dalla Guardiana)
+- Auto-checkpoint hook sporca i PROMPT_RIPRESA (ha aggiunto noise 2 volte, dovuto pulire)
 
 ### Pattern candidato
-- "Logica condivisa: estrarre helper quando 2+ metodi usano la stessa logica di naming/mapping"
-- Evidenza: S387 Lean4 _branch_def_names(), S386 _safe_lean_ident
-- Azione: MONITORARE (2 occorrenze, serve 1 altra per promuovere)
+- "README: verifica TUTTI gli esempi con esecuzione reale prima di pubblicare" (F1-F3 erano copy-paste errors)
+- Evidenza: S388 (3 P1 in README), S368 (code-intelligence README)
+- Azione: PROMUOVERE (2 occorrenze, critico per open source)
 
 ---
 
@@ -66,31 +48,28 @@ Implementato il primo livello di auto-apprendimento basato su Reflexion (NeurIPS
 ```
 LINGUA UNIVERSALE:
   FASE A: LE FONDAMENTA     [####################] 100% HARDENED! (S375-S386)
-    7 moduli | 997 test | 65 API symbols | ZERO deps
   FASE B: IL TOOLKIT         [################....] 80% (S387)
-    +2 moduli (confidence.py, trust.py) | +276 test | +19 API symbols
-    FATTO: Confidence Types, Trust Composition, Thread Safety, Welford, 5 dataclass
-    RESTA: DSL nested choices (ALTA complessita, differito a Fase B.2)
+    FATTO: Confidence, Trust, Thread Safety, Welford, 5 dataclass
+    RESTA: DSL nested choices (differito post-PyPI)
+  PYPI PUBLISH              [####################] 100% (S389)
+    LIVE su pypi.org! pip install cervellaswarm-lingua-universale
 
 OPEN SOURCE ROADMAP:
   FASE 0-2                   [####################] 100%
-  FASE 3                     [####................] 25%
+  FASE 3                     [######..............] 30%
 
-AUTO-LEARNING:
-  Livello 1 (Reflexion)     [####################] 100% (S387)
-    20 pattern | 3 file | Guardiana 9.5/10
-  Livello 2 (Batch Analysis) [....................] FUTURO (1-3 mesi)
-
-CACCIA BUG: 9/9 COMPLETATA (121 bug totali, 71 fix)
+AUTO-LEARNING L1            [####################] 100% (S387)
+CACCIA BUG: 9/9 COMPLETATA (121 bug, 71 fix)
+CROSS-PACKAGE: 3112 test totali, 11 packages, ZERO flaky
 ```
 
 ---
 
 ## PROSSIMI STEP (in ordine)
 
-1. **Lingua Universale Fase B.2** - DSL nested choices (alta complessita, parser ricorsivo)
-2. **F3.2 SQLite Event Database** - prossimo step open source
-3. **Auto-Learning Livello 2** - Script batch analisi PROMPT_RIPRESA (1-3 mesi)
+1. **F3.2 SQLite Event Database** - prossimo step open source
+2. **Fase B.2** - DSL nested choices (post-feedback community)
+3. **Community engagement** - annunciare su Reddit, HN, Python communities
 
 ---
 
@@ -104,8 +83,12 @@ CACCIA BUG: 9/9 COMPLETATA (121 bug totali, 71 fix)
 | S379 | FIX AUTO-HANDOFF (8 step, 14 file, 9.5/10) |
 | S380-S386 | LINGUA UNIVERSALE Fase A (7 moduli, 997 test, HARDENED!) |
 | S387 | AUTO-LEARNING L1 + FASE B (9 moduli, 1273 test, 84 API) |
+| S388 | README killer + CI/Publish per PyPI (Guardiana 9.5/10) |
+| S389 | PyPI PUBLISH LIVE! cervellaswarm-lingua-universale v0.1.0 |
 
 ---
 
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
 *"Lavoriamo in pace! Senza casino! Dipende da noi!"*
+
+---
