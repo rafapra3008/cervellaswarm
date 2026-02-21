@@ -339,6 +339,114 @@ class ResearchReport:
             raise ValueError("sources_consulted must be at least 1")
 
 
+@dataclass(frozen=True)
+class DirectMessage:
+    """Agent -> Agent: direct message between any two agents.
+
+    Used for peer-to-peer communication within the swarm.
+    """
+
+    sender_role: str
+    content: str
+    thread_id: str = ""
+
+    KIND: MessageKind = field(
+        default=MessageKind.DM, init=False, repr=False
+    )
+
+    def __post_init__(self) -> None:
+        if not self.sender_role:
+            raise ValueError("sender_role cannot be empty")
+        if not self.content:
+            raise ValueError("content cannot be empty")
+
+
+@dataclass(frozen=True)
+class Broadcast:
+    """Agent -> All: broadcast message to all agents.
+
+    Used for team-wide announcements and critical notifications.
+    """
+
+    sender_role: str
+    content: str
+    priority: str = "normal"
+
+    KIND: MessageKind = field(
+        default=MessageKind.BROADCAST, init=False, repr=False
+    )
+
+    def __post_init__(self) -> None:
+        if not self.sender_role:
+            raise ValueError("sender_role cannot be empty")
+        if not self.content:
+            raise ValueError("content cannot be empty")
+        if self.priority not in ("normal", "urgent", "critical"):
+            raise ValueError(
+                f"priority must be normal/urgent/critical, got {self.priority!r}"
+            )
+
+
+@dataclass(frozen=True)
+class ShutdownRequest:
+    """Leader -> Agent: request graceful shutdown.
+
+    The agent should finish current work and acknowledge.
+    """
+
+    target_role: str
+    reason: str = ""
+
+    KIND: MessageKind = field(
+        default=MessageKind.SHUTDOWN_REQUEST, init=False, repr=False
+    )
+
+    def __post_init__(self) -> None:
+        if not self.target_role:
+            raise ValueError("target_role cannot be empty")
+
+
+@dataclass(frozen=True)
+class ShutdownAck:
+    """Agent -> Leader: acknowledge shutdown request.
+
+    Confirms the agent has received and will comply with shutdown.
+    """
+
+    target_role: str
+    acknowledged: bool = True
+
+    KIND: MessageKind = field(
+        default=MessageKind.SHUTDOWN_ACK, init=False, repr=False
+    )
+
+    def __post_init__(self) -> None:
+        if not self.target_role:
+            raise ValueError("target_role cannot be empty")
+
+
+@dataclass(frozen=True)
+class ContextInject:
+    """System -> Agent: inject context into agent session.
+
+    Used by hooks to provide PROMPT_RIPRESA, FATOS, etc.
+    """
+
+    context_type: str
+    content: str
+    source_file: str = ""
+
+    KIND: MessageKind = field(
+        default=MessageKind.CONTEXT_INJECT, init=False, repr=False
+    )
+
+    def __post_init__(self) -> None:
+        if not self.context_type:
+            raise ValueError("context_type cannot be empty")
+        if not self.content:
+            raise ValueError("content cannot be empty")
+
+
 # Type alias for any swarm message
 SwarmMessage = (
     TaskRequest
@@ -350,6 +458,11 @@ SwarmMessage = (
     | PlanDecision
     | ResearchQuery
     | ResearchReport
+    | DirectMessage
+    | Broadcast
+    | ShutdownRequest
+    | ShutdownAck
+    | ContextInject
 )
 
 

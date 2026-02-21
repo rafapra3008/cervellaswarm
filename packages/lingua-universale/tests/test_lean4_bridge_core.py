@@ -1245,3 +1245,74 @@ class TestBranchSanitizationComprehensive:
         )
         branches = gen.generate_branches(p)
         assert "TestSlash_branch_path_a" in branches
+
+
+class TestBranchNameDedup:
+    """Test that branch names are de-duplicated after sanitization."""
+
+    def test_colliding_branch_names_get_suffix(self):
+        """Branches 'opt-1' and 'opt_1' both sanitize to 'opt_1'."""
+        gen = Lean4Generator()
+        p = Protocol(
+            name="Dedup",
+            roles=("a", "b"),
+            elements=(
+                ProtocolChoice(
+                    decider="a",
+                    branches={
+                        "opt-1": (
+                            ProtocolStep(
+                                sender="a", receiver="b",
+                                message_kind=MessageKind.TASK_REQUEST,
+                            ),
+                        ),
+                        "opt_1": (
+                            ProtocolStep(
+                                sender="a", receiver="b",
+                                message_kind=MessageKind.TASK_RESULT,
+                            ),
+                        ),
+                    },
+                ),
+            ),
+        )
+        branches = gen.generate_branches(p)
+        # One gets 'opt_1', the other 'opt_1_2'
+        assert "Dedup_branch_opt_1" in branches
+        assert "Dedup_branch_opt_1_2" in branches
+
+    def test_theorems_use_same_deduped_names(self):
+        """generate_theorems() must reference the same names as generate_branches()."""
+        gen = Lean4Generator()
+        p = Protocol(
+            name="Sync",
+            roles=("a", "b"),
+            elements=(
+                ProtocolChoice(
+                    decider="a",
+                    branches={
+                        "x-y": (
+                            ProtocolStep(
+                                sender="a", receiver="b",
+                                message_kind=MessageKind.TASK_REQUEST,
+                            ),
+                        ),
+                        "x_y": (
+                            ProtocolStep(
+                                sender="a", receiver="b",
+                                message_kind=MessageKind.TASK_RESULT,
+                            ),
+                        ),
+                    },
+                ),
+            ),
+        )
+        branches = gen.generate_branches(p)
+        theorems = gen.generate_theorems(p)
+        # Every def name in branches must appear in theorems
+        for line in branches.split("\n"):
+            if line.startswith("def "):
+                def_name = line.split(" ")[1]
+                assert def_name in theorems, (
+                    f"Branch {def_name} not referenced in theorems"
+                )

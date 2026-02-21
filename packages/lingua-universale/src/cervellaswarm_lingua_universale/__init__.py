@@ -27,6 +27,11 @@ from .types import (
     PlanDecision,
     ResearchQuery,
     ResearchReport,
+    DirectMessage,
+    Broadcast,
+    ShutdownRequest,
+    ShutdownAck,
+    ContextInject,
     SwarmMessage,
     message_kind,
 )
@@ -94,6 +99,20 @@ from .integration import (
     validate_swarm,
     resolve_bindings,
 )
+from .confidence import (
+    ConfidenceScore,
+    ConfidenceSource,
+    Confident,
+    CompositionStrategy,
+    compose_scores,
+)
+from .trust import (
+    TrustTier,
+    TrustScore,
+    trust_tier_for_role,
+    compose_chain,
+    chain_confidence,
+)
 
 __all__ = [
     # Version
@@ -114,6 +133,11 @@ __all__ = [
     "PlanDecision",
     "ResearchQuery",
     "ResearchReport",
+    "DirectMessage",
+    "Broadcast",
+    "ShutdownRequest",
+    "ShutdownAck",
+    "ContextInject",
     "SwarmMessage",
     "message_kind",
     # Protocols
@@ -174,4 +198,16 @@ __all__ = [
     "SwarmValidationResult",
     "validate_swarm",
     "resolve_bindings",
+    # Confidence
+    "ConfidenceScore",
+    "ConfidenceSource",
+    "Confident",
+    "CompositionStrategy",
+    "compose_scores",
+    # Trust
+    "TrustTier",
+    "TrustScore",
+    "trust_tier_for_role",
+    "compose_chain",
+    "chain_confidence",
 ]

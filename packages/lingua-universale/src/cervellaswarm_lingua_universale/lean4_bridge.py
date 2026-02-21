@@ -258,19 +258,44 @@ class Lean4Generator:
         lines.append("  ]")
         return "\n".join(lines) + "\n"
 
+    @staticmethod
+    def _branch_def_names(
+        protocol_name: str, choices: list,
+    ) -> dict[tuple[int, str], str]:
+        """Compute de-duplicated Lean 4 definition names for all branches.
+
+        Returns a mapping (choice_index, branch_name) -> def_name.
+        Shared between generate_branches() and generate_theorems()
+        so they always use the same names.
+        """
+        result: dict[tuple[int, str], str] = {}
+        seen: set[str] = set()
+        for ci, choice in enumerate(choices):
+            for branch_name in choice.branches:
+                safe_name = _safe_lean_ident(branch_name)
+                def_name = f"{protocol_name}_branch_{safe_name}"
+                if ci > 0:
+                    def_name = f"{protocol_name}_choice{ci}_branch_{safe_name}"
+                base_def_name = def_name
+                suffix = 2
+                while def_name in seen:
+                    def_name = f"{base_def_name}_{suffix}"
+                    suffix += 1
+                seen.add(def_name)
+                result[(ci, branch_name)] = def_name
+        return result
+
     def generate_branches(self, protocol: Protocol) -> str:
         """Generate per-branch step lists for protocols with choices."""
         choices = _collect_choices(protocol.elements)
         if not choices:
             return ""
 
+        name_map = self._branch_def_names(protocol.name, choices)
         parts: list[str] = []
         for ci, choice in enumerate(choices):
             for branch_name, branch_steps in choice.branches.items():
-                safe_name = _safe_lean_ident(branch_name)
-                def_name = f"{protocol.name}_branch_{safe_name}"
-                if ci > 0:
-                    def_name = f"{protocol.name}_choice{ci}_branch_{safe_name}"
+                def_name = name_map[(ci, branch_name)]
 
                 lines = [f"def {def_name} : List ProtocolStep :="]
                 for i, step in enumerate(branch_steps):
@@ -323,14 +348,12 @@ class Lean4Generator:
         # Choice-specific theorems
         choices = _collect_choices(protocol.elements)
         if choices:
+            name_map = self._branch_def_names(name, choices)
             # T6: branches_non_empty
             for ci, choice in enumerate(choices):
                 branch_checks: list[str] = []
                 for branch_name in choice.branches:
-                    safe_name = _safe_lean_ident(branch_name)
-                    def_name = f"{name}_branch_{safe_name}"
-                    if ci > 0:
-                        def_name = f"{name}_choice{ci}_branch_{safe_name}"
+                    def_name = name_map[(ci, branch_name)]
                     branch_checks.append(f"{def_name}.length > 0")
 
                 conjunction = " ∧\n    ".join(branch_checks)

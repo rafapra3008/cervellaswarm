@@ -175,8 +175,11 @@ class MetricsCollector:
         self._total_messages = 0
         self._total_violations = 0
         self._total_branches = 0
-        self._session_durations: list[float] = []
-        self._step_durations: list[float] = []
+        # Welford's online algorithm for bounded memory (no unbounded lists)
+        self._session_count = 0
+        self._session_mean = 0.0
+        self._step_count = 0
+        self._step_mean = 0.0
         self._violation_by_step: dict[int, int] = {}
         self._branch_frequency: dict[str, int] = {}
         self._sessions_per_protocol: dict[str, int] = {}
@@ -192,7 +195,9 @@ class MetricsCollector:
                 )
             elif isinstance(event, MessageSent):
                 self._total_messages += 1
-                self._step_durations.append(event.duration_ms)
+                self._step_count += 1
+                delta = event.duration_ms - self._step_mean
+                self._step_mean += delta / self._step_count
             elif isinstance(event, BranchChosen):
                 self._total_branches += 1
                 self._branch_frequency[event.branch_name] = (
@@ -206,21 +211,15 @@ class MetricsCollector:
                 )
             elif isinstance(event, SessionEnded):
                 self._sessions_completed += 1
-                self._session_durations.append(event.duration_ms)
+                self._session_count += 1
+                delta = event.duration_ms - self._session_mean
+                self._session_mean += delta / self._session_count
 
     def snapshot(self) -> MetricsSnapshot:
         """Return an immutable snapshot of current metrics."""
         with self._lock:
-            avg_session = (
-                sum(self._session_durations) / len(self._session_durations)
-                if self._session_durations
-                else 0.0
-            )
-            avg_step = (
-                sum(self._step_durations) / len(self._step_durations)
-                if self._step_durations
-                else 0.0
-            )
+            avg_session = self._session_mean
+            avg_step = self._step_mean
             return MetricsSnapshot(
                 sessions_started=self._sessions_started,
                 sessions_completed=self._sessions_completed,
@@ -250,8 +249,10 @@ class MetricsCollector:
             self._total_messages = 0
             self._total_violations = 0
             self._total_branches = 0
-            self._session_durations.clear()
-            self._step_durations.clear()
+            self._session_count = 0
+            self._session_mean = 0.0
+            self._step_count = 0
+            self._step_mean = 0.0
             self._violation_by_step.clear()
             self._branch_frequency.clear()
             self._sessions_per_protocol.clear()
@@ -430,9 +431,11 @@ class LoggingListener:
 
 
 class EventCollector:
-    """Simple listener that collects all events into a list.
+    """Thread-safe listener that collects all events into a list.
 
-    Useful for testing and debugging.
+    Useful for testing and debugging. Safe for concurrent use
+    from multiple threads (e.g. when ProtocolMonitor emits from
+    different threads).
 
     Usage::
 
@@ -441,17 +444,30 @@ class EventCollector:
         # ... protocol actions ...
         for event in collector.events:
             print(event)
+
+    Note: The ``events`` property returns a snapshot (copy).
+    For single-threaded use, this adds negligible overhead.
     """
 
     def __init__(self) -> None:
-        self.events: list[MonitorEvent] = []
+        self._lock = threading.Lock()
+        self._events: list[MonitorEvent] = []
+
+    @property
+    def events(self) -> list[MonitorEvent]:
+        """Return a snapshot of collected events."""
+        with self._lock:
+            return list(self._events)
 
     def on_event(self, event: MonitorEvent) -> None:
-        self.events.append(event)
+        with self._lock:
+            self._events.append(event)
 
     def clear(self) -> None:
-        self.events.clear()
+        with self._lock:
+            self._events.clear()
 
     def of_type(self, event_type: type) -> list[MonitorEvent]:
         """Return events of a specific type."""
-        return [e for e in self.events if isinstance(e, event_type)]
+        with self._lock:
+            return [e for e in self._events if isinstance(e, event_type)]
