@@ -82,6 +82,7 @@ include = [
     "LICENSE",
     "NOTICE",
     "README.md",
+    "CHANGELOG.md",
     "pyproject.toml",
 ]
 
