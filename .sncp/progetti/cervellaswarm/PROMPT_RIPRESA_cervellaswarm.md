@@ -1,62 +1,60 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-20 - Sessione 382
-> **STATUS:** Lingua Universale Fase A Step 1-5 DONE + Code Review + Bug Hunt COMPLETATO. 320 test, 96% cov, 9.5/10.
+> **Ultimo aggiornamento:** 2026-02-21 - Sessione 383
+> **STATUS:** Lingua Universale Fase A Step 6 DONE - Protocol Monitor. 454 test, 97% cov, 9.6/10.
 
 ---
 
-## SESSIONE 382 - CODE REVIEW + BUG HUNT LINGUA UNIVERSALE
+## SESSIONE 383 - PROTOCOL MONITOR (5o MODULO)
 
-### Cosa: Review profonda + caccia bug sistematica dei 4 moduli
+### Cosa: Osservabilita real-time per protocolli multi-agent
 
-**12 bug trovati e fixati:**
+**Nuovo modulo `monitor.py`** - Il 5o modulo della Lingua Universale.
+"Gli OCCHI del sistema" - ogni azione del protocollo osservata, misurata, riportata.
 
-| # | File | Bug | Fix |
-|---|------|-----|-----|
-| 1 | checker.py | Multi-choice: loop trova sempre 1o choice | step_index diretto |
-| 2 | protocols.py | Decider non validato nei roles | validate in __post_init__ |
-| 3 | protocols.py | branches dict mutabile in frozen | MappingProxyType |
-| 4 | checker.py | Branch detect ambiguo (1o match) | return None se >1 match |
-| 5 | dsl.py | _kind/_name leak nel namespace | del dopo loop |
-| 6 | checker.py | Empty protocol non complete on init | _check_completion in init |
-| 7 | types.py | ResearchReport sources=0 accettato | >= 1 |
-| 8 | protocols.py | STANDARD_PROTOCOLS mutabile | MappingProxyType |
-| 9 | protocols.py | Duplicate roles accettati | set() check |
-| 10 | protocols.py | sender==receiver accettato | ProtocolStep __post_init__ |
-| 11 | protocols.py | max_repetitions=0 accettato | >= 1 validation |
-| 12 | protocols.py | ProtocolChoice branches={} accettato | __post_init__ validation |
+**Architettura:**
+- 6 event types (frozen dataclass): SessionStarted, MessageSent, BranchChosen, ViolationOccurred, SessionEnded, RepetitionStarted
+- MonitorListener (typing.Protocol, structural typing) - interfaccia subscriber
+- MetricsCollector + MetricsSnapshot - metriche thread-safe, snapshot immutabili
+- ProtocolMonitor - event emitter + listener registry, RLock + snapshot pattern
+- LoggingListener + EventCollector - listener built-in per logging e testing
+- Integrazione: `SessionChecker.__init__` accetta `monitor: Optional[ProtocolMonitor]`
+- ZERO deps esterne (solo stdlib), zero overhead se monitor=None
 
-**API completata:** Re-export di TaskStatus, AuditVerdictType, PlanComplexity, ProtocolViolation, SessionComplete, MessageRecord
-
-**README fixato:** "backend" -> "worker", list -> tuple, "Protocol monitor" -> "DSL notation"
+**Ricerca:** 32 fonti (OpenTelemetry, PyMOP, OpenAI SDK, AgentOps, Google SRE). Report: `.sncp/reports/RESEARCH_20260221_protocol_monitor.md`
 
 ### Numeri
 
-- Test: 284 -> 320 (+36 regression tests)
-- Coverage: 95% -> 96% (protocols.py = 100%)
-- Guardiana: 9.5/10 APPROVED (2 P2 README fixati, 8 P3 residui)
+- Test: 320 -> 454 (+134 monitor tests)
+- Coverage: 96% -> 97% (monitor.py = 100%)
+- Source modules: 4 -> 5
+- Guardiana: 9.6/10 APPROVED (0 P1, 0 P2, 7 P3 cosmetici)
+- Tempo test: 0.11s
 
 ### Processo usato
 
-1. Studio logica (Regina legge 4 moduli riga per riga)
-2. Code review (Ingegnera: 3 P1, 7 P2, 7 P3)
-3. Bug hunt (Tester: 12 bug confermati con test)
-4. Fix sistematico (12 fix applicati)
-5. Regression test (36 nuovi test)
-6. Guardiana audit: 9.5/10 APPROVED
+1. Ricerca (Ricercatrice: 32 fonti, 7 pattern)
+2. Design architettura (basata su ricerca)
+3. Implementazione monitor.py (Regina: ~310 righe)
+4. Integrazione checker.py (Regina: chirurgica, backward compat)
+5. Update __init__.py (13 re-exports)
+6. Test (Tester: 134 test, 100% coverage monitor.py)
+7. Guardiana audit: 9.6/10 APPROVED
+8. Fix F3 (completed_at semantico)
 
 ### Dove siamo nella VISIONE
 
 ```
 FASE A: Le Fondamenta
-  Step 1 (Ricerca)         [####################] DONE
-  Step 2 (Design)          [####################] DONE
-  Step 3 (Prototipo)       [####################] DONE
-  Step 4 (Guardiana audit) [####################] DONE
-  Step 5 (DSL notation)    [####################] DONE
-  Step 5b (Code Review)    [####################] DONE (S382!)
-  Step 6 (Lean 4 bridge)   [....................] PROSSIMO
-  Step 7 (Integration)     [....................] TODO
+  Step 1 (Ricerca)          [####################] DONE
+  Step 2 (Design)           [####################] DONE
+  Step 3 (Prototipo)        [####################] DONE
+  Step 4 (Guardiana audit)  [####################] DONE
+  Step 5 (DSL notation)     [####################] DONE
+  Step 5b (Code Review)     [####################] DONE (S382)
+  Step 6 (Protocol Monitor) [####################] DONE (S383!)
+  Step 7 (Lean 4 bridge)    [....................] PROSSIMO
+  Step 8 (Integration)      [....................] TODO
 ```
 
 ---
@@ -72,15 +70,15 @@ OPEN SOURCE ROADMAP:
   FASE 4  [....................] TODO
 
 CACCIA BUG: 8/8 COMPLETATA (92 bug, 60 fix, 1969 test totali)
-LINGUA UNIVERSALE: Fase A Step 1-5b DONE, 320 test, 96% cov
+LINGUA UNIVERSALE: Fase A Step 1-6 DONE, 454 test, 97% cov
 ```
 
 ---
 
 ## PROSSIMI STEP
 
-1. **Lingua Universale Fase A Step 6** - Lean 4 bridge per verifica formale
-2. **Lingua Universale Fase A Step 7** - Integration con i 17 agenti reali
+1. **Lingua Universale Fase A Step 7** - Lean 4 bridge per verifica formale
+2. **Lingua Universale Fase A Step 8** - Integration con i 17 agenti reali
 3. **F3.2 SQLite Event Database** - prossimo step open source
 
 ---
@@ -100,6 +98,7 @@ LINGUA UNIVERSALE: Fase A Step 1-5b DONE, 320 test, 96% cov
 | S380 | **LINGUA UNIVERSALE Fase A** (8o package, 153 test, 9.5/10) |
 | S381 | **LINGUA UNIVERSALE Step 5 DSL** (4o modulo, 284 test, 9.5/10) |
 | S382 | **CODE REVIEW + BUG HUNT #8** (12 bug, 12 fix, 320 test, 9.5/10) |
+| S383 | **PROTOCOL MONITOR** (5o modulo, 134 test, 454 totali, 9.6/10) |
 
 ---
 

@@ -16,6 +16,15 @@ import time
 from dataclasses import dataclass, field
 from typing import Optional
 
+from .monitor import (
+    BranchChosen,
+    MessageSent,
+    ProtocolMonitor,
+    RepetitionStarted,
+    SessionEnded,
+    SessionStarted,
+    ViolationOccurred,
+)
 from .protocols import Protocol, ProtocolChoice, ProtocolStep
 from .types import MessageKind, SwarmMessage, message_kind
 
@@ -175,6 +184,7 @@ class SessionChecker:
         protocol: Protocol,
         session_id: str = "",
         role_bindings: Optional[dict[str, str]] = None,
+        monitor: Optional[ProtocolMonitor] = None,
     ) -> None:
         self._state = SessionState(
             session_id=session_id or f"{protocol.name}_{id(self)}",
@@ -183,8 +193,26 @@ class SessionChecker:
         # role_bindings maps protocol roles to actual agent names
         # e.g., {"worker": "cervella-backend", "guardiana": "cervella-guardiana-qualita"}
         self._role_bindings: dict[str, str] = role_bindings or {}
+        self._monitor = monitor
         # Mark complete immediately if protocol has no elements
         self._state._check_completion_or_repeat()
+        # Emit session lifecycle events
+        if self._monitor is not None:
+            self._monitor.emit(SessionStarted(
+                session_id=self._state.session_id,
+                protocol_name=protocol.name,
+                timestamp=time.time(),
+                roles=protocol.roles,
+            ))
+            if self._state.completed:
+                self._monitor.emit(SessionEnded(
+                    session_id=self._state.session_id,
+                    protocol_name=protocol.name,
+                    timestamp=time.time(),
+                    total_messages=0,
+                    duration_ms=0.0,
+                    repetitions=self._state.repetition_count,
+                ))
 
     @property
     def session_id(self) -> str:
@@ -214,6 +242,11 @@ class SessionChecker:
         """Choose a branch at a ProtocolChoice point."""
         choice = self._state.at_choice
         if choice is None:
+            self._emit_violation(
+                step=self._state.step_index,
+                expected="not at a choice point",
+                got=f"choose_branch('{branch_name}')",
+            )
             raise ProtocolViolation(
                 protocol=self.protocol_name,
                 session_id=self.session_id,
@@ -223,6 +256,11 @@ class SessionChecker:
             )
         if branch_name not in choice.branches:
             valid = list(choice.branches.keys())
+            self._emit_violation(
+                step=self._state.step_index,
+                expected=f"branch in {valid}",
+                got=branch_name,
+            )
             raise ProtocolViolation(
                 protocol=self.protocol_name,
                 session_id=self.session_id,
@@ -232,6 +270,15 @@ class SessionChecker:
             )
         self._state.branch = branch_name
         self._state.branch_step_index = 0
+        if self._monitor is not None:
+            self._monitor.emit(BranchChosen(
+                session_id=self.session_id,
+                protocol_name=self.protocol_name,
+                timestamp=time.time(),
+                step_index=self._state.step_index,
+                branch_name=branch_name,
+                auto_detected=False,
+            ))
 
     def send(self, sender: str, receiver: str, msg: SwarmMessage) -> None:
         """Record and validate a message in the session.
@@ -239,6 +286,8 @@ class SessionChecker:
         Raises ProtocolViolation if the message doesn't match expectations.
         Raises SessionComplete if the protocol is already done.
         """
+        _t0 = time.monotonic()
+
         if self._state.completed:
             raise SessionComplete(self.protocol_name, self.session_id)
 
@@ -251,6 +300,15 @@ class SessionChecker:
             if matched_branch is not None:
                 self._state.branch = matched_branch
                 self._state.branch_step_index = 0
+                if self._monitor is not None:
+                    self._monitor.emit(BranchChosen(
+                        session_id=self.session_id,
+                        protocol_name=self.protocol_name,
+                        timestamp=time.time(),
+                        step_index=self._state.step_index,
+                        branch_name=matched_branch,
+                        auto_detected=True,
+                    ))
 
         # Advance past exhausted branch if needed (explicit mutation)
         self._state.advance_past_exhausted_branch()
@@ -262,11 +320,16 @@ class SessionChecker:
             if self._state.completed:
                 raise SessionComplete(self.protocol_name, self.session_id)
             # Still at an unresolved choice
+            _expected = "branch selection (call choose_branch first)"
+            _got = f"{sender}->{receiver}:{kind.value}"
+            self._emit_violation(
+                step=self._state.step_index, expected=_expected, got=_got,
+            )
             raise ProtocolViolation(
                 protocol=self.protocol_name,
                 session_id=self.session_id,
-                expected="branch selection (call choose_branch first)",
-                got=f"{sender}->{receiver}:{kind.value}",
+                expected=_expected,
+                got=_got,
                 step=self._state.step_index,
             )
 
@@ -275,29 +338,44 @@ class SessionChecker:
         resolved_receiver = self._resolve_role(receiver)
 
         if resolved_sender != expected.sender:
+            _expected = f"sender={expected.sender}"
+            _got = f"sender={resolved_sender} (raw: {sender})"
+            self._emit_violation(
+                step=self._state.step_index, expected=_expected, got=_got,
+            )
             raise ProtocolViolation(
                 protocol=self.protocol_name,
                 session_id=self.session_id,
-                expected=f"sender={expected.sender}",
-                got=f"sender={resolved_sender} (raw: {sender})",
+                expected=_expected,
+                got=_got,
                 step=self._state.step_index,
             )
 
         if resolved_receiver != expected.receiver:
+            _expected = f"receiver={expected.receiver}"
+            _got = f"receiver={resolved_receiver} (raw: {receiver})"
+            self._emit_violation(
+                step=self._state.step_index, expected=_expected, got=_got,
+            )
             raise ProtocolViolation(
                 protocol=self.protocol_name,
                 session_id=self.session_id,
-                expected=f"receiver={expected.receiver}",
-                got=f"receiver={resolved_receiver} (raw: {receiver})",
+                expected=_expected,
+                got=_got,
                 step=self._state.step_index,
             )
 
         if kind != expected.message_kind:
+            _expected = f"message={expected.message_kind.value}"
+            _got = f"message={kind.value}"
+            self._emit_violation(
+                step=self._state.step_index, expected=_expected, got=_got,
+            )
             raise ProtocolViolation(
                 protocol=self.protocol_name,
                 session_id=self.session_id,
-                expected=f"message={expected.message_kind.value}",
-                got=f"message={kind.value}",
+                expected=_expected,
+                got=_got,
                 step=self._state.step_index,
             )
 
@@ -310,6 +388,9 @@ class SessionChecker:
             step_index=self._state.step_index,
         )
         self._state.log.append(record)
+
+        # Capture branch before advance (for event)
+        current_branch = self._state.branch
 
         # Advance state
         if self._state.branch is not None:
@@ -325,7 +406,44 @@ class SessionChecker:
         else:
             self._state.step_index += 1
 
+        # Emit MessageSent event
+        if self._monitor is not None:
+            _duration_ms = (time.monotonic() - _t0) * 1000.0
+            self._monitor.emit(MessageSent(
+                session_id=self.session_id,
+                protocol_name=self.protocol_name,
+                timestamp=time.time(),
+                step_index=record.step_index,
+                sender=sender,
+                receiver=receiver,
+                message_kind=kind,
+                duration_ms=_duration_ms,
+                branch=current_branch,
+            ))
+
+        # Check completion or repetition
+        prev_rep = self._state.repetition_count
         self._state._check_completion_or_repeat()
+
+        if self._monitor is not None:
+            if self._state.completed:
+                self._monitor.emit(SessionEnded(
+                    session_id=self.session_id,
+                    protocol_name=self.protocol_name,
+                    timestamp=self._state.completed_at,
+                    total_messages=len(self._state.log),
+                    duration_ms=(
+                        self._state.completed_at - self._state.started_at
+                    ) * 1000.0,
+                    repetitions=self._state.repetition_count,
+                ))
+            elif self._state.repetition_count > prev_rep:
+                self._monitor.emit(RepetitionStarted(
+                    session_id=self.session_id,
+                    protocol_name=self.protocol_name,
+                    timestamp=time.time(),
+                    repetition_number=self._state.repetition_count,
+                ))
 
     def _resolve_role(self, agent_name: str) -> str:
         """Resolve an agent name to a protocol role.
@@ -371,6 +489,20 @@ class SessionChecker:
             return matches[0]
         # Ambiguous or no match - require explicit choose_branch
         return None
+
+    def _emit_violation(
+        self, *, step: int, expected: str, got: str,
+    ) -> None:
+        """Emit a ViolationOccurred event if monitor is attached."""
+        if self._monitor is not None:
+            self._monitor.emit(ViolationOccurred(
+                session_id=self.session_id,
+                protocol_name=self.protocol_name,
+                timestamp=time.time(),
+                step_index=step,
+                expected=expected,
+                got=got,
+            ))
 
     def summary(self) -> dict:
         """Return a summary of the session state."""

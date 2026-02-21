@@ -213,11 +213,11 @@ S375  [DONE]  Visione + Ricerca iniziale (95 fonti, 5 report)
 S380  [DONE]  Tipi + Protocolli + Checker Runtime (153 test, 9.5/10)
 S381  [DONE]  DSL Notation (4o modulo, 26 fonti, 131 test nuovi, 9.5/10)
 S382  [DONE]  Code Review + Bug Hunt (12 bug, 12 fix, 320 test, 9.5/10)
-S383  [NEXT]  Protocol Monitor - osservabilita in tempo reale
-S384  [PLAN]  Lean 4 Bridge - le PRIME prove formali
-S384  [PLAN]  Integration - i 17 agenti USANO la lingua davvero
-S385+ [PLAN]  Confidence Types - l'incertezza come tipo
-S386+ [PLAN]  Trust Composition - la fiducia che si compone
+S383  [DONE]  Protocol Monitor (5o modulo, 134 test, 454 totali, 9.6/10)
+S384  [NEXT]  Lean 4 Bridge - le PRIME prove formali
+S385  [PLAN]  Integration - i 17 agenti USANO la lingua davvero
+S386+ [PLAN]  Confidence Types - l'incertezza come tipo
+S387+ [PLAN]  Trust Composition - la fiducia che si compone
 ```
 
 Ogni sessione = un step.
@@ -228,7 +228,7 @@ Fatto BENE > Fatto VELOCE.
 
 ## IL CAMPO VERGINE
 
-179 fonti consultate (153 S375+S380 + 26 S381). 320 test, 96% coverage. La verita:
+211 fonti consultate (153 S375+S380 + 26 S381 + 32 S383). 454 test, 97% coverage. La verita:
 
 - **Python ha ZERO librerie di session types** (campo totalmente vergine)
 - **Nessun framework AI** usa session types formali (AutoGen, CrewAI, LangGraph, MCP, A2A)

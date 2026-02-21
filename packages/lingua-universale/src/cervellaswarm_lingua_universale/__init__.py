@@ -52,6 +52,21 @@ from .dsl import (
     DSLError,
     DSLParseError,
 )
+from .monitor import (
+    MonitorEvent,
+    SessionStarted,
+    MessageSent,
+    BranchChosen,
+    ViolationOccurred,
+    SessionEnded,
+    RepetitionStarted,
+    MonitorListener,
+    MetricsSnapshot,
+    MetricsCollector,
+    ProtocolMonitor,
+    LoggingListener,
+    EventCollector,
+)
 
 __all__ = [
     # Version
@@ -93,4 +108,18 @@ __all__ = [
     "render_protocols",
     "DSLError",
     "DSLParseError",
+    # Monitor
+    "MonitorEvent",
+    "SessionStarted",
+    "MessageSent",
+    "BranchChosen",
+    "ViolationOccurred",
+    "SessionEnded",
+    "RepetitionStarted",
+    "MonitorListener",
+    "MetricsSnapshot",
+    "MetricsCollector",
+    "ProtocolMonitor",
+    "LoggingListener",
+    "EventCollector",
 ]
