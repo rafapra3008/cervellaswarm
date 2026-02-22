@@ -1,84 +1,98 @@
 # PROMPT RIPRESA - Contabilita Antigravity
 
-> **Ultimo aggiornamento:** 21 Febbraio 2026 - Sessione 125
+> **Ultimo aggiornamento:** 22 Febbraio 2026 - Sessione 133
 > **Branch attivo:** lab-v3 (sviluppo V3) + lab-v2 (intoccato) + main (produzione)
 > **Versione canonica:** `CervellaSwarm/.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md`
 
 ---
 
-## Stato Attuale - S125: Studio Qualita Dati + PAYMENT_MAP Multi-Hotel
+## Stato Attuale - FASE L COMPLETATA! Reconcile 3/3 Hotel ATTIVI
 
 | Cosa | Stato |
 |------|-------|
 | **Produzione** | v2.11.0 LIVE su contabilitafamigliapra.it (INTATTA) |
-| **V3 VM** | LIVE - v3.contabilitafamigliapra.it, porta 8003, Fortezza attiva |
-| **V3 Transformer** | **v1.2.0 DEPLOYATO** - PAYMENT_MAP multi-hotel (NL + SHE) |
-| **Agent NL** | ATTIVO v1.2.0 - watermark 4007, HC.io VERDE + Telegram, 1h auto |
-| **Agent SHE** | ATTIVO v1.2.0 - watermark 21623, HC.io VERDE + Telegram, 1h auto |
-| **Agent HP** | PENDING (FASE I.2 - serve info da Rafa) |
+| **V3 VM** | LIVE - Transformer v1.4.0 + Reconcile endpoint v1.0.0 |
+| **3 Hotel Sync** | TUTTI ATTIVI (NL WM4007, SHE WM21651, HP WM24352) HC.io+TG 1h |
+| **Reconcile NL** | ATTIVO S132! HC.io VERDE, 0 anomalie, window=30 |
+| **Reconcile SHE** | ATTIVO S133! HC.io 94015357, Scheduler 05:00, window=1 |
+| **Reconcile HP** | ATTIVO S133! HC.io 99c24a24, Scheduler 05:00, window=1 |
 | **Lab v2** | INTOCCATO, frozen S87 |
-| **Test** | **1370 portale** + 276 agent = **1646 PASS** (0 warnings) |
+| **Test** | **1709 PASS** (1399 portale + 310 agent, 0 fail) |
+| **FASE K** | COMPLETATA S129-S130 - 24/24 finding fixati |
+| **FASE L** | **COMPLETATA S131-S133** - Reconcile 3/3 hotel ATTIVI! |
+| **Subroadmap** | `docs/SUBROADMAP_S128_DIAMANTE.md` |
+| **Prossimo** | **FASE M** - SPRING Discovery + **monitoraggio reconcile SHE+HP** |
 
 ---
 
-## S125 - Cosa e' stato fatto
+## S131 - FASE L.1+L.2: Reconcile Backend + Agent (commit 4c16545)
 
-| Step | Cosa | Risultato |
-|------|------|-----------|
-| **1. Telegram HC.io** | Rafa ha configurato | SHE + NL, notifica test OK |
-| **2. Studio PAYMENT_MAP** | Script `research_payment_types.py` su SHE + NL | Scoperto 5 codici SHE mancanti |
-| **3. Fix PAYMENT_MAP** | Aggiunto CAR, BN, BNU, BONUS, BAN | EricsoftTransformer v1.1.0 -> v1.2.0, +5 test |
-| **4. Guardiana R1** | Audit PAYMENT_MAP | **9.5/10** APPROVED |
-| **5. Studio nomi** | Script `research_name_resolution.py` su SHE + NL | Nomi OK 99.9%, 3 path COALESCE funziona |
-| **6. Deploy VM** | Transformer v1.2.0 + fix record Gandin Leone | backup + deploy + restart + health OK |
-| **7. Guardiana R2** | Audit deploy | **9.5/10** APPROVED |
+**L.1 - Backend Portale:**
+- GET /api/v3/reconcile-stats (5 query SQLite, auth Bearer)
+- Dati: ultimo_reconcile, count_anomalie, total_ericsoft, total_portale, delta
+- 16 test nuovi, Guardiana 9.5/10
 
----
+**L.2 - Agent Python (6 moduli):**
+- reconcile_config.py - Configurazione da .env
+- reconcile_reader.py - Lettura Ericsoft SQL Server (pymssql/pyodbc)
+- reconcile_api.py - Comunicazione con portale V3
+- reconcile_comparator.py - Confronto count + dettaglio per-giorno
+- reconcile_notifier.py - Alert Telegram + HC.io ping
+- reconcile.py - Entry point CLI (--hotel, --env, --dry-run, --verbose)
+- 26 test nuovi, Guardiana 9.2/10
 
-## Scoperte S125 - Dati REALI
+## S132 - FASE L.3 NL: Deploy + Test Reale (commit ae152e3)
 
-### Codici pagamento per hotel (PAYMENT_MAP)
+**Prep (commit 64ace9c):**
+- 3 .bat (nl/she/hp) per Task Scheduler Windows, 05:00 AM, log rotation 30gg
+- Guardiana prep 9.5/10 (F1+F2+F6+F8 fixati)
 
-```
-COMUNI:      BK, CAP, CON, U100M, U100V, VOU
-SOLO NL:     POS, BONC, BONU, PAGON, CONDINL, ACC
-SOLO SHE:    CAR (4264!), BN (1375), BNU (13), BONUS (91), BAN (7)
-SHE ESCLUSI: DEP (6, solo INC), TESS (0), SOP (0), TAS (0)
-```
+**Fix compatibilita NL (commit ae152e3):**
+- reconcile_config.py: _safe_int_env locale (config.py hotel vecchio non ce l'ha)
+- reconcile_reader.py: getattr driver fallback per pymssql vecchio
+- reconcile_nl.bat: .env path corretto (agent/.env, non root per NL)
 
-### Name resolution (3 path)
-
-```
-Path 1 (SchedaContoAnagrafica): SHE 99.0%, NL 86.0% - NULL per Gruppo (Tipo=G)
-Path 2 (Scheda.IdAnagraficaPrenotato): SHE 99.7%, NL 99.8% - IL PIU AFFIDABILE
-Path 3 (MovimentoCassa.IdAnagrafica): SHE 0.1%, NL 0.1% - QUASI INUTILE
-COALESCE finale: SHE 99.9%, NL 99.8% - FUNZIONA
-```
-
-### DB V3 SHE VM (post-deploy S125)
-
-```
-4 caparre ericsoft: Gemelli(BK), Scaggiante(BK), Rossi(U100M), Gandin Leone(BN->BONIFICO)
-4 giroconti ericsoft: Lawrence, Serejko, Favaro, Vandamme
-1 marker: WATERMARK_INIT (importo 0, skipped - by design)
-Watermark attuale: 21623
-```
+**Risultato NL:**
+- Dry-run: RECONCILE OK, 0 anomalie
+- Test reale: RECONCILE OK, 0 anomalie, HC.io VERDE
+- Task Scheduler: ContabilitaReconcile-NL, 05:00 AM daily
 
 ---
 
-## Prossimi step (S126)
+## S133 - FASE L.3 SHE+HP: Deploy Reconcile
+
+**SHE:** HC.io 94015357, 7 file copiati, window=1, Scheduler 05:00, Guardiane 9.7+9.3/10
+**HP:** HC.io 99c24a24, 7 file copiati, window=1, Scheduler 05:00, Guardiana 9.3/10
+**Piano window:** =1 ora, =7 tra 1 sett, =30 tra 1 mese
+**P2 aperto:** File Desktop pre-fix S132, copiare dal repo lab-v3 al prossimo VPN
+
+---
+
+## Subroadmap "Il Diamante" - Progresso
 
 ```
-1. [ ] FASE I.2 HP: serve da Rafa -> IP server, porta SQL, nome DB, VPN
-2. [ ] HP: stessa procedura SHE (discovery, reader, Python, agent, sync, HC.io, scheduler)
-3. [ ] Dopo HP: monitor 48h tutti e 3 hotel, poi FASE I chiusa
-4. [ ] Studio codici pagamento HP (research_payment_types.py --pyodbc)
-5. [ ] Aggiungere codici HP al PAYMENT_MAP + deploy
+FASE K - QA Fix                              COMPLETATA!
+  K.1  Fix P1+P2 critici (5 fix)           S129 (9.6/10)
+  K.2  Fix P2 backend+logic (2 fix)        S130 (9.6/10)
+  K.3  Fix P3 tutti (15 fix)               S130 (9.6/10)
+
+FASE L - Agent Prova Reale                   COMPLETATA!
+  L.1  Endpoint backend + 16 test          S131 (9.5/10) FATTO
+  L.2  6 moduli Python + 26 test           S131 (9.2/10) FATTO
+  L.3  Deploy NL + test reale              S132 (9.5/10) FATTO
+  L.3  Deploy SHE + HP                     S133 (9.3/10) FATTO
+
+FASE M - SPRING Discovery                   PENDING
+  M.1  Discovery read-only DB SISTEMI
+  M.2  Ottimizzare file Excel import
+
+FASE N - Sync DB                             PENDING
+  N.1  Allineare HP/SHE lab vs prod (NL ok)
 ```
 
 ---
 
-## Mappa Sistema (aggiornata S125)
+## Mappa Sistema
 
 ```
                     PRODUZIONE (INTATTA)
@@ -93,54 +107,34 @@ Watermark attuale: 21623
     LAB V2                  V3 (lab-v3)
     INTOCCATO               v3.contabilita...
     frozen S87              porta 8003
-                            FORTEZZA ATTIVA
-                            Transformer v1.2.0
+                            Reconcile endpoint v1.0.0
                             |
                 +-----------+-----------+
                 |           |           |
             Hotel NL    Hotel SHE   Hotel HP
-            ATTIVO      ATTIVO      PENDING
-            pymssql     pyodbc      ???
-            WM 4007     WM 21623    Step I.2
-            HC.io+TG    HC.io+TG    serve info
-            1h auto     1h auto     da Rafa
+            SYNC+REC    SYNC+REC    SYNC+REC
+            WM 4007     WM 21651    WM 24352
+            HC.io+TG    HC.io+TG    HC.io+TG
+            1h sync     1h sync     1h sync
+            5AM recon   5AM recon   5AM recon
+            win=30      win=1       win=1
 ```
 
 ---
 
-## Mappa Connessione Per-Hotel
+## Lezioni Apprese (Sessione S131-S132)
 
-```
-NL:  192.168.200.5:54081 -> DB PRA    -> pymssql -> Agent v1.2.0 -> WM 4007  -> HC.io+TG -> 1h auto
-SHE: 127.0.0.1:1433      -> DB SUITE  -> pyodbc  -> Agent v1.2.0 -> WM 21623 -> HC.io+TG -> 1h auto
-HP:  ???                  -> DB ???    -> ???     -> Agent v1.3.0 -> PENDING
-```
+### Cosa ha funzionato bene
+- Design modulare reconcile (6 file separati) = testabile, facile debug
+- Fix compat hotel NL specifici (config.py vecchio vs nuovo) risolti al primo tentativo
+- Strategia "fix + Guardiana per ogni step" confermata: 3 Guardiane (9.5+9.2+9.5)/10
 
----
+### Cosa non ha funzionato
+- Crash Bun (segfault) ha perso aggiornamento NORD/PROMPT (fix: documentare SUBITO dopo ogni step)
 
-## Lezioni S125
-
-- **PAYMENT_MAP era solo NL**: Costruito in FASE B su dati NL. Ogni hotel ha codici diversi - SEMPRE fare research_payment_types.py prima di attivare un hotel
-- **research_payment_types.py**: Script riutilizzabile per HP (supporta --pyodbc)
-- **research_name_resolution.py**: Diagnostica 3 path nomi - Path 2 e il piu affidabile
-- **Record "skipped" con importo 0**: Era il WATERMARK_INIT marker di S124, non un bug
-- **data_conferma_bonifici**: Quando si cambia circuito a BONIFICO, ricordarsi di popolare anche data_conferma
-- **P1 vs P2 nomi diversi**: Normale - P1=ospite camera, P2=prenotante. COALESCE prende P1 (corretto)
+### Pattern candidato
+- "Preparare file deploy su Desktop per hotel" = Rafa copia con drag&drop via VPN -> CONFERMATO (S98+S132)
 
 ---
 
-## Dove leggere
-
-| Cosa | File |
-|------|------|
-| EricsoftTransformer v1.2.0 | `backend/processors/ericsoft_transformer.py` |
-| research_payment_types.py | `agent/scripts/research_payment_types.py` |
-| research_name_resolution.py | `agent/scripts/research_name_resolution.py` |
-| sync_she.bat v1.2.0 | `agent/scripts/sync_she.bat` |
-| Piano FASE I SHE | `docs/FASE_I_PIANO_SHE.md` |
-| Checklist HP | Sezione "Prossimi step" sopra |
-
----
-
-*S125: Studio qualita dati + PAYMENT_MAP multi-hotel + deploy VM. Prossimo: FASE I.2 HP.*
-
+*S133: FASE L COMPLETATA! Reconcile ATTIVO su tutti e 3 gli hotel (NL+SHE+HP). 81 round QA totali.*
