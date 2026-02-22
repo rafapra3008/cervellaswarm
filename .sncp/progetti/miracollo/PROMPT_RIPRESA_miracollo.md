@@ -1,123 +1,120 @@
 <!-- DISCRIMINATORE: ECOSISTEMA MIRACOLLO - PANORAMA -->
-<!-- QUESTO FILE: Overview dei 3 bracci, NON dettagli specifici -->
-<!-- Per dettagli: vai in bracci/{nome}/PROMPT_RIPRESA_{nome}.md -->
 
 # PROMPT RIPRESA - Ecosistema Miracollo
 
-> **Ultimo aggiornamento:** 22 Febbraio 2026
-> **Status:** VM in pausa, audit completato, SUBROADMAP RINASCITA pronta
+> **Ultimo aggiornamento:** 22 Febbraio 2026 - Sessione FASE 1 Online
+> **Status:** FASE A completata (9.0/10), pronta per FASE B (Rafa accende VM)
 
 ---
 
 ## I 3 BRACCI
 
-```
-+================================================================+
-|   ECOSISTEMA MIRACOLLO = 3 BRACCI INDIPENDENTI                 |
-+================================================================+
-
-├── PMS CORE (:8001)        Sistema alberghiero     90% LIVE
-├── MIRACOLLOOK (:8002)     Email client AI         10/10
-└── ROOM HARDWARE (:8003)   Domotica                10% (bloccato VLAN)
-```
+| Braccio | Porta | Score | Focus |
+|---------|-------|-------|-------|
+| **PMS Core** | 8001 | 90% LIVE | FASE 1 Online (andare live su miracollo.com) |
+| **Miracollook** | 8002 | 10/10 | READ-ONLY. Non toccare fino PMS >= 9.0 |
+| **Room Hardware** | 8003 | 10% | Bloccato VLAN, DOPO |
 
 ---
 
-## STATO RAPIDO
+## FASE 1 ONLINE - STATO
 
-| Braccio | Porta | Score | Focus Attuale |
-|---------|-------|-------|---------------|
-| **PMS Core** | 8001 | 90% LIVE | RINASCITA: audit code 6.5/10, serve auth+security |
-| **Miracollook** | 8002 | 10/10 | READ-ONLY da Ericsoft. Non toccare fino PMS >= 9.0 |
-| **Room Hardware** | 8003 | 10% | Bloccato: serve admin VLAN 1101 |
+```
+FASE A - Preparazione         [####################] 100% COMPLETATA (9.0/10)
+  ├── Audit Security+Ops+QA    ✅ 34+ finding trovati -> TUTTI P0 risolti
+  ├── Script activate_vm.sh    ✅ 716 righe, 11 step (scripts/activate_vm.sh)
+  ├── nginx hardened            ✅ Basic Auth + CSP-RO + Swagger blocked + headers fix
+  ├── deploy.sh fixato          ✅ Backup DB + auto-detect path VM
+  └── CI/CD fixato              ✅ merge --ff-only (no reset --hard)
+
+FASE B - Rafa attiva VM       [....................] DA FARE (PROSSIMO STEP!)
+  └── GCP Console: Start VM -> riserva IP statico -> comunicare IP a Cervella
+
+FASE C - Cervella configura   [....................] DA FARE
+  └── ./scripts/activate_vm.sh <NUOVO_IP>
+
+FASE D - Rafa aggiorna DNS    [....................] DA FARE
+  └── register.it: Record A miracollo.com + www -> nuovo IP
+
+FASE E - Cervella deploy      [....................] DA FARE
+  └── SSL + Docker + Smoke test
+
+FASE F - Audit finale         [....................] DA FARE
+```
+
+### Credenziali Basic Auth PMS
+- User: `miracollo`, Pass: [stored in nginx/.htpasswd, NOT in git]
+
+### Discrepanza Path VM
+4 path nella codebase: `~/app`, `/app/miracollo`, `/opt/miracollo`, `/app`
+- deploy.sh + activate_vm.sh: auto-detect al runtime
+- **Da unificare** dopo conferma su VM accesa
 
 ---
 
-## SITUAZIONE INFRASTRUTTURA (22 Feb 2026)
+## INFRASTRUTTURA
 
 ```
 VM miracollo-cervella (GCP us-central1-b):
-  - STATO: IN PAUSA (costi sospesi)
-  - Internal IP: 10.128.0.7
-  - External IP: NON FISSO (rilasciato in pausa)
-  - Specs: ARM64, 2 vCPU, 4GB RAM
+  - STATO: IN PAUSA
+  - Specs attuale: ARM64, 2 vCPU, 4GB RAM
+  - Target: e2-small x86_64 (~$16/mese)
+  - NOTA: ARM64 vs x86_64 - script verifica e avvisa
 
-DNS miracollo.com:
-  - DA AGGIORNARE dopo riattivazione VM + IP statico
-
-SSH config (~/.ssh/config):
-  - miracollo-vm -> 34.27.179.164 (IP VECCHIO, da aggiornare)
-  - cervellamiracollo -> 104.197.100.249 (PROBABILMENTE OBSOLETO, chiedere Rafa)
+DNS: miracollo.com su register.it (Rafa aggiorna record A)
+SSH: miracollo-vm (IP vecchio 34.27.179.164, script aggiorna)
 ```
 
 ---
 
-## AUDIT 22 FEBBRAIO - RISULTATI
+## FILE MODIFICATI (sessione 22 Feb)
 
-```
-INGEGNERA (codice):    6.5/10 - 4 critici, 5 alti
-GUARDIANA QA (docs):   6.5/10 - 3 critici, 8 medi, ~250 file orfani
-DEVOPS (infra):        VM spenta, DNS sbagliato, raccomanda ~$36/mese
-```
+| File | Modifica |
+|------|----------|
+| `nginx/nginx.conf` | Basic Auth, CSP-RO, blocco Swagger, security headers inheritance fix |
+| `docker-compose.yml` | Volume .htpasswd per nginx |
+| `.gitignore` | .htpasswd escluso |
+| `.env.production` | CORS = solo HTTPS miracollo.com |
+| `deploy.sh` | Auto-detect path VM + backup DB pre-deploy |
+| `.github/workflows/deploy.yml` | merge --ff-only (no reset --hard) |
+| `scripts/activate_vm.sh` | **NUOVO** - automazione completa riattivazione VM |
 
-**BUG CRITICO:** `guests.py:74-88` - INSERT 22 colonne ma 9 placeholder
-**SICUREZZA:** Solo 23/396 endpoint hanno autenticazione (5.8%)
-**XSS:** ~362 innerHTML senza escape in 82 file JS
-
----
-
-## SUBROADMAP ATTIVA
-
-**File:** `roadmaps/SUBROADMAP_RECAP_RINASCITA_2026.md`
-**Score Guardiana:** 8.8/10 (APPROVED WITH NOTES, correzioni applicate)
-
-```
-FASE 0 - Emergenze (bug, .gitignore)
-FASE 1 - Demo ditta tedesca (VM, IP, DNS)
-FASE 2 - Sicurezza (auth, XSS, CSP)
-FASE 3 - Documentazione (sync, pulizia)
-FASE 4 - Qualita codice (except, split)
-FASE 5 - Infrastruttura (SSH, porte, CI/CD)
-FASE 6 - Accessi (verifiche finali)
-```
+**NOTA: Modifiche NON ancora committate! Fare git commit + push nella prossima sessione.**
 
 ---
 
-## DECISIONI CHIUSE (22 Feb 2026)
+## BUG CRITICI NOTI (pre-esistenti, non toccati)
 
-| # | Decisione | Risposta |
-|---|-----------|----------|
-| D1 | VM size | **e2-small** (~$16/mese) |
-| D2 | cervellamiracollo SSH | VM probabilmente eliminata. Rimuovere entry SSH config |
-| D3 | DNS | **register.it** - Rafa aggiorna record A |
-| D4 | Demo tedesca | NON urgente, piano piano |
-| D5 | Room Hardware | DOPO, non ora |
+- `guests.py:74-88` - INSERT 22 colonne ma 9 placeholder
+- 98% endpoint senza auth (mitigato con Basic Auth Nginx)
+- ~411 innerHTML senza escape in 94 file JS (mitigato con CSP-RO)
 
 ---
 
-## PROMPT_RIPRESA PER BRACCIO
+## SUBROADMAP: `roadmaps/SUBROADMAP_RECAP_RINASCITA_2026.md` (8.8/10)
 
-| Braccio | File |
-|---------|------|
-| PMS Core | `bracci/pms-core/PROMPT_RIPRESA_pms-core.md` |
-| Miracollook | `bracci/miracallook/PROMPT_RIPRESA_miracollook.md` |
-| Room Hardware | `bracci/room-hardware/PROMPT_RIPRESA_room_hardware.md` |
+## DECISIONI CHIUSE: D1 e2-small | D2 rimuovere cervellamiracollo | D3 register.it | D4 demo non urgente | D5 Room HW dopo
+
+## BRACCI: `bracci/pms-core/`, `bracci/miracallook/`, `bracci/room-hardware/`
 
 ---
 
-## REGOLA DISAMBIGUAZIONE
+## Lezioni Apprese (Sessione FASE 1 Online)
 
-```
-Se Rafa dice "Miracollo" senza specificare -> CHIEDI quale braccio!
+### Funzionato bene
+- **Swarm parallelo 4 Guardiane** - 34+ finding in ~5 min
+- **Step-by-step con audit** - ogni fix verificato prima del successivo
+- **Decisione autonoma Regina** - basic auth scelto senza bloccare Rafa
 
-Keywords:
-- "PMS", "prenotazioni", "fatture" -> PMS Core (8001)
-- "email", "Gmail", "Look" -> Miracollook (8002)
-- "room", "domotica", "sensori" -> Room Hardware (8003)
-```
+### Non funzionato
+- **P0 "falsi"** - Security ha classificato .env.production P0 ma NON era in git
+- **Health check non aggiornato** - Dopo basic auth, deploy.sh testava /api/health (401)
+
+### Pattern candidato
+- **Nginx add_header inheritance** - SEMPRE re-dichiarare headers in location con add_header
+- **Auto-detect path** - Non hardcodare, verificare a runtime
 
 ---
 
-*"Non abbiamo fretta. Vogliamo la PERFEZIONE."*
+*"Lavoriamo in pace! Senza casino! Dipende da noi!"*
 *Cervella & Rafa - 22 Febbraio 2026*
-
