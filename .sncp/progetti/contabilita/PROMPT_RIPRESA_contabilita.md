@@ -1,94 +1,84 @@
 # PROMPT RIPRESA - Contabilita Antigravity
 
-> **Ultimo aggiornamento:** 22 Febbraio 2026 - Sessione 133
+> **Ultimo aggiornamento:** 22 Febbraio 2026 - Sessione 134
 > **Branch attivo:** lab-v3 (sviluppo V3) + lab-v2 (intoccato) + main (produzione)
 > **Versione canonica:** `CervellaSwarm/.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md`
 
 ---
 
-## Stato Attuale - FASE L COMPLETATA! Reconcile 3/3 Hotel ATTIVI
+## Stato Attuale - S134 Checkout Date Fix DEPLOYATO
 
 | Cosa | Stato |
 |------|-------|
 | **Produzione** | v2.11.0 LIVE su contabilitafamigliapra.it (INTATTA) |
-| **V3 VM** | LIVE - Transformer v1.4.0 + Reconcile endpoint v1.0.0 |
+| **V3 VM** | LIVE - EricsoftTransformer v1.5.0 (checkout primario) + Reconcile v1.0.0 |
+| **S134 Checkout** | **DEPLOYATO!** 9 file su VM, colonna Check Out = data partenza |
 | **3 Hotel Sync** | TUTTI ATTIVI (NL WM4007, SHE WM21651, HP WM24352) HC.io+TG 1h |
-| **Reconcile NL** | ATTIVO S132! HC.io VERDE, 0 anomalie, window=30 |
-| **Reconcile SHE** | ATTIVO S133! HC.io 94015357, Scheduler 05:00, window=1 |
-| **Reconcile HP** | ATTIVO S133! HC.io 99c24a24, Scheduler 05:00, window=1 |
+| **Reconcile** | 3/3 ATTIVI (NL win=30, SHE+HP win=1) |
 | **Lab v2** | INTOCCATO, frozen S87 |
-| **Test** | **1709 PASS** (1399 portale + 310 agent, 0 fail) |
-| **FASE K** | COMPLETATA S129-S130 - 24/24 finding fixati |
-| **FASE L** | **COMPLETATA S131-S133** - Reconcile 3/3 hotel ATTIVI! |
-| **Subroadmap** | `docs/SUBROADMAP_S128_DIAMANTE.md` |
-| **Prossimo** | **FASE M** - SPRING Discovery + **monitoraggio reconcile SHE+HP** |
+| **Test** | **1705 PASS** (1395 portale + 310 agent, 0 fail) |
+| **Round QA** | 88 totali (81 S133 + 7 S134) |
+| **Subroadmap** | `docs/SUBROADMAP_S128_DIAMANTE.md` + `docs/SUBROADMAP_CHECKOUT_DATE.md` |
+| **Prossimo** | Deploy agent.py su hotel (VPN) + **FASE M** SPRING Discovery |
 
 ---
 
-## S131 - FASE L.1+L.2: Reconcile Backend + Agent (commit 4c16545)
+## S134 - Checkout Date Fix (commit 08f359a + d58c752)
 
-**L.1 - Backend Portale:**
-- GET /api/v3/reconcile-stats (5 query SQLite, auth Bearer)
-- Dati: ultimo_reconcile, count_anomalie, total_ericsoft, total_portale, delta
-- 16 test nuovi, Guardiana 9.5/10
+### Problema
+La colonna "Check Out" nella UI mostrava il campo `check_in` (data di ARRIVO).
+Rafa ha visto caparre inserite oggi con date checkin - per controllo stagione e matching giroconti serve checkout.
 
-**L.2 - Agent Python (6 moduli):**
-- reconcile_config.py - Configurazione da .env
-- reconcile_reader.py - Lettura Ericsoft SQL Server (pymssql/pyodbc)
-- reconcile_api.py - Comunicazione con portale V3
-- reconcile_comparator.py - Confronto count + dettaglio per-giorno
-- reconcile_notifier.py - Alert Telegram + HC.io ping
-- reconcile.py - Entry point CLI (--hotel, --env, --dry-run, --verbose)
-- 26 test nuovi, Guardiana 9.2/10
+### Soluzione Implementata
+- **UI**: colonna "Check Out" mostra `tx.checkout_date` (data PARTENZA)
+- **Stagione**: chain `checkout_date (primario) > check_in (fallback)`
+- **Rimosso**: fallback note_ericsoft, fallback stagione agent, fallback data_movimento
+- **Edit inline**: checkout_date editabile con ricalcolo stagione automatico
 
-## S132 - FASE L.3 NL: Deploy + Test Reale (commit ae152e3)
+### File Modificati (11 + 2 test)
 
-**Prep (commit 64ace9c):**
-- 3 .bat (nl/she/hp) per Task Scheduler Windows, 05:00 AM, log rotation 30gg
-- Guardiana prep 9.5/10 (F1+F2+F6+F8 fixati)
+| File | Modifica |
+|------|----------|
+| backend/database/transactions.py | checkout_date in allowed_fields + edit branch + create_transaction |
+| backend/database/pareggi.py | Suggerimento pareggio usa checkout_date primario |
+| backend/processors/ericsoft_transformer.py | Chain stagione invertita, rimosso import re |
+| backend/routers/transactions.py | Pydantic model + routing + season guard |
+| backend/security.py | Validazione checkout_date DD/MM/YYYY |
+| frontend/js/data.js | Display tx.checkout_date + merge |
+| frontend/js/config.js | FIELD_CONFIG checkout_date |
+| frontend/js/editing.js | 5 punti edit inline + ricalcolo stagione |
+| frontend/index.html | Cache bust ?v=202602221700 |
+| agent/agent.py | Chain checkout > check_in |
+| tests/ + agent/tests/ | 15+ test riscritti per nuova priorita |
 
-**Fix compatibilita NL (commit ae152e3):**
-- reconcile_config.py: _safe_int_env locale (config.py hotel vecchio non ce l'ha)
-- reconcile_reader.py: getattr driver fallback per pymssql vecchio
-- reconcile_nl.bat: .env path corretto (agent/.env, non root per NL)
+### Dati Reali VM (pre-deploy)
 
-**Risultato NL:**
-- Dry-run: RECONCILE OK, 0 anomalie
-- Test reale: RECONCILE OK, 0 anomalie, HC.io VERDE
-- Task Scheduler: ContabilitaReconcile-NL, 05:00 AM daily
+| Hotel | CAP | CON checkout | SENZA | % |
+|-------|-----|-------------|-------|---|
+| NL | 1943 | 1927 | 16 | 99.2% |
+| SHE | 8 | 7 | 1 | 87.5% |
+| HP | 6 | 5 | 1 | 83.3% |
+
+### QA Totale S134
+- 7 Guardiane: 9.6 + 9.6 + 9.3 + 9.3 + 9.5 (finale) + 9.5 (pre-deploy) + Bug Hunt
+- Double-triple check: trovato 1 P1 + 3 P2, tutti FIXATI prima del deploy
+- 1395/1395 test PASS
+
+### Deploy VM (commit d58c752)
+- 9 file deployati su /opt/contabilita-v3/
+- Backup con timestamp _20260222_HHMM
+- Cache bust JS aggiornato
+- contabilita-v3 service: active
 
 ---
 
-## S133 - FASE L.3 SHE+HP: Deploy Reconcile
+## TODO Prossime Sessioni
 
-**SHE:** HC.io 94015357, 7 file copiati, window=1, Scheduler 05:00, Guardiane 9.7+9.3/10
-**HP:** HC.io 99c24a24, 7 file copiati, window=1, Scheduler 05:00, Guardiana 9.3/10
-**Piano window:** =1 ora, =7 tra 1 sett, =30 tra 1 mese
-**P2 aperto:** File Desktop pre-fix S132, copiare dal repo lab-v3 al prossimo VPN
-
----
-
-## Subroadmap "Il Diamante" - Progresso
-
-```
-FASE K - QA Fix                              COMPLETATA!
-  K.1  Fix P1+P2 critici (5 fix)           S129 (9.6/10)
-  K.2  Fix P2 backend+logic (2 fix)        S130 (9.6/10)
-  K.3  Fix P3 tutti (15 fix)               S130 (9.6/10)
-
-FASE L - Agent Prova Reale                   COMPLETATA!
-  L.1  Endpoint backend + 16 test          S131 (9.5/10) FATTO
-  L.2  6 moduli Python + 26 test           S131 (9.2/10) FATTO
-  L.3  Deploy NL + test reale              S132 (9.5/10) FATTO
-  L.3  Deploy SHE + HP                     S133 (9.3/10) FATTO
-
-FASE M - SPRING Discovery                   PENDING
-  M.1  Discovery read-only DB SISTEMI
-  M.2  Ottimizzare file Excel import
-
-FASE N - Sync DB                             PENDING
-  N.1  Allineare HP/SHE lab vs prod (NL ok)
-```
+1. **Verifica UI**: Rafa apre v3.contabilitafamigliapra.it -> colonna Check Out mostra data partenza
+2. **Deploy agent.py**: Al prossimo VPN, copiare agent.py su NL/SHE/HP (stagione da checkout)
+3. **Window reconcile**: Tra 1 sett -> RECONCILE_WINDOW_DAYS=7 su SHE+HP
+4. **FASE M**: SPRING Discovery (read-only DB SISTEMI HP)
+5. **FASE N**: Sync DB (allineare HP/SHE lab vs prod)
 
 ---
 
@@ -107,7 +97,8 @@ FASE N - Sync DB                             PENDING
     LAB V2                  V3 (lab-v3)
     INTOCCATO               v3.contabilita...
     frozen S87              porta 8003
-                            Reconcile endpoint v1.0.0
+                            Transformer v1.5.0 (checkout!)
+                            Reconcile v1.0.0
                             |
                 +-----------+-----------+
                 |           |           |
@@ -118,23 +109,25 @@ FASE N - Sync DB                             PENDING
             1h sync     1h sync     1h sync
             5AM recon   5AM recon   5AM recon
             win=30      win=1       win=1
+            agent 1.3   agent 1.3   agent 1.3
+            TODO: 1.4   TODO: 1.4   TODO: 1.4
 ```
 
 ---
 
-## Lezioni Apprese (Sessione S131-S132)
+## Lezioni Apprese (Sessione S134)
 
 ### Cosa ha funzionato bene
-- Design modulare reconcile (6 file separati) = testabile, facile debug
-- Fix compat hotel NL specifici (config.py vecchio vs nuovo) risolti al primo tentativo
-- Strategia "fix + Guardiana per ogni step" confermata: 3 Guardiane (9.5+9.2+9.5)/10
+- "Double-triple check pre-deploy" = trovato 1 P1 + 3 P2 che 5 audit precedenti avevano mancato
+- "Guardiana dopo ogni step" confermata: 7 Guardiane, score medio 9.46/10
+- Ricerca in parallelo con 3 Cervelle all'inizio = analisi completa in 1 round
 
 ### Cosa non ha funzionato
-- Crash Bun (segfault) ha perso aggiornamento NORD/PROMPT (fix: documentare SUBITO dopo ogni step)
+- Deploy SCP: nomi file duplicati (transactions.py DB vs router) causava sovrascrittura. Fix: nomi univoci
 
 ### Pattern candidato
-- "Preparare file deploy su Desktop per hotel" = Rafa copia con drag&drop via VPN -> CONFERMATO (S98+S132)
+- "Double-triple check con Bug Hunter prima del deploy" -> CONFERMATO (P1 trovato!) -> PROMUOVERE
 
 ---
 
-*S133: FASE L COMPLETATA! Reconcile ATTIVO su tutti e 3 gli hotel (NL+SHE+HP). 81 round QA totali.*
+*S134: Checkout Date Fix DEPLOYATO! 88 round QA totali. "Ultrapassar os proprios limites!"*
