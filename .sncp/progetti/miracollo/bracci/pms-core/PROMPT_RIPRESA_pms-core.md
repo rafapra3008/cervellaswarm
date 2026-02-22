@@ -5,95 +5,104 @@
 
 # PROMPT RIPRESA - PMS Core
 
-> **Ultimo aggiornamento:** 22 Gennaio 2026 - Sessione 312
-> **STATO:** 90% LIVE | Health 9.5/10
+> **Ultimo aggiornamento:** 22 Febbraio 2026
+> **STATO:** 90% LIVE | Health codice 6.5/10 (post-audit dettagliato)
 
 ---
 
-## SESSIONE 312 - F3.4 HOUSEKEEPING QUICK WINS COMPLETATO!
+## SESSIONE 22 FEB - AUDIT COMPLETO + SUBROADMAP
 
 ```
 +================================================================+
-|   F3.4 Housekeeping Quick Wins  9/10 DONE                      |
+|   RECAP GIGANTE - 3 Audit Paralleli Completati                 |
 |                                                                |
-|   - Auto-dirty on checkout (camera → dirty automatico)         |
-|   - Planning housekeeping panel (sidebar integrata)            |
-|   - Bulk operations (multi-select + azioni massive)            |
+|   Ingegnera:    Codice 6.5/10 (4 critici, 5 alti)             |
+|   Guardiana QA: Docs   6.5/10 (3 critici, ~250 orfani)        |
+|   DevOps:       VM spenta, DNS sbagliato                       |
 |                                                                |
-|   FASE 3 FEATURE = 3/5 (60%)                                   |
+|   SUBROADMAP RINASCITA creata e validata (8.8/10)              |
 +================================================================+
 ```
 
-### Scoperte Sessione 312
+### Cosa e stato fatto oggi
+- Audit codice completo (85 tool calls, 83 file router, 396 endpoint)
+- Audit documentazione (46 tool calls, tutte le contraddizioni mappate)
+- Audit infrastruttura (32 tool calls, porte, VM, DNS)
+- Subroadmap 6 fasi creata e validata dalla Guardiana
 
-- **F3.3 Revenue Dashboard** già 80% completo! (revenue.html + competitors.html esistenti)
-- **F3.4 Housekeeping** già 80% completo! (Room Manager MVP esistente)
-- Enhancement invece di creazione da zero = più veloce!
+### Cosa NON e stato modificato
+- Zero righe di codice cambiate
+- Zero file di produzione toccati
+- Solo documentazione SNCP aggiornata
 
 ---
 
-## FASE 3 - PROGRESSO (3/5)
+## BUG CRITICI DA FIXARE (FASE 0)
+
+| Bug | File | Dettaglio |
+|-----|------|-----------|
+| **create_guest ROTTO** | `backend/routers/guests.py:74-88` | INSERT 22 colonne, 9 placeholder. Crash SQLite. |
+| **Auth mancante** | 83 router files | Solo 23/396 endpoint protetti (5.8%) |
+| **XSS frontend** | 82 file JS | ~362 innerHTML senza escape, no CSP header |
+| **DB backup in git history** | storia Git | 2 file con dati personali clienti |
+
+---
+
+## ARCHITETTURA ATTUALE
+
+```
+396 endpoint API in 83 file router
+Backend: Python 3.11, FastAPI, SQLite, Gunicorn (5 workers)
+Frontend: HTML/CSS/JS puro (NON React!)
+Docker: Multi-stage build, non-root user, Nginx reverse proxy
+```
+
+### Punti di Forza (confermati dall'audit)
+- Buona modularizzazione (50+ file < 400 righe)
+- Pydantic settings, optimistic locking, security headers
+- HMAC webhook validation, GZip compression, rate limiting
+- Dockerfile best practices
+
+### Debiti Tecnici Principali
+- except Exception generico in 100+ punti
+- Rate limiting in-memory (non funziona con multi-worker)
+- on_event("startup") deprecato -> migrare a lifespan
+- 13 file Python > 650 righe (candidati split)
+- revenue.js 1296 righe (piu grande nel frontend)
+
+---
+
+## FASE 3 FEATURE - PROGRESSO REALE: 4/5 (80%)
 
 | Task | Status | Note |
 |------|--------|------|
 | **F3.1 Batch Operations** | **DONE 9/10** | POST /api/batch/* |
 | **F3.2 Webhooks Outbound** | **DONE 9/10** | HMAC, retry, DLQ |
-| **F3.3 Revenue Dashboard** | **DONE 8/10** | Già esistente, enhancement minor |
+| **F3.3 Revenue Dashboard** | **DONE 8/10** | Gia esistente, enhancement minor |
 | **F3.4 Housekeeping Quick Wins** | **DONE 9/10** | Auto-dirty, panel, bulk |
 | F3.5 Channel Manager 2-Way | FUTURO | dopo F3.2 (ora possibile!) |
 
 ---
 
-## FILE CREATI/MODIFICATI SESSIONE 312
+## PROSSIMI STEP
 
-### Backend
-| File | Scopo |
-|------|-------|
-| `services/room_manager_service.py` | + bulk_update_housekeeping() |
-| `services/checkin_service.py` | + auto-dirty on checkout |
-| `routers/room_manager.py` | + POST /bulk-housekeeping |
-| `routers/planning_ops.py` | + await async fix |
-
-### Frontend
-| File | Scopo |
-|------|-------|
-| `js/planning/housekeeping-panel.js` | NUOVO - Panel housekeeping in Planning |
-| `css/planning/housekeeping-panel.css` | NUOVO - Stili dark theme |
-| `js/room-manager/api.js` | + bulkUpdateHousekeeping() |
-| `js/room-manager/core.js` | + Button "Bulk Clean" |
-| `planning.html` | + button, panel, script |
-
-### Docs
-| File | Scopo |
-|------|-------|
-| `ANALISI_HOUSEKEEPING_ESISTENTE.md` | Research codebase |
-| `RICERCA_HOUSEKEEPING_*.md` | Best practices (4 parti) |
-| `BULK_HOUSEKEEPING_IMPLEMENTATION.md` | Documentazione |
-
----
-
-## ENDPOINT HOUSEKEEPING
+**Seguire SUBROADMAP:** `roadmaps/SUBROADMAP_RECAP_RINASCITA_2026.md`
 
 ```
-POST /api/room-manager/{hotel_code}/bulk-housekeeping  - Bulk update status
-GET  /api/room-manager/{hotel_code}/rooms              - Lista camere
-PUT  /api/room-manager/rooms/{id}/housekeeping         - Update singolo
+FASE 0 -> Fix bug guests.py + .gitignore
+FASE 1 -> Riattivare VM per demo ditta tedesca
+FASE 2 -> Auth su tutti endpoint + CSP + XSS fix
 ```
-
----
-
-## PROSSIMA SESSIONE - F3.4 FASE 2
-
-1. **Task Assignment System** - Chi pulisce cosa?
-2. **Mobile PWA Basic** - Lista task per housekeeper
-3. **Cleaning Time Tracking** - Start/end timestamps
 
 ---
 
 ## WARNING ESISTENTI
 
-- **FK violations:** 1262 nel DB (problema esistente, task separato)
+- **FK violations:** 1262 nel DB (problema pre-esistente)
+- **VM:** In pausa, IP non fisso, DNS da aggiornare
+- **Contabilita:** USA porte simili in locale (8000, 8001) - NON toccare
 
 ---
 
-*"Housekeeping Quick Wins completati! +30% efficienza operativa!" - Sessione 312*
+*"Audit fatto con calma, ogni punto trovato. Ora si sistema."*
+*22 Febbraio 2026*
