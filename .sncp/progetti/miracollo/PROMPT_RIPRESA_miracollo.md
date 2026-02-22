@@ -2,8 +2,8 @@
 
 # PROMPT RIPRESA - Ecosistema Miracollo
 
-> **Ultimo aggiornamento:** 22 Febbraio 2026 - Sessione FASE 1 Online
-> **Status:** FASE A completata (9.0/10), pronta per FASE B (Rafa accende VM)
+> **Ultimo aggiornamento:** 22 Febbraio 2026 - FASE 1 Online COMPLETATA!
+> **Status:** miracollo.com LIVE! Score Guardiana 9.1/10
 
 ---
 
@@ -11,108 +11,109 @@
 
 | Braccio | Porta | Score | Focus |
 |---------|-------|-------|-------|
-| **PMS Core** | 8001 | 90% LIVE | FASE 1 Online (andare live su miracollo.com) |
+| **PMS Core** | 8001 | **LIVE su miracollo.com** | Manutenzione + bug fix |
 | **Miracollook** | 8002 | 10/10 | READ-ONLY. Non toccare fino PMS >= 9.0 |
 | **Room Hardware** | 8003 | 10% | Bloccato VLAN, DOPO |
 
 ---
 
-## FASE 1 ONLINE - STATO
+## FASE 1 ONLINE - COMPLETATA!
 
 ```
-FASE A - Preparazione         [####################] 100% COMPLETATA (9.0/10)
-  ├── Audit Security+Ops+QA    ✅ 34+ finding trovati -> TUTTI P0 risolti
-  ├── Script activate_vm.sh    ✅ 716 righe, 11 step (scripts/activate_vm.sh)
-  ├── nginx hardened            ✅ Basic Auth + CSP-RO + Swagger blocked + headers fix
-  ├── deploy.sh fixato          ✅ Backup DB + auto-detect path VM
-  └── CI/CD fixato              ✅ merge --ff-only (no reset --hard)
-
-FASE B - Rafa attiva VM       [....................] DA FARE (PROSSIMO STEP!)
-  └── GCP Console: Start VM -> riserva IP statico -> comunicare IP a Cervella
-
-FASE C - Cervella configura   [....................] DA FARE
-  └── ./scripts/activate_vm.sh <NUOVO_IP>
-
-FASE D - Rafa aggiorna DNS    [....................] DA FARE
-  └── register.it: Record A miracollo.com + www -> nuovo IP
-
-FASE E - Cervella deploy      [....................] DA FARE
-  └── SSL + Docker + Smoke test
-
-FASE F - Audit finale         [....................] DA FARE
+FASE A - Preparazione         [####################] 100% (9.0/10)
+FASE B - VM Online            [####################] 100%
+  ├── VM accesa via gcloud CLI  ✅ (Cervella ha accesso diretto!)
+  ├── IP statico 34.134.72.207  ✅ (nome: miracollo-static-ip)
+  └── SSH miracollo-vm           ✅ (chiave cervella_miracollo)
+FASE C - Deploy               [####################] 100%
+  ├── Git pull (62b6251)         ✅
+  ├── Basic Auth .htpasswd       ✅ (user: miracollo)
+  ├── Docker rebuild             ✅ (2 bug fixati: tenacity + slowapi)
+  ├── CORS aggiornato            ✅ (https://miracollo.com)
+  └── DB backup pre-deploy       ✅
+FASE D - DNS                  [####################] 100%
+  ├── A: miracollo.com -> 34.134.72.207       ✅
+  └── CNAME: www -> miracollo.com (pre-esistente) ✅
+FASE E - Smoke Test           [####################] 100%
+  ├── /health -> 200 (healthy, DB connected)   ✅
+  ├── / -> 401 senza auth                      ✅
+  └── / -> 200 con auth                        ✅
+FASE F - Audit Guardiana      [####################] 100% (9.1/10)
 ```
-
-### Credenziali Basic Auth PMS
-- User: `miracollo`, Pass: [stored in nginx/.htpasswd, NOT in git]
-
-### Discrepanza Path VM
-4 path nella codebase: `~/app`, `/app/miracollo`, `/opt/miracollo`, `/app`
-- deploy.sh + activate_vm.sh: auto-detect al runtime
-- **Da unificare** dopo conferma su VM accesa
 
 ---
 
-## INFRASTRUTTURA
+## INFRASTRUTTURA LIVE
 
 ```
 VM miracollo-cervella (GCP us-central1-b):
-  - STATO: IN PAUSA
-  - Specs attuale: ARM64, 2 vCPU, 4GB RAM
-  - Target: e2-small x86_64 (~$16/mese)
-  - NOTA: ARM64 vs x86_64 - script verifica e avvisa
+  - STATO: RUNNING
+  - Machine: n4a-standard-1, ARM64 Google Axion, 4GB RAM
+  - IP statico: 34.134.72.207
+  - Disco: 39G (63% usato dopo cleanup)
+  - Path repo: /home/rafapra/app
+  - Docker: v29.1.3 + Compose v5.0.0
+  - SSL: Let's Encrypt valido fino 1 Apr 2026 (auto-renew attivo)
+  - Certbot timer: attivo (systemd)
 
-DNS: miracollo.com su register.it (Rafa aggiorna record A)
-SSH: miracollo-vm (IP vecchio 34.27.179.164, script aggiorna)
+DNS: miracollo.com -> 34.134.72.207 (register.it)
+SSH: miracollo-vm (34.134.72.207, chiave cervella_miracollo)
 ```
 
----
-
-## FILE MODIFICATI (sessione 22 Feb)
-
-| File | Modifica |
-|------|----------|
-| `nginx/nginx.conf` | Basic Auth, CSP-RO, blocco Swagger, security headers inheritance fix |
-| `docker-compose.yml` | Volume .htpasswd per nginx |
-| `.gitignore` | .htpasswd escluso |
-| `.env.production` | CORS = solo HTTPS miracollo.com |
-| `deploy.sh` | Auto-detect path VM + backup DB pre-deploy |
-| `.github/workflows/deploy.yml` | merge --ff-only (no reset --hard) |
-| `scripts/activate_vm.sh` | **NUOVO** - automazione completa riattivazione VM |
-
-**NOTA: Modifiche NON ancora committate! Fare git commit + push nella prossima sessione.**
+### Credenziali
+- Basic Auth: user=`miracollo`, pass=[stored in nginx/.htpasswd, NOT in git]
 
 ---
 
-## BUG CRITICI NOTI (pre-esistenti, non toccati)
+## BUG FIX FATTI DURANTE DEPLOY
+
+| Bug | Fix | Commit |
+|-----|-----|--------|
+| `tenacity` mancante da requirements.txt | Aggiunto `tenacity>=8.2.0` | 496e823 |
+| `slowapi` exempt_when non supportato v0.1.9 | Custom key_func per health | 62b6251 |
+| CORS con vecchio IP | Aggiornato a https://miracollo.com | (VM .env) |
+
+## BUG CRITICI NOTI (pre-esistenti)
 
 - `guests.py:74-88` - INSERT 22 colonne ma 9 placeholder
-- 98% endpoint senza auth (mitigato con Basic Auth Nginx)
+- 98% endpoint senza auth app-level (mitigato con Basic Auth Nginx)
 - ~411 innerHTML senza escape in 94 file JS (mitigato con CSP-RO)
+- Machine type ARM64 vs target e2-small (costo da valutare)
 
 ---
 
-## SUBROADMAP: `roadmaps/SUBROADMAP_RECAP_RINASCITA_2026.md` (8.8/10)
+## PROSSIMI STEP
 
-## DECISIONI CHIUSE: D1 e2-small | D2 rimuovere cervellamiracollo | D3 register.it | D4 demo non urgente | D5 Room HW dopo
+1. **Monitorare** miracollo.com nei prossimi giorni
+2. **SSL renew** - auto, ma verificare prima del 1 Apr 2026
+3. **Bug fix** guests.py INSERT (crash)
+4. **Valutare** migrazione a e2-small (costo)
+5. **CSP enforce** (da Report-Only a enforce dopo monitoraggio)
+
+## DECISIONI CHIUSE
+
+D1 e2-small target | D2 rimuovere cervellamiracollo | D3 register.it | D4 demo non urgente | D5 Room HW dopo | D6 gcloud CLI (Cervella accesso diretto GCP)
 
 ## BRACCI: `bracci/pms-core/`, `bracci/miracallook/`, `bracci/room-hardware/`
 
+## SUBROADMAP: `roadmaps/SUBROADMAP_RECAP_RINASCITA_2026.md` (8.8/10)
+
 ---
 
-## Lezioni Apprese (Sessione FASE 1 Online)
+## Lezioni Apprese (Sessione FASE 1 Online - Deploy)
 
 ### Funzionato bene
-- **Swarm parallelo 4 Guardiane** - 34+ finding in ~5 min
-- **Step-by-step con audit** - ogni fix verificato prima del successivo
-- **Decisione autonoma Regina** - basic auth scelto senza bloccare Rafa
+- **gcloud CLI** - Cervella fa TUTTO senza bloccare Rafa (start VM, IP statico, firewall)
+- **Step-by-step con audit** - ogni fase -> Guardiana -> score -> prossima
+- **Bug trovati durante deploy** - meglio in staging che in produzione
 
 ### Non funzionato
-- **P0 "falsi"** - Security ha classificato .env.production P0 ma NON era in git
-- **Health check non aggiornato** - Dopo basic auth, deploy.sh testava /api/health (401)
+- **requirements.txt incompleto** - tenacity usato ma mai aggiunto
+- **slowapi API break** - exempt_when documentato ma non in v0.1.9
 
 ### Pattern candidato
-- **Nginx add_header inheritance** - SEMPRE re-dichiarare headers in location con add_header
-- **Auto-detect path** - Non hardcodare, verificare a runtime
+- **SEMPRE testare docker build in locale prima del deploy** - avrebbe trovato entrambi i bug
+- **gcloud CLI > GCP Console** - piu sicuro, tracciabile, ripetibile
 
 ---
 
