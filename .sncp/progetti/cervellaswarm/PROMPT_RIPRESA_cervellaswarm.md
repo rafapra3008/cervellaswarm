@@ -1,93 +1,88 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-24 - Sessione 392
-> **STATUS:** FASE 3 COMPLETA AL 100%! F3.3 Quality Gates + F3.4 Documentation DONE!
+> **Ultimo aggiornamento:** 2026-02-24 - Sessione 393
+> **STATUS:** FASE 4 IN CORSO - CI/CD pronto, 7 packages da pubblicare su PyPI
 
 ---
 
-## SESSIONE 392 - Cosa e successo
+## SESSIONE 393 - Cosa e successo
 
-### Scoperta iniziale
-- Il PROMPT_RIPRESA precedente documentava S391 con F3.3/F3.4 "fatti"
-- Ma `packages/quality-gates/` NON esisteva e ultimo commit era S390
-- **La sessione S391 si era persa senza commit**
-- Abbiamo usato il blueprint dettagliato del vecchio PROMPT_RIPRESA come guida
+### Commit S392 completato
+- S392 era rimasto senza commit (auto-compact). Primo atto: committare e pushare tutto
+- Commit `fe403210`: F3.3 Quality Gates + F3.4 Documentation - FASE 3 COMPLETA!
 
-### 2 deliverable ricostruiti
+### FASE 4.1 Pre-requisiti: CI/CD Pipeline
+- Ricerca: solo 2/9 packages su PyPI (code-intelligence, lingua-universale). 7 mancano
+- Ricerca: strategia publish monorepo -> Reusable Workflow (DRY pattern)
+- Build check: 7/7 packages buildano, 1572 test passano, twine check OK
+- Creati 15 nuovi workflow files:
+  - `_publish-package.yml`: template reusable (build, testpypi, pypi, github-release)
+  - 7x `publish-{name}.yml`: thin callers (25 righe ciascuno)
+  - 7x `ci-{name}.yml`: Python 3.10-3.13 matrix, coverage, smoke tests
+- Guardiana audit: 8.5 -> 9.5/10 (4 P1 phantom imports + 2 P2 redundant permissions fixati)
+- Commit `6bd27918`: S393 CI/CD pushato
 
-**1. F3.3 Quality Gates** - Guardiana 9.3 -> ~9.5/10 (post-fix)
-- Nuovo package: `cervellaswarm-quality-gates` v0.1.0 at `packages/quality-gates/`
-- 6 moduli: config, quality, hooks, sync, cli, __init__
-- quality.py: 4 dimensioni scoring (actionability 30%, specificity 30%, freshness 20%, conciseness 20%)
-- hooks.py: valida integrita hook (5 stati: OK/BROKEN/DISABLED/NOT_EXEC/MISSING)
-- sync.py: compara directory agenti (SHA-256 hash, ignore patterns, diff report)
-- cli.py: `cervella-check` con subcommand quality/hooks/sync/all + --json + --verbose
-- Config: env vars > project YAML > user YAML > defaults
-- ZERO deps, 206 test, 0.10s
-- Guardiana trovato 2 P2 + 6 P3, tutti fixati:
-  - P2-1: DEFAULTS/DEFAULT_WEIGHTS -> MappingProxyType (P04)
-  - P2-2: _check_disabled() non flagga piu __init__.py/__main__.py
-  - P3: .gitignore, docstring, glob duplicati, yaml.YAMLError, weight validation, test YAML corrotto
-
-**2. F3.4 Documentation** - Guardiana 9.0 -> ~9.5/10 (post-fix)
-- ARCHITECTURE.md aggiornato: 17 agenti, SNCP 4.0, MCP name, Python Packages section (9 pkg, 25 CLI, 3244+ test)
-- GETTING_STARTED.md aggiornato: CLI reali cervella-*, prerequisiti API key, troubleshooting
-- MIGRATION.md NUOVO: guida CrewAI/AutoGen/LangGraph con concept mapping
-- Pattern applicato: "Verifica CLI reali con Explore agent PRIMA di scrivere docs" (25 entry points verificati)
-- Guardiana trovato 4 P2 + 8 P3, 4 P2 + 2 P3 fixati:
-  - P2: spawn-workers->cervella-spawn, cervellaswarm init->cervella-session init, cervella-security phantom, --last flag
+### Stato PyPI
+| Package | Su PyPI | Workflow pronto |
+|---------|---------|-----------------|
+| code-intelligence | SI (S369) | SI (esistente) |
+| lingua-universale | SI (S389) | SI (esistente) |
+| agent-hooks | NO | SI (S393) |
+| agent-templates | NO | SI (S393) |
+| task-orchestration | NO | SI (S393) |
+| spawn-workers | NO | SI (S393) |
+| session-memory | NO | SI (S393) |
+| event-store | NO | SI (S393) |
+| quality-gates | NO | SI (S393) |
 
 ---
 
-## Lezioni Apprese (Sessione 392)
+## Lezioni Apprese (Sessione 393)
 
 ### Cosa ha funzionato bene
-- Strategia "casa in ordine prima": allineare NORD/SUBROADMAP/PROMPT_RIPRESA prima di costruire
-- Blueprint S391 come guida: ricostruire da docs e piu veloce che da zero
-- Explore agent per CLI reali PRIMA di scrivere docs: ha evitato phantom CLI in MIGRATION.md
-- Guardiana dopo ogni step: ha trovato 2 P2 in F3.3 e 4 P2 in F3.4
+- Agenti in parallelo: 3 DevOps agent creano 15 file contemporaneamente (3x velocita)
+- Guardiana trova phantom imports PRIMA che CI fallisca in produzione (4 P1 evitati)
+- Ricerca PRIMA di implementare: monorepo pattern ha evitato 1400+ righe duplicate
 
 ### Cosa non ha funzionato
-- S391 persa senza commit = lavoro da rifare. LEZIONE: commit SUBITO dopo ogni deliverable
-- MappingProxyType non e deepcopy-able: i test che facevano `copy.deepcopy(DEFAULTS)` sono falliti. Serve usare `_DEFAULTS_RAW` nei test
+- Smoke test imports inventati dagli agenti: MAI fidarsi di API guessate, SEMPRE verificare
 
 ### Pattern candidato
-- "Commit SUBITO dopo ogni deliverable completato, non aspettare fine sessione"
-- Evidenza: S392 (S391 persa = 1 sessione di lavoro perso)
-- Azione: PROMUOVERE (evita perdita lavoro)
+- "Verificare API reali con import test PRIMA di scrivere smoke tests nei CI"
+- Evidenza: S393 (4 P1 phantom imports)
+- Azione: PROMUOVERE
 
 ---
 
 ## MAPPA SITUAZIONE
 
 ```
-LINGUA UNIVERSALE:
-  FASE A: LE FONDAMENTA     [####################] 100% HARDENED!
-  FASE B: IL TOOLKIT         [################....] 80% (S387)
-  PYPI PUBLISH              [####################] 100% (S389)
-
 OPEN SOURCE ROADMAP:
   FASE 0: Preparazione       [####################] 100%
   FASE 1: AST Pipeline       [####################] 100%
   FASE 2: Agent Framework    [####################] 100%
   FASE 3: Session Memory     [####################] 100% COMPLETA!
-    F3.1 Session Memory       DONE (S373, 9.6/10)
-    F3.2 SQLite Event DB      DONE (S390, 9.3/10)
-    F3.3 Quality Gates        DONE (S392, ~9.5/10)
-    F3.4 Documentation        DONE (S392, ~9.5/10)
-    F3.5 Auto-Handoff         DONE (S379, 9.5/10)
-  FASE 4: Launch              [...................] TODO
+  FASE 4: Launch              [####................] 20% IN CORSO
+    F4.1a CI/CD Pipeline       DONE (S393, 9.5/10) - 15 workflow files
+    F4.1b PyPI Publication     TODO - 7 packages da pubblicare
+    F4.1c GitHub Release       TODO
+    F4.1d Blog + Social        TODO
 
-PACKAGES: 9 su PyPI, 13 totali nel repo, 3450+ test, ZERO flaky
+PACKAGES: 2/9 su PyPI, 9 totali, 3450+ test
+CI/CD: 9/9 CI workflow, 9/9 publish workflow PRONTI
 ```
 
 ---
 
 ## PROSSIMI STEP (in ordine)
 
-1. **FASE 4: Launch!** - GitHub Release, community outreach, blog post
-2. **Fase B.2 Lingua** - DSL nested choices (post-feedback community)
-3. **Community engagement** - Discord, Good First Issues, contributors
+1. **Configurare Trusted Publishers su PyPI** per 7 nuovi packages
+   - Rafa va su pypi.org -> Publishing -> Add pending publisher per ciascuno
+   - Owner: rafapra3008, Repo: cervellaswarm-internal, Workflow: publish-{name}.yml, Env: pypi
+2. **Taggare e pubblicare** i 7 packages (git tag {name}-v0.1.0 && git push --tags)
+3. **Refactor 2 workflow esistenti** (code-intelligence, lingua-universale) a usare il template reusable
+4. **GitHub Release formale** con CHANGELOG
+5. **Blog post + community** (F4.1d, F4.2)
 
 ---
 
@@ -96,38 +91,12 @@ PACKAGES: 9 su PyPI, 13 totali nel repo, 3450+ test, ZERO flaky
 | Sessione | Cosa |
 |----------|------|
 | S337-S372 | Coverage push + SNCP 4.0 + FASE 0-2 open source |
-| S373 | FASE 3: F3.1 Session Memory (9.6/10) |
-| S374-S378 | CACCIA BUG 1-7 (7 packages, 80 bug, 48 fix) |
-| S379 | FIX AUTO-HANDOFF (8 step, 14 file, 9.5/10) |
-| S380-S386 | LINGUA UNIVERSALE Fase A (7 moduli, 997 test, HARDENED!) |
-| S387 | AUTO-LEARNING L1 + FASE B (9 moduli, 1273 test, 84 API) |
-| S388 | README killer + CI/Publish per PyPI (Guardiana 9.5/10) |
-| S389 | PyPI PUBLISH LIVE! cervellaswarm-lingua-universale v0.1.0 |
-| S390 | Desktop setup + P2 fix (9.7) + F3.2 Event Store (9.3) |
+| S373-S390 | FASE 3 complete (5 deliverables, media 9.4/10) |
 | S391 | PERSA (non committata) |
-| S392 | F3.3 Quality Gates (~9.5) + F3.4 Documentation (~9.5) - FASE 3 100%! |
+| S392 | F3.3 Quality Gates + F3.4 Documentation - FASE 3 100%! |
+| S393 | CI/CD Pipeline: 15 workflow, Guardiana 9.5/10, 7 packages pronti per PyPI |
 
 ---
 
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
 *"Lavoriamo in pace! Senza casino! Dipende da noi!"*
-
----
-
-## AUTO-CHECKPOINT: 2026-02-24 20:51 (auto)
-
-### Stato Git
-- **Branch**: main
-- **Ultimo commit**: 0febb6d9 - S390: F3.2 SQLite Event Database package (cervellaswarm-event-store)
-- **File modificati** (5):
-  - sncp/PROMPT_RIPRESA_MASTER.md
-  - .sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
-  - .sncp/progetti/cervellaswarm/idee/20260113_RICERCA_COMUNICAZIONE_INTER_AGENT.md
-  - .sncp/progetti/cervellaswarm/idee/20260114_PROBLEMA_MEMORIA_SWARM.md
-  - .sncp/progetti/cervellaswarm/idee/20260115_TEMPLATE_PRE_POST_FLIGHT.md
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: auto
-
----

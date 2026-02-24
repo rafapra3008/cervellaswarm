@@ -80,7 +80,7 @@ FASE 3: Primi Utenti            [....................] PARCHEGGIATO
 FASE 4: Scala                   [....................] PARCHEGGIATO
 ```
 
-### OPEN SOURCE - IN CORSO (S362-S369)
+### OPEN SOURCE - IN CORSO (S362-S393)
 
 ```
 SUBROADMAP: .sncp/roadmaps/SUBROADMAP_OPENSOURCE.md
@@ -112,7 +112,11 @@ FASE 3: Session Memory System     [####################] 100% COMPLETA!
   F3.4 Documentation               DONE (S392) - 3 docs, CLI verificate, ~9.5/10
   F3.5 Auto-Handoff                DONE (S379) - 8 step, 14 file, 9.5/10
 
-FASE 4: Launch                    [....................] TODO
+FASE 4: Launch                    [####................] 20% IN CORSO
+  F4.1a CI/CD Pipeline             DONE (S393) - 15 workflow, Guardiana 9.5/10
+  F4.1b PyPI Publication            TODO - 7 packages da pubblicare
+  F4.1c GitHub Release              TODO
+  F4.1d Blog + Social              TODO
 ```
 
 ### LA STELLA POLARE - LINGUA UNIVERSALE (S375-S389)
