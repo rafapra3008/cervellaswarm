@@ -105,3 +105,24 @@ docs/MIGRATION.md                            # NUOVO (S392)
 
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
 *"Lavoriamo in pace! Senza casino! Dipende da noi!"*
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-02-24 21:41 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 0ac20d03 - S393: Final checkpoint - NORD fix + PROMPT_RIPRESA handoff
+- **File modificati** (2):
+  - sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
+  - .sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---

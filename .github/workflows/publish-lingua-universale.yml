@@ -1,20 +1,8 @@
-# Publish Workflow for cervellaswarm-lingua-universale (PyPI)
-#
-# Triggered on tags matching 'lingua-universale-v*'
-# Uses Trusted Publishing (OIDC) - no API tokens needed!
-#
-# Setup required on PyPI:
-#   1. Go to pypi.org -> Your projects -> Publishing
-#   2. Add new pending publisher:
-#      - Owner: rafapra3008
-#      - Repository: cervellaswarm-internal
-#      - Workflow: publish-lingua-universale.yml
-#      - Environment: pypi (for production)
-#   3. Same for test.pypi.org with environment: testpypi
-#
-# Quality is not negotiable.
+# Publish cervellaswarm-lingua-universale to PyPI
+# Triggered on tag: lingua-universale-v*
+# Trusted Publisher config on PyPI: workflow=publish-lingua-universale.yml, environment=pypi
 
-name: Publish Lingua Universale to PyPI
+name: Publish lingua-universale
 
 on:
   push:
@@ -22,196 +10,16 @@ on:
       - 'lingua-universale-v[0-9]+.[0-9]+.[0-9]+'
       - 'lingua-universale-v[0-9]+.[0-9]+.[0-9]+-*'
 
-# NEVER cancel publish in-flight!
-concurrency:
-  group: publish-lingua-universale-${{ github.ref }}
-  cancel-in-progress: false
+permissions:
+  id-token: write
+  contents: write
 
 jobs:
-  # ---------------------------------------------------------------
-  # Step 1: Build and verify the package
-  # ---------------------------------------------------------------
-  build:
-    name: Build & Verify
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-          cache: 'pip'
-
-      - name: Install build tools
-        run: python -m pip install --upgrade pip build twine
-
-      - name: Build package
-        run: python -m build
-        working-directory: packages/lingua-universale
-
-      - name: Verify package metadata
-        run: twine check dist/*
-        working-directory: packages/lingua-universale
-
-      - name: Verify wheel contents
-        run: |
-          echo "=== Wheel contents ==="
-          python -c "
-          import zipfile, os
-          whl = [f for f in os.listdir('dist') if f.endswith('.whl')][0]
-          with zipfile.ZipFile(f'dist/{whl}') as z:
-              for name in sorted(z.namelist()):
-                  print(f'  {name}')
-          "
-          echo ""
-          echo "=== Package version ==="
-          python -c "
-          import zipfile, os
-          whl = [f for f in os.listdir('dist') if f.endswith('.whl')][0]
-          with zipfile.ZipFile(f'dist/{whl}') as z:
-              meta = [n for n in z.namelist() if 'METADATA' in n][0]
-              for line in z.read(meta).decode().splitlines():
-                  if line.startswith(('Name:', 'Version:', 'License')):
-                      print(line)
-          "
-        working-directory: packages/lingua-universale
-
-      - name: Run tests
-        run: |
-          pip install -e ".[test]"
-          pytest tests/ -q --tb=short
-        working-directory: packages/lingua-universale
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: lingua-universale-distributions
-          path: packages/lingua-universale/dist/
-          retention-days: 30
-
-  # ---------------------------------------------------------------
-  # Step 2: Publish to TestPyPI (pre-releases)
-  # ---------------------------------------------------------------
-  publish-testpypi:
-    name: Publish to TestPyPI
-    needs: [build]
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha')
-
-    environment:
-      name: testpypi
-      url: https://test.pypi.org/p/cervellaswarm-lingua-universale
-
-    permissions:
-      id-token: write
-
-    steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: lingua-universale-distributions
-          path: dist/
-
-      - name: Publish to TestPyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository-url: https://test.pypi.org/legacy/
-          skip-existing: true
-          verbose: true
-
-  # ---------------------------------------------------------------
-  # Step 3: Publish to PyPI (stable releases only)
-  # ---------------------------------------------------------------
-  publish-pypi:
-    name: Publish to PyPI
-    needs: [build]
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: "!contains(github.ref_name, '-rc') && !contains(github.ref_name, '-beta') && !contains(github.ref_name, '-alpha')"
-
-    environment:
-      name: pypi
-      url: https://pypi.org/p/cervellaswarm-lingua-universale
-
-    permissions:
-      id-token: write
-
-    steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: lingua-universale-distributions
-          path: dist/
-
-      - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          verbose: true
-
-  # ---------------------------------------------------------------
-  # Step 4: Create GitHub Release
-  # ---------------------------------------------------------------
-  github-release:
-    name: Create GitHub Release
-    needs: [build, publish-pypi, publish-testpypi]
-    if: always() && needs.build.result == 'success' && (needs.publish-pypi.result == 'success' || needs.publish-testpypi.result == 'success')
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-
-    permissions:
-      contents: write
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: lingua-universale-distributions
-          path: dist/
-
-      - name: Extract version from tag
-        id: version
-        run: echo "version=${GITHUB_REF_NAME#lingua-universale-v}" >> "$GITHUB_OUTPUT"
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ github.ref_name }}
-          name: "Lingua Universale ${{ steps.version.outputs.version }}"
-          body: |
-            ## CervellaSwarm Lingua Universale ${{ steps.version.outputs.version }}
-
-            **The first session type system for AI agents in Python.**
-
-            **Install:**
-            ```bash
-            pip install cervellaswarm-lingua-universale==${{ steps.version.outputs.version }}
-            ```
-
-            **Highlights:**
-            - 9 modules, 84 public API symbols
-            - 1273 tests, 98% coverage
-            - Zero external dependencies
-            - Session types, DSL, Lean 4 verification, Confidence types, Trust composition
-
-            **What's new:**
-            - See [CHANGELOG](https://github.com/rafapra3008/cervellaswarm/blob/${{ github.ref_name }}/packages/lingua-universale/CHANGELOG.md)
-
-            **Links:**
-            - [PyPI package](https://pypi.org/project/cervellaswarm-lingua-universale/${{ steps.version.outputs.version }}/)
-            - [Documentation](https://github.com/rafapra3008/cervellaswarm/tree/main/packages/lingua-universale#readme)
-
-            ---
-            *Runtime-verified communication protocols for AI agents. Zero dependencies.*
-          files: dist/*
-          draft: false
-          prerelease: ${{ contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha') }}
+  publish:
+    uses: ./.github/workflows/_publish-package.yml
+    with:
+      package_name: "lingua-universale"
+      package_dir: "packages/lingua-universale"
+      pypi_name: "cervellaswarm-lingua-universale"
+      module_name: "cervellaswarm_lingua_universale"
+      release_description: "Runtime-verified communication protocols for AI agents. Zero dependencies."

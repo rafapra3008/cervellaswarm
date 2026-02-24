@@ -1,0 +1,25 @@
+# Publish cervellaswarm-code-intelligence to PyPI
+# Triggered on tag: code-intelligence-v*
+# Trusted Publisher config on PyPI: workflow=publish-code-intelligence.yml, environment=pypi
+
+name: Publish code-intelligence
+
+on:
+  push:
+    tags:
+      - 'code-intelligence-v[0-9]+.[0-9]+.[0-9]+'
+      - 'code-intelligence-v[0-9]+.[0-9]+.[0-9]+-*'
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  publish:
+    uses: ./.github/workflows/_publish-package.yml
+    with:
+      package_name: "code-intelligence"
+      package_dir: "packages/code-intelligence"
+      pypi_name: "cervellaswarm-code-intelligence"
+      module_name: "cervellaswarm_code_intelligence"
+      release_description: "AST-based code analysis: symbol extraction, dependency graphs, semantic search."
