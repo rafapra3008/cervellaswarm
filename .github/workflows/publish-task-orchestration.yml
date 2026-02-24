@@ -1,0 +1,25 @@
+# Publish cervellaswarm-task-orchestration to PyPI
+# Triggered on tag: task-orchestration-v*
+# Trusted Publisher config on PyPI: workflow=publish-task-orchestration.yml, environment=pypi
+
+name: Publish task-orchestration
+
+on:
+  push:
+    tags:
+      - 'task-orchestration-v[0-9]+.[0-9]+.[0-9]+'
+      - 'task-orchestration-v[0-9]+.[0-9]+.[0-9]+-*'
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  publish:
+    uses: ./.github/workflows/_publish-package.yml
+    with:
+      package_name: "task-orchestration"
+      package_dir: "packages/task-orchestration"
+      pypi_name: "cervellaswarm-task-orchestration"
+      module_name: "cervellaswarm_task_orchestration"
+      release_description: "Rule-based task routing and validation. Zero dependencies."

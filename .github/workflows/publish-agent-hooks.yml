@@ -1,0 +1,25 @@
+# Publish cervellaswarm-agent-hooks to PyPI
+# Triggered on tag: agent-hooks-v*
+# Trusted Publisher config on PyPI: workflow=publish-agent-hooks.yml, environment=pypi
+
+name: Publish agent-hooks
+
+on:
+  push:
+    tags:
+      - 'agent-hooks-v[0-9]+.[0-9]+.[0-9]+'
+      - 'agent-hooks-v[0-9]+.[0-9]+.[0-9]+-*'
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  publish:
+    uses: ./.github/workflows/_publish-package.yml
+    with:
+      package_name: "agent-hooks"
+      package_dir: "packages/agent-hooks"
+      pypi_name: "cervellaswarm-agent-hooks"
+      module_name: "cervellaswarm_agent_hooks"
+      release_description: "Hook system for agent lifecycle events. 5 hooks, YAML config."

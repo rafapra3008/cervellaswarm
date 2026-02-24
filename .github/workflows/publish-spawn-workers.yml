@@ -1,0 +1,25 @@
+# Publish cervellaswarm-spawn-workers to PyPI
+# Triggered on tag: spawn-workers-v*
+# Trusted Publisher config on PyPI: workflow=publish-spawn-workers.yml, environment=pypi
+
+name: Publish spawn-workers
+
+on:
+  push:
+    tags:
+      - 'spawn-workers-v[0-9]+.[0-9]+.[0-9]+'
+      - 'spawn-workers-v[0-9]+.[0-9]+.[0-9]+-*'
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  publish:
+    uses: ./.github/workflows/_publish-package.yml
+    with:
+      package_name: "spawn-workers"
+      package_dir: "packages/spawn-workers"
+      pypi_name: "cervellaswarm-spawn-workers"
+      module_name: "cervellaswarm_spawn_workers"
+      release_description: "Process management for AI agent teams. tmux/nohup backends."

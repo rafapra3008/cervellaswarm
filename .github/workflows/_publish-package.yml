@@ -1,0 +1,226 @@
+# Reusable publish workflow for CervellaSwarm Python packages.
+# Called by per-package publish-*.yml workflows.
+#
+# Usage: add `uses: ./.github/workflows/_publish-package.yml` with
+# the required inputs from a thin caller workflow.
+#
+# Trusted Publishing (OIDC) note:
+#   PyPI Trusted Publisher must reference the CALLER workflow filename,
+#   not this reusable. The caller must grant `id-token: write` to its
+#   environment jobs (or top-level). The publish jobs here also declare
+#   the permission so GitHub issues the token correctly through the
+#   reusable workflow chain.
+#
+# Quality is not negotiable.
+
+on:
+  workflow_call:
+    inputs:
+      package_name:
+        description: "Short package name, e.g. agent-hooks"
+        type: string
+        required: true
+      package_dir:
+        description: "Relative path from repo root, e.g. packages/agent-hooks"
+        type: string
+        required: true
+      pypi_name:
+        description: "PyPI distribution name, e.g. cervellaswarm-agent-hooks"
+        type: string
+        required: true
+      module_name:
+        description: "Python import name, e.g. cervellaswarm_agent_hooks"
+        type: string
+        required: true
+      release_description:
+        description: "One-line description for the GitHub release body"
+        type: string
+        required: true
+
+# NEVER cancel publish in-flight!
+concurrency:
+  group: publish-${{ inputs.package_name }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  # ---------------------------------------------------------------
+  # Step 1: Build and verify the package
+  # ---------------------------------------------------------------
+  build:
+    name: Build & Verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install build tools
+        run: python -m pip install --upgrade pip build twine
+
+      - name: Build package
+        run: python -m build
+        working-directory: ${{ inputs.package_dir }}
+
+      - name: Verify package metadata
+        run: twine check dist/*
+        working-directory: ${{ inputs.package_dir }}
+
+      - name: Verify wheel contents
+        run: |
+          echo "=== Wheel contents ==="
+          python -c "
+          import zipfile, os
+          whl = [f for f in os.listdir('dist') if f.endswith('.whl')][0]
+          with zipfile.ZipFile(f'dist/{whl}') as z:
+              for name in sorted(z.namelist()):
+                  print(f'  {name}')
+          "
+          echo ""
+          echo "=== Package version ==="
+          python -c "
+          import zipfile, os
+          whl = [f for f in os.listdir('dist') if f.endswith('.whl')][0]
+          with zipfile.ZipFile(f'dist/{whl}') as z:
+              meta = [n for n in z.namelist() if 'METADATA' in n][0]
+              for line in z.read(meta).decode().splitlines():
+                  if line.startswith(('Name:', 'Version:', 'License')):
+                      print(line)
+          "
+        working-directory: ${{ inputs.package_dir }}
+
+      - name: Run tests
+        run: |
+          pip install -e ".[test]"
+          pytest tests/ -q --tb=short
+        working-directory: ${{ inputs.package_dir }}
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.package_name }}-distributions
+          path: ${{ inputs.package_dir }}/dist/
+          retention-days: 30
+
+  # ---------------------------------------------------------------
+  # Step 2: Publish to TestPyPI (pre-releases only)
+  # ---------------------------------------------------------------
+  publish-testpypi:
+    name: Publish to TestPyPI
+    needs: [build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha')
+
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/${{ inputs.pypi_name }}
+
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.package_name }}-distributions
+          path: dist/
+
+      - name: Publish to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          skip-existing: true
+          verbose: true
+
+  # ---------------------------------------------------------------
+  # Step 3: Publish to PyPI (stable releases only)
+  # ---------------------------------------------------------------
+  publish-pypi:
+    name: Publish to PyPI
+    needs: [build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: "!contains(github.ref_name, '-rc') && !contains(github.ref_name, '-beta') && !contains(github.ref_name, '-alpha')"
+
+    environment:
+      name: pypi
+      url: https://pypi.org/p/${{ inputs.pypi_name }}
+
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.package_name }}-distributions
+          path: dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          verbose: true
+
+  # ---------------------------------------------------------------
+  # Step 4: Create GitHub Release
+  # ---------------------------------------------------------------
+  github-release:
+    name: Create GitHub Release
+    needs: [build, publish-pypi, publish-testpypi]
+    if: always() && needs.build.result == 'success' && (needs.publish-pypi.result == 'success' || needs.publish-testpypi.result == 'success')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.package_name }}-distributions
+          path: dist/
+
+      - name: Extract version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#${{ inputs.package_name }}-v}" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "${{ inputs.package_name }} ${{ steps.version.outputs.version }}"
+          body: |
+            ## CervellaSwarm ${{ inputs.package_name }} ${{ steps.version.outputs.version }}
+
+            **${{ inputs.release_description }}**
+
+            **Install:**
+            ```bash
+            pip install ${{ inputs.pypi_name }}==${{ steps.version.outputs.version }}
+            ```
+
+            **What's new:**
+            - See [CHANGELOG](https://github.com/rafapra3008/cervellaswarm/blob/${{ github.ref_name }}/${{ inputs.package_dir }}/CHANGELOG.md)
+
+            **Links:**
+            - [PyPI package](https://pypi.org/project/${{ inputs.pypi_name }}/${{ steps.version.outputs.version }}/)
+            - [Documentation](https://github.com/rafapra3008/cervellaswarm/tree/main/${{ inputs.package_dir }}#readme)
+
+            ---
+            *Part of the CervellaSwarm multi-agent framework.*
+          files: dist/*
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha') }}

@@ -1,0 +1,25 @@
+# Publish cervellaswarm-quality-gates to PyPI
+# Triggered on tag: quality-gates-v*
+# Trusted Publisher config on PyPI: workflow=publish-quality-gates.yml, environment=pypi
+
+name: Publish quality-gates
+
+on:
+  push:
+    tags:
+      - 'quality-gates-v[0-9]+.[0-9]+.[0-9]+'
+      - 'quality-gates-v[0-9]+.[0-9]+.[0-9]+-*'
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  publish:
+    uses: ./.github/workflows/_publish-package.yml
+    with:
+      package_name: "quality-gates"
+      package_dir: "packages/quality-gates"
+      pypi_name: "cervellaswarm-quality-gates"
+      module_name: "cervellaswarm_quality_gates"
+      release_description: "Content scoring, hook validation, agent sync. Zero dependencies."

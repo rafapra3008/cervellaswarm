@@ -1,0 +1,25 @@
+# Publish cervellaswarm-event-store to PyPI
+# Triggered on tag: event-store-v*
+# Trusted Publisher config on PyPI: workflow=publish-event-store.yml, environment=pypi
+
+name: Publish event-store
+
+on:
+  push:
+    tags:
+      - 'event-store-v[0-9]+.[0-9]+.[0-9]+'
+      - 'event-store-v[0-9]+.[0-9]+.[0-9]+-*'
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  publish:
+    uses: ./.github/workflows/_publish-package.yml
+    with:
+      package_name: "event-store"
+      package_dir: "packages/event-store"
+      pypi_name: "cervellaswarm-event-store"
+      module_name: "cervellaswarm_event_store"
+      release_description: "SQLite event database for agent analytics. Zero dependencies."

@@ -1,0 +1,25 @@
+# Publish cervellaswarm-session-memory to PyPI
+# Triggered on tag: session-memory-v*
+# Trusted Publisher config on PyPI: workflow=publish-session-memory.yml, environment=pypi
+
+name: Publish session-memory
+
+on:
+  push:
+    tags:
+      - 'session-memory-v[0-9]+.[0-9]+.[0-9]+'
+      - 'session-memory-v[0-9]+.[0-9]+.[0-9]+-*'
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  publish:
+    uses: ./.github/workflows/_publish-package.yml
+    with:
+      package_name: "session-memory"
+      package_dir: "packages/session-memory"
+      pypi_name: "cervellaswarm-session-memory"
+      module_name: "cervellaswarm_session_memory"
+      release_description: "Persistent session state management. The differentiator."

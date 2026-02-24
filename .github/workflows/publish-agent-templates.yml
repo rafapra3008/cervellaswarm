@@ -1,0 +1,25 @@
+# Publish cervellaswarm-agent-templates to PyPI
+# Triggered on tag: agent-templates-v*
+# Trusted Publisher config on PyPI: workflow=publish-agent-templates.yml, environment=pypi
+
+name: Publish agent-templates
+
+on:
+  push:
+    tags:
+      - 'agent-templates-v[0-9]+.[0-9]+.[0-9]+'
+      - 'agent-templates-v[0-9]+.[0-9]+.[0-9]+-*'
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  publish:
+    uses: ./.github/workflows/_publish-package.yml
+    with:
+      package_name: "agent-templates"
+      package_dir: "packages/agent-templates"
+      pypi_name: "cervellaswarm-agent-templates"
+      module_name: "cervellaswarm_agent_templates"
+      release_description: "Agent definition templates and team composition. YAML-based."

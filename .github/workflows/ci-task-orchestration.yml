@@ -1,0 +1,102 @@
+# CI Workflow for cervellaswarm-task-orchestration
+#
+# Runs on push/PR when package files change.
+# Matrix: Python 3.10, 3.11, 3.12, 3.13
+#
+# Quality is not negotiable.
+
+name: Task Orchestration CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/task-orchestration/**'
+      - '.github/workflows/ci-task-orchestration.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'packages/task-orchestration/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: packages/task-orchestration/pyproject.toml
+
+      - name: Install package with test dependencies
+        run: pip install -e ".[test]"
+        working-directory: packages/task-orchestration
+
+      - name: Run tests
+        if: matrix.python-version != '3.12'
+        run: pytest tests/ -q --tb=short
+        working-directory: packages/task-orchestration
+
+      - name: Run tests with coverage (Python 3.12 only)
+        if: matrix.python-version == '3.12'
+        run: |
+          pytest tests/ --cov=cervellaswarm_task_orchestration --cov-report=term --cov-report=xml --tb=short
+        working-directory: packages/task-orchestration
+
+      - name: Upload coverage (Python 3.12 only)
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: task-orchestration-coverage
+          path: packages/task-orchestration/coverage.xml
+          retention-days: 30
+
+  build-check:
+    name: Build & Package Verify
+    needs: [test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install build tools
+        run: pip install build twine
+
+      - name: Build package
+        run: python -m build
+        working-directory: packages/task-orchestration
+
+      - name: Verify package
+        run: twine check dist/*
+        working-directory: packages/task-orchestration
+
+      - name: Test install from wheel
+        run: |
+          pip install dist/*.whl
+          python -c "from cervellaswarm_task_orchestration import classify_task, route_task; print('Import OK')"
+          cervella-classify --help
+          cervella-route --help
+        working-directory: packages/task-orchestration
