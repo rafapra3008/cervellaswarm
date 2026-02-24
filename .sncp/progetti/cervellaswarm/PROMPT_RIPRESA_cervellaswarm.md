@@ -7,50 +7,49 @@
 
 ## SESSIONE 393 - Cosa e successo
 
-### Commit S392 completato
-- S392 era rimasto senza commit (auto-compact). Primo atto: committare e pushare tutto
-- Commit `fe403210`: F3.3 Quality Gates + F3.4 Documentation - FASE 3 COMPLETA!
+### 3 Commit pushati
+1. `fe403210` - S392: F3.3 Quality Gates + F3.4 Documentation -> FASE 3 100%!
+2. `6bd27918` - S393: CI/CD Pipeline (15 workflow, Guardiana 8.5->9.5/10)
+3. `c0662937` - S393: NORD + PROMPT_RIPRESA aggiornati
 
-### FASE 4.1 Pre-requisiti: CI/CD Pipeline
-- Ricerca: solo 2/9 packages su PyPI (code-intelligence, lingua-universale). 7 mancano
-- Ricerca: strategia publish monorepo -> Reusable Workflow (DRY pattern)
-- Build check: 7/7 packages buildano, 1572 test passano, twine check OK
-- Creati 15 nuovi workflow files:
-  - `_publish-package.yml`: template reusable (build, testpypi, pypi, github-release)
-  - 7x `publish-{name}.yml`: thin callers (25 righe ciascuno)
-  - 7x `ci-{name}.yml`: Python 3.10-3.13 matrix, coverage, smoke tests
-- Guardiana audit: 8.5 -> 9.5/10 (4 P1 phantom imports + 2 P2 redundant permissions fixati)
-- Commit `6bd27918`: S393 CI/CD pushato
+### Stato packages (tabella aggiornata)
+```
+PACKAGE                  PYPI   CI   PUBLISH   BUILD   TESTS
+code-intelligence        LIVE   OK   OK        OK      399
+lingua-universale        LIVE   OK   OK        OK      1273
+agent-hooks              --     OK   OK        OK      236
+agent-templates          --     OK   OK        OK      192
+task-orchestration       --     OK   OK        OK      305
+spawn-workers            --     OK   OK        OK      191
+session-memory           --     OK   OK        OK      193
+event-store              --     OK   OK        OK      249
+quality-gates            --     OK   OK        OK      206
+TOTALE                   2/9    9/9  9/9       9/9     3244
+```
 
-### Stato PyPI
-| Package | Su PyPI | Workflow pronto |
-|---------|---------|-----------------|
-| code-intelligence | SI (S369) | SI (esistente) |
-| lingua-universale | SI (S389) | SI (esistente) |
-| agent-hooks | NO | SI (S393) |
-| agent-templates | NO | SI (S393) |
-| task-orchestration | NO | SI (S393) |
-| spawn-workers | NO | SI (S393) |
-| session-memory | NO | SI (S393) |
-| event-store | NO | SI (S393) |
-| quality-gates | NO | SI (S393) |
+### Per pubblicare i 7 packages mancanti
+**BLOCCO: serve Trusted Publisher su pypi.org (Rafa)**
+
+Per OGNI package, su pypi.org -> Publishing -> "Add pending publisher":
+- PyPI name: `cervellaswarm-{name}`
+- Owner: `rafapra3008`, Repo: `cervellaswarm-internal`
+- Workflow: `publish-{name}.yml`, Environment: `pypi`
+
+Poi la Regina taglia: `git tag {name}-v0.1.0 && git push origin {name}-v0.1.0`
 
 ---
 
-## Lezioni Apprese (Sessione 393)
+## Lezioni Apprese (S393)
 
 ### Cosa ha funzionato bene
-- Agenti in parallelo: 3 DevOps agent creano 15 file contemporaneamente (3x velocita)
-- Guardiana trova phantom imports PRIMA che CI fallisca in produzione (4 P1 evitati)
-- Ricerca PRIMA di implementare: monorepo pattern ha evitato 1400+ righe duplicate
-
-### Cosa non ha funzionato
-- Smoke test imports inventati dagli agenti: MAI fidarsi di API guessate, SEMPRE verificare
+- 3 agenti DevOps in parallelo creano 15 file contemporaneamente
+- Guardiana trova 4 phantom imports PRIMA del deploy (pattern: verificare API reali)
+- Reusable workflow evita 1400+ righe duplicate
+- Commit SUBITO dopo ogni deliverable (lezione S392)
 
 ### Pattern candidato
-- "Verificare API reali con import test PRIMA di scrivere smoke tests nei CI"
-- Evidenza: S393 (4 P1 phantom imports)
-- Azione: PROMUOVERE
+- "Verificare API reali PRIMA di scrivere smoke test nei CI"
+- Evidenza: S393 (4/7 CI phantom imports). Azione: PROMUOVERE
 
 ---
 
@@ -58,31 +57,38 @@
 
 ```
 OPEN SOURCE ROADMAP:
-  FASE 0: Preparazione       [####################] 100%
-  FASE 1: AST Pipeline       [####################] 100%
-  FASE 2: Agent Framework    [####################] 100%
-  FASE 3: Session Memory     [####################] 100% COMPLETA!
-  FASE 4: Launch              [####................] 20% IN CORSO
-    F4.1a CI/CD Pipeline       DONE (S393, 9.5/10) - 15 workflow files
-    F4.1b PyPI Publication     TODO - 7 packages da pubblicare
+  FASE 0-3: COMPLETE (100%, media 9.4/10)
+  FASE 4: Launch              [####................] 20%
+    F4.1a CI/CD Pipeline       DONE (S393, 9.5/10)
+    F4.1b PyPI Publication     BLOCKED (Trusted Publisher)
     F4.1c GitHub Release       TODO
     F4.1d Blog + Social        TODO
+    F4.2  Community            TODO
 
-PACKAGES: 2/9 su PyPI, 9 totali, 3450+ test
-CI/CD: 9/9 CI workflow, 9/9 publish workflow PRONTI
+PACKAGES: 2/9 LIVE, 7 pronti | CI/CD: 9/9 completi | TEST: 3244+
 ```
 
 ---
 
-## PROSSIMI STEP (in ordine)
+## PROSSIMI STEP
 
-1. **Configurare Trusted Publishers su PyPI** per 7 nuovi packages
-   - Rafa va su pypi.org -> Publishing -> Add pending publisher per ciascuno
-   - Owner: rafapra3008, Repo: cervellaswarm-internal, Workflow: publish-{name}.yml, Env: pypi
-2. **Taggare e pubblicare** i 7 packages (git tag {name}-v0.1.0 && git push --tags)
-3. **Refactor 2 workflow esistenti** (code-intelligence, lingua-universale) a usare il template reusable
-4. **GitHub Release formale** con CHANGELOG
-5. **Blog post + community** (F4.1d, F4.2)
+1. Configurare Trusted Publishers (Rafa su pypi.org)
+2. Taggare + pubblicare 7 packages
+3. Refactoring opzionale: migrare 2 publish esistenti al template reusable
+4. GitHub Release formale
+5. Sync repo pubblico + Blog + Community
+
+---
+
+## FILE CHIAVE
+
+```
+.github/workflows/_publish-package.yml      # Template reusable
+.github/workflows/publish-{7 names}.yml     # Thin callers
+.github/workflows/ci-{7 names}.yml          # CI matrix
+packages/quality-gates/                      # F3.3 (S392)
+docs/MIGRATION.md                            # NUOVO (S392)
+```
 
 ---
 
@@ -90,11 +96,10 @@ CI/CD: 9/9 CI workflow, 9/9 publish workflow PRONTI
 
 | Sessione | Cosa |
 |----------|------|
-| S337-S372 | Coverage push + SNCP 4.0 + FASE 0-2 open source |
-| S373-S390 | FASE 3 complete (5 deliverables, media 9.4/10) |
-| S391 | PERSA (non committata) |
-| S392 | F3.3 Quality Gates + F3.4 Documentation - FASE 3 100%! |
-| S393 | CI/CD Pipeline: 15 workflow, Guardiana 9.5/10, 7 packages pronti per PyPI |
+| S337-S390 | FASE 0-3 open source (complete) |
+| S391 | PERSA |
+| S392 | F3.3 + F3.4 - FASE 3 100%! |
+| S393 | CI/CD Pipeline + Guardiana 9.5/10 |
 
 ---
 
