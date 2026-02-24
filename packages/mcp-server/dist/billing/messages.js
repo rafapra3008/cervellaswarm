@@ -4,7 +4,7 @@
  * User-friendly messages for quota warnings and limits.
  * Designed to be helpful, not aggressive.
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  */
 import { TIER_NAMES, TIER_LIMITS, TIER_PRICES, getUpgradeTier, getUpgradeUrl, } from "./tiers.js";

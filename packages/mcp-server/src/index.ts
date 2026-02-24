@@ -10,6 +10,9 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
@@ -27,9 +30,17 @@ import {
 import { getUsageTracker, QuotaStatus } from "./billing/usage.js";
 import { registerSncpTools } from "./sncp/tools.js";
 
-// Server metadata
+// Server metadata - version from package.json (single source of truth)
 const SERVER_NAME = "cervellaswarm";
-const SERVER_VERSION = "0.3.0";
+const SERVER_VERSION = (() => {
+  const modDir = dirname(fileURLToPath(import.meta.url));
+  for (const rel of ["../package.json", "../../package.json"]) {
+    try {
+      return JSON.parse(readFileSync(join(modDir, rel), "utf-8")).version;
+    } catch { /* continue */ }
+  }
+  return "0.0.0";
+})();
 
 // Create MCP server instance
 const server = new McpServer({
@@ -249,7 +260,7 @@ server.tool(
     status += `## API Key\n\n`;
 
     if (hasKey && apiKey) {
-      const maskedKey = `${apiKey.substring(0, 10)}...${apiKey.substring(apiKey.length - 4)}`;
+      const maskedKey = `${apiKey.substring(0, 7)}****${apiKey.substring(apiKey.length - 4)}`;
       status += `- Status: Configured\n`;
       status += `- Source: ${keySource}\n`;
       status += `- Key: \`${maskedKey}\`\n`;
@@ -339,8 +350,7 @@ registerSncpTools(server);
 // PROMPTS
 // ============================================
 
-// TODO(#2): Add prompts in future versions
-// https://github.com/rafapra3008/cervellaswarm-internal/issues/2
+// TODO: Add prompts in future versions
 // - coordinate_workers: Plan multi-agent tasks
 // - analyze_codebase: Full project analysis
 

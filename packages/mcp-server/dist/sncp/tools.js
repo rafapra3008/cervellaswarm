@@ -59,7 +59,8 @@ export function registerSncpTools(server) {
     });
     /**
      * Tool: sncp_read_stato
-     * Read stato.md for a project (detailed state)
+     * DEPRECATED: stato.md was eliminated in SNCP 4.0 (S357).
+     * Kept for backward compatibility - returns deprecation notice.
      */
     server.tool("sncp_read_stato", "Read the stato.md (detailed project state) for a CervellaSwarm project. " +
         "Contains: current progress, open issues, technical details.", {
@@ -73,30 +74,17 @@ export function registerSncpTools(server) {
         idempotentHint: true,
         openWorldHint: false,
     }, async ({ project }) => {
-        try {
-            const { content, path } = await readProjectFile(project, "stato");
-            return {
-                content: [
-                    {
-                        type: "text",
-                        text: `# Stato - ${project}\n` +
-                            `Source: ${path}\n\n---\n\n` +
-                            content,
-                    },
-                ],
-            };
-        }
-        catch (error) {
-            return {
-                content: [
-                    {
-                        type: "text",
-                        text: `Error reading stato.md for ${project}: ${error instanceof Error ? error.message : "File not found"}`,
-                    },
-                ],
-                isError: true,
-            };
-        }
+        return {
+            content: [
+                {
+                    type: "text",
+                    text: `# stato.md - DEPRECATED\n\n` +
+                        `stato.md was eliminated in SNCP 4.0 (S357).\n` +
+                        `Use \`sncp_read_ripresa\` instead to read the PROMPT_RIPRESA for ${project}.\n` +
+                        `PROMPT_RIPRESA contains: session state, decisions, next steps.`,
+                },
+            ],
+        };
     });
     /**
      * Tool: sncp_list_projects
@@ -126,7 +114,6 @@ export function registerSncpTools(server) {
             for (const p of projects) {
                 const indicators = [
                     p.hasPromptRipresa ? "RIPRESA" : "",
-                    p.hasStato ? "STATO" : "",
                     p.hasMemory ? "MEMORY" : "",
                 ]
                     .filter(Boolean)
@@ -135,7 +122,7 @@ export function registerSncpTools(server) {
                 output += `Available: ${indicators}\n`;
                 output += `Files: ${p.files.join(", ")}\n\n`;
             }
-            output += `\nUse \`sncp_read_ripresa\` or \`sncp_read_stato\` to read specific files.`;
+            output += `\nUse \`sncp_read_ripresa\` to read session context for a project.`;
             return {
                 content: [{ type: "text", text: output }],
             };
@@ -157,7 +144,7 @@ export function registerSncpTools(server) {
      * Search across SNCP files for a query
      */
     server.tool("sncp_search", "Search across all CervellaSwarm SNCP project files for a query string. " +
-        "Searches PROMPT_RIPRESA, stato.md, roadmaps, and other .md files.", {
+        "Searches PROMPT_RIPRESA, roadmaps, and other .md files.", {
         query: z.string().min(1).describe("Search query (case-insensitive)"),
         project: z
             .enum(KNOWN_PROJECTS)

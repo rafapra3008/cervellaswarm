@@ -3,12 +3,13 @@
  *
  * Provides access to SNCP project files:
  * - PROMPT_RIPRESA (session context)
- * - stato.md (project state)
+ * - MEMORY.md (project memory)
  * - roadmaps and other docs
  *
  * Version: 1.0.0
  * Date: 2026-02-10 - Sessione 352 (Step D.2)
  */
+import { existsSync } from "node:fs";
 import { readFile, readdir, stat } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -18,17 +19,35 @@ const __dirname = dirname(__filename);
 // Known SNCP projects
 const KNOWN_PROJECTS = ["cervellaswarm", "miracollo", "contabilita", "cervellacostruzione"];
 // File types available per project
+// NOTE: stato.md eliminated in SNCP 4.0 (S357). Only PROMPT_RIPRESA and MEMORY survive.
 const FILE_TYPES = {
     PROMPT_RIPRESA: "PROMPT_RIPRESA",
-    stato: "stato",
     MEMORY: "MEMORY",
 };
 /**
  * Find the SNCP root directory.
- * Strategy: go up from compiled dist/ to project root, find .sncp/progetti/
+ * Strategy: env var > walk up from CWD > fall back to relative from module.
  */
 export function getSncpRoot() {
-    // From dist/sncp/reader.js → go up 4 levels to CervellaSwarm/
+    // Priority 1: Environment variable (most reliable for MCP servers)
+    const envRoot = process.env.CERVELLASWARM_SNCP_ROOT;
+    if (envRoot) {
+        return resolve(envRoot, "progetti");
+    }
+    // Priority 2: Walk up from CWD looking for .sncp/progetti/
+    let dir = process.cwd();
+    for (let i = 0; i < 10; i++) {
+        const candidate = join(dir, ".sncp", "progetti");
+        if (existsSync(candidate)) {
+            return candidate;
+        }
+        const parent = dirname(dir);
+        if (parent === dir)
+            break;
+        dir = parent;
+    }
+    // Priority 3: Fall back to relative path from module location
+    // From dist/sncp/reader.js -> go up 4 levels to CervellaSwarm/
     return resolve(__dirname, "..", "..", "..", "..", ".sncp", "progetti");
 }
 /**
@@ -41,14 +60,12 @@ export async function readProjectFile(project, fileType) {
         case "PROMPT_RIPRESA":
             fileName = `PROMPT_RIPRESA_${project}.md`;
             break;
-        case "stato":
-            fileName = "stato.md";
-            break;
         case "MEMORY":
             fileName = "MEMORY.md";
             break;
     }
     const filePath = join(root, project, fileName);
+    assertWithinRoot(root, filePath);
     const content = await readFile(filePath, "utf-8");
     return { content, path: filePath };
 }
@@ -85,7 +102,7 @@ export async function listProjects() {
         results.push({
             name: entry,
             hasPromptRipresa: projectFiles.some((f) => f.startsWith("PROMPT_RIPRESA_")),
-            hasStato: projectFiles.includes("stato.md"),
+            hasStato: false, // stato.md eliminated in SNCP 4.0 (S357)
             hasMemory: projectFiles.includes("MEMORY.md"),
             files: projectFiles.filter((f) => f.endsWith(".md")),
         });
@@ -102,6 +119,7 @@ export async function searchSncp(query, project) {
     const queryLower = query.toLowerCase();
     for (const proj of projectsToSearch) {
         const projectDir = join(root, proj);
+        assertWithinRoot(root, projectDir);
         let files;
         try {
             files = await readdir(projectDir);
@@ -133,6 +151,7 @@ export async function searchSncp(query, project) {
         }
         // Also search roadmaps/ subdirectory
         const roadmapsDir = join(projectDir, "roadmaps");
+        assertWithinRoot(root, roadmapsDir);
         let roadmapFiles;
         try {
             roadmapFiles = await readdir(roadmapsDir);
@@ -165,5 +184,16 @@ export async function searchSncp(query, project) {
     }
     return results;
 }
-export { KNOWN_PROJECTS, FILE_TYPES };
+/**
+ * Validate that a resolved path stays within the SNCP root.
+ * Defense-in-depth: even if Zod validation is bypassed, prevent path traversal.
+ */
+function assertWithinRoot(root, targetPath) {
+    const resolvedRoot = resolve(root);
+    const resolvedTarget = resolve(targetPath);
+    if (!resolvedTarget.startsWith(resolvedRoot + "/") && resolvedTarget !== resolvedRoot) {
+        throw new Error(`Path traversal blocked: target is outside SNCP root`);
+    }
+}
+export { KNOWN_PROJECTS, FILE_TYPES, assertWithinRoot };
 //# sourceMappingURL=reader.js.map

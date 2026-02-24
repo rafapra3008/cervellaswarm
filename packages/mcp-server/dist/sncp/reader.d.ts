@@ -3,7 +3,7 @@
  *
  * Provides access to SNCP project files:
  * - PROMPT_RIPRESA (session context)
- * - stato.md (project state)
+ * - MEMORY.md (project memory)
  * - roadmaps and other docs
  *
  * Version: 1.0.0
@@ -13,13 +13,12 @@ declare const KNOWN_PROJECTS: readonly ["cervellaswarm", "miracollo", "contabili
 export type SncpProject = (typeof KNOWN_PROJECTS)[number];
 declare const FILE_TYPES: {
     readonly PROMPT_RIPRESA: "PROMPT_RIPRESA";
-    readonly stato: "stato";
     readonly MEMORY: "MEMORY";
 };
 export type SncpFileType = keyof typeof FILE_TYPES;
 /**
  * Find the SNCP root directory.
- * Strategy: go up from compiled dist/ to project root, find .sncp/progetti/
+ * Strategy: env var > walk up from CWD > fall back to relative from module.
  */
 export declare function getSncpRoot(): string;
 /**
@@ -35,7 +34,8 @@ export declare function readProjectFile(project: SncpProject, fileType: SncpFile
 export declare function listProjects(): Promise<Array<{
     name: string;
     hasPromptRipresa: boolean;
-    hasStato: boolean;
+    /** @deprecated stato.md eliminated in SNCP 4.0 - always false */
+    hasStato: false;
     hasMemory: boolean;
     files: string[];
 }>>;
@@ -50,5 +50,10 @@ export declare function searchSncp(query: string, project?: SncpProject): Promis
         text: string;
     }>;
 }>>;
-export { KNOWN_PROJECTS, FILE_TYPES };
+/**
+ * Validate that a resolved path stays within the SNCP root.
+ * Defense-in-depth: even if Zod validation is bypassed, prevent path traversal.
+ */
+declare function assertWithinRoot(root: string, targetPath: string): void;
+export { KNOWN_PROJECTS, FILE_TYPES, assertWithinRoot };
 //# sourceMappingURL=reader.d.ts.map

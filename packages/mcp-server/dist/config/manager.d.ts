@@ -4,7 +4,7 @@
  * Shares configuration with CLI through `conf` package.
  * Same config file = CLI and MCP see same settings.
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  */
 export declare function getApiKey(): string | null;

@@ -79,6 +79,7 @@ export async function readProjectFile(
   }
 
   const filePath = join(root, project, fileName);
+  assertWithinRoot(root, filePath);
 
   const content = await readFile(filePath, "utf-8");
   return { content, path: filePath };
@@ -169,6 +170,7 @@ export async function searchSncp(
 
   for (const proj of projectsToSearch) {
     const projectDir = join(root, proj);
+    assertWithinRoot(root, projectDir);
     let files: string[];
     try {
       files = await readdir(projectDir);
@@ -202,6 +204,7 @@ export async function searchSncp(
 
     // Also search roadmaps/ subdirectory
     const roadmapsDir = join(projectDir, "roadmaps");
+    assertWithinRoot(root, roadmapsDir);
     let roadmapFiles: string[];
     try {
       roadmapFiles = await readdir(roadmapsDir);
@@ -237,4 +240,16 @@ export async function searchSncp(
   return results;
 }
 
-export { KNOWN_PROJECTS, FILE_TYPES };
+/**
+ * Validate that a resolved path stays within the SNCP root.
+ * Defense-in-depth: even if Zod validation is bypassed, prevent path traversal.
+ */
+function assertWithinRoot(root: string, targetPath: string): void {
+  const resolvedRoot = resolve(root);
+  const resolvedTarget = resolve(targetPath);
+  if (!resolvedTarget.startsWith(resolvedRoot + "/") && resolvedTarget !== resolvedRoot) {
+    throw new Error(`Path traversal blocked: target is outside SNCP root`);
+  }
+}
+
+export { KNOWN_PROJECTS, FILE_TYPES, assertWithinRoot };

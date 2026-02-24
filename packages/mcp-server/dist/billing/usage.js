@@ -8,12 +8,13 @@
  * - Serialized writes (race condition safe)
  * - Lazy monthly reset
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  */
 import * as fs from "fs";
 import * as path from "path";
 import * as crypto from "crypto";
+import * as os from "os";
 import { z } from "zod";
 import { QuotaStatus, } from "./types.js";
 import { SCHEMA_VERSION, MAX_HISTORY_RECORDS, WARNING_THRESHOLD, getLimitForTier, isUnlimited, } from "./tiers.js";
@@ -21,7 +22,9 @@ import { getWarningMessage, getLimitExceededMessage, getUsageStatusMessage, } fr
 // Re-export QuotaStatus for convenience
 export { QuotaStatus };
 // Checksum secret (machine-specific)
-const CHECKSUM_SECRET = process.env.CERVELLASWARM_SECRET || `cs-${process.env.USER || "user"}-local`;
+// Uses hostname + uid for better uniqueness than just USER env var
+const CHECKSUM_SECRET = process.env.CERVELLASWARM_SECRET ||
+    `cs-${process.env.USER || "user"}-${os.hostname()}-${process.getuid?.() ?? 0}`;
 // Zod schema for validation
 const BillingPeriodSchema = z.object({
     month: z.string().regex(/^\d{4}-\d{2}$/),

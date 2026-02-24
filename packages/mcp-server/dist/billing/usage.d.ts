@@ -8,7 +8,7 @@
  * - Serialized writes (race condition safe)
  * - Lazy monthly reset
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  */
 import { type Tier, type QuotaResult, QuotaStatus, type UsageStats } from "./types.js";

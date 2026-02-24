@@ -1,45 +1,50 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-21 - Sessione 389
-> **STATUS:** Lingua Universale v0.1.0 PUBBLICATA SU PYPI! `pip install cervellaswarm-lingua-universale`
+> **Ultimo aggiornamento:** 2026-02-24 - Sessione 390
+> **STATUS:** Claude Desktop CONFIGURATO per la Famiglia!
 
 ---
 
-## SESSIONE 389 - Cosa e successo
+## SESSIONE 390 - Cosa e successo
 
-### PyPI Publish COMPLETATO!
+### Claude Desktop Setup COMPLETATO
 
-Rafa ha configurato il Trusted Publisher su pypi.org. La Regina ha creato il tag `lingua-universale-v0.1.0` e il workflow ha pubblicato automaticamente.
+Rafa ha chiesto di esplorare Claude Desktop (v1.1.4088, aggiornato 23 Feb 2026) per il workflow della Famiglia. Ricerca + configurazione + audit Guardiana.
 
-**Risultato:** `cervellaswarm-lingua-universale` v0.1.0 e LIVE su PyPI!
-- `pip install cervellaswarm-lingua-universale` funziona
-- GitHub Release creata automaticamente
-- Trusted Publishing OIDC (zero secrets nel repo)
+**Cosa abbiamo fatto:**
+- Ricerca approfondita su Claude Desktop (12+ fonti): 3 tab (Chat, Cowork, Code)
+- Tab Code = stessa esperienza CLI (legge CLAUDE.md, agents, .mcp.json, hooks)
+- MCP server CervellaSwarm: rebuild TypeScript, verificato funzionante nel Desktop
+- SNCP tools funzionano (read/search progetti) - testato live nel Desktop
+- Guardiana audit: 8.5/10 (0 P0, 0 P1, 3 P2, 4 P3)
 
-### Pipeline completa (tutto automatico dopo il tag)
+**Decisioni chiave:**
+- MCP spawn_worker NON serve nel Desktop (Max 20x copre tutto, Task tool nativo)
+- Il valore del nostro MCP nel Desktop = SNCP (memoria progetti)
+- Errore "connectors directory" = ignorabile (marketplace Anthropic, non nostro)
+- Desktop = complemento alla CLI, non sostituto. CLI resta backbone per automazione/swarm
 
-```
-✓ Build & Verify    28s  - test passati, wheel verificato
-✓ Publish to PyPI   19s  - LIVE su pypi.org
-✓ GitHub Release     9s  - Release con artifacts
-```
+### Guardiana Audit P2 trovati (MCP server)
+- F1: Nessun env isolation in .mcp.json (security)
+- F2: Path traversal fragile in sncp/reader.ts (type guard salva, ma fragile)
+- F3: API key prefix leak in check_status (mostra troppi caratteri)
+- F7: Version mismatch SERVER_VERSION 0.3.0 vs package.json 2.0.0-beta.1
 
 ---
 
-## Lezioni Apprese (Sessione 389)
+## Lezioni Apprese (Sessione 390)
 
 ### Cosa ha funzionato bene
-- CEO decision: consultare 4 esperte in parallelo prima di decidere la direzione
-- Guardiana ha trovato 3 P1 nel README (esempi rotti!) - senza lei, primo developer = errore
-- Researcher ha dato struttura vincente (beartype pattern: mostra l'ERRORE, non il meccanismo)
+- Ricerca PRIMA di agire: 2 researcher in parallelo (features + setup guide) = decisione informata
+- Guardiana audit su config MCP ha trovato 3 P2 che non avremmo visto
 
 ### Cosa non ha funzionato
-- Auto-checkpoint hook sporca i PROMPT_RIPRESA (ha aggiunto noise 2 volte, dovuto pulire)
+- Auto-checkpoint hook continua a sporcare PROMPT_RIPRESA (noise in fondo al file, dovuto pulire di nuovo)
 
 ### Pattern candidato
-- "README: verifica TUTTI gli esempi con esecuzione reale prima di pubblicare" (F1-F3 erano copy-paste errors)
-- Evidenza: S388 (3 P1 in README), S368 (code-intelligence README)
-- Azione: PROMUOVERE (2 occorrenze, critico per open source)
+- "Desktop Code tab = CLI con UI. Stessi file, stessi agents, stessi hooks. Zero config extra."
+- Evidenza: S390 (confermato con test live)
+- Azione: MONITORARE (1 occorrenza)
 
 ---
 
@@ -85,10 +90,9 @@ CROSS-PACKAGE: 3112 test totali, 11 packages, ZERO flaky
 | S387 | AUTO-LEARNING L1 + FASE B (9 moduli, 1273 test, 84 API) |
 | S388 | README killer + CI/Publish per PyPI (Guardiana 9.5/10) |
 | S389 | PyPI PUBLISH LIVE! cervellaswarm-lingua-universale v0.1.0 |
+| S390 | Claude Desktop setup + MCP audit Guardiana 8.5/10 |
 
 ---
 
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
 *"Lavoriamo in pace! Senza casino! Dipende da noi!"*
-
----
