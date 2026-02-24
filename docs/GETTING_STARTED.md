@@ -11,8 +11,9 @@ This guide will get you from zero to working with your AI team.
 Before starting, make sure you have:
 
 - [ ] macOS or Linux (Windows WSL works too)
+- [ ] Python 3.10+ installed
 - [ ] [Claude Code CLI](https://claude.ai/code) installed
-- [ ] Claude Pro subscription (for API access)
+- [ ] Anthropic API key (for MCP server) or Claude Pro subscription
 - [ ] Git installed
 - [ ] Terminal/shell access
 
@@ -49,16 +50,14 @@ done.
 ```
 CervellaSwarm/
 ├── .claude/
-│   ├── agents/          # 16 agent definitions
+│   ├── agents/          # 17 agent definitions
 │   ├── hooks/           # Automatic triggers
 │   └── settings.json    # Configuration
-├── .sncp/               # Memory system
-│   ├── progetti/        # Per-project memory
-│   └── stato/           # Current state
-├── scripts/
-│   └── sncp/            # Setup scripts
+├── .sncp/               # Memory system (SNCP 4.0)
+│   └── progetti/        # Per-project memory
+├── packages/            # 9 Python packages (pip installable)
 ├── docs/                # Documentation
-└── spawn-workers        # Main CLI tool
+└── NORD.md              # Project compass
 ```
 
 ---
@@ -68,23 +67,19 @@ CervellaSwarm/
 CervellaSwarm can manage multiple projects. Initialize memory for each:
 
 ```bash
+# Install session memory package
+pip install cervellaswarm-session-memory
+
 # Initialize for a new project
-./scripts/sncp/sncp-init.sh my-project
+cervella-session init my-project
 
 # This creates:
-# .sncp/progetti/my-project/
-#   ├── stato.md           # Project state
-#   ├── PROMPT_RIPRESA.md  # Session continuity
-#   ├── idee/              # Ideas and research
-#   ├── decisioni/         # Decisions log
-#   └── roadmaps/          # Project plans
-```
-
-**Expected output:**
-```
-Inizializzazione SNCP per: my-project
-Creazione struttura...
-OK - Progetto inizializzato!
+# .cervella/
+#   ├── session-memory.yaml    # Configuration
+#   └── projects/
+#       └── my-project/
+#           ├── PROMPT_RIPRESA_my-project.md   # Session state
+#           └── NORD.md                         # Project compass
 ```
 
 ---
@@ -92,28 +87,20 @@ OK - Progetto inizializzato!
 ## Step 4: Launch Your First Agent
 
 ```bash
-# See all available agents
-spawn-workers --list
-```
+# Install spawn workers package
+pip install cervellaswarm-spawn-workers
 
-**Expected output:**
-```
-Available agents:
-  --backend      Python, FastAPI, APIs
-  --frontend     React, CSS, UI/UX
-  --tester       Testing, QA
-  --researcher   Technical research
-  --reviewer     Code review
-  ...
+# See all available agents
+cervella-spawn --list
 ```
 
 **Launch a specific agent:**
 ```bash
 # Launch the backend specialist
-spawn-workers --backend
+cervella-spawn --worker backend
 
-# Or launch the researcher
-spawn-workers --researcher
+# Or launch a whole team from config
+cervella-spawn --team team.yaml
 ```
 
 ---
@@ -140,7 +127,7 @@ Agent: [Analyzes your code, reads files, provides recommendations]
 For complex work, use the Queen (orchestrator):
 
 ```bash
-spawn-workers --orchestrator
+cervella-spawn --team team.yaml
 ```
 
 The Queen will:
@@ -166,28 +153,27 @@ Queen:
 
 | Command | Description |
 |---------|-------------|
-| `spawn-workers --list` | Show all agents |
-| `spawn-workers --backend` | Launch backend agent |
-| `spawn-workers --frontend` | Launch frontend agent |
-| `spawn-workers --tester` | Launch testing agent |
-| `spawn-workers --researcher` | Launch research agent |
-| `spawn-workers --orchestrator` | Launch Queen to coordinate |
+| `cervella-spawn --list` | Show all available agents |
+| `cervella-spawn --worker backend` | Launch backend agent |
+| `cervella-spawn --worker frontend` | Launch frontend agent |
+| `cervella-spawn --worker tester` | Launch testing agent |
+| `cervella-spawn --team team.yaml` | Launch full team from config |
+| `cervella-check all --project-dir .` | Run quality gates |
+| `cervella-session check` | Check session health |
+| `cervella-events stats` | View agent analytics |
 
 ---
 
 ## Troubleshooting
 
-### "spawn-workers: command not found"
+### "cervella-spawn: command not found"
 
-Make sure you're in the CervellaSwarm directory:
+Install the spawn-workers package:
 ```bash
-cd ~/your-project
-./spawn-workers --list  # Use ./ prefix
-```
+pip install cervellaswarm-spawn-workers
 
-Or add to your PATH:
-```bash
-export PATH="$PATH:~/your-project"
+# Verify installation
+cervella-spawn --list
 ```
 
 ### "Claude not authenticated"
@@ -215,7 +201,7 @@ Check your Claude API quota. Pro subscription is recommended for heavy usage.
 
 ## Need Help?
 
-- **Issues:** [GitHub Issues](https://github.com/rafapra3008/CervellaSwarm/issues)
+- **Issues:** [GitHub Issues](https://github.com/rafapra3008/cervellaswarm/issues)
 - **Documentation:** Check the `docs/` folder
 
 ---

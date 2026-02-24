@@ -1,50 +1,60 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-24 - Sessione 390
-> **STATUS:** Claude Desktop CONFIGURATO per la Famiglia!
+> **Ultimo aggiornamento:** 2026-02-24 - Sessione 392
+> **STATUS:** FASE 3 COMPLETA AL 100%! F3.3 Quality Gates + F3.4 Documentation DONE!
 
 ---
 
-## SESSIONE 390 - Cosa e successo
+## SESSIONE 392 - Cosa e successo
 
-### Claude Desktop Setup COMPLETATO
+### Scoperta iniziale
+- Il PROMPT_RIPRESA precedente documentava S391 con F3.3/F3.4 "fatti"
+- Ma `packages/quality-gates/` NON esisteva e ultimo commit era S390
+- **La sessione S391 si era persa senza commit**
+- Abbiamo usato il blueprint dettagliato del vecchio PROMPT_RIPRESA come guida
 
-Rafa ha chiesto di esplorare Claude Desktop (v1.1.4088, aggiornato 23 Feb 2026) per il workflow della Famiglia. Ricerca + configurazione + audit Guardiana.
+### 2 deliverable ricostruiti
 
-**Cosa abbiamo fatto:**
-- Ricerca approfondita su Claude Desktop (12+ fonti): 3 tab (Chat, Cowork, Code)
-- Tab Code = stessa esperienza CLI (legge CLAUDE.md, agents, .mcp.json, hooks)
-- MCP server CervellaSwarm: rebuild TypeScript, verificato funzionante nel Desktop
-- SNCP tools funzionano (read/search progetti) - testato live nel Desktop
-- Guardiana audit: 8.5/10 (0 P0, 0 P1, 3 P2, 4 P3)
+**1. F3.3 Quality Gates** - Guardiana 9.3 -> ~9.5/10 (post-fix)
+- Nuovo package: `cervellaswarm-quality-gates` v0.1.0 at `packages/quality-gates/`
+- 6 moduli: config, quality, hooks, sync, cli, __init__
+- quality.py: 4 dimensioni scoring (actionability 30%, specificity 30%, freshness 20%, conciseness 20%)
+- hooks.py: valida integrita hook (5 stati: OK/BROKEN/DISABLED/NOT_EXEC/MISSING)
+- sync.py: compara directory agenti (SHA-256 hash, ignore patterns, diff report)
+- cli.py: `cervella-check` con subcommand quality/hooks/sync/all + --json + --verbose
+- Config: env vars > project YAML > user YAML > defaults
+- ZERO deps, 206 test, 0.10s
+- Guardiana trovato 2 P2 + 6 P3, tutti fixati:
+  - P2-1: DEFAULTS/DEFAULT_WEIGHTS -> MappingProxyType (P04)
+  - P2-2: _check_disabled() non flagga piu __init__.py/__main__.py
+  - P3: .gitignore, docstring, glob duplicati, yaml.YAMLError, weight validation, test YAML corrotto
 
-**Decisioni chiave:**
-- MCP spawn_worker NON serve nel Desktop (Max 20x copre tutto, Task tool nativo)
-- Il valore del nostro MCP nel Desktop = SNCP (memoria progetti)
-- Errore "connectors directory" = ignorabile (marketplace Anthropic, non nostro)
-- Desktop = complemento alla CLI, non sostituto. CLI resta backbone per automazione/swarm
-
-### Guardiana Audit P2 trovati (MCP server)
-- F1: Nessun env isolation in .mcp.json (security)
-- F2: Path traversal fragile in sncp/reader.ts (type guard salva, ma fragile)
-- F3: API key prefix leak in check_status (mostra troppi caratteri)
-- F7: Version mismatch SERVER_VERSION 0.3.0 vs package.json 2.0.0-beta.1
+**2. F3.4 Documentation** - Guardiana 9.0 -> ~9.5/10 (post-fix)
+- ARCHITECTURE.md aggiornato: 17 agenti, SNCP 4.0, MCP name, Python Packages section (9 pkg, 25 CLI, 3244+ test)
+- GETTING_STARTED.md aggiornato: CLI reali cervella-*, prerequisiti API key, troubleshooting
+- MIGRATION.md NUOVO: guida CrewAI/AutoGen/LangGraph con concept mapping
+- Pattern applicato: "Verifica CLI reali con Explore agent PRIMA di scrivere docs" (25 entry points verificati)
+- Guardiana trovato 4 P2 + 8 P3, 4 P2 + 2 P3 fixati:
+  - P2: spawn-workers->cervella-spawn, cervellaswarm init->cervella-session init, cervella-security phantom, --last flag
 
 ---
 
-## Lezioni Apprese (Sessione 390)
+## Lezioni Apprese (Sessione 392)
 
 ### Cosa ha funzionato bene
-- Ricerca PRIMA di agire: 2 researcher in parallelo (features + setup guide) = decisione informata
-- Guardiana audit su config MCP ha trovato 3 P2 che non avremmo visto
+- Strategia "casa in ordine prima": allineare NORD/SUBROADMAP/PROMPT_RIPRESA prima di costruire
+- Blueprint S391 come guida: ricostruire da docs e piu veloce che da zero
+- Explore agent per CLI reali PRIMA di scrivere docs: ha evitato phantom CLI in MIGRATION.md
+- Guardiana dopo ogni step: ha trovato 2 P2 in F3.3 e 4 P2 in F3.4
 
 ### Cosa non ha funzionato
-- Auto-checkpoint hook continua a sporcare PROMPT_RIPRESA (noise in fondo al file, dovuto pulire di nuovo)
+- S391 persa senza commit = lavoro da rifare. LEZIONE: commit SUBITO dopo ogni deliverable
+- MappingProxyType non e deepcopy-able: i test che facevano `copy.deepcopy(DEFAULTS)` sono falliti. Serve usare `_DEFAULTS_RAW` nei test
 
 ### Pattern candidato
-- "Desktop Code tab = CLI con UI. Stessi file, stessi agents, stessi hooks. Zero config extra."
-- Evidenza: S390 (confermato con test live)
-- Azione: MONITORARE (1 occorrenza)
+- "Commit SUBITO dopo ogni deliverable completato, non aspettare fine sessione"
+- Evidenza: S392 (S391 persa = 1 sessione di lavoro perso)
+- Azione: PROMUOVERE (evita perdita lavoro)
 
 ---
 
@@ -52,29 +62,32 @@ Rafa ha chiesto di esplorare Claude Desktop (v1.1.4088, aggiornato 23 Feb 2026) 
 
 ```
 LINGUA UNIVERSALE:
-  FASE A: LE FONDAMENTA     [####################] 100% HARDENED! (S375-S386)
+  FASE A: LE FONDAMENTA     [####################] 100% HARDENED!
   FASE B: IL TOOLKIT         [################....] 80% (S387)
-    FATTO: Confidence, Trust, Thread Safety, Welford, 5 dataclass
-    RESTA: DSL nested choices (differito post-PyPI)
   PYPI PUBLISH              [####################] 100% (S389)
-    LIVE su pypi.org! pip install cervellaswarm-lingua-universale
 
 OPEN SOURCE ROADMAP:
-  FASE 0-2                   [####################] 100%
-  FASE 3                     [######..............] 30%
+  FASE 0: Preparazione       [####################] 100%
+  FASE 1: AST Pipeline       [####################] 100%
+  FASE 2: Agent Framework    [####################] 100%
+  FASE 3: Session Memory     [####################] 100% COMPLETA!
+    F3.1 Session Memory       DONE (S373, 9.6/10)
+    F3.2 SQLite Event DB      DONE (S390, 9.3/10)
+    F3.3 Quality Gates        DONE (S392, ~9.5/10)
+    F3.4 Documentation        DONE (S392, ~9.5/10)
+    F3.5 Auto-Handoff         DONE (S379, 9.5/10)
+  FASE 4: Launch              [...................] TODO
 
-AUTO-LEARNING L1            [####################] 100% (S387)
-CACCIA BUG: 9/9 COMPLETATA (121 bug, 71 fix)
-CROSS-PACKAGE: 3112 test totali, 11 packages, ZERO flaky
+PACKAGES: 9 su PyPI, 13 totali nel repo, 3450+ test, ZERO flaky
 ```
 
 ---
 
 ## PROSSIMI STEP (in ordine)
 
-1. **F3.2 SQLite Event Database** - prossimo step open source
-2. **Fase B.2** - DSL nested choices (post-feedback community)
-3. **Community engagement** - annunciare su Reddit, HN, Python communities
+1. **FASE 4: Launch!** - GitHub Release, community outreach, blog post
+2. **Fase B.2 Lingua** - DSL nested choices (post-feedback community)
+3. **Community engagement** - Discord, Good First Issues, contributors
 
 ---
 
@@ -90,9 +103,31 @@ CROSS-PACKAGE: 3112 test totali, 11 packages, ZERO flaky
 | S387 | AUTO-LEARNING L1 + FASE B (9 moduli, 1273 test, 84 API) |
 | S388 | README killer + CI/Publish per PyPI (Guardiana 9.5/10) |
 | S389 | PyPI PUBLISH LIVE! cervellaswarm-lingua-universale v0.1.0 |
-| S390 | Claude Desktop setup + MCP audit Guardiana 8.5/10 |
+| S390 | Desktop setup + P2 fix (9.7) + F3.2 Event Store (9.3) |
+| S391 | PERSA (non committata) |
+| S392 | F3.3 Quality Gates (~9.5) + F3.4 Documentation (~9.5) - FASE 3 100%! |
 
 ---
 
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
 *"Lavoriamo in pace! Senza casino! Dipende da noi!"*
+
+---
+
+## AUTO-CHECKPOINT: 2026-02-24 20:51 (auto)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 0febb6d9 - S390: F3.2 SQLite Event Database package (cervellaswarm-event-store)
+- **File modificati** (5):
+  - sncp/PROMPT_RIPRESA_MASTER.md
+  - .sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
+  - .sncp/progetti/cervellaswarm/idee/20260113_RICERCA_COMUNICAZIONE_INTER_AGENT.md
+  - .sncp/progetti/cervellaswarm/idee/20260114_PROBLEMA_MEMORIA_SWARM.md
+  - .sncp/progetti/cervellaswarm/idee/20260115_TEMPLATE_PRE_POST_FLIGHT.md
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: auto
+
+---

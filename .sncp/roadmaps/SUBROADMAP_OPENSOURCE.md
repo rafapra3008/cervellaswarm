@@ -248,25 +248,34 @@
 - [x] Research: 20 sources, Letta Context Repositories (Feb 12 2026) - finestra aperta ORA
 - **Criterio:** `cervella-session init my-project` crea struttura completa - SODDISFATTO
 
-**F3.2 - Memory Database**
-- [ ] SQLite memory system (init_db, log_event, query_events)
-- [ ] Analytics per agente/progetto
-- [ ] Lessons learned con confidence scoring
-- [ ] Context loader con agent filtering
-- **Criterio:** DB si auto-crea, zero config manuale
+**F3.2 - Memory Database** -- DONE (S390, 9.3/10)
+- [x] SQLite memory system (init_db, log_event, query_events)
+- [x] Analytics per agente/progetto
+- [x] Lessons learned con confidence scoring
+- [x] Context loader con agent filtering
+- [x] `packages/event-store/` con 7 moduli, 143 test, 0.09s, ZERO deps
+- [x] CLI: `cervella-events log/query/stats/export/init`
+- [x] Guardiana 8.8 -> 9.3/10 (3 P2 fixed)
+- **Criterio:** DB si auto-crea, zero config manuale - SODDISFATTO
 
-**F3.3 - Quality Gate Scripts**
-- [ ] quality-check.py (generico)
-- [ ] verify-hooks.py (generico)
-- [ ] sync-agents.sh (generico)
-- [ ] Docs: "Keep your swarm healthy"
-- **Criterio:** Scripts funzionano su qualsiasi progetto
+**F3.3 - Quality Gate Scripts** -- DONE (S392, ~9.5/10)
+- [x] `packages/quality-gates/` con 6 moduli, 206 test, 0.10s, ZERO deps
+- [x] quality.py: 4 dimensioni scoring (actionability 30%, specificity 30%, freshness 20%, conciseness 20%)
+- [x] hooks.py: valida integrita hook (OK/BROKEN/DISABLED/NOT_EXEC/MISSING)
+- [x] sync.py: compara e sincronizza directory agenti (SHA-256 hash, ignore patterns)
+- [x] cli.py: `cervella-check` con subcommand quality/hooks/sync/all + --json + --verbose
+- [x] Config: env vars > project YAML > user YAML > defaults
+- [x] MappingProxyType per DEFAULTS (P04), weight validation, YAML error handling
+- [x] Guardiana audit: 9.3 -> fix 2 P2 + 6 P3 -> ~9.5/10
+- **Criterio:** Scripts funzionano su qualsiasi progetto - SODDISFATTO
 
-**F3.4 - Documentazione architetturale**
-- [ ] ARCHITECTURE.md (come tutto si connette)
-- [ ] GETTING_STARTED.md (from zero to swarm in 30 min)
-- [ ] MIGRATION.md (per chi gia usa CrewAI/AutoGen)
-- **Criterio:** Dev migra da CrewAI in < 1 ora
+**F3.4 - Documentazione architetturale** -- DONE (S392, ~9.5/10)
+- [x] ARCHITECTURE.md aggiornato: 17 agenti, SNCP 4.0, MCP name fix, Python Packages section (9 pkg)
+- [x] GETTING_STARTED.md aggiornato: CLI reali (cervella-*), prerequisiti API key, SNCP 4.0
+- [x] MIGRATION.md NUOVO: guida CrewAI/AutoGen/LangGraph con concept mapping e CLI reali
+- [x] Guardiana audit: 9.0 -> fix 4 P2 + 2 P3 -> ~9.5/10
+- [x] Pattern validato: "Verifica CLI reali con Explore agent PRIMA di scrivere docs"
+- **Criterio:** Dev migra da CrewAI in < 1 ora - SODDISFATTO
 
 **F3.5 - Auto-Handoff Miglioramento** -- DONE (S379, 3/4 criteri)
 - [x] Rimuovere logica "apri nuova finestra" dall'auto-handoff (VS Code spawn rimosso da anti-compact.sh v2.0.0)

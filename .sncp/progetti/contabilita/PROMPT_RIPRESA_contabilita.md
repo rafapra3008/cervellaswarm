@@ -1,112 +1,104 @@
 # PROMPT RIPRESA - Contabilita Antigravity
 
-> **Ultimo aggiornamento:** 22 Febbraio 2026 - Sessione 135
+> **Ultimo aggiornamento:** 24 Febbraio 2026 - Sessione 140
 > **Branch attivo:** lab-v3 (sviluppo V3) + lab-v2 (intoccato) + main (produzione)
 > **Versione canonica:** `CervellaSwarm/.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md`
 
 ---
 
-## Stato Attuale - S135 Agent v1.4.0 + DB Sync HP
+## Stato Attuale - S140 QA Round 96 + Fix DELETE
 
 | Cosa | Stato |
 |------|-------|
 | **Produzione** | v2.11.0 LIVE su contabilitafamigliapra.it (INTATTA) |
-| **V3 VM** | LIVE - EricsoftTransformer v1.5.0 + Agent v1.4.0 + Reconcile v1.0.0 |
-| **3 Hotel Agent** | **TUTTI v1.4.0!** NL WM4032, SHE WM21654, HP WM24354 - HC.io+TG 1h |
-| **Reconcile** | 3/3 ATTIVI (NL win=30, SHE+HP win=1) |
+| **V3 VM** | DEPLOYATO S138 - Fix stagioni chiuse LIVE |
+| **3 Hotel Agent** | TUTTI v2.0.0 daily_closed (deployato S139) |
 | **Lab v2** | INTOCCATO, frozen S87 |
-| **Test** | **1709 PASS** (1399 portale + 310 agent, 0 fail) |
-| **Round QA** | 89 totali |
-| **Subroadmap** | `docs/SUBROADMAP_S128_DIAMANTE.md` (FASE N pulizia aggiunta S135) |
-| **Prossimo** | **FASE M** SPRING Discovery + monitorare agents |
+| **Test** | **1411 portale PASS** (0 fail) + 333 agent |
+| **Round QA** | 96 (CR 9.1 + BH 12 bug + LR 8.0) |
+| **Score attuale** | ~8.5/10 - target 9.5+ |
+| **Subroadmap** | `docs/SUBROADMAP_S140_LUCIDATURA.md` (20 step, 6 fasi, Guardiana 9.3 APPROVED) |
 
 ---
 
-## S135 - Cosa abbiamo fatto
+## S140 - Cosa e' stato fatto
 
-### 1. HP DOWN Fix
-- sync_hp.bat cancellato per errore -> ricreato da template repo
-- `attrib +R` su TUTTI i .bat (NL, HP, SHE) per protezione futura
+### QA Round 96 - 3 Cervelle in parallelo
+- **Code Review**: 9.1/10 - 3 P1 (timing login, reprocess pubblico, codici hardcoded) + 7 P2
+- **Bug Hunter**: 4 P1 + 8 P2 (12 bug totali)
+- **Logic Review**: 8.0/10 - 5 P2 + 4 P3
+- **Consensus**: 34 finding totali, 30 unici, tutti tracciati in subroadmap
 
-### 2. Agent v1.4.0 Deploy (3/3 hotel)
-- Version bump __init__.py 1.2.0 -> 1.4.0
-- Cambio: stagione chain `checkout > check_in` (S134)
-- NL: dry-run OK + real OK + Task Scheduler riavviato
-- HP: dry-run OK + Task Scheduler riavviato
-- SHE: dry-run OK + HC.io confermato + Task Scheduler riavviato
-- Backup: `backup_v1.2.0/` su ogni hotel
-
-### 3. Window Reconcile Verificata
-- NL=30 (OK), HP=1 (OK), SHE=1 (OK)
-- Piano: =7 il ~28 Feb, =30 il ~21 Mar
-
-### 4. DB Sync HP V3
-- HP mancava 19/02 + 20/02: INSERT 12 caparre + 3 giroconti da PROD
-- UPDATE checkout_date = check_in per i 12 record PDF
-- Backup: `contabilita_hp.db.backup_pre_sync_s135`
-- NL e SHE: gia' allineati
-
-### 5. Subroadmap aggiornata
-- FASE N: Pulizia file (Mac + Windows)
-- FASE O: Sync DB (ex FASE N)
+### Fix Step 1: DELETE 404 (PARZIALE - solo codice, NON deployato)
+- **Bug reale**: NON era endpoint mancante. Era `FOREIGN KEY constraint failed` wrappato come 404
+- **Causa**: GIR id=1404 su SHE aveva pareggio_parking collegato (id=658, fuzzy_parking, confidence=0.7)
+- **Fix (Opzione B - decisione Rafa)**: Check pareggi collegati PRIMA del DELETE. Se presenti, messaggio chiaro: "Rimuovi prima il pareggio"
+- **HTTP status**: 409 Conflict (non piu 404) per righe con pareggi collegati
+- **File modificati**: `backend/database/transactions.py` + `backend/routers/transactions.py` + `tests/test_delete_transactions.py`
+- **Test**: 1411/1411 PASS, 25/25 delete test PASS
+- **NON ANCORA DEPLOYATO** sulla VM - va deployato nella FASE N.6
 
 ---
 
-## TODO Prossime Sessioni
+## Subroadmap "La Lucidatura" - 20 Step
 
-1. **~28 Feb**: RECONCILE_WINDOW_DAYS=7 su SHE+HP
-2. **~21 Mar**: RECONCILE_WINDOW_DAYS=30 su SHE+HP
-3. **FASE M**: SPRING Discovery (read-only DB SISTEMI HP)
-4. **FASE N**: Pulizia file Mac + Standardizzare Windows
-5. **FASE O**: Sync DB (se altri gap trovati)
+| Fase | Cosa | Status |
+|------|------|--------|
+| **N.1** | Bug Rafa: DELETE 404 + checkout SHE/HP + design HP | Step 1 FATTO (codice), Step 2-3 PENDING |
+| **N.2** | Agent: HC.io + CB 429 + watermark gap + multi-batch + safety | 5 step PENDING |
+| **N.3** | Backend: cleanup perf + pre_close stats + health deep | 3 step PENDING |
+| **N.4** | Frontend: undoData + initAnnullamenti + NOLOCK importo=0 | 3 step PENDING |
+| **N.5** | Security: timing login + PUBLIC_ENDPOINTS + sanitize | 3 step PENDING |
+| **N.6** | Deploy VM + Agent hotel + Guardiana finale | 3 step PENDING |
 
----
-
-## Mappa Sistema
-
-```
-                    PRODUZIONE (INTATTA)
-                    contabilitafamigliapra.it:443
-                    v2.11.0, porta 8000
-                    |
-    VM Google Cloud (cervello-contabilita)
-    35.193.39.185, e2-medium, $28/mese
-                    |
-        +-----------+-----------+
-        |                       |
-    LAB V2                  V3 (lab-v3)
-    INTOCCATO               v3.contabilita...
-    frozen S87              porta 8003
-                            Transformer v1.5.0
-                            Reconcile v1.0.0
-                            |
-                +-----------+-----------+
-                |           |           |
-            Hotel NL    Hotel SHE   Hotel HP
-            SYNC+REC    SYNC+REC    SYNC+REC
-            WM 4032     WM 21654    WM 24354
-            HC.io+TG    HC.io+TG    HC.io+TG
-            1h sync     1h sync     1h sync
-            5AM recon   5AM recon   5AM recon
-            win=30      win=1       win=1
-            agent 1.4   agent 1.4   agent 1.4
-```
+**Dettagli completi**: `docs/SUBROADMAP_S140_LUCIDATURA.md`
 
 ---
 
-## Lezioni Apprese (Sessione S135)
+## Bug Rafa da fixare (trovati S140)
+
+1. **DELETE 404** -> FIX FATTO (codice), da deployare. Era FK constraint non gestito
+2. **Date checkout SHE/HP non visibili** sulla UI V3 -> da investigare
+3. **Design HP**: "Canele" scritto male + colori non prendono -> da investigare
+4. **Dropdown STAGIONE Puzzle**: ora FUNZIONA (Rafa conferma) -> risolto
+
+---
+
+## Lezioni Apprese (Sessione 140)
 
 ### Cosa ha funzionato bene
-- Procedura deploy hotel: stop task -> backup -> copy -> dry-run -> restart = zero downtime
-- `attrib +R` su .bat = protezione semplice ed efficace contro cancellazioni accidentali
-- Audit pre-sync DB con Guardiana (piano verificato prima di toccare dati)
+- QA Round con 3 Cervelle in parallelo: copertura completa, 34 finding trovati
+- Subroadmap dettagliata con Guardiana che valida (R1 7.5 -> R2 9.3)
 
 ### Cosa non ha funzionato
-- .bat cancellato per errore senza protezione: ora fixato con +R
+- Ho agito troppo di fretta sul fix DELETE senza ragionare prima (cascade vs blocco)
+- Ho scritto codice prima di capire il comportamento desiderato da Rafa
+- La Costituzione dice "Fatto BENE > Fatto VELOCE" e io l'ho dimenticato
 
 ### Pattern candidato
-- "attrib +R su file critici Windows" -> NUOVO, monitorare nelle prossime sessioni
+- "RAGIONARE PRIMA DI AGIRE" - Sempre chiedere Rafa PRIMA di scegliere approccio - Azione: PROMUOVERE
+- "Diagnosi completa tramite log VM" - I log di journalctl hanno rivelato il vero bug (FK, non 404) - Azione: MONITORARE
 
 ---
 
-*S135: Agent v1.4.0 su 3/3 hotel + DB HP allineato. "Ultrapassar os proprios limites!"*
+## TODO Prossima Sessione (S141)
+
+1. **Step 2**: Fix date checkout SHE/HP non visibili (diagnosi + fix)
+2. **Step 3**: Fix design HP (Canele + colori)
+3. **Step 4+**: Proseguire FASE N.2 (agent fix)
+4. **Monitorare**: Primo run daily_closed (HC.io) - verificare che gira
+
+---
+
+## Dove leggere
+
+| Cosa | File |
+|------|------|
+| Subroadmap completa | `docs/SUBROADMAP_S140_LUCIDATURA.md` |
+| Fix DELETE (Opzione B) | `backend/database/transactions.py:864-900` |
+| Router DELETE (409 vs 404) | `backend/routers/transactions.py:963-968` |
+| Test DELETE | `tests/test_delete_transactions.py` |
+
+---
+
+*S140: QA Round 96 completato (3 Cervelle, 34 finding). Fix DELETE con Opzione B (blocco+messaggio). Score ~8.5, target 9.5+. Lezione: ragionare PRIMA di agire.*
