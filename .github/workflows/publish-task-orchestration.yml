@@ -1,6 +1,7 @@
 # Publish cervellaswarm-task-orchestration to PyPI
 # Triggered on tag: task-orchestration-v*
 # Trusted Publisher config on PyPI: workflow=publish-task-orchestration.yml, environment=pypi
+# NOTE: Publish/release jobs inline due to PyPI OIDC limitation (warehouse#11096)
 
 name: Publish task-orchestration
 
@@ -10,16 +11,99 @@ on:
       - 'task-orchestration-v[0-9]+.[0-9]+.[0-9]+'
       - 'task-orchestration-v[0-9]+.[0-9]+.[0-9]+-*'
 
-permissions:
-  id-token: write
-  contents: write
+concurrency:
+  group: publish-task-orchestration-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  publish:
-    uses: ./.github/workflows/_publish-package.yml
+  build:
+    uses: ./.github/workflows/_build-package.yml
     with:
       package_name: "task-orchestration"
       package_dir: "packages/task-orchestration"
-      pypi_name: "cervellaswarm-task-orchestration"
-      module_name: "cervellaswarm_task_orchestration"
-      release_description: "Rule-based task routing and validation. Zero dependencies."
+
+  publish-testpypi:
+    name: Publish to TestPyPI
+    needs: [build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha')
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/cervellaswarm-task-orchestration
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: task-orchestration-distributions
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          skip-existing: true
+          verbose: true
+
+  publish-pypi:
+    name: Publish to PyPI
+    needs: [build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: "!contains(github.ref_name, '-rc') && !contains(github.ref_name, '-beta') && !contains(github.ref_name, '-alpha')"
+    environment:
+      name: pypi
+      url: https://pypi.org/p/cervellaswarm-task-orchestration
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: task-orchestration-distributions
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          verbose: true
+
+  github-release:
+    name: Create GitHub Release
+    needs: [build, publish-pypi, publish-testpypi]
+    if: always() && needs.build.result == 'success' && (needs.publish-pypi.result == 'success' || needs.publish-testpypi.result == 'success')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: task-orchestration-distributions
+          path: dist/
+      - name: Extract version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#task-orchestration-v}" >> "$GITHUB_OUTPUT"
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "task-orchestration ${{ steps.version.outputs.version }}"
+          body: |
+            ## CervellaSwarm task-orchestration ${{ steps.version.outputs.version }}
+
+            **Rule-based task routing and validation. Zero dependencies.**
+
+            **Install:**
+            ```bash
+            pip install cervellaswarm-task-orchestration==${{ steps.version.outputs.version }}
+            ```
+
+            **What's new:**
+            - See [CHANGELOG](https://github.com/rafapra3008/cervellaswarm/blob/${{ github.ref_name }}/packages/task-orchestration/CHANGELOG.md)
+
+            **Links:**
+            - [PyPI package](https://pypi.org/project/cervellaswarm-task-orchestration/${{ steps.version.outputs.version }}/)
+            - [Documentation](https://github.com/rafapra3008/cervellaswarm/tree/main/packages/task-orchestration#readme)
+
+            ---
+            *Part of the CervellaSwarm multi-agent framework.*
+          files: dist/*
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha') }}
