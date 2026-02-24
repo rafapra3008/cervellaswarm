@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 24 Febbraio 2026 - S393 (FASE 4 IN CORSO - CI/CD pronto!)
+> Aggiornato: 24 Febbraio 2026 - S394 (5/9 PyPI LIVE + MAPPA Linguaggio)
 
 ```
 +==================================================================+
@@ -80,7 +80,7 @@ FASE 3: Primi Utenti            [....................] PARCHEGGIATO
 FASE 4: Scala                   [....................] PARCHEGGIATO
 ```
 
-### OPEN SOURCE - IN CORSO (S362-S393)
+### OPEN SOURCE - IN CORSO (S362-S394)
 
 ```
 SUBROADMAP: .sncp/roadmaps/SUBROADMAP_OPENSOURCE.md
@@ -112,9 +112,9 @@ FASE 3: Session Memory System     [####################] 100% COMPLETA!
   F3.4 Documentation               DONE (S392) - 3 docs, CLI verificate, ~9.5/10
   F3.5 Auto-Handoff                DONE (S379) - 8 step, 14 file, 9.5/10
 
-FASE 4: Launch                    [####................] 20% IN CORSO
+FASE 4: Launch                    [########............] 40% IN CORSO
   F4.1a CI/CD Pipeline             DONE (S393) - 15 workflow, Guardiana 9.5/10
-  F4.1b PyPI Publication            TODO - 7 packages da pubblicare
+  F4.1b PyPI Publication           IN CORSO (S394) - 5/9 LIVE, 4 restanti
   F4.1c GitHub Release              TODO
   F4.1d Blog + Social              TODO
 ```
@@ -167,8 +167,8 @@ STATO ATTUALE:
   ✓ FAMIGLIA COMPLETA             17 agenti (1 Regina + 3 Guardiane + 1 Architect + 12 Worker)
   ✓ API Fly.io                    ONLINE
   ✓ cervellaswarm.com             LIVE
-  ✓ PyPI (2 live, 7 pronti)        code-intelligence + lingua-universale LIVE
-                                   agent-hooks, agent-templates, task-orchestration,
+  ✓ PyPI (5 live, 4 pronti)        code-intelligence, lingua-universale,
+                                   agent-hooks, agent-templates, task-orchestration = LIVE
                                    spawn-workers, session-memory, event-store,
                                    quality-gates = workflow pronti, Trusted Publisher TODO
   ✓ Repo Pubblico                 github.com/rafapra3008/cervellaswarm
@@ -193,6 +193,7 @@ STATO ATTUALE:
 
 | Cosa | Dove |
 |------|------|
+| **MAPPA LINGUAGGIO (LA MISSIONE!)** | `.sncp/roadmaps/MAPPA_LINGUAGGIO_CERVELLASWARM.md` |
 | **MAPPA COMPLETA (BIBBIA!)** | `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_COMPLETA_STEP_BY_STEP.md` |
 | **MAPPA MIGLIORAMENTI (ATTIVA!)** | `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_MIGLIORAMENTI_INTERNI.md` |
 | **MARKETING DIAMANTE** | `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_DIAMANTE_MARKETING_LANCIO.md` |
