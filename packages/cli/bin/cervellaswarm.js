@@ -6,7 +6,7 @@
  * 17 AI agents working as a team for your project.
  * "Not an assistant - a TEAM."
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -262,7 +262,6 @@ Examples:
 
 File Limits:
   - PROMPT_RIPRESA: max 150 lines
-  - stato.md: max 500 lines
   - reports/: archive after 30 days
 
 "Casa pulita = mente pulita = lavoro pulito!"

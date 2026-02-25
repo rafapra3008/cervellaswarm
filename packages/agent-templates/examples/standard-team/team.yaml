@@ -1,0 +1,31 @@
+name: my-project
+version: 1.0.0
+description: Standard 7-agent team with architect and multiple workers
+agents:
+- name: lead
+  type: coordinator
+  role: lead
+- name: planner
+  type: architect
+  role: planner
+- name: reviewer
+  type: quality-gate
+  role: validator
+- name: backend
+  type: worker
+  specialty: backend
+  role: worker
+- name: frontend
+  type: worker
+  specialty: frontend
+  role: worker
+- name: tester
+  type: worker
+  specialty: tester
+  role: worker
+- name: researcher
+  type: worker
+  specialty: researcher
+  role: worker
+entry_point: lead
+process: hierarchical

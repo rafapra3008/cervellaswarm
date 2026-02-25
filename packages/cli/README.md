@@ -1,5 +1,8 @@
 # CervellaSwarm
 
+[![npm version](https://img.shields.io/npm/v/cervellaswarm.svg)](https://www.npmjs.com/package/cervellaswarm)
+[![npm downloads](https://img.shields.io/npm/dm/cervellaswarm.svg)](https://www.npmjs.com/package/cervellaswarm)
+
 > **The only AI coding team that checks its own work.**
 >
 > 17 specialized AI agents. Regina coordinates, Architect plans, Workers execute, Guardians verify.
@@ -8,7 +11,7 @@
 cervellaswarm task "Add user authentication"
 
   Agent: cervella-backend
-  Model: claude-sonnet-4-20250514
+  Model: claude-sonnet-4-6
 
   Working...
 
@@ -194,8 +197,8 @@ cervellaswarm doctor --config   # Show all configuration values
 
 ## Key Features
 
-- **17 Specialized Agents**: 1 Queen + 3 Guardians + 1 Architect + 12 Workers
-- **Quality-First**: 3 Opus Guardians verify every output (9.5/10 target)
+- **17 Specialized Agents**: 1 Queen + 3 Guardians + 1 Architect + 2 Analysts + 10 Workers
+- **Quality-First**: 3 Opus Guardians + 2 Opus Analysts verify every output (9.5/10 target)
 - **Architect Planning**: Complex tasks get a PLAN.md before implementation
 - **Smart Routing**: Automatically selects the best agent for your task
 - **Persistent Memory (SNCP)**: Never explain your project twice
@@ -232,14 +235,19 @@ cervellaswarm doctor --config   # Show all configuration values
                              +-- Creates PLAN.md for complex tasks
 
 +-----------------------------------------------+
-|                 12 WORKERS                    |
-|  backend, frontend, tester, docs, devops,    |
-|  data, security, researcher, ingegnera,      |
-|  marketing, reviewer, scienziata             |
-|  All Sonnet                                  |
+|              2 ANALYSTS (Opus)                |
+|  security, ingegnera                         |
+|  Deep reasoning for audits & architecture    |
 +-----------------------------------------------+
 
-TOTAL: 5 Opus + 12 Sonnet = 17 agents
++-----------------------------------------------+
+|                 10 WORKERS (Sonnet)           |
+|  backend, frontend, tester, docs, devops,    |
+|  data, researcher, marketing, reviewer,      |
+|  scienziata                                  |
++-----------------------------------------------+
+
+TOTAL: 7 Opus + 10 Sonnet = 17 agents
 ```
 
 ## Requirements
@@ -303,4 +311,4 @@ Apache-2.0
 
 *Sometimes it feels like magic.*
 
-*Built with love by Cervella & Rafa*
+*Built with love by the CervellaSwarm team*

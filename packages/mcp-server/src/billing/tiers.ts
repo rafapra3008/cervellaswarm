@@ -4,7 +4,7 @@
  * Defines limits and pricing for each subscription tier.
  * Single source of truth for tier-related constants.
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  */
 

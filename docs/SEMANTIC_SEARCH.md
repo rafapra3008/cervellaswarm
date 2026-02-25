@@ -67,7 +67,7 @@ SemanticSearch(repo_root: str)
 
 **Example:**
 ```python
-search = SemanticSearch("/Users/rafapra/Developer/CervellaSwarm")
+search = SemanticSearch("/path/to/your-project")
 ```
 
 **Note:** Initialization builds symbol index (may take a few seconds for large repos).
@@ -250,7 +250,7 @@ ImpactAnalyzer(repo_root: str)
 
 **Example:**
 ```python
-analyzer = ImpactAnalyzer("/Users/rafapra/Developer/CervellaSwarm")
+analyzer = ImpactAnalyzer("/path/to/your-project")
 ```
 
 **Note:** Internally creates a `SemanticSearch` instance. Index is built during initialization.
@@ -394,7 +394,7 @@ from semantic_search import SemanticSearch
 from impact_analyzer import ImpactAnalyzer
 
 # Initialize
-repo_root = "/Users/rafapra/Developer/CervellaSwarm"
+repo_root = "/path/to/your-project"
 search = SemanticSearch(repo_root)
 analyzer = ImpactAnalyzer(repo_root)
 
@@ -421,7 +421,7 @@ if location:
 ```python
 from semantic_search import SemanticSearch
 
-search = SemanticSearch("/Users/rafapra/Developer/CervellaSwarm")
+search = SemanticSearch("/path/to/your-project")
 
 # Find who calls extract_symbols()
 callers = search.find_callers("extract_symbols")
@@ -438,7 +438,7 @@ for file, line, caller in callers:
 ```python
 from impact_analyzer import ImpactAnalyzer
 
-analyzer = ImpactAnalyzer("/Users/rafapra/Developer/CervellaSwarm")
+analyzer = ImpactAnalyzer("/path/to/your-project")
 
 file = "scripts/utils/semantic_search.py"
 
@@ -498,7 +498,7 @@ def check_before_modifying(symbol_name: str, repo_root: str):
         return True
 
 # Example usage
-check_before_modifying("DependencyGraph", "/Users/rafapra/Developer/CervellaSwarm")
+check_before_modifying("DependencyGraph", "/path/to/your-project")
 ```
 
 ## CLI Usage
@@ -524,19 +524,19 @@ python semantic_search.py <repo_root> <symbol_name> [command]
 
 ```bash
 # Find where Symbol class is defined
-python semantic_search.py ~/Developer/CervellaSwarm Symbol
+python semantic_search.py ~/your-project Symbol
 
 # Find who calls extract_symbols
-python semantic_search.py ~/Developer/CervellaSwarm extract_symbols callers
+python semantic_search.py ~/your-project extract_symbols callers
 
 # Find what DependencyGraph uses
-python semantic_search.py ~/Developer/CervellaSwarm DependencyGraph callees
+python semantic_search.py ~/your-project DependencyGraph callees
 
 # Show detailed info about TreesitterParser
-python semantic_search.py ~/Developer/CervellaSwarm TreesitterParser info
+python semantic_search.py ~/your-project TreesitterParser info
 
 # Show repository stats
-python semantic_search.py ~/Developer/CervellaSwarm Symbol stats
+python semantic_search.py ~/your-project Symbol stats
 ```
 
 ### Bash Wrapper CLI (W5)
@@ -622,12 +622,12 @@ python impact_analyzer.py <repo_root> <symbol_name>
 
 ```bash
 # Analyze impact of modifying SemanticSearch
-python impact_analyzer.py ~/Developer/CervellaSwarm SemanticSearch
+python impact_analyzer.py ~/your-project SemanticSearch
 ```
 
 **Output:**
 ```
-🔍 Initializing impact analyzer for: /Users/rafapra/Developer/CervellaSwarm
+🔍 Initializing impact analyzer for: /path/to/your-project
 
 📊 Repository Statistics:
    Total symbols: 156
@@ -709,7 +709,7 @@ Use Semantic Search in worker prompts to provide context:
 from semantic_search import SemanticSearch
 
 # Before delegating to backend worker
-search = SemanticSearch("/Users/rafapra/Developer/CervellaSwarm")
+search = SemanticSearch("/path/to/your-project")
 location = search.find_symbol("extract_symbols")
 
 if location:

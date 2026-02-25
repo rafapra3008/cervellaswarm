@@ -1,0 +1,84 @@
+# Reusable BUILD workflow for CervellaSwarm Python packages.
+# Called by per-package publish-*.yml workflows.
+# Handles: build, verify, test, upload artifacts.
+# Publish and Release jobs stay in the CALLER due to PyPI Trusted Publisher
+# OIDC limitation (warehouse#11096: job_workflow_ref must match caller).
+#
+# Quality is not negotiable.
+
+on:
+  workflow_call:
+    inputs:
+      package_name:
+        description: "Short package name, e.g. agent-hooks"
+        type: string
+        required: true
+      package_dir:
+        description: "Relative path from repo root, e.g. packages/agent-hooks"
+        type: string
+        required: true
+
+jobs:
+  build:
+    name: Build & Verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install build tools
+        run: python -m pip install --upgrade pip build twine
+
+      - name: Build package
+        run: python -m build
+        working-directory: ${{ inputs.package_dir }}
+
+      - name: Verify package metadata
+        run: twine check dist/*
+        working-directory: ${{ inputs.package_dir }}
+
+      - name: Verify wheel contents
+        run: |
+          echo "=== Wheel contents ==="
+          python -c "
+          import zipfile, os
+          whl = [f for f in os.listdir('dist') if f.endswith('.whl')][0]
+          with zipfile.ZipFile(f'dist/{whl}') as z:
+              for name in sorted(z.namelist()):
+                  print(f'  {name}')
+          "
+          echo ""
+          echo "=== Package version ==="
+          python -c "
+          import zipfile, os
+          whl = [f for f in os.listdir('dist') if f.endswith('.whl')][0]
+          with zipfile.ZipFile(f'dist/{whl}') as z:
+              meta = [n for n in z.namelist() if 'METADATA' in n][0]
+              for line in z.read(meta).decode().splitlines():
+                  if line.startswith(('Name:', 'Version:', 'License')):
+                      print(line)
+          "
+        working-directory: ${{ inputs.package_dir }}
+
+      - name: Run tests
+        run: |
+          pip install -e ".[test]"
+          pytest tests/ -q --tb=short
+        working-directory: ${{ inputs.package_dir }}
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.package_name }}-distributions
+          path: ${{ inputs.package_dir }}/dist/
+          retention-days: 30

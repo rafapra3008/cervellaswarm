@@ -8,7 +8,7 @@ This document explains how CervellaSwarm works under the hood: the agent hierarc
 
 ## High-Level Overview
 
-CervellaSwarm is a **three-tier architecture** with 16 specialized AI agents:
+CervellaSwarm is a **three-tier architecture** with 17 specialized AI agents:
 
 ```
                       ┌─────────────────┐
@@ -243,7 +243,7 @@ def validate_worker_output(worker_task):
          ▼
 ┌──────────────────────────┐
 │  MCP Server              │
-│  @cervellaswarm/mcp      │
+│  @cervellaswarm/mcp-server│
 │                          │
 │  Tools:                  │
 │  - spawn_worker()        │
@@ -267,7 +267,7 @@ def validate_worker_output(worker_task):
 - Returns result to Claude Code
 
 **list_workers()**
-- Lists all 16 available agents
+- Lists all 17 available agents
 - Shows specialties and capabilities
 
 **check_status()**
@@ -324,16 +324,15 @@ AI agents are stateless - they forget everything between sessions. SNCP solves t
 .sncp/
 ├── progetti/
 │   ├── project-a/
-│   │   ├── PROMPT_RIPRESA.md      # Resume instructions
-│   │   ├── stato.md               # Current state
-│   │   ├── decisioni/             # Decision log
-│   │   ├── idee/                  # Ideas and research
-│   │   └── roadmaps/              # Plans
+│   │   ├── PROMPT_RIPRESA_project-a.md  # Resume instructions (max 150 lines)
+│   │   ├── archivio/                     # Archived sessions
+│   │   └── roadmaps/                     # Plans
 │   └── project-b/
 │       └── [same structure]
-└── handoff/                         # Session handoffs (SNCP 2.0)
-    └── HANDOFF_*.md
+└── roadmaps/                             # Cross-project roadmaps
 ```
+
+> **SNCP 4.0 (S357):** Simplified to PROMPT_RIPRESA + NORD.md only. Previous `stato.md` and `oggi.md` deprecated.
 
 ### Context Mesh Pattern
 
@@ -352,10 +351,9 @@ Session End:
 ```
 
 **File Size Limits** (enforced by hooks):
-- `PROMPT_RIPRESA_*.md`: 150 lines max
-- `stato.md`: 500 lines max
+- `PROMPT_RIPRESA_*.md`: 150 lines max (300 in CervellaSwarm)
 
-> **SNCP 2.0:** `oggi.md` deprecated (Session 297). Use PROMPT_RIPRESA + handoff.
+When limits exceeded, archive old sessions to `archivio/`.
 
 When limits exceeded → Archive old sessions to `archivio/`
 
@@ -425,7 +423,7 @@ scripts/swarm/ask-regina.sh BLOCKER "Need database schema"
 ```
 Developer
     │
-    ├─► spawn-workers CLI
+    ├─► cervella-spawn CLI
     │       ↓
     │   Spawns local Claude Code sessions
     │   (one per agent)
@@ -441,10 +439,10 @@ Developer
 ```
 User Project
     │
-    ├─► cervellaswarm init
+    ├─► cervella-session init my-project
     │       ↓
-    │   Initializes SNCP structure
-    │   Configures MCP server
+    │   Initializes session memory structure
+    │   Configures project compass
     │
     ├─► Claude Code + MCP
     │       ↓
@@ -463,7 +461,7 @@ User Project
 
 ### Current Limits
 
-- **Agents:** 16 (1 Regina + 3 Guardians + 12 Workers)
+- **Agents:** 17 (1 Regina + 3 Guardians + 1 Architect + 2 Analysts + 10 Workers)
 - **Parallel Workers:** Up to 5 simultaneously
 - **Context Size:** ~150 lines per PROMPT_RIPRESA
 - **API Model:** Anthropic Claude (Opus/Sonnet)
@@ -504,7 +502,35 @@ User Project
 
 - Level 3 (HIGH RISK) requires human approval
 - Guardians flag security issues
-- `cervella-security` audits before deploy
+- Security agent reviews before deploy
+
+---
+
+## Python Packages (PyPI)
+
+CervellaSwarm is distributed as **9 independent Python packages**, each installable via pip:
+
+| Package | Description | CLI | Deps | Tests |
+|---------|-------------|-----|------|-------|
+| `cervellaswarm-code-intelligence` | AST analysis, semantic search, impact analysis | `cervella-search`, `cervella-impact`, `cervella-map` | 4 | 399 |
+| `cervellaswarm-agent-hooks` | Hook system for agent lifecycle events | `cervella-hooks` + 5 standalone | pyyaml | 236 |
+| `cervellaswarm-agent-templates` | Agent definition templates and scaffolding | `cervella-agent` | pyyaml | 192 |
+| `cervellaswarm-task-orchestration` | Rule-based task routing and validation | `cervella-orchestrate` + 5 standalone | ZERO | 305 |
+| `cervellaswarm-spawn-workers` | Process management for agent teams | `cervella-spawn` | pyyaml | 191 |
+| `cervellaswarm-session-memory` | Persistent session state management | `cervella-session` + 5 standalone | pyyaml | 193 |
+| `cervellaswarm-event-store` | SQLite event database for analytics | `cervella-events` | ZERO | 249 |
+| `cervellaswarm-quality-gates` | Content scoring, hook validation, agent sync | `cervella-check` | ZERO | 206 |
+| `cervellaswarm-lingua-universale` | Session type system for agent protocols | (library only) | ZERO | 1273 |
+
+**Total: 25 CLI commands, 3244+ tests, 4 packages with ZERO dependencies**
+
+### Package Design Principles
+
+- **src/ layout** with Hatchling build system (PEP 639)
+- **Apache-2.0** license on all packages
+- **ZERO or minimal deps** (4/9 packages have zero external dependencies)
+- **Frozen dataclasses** for value types (immutability by default)
+- **MappingProxyType** for global catalogs (P04 validated pattern)
 
 ---
 

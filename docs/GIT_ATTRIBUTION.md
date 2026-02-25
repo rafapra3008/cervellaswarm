@@ -11,7 +11,7 @@ Il sistema di Git Attribution permette di tracciare chi (quale agente) ha fatto 
 ```
 feat(api): Add user authentication
 
-Co-authored-by: CervellaSwarm (backend-worker/claude-sonnet-4-5) <noreply@cervellaswarm.com>
+Co-authored-by: CervellaSwarm (backend-worker/claude-sonnet-4-6) <noreply@cervellaswarm.com>
 ```
 
 ---
@@ -21,7 +21,7 @@ Co-authored-by: CervellaSwarm (backend-worker/claude-sonnet-4-5) <noreply@cervel
 | File | Versione | Scopo |
 |------|----------|-------|
 | `scripts/utils/git_worker_commit.sh` | v1.2.2 | Script commit con attribution |
-| `scripts/utils/worker_attribution.json` | v1.1.0 | Mapping worker → attribution |
+| `scripts/utils/worker_attribution.json` | v1.2.0 | Mapping worker → attribution |
 | `scripts/swarm/spawn-workers.sh` | v3.6.0 | Integrazione --auto-commit |
 
 ---
@@ -131,7 +131,7 @@ Co-authored-by: CervellaSwarm ({role}/{model}) <noreply@cervellaswarm.com>
 
 Esempio:
 ```
-Co-authored-by: CervellaSwarm (backend-worker/claude-sonnet-4-5) <noreply@cervellaswarm.com>
+Co-authored-by: CervellaSwarm (backend-worker/claude-sonnet-4-6) <noreply@cervellaswarm.com>
 ```
 
 ---
@@ -205,7 +205,7 @@ Il file `scripts/utils/worker_attribution.json` e la single source of truth per 
   "workers": {
     "backend": {
       "role": "backend-worker",
-      "model": "claude-sonnet-4-5",
+      "model": "claude-sonnet-4-6",
       "specialization": "Python, FastAPI, Database, API REST"
     }
   }

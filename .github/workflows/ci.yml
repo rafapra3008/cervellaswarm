@@ -3,7 +3,7 @@
 # Runs on every push to main and on PRs.
 # Jobs: lint -> test (matrix) -> build-check
 #
-# "Fatto BENE > Fatto VELOCE"
+# Quality is not negotiable.
 
 name: CI
 

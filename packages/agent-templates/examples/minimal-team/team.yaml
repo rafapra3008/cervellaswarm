@@ -1,0 +1,16 @@
+name: my-project
+version: 1.0.0
+description: 'Minimal 3-agent team: coordinator + backend worker + quality gate'
+agents:
+- name: lead
+  type: coordinator
+  role: lead
+- name: dev
+  type: worker
+  specialty: backend
+  role: worker
+- name: reviewer
+  type: quality-gate
+  role: validator
+entry_point: lead
+process: hierarchical

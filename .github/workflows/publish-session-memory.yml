@@ -1,0 +1,109 @@
+# Publish cervellaswarm-session-memory to PyPI
+# Triggered on tag: session-memory-v*
+# Trusted Publisher config on PyPI: workflow=publish-session-memory.yml, environment=pypi
+# NOTE: Publish/release jobs inline due to PyPI OIDC limitation (warehouse#11096)
+
+name: Publish session-memory
+
+on:
+  push:
+    tags:
+      - 'session-memory-v[0-9]+.[0-9]+.[0-9]+'
+      - 'session-memory-v[0-9]+.[0-9]+.[0-9]+-*'
+
+concurrency:
+  group: publish-session-memory-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    uses: ./.github/workflows/_build-package.yml
+    with:
+      package_name: "session-memory"
+      package_dir: "packages/session-memory"
+
+  publish-testpypi:
+    name: Publish to TestPyPI
+    needs: [build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha')
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/cervellaswarm-session-memory
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: session-memory-distributions
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          skip-existing: true
+          verbose: true
+
+  publish-pypi:
+    name: Publish to PyPI
+    needs: [build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: "!contains(github.ref_name, '-rc') && !contains(github.ref_name, '-beta') && !contains(github.ref_name, '-alpha')"
+    environment:
+      name: pypi
+      url: https://pypi.org/p/cervellaswarm-session-memory
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: session-memory-distributions
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          verbose: true
+
+  github-release:
+    name: Create GitHub Release
+    needs: [build, publish-pypi, publish-testpypi]
+    if: always() && needs.build.result == 'success' && (needs.publish-pypi.result == 'success' || needs.publish-testpypi.result == 'success')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: session-memory-distributions
+          path: dist/
+      - name: Extract version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#session-memory-v}" >> "$GITHUB_OUTPUT"
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "session-memory ${{ steps.version.outputs.version }}"
+          body: |
+            ## CervellaSwarm session-memory ${{ steps.version.outputs.version }}
+
+            **Persistent session state management. The differentiator.**
+
+            **Install:**
+            ```bash
+            pip install cervellaswarm-session-memory==${{ steps.version.outputs.version }}
+            ```
+
+            **What's new:**
+            - See [CHANGELOG](https://github.com/rafapra3008/cervellaswarm/blob/${{ github.ref_name }}/packages/session-memory/CHANGELOG.md)
+
+            **Links:**
+            - [PyPI package](https://pypi.org/project/cervellaswarm-session-memory/${{ steps.version.outputs.version }}/)
+            - [Documentation](https://github.com/rafapra3008/cervellaswarm/tree/main/packages/session-memory#readme)
+
+            ---
+            *Part of the CervellaSwarm multi-agent framework.*
+          files: dist/*
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha') }}

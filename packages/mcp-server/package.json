@@ -1,6 +1,6 @@
 {
   "name": "@cervellaswarm/mcp-server",
-  "version": "2.0.0-beta",
+  "version": "2.0.0-beta.1",
   "description": "17 AI agents with quality guardians - the only team that checks its own work",
   "type": "module",
   "main": "dist/index.js",
@@ -15,6 +15,7 @@
     "test": "node --test"
   },
   "dependencies": {
+    "@cervellaswarm/core": "file:../core",
     "@anthropic-ai/sdk": "^0.39.0",
     "@modelcontextprotocol/sdk": "^1.12.0",
     "conf": "^13.0.1",
@@ -41,7 +42,7 @@
     "ai-agents",
     "cervellaswarm"
   ],
-  "author": "Rafa & Cervella",
+  "author": "CervellaSwarm Contributors",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

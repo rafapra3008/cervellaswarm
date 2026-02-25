@@ -1,0 +1,101 @@
+# CI Workflow for cervellaswarm-spawn-workers
+#
+# Runs on push/PR when package files change.
+# Matrix: Python 3.10, 3.11, 3.12, 3.13
+#
+# Quality is not negotiable.
+
+name: Spawn Workers CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/spawn-workers/**'
+      - '.github/workflows/ci-spawn-workers.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'packages/spawn-workers/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: packages/spawn-workers/pyproject.toml
+
+      - name: Install package with test dependencies
+        run: pip install -e ".[test]"
+        working-directory: packages/spawn-workers
+
+      - name: Run tests
+        if: matrix.python-version != '3.12'
+        run: pytest tests/ -q --tb=short
+        working-directory: packages/spawn-workers
+
+      - name: Run tests with coverage (Python 3.12 only)
+        if: matrix.python-version == '3.12'
+        run: |
+          pytest tests/ --cov=cervellaswarm_spawn_workers --cov-report=term --cov-report=xml --tb=short
+        working-directory: packages/spawn-workers
+
+      - name: Upload coverage (Python 3.12 only)
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: spawn-workers-coverage
+          path: packages/spawn-workers/coverage.xml
+          retention-days: 30
+
+  build-check:
+    name: Build & Package Verify
+    needs: [test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install build tools
+        run: pip install build twine
+
+      - name: Build package
+        run: python -m build
+        working-directory: packages/spawn-workers
+
+      - name: Verify package
+        run: twine check dist/*
+        working-directory: packages/spawn-workers
+
+      - name: Test install from wheel
+        run: |
+          pip install dist/*.whl
+          python -c "from cervellaswarm_spawn_workers import SpawnManager; print('Import OK')"
+          cervella-spawn --help
+        working-directory: packages/spawn-workers

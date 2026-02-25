@@ -22,10 +22,10 @@ describe('Init Command', () => {
 
       // Simula l'output del comando init
       console.log('  Welcome to CervellaSwarm!');
-      console.log('  16 AI agents. 1 command. Your AI dev team.');
+      console.log('  17 AI agents. 1 command. Your AI dev team.');
 
       assert.ok(output.hasLog('Welcome to CervellaSwarm'), 'Should show welcome');
-      assert.ok(output.hasLog('16 AI agents'), 'Should show tagline');
+      assert.ok(output.hasLog('17 AI agents'), 'Should show tagline');
     });
   });
 
@@ -102,7 +102,7 @@ describe('SNCP Initialization', () => {
 
     // Simula la creazione della struttura SNCP
     await createFileStructure(tempDir, {
-      '.sncp/stato.md': '# Project Status\n',
+      '.sncp/PROMPT_RIPRESA_test.md': '# PROMPT RIPRESA\n',
       '.sncp/idee/.gitkeep': '',
       '.sncp/decisioni/.gitkeep': '',
       '.sncp/sessions/.gitkeep': '',
@@ -110,14 +110,14 @@ describe('SNCP Initialization', () => {
     });
 
     const exists = await verifyFileStructure(tempDir, [
-      '.sncp/stato.md',
+      '.sncp/PROMPT_RIPRESA_test.md',
       '.sncp/idee',
       '.sncp/decisioni',
       '.sncp/sessions',
       '.sncp/reports'
     ]);
 
-    assert.ok(exists['.sncp/stato.md'], 'Should create stato.md');
+    assert.ok(exists['.sncp/PROMPT_RIPRESA_test.md'], 'Should create PROMPT_RIPRESA');
     assert.ok(exists['.sncp/idee'], 'Should create idee/');
     assert.ok(exists['.sncp/decisioni'], 'Should create decisioni/');
     assert.ok(exists['.sncp/sessions'], 'Should create sessions/');

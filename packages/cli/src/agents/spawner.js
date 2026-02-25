@@ -6,89 +6,22 @@
  *
  * "17 agenti. 1 comando. Il tuo team AI."
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 
 import Anthropic from '@anthropic-ai/sdk';
 import * as config from '../config/manager.js';
+import {
+  buildAgentPrompt,
+  getAvailableWorkers,
+  getSuggestedNextStep
+} from '@cervellaswarm/core/workers';
 
 // Retry delays (ms between retries)
 const RETRY_DELAYS = [1000, 3000, 5000];
 const MAX_RETRIES = RETRY_DELAYS.length;
-
-/**
- * Get agent-specific system prompt
- */
-function getAgentPrompt(agent, context) {
-  const projectName = context?.name || 'this project';
-  const projectDescription = context?.description || '';
-  const projectPath = context?.path || process.cwd();
-
-  const baseContext = `
-Lavori su: ${projectName}${projectDescription ? ` - ${projectDescription}` : ''}
-Path: ${projectPath}
-
-REGOLE:
-- Scrivi codice REALE che funziona
-- Se crei/modifichi file, indica chiaramente quali
-- Sii conciso ma completo
-- Segui le best practices del linguaggio
-`;
-
-  const prompts = {
-    'cervella-backend': `Sei CERVELLA-BACKEND, specialista Python, FastAPI, Database, API REST, logica business.
-${baseContext}
-Focus: Backend, API, database, server-side logic.
-Stile: Codice pulito, ben documentato, testabile.
-Output: Mostra il codice completo da creare/modificare.`,
-
-    'cervella-frontend': `Sei CERVELLA-FRONTEND, specialista React, CSS, Tailwind, UI/UX, componenti.
-${baseContext}
-Focus: UI, componenti, styling, user experience.
-Stile: Componenti riutilizzabili, accessibili, responsive.
-Output: Mostra il codice JSX/CSS completo.`,
-
-    'cervella-tester': `Sei CERVELLA-TESTER, specialista Testing, Debug, QA, validazione.
-${baseContext}
-Focus: Test unitari, integration test, bug hunting.
-Stile: Test completi, edge cases, coverage alta.
-Output: Mostra i test completi pronti per essere eseguiti.`,
-
-    'cervella-docs': `Sei CERVELLA-DOCS, specialista Documentazione, README, guide, tutorial.
-${baseContext}
-Focus: Documentazione chiara, esempi pratici, getting started.
-Stile: Conciso ma completo, utente-first.
-Output: Mostra la documentazione markdown completa.`,
-
-    'cervella-devops': `Sei CERVELLA-DEVOPS, specialista Deploy, CI/CD, Docker, infrastruttura.
-${baseContext}
-Focus: Deployment, automation, monitoring, infrastructure.
-Stile: Sicuro, scalabile, automatizzato.
-Output: Mostra configurazioni complete (Dockerfile, CI config, etc).`,
-
-    'cervella-data': `Sei CERVELLA-DATA, specialista SQL, analytics, query, database design.
-${baseContext}
-Focus: Query ottimizzate, schema design, data integrity.
-Stile: Performance-first, normalization quando serve.
-Output: Mostra query SQL e schema completi.`,
-
-    'cervella-security': `Sei CERVELLA-SECURITY, specialista sicurezza, audit, vulnerabilita.
-${baseContext}
-Focus: Security audit, vulnerabilities, best practices.
-Stile: Defense in depth, zero trust, secure by default.
-Output: Lista vulnerabilita trovate e fix raccomandati.`,
-
-    'cervella-researcher': `Sei CERVELLA-RESEARCHER, specialista ricerca tecnica, studi, analisi.
-${baseContext}
-Focus: Ricerca approfondita, comparazioni, best practices.
-Stile: Fonti affidabili, analisi critica, raccomandazioni chiare.
-Output: Report strutturato con findings e raccomandazioni.`,
-  };
-
-  return prompts[agent] || prompts['cervella-backend'];
-}
 
 /**
  * Sleep for specified milliseconds
@@ -178,7 +111,9 @@ export async function spawnAgent(agent, description, context, options = {}) {
     };
   }
 
-  const systemPrompt = getAgentPrompt(agent, context);
+  // Normalize agent name (remove 'cervella-' prefix for core functions)
+  const agentType = agent.replace(/^cervella-/, '');
+  const systemPrompt = buildAgentPrompt(agentType, context);
   const model = options.model || config.getDefaultModel();
   const maxTokens = options.maxTokens || 4096;
   const timeout = options.timeout || config.getTimeout();
@@ -334,36 +269,18 @@ function extractFilesFromOutput(output) {
 
 /**
  * Suggest next step based on agent and task
+ * (Now uses @cervellaswarm/core for all 12 workers + guardians)
  */
 function suggestNextStep(agent, _description) {
-  const suggestions = {
-    'cervella-backend': 'Review the code and run: npm test',
-    'cervella-frontend': 'Preview in browser: npm run dev',
-    'cervella-tester': 'Run the test suite: npm test',
-    'cervella-docs': 'Review documentation for clarity',
-    'cervella-devops': 'Test deployment in staging first',
-    'cervella-data': 'Verify query performance with EXPLAIN',
-    'cervella-security': 'Apply the security fixes',
-    'cervella-researcher': 'Apply findings to your project'
-  };
-
-  return suggestions[agent] || 'Continue with your next task';
+  return getSuggestedNextStep(agent);
 }
 
 /**
  * Get available agents list
+ * (Now uses @cervellaswarm/core - all 12 workers!)
  */
 export function getAvailableAgents() {
-  return [
-    { name: 'cervella-backend', description: 'Python, FastAPI, API, Database' },
-    { name: 'cervella-frontend', description: 'React, CSS, Tailwind, UI/UX' },
-    { name: 'cervella-tester', description: 'Testing, Debug, QA' },
-    { name: 'cervella-docs', description: 'Documentation, README, Guides' },
-    { name: 'cervella-devops', description: 'Deploy, CI/CD, Docker' },
-    { name: 'cervella-data', description: 'SQL, Analytics, Database Design' },
-    { name: 'cervella-security', description: 'Security Audit, Vulnerabilities' },
-    { name: 'cervella-researcher', description: 'Research, Analysis, Best Practices' }
-  ];
+  return getAvailableWorkers();
 }
 
 /**

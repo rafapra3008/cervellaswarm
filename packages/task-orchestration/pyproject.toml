@@ -1,0 +1,119 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 CervellaSwarm Contributors
+
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+# ---------------------------------------------------------------------------
+# Project Metadata (PEP 621 + PEP 639)
+# ---------------------------------------------------------------------------
+[project]
+name = "cervellaswarm-task-orchestration"
+version = "0.1.0"
+description = "Deterministic task classification, routing, and validation for multi-agent systems. Zero LLM calls, file-based state, git-friendly audit trail."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.10"
+authors = [
+    {name = "CervellaSwarm Contributors"},
+]
+keywords = [
+    "task-orchestration",
+    "multi-agent",
+    "task-classifier",
+    "routing",
+    "validation",
+    "agent-framework",
+    "deterministic",
+    "file-based-state",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = []
+
+# ---------------------------------------------------------------------------
+# CLI Entry Points
+# ---------------------------------------------------------------------------
+[project.scripts]
+cervella-classify = "cervellaswarm_task_orchestration.cli:main_classify"
+cervella-route = "cervellaswarm_task_orchestration.cli:main_route"
+cervella-validate-plan = "cervellaswarm_task_orchestration.cli:main_validate_plan"
+cervella-validate-output = "cervellaswarm_task_orchestration.cli:main_validate_output"
+cervella-task = "cervellaswarm_task_orchestration.cli:main_task"
+cervella-orchestrate = "cervellaswarm_task_orchestration.cli:main"
+
+# ---------------------------------------------------------------------------
+# Project URLs
+# ---------------------------------------------------------------------------
+[project.urls]
+Homepage = "https://github.com/rafapra3008/cervellaswarm"
+Repository = "https://github.com/rafapra3008/cervellaswarm"
+Documentation = "https://github.com/rafapra3008/cervellaswarm/tree/main/packages/task-orchestration"
+"Bug Tracker" = "https://github.com/rafapra3008/cervellaswarm/issues"
+
+# ---------------------------------------------------------------------------
+# Optional Dependencies
+# ---------------------------------------------------------------------------
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.9.0",
+]
+test = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+]
+
+# ---------------------------------------------------------------------------
+# Hatchling Build Config
+# ---------------------------------------------------------------------------
+[tool.hatch.build.targets.wheel]
+packages = ["src/cervellaswarm_task_orchestration"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/",
+    "tests/",
+    "LICENSE",
+    "NOTICE",
+    "README.md",
+    "pyproject.toml",
+]
+
+# ---------------------------------------------------------------------------
+# Pytest
+# ---------------------------------------------------------------------------
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = ["--tb=short", "-q"]
+
+# ---------------------------------------------------------------------------
+# Coverage
+# ---------------------------------------------------------------------------
+[tool.coverage.run]
+source = ["cervellaswarm_task_orchestration"]
+omit = ["*/tests/*", "*/__main__.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
+show_missing = true

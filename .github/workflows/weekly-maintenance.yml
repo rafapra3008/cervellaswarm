@@ -1,17 +1,15 @@
-# CervellaSwarm - Manutenzione Settimanale
-# Versione: 1.0.0
-# Data: 2026-01-02
+# CervellaSwarm - Weekly Maintenance
+# Version: 1.1.0
 #
-# Esegue analisi settimanale del codebase ogni Lunedi alle 9:00 UTC
+# Runs weekly codebase analysis every Monday at 9:00 UTC
 
 name: Weekly Maintenance
 
 on:
   schedule:
-    # Ogni Lunedi alle 9:00 UTC (10:00 Roma)
+    # Every Monday at 9:00 UTC
     - cron: '0 9 * * 1'
 
-  # Permetti esecuzione manuale
   workflow_dispatch:
 
 jobs:
@@ -25,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -36,50 +34,50 @@ jobs:
 
           prompt: |
             ============================================
-            MANUTENZIONE SETTIMANALE CERVELLASWARM
+            WEEKLY MAINTENANCE - CERVELLASWARM
             ============================================
 
-            Sei Cervella-Ingegnera. Fai analisi settimanale del codebase.
+            You are a code maintenance analyst. Run a weekly codebase health check.
 
-            CONTROLLA:
+            CHECK:
 
-            1. FILE GRANDI (> 500 righe)
-               - Trova file che hanno superato soglia
-               - Suggerisci split se necessario
+            1. LARGE FILES (> 500 lines)
+               - Find files that exceeded the threshold
+               - Suggest splits if needed
 
-            2. TODO/FIXME NEL CODICE
-               - Cerca TODO senza issue linkato
-               - Identifica FIXME dimenticati
+            2. TODO/FIXME IN CODE
+               - Find TODOs without linked issues
+               - Identify forgotten FIXMEs
 
             3. DEPENDENCY UPDATES
-               - Controlla requirements.txt / package.json
-               - Nota se ci sono update disponibili
+               - Check requirements.txt / package.json
+               - Note available updates
 
             4. DOCUMENTATION FRESHNESS
-               - README e ROADMAP aggiornati?
-               - Docs obsolete?
+               - Are README and docs up to date?
+               - Outdated documentation?
 
             5. CODE PATTERNS
-               - Pattern ripetuti da estrarre
-               - Potenziali ottimizzazioni
+               - Repeated patterns to extract
+               - Potential optimizations
 
             ============================================
             OUTPUT
             ============================================
 
-            Se trovi problemi, crea UNA issue con:
-            - Titolo: "[Weekly] Manutenzione YYYY-MM-DD"
-            - Body: Lista problemi organizzati per categoria
+            If you find issues, create ONE issue with:
+            - Title: "[Weekly] Maintenance YYYY-MM-DD"
+            - Body: List of issues organized by category
             - Labels: maintenance, automated
 
-            Se tutto OK, non creare issue.
+            If everything is OK, do not create an issue.
 
           claude_args: |
             --allowedTools "Bash(gh issue:*),Read,Glob,Grep"
-            --model claude-sonnet-4-5-20250929
+            --model claude-sonnet-4-6
             --max_turns 5
 
       - name: Log Completion
         run: |
-          echo "Manutenzione settimanale completata!"
-          echo "Data: $(date)"
+          echo "Weekly maintenance completed!"
+          echo "Date: $(date)"

@@ -1,9 +1,8 @@
-# CervellaSwarm - Claude Code Review Automatica
-# Versione: 1.0.0
-# Data: 2026-01-02
+# CervellaSwarm - Automated Claude Code Review
+# Version: 1.1.0
 #
-# Questo workflow usa Claude per review automatica delle PR.
-# Attivato su: apertura PR, sync, o menzione @claude
+# Uses Claude for automated PR review.
+# Triggered on: PR open, sync, or @claude mention
 
 name: CervellaSwarm Review
 
@@ -17,7 +16,7 @@ jobs:
   review:
     runs-on: ubuntu-latest
 
-    # Esegui su PR o se menzionato @claude in un commento PR
+    # Run on PR or if @claude is mentioned in a PR comment
     if: >
       github.event_name == 'pull_request' ||
       (github.event_name == 'issue_comment' &&
@@ -32,7 +31,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -52,6 +51,6 @@ jobs:
       - name: Post Review Summary
         if: always()
         run: |
-          echo "Review completata!"
+          echo "Review completed!"
           echo "PR: ${{ github.event.pull_request.number || github.event.issue.number }}"
           echo "Status: ${{ job.status }}"

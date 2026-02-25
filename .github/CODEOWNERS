@@ -1,0 +1,14 @@
+# CervellaSwarm Code Owners
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything
+* @rafapra3008
+
+# Packages
+packages/cli/       @rafapra3008
+packages/core/      @rafapra3008
+packages/mcp-server/ @rafapra3008
+packages/api/       @rafapra3008
+
+# CI/CD
+.github/            @rafapra3008

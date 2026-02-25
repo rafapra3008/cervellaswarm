@@ -5,7 +5,7 @@
  * The heart of CervellaSwarm's differentiator:
  * "Define once, never re-explain."
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0
  */
@@ -116,7 +116,6 @@ When working on this project:
 Keep your .sncp/ folder clean:
 
 - **PROMPT_RIPRESA:** max 150 lines (archive old sessions)
-- **stato.md:** max 500 lines (compact periodically)
 - **reports/:** archive files older than 30 days
 
 **Command:** \`cervellaswarm housekeeping\`

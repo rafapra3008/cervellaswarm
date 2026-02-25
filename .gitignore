@@ -1,46 +1,56 @@
-# Dependencies
-node_modules/
-
-# Build outputs
+__pycache__/
+*.egg-info/
 dist/
 build/
-*.tgz
+
+# Data directory (operational data, logs, database, retro reports)
+data/
+*.db
+*.sqlite
 
 # Environment
 .env
-.env.*
-!.env.example
+*.env
 
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
+# Swarm operational data (personal data, IPs, emails, infra details)
+# S363: entire .swarm/ has sensitive data in handoff, security, tasks
+.swarm/
+CREDENZIALI_OAUTH.md
 
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
+# Logs and reports (hardcoded paths and operational data)
 logs/
+reports/
 
-# Test coverage
-coverage/
-.nyc_output/
+# MCP config (local paths)
+.mcp.json
 
-# Cache
-.cache/
-*.cache
-.eslintcache
+# IDE config (personal paths)
+.vscode/
 
-# TypeScript
-*.tsbuildinfo
+# Personal research files at root
+RESEARCH_*.md
+RICERCA_*.md
+PASSAGGIO_CONSEGNA_*.txt
 
-# Package manager locks (keep package-lock.json)
-yarn.lock
-pnpm-lock.yaml
+# Node modules
+packages/*/node_modules/
+node_modules/
 
-# Temporary files
-*.tmp
-*.temp
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.pytest_cache/
+
+# Private files (NEVER sync to public)
+.sncp/
+NORD.md
+docs/studio/
+
+# Config with local paths
+config/claude-hooks/
+
+# VS Code extension with personal config
+cervellaswarm-extension/

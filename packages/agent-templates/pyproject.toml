@@ -1,0 +1,117 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 CervellaSwarm Contributors
+
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+# ---------------------------------------------------------------------------
+# Project Metadata (PEP 621 + PEP 639)
+# ---------------------------------------------------------------------------
+[project]
+name = "cervellaswarm-agent-templates"
+version = "0.1.0"
+description = "Template agent definitions for Claude Code: coordinator, architect, quality-gate, and worker roles with team composition files."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.10"
+authors = [
+    {name = "CervellaSwarm Contributors"},
+]
+keywords = [
+    "claude-code",
+    "agent",
+    "template",
+    "multi-agent",
+    "orchestration",
+    "swarm",
+    "developer-tools",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Code Generators",
+]
+dependencies = [
+    "pyyaml>=6.0",
+]
+
+# ---------------------------------------------------------------------------
+# CLI Entry Points
+# ---------------------------------------------------------------------------
+[project.scripts]
+cervella-agent = "cervellaswarm_agent_templates.cli:main"
+
+# ---------------------------------------------------------------------------
+# Project URLs
+# ---------------------------------------------------------------------------
+[project.urls]
+Homepage = "https://github.com/rafapra3008/cervellaswarm"
+Repository = "https://github.com/rafapra3008/cervellaswarm"
+Documentation = "https://github.com/rafapra3008/cervellaswarm/tree/main/packages/agent-templates"
+"Bug Tracker" = "https://github.com/rafapra3008/cervellaswarm/issues"
+
+# ---------------------------------------------------------------------------
+# Optional Dependencies
+# ---------------------------------------------------------------------------
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.9.0",
+]
+test = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+]
+
+# ---------------------------------------------------------------------------
+# Hatchling Build Config
+# ---------------------------------------------------------------------------
+[tool.hatch.build.targets.wheel]
+packages = ["src/cervellaswarm_agent_templates"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/",
+    "tests/",
+    "examples/",
+    "docs/",
+    "LICENSE",
+    "NOTICE",
+    "README.md",
+    "pyproject.toml",
+]
+
+# ---------------------------------------------------------------------------
+# Pytest
+# ---------------------------------------------------------------------------
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = ["--tb=short", "-q"]
+
+# ---------------------------------------------------------------------------
+# Coverage
+# ---------------------------------------------------------------------------
+[tool.coverage.run]
+source = ["cervellaswarm_agent_templates"]
+omit = ["*/tests/*", "*/__main__.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
+show_missing = true

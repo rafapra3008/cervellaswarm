@@ -5,11 +5,14 @@
  * 17 AI agents exposed as MCP tools for Claude Code integration.
  * "Not an assistant - a TEAM."
  *
- * Copyright 2026 Rafa & Cervella
+ * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
@@ -19,15 +22,25 @@ import {
   hasApiKey,
   getApiKeySource,
   validateApiKey,
+  validateApiKeyFormat,
   getConfigPath,
   getConfigDir,
   getTier,
 } from "./config/manager.js";
 import { getUsageTracker, QuotaStatus } from "./billing/usage.js";
+import { registerSncpTools } from "./sncp/tools.js";
 
-// Server metadata
+// Server metadata - version from package.json (single source of truth)
 const SERVER_NAME = "cervellaswarm";
-const SERVER_VERSION = "0.2.2";
+const SERVER_VERSION = (() => {
+  const modDir = dirname(fileURLToPath(import.meta.url));
+  for (const rel of ["../package.json", "../../package.json"]) {
+    try {
+      return JSON.parse(readFileSync(join(modDir, rel), "utf-8")).version;
+    } catch { /* continue */ }
+  }
+  return "0.0.0";
+})();
 
 // Create MCP server instance
 const server = new McpServer({
@@ -75,17 +88,16 @@ server.tool(
     openWorldHint: true,
   },
   async ({ worker, task, context }) => {
-    // Check API key
-    if (!hasApiKey()) {
+    // Check API key FORMAT (fast, no API call)
+    const keyValidation = validateApiKeyFormat();
+    if (!keyValidation.valid) {
       return {
         content: [
           {
             type: "text",
             text:
-              "Error: No API key configured.\n\n" +
-              "To use CervellaSwarm, set your Anthropic API key:\n" +
-              "1. Run: cervellaswarm init\n" +
-              "2. Or set: export ANTHROPIC_API_KEY=sk-ant-...\n\n" +
+              `Error: ${keyValidation.error}\n\n` +
+              `${keyValidation.suggestion}\n\n` +
               "Get your key at: https://console.anthropic.com/",
           },
         ],
@@ -138,6 +150,11 @@ server.tool(
       const stats = await usageTracker.getStats();
       const usageInfo = `Usage: ${stats.calls}/${stats.limit} calls this month`;
 
+      // Show retry info if multiple attempts were needed
+      const retryInfo = result.attempts && result.attempts > 1
+        ? `⚠️ Note: Completed after ${result.attempts} attempts (retry succeeded)\n\n`
+        : '';
+
       return {
         content: [
           {
@@ -147,6 +164,7 @@ server.tool(
               `Duration: ${result.duration}\n` +
               `Tokens: ${result.usage?.inputTokens || 0} in / ${result.usage?.outputTokens || 0} out\n` +
               `${usageInfo}\n\n` +
+              retryInfo +
               `---\n\n${result.output}\n\n---\n\n` +
               `Next step: ${result.nextStep}${warningMessage}`,
           },
@@ -242,7 +260,7 @@ server.tool(
     status += `## API Key\n\n`;
 
     if (hasKey && apiKey) {
-      const maskedKey = `${apiKey.substring(0, 10)}...${apiKey.substring(apiKey.length - 4)}`;
+      const maskedKey = `${apiKey.substring(0, 7)}****${apiKey.substring(apiKey.length - 4)}`;
       status += `- Status: Configured\n`;
       status += `- Source: ${keySource}\n`;
       status += `- Key: \`${maskedKey}\`\n`;
@@ -317,13 +335,16 @@ server.tool(
 );
 
 // ============================================
+// SNCP TOOLS - Project Memory Access
+// ============================================
+
+registerSncpTools(server);
+
+// ============================================
 // RESOURCES
 // ============================================
 
-// TODO: Add SNCP resources in future versions
-// - Project state (.sncp/progetti/*/stato.md)
-// - Session history
-// - Worker reports
+// Future: Add MCP resources for structured data access
 
 // ============================================
 // PROMPTS
@@ -341,6 +362,13 @@ async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
   console.error(`CervellaSwarm MCP Server v${SERVER_VERSION} started`);
+
+  const shutdown = async () => {
+    await server.close();
+    process.exit(0);
+  };
+  process.on("SIGINT", shutdown);
+  process.on("SIGTERM", shutdown);
 }
 
 main().catch((error) => {

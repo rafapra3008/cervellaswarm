@@ -1,10 +1,10 @@
 # GitHub Actions: Python Test Suite with Coverage
 #
-# Trigger: Push/PR su main con modifiche Python
+# Trigger: Push/PR to main on Python file changes
 # Matrix: Python 3.10, 3.11, 3.12
-# Output: Coverage report (40% threshold, roadmap: 40 -> 50 -> 60)
+# Output: Coverage report (55% CI threshold, actual: 95%)
 #
-# "Fatto BENE > Fatto VELOCE" - CervellaSwarm
+# Quality is not negotiable.
 
 name: Python Tests
 
@@ -67,7 +67,7 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          pytest tests/ --cov=scripts --cov=src --cov-report=term --cov-report=xml --cov-fail-under=40
+          pytest tests/ --cov=scripts --cov=src --cov-report=term --cov-report=xml --cov-fail-under=55
         env:
           PYTHONPATH: ${{ github.workspace }}
 

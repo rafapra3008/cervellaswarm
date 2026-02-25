@@ -1,0 +1,101 @@
+# CI Workflow for cervellaswarm-event-store
+#
+# Runs on push/PR when package files change.
+# Matrix: Python 3.10, 3.11, 3.12, 3.13
+#
+# Quality is not negotiable.
+
+name: Event Store CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/event-store/**'
+      - '.github/workflows/ci-event-store.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'packages/event-store/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: packages/event-store/pyproject.toml
+
+      - name: Install package with test dependencies
+        run: pip install -e ".[test]"
+        working-directory: packages/event-store
+
+      - name: Run tests
+        if: matrix.python-version != '3.12'
+        run: pytest tests/ -q --tb=short
+        working-directory: packages/event-store
+
+      - name: Run tests with coverage (Python 3.12 only)
+        if: matrix.python-version == '3.12'
+        run: |
+          pytest tests/ --cov=cervellaswarm_event_store --cov-report=term --cov-report=xml --tb=short
+        working-directory: packages/event-store
+
+      - name: Upload coverage (Python 3.12 only)
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: event-store-coverage
+          path: packages/event-store/coverage.xml
+          retention-days: 30
+
+  build-check:
+    name: Build & Package Verify
+    needs: [test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install build tools
+        run: pip install build twine
+
+      - name: Build package
+        run: python -m build
+        working-directory: packages/event-store
+
+      - name: Verify package
+        run: twine check dist/*
+        working-directory: packages/event-store
+
+      - name: Test install from wheel
+        run: |
+          pip install dist/*.whl
+          python -c "from cervellaswarm_event_store import EventStore, Event, load_config; print('Import OK')"
+          cervella-events --help
+        working-directory: packages/event-store
