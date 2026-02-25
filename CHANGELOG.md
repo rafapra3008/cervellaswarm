@@ -7,6 +7,80 @@ adhering to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.1.0] - 2026-02-25
+
+First open source release of the CervellaSwarm Python package suite. 9 packages on PyPI.
+
+### Added
+
+**Lingua Universale** -- Session types & formal verification for AI agents
+- 14 modules: types, protocols, checker, dsl, monitor, lean4_bridge, integration, confidence, trust, codegen, intent, spec, errors (+ showcase example)
+- Session type system: typed protocols with runtime checking (first in Python for AI)
+- DSL notation: Scribble-inspired `sender -> receiver : MessageKind;` syntax with parser + renderer
+- Lean 4 bridge: Python protocols to Lean 4 formal proofs (7 verification properties)
+- Confidence types: `Confident[T]` with composition strategies (min, product, average)
+- Trust composition: 4-tier trust model with transitive composition (Subjective Logic)
+- Code generation: Protocol -> typed Python classes with runtime enforcement
+- Intent parser: structured micro-language for protocol definitions
+- Specification language: 7 formal properties (always_terminates, no_deadlock, confidence_min, etc.)
+- Error messages: Elm/Rust-style user-friendly errors, 35 codes, 3 locales (en, it, pt)
+- 1,820 tests, 98% coverage, ZERO external dependencies
+
+**Code Intelligence** -- AST-powered code understanding
+- Tree-sitter parser for Python, TypeScript, JavaScript
+- Symbol extraction, dependency graph (PageRank), semantic search
+- Impact analysis with risk scoring
+- 399 tests, 3 CLI tools (`cervella-search`, `cervella-impact`, `cervella-map`)
+
+**Agent Hooks** -- Lifecycle hooks for Claude Code agents
+- Bash validator, git reminder, file limits guard, context injector, session checkpoint
+- YAML configuration with project/user/env override
+- 236 tests, 5 CLI tools
+
+**Agent Templates** -- Agent definition templates & team configuration
+- 4 base templates + 7 worker specialties + team.yaml format
+- Enhanced frontmatter: role, permissionMode, maxTurns, disallowedTools
+- 192 tests, 1 CLI tool (`cervella-agent`)
+
+**Task Orchestration** -- Deterministic task routing & validation
+- Rule-based task classification (unique: 0/5 competitors have deterministic routing)
+- Plan validation, output validation, atomic race protection
+- 305 tests, 6 CLI tools, ZERO dependencies
+
+**Spawn Workers** -- Multi-agent process management
+- tmux/nohup backend auto-detection
+- Signal handling (SIGINT/SIGTERM), cross-invocation tracking
+- team.yaml integration for team-level spawning
+- 191 tests, 1 CLI tool (`cervella-spawn`)
+
+**Session Memory** -- Persistent session context
+- Template-based session snapshots with rotation
+- Project detection and auto-save
+- 193 tests
+
+**Event Store** -- Immutable event logging & audit trail
+- Schema-validated events with freezing
+- Query API with filtering and aggregation
+- 249 tests, ZERO runtime dependencies
+
+**Quality Gates** -- Automated quality checks & scoring
+- Multi-gate validation with configurable thresholds
+- Score composition and reporting
+- 206 tests
+
+**Open Source Infrastructure**
+- CI/CD: GitHub Actions per-package workflows with reusable build template
+- PyPI: Trusted Publishers (OIDC) -- zero secrets, zero API tokens
+- Dual repo strategy: private development + public releases with content scanning
+- Security: 6-layer content scanner (v3.2.0) blocks private paths, emails, project names
+- .github/: issue templates, PR template, dependabot, CODEOWNERS, FUNDING
+
+---
+
+## Node.js CLI/MCP Releases (legacy)
+
+The following releases predate the Python package suite and refer to the Node.js CLI and MCP server components.
+
 ## [2.0.0-beta] - 2026-01-19
 
 Major release with semantic code understanding, intelligent planning, and improved reliability.
@@ -134,5 +208,5 @@ PATCH: Backward-compatible bug fixes
 
 ---
 
-*Last updated: 2026-01-19*
+*Last updated: 2026-02-25*
 *Format: Keep a Changelog 1.0.0*

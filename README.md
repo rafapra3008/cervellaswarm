@@ -5,8 +5,9 @@
 **Build AI agent teams that remember.**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Tests: 1032 passing](https://img.shields.io/badge/tests-1032_passing-brightgreen.svg)](tests/)
-[![Coverage: 95%](https://img.shields.io/badge/coverage-95%25-brightgreen.svg)](tests/)
+[![PyPI Packages](https://img.shields.io/badge/PyPI-9_packages-orange.svg)](https://pypi.org/search/?q=cervellaswarm)
+[![Tests: 3791 passing](https://img.shields.io/badge/tests-3791_passing-brightgreen.svg)](packages/)
+[![Coverage: 95%](https://img.shields.io/badge/coverage-95%25-brightgreen.svg)](packages/)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-native-blueviolet.svg)](https://claude.ai/code)
 
 ```
@@ -102,6 +103,26 @@ Guardians and critical analysts run on Claude Opus for deeper reasoning. Most Wo
 
 See [Agents Reference](docs/AGENTS_REFERENCE.md) for detailed capabilities and examples.
 
+## Packages
+
+All packages are on [PyPI](https://pypi.org/search/?q=cervellaswarm) -- install what you need:
+
+| Package | What it does | Install |
+|---|---|---|
+| **[lingua-universale](packages/lingua-universale/)** | Session types & formal verification for AI agents. The core. | `pip install cervellaswarm-lingua-universale` |
+| **[code-intelligence](packages/code-intelligence/)** | AST-powered code understanding (tree-sitter, PageRank) | `pip install cervellaswarm-code-intelligence` |
+| **[agent-hooks](packages/agent-hooks/)** | Lifecycle hooks for Claude Code agents | `pip install cervellaswarm-agent-hooks` |
+| **[agent-templates](packages/agent-templates/)** | Agent definition templates & team configuration | `pip install cervellaswarm-agent-templates` |
+| **[task-orchestration](packages/task-orchestration/)** | Deterministic task routing & validation | `pip install cervellaswarm-task-orchestration` |
+| **[spawn-workers](packages/spawn-workers/)** | Multi-agent process management (tmux/nohup) | `pip install cervellaswarm-spawn-workers` |
+| **[session-memory](packages/session-memory/)** | Persistent session context across conversations | `pip install cervellaswarm-session-memory` |
+| **[event-store](packages/event-store/)** | Immutable event logging & audit trail | `pip install cervellaswarm-event-store` |
+| **[quality-gates](packages/quality-gates/)** | Automated quality checks & scoring | `pip install cervellaswarm-quality-gates` |
+
+Every package: Apache 2.0, Python 3.10+, tested, documented, zero or minimal dependencies.
+
+> **The crown jewel:** `lingua-universale` is the first session type system for AI agent communication in Python. 14 modules, 1820 tests, ZERO external dependencies. [Read the vision](packages/lingua-universale/NORD.md).
+
 ## Key Features
 
 ### SNCP -- Persistent Memory
@@ -189,10 +210,10 @@ Built-in tree-sitter powered code understanding:
 ## Battle-Tested
 
 ```
-365+ sessions of daily use since December 2025
-1,032 tests passing (95% coverage)
+400+ sessions of daily use since December 2025
+3,791 tests passing across 9 packages (95% coverage)
 17 agents used daily across real production codebases
-56,800 lines of Python + 16,600 lines of Bash
+9 packages published on PyPI (all v0.1.0)
 Built before multi-agent was a buzzword
 ```
 
@@ -202,16 +223,23 @@ This isn't a demo project. CervellaSwarm has been our daily development tool sin
 
 ```
 packages/
-  core/           # Core library (@cervellaswarm/core)
-  cli/            # CLI tool (@cervellaswarm/cli)
-  mcp-server/     # MCP integration (@cervellaswarm/mcp-server)
-  api/            # API client (@cervellaswarm/api)
+  lingua-universale/   # Session types & formal verification (Python, PyPI)
+  code-intelligence/   # AST pipeline & semantic search (Python, PyPI)
+  agent-hooks/         # Lifecycle hook system (Python, PyPI)
+  agent-templates/     # Agent & team definitions (Python, PyPI)
+  task-orchestration/  # Task routing & validation (Python, PyPI)
+  spawn-workers/       # Process management (Python, PyPI)
+  session-memory/      # Persistent context (Python, PyPI)
+  event-store/         # Event logging (Python, PyPI)
+  quality-gates/       # Quality scoring (Python, PyPI)
+  core/                # Core library (Node.js)
+  cli/                 # CLI tool (Node.js)
+  mcp-server/          # MCP integration (Node.js)
 scripts/
-  swarm/          # Agent orchestration
-  utils/          # AST pipeline, semantic search, impact analysis
-  common/         # Shared utilities (db, config, colors)
-tests/            # 1,032 tests (pytest)
-docs/             # Comprehensive documentation
+  swarm/               # Agent orchestration
+  utils/               # Internal utilities
+tests/                 # Integration tests (pytest)
+docs/                  # Documentation
 ```
 
 ## Contributing
