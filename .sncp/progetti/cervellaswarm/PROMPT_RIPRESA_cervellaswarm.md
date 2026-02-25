@@ -1,53 +1,55 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-25 - Sessione 397
-> **STATUS:** B.5 Spec Language DONE! Proprieta formali user-friendly per protocolli.
+> **Ultimo aggiornamento:** 2026-02-25 - Sessione 398
+> **STATUS:** B.6 Error Messages DONE! Errori user-friendly in 3 lingue per la Lingua Universale.
 
 ---
 
-## SESSIONE 397 - Cosa e successo
+## SESSIONE 398 - Cosa e successo
 
-### B.5 Specification Language - COMPLETATO
-Il 13esimo modulo della Lingua Universale. Proprieta formali in linguaggio umano.
-Ora si puo SPECIFICARE cosa deve essere vero di un protocollo:
+### B.6 Error Messages per Umani - COMPLETATO
+Il 14esimo modulo della Lingua Universale. Translator layer che converte eccezioni
+tecniche in messaggi comprensibili per non-developer, ispirato a Elm e Rust.
 
 ```
-PRIMA (solo checker strutturale, 7 property in lean4_bridge.py):
-  senders_in_roles, no_self_loop, non_empty... (hardcoded)
+PRIMA (errore tecnico grezzo):
+  SpecParseError: line 2: unknown message kind 'audit_verdct'.
+  Valid (snake_case): audit_request, audit_verdict, ...
 
-DOPO (user-friendly, qualsiasi proprieta):
-  properties for DelegateTask:
-      always terminates
-      no deadlock
-      task_request before task_result
-      worker cannot send audit_verdict
-      confidence >= high
-      trust >= trusted
-      all roles participate
+DOPO (errore user-friendly con fuzzy matching):
+  [LU-S003] Unknown message type: "audit_verdct"
+    Line 2
+    Did you mean: audit_verdict?
+    Hint: Check the valid message types for this protocol.
 ```
 
-Nuovo modulo `spec.py` in lingua-universale:
-- Mini-DSL strutturato (stesso pattern di intent.py/dsl.py: tokenizer + recursive descent)
-- 7 PropertyKind: always_terminates, no_deadlock, ordering, exclusion, confidence_min, trust_min, all_roles_participate
-- DUAL verification: `check_properties()` statico (PROVED/VIOLATED) + `check_session()` runtime (SATISFIED/VIOLATED)
-- PropertyVerdict: PROVED (statico), SATISFIED (runtime), VIOLATED, SKIPPED
-- `_collect_all_paths()`: enumera tutti i path di esecuzione (gestisce branch/choice)
-- `MappingProxyType` per tutti i lookup table (P04 compliant)
-- 1242 LOC, ZERO deps esterne (solo stdlib + moduli interni: protocols, types, checker, trust)
+Nuovo modulo `errors.py` in lingua-universale:
+- 35 error codes (LU-T/P/R/D/S/I/L/G/C/A/X) che coprono TUTTI i 13 moduli
+- 3 lingue: inglese, italiano, portoghese (template dict, ZERO deps)
+- `humanize(exc)`: traduce qualsiasi eccezione -> HumanError frozen dataclass
+- `format_error()`: output Elm/Rust style (location + got/expected + hint + verbose)
+- `suggest_similar()`: fuzzy matching via difflib.get_close_matches() (stdlib)
+- Chain of matchers: custom exceptions -> ValueError substring -> fallback LU-X001
+- `_SafeDict` per template rendering senza KeyError
+- 1784 LOC, ZERO deps esterne
 
-### Decisione architetturale (CEO)
-Scelta: standalone spec.py con micro-DSL > builder/decorator/inline DSL.
-Perche: Architect + Researcher concordi al 100%. Mini-DSL = leggibile da non-developer (missione NORD). Separation of concerns: specifica != protocollo. No breaking changes ai parser esistenti.
-27 fonti di ricerca (Dwyer 1999, DECLARE, TLA+, FizzBee, NL2LTL/IBM, Alloy, etc.).
-DIFFERENZIATORE: `confidence >= high` come proprieta formale. NESSUNO al mondo lo ha.
+### Decisione architetturale (Regina)
+Scelta: Translator Layer additive > sostituzione eccezioni.
+Perche: Researcher + Architect convergenza 100%. ZERO breaking changes. Eccezioni tecniche
+restano per developer, errors.py aggiunge layer user-friendly. Pattern approvato da 27 fonti
+(Elm 2015, Rust diagnostics, miette, Alloy counterexamples, FizzBee, Dafny).
+DIFFERENZIATORE: errori multi-lingua per session types formali. NESSUNO al mondo lo ha.
 
 ### Guardiana Audit
-- Score: 9.3/10 APPROVED. 2 P2 fixati subito (redundant import, O(n) AgentRole scan). 7 P3 (4 fixati: MappingProxyType, empty log test, branch exclusion test, trust violation test. 3 deferred: nested choices, _collect_all_paths unit test, test_spec_core monitoring).
+- Score: 9.3/10 APPROVED. 3 P2 fixati subito (dead code _mk_similar, entry duplicata,
+  matcher mancante "protocols cannot be empty"). 4 P3 differiti (import re inline,
+  RuntimeError category, 19 codici senza e2e test, IT/PT ASCII-only).
+- Tester ha trovato 2 bug aggiuntivi (template escaping `{`/`}` in LU-D006/D007).
 
 ### Test
-- 116 nuovi test (47 core + 43 parse + 23 session + 3 regression fix Guardiana)
-- Suite lingua-universale: **1563 test** (era 1447, +116), 0.36s, ZERO regressioni
-- Copertura: tutti 7 PropertyKind, static + runtime, happy + error + edge
+- 257 nuovi test (67 core + 100 humanize + 55 humanize2 + 35 catalog)
+- Suite lingua-universale: **1820 test** (era 1563, +257), 0.43s, ZERO regressioni
+- 4 file test: test_errors_core, test_errors_humanize, test_errors_humanize2, test_errors_catalog
 
 ---
 
@@ -56,7 +58,7 @@ DIFFERENZIATORE: `confidence >= high` come proprieta formale. NESSUNO al mondo l
 ```
 PACKAGE                  PYPI    CI   BUILD   TESTS
 code-intelligence        LIVE    OK   OK      399
-lingua-universale        LIVE    OK   OK      1563    <-- S397! (+116)
+lingua-universale        LIVE    OK   OK      1820    <-- S398! (+257)
 agent-hooks              LIVE    OK   OK      236
 agent-templates          LIVE    OK   OK      192
 task-orchestration       LIVE    OK   OK      305
@@ -64,7 +66,7 @@ spawn-workers            --      OK   OK      191
 session-memory           --      OK   OK      193
 event-store              --      OK   OK      249
 quality-gates            --      OK   OK      206
-TOTALE                   5/9     9/9  9/9     3534
+TOTALE                   5/9     9/9  9/9     3791
 ```
 
 ---
@@ -82,19 +84,20 @@ OPEN SOURCE ROADMAP:
 
 LINGUAGGIO CERVELLASWARM (la missione vera):
   FASE A: Fondamenta           COMPLETA (7 moduli originali, 9.5+ media)
-  FASE B: Il Toolkit           IN CORSO - 5/7 DONE!
+  FASE B: Il Toolkit           IN CORSO - 6/7 DONE!
     B.1 Confidence Types       DONE (S387 - confidence.py)
     B.2 Trust Composition      DONE (S388 - trust.py)
     B.3 Code Generation        DONE (S395 - codegen.py)
     B.4 Intent Parser          DONE (S396 - intent.py)
-    B.5 Spec Language          DONE (S397 - spec.py)  <-- OGGI!
-    B.6 Error Messages         PROSSIMO PASSO <-- QUI
-    B.7 Showcase               Pianificato
+    B.5 Spec Language          DONE (S397 - spec.py)
+    B.6 Error Messages         DONE (S398 - errors.py)  <-- OGGI!
+    B.7 Showcase               PROSSIMO PASSO <-- QUI
   FASE C: Il Linguaggio        2027+
   FASE D: Per Tutti            Il sogno
 
-TUTTI I LAYER OPERATIVI (9!):
-  Layer 9: Spec Language (proprieta)  OK (S397!)  <-- NUOVO!
+TUTTI I LAYER OPERATIVI (10!):
+  Layer 10: Error Messages (umano)    OK (S398!)  <-- NUOVO!
+  Layer 9: Spec Language (proprieta)  OK (S397)
   Layer 8: Intent (naturale)          OK (S396)
   Layer 7: Conversazione Claude       OK
   Layer 6: DSL + Session Checker      OK
@@ -107,39 +110,39 @@ TUTTI I LAYER OPERATIVI (9!):
 
 ---
 
-## Lezioni Apprese (S397)
+## Lezioni Apprese (S398)
 
 ### Cosa ha funzionato bene
-- Lancio Researcher + Architect in parallelo -> convergenza 100%, zero waste
-- Micro-DSL strutturato (stessa decisione di B.4) -> riuso pattern comprovato
-- Dual verification (statico + runtime) -> copre piu casi, design pulito
-- Guardiana audit -> 2 P2 trovati che sarebbero sfuggiti (inner import, linear scan)
+- Researcher + Architect in parallelo -> convergenza 100% (confermato 3a volta: B.4, B.5, B.6)
+- Tester ha trovato 2 bug reali (template escaping) che il Backend non aveva visto
+- Guardiana ha trovato 3 P2 (dead code, duplicata, matcher mancante) - valore ENORME
+- Pipeline completa (Research->Architect->Backend->Tester->Guardiana) = METODO COLLAUDATO
 
 ### Cosa non ha funzionato
-- spec.py 1242 LOC (stimato 400-600) - ma giustificato: parser + 2 checker x 7 proprieta
-- Researcher piu lenta del solito (467s vs ~150s) - molte fonti accademiche
+- errors.py 1784 LOC (stimato 800-1000) - catalogo messaggi x3 lingue occupa molto spazio
+- Tester ha dovuto fare 4 file (non 3) per stare sotto P18 500-righe
 
 ### Pattern candidato
-- "Dual verification (static + runtime) per property checking" -> MONITORARE
-- "MappingProxyType su TUTTI i lookup table dal giorno 1" -> CONSOLIDATO (era P04, ora applicato subito)
+- "Researcher + Architect parallelo come step 1" -> PROMUOVERE (3 sessioni consecutive, 100% convergenza)
+- "Tester trova bug che Backend non vede" -> CONSOLIDATO (valore provato in 10+ sessioni)
 
 ---
 
 ## Prossimi step
 
-1. **B.6 Error Messages** - Tradurre errori Lean 4 in linguaggio umano
-2. Pubblicare 4 packages mancanti (Rafa: Trusted Publishers)
-3. **B.7 Showcase** - Demo end-to-end + Blog "From Vibecoding to Vericoding"
+1. **B.7 Showcase** - ULTIMO step Fase B! PyPI 9/9 + demo end-to-end + blog "Vericoding"
+2. **Fase C** - Il Linguaggio vero (2027+)
 
 ---
 
 ## File chiave
 
-- `packages/lingua-universale/src/.../spec.py` - B.5 SPEC LANGUAGE (NUOVO!)
+- `packages/lingua-universale/src/.../errors.py` - B.6 ERROR MESSAGES (NUOVO!)
 - `packages/lingua-universale/NORD.md` - VISIONE (leggere SEMPRE!)
 - `.sncp/roadmaps/MAPPA_LINGUAGGIO_CERVELLASWARM.md` - LA MAPPA del linguaggio
-- `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260225_spec_language_b5.md` - Ricerca B.5
+- `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260225_error_messages_b6.md` - Ricerca B.6
+- `.swarm/plans/PLAN_B6_error_messages.md` - Piano architetturale B.6
 
-Archivio: S337-S393 open source. S394 PyPI+MAPPA. S395 B.3. S396 B.4. S397 B.5.
+Archivio: S337-S393 open source. S394 PyPI+MAPPA. S395 B.3. S396 B.4. S397 B.5. S398 B.6.
 
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*

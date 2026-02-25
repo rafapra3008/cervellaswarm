@@ -6,7 +6,7 @@
 > "La domanda e la risposta nello STESSO linguaggio." - Rafa
 
 **Creata:** 24 Febbraio 2026 - Sessione 394
-**Aggiornata:** 25 Febbraio 2026 - Sessione 396 (B.4 DONE)
+**Aggiornata:** 25 Febbraio 2026 - Sessione 398 (B.6 DONE)
 **Autrice:** Cervella Architect (su commissione della Regina)
 **Fonti:** NORD.md + 3 report di ricerca (64+ fonti esterne) + analisi codebase
 **Score target:** 9.5/10 per ogni step (audit Guardiana)
@@ -24,7 +24,7 @@ LAYER 3: Code Generation certificata                      OPERATIVO (S395!)
 LAYER 2: Agent Hooks + Quality Gates                      OPERATIVO
 LAYER 1: CI/CD + PyPI + Fly.io                            OPERATIVO
 
-Asset: 13 moduli, 1563 test, ~6600 LOC, ZERO deps esterne
+Asset: 14 moduli, 1820 test, ~8400 LOC, ZERO deps esterne
 Campo vergine confermato da 242+ fonti (session types per AI in Python)
 ```
 
@@ -103,19 +103,15 @@ Scelta architetturale: micro-DSL strutturato (come B.4) > builder/decorator/inli
 - Ricerca: 27 fonti (Dwyer 1999, DECLARE, TLA+, FizzBee, NL2LTL, Alloy, etc.)
 - **Output:** 1242 LOC, 116 test (47 core + 43 parse + 23 session + 3 regression), ZERO deps
 
-### B.6 - Error Messages per Umani
+### B.6 - Error Messages per Umani -- DONE (S398)
 
-Tradurre gli errori Lean 4 in linguaggio comprensibile.
-
-- **Cosa fare:**
-  Estensione di lean4_bridge.py. Mappa errori formali -> spiegazioni naturali.
-  Esempio: "type mismatch" diventa "Il tuo agente Worker sta rispondendo con
-  un verdetto di audit, ma il protocollo si aspetta un risultato del task."
-  Supporto multi-lingua (italiano, inglese, portoghese) via template.
-- **Dipendenze:** lean4_bridge.py (operativo), B.5
-- **Output atteso:** modulo errors.py, 30+ test, 20+ error pattern mappati
-- **Chi:** Worker Backend + Cervella Docs
-- **Effort:** 1-2 sessioni
+Translator layer: errori tecnici -> messaggi user-friendly stile Elm/Rust.
+- `errors.py`: humanize(), format_error(), suggest_similar(), _SafeDict
+- 35 error codes (LU-T/P/R/D/S/I/L/G/C/A/X), 3 locales (en, it, pt)
+- Fuzzy matching via difflib.get_close_matches() (stdlib, ZERO deps)
+- Guardiana 9.3/10 APPROVED, 5 bug trovati e fixati (2 Tester + 3 Guardiana)
+- Ricerca: 27 fonti (Elm 2015, Rust diagnostics, miette, Alloy, FizzBee, Dafny)
+- **Output:** 1784 LOC, 257 test, ZERO deps
 
 ### B.7 - Showcase e Community
 
@@ -224,7 +220,7 @@ FASE A (DONE) --> B.1 (DONE) --> B.2 (DONE) --> B.3 (DONE S395!)
                                            |
                                           B.5 (DONE S397!)
                                            |
-                                          B.6
+                                          B.6 (DONE S398!)
                                            |
                                           B.7 --> C.1 --> C.2 --> C.3
                                                     |        |

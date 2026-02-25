@@ -137,6 +137,17 @@ from .spec import (
     check_properties,
     check_session,
 )
+from .errors import (
+    ErrorCategory,
+    ErrorSeverity,
+    ErrorLocation,
+    HumanError,
+    humanize,
+    format_error,
+    suggest_similar,
+    DEFAULT_LOCALE,
+    SUPPORTED_LOCALES,
+)
 
 __all__ = [
     # Version
@@ -255,4 +266,14 @@ __all__ = [
     "parse_spec",
     "check_properties",
     "check_session",
+    # Errors
+    "ErrorCategory",
+    "ErrorSeverity",
+    "ErrorLocation",
+    "HumanError",
+    "humanize",
+    "format_error",
+    "suggest_similar",
+    "DEFAULT_LOCALE",
+    "SUPPORTED_LOCALES",
 ]
