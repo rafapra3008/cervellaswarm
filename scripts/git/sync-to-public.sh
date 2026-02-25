@@ -402,7 +402,8 @@ git commit --no-verify -m "$COMMIT_MSG
 Co-Authored-By: CervellaSwarm Bot <noreply@users.noreply.github.com>"
 
 # Push from worktree (use HEAD since we're on a temp branch)
-git push public HEAD:main
+# --no-verify: skip pre-push hooks from the main repo (they check against origin, not public)
+git push --no-verify public HEAD:main
 
 # =============================================================================
 # DONE
