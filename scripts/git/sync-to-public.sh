@@ -2,7 +2,7 @@
 # =============================================================================
 # sync-to-public.sh - Safe sync from private repo to public
 # =============================================================================
-# Version: 3.2.0 (S367 - Extended content scanning)
+# Version: 3.3.0 (S400 - Worktree cleanup, .git/.example exclusion, --no-verify push)
 #
 # HOW IT WORKS:
 # 1. Creates temporary worktree from public/main
