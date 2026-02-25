@@ -1,44 +1,30 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-25 - Sessione 401
-> **STATUS:** PyPI 9/9 LIVE! Fase 4 Launch in progress.
+> **Ultimo aggiornamento:** 2026-02-25 - Sessione 402
+> **STATUS:** PyPI 9/9 LIVE! Fase 4 Launch - pre-submit finale.
 
 ---
 
-## SESSIONE 401 - Cosa e successo
+## SESSIONE 402 - Cosa e successo
 
-### F4.1d Step 2: Colab Notebook Demo - COMPLETATO
-Notebook interattivo per accompagnare il blog "From Vibecoding to Vericoding" su Show HN.
+### Pre-Submit Finale
+Preparazione finale per il submit su Show HN.
 
-**File:** `docs/blog/from-vibecoding-to-vericoding-demo.ipynb`
+**Modifiche:**
+- README.md: aggiunto badge "Open in Colab", sezione "Try It Now" con codice verificato, link blog+Colab nel footer, session count 401+
+- MEMORY.md: sfoltito da 425 a <200 righe (dettagli in file separati)
+- Guardiana audit README: 9.5/10 APPROVED (0 P0, 0 P1, 1 P2 fixato, 4 P3)
 
-**Struttura (25 celle, ~2 min "Run All"):**
-- Setup (pip install, zero deps, no runtime restart)
-- Il Problema (untyped agent communication)
-- Typed Protocols (CodeReview 3-step)
-- Runtime Violation Detection (happy path + violation caught)
-- DSL Notation (render + parse + write from DSL)
-- Elm/Rust-Style Error Messages (3 locali: en, it, pt)
-- Lean 4 Formal Verification (genera 56 righe Lean 4, 5 proprieta)
-- Static Spec Verification (always_terminates, no_deadlock, all_roles_participate)
-- Confidence Types (Confident[T], compose_scores, .map())
-- Trust Composition (4-tier, privilege attenuation, chain_confidence)
-- Observable Sessions (ProtocolMonitor, EventCollector, DelegateTask)
-- Summary table + Call to Action (GitHub, PyPI, blog)
+**Test suite:** 9/9 packages VERDI (3790 test)
 
-**Ricerca (2 Researcher in parallelo, 40+ fonti):**
-- Best practices Colab notebook per Show HN (18 fonti)
-- Analisi showcase.py + blog -> outline celle (5 file letti, 6 API issue trovate)
-- Reports: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260225_*`
+### S401 (sessione precedente) - Riepilogo
+- F4.1d Step 2: Colab Notebook Demo DONE (25 celle, 9.5/10)
+- F4.1d Step 3: Show HN Draft DONE (titolo + primo commento + 7 risposte, Guardiana OK)
+- Reports ricerca: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260225_*`
 
-**Verifica:** TUTTE 12 celle code testate localmente, ZERO errori.
-**Guardiana audit:** 9.5/10 APPROVED (0 P0, 0 P1, 1 P2 fixato, 7 P3)
-- P2 fixato: cell Monitor splittata in 2 (33 righe -> 18+22)
-- P3 fixato: `except Exception` -> `except ProtocolViolation`
-
-### S400 (sessione precedente) - Riepilogo
-- F4.1c GitHub Release: DONE (README+CHANGELOG aggiornati, 3 security fix, release LIVE)
-- F4.1d Blog Post: DONE (74 fonti, 2 audit Guardiana 7.8->9.3/10, sync pubblico OK)
+### S400 - Riepilogo
+- F4.1c GitHub Release: DONE (9.3/10)
+- F4.1d Blog Post: DONE (74 fonti, 9.3/10)
 
 ---
 
@@ -65,15 +51,16 @@ TOTALE                   9/9     9/9  9/9     3791
 ```
 OPEN SOURCE ROADMAP:
   FASE 0-3: COMPLETE (100%, media 9.4/10)
-  FASE 4: Launch              [###############.....] 75%
+  FASE 4: Launch              [##################..] 90%
     F4.1a CI/CD Pipeline       DONE (S393, 9.5/10)
     F4.1b PyPI Publication     DONE (S399, 9.7/10) - 9/9 LIVE!
     F4.1c GitHub Release       DONE (S400, 9.3/10)
     F4.1d Blog + Social        IN PROGRESS
       Step 1: Blog post         DONE (S400, 9.3/10)
-      Step 2: Colab notebook    DONE (S401, 9.5/10)  <-- OGGI!
-      Step 3: Prepare Show HN   TODO
-      Step 4: Submit             TODO (domenica 12:00-14:00 UTC)
+      Step 2: Colab notebook    DONE (S401, 9.5/10)
+      Step 3: Show HN draft     DONE (S401, Guardiana OK)
+      Step 4: README pre-submit DONE (S402, 9.5/10)
+      Step 5: Submit             TODO (domenica 12:00-14:00 UTC)
 
 LINGUAGGIO CERVELLASWARM (la missione vera):
   FASE A: Fondamenta           COMPLETA (7 moduli, 9.5+ media)
@@ -84,28 +71,27 @@ LINGUAGGIO CERVELLASWARM (la missione vera):
 
 ---
 
-## Lezioni Apprese (S401)
+## Lezioni Apprese (S402)
 
 ### Cosa ha funzionato bene
-- 2 Researcher in parallelo (40+ fonti) = ricerca completa in ~5 min
-- Verifica locale di TUTTE le celle prima di audit Guardiana = zero sorprese
-- Pattern "contrast PRIMA/DOPO" (dalla ricerca Supertree Show HN) applicato nel notebook
+- Health check interno PRIMA di iniziare lavoro = chiarezza totale sullo stato
+- Parallelizzazione: Guardiana audit + MEMORY.md slim + PROMPT_RIPRESA update simultanei
+- Strategia step-by-step con audit dopo ogni step: conferma qualita incrementale
 
 ### Cosa non ha funzionato
-- Celle code tendono a superare 20 righe quando mostrano contrasto (happy path + violation)
-  Pattern: accettabile se narrativa beneficia, ma monitorare
+- (da completare a fine sessione)
 
 ### Pattern candidato
-- "Researcher paralleli per ricerca multi-angolo" -> CONSOLIDATO (gia usato in S400 blog, S401 notebook)
-- "Verifica locale celle PRIMA di audit" -> REGOLA (evita ping-pong Guardiana su errori banali)
+- "Health check interno a inizio sessione" -> CANDIDATO (prima volta, monitorare)
 
 ---
 
 ## Prossimi step
 
-1. **F4.1d Step 3: Prepare Show HN** - Titolo + primo commento + link strategy
-2. **F4.1d Step 4: Submit** - Domenica 12:00-14:00 UTC
-3. **Fase C** - Il Linguaggio vero (CervellaLang Alpha, 2027+)
+1. **F4.1d Step 5: Submit su Show HN** - Domenica 12:00-14:00 UTC
+   - Draft pronto: `docs/blog/show-hn-draft.md`
+   - Pre-submit: Rafa testa Colab in incognito
+2. **Fase C** - Il Linguaggio vero (CervellaLang Alpha, 2027+)
 
 ---
 
@@ -114,8 +100,29 @@ LINGUAGGIO CERVELLASWARM (la missione vera):
 - `packages/lingua-universale/NORD.md` - VISIONE (leggere SEMPRE!)
 - `docs/blog/from-vibecoding-to-vericoding.md` - Blog post
 - `docs/blog/from-vibecoding-to-vericoding-demo.ipynb` - Colab notebook demo
+- `docs/blog/show-hn-draft.md` - Show HN draft + response strategy
 - `.sncp/roadmaps/MAPPA_LINGUAGGIO_CERVELLASWARM.md` - LA MAPPA del linguaggio
 
-Archivio: S337-S398 (vedi MEMORY.md). S399 PyPI 9/9. S400 Release+Blog. S401 Colab notebook.
+Archivio: S337-S398 (vedi MEMORY.md). S399 PyPI 9/9. S400 Release+Blog. S401 Colab+ShowHN draft. S402 README pre-submit.
 
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-02-25 12:25 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 7366d2b9 - S401: F4.1d Show HN draft (title + first comment + response strategy)
+- **File modificati** (3):
+  - sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
+  - .sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md
+  - README.md
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---

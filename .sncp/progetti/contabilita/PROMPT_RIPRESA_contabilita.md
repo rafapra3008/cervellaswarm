@@ -1,75 +1,124 @@
 # PROMPT RIPRESA - Contabilita Antigravity
 
-> **Ultimo aggiornamento:** 25 Febbraio 2026 - Sessione 148
+> **Ultimo aggiornamento:** 25 Febbraio 2026 - Sessione 153
 > **Branch attivo:** lab-v3 (sviluppo V3) + lab-v2 (intoccato) + main (produzione)
 > **Versione canonica:** `CervellaSwarm/.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md`
 
 ---
 
-## Stato Attuale - S148 FASE N.6 DEPLOY COMPLETATA
+## Stato Attuale - S153 Deploy + Bug Faldone Trovato
 
 | Cosa | Stato |
 |------|-------|
 | **Produzione** | v2.11.0 LIVE su contabilitafamigliapra.it (INTATTA) |
-| **V3 VM** | v3.contabilitafamigliapra.it LIVE (**main.py v1.14.0** - deployato S148) |
-| **3 Hotel Agent** | TUTTI **v2.0.1** deployato S148. NL+SHE+HP scheduler ON |
-| **Lab v2** | INTOCCATO, frozen S87 |
-| **Test** | **1441 portale** + **348 agent** = **1789 PASS** (0 warning) |
-| **Round QA** | **112** (R111 Deploy Audit 9.5 + R112 Guardiana Finale 9.5) |
-| **Subroadmap Lucidatura** | **100% COMPLETATA** (20/20 step, S140-S148) |
+| **V3 VM** | v3.contabilitafamigliapra.it - **7 file deployati S153** (FORTEZZA v2.0.0, 12/12 OK) |
+| **Stagioni NL** | INVERNO 2024-2025 + ESTATE 2025 **CHIUSE** (Rafa le ha richiuse, ma pareggi mancanti) |
+| **3 Hotel Agent** | TUTTI v2.0.1, NL+SHE+HP scheduler ON |
+| **Test** | 1441 portale + 348 agent = **1789 PASS** |
+| **Round QA** | **125** + 1 Ops + 1 Caccia Bug |
+| **Backup DB** | `contabilita_nl.db.backup_pre_reopen_20260225_101439` |
 
 ---
 
-## S148 - Cosa e' stato fatto (FASE N.6 Deploy)
+## HANDOFF S153 -> S154: Due Problemi da Risolvere
 
-### Step 18: Deploy PORTALE (11 file)
-- Script `deploy_v3_files.sh v2.0.0` - 12/12 step FORTEZZA verdi
-- **11 file**: main.py v1.14.0, auth.py, admin.py v1.2.0, transactions.py (router+db), seasons.py, ericsoft_transformer.py, style.css, annullamenti.js, data.js, selection.js
-- MD5 match 11/11, backup `.backup.20260225_063602`
-- Health: v1.13.0 -> v1.14.0 OK. Prod + Lab-v2 intatti
-- Cache bust: 3 JS -> `?v=202602250636`
+### Problema 1: BUG nel codice faldone storico (TROVATO in S153)
 
-### Step 19: Deploy AGENT (4 file su 3 hotel)
-- Rafa via VPN: stop scheduler -> copy 4 file -> dry-run -> start scheduler
-- **NL**: v2.0.1, WM 4039, 0 mov, HC.io OK
-- **SHE**: v2.0.1, WM 21659, 6 mov CAP pronti
-- **HP**: v2.0.1, WM 24368, 3 mov CAP pronti
+**File:** `backend/database/seasons.py` - metodo `get_season_history()`
+**Riga:** ~331-337 (query caparre)
 
-### Step 20: Guardiana Finale
-- Pre-Deploy Check: 7/7 PASS
-- Guardiana R111 (Deploy Audit): 9.5/10 APPROVED
-- Guardiana R112 (Post-Deploy): 9.5/10 APPROVED
-- Live check: V3+Prod+Lab-v2 tutti OK, NL/HP/SHE pagine HTTP 200
+**Il bug:** Quando si chiude una stagione, le caparre NON pareggiate vengono migrate alla stagione successiva (carry-forward). Il faldone poi cerca `WHERE stagione = ?` e NON trova le caparre migrate. Il conteggio caparre nella tabella del faldone risulta incompleto.
 
----
+**Il fix (1 riga):**
+```python
+# PRIMA (bug):
+'SELECT ... FROM transactions_caparra WHERE stagione = ?'
 
-## Cosa MONITORARE (prossime 24h)
+# DOPO (fix):
+'SELECT ... FROM transactions_caparra WHERE stagione = ? OR originated_from_season = ?'
+```
 
-1. **SHE**: 6 mov pronti al prossimo run reale (scheduler ogni 1h)
-2. **HP**: 3 mov pronti al prossimo run reale
-3. **Reconcile**: NL 14:00, SHE 14:10, HP 14:20 - verificare HC.io verde
-4. **Rafa verifica UI**: colori HP, DELETE 409 messaggio, annullamenti card
+**Nota:** I box statistiche in alto (CAPARRE, GIR, PAREGGI) leggono da `closed_stats` (snapshot JSON al momento della chiusura) e sono CORRETTI. La tabella espandibile sotto legge query live ed e' quella con il bug.
 
----
+### Problema 2: Matching non rifatto per le 2 stagioni
 
-## P3 Pendenti (cosmetici, NON bloccanti)
+**Causa:** Dopo la riapertura S153, le caparre e GIR ci sono tutti nel DB, ma i pareggi (match tra caparra e giroconto) NON sono stati ricreati. Rafa ha richiuso le stagioni senza fare il matching, quindi il faldone mostra pochi pareggi.
 
-- ericsoft_transformer.py `__version__` 1.4.0 vs docs 1.5.0 (allineare in prossima sessione)
-- f-string in logger (pre-esistente, performance marginale)
-- Debug vars non usate in data.js (pre-esistente)
+**Dati DB attuali (VM):**
+
+| Stagione | Caparre | GIR | Pareggi ORA | Pareggi ATTESI |
+|----------|---------|-----|-------------|----------------|
+| INVERNO 2024-2025 | 305 | 296 | ~4 | ~289 |
+| ESTATE 2025 | 1197 | 1172 | ~7 | ~1150 |
+| INVERNO 2025-2026 | 432 | 382 | 369 | 369 (OK) |
 
 ---
 
-## Lezioni Apprese (Sessione 148)
+## Piano S154 (Ordine Preciso)
+
+### Fase 1: Fix il bug (codice)
+1. Fix `get_season_history()` in `backend/database/seasons.py` - aggiungere `OR originated_from_season = ?`
+2. Scrivere test per verificare il fix
+3. Guardiana audit
+4. Deploy il fix su VM (1 solo file: `backend/database/seasons.py`)
+
+### Fase 2: Riapertura + Matching + Chiusura
+5. Riaprire le 2 stagioni (stesso processo S153: backup -> stop service -> transazione -> start)
+6. Rafa fa matching per **INVERNO 2024-2025** dalla UI (tab Pareggi)
+7. Rafa chiude INVERNO 2024-2025 dalla UI
+8. Rafa fa matching per **ESTATE 2025** dalla UI
+9. Rafa chiude ESTATE 2025 dalla UI
+10. Verifica faldone storico - numeri corretti
+
+### Note importanti per S154
+- Il matching e' GLOBALE (tocca tutte le stagioni aperte). I pareggi gia' confermati sono SAFE
+- Fare UNA stagione alla volta: match -> chiudi -> poi la successiva
+- Prima la piu' vecchia (INVERNO 2024-2025), poi ESTATE 2025
+- Lo script riapertura e' lo STESSO di S153 (provato e funzionante)
+
+---
+
+## Dove leggere
+
+| Cosa | File |
+|------|------|
+| **Bug faldone** | `backend/database/seasons.py` - `get_season_history()` ~riga 331 |
+| Subroadmap Diamante Finale | `docs/SUBROADMAP_S153_DIAMANTE_FINALE.md` |
+| Piano deploy S152 | `docs/PIANO_DEPLOY_S152.md` |
+| NORD.md (bussola) | `NORD.md` (lab-v3 worktree) |
+
+---
+
+## Lezioni Apprese (Sessione 153)
 
 ### Cosa ha funzionato bene
-- **Script FORTEZZA V3** (`deploy_v3_files.sh` + `pre_deploy_check_v3.sh`): 12 step automatizzati con rollback, zero errori manuali
-- **Guardiana pre + post deploy**: audit sia sul codice che sul processo = confidenza massima
-- **Dry-run agent su ogni hotel**: verifica PRIMA di attivare scheduler, zero sorprese
+- **FORTEZZA v2.0.0 impeccabile**: 12/12 step, MD5 match, prod+lab-v2 intatti
+- **Guardiana dopo ogni step**: 5 audit in 1 sessione, nessun finding perso
+- **Stop service + BEGIN TRANSACTION**: zero inconsistenze per operazioni DB
+- **Caccia Bug prima di agire**: ha trovato il bug faldone PRIMA di sprecare tempo
+
+### Cosa non ha funzionato
+- **Riapertura senza matching**: le stagioni sono state riaperte e richiuse senza rifare i pareggi
+- **Non verificato il faldone in locale prima**: avremmo visto il problema subito
 
 ### Pattern candidato
-- "Pre-deploy check script + dry-run deploy + real deploy" - tre fasi distinte prevengono errori. Evidenza: S148 (0 errori su 11+4 file, 3 hotel). Azione: PROMUOVERE
+- **Caccia Bug OBBLIGATORIA prima di operazioni DB**: Evidenza: S153. Azione: PROMUOVERE
 
 ---
 
-*S148: FASE N.6 DEPLOY COMPLETATA. 11 file portale + 4 file agent 3 hotel. Guardiane R111+R112 9.5/10. Subroadmap "La Lucidatura" 100% (20/20 step). 1789 test. 112 round QA.*
+*S153: Deploy 7 file OK. Bug faldone trovato (get_season_history manca originated_from_season). Matching da rifare. Piano S154 scritto.*
+
+---
+
+## AUTO-CHECKPOINT: 2026-02-25 12:11 (unknown)
+
+### Stato Git
+- **Branch**: lab-v2
+- **Ultimo commit**: eb48d09 - ANTI-COMPACT: PreCompact auto
+- **File modificati**: Nessuno (git pulito)
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---

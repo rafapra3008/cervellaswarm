@@ -9,6 +9,7 @@
 [![Tests: 3791 passing](https://img.shields.io/badge/tests-3791_passing-brightgreen.svg)](packages/)
 [![Coverage: 95%](https://img.shields.io/badge/coverage-95%25-brightgreen.svg)](packages/)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-native-blueviolet.svg)](https://claude.ai/code)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rafapra3008/cervellaswarm/blob/main/docs/blog/from-vibecoding-to-vericoding-demo.ipynb)
 
 ```
    You ──> Queen ──> Architect ──> Workers ──> Guardians ──> Done
@@ -123,6 +124,30 @@ Every package: Apache 2.0, Python 3.10+, tested, documented, zero or minimal dep
 
 > **The crown jewel:** `lingua-universale` is the first session type system for AI agent communication in Python. 14 modules, 1820 tests, ZERO external dependencies. [Read the vision](packages/lingua-universale/NORD.md).
 
+## Try It Now
+
+```bash
+pip install cervellaswarm-lingua-universale
+```
+
+```python
+from cervellaswarm_lingua_universale import (
+    Protocol, ProtocolStep, MessageKind, SessionChecker, TaskResult, TaskStatus,
+)
+
+# Define a protocol: who sends what, to whom, in what order
+review = Protocol(name="Review", roles=("dev", "reviewer"), elements=(
+    ProtocolStep(sender="dev", receiver="reviewer", message_kind=MessageKind.TASK_RESULT),
+))
+
+# The checker enforces it at runtime
+checker = SessionChecker(review)
+checker.send("dev", "reviewer", TaskResult(task_id="1", status=TaskStatus.OK, summary="Done"))
+# Wrong sender/receiver/order? -> ProtocolViolation raised immediately
+```
+
+Or try the **[interactive Colab notebook](https://colab.research.google.com/github/rafapra3008/cervellaswarm/blob/main/docs/blog/from-vibecoding-to-vericoding-demo.ipynb)** -- 2 minutes, zero setup, 9 features demoed live.
+
 ## Key Features
 
 ### SNCP -- Persistent Memory
@@ -210,7 +235,7 @@ Built-in tree-sitter powered code understanding:
 ## Battle-Tested
 
 ```
-400+ sessions of daily use since December 2025
+401+ sessions of daily use since December 2025
 3,791 tests passing across 9 packages (95% coverage)
 17 agents used daily across real production codebases
 9 packages published on PyPI (all v0.1.0)
@@ -262,6 +287,6 @@ Copyright 2025-2026 CervellaSwarm Contributors.
 
 **CervellaSwarm** -- *17 brains are better than one.*
 
-[Getting Started](docs/GETTING_STARTED.md) | [Documentation](docs/) | [Contributing](CONTRIBUTING.md) | [Changelog](CHANGELOG.md)
+[Getting Started](docs/GETTING_STARTED.md) | [Documentation](docs/) | [Blog: From Vibecoding to Vericoding](docs/blog/from-vibecoding-to-vericoding.md) | [Try in Colab](https://colab.research.google.com/github/rafapra3008/cervellaswarm/blob/main/docs/blog/from-vibecoding-to-vericoding-demo.ipynb) | [Contributing](CONTRIBUTING.md) | [Changelog](CHANGELOG.md)
 
 </div>
