@@ -122,7 +122,7 @@ All packages are on [PyPI](https://pypi.org/search/?q=cervellaswarm) -- install 
 
 Every package: Apache 2.0, Python 3.10+, tested, documented, zero or minimal dependencies.
 
-> **The crown jewel:** `lingua-universale` is the first session type system for AI agent communication in Python. 14 modules, 1820 tests, ZERO external dependencies. [Read the vision](packages/lingua-universale/NORD.md).
+> **The crown jewel:** To our knowledge, `lingua-universale` is the first session type system for AI agent communication in Python. 13 modules, 1820 tests, ZERO external dependencies. [Read the vision](packages/lingua-universale/NORD.md).
 
 ## Try It Now
 
@@ -235,10 +235,10 @@ Built-in tree-sitter powered code understanding:
 ## Battle-Tested
 
 ```
-401+ sessions of daily use since December 2025
+400+ sessions of daily use since December 2025
 3,791 tests passing across 9 packages (95% coverage)
 17 agents used daily across real production codebases
-9 packages published on PyPI (all v0.1.0)
+9 packages published on PyPI, all Apache 2.0
 Built before multi-agent was a buzzword
 ```
 
