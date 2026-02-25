@@ -2,7 +2,7 @@
 # Copyright 2026 CervellaSwarm Contributors
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling>=1.26"]
 build-backend = "hatchling.build"
 
 [project]
@@ -13,48 +13,55 @@ readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
 requires-python = ">=3.10"
-authors = [
-    { name = "CervellaSwarm Contributors" },
-]
+authors = [{ name = "CervellaSwarm Contributors" }]
+keywords = ["multi-agent", "ai-agents", "worker-spawning", "tmux", "process-management"]
 classifiers = [
     "Development Status :: 3 - Alpha",
+    "Environment :: Console",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
-    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-keywords = ["multi-agent", "ai-agents", "worker-spawning", "tmux", "process-management"]
-dependencies = [
-    "pyyaml",
-]
-
-[project.urls]
-Homepage = "https://github.com/rafapra3008/cervellaswarm"
-Repository = "https://github.com/rafapra3008/cervellaswarm/tree/main/packages/spawn-workers"
-Issues = "https://github.com/rafapra3008/cervellaswarm/issues"
+dependencies = ["pyyaml>=6.0"]
 
 [project.scripts]
 cervella-spawn = "cervellaswarm_spawn_workers.cli:main"
 
+[project.urls]
+Homepage = "https://github.com/rafapra3008/cervellaswarm"
+Repository = "https://github.com/rafapra3008/cervellaswarm"
+Documentation = "https://github.com/rafapra3008/cervellaswarm/tree/main/packages/spawn-workers"
+"Bug Tracker" = "https://github.com/rafapra3008/cervellaswarm/issues"
+
 [project.optional-dependencies]
-test = [
-    "pytest>=7.0",
-    "pytest-cov>=4.0",
-]
+dev = ["pytest>=8.0", "pytest-cov>=5.0", "ruff>=0.9.0"]
+test = ["pytest>=8.0", "pytest-cov>=5.0"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cervellaswarm_spawn_workers"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/", "tests/", "LICENSE", "NOTICE", "README.md", "CHANGELOG.md", "pyproject.toml"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+addopts = ["--tb=short", "-q"]
 
 [tool.coverage.run]
 source = ["cervellaswarm_spawn_workers"]
+omit = ["*/tests/*", "*/__main__.py"]
 
 [tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
 show_missing = true
-
-[tool.hatch.build.targets.sdist]
-include = ["src/", "LICENSE", "NOTICE", "README.md", "CHANGELOG.md"]

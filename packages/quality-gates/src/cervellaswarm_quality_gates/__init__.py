@@ -3,6 +3,10 @@
 
 """CervellaSwarm Quality Gates - Quality gates for AI agent swarms."""
 
+from importlib.metadata import version as _version
+
+__version__ = _version("cervellaswarm-quality-gates")
+
 from cervellaswarm_quality_gates.config import (
     find_config_file,
     get_section,

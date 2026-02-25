@@ -3,6 +3,10 @@
 
 """CervellaSwarm Session Memory - Git-native, human-readable session continuity for AI agents."""
 
+from importlib.metadata import version as _version
+
+__version__ = _version("cervellaswarm-session-memory")
+
 from cervellaswarm_session_memory.config import (
     load_config,
     get_section,

@@ -3,6 +3,10 @@
 
 """CervellaSwarm Event Store - SQLite event database for AI agent session tracking."""
 
+from importlib.metadata import version as _version
+
+__version__ = _version("cervellaswarm-event-store")
+
 from cervellaswarm_event_store.config import (
     find_config_file,
     get_db_path,
