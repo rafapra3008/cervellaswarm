@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 25 Febbraio 2026 - S396 (B.4 Intent Parser DONE + 1447 test)
+> Aggiornato: 25 Febbraio 2026 - S397 (B.5 Spec Language DONE + 1563 test)
 
 ```
 +==================================================================+
@@ -135,11 +135,11 @@ FASE 4: Launch                    [########............] 40% IN CORSO
 |     3. Protocolli che si provano da soli (Lean 4)                |
 |                                                                  |
 |   FASE A: COMPLETA + HARDENED (S380-S386)                        |
-|   FASE B: B.1+B.2+B.3+B.4 DONE! (S387-S396)                    |
-|     B.4 Intent Parser = IL PONTE VERSO L'UMANO!                  |
-|     intent naturale -> specifica -> Lean 4 -> CODICE PYTHON       |
+|   FASE B: B.1+B.2+B.3+B.4+B.5 DONE! (S387-S397)                |
+|     B.5 Spec Language = PROPRIETA FORMALI USER-FRIENDLY!         |
+|     "always terminates, no deadlock, A before B" -> PROVED!      |
 |   PyPI: LIVE! pip install cervellaswarm-lingua-universale (S389) |
-|   12 moduli, 1447 test, 92 API symbols, ZERO deps               |
+|   13 moduli, 1563 test, 102 API symbols, ZERO deps              |
 |   NORD completo: packages/lingua-universale/NORD.md              |
 |                                                                  |
 +==================================================================+

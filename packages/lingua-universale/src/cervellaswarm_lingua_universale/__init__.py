@@ -125,6 +125,18 @@ from .intent import (
     parse_intent,
     parse_intent_protocol,
 )
+from .spec import (
+    PropertyKind,
+    PropertyVerdict,
+    PropertySpec,
+    ProtocolSpec,
+    PropertyResult,
+    PropertyReport,
+    SpecParseError,
+    parse_spec,
+    check_properties,
+    check_session,
+)
 
 __all__ = [
     # Version
@@ -232,4 +244,15 @@ __all__ = [
     "IntentParseError",
     "parse_intent",
     "parse_intent_protocol",
+    # Spec
+    "PropertyKind",
+    "PropertyVerdict",
+    "PropertySpec",
+    "ProtocolSpec",
+    "PropertyResult",
+    "PropertyReport",
+    "SpecParseError",
+    "parse_spec",
+    "check_properties",
+    "check_session",
 ]

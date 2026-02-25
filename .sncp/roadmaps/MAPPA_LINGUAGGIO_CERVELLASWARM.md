@@ -24,7 +24,7 @@ LAYER 3: Code Generation certificata                      OPERATIVO (S395!)
 LAYER 2: Agent Hooks + Quality Gates                      OPERATIVO
 LAYER 1: CI/CD + PyPI + Fly.io                            OPERATIVO
 
-Asset: 12 moduli, 1447 test, ~5350 LOC, ZERO deps esterne
+Asset: 13 moduli, 1563 test, ~6600 LOC, ZERO deps esterne
 Campo vergine confermato da 242+ fonti (session types per AI in Python)
 ```
 
@@ -88,18 +88,20 @@ Scelta architetturale: micro-linguaggio > parser NLP (insight Rafa + Architect +
 - Ricerca: 28 fonti (Adapt, Rasa, Req2LTL, spaCy, LUIS, etc.)
 - **Output:** 649 LOC, 67 test (36 core + 31 edge), ZERO deps
 
-### B.5 - Specification Language Accessibile
+### B.5 - Specification Language -- DONE (S397)
 
-Semplificare il DSL per chi non conosce i metodi formali.
+Mini-DSL per esprimere proprieta formali sui protocolli. Dual verification: statico + runtime.
+Scelta architetturale: micro-DSL strutturato (come B.4) > builder/decorator/inline DSL.
 
-- **Cosa fare:**
-  Layer sopra il DSL attuale (Scribble-inspired, tecnico).
-  Sintassi piu naturale: `when User asks -> Backend responds with confidence High`.
-  Il parser interno traduce nella stessa AST del DSL esistente.
-- **Dipendenze:** B.3, B.4
-- **Output atteso:** modulo dsl_friendly.py, 30+ test, sintassi documentata
-- **Chi:** Worker Backend + Cervella Docs
-- **Effort:** 1-2 sessioni
+- `spec.py`: SpecParseError, PropertyKind (7 tipi), PropertySpec, ProtocolSpec, PropertyReport
+- Parser indent-aware + recursive descent (stesso pattern intent.py/dsl.py)
+- `check_properties()`: statico contro Protocol (PROVED/VIOLATED)
+- `check_session()`: runtime contro session log (SATISFIED/VIOLATED)
+- 7 proprieta: always_terminates, no_deadlock, ordering, exclusion, confidence_min, trust_min, all_roles_participate
+- DIFFERENZIATORE: `confidence >= high` come proprieta formale (NESSUNO al mondo lo ha!)
+- Guardiana audit: 9.3/10 APPROVED, 2 P2 fixati (inner import + O(n) scan), 7 P3 (4 fixati, 3 deferred)
+- Ricerca: 27 fonti (Dwyer 1999, DECLARE, TLA+, FizzBee, NL2LTL, Alloy, etc.)
+- **Output:** 1242 LOC, 116 test (47 core + 43 parse + 23 session + 3 regression), ZERO deps
 
 ### B.6 - Error Messages per Umani
 
@@ -220,7 +222,7 @@ FASE A (DONE) --> B.1 (DONE) --> B.2 (DONE) --> B.3 (DONE S395!)
                                                     |
                                           B.4 (DONE S396!) <--+
                                            |
-                                          B.5
+                                          B.5 (DONE S397!)
                                            |
                                           B.6
                                            |
