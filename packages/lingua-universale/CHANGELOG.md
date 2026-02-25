@@ -4,6 +4,39 @@ All notable changes to `cervellaswarm-lingua-universale` will be documented in t
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] - 2026-02-25
+
+### Added
+
+**Error messages (errors.py)**
+- `humanize()`: convert `ProtocolViolation` to human-readable `HumanError`
+- `format_error()`: Elm/Rust-style error formatting with suggestions
+- `SUPPORTED_LOCALES`: multi-language support (en, it, pt)
+- Verbose mode with contextual suggestions for fixing violations
+
+**Spec language (spec.py)**
+- `parse_spec()`: natural language property specification parser
+- `check_properties()`: static structural verification of protocols
+- `PropertyVerdict`: PROVED / VIOLATED / UNKNOWN verdicts with evidence
+- Properties: `always_terminates`, `no_deadlock`, `all_roles_participate`
+
+**Code generation (codegen.py)**
+- `generate_python()`: Protocol to Python stub generation
+- `generate_python_multi()`: batch generation for multiple protocols
+
+**Intent parser (intent.py)**
+- `parse_intent()`: natural language to Protocol conversion
+- Pattern matching for common protocol descriptions
+
+### Changed
+
+- Expanded `__init__.py` re-exports: 84 -> 110 public symbols
+- Updated test count: 1273 -> 1820 tests, 98% coverage maintained
+
+### Fixed
+
+- Colab notebook compatibility: all 14 modules now importable from PyPI
+
 ## [0.1.0] - 2026-02-21
 
 ### Added
@@ -71,4 +104,5 @@ This project follows [Semantic Versioning](https://semver.org/).
 - Frozen dataclasses with `__post_init__` validation throughout
 - Pre-computed O(1) lookup tables for MessageKind <-> PascalCase conversion
 
+[0.1.1]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.1.1
 [0.1.0]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.1.0
