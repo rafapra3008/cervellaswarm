@@ -113,6 +113,12 @@ from .trust import (
     compose_chain,
     chain_confidence,
 )
+from .codegen import (
+    GeneratedCode,
+    PythonGenerator,
+    generate_python,
+    generate_python_multi,
+)
 
 __all__ = [
     # Version
@@ -210,4 +216,9 @@ __all__ = [
     "trust_tier_for_role",
     "compose_chain",
     "chain_confidence",
+    # Codegen
+    "GeneratedCode",
+    "PythonGenerator",
+    "generate_python",
+    "generate_python_multi",
 ]

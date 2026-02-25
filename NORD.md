@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 24 Febbraio 2026 - S394 (5/9 PyPI LIVE + MAPPA Linguaggio)
+> Aggiornato: 25 Febbraio 2026 - S395 (B.3 Code Generation DONE + 1380 test)
 
 ```
 +==================================================================+
@@ -135,9 +135,11 @@ FASE 4: Launch                    [########............] 40% IN CORSO
 |     3. Protocolli che si provano da soli (Lean 4)                |
 |                                                                  |
 |   FASE A: COMPLETA + HARDENED (S380-S386)                        |
-|   FASE B: 80% (S387 - confidence, trust, thread safety)          |
+|   FASE B: B.1+B.2+B.3 DONE! (S387-S395)                        |
+|     B.3 Code Generation = IL CICLO E COMPLETO!                   |
+|     specifica -> verifica Lean 4 -> CODICE PYTHON                |
 |   PyPI: LIVE! pip install cervellaswarm-lingua-universale (S389) |
-|   9 moduli, 1273 test, 84 API symbols, ZERO deps                |
+|   11 moduli, 1380 test, 88 API symbols, ZERO deps               |
 |   NORD completo: packages/lingua-universale/NORD.md              |
 |                                                                  |
 +==================================================================+

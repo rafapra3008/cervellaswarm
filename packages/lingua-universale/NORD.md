@@ -216,9 +216,11 @@ S382  [DONE]  Code Review + Bug Hunt (12 bug, 12 fix, 320 test, 9.5/10)
 S383  [DONE]  Protocol Monitor (5o modulo, 134 test, 454 totali, 9.6/10)
 S384  [DONE]  Lean 4 Bridge (6o modulo, 31 fonti, 322 test, 776 totali, 9.7/10)
 S385  [DONE]  Integration (7o modulo, 191 test, 967 totali, 9.5/10) - FASE A COMPLETA!
-S386+ [PLAN]  Auto-Learning Research (Scienziata - idee Rafa)
-S387+ [PLAN]  Confidence Types - l'incertezza come tipo (Fase B)
-S388+ [PLAN]  Trust Composition - la fiducia che si compone (Fase B)
+S386  [DONE]  Code Review + Bug Hunt #9 (29 issue, 11 fix, 997 test, 9.5/10)
+S387  [DONE]  Confidence Types (8o modulo, confidence.py, 178 LOC) - FASE B inizio!
+S388  [DONE]  Trust Composition (9o modulo, trust.py, 168 LOC)
+S395  [DONE]  Code Generation (10o modulo, codegen.py, 730 LOC, 107 test) - CICLO COMPLETO!
+S???  [NEXT]  Intent Parser - da linguaggio naturale a specifica formale (Fase B.4)
 ```
 
 Ogni sessione = un step.
@@ -229,7 +231,7 @@ Fatto BENE > Fatto VELOCE.
 
 ## IL CAMPO VERGINE
 
-242 fonti consultate (153 S375+S380 + 26 S381 + 32 S383 + 31 S384). 967 test, 98% coverage. La verita:
+242+ fonti consultate. 1380 test, 98% coverage. 11 moduli, ZERO deps. La verita:
 
 - **Python ha ZERO librerie di session types** (campo totalmente vergine)
 - **Nessun framework AI** usa session types formali (AutoGen, CrewAI, LangGraph, MCP, A2A)
