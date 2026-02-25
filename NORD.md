@@ -112,9 +112,9 @@ FASE 3: Session Memory System     [####################] 100% COMPLETA!
   F3.4 Documentation               DONE (S392) - 3 docs, CLI verificate, ~9.5/10
   F3.5 Auto-Handoff                DONE (S379) - 8 step, 14 file, 9.5/10
 
-FASE 4: Launch                    [########............] 40% IN CORSO
+FASE 4: Launch                    [############........] 60% IN CORSO
   F4.1a CI/CD Pipeline             DONE (S393) - 15 workflow, Guardiana 9.5/10
-  F4.1b PyPI Publication           IN CORSO (S394) - 5/9 LIVE, 4 restanti
+  F4.1b PyPI Publication           DONE (S399) - 9/9 LIVE! Guardiana 9.7/10
   F4.1c GitHub Release              TODO
   F4.1d Blog + Social              TODO
 ```
@@ -169,10 +169,10 @@ STATO ATTUALE:
   ✓ FAMIGLIA COMPLETA             17 agenti (1 Regina + 3 Guardiane + 1 Architect + 12 Worker)
   ✓ API Fly.io                    ONLINE
   ✓ cervellaswarm.com             LIVE
-  ✓ PyPI (5 live, 4 pronti)        code-intelligence, lingua-universale,
-                                   agent-hooks, agent-templates, task-orchestration = LIVE
+  ✓ PyPI (9/9 LIVE!)               code-intelligence, lingua-universale,
+                                   agent-hooks, agent-templates, task-orchestration,
                                    spawn-workers, session-memory, event-store,
-                                   quality-gates = workflow pronti, Trusted Publisher TODO
+                                   quality-gates = TUTTI LIVE su pypi.org!
   ✓ Repo Pubblico                 github.com/rafapra3008/cervellaswarm
   ✓ Scripts                       135+ file, ~20,000+ righe
   ✓ Hooks                         14+ hooks su 6 trigger points
