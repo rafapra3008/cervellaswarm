@@ -206,6 +206,11 @@ git worktree add -b "$WORKTREE_BRANCH" "$WORKTREE_DIR" public/main
 echo -e "${CYAN}[3/6] Copying public files (excluding node_modules/dist)...${NC}"
 cd "$WORKTREE_DIR"
 
+# Clean worktree: remove all tracked content, keep only .git
+# This ensures ONLY whitelisted files end up in the public repo
+git rm -rf . > /dev/null 2>&1 || true
+git checkout -- .gitignore 2>/dev/null || true
+
 for item in "${PUBLIC_FILES[@]}"; do
     src="$REPO_ROOT/$item"
     if [ -e "$src" ]; then
@@ -285,7 +290,7 @@ CONTENT_SCAN_COUNT=0
 for pattern in "${BLACKLIST_CONTENT_PATTERNS[@]}"; do
     # -r: recursive, -l: filenames only, -I: skip binary files
     # Exclude .git/ and node_modules/ directories
-    matches=$(/usr/bin/grep -rlI "$pattern" . --exclude-dir='.git' --exclude-dir='node_modules' 2>/dev/null || true)
+    matches=$(/usr/bin/grep -rlI "$pattern" . --exclude-dir='.git' --exclude='.git' --exclude-dir='node_modules' 2>/dev/null || true)
     if [ -n "$matches" ]; then
         echo -e "  ${RED}SENSITIVE CONTENT FOUND: '${pattern}'${NC}"
         echo "$matches" | head -5
