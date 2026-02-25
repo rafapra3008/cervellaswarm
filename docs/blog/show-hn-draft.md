@@ -158,7 +158,7 @@ direction.
 ## PRE-SUBMIT CHECKLIST
 
 - [x] `pip install cervellaswarm-lingua-universale` works in fresh env (S403: v0.1.1, all imports OK)
-- [ ] Colab notebook "Run All" works (test in incognito) -- Rafa manual check
+- [x] Colab notebook "Run All" works (test in incognito) (S403: Rafa verified, all 25 cells green)
 - [x] GitHub README has Colab badge link (S403: 3 links verified)
 - [x] All 9 packages installable from PyPI (S403: all HTTP 200)
 - [x] First comment ready (copy-paste, no edits under pressure) (S403: code snippet verified)
