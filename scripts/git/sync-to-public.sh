@@ -71,6 +71,7 @@ PUBLIC_FILES=(
     "docs/ARCHITECT_PATTERN.md"
     "docs/GIT_ATTRIBUTION.md"
     "docs/DUAL_REPO_STRATEGY.md"
+    "docs/blog"
 )
 
 # Files/directories that must NEVER appear in public root
