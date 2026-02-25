@@ -53,7 +53,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
-    "conf": "^13.0.0"
+    "conf": "^15.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
