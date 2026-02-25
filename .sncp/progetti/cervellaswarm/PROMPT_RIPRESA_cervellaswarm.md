@@ -1,55 +1,23 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 2026-02-25 - Sessione 398
-> **STATUS:** B.6 Error Messages DONE! Errori user-friendly in 3 lingue per la Lingua Universale.
+> **STATUS:** FASE B COMPLETA! 7/7 step, 14 moduli, 1820 test, score medio 9.33/10.
 
 ---
 
 ## SESSIONE 398 - Cosa e successo
 
 ### B.6 Error Messages per Umani - COMPLETATO
-Il 14esimo modulo della Lingua Universale. Translator layer che converte eccezioni
-tecniche in messaggi comprensibili per non-developer, ispirato a Elm e Rust.
+14esimo modulo `errors.py`: translator layer Elm/Rust, 35 error codes, 3 lingue (en/it/pt),
+fuzzy matching via difflib, 1784 LOC, ZERO deps. Guardiana 9.3/10. +257 test.
 
-```
-PRIMA (errore tecnico grezzo):
-  SpecParseError: line 2: unknown message kind 'audit_verdct'.
-  Valid (snake_case): audit_request, audit_verdict, ...
+### B.7 Showcase Demo - COMPLETATO
+Script `examples/showcase.py` (492 LOC): dimostra l'INTERO pipeline in 8 sezioni.
+Intent naturale -> Protocol -> DSL -> Spec (5/5 PROVED) -> Lean 4 -> Python -> Runtime -> Errors.
+Guardiana 9.5/10. ZERO P1/P2.
 
-DOPO (errore user-friendly con fuzzy matching):
-  [LU-S003] Unknown message type: "audit_verdct"
-    Line 2
-    Did you mean: audit_verdict?
-    Hint: Check the valid message types for this protocol.
-```
-
-Nuovo modulo `errors.py` in lingua-universale:
-- 35 error codes (LU-T/P/R/D/S/I/L/G/C/A/X) che coprono TUTTI i 13 moduli
-- 3 lingue: inglese, italiano, portoghese (template dict, ZERO deps)
-- `humanize(exc)`: traduce qualsiasi eccezione -> HumanError frozen dataclass
-- `format_error()`: output Elm/Rust style (location + got/expected + hint + verbose)
-- `suggest_similar()`: fuzzy matching via difflib.get_close_matches() (stdlib)
-- Chain of matchers: custom exceptions -> ValueError substring -> fallback LU-X001
-- `_SafeDict` per template rendering senza KeyError
-- 1784 LOC, ZERO deps esterne
-
-### Decisione architetturale (Regina)
-Scelta: Translator Layer additive > sostituzione eccezioni.
-Perche: Researcher + Architect convergenza 100%. ZERO breaking changes. Eccezioni tecniche
-restano per developer, errors.py aggiunge layer user-friendly. Pattern approvato da 27 fonti
-(Elm 2015, Rust diagnostics, miette, Alloy counterexamples, FizzBee, Dafny).
-DIFFERENZIATORE: errori multi-lingua per session types formali. NESSUNO al mondo lo ha.
-
-### Guardiana Audit
-- Score: 9.3/10 APPROVED. 3 P2 fixati subito (dead code _mk_similar, entry duplicata,
-  matcher mancante "protocols cannot be empty"). 4 P3 differiti (import re inline,
-  RuntimeError category, 19 codici senza e2e test, IT/PT ASCII-only).
-- Tester ha trovato 2 bug aggiuntivi (template escaping `{`/`}` in LU-D006/D007).
-
-### Test
-- 257 nuovi test (67 core + 100 humanize + 55 humanize2 + 35 catalog)
-- Suite lingua-universale: **1820 test** (era 1563, +257), 0.43s, ZERO regressioni
-- 4 file test: test_errors_core, test_errors_humanize, test_errors_humanize2, test_errors_catalog
+### FASE B DICHIARATA COMPLETA dalla Guardiana
+Score medio: 9.33/10 (target 9.0 raggiunto). 7/7 step DONE.
 
 ---
 
@@ -84,14 +52,14 @@ OPEN SOURCE ROADMAP:
 
 LINGUAGGIO CERVELLASWARM (la missione vera):
   FASE A: Fondamenta           COMPLETA (7 moduli originali, 9.5+ media)
-  FASE B: Il Toolkit           IN CORSO - 6/7 DONE!
-    B.1 Confidence Types       DONE (S387 - confidence.py)
-    B.2 Trust Composition      DONE (S388 - trust.py)
-    B.3 Code Generation        DONE (S395 - codegen.py)
-    B.4 Intent Parser          DONE (S396 - intent.py)
-    B.5 Spec Language          DONE (S397 - spec.py)
-    B.6 Error Messages         DONE (S398 - errors.py)  <-- OGGI!
-    B.7 Showcase               PROSSIMO PASSO <-- QUI
+  FASE B: Il Toolkit           COMPLETA! 7/7 DONE, media 9.33/10
+    B.1 Confidence Types       DONE (S387 - confidence.py, 9.5)
+    B.2 Trust Composition      DONE (S388 - trust.py, 9.5)
+    B.3 Code Generation        DONE (S395 - codegen.py, 9.3)
+    B.4 Intent Parser          DONE (S396 - intent.py, 9.3)
+    B.5 Spec Language          DONE (S397 - spec.py, 9.3)
+    B.6 Error Messages         DONE (S398 - errors.py, 9.3)
+    B.7 Showcase               DONE (S398 - showcase.py, 9.5)  <-- OGGI!
   FASE C: Il Linguaggio        2027+
   FASE D: Per Tutti            Il sogno
 
@@ -130,8 +98,8 @@ TUTTI I LAYER OPERATIVI (10!):
 
 ## Prossimi step
 
-1. **B.7 Showcase** - ULTIMO step Fase B! PyPI 9/9 + demo end-to-end + blog "Vericoding"
-2. **Fase C** - Il Linguaggio vero (2027+)
+1. **LANCIO**: PyPI 9/9 (Rafa: Trusted Publishers) + blog "Vericoding" + Show HN
+2. **Fase C** - Il Linguaggio vero (CervellaLang Alpha, 2027+)
 
 ---
 
