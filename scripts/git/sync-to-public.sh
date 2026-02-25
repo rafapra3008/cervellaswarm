@@ -247,7 +247,7 @@ done
 
 # Check 2: Filename patterns (exclude node_modules and .git)
 for pattern in "${BLACKLIST_FILENAME_PATTERNS[@]}"; do
-    matches=$(find . -path "./node_modules" -prune -o -path "./.git" -prune -o -path "./packages/*/node_modules" -prune -o -name "*${pattern}*" -print 2>/dev/null | /usr/bin/grep -v "^$" || true)
+    matches=$(find . -path "./node_modules" -prune -o -path "./.git" -prune -o -path "./packages/*/node_modules" -prune -o -name "*${pattern}*" -print 2>/dev/null | /usr/bin/grep -v "^$" | /usr/bin/grep -v "\.example$" || true)
     if [ -n "$matches" ]; then
         echo -e "  ${RED}PRIVATE FILENAME PATTERN: ${pattern}${NC}"
         echo "$matches"

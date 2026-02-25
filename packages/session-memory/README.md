@@ -149,9 +149,9 @@ secrets:
 # Multi-project registry
 projects:
   my-app:
-    path: ~/Developer/MyApp
+    path: ~/projects/my-app
   my-api:
-    path: ~/Developer/MyAPI
+    path: ~/projects/my-api
 ```
 
 Config priority: `CERVELLASWARM_SESSION_MEMORY_CONFIG` env var > project `.cervella/session-memory.yaml` > user `~/.claude/session-memory.yaml` > defaults.

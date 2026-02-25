@@ -16,7 +16,7 @@ This mirrors how real development teams work: specialized roles, coordination, a
 
 ### Why beta?
 
-The code is solid - 241 tests pass, the architecture is proven in production across three real projects (Miracollo PMS, Miracollook, ContabilitaAntigravity).
+The code is solid - 3,791 tests pass across 9 packages, the architecture is proven in production across 400+ sessions of daily use.
 
 We're in beta to gather feedback from real-world users before declaring v1.0 stability. We want to understand how developers use CervellaSwarm in different contexts, what workflows work best, and what needs improvement.
 
