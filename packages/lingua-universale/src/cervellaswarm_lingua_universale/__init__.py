@@ -119,6 +119,12 @@ from .codegen import (
     generate_python,
     generate_python_multi,
 )
+from .intent import (
+    IntentParseResult,
+    IntentParseError,
+    parse_intent,
+    parse_intent_protocol,
+)
 
 __all__ = [
     # Version
@@ -221,4 +227,9 @@ __all__ = [
     "PythonGenerator",
     "generate_python",
     "generate_python_multi",
+    # Intent
+    "IntentParseResult",
+    "IntentParseError",
+    "parse_intent",
+    "parse_intent_protocol",
 ]

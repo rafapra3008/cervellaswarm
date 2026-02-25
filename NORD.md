@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 25 Febbraio 2026 - S395 (B.3 Code Generation DONE + 1380 test)
+> Aggiornato: 25 Febbraio 2026 - S396 (B.4 Intent Parser DONE + 1447 test)
 
 ```
 +==================================================================+
@@ -119,7 +119,7 @@ FASE 4: Launch                    [########............] 40% IN CORSO
   F4.1d Blog + Social              TODO
 ```
 
-### LA STELLA POLARE - LINGUA UNIVERSALE (S375-S389)
+### LA STELLA POLARE - LINGUA UNIVERSALE (S375-S396)
 
 ```
 +==================================================================+
@@ -135,11 +135,11 @@ FASE 4: Launch                    [########............] 40% IN CORSO
 |     3. Protocolli che si provano da soli (Lean 4)                |
 |                                                                  |
 |   FASE A: COMPLETA + HARDENED (S380-S386)                        |
-|   FASE B: B.1+B.2+B.3 DONE! (S387-S395)                        |
-|     B.3 Code Generation = IL CICLO E COMPLETO!                   |
-|     specifica -> verifica Lean 4 -> CODICE PYTHON                |
+|   FASE B: B.1+B.2+B.3+B.4 DONE! (S387-S396)                    |
+|     B.4 Intent Parser = IL PONTE VERSO L'UMANO!                  |
+|     intent naturale -> specifica -> Lean 4 -> CODICE PYTHON       |
 |   PyPI: LIVE! pip install cervellaswarm-lingua-universale (S389) |
-|   11 moduli, 1380 test, 88 API symbols, ZERO deps               |
+|   12 moduli, 1447 test, 92 API symbols, ZERO deps               |
 |   NORD completo: packages/lingua-universale/NORD.md              |
 |                                                                  |
 +==================================================================+

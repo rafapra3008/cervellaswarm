@@ -6,6 +6,7 @@
 > "La domanda e la risposta nello STESSO linguaggio." - Rafa
 
 **Creata:** 24 Febbraio 2026 - Sessione 394
+**Aggiornata:** 25 Febbraio 2026 - Sessione 396 (B.4 DONE)
 **Autrice:** Cervella Architect (su commissione della Regina)
 **Fonti:** NORD.md + 3 report di ricerca (64+ fonti esterne) + analisi codebase
 **Score target:** 9.5/10 per ogni step (audit Guardiana)
@@ -23,7 +24,7 @@ LAYER 3: Code Generation certificata                      OPERATIVO (S395!)
 LAYER 2: Agent Hooks + Quality Gates                      OPERATIVO
 LAYER 1: CI/CD + PyPI + Fly.io                            OPERATIVO
 
-Asset: 11 moduli, 1380 test, ~4700 LOC, ZERO deps esterne
+Asset: 12 moduli, 1447 test, ~5350 LOC, ZERO deps esterne
 Campo vergine confermato da 242+ fonti (session types per AI in Python)
 ```
 
@@ -73,20 +74,19 @@ Completa il ciclo: specifica -> verifica -> CODICE.
 - Guardiana audit: 9.3/10 iniziale -> P2 fix applicati (escaping, validation, cache)
 - **Output:** 730 LOC, 107 test (80 core + 27 e2e), ZERO deps
 
-### B.4 - Intent Parser
+### B.4 - Intent Parser -- DONE (S396)
 
-Da linguaggio naturale a specifica formale strutturata.
+Micro-linguaggio strutturato: sembra naturale, e deterministico.
+Scelta architetturale: micro-linguaggio > parser NLP (insight Rafa + Architect + Ingegnera).
 
-- **Cosa fare:**
-  Nuovo modulo `intent.py`. Riceve testo in linguaggio naturale.
-  Estrae: proprieta formali, vincoli, ruoli, flusso.
-  Output: Protocol o ProtocolSpec (struttura intermedia prima del DSL).
-  Regole deterministiche per proprieta comuni (no_data_loss, auth_required).
-- **Perche dopo B.3:** B.3 chiude il ciclo tecnico. B.4 apre il ciclo umano.
-- **Dipendenze:** B.3 (code generation per chiudere il ciclo end-to-end)
-- **Output atteso:** modulo intent.py, 40+ test, parse_intent("descrizione") -> Protocol
-- **Chi:** Worker Backend + Researcher (per NLP patterns)
-- **Effort:** 2-3 sessioni
+- `intent.py`: IntentParseResult, IntentParseError, parse_intent(), parse_intent_protocol()
+- Tokenizer indent-aware + recursive descent (stesso pattern di dsl.py)
+- `_ACTION_MAP`: 14 verb phrase -> MessageKind (deterministic, ZERO ambiguita)
+- Supporta flat protocols E branched (`when X decides:`)
+- Integrazione verificata: SessionChecker + Lean4 + CodeGen + DSL roundtrip
+- Guardiana audit: 9.3/10, 6 P3 (4 fixati subito)
+- Ricerca: 28 fonti (Adapt, Rasa, Req2LTL, spaCy, LUIS, etc.)
+- **Output:** 649 LOC, 67 test (36 core + 31 edge), ZERO deps
 
 ### B.5 - Specification Language Accessibile
 
@@ -218,7 +218,7 @@ Il mondo deve sapere che esistiamo.
 ```
 FASE A (DONE) --> B.1 (DONE) --> B.2 (DONE) --> B.3 (DONE S395!)
                                                     |
-                                          B.4 <-----+
+                                          B.4 (DONE S396!) <--+
                                            |
                                           B.5
                                            |

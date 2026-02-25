@@ -220,7 +220,8 @@ S386  [DONE]  Code Review + Bug Hunt #9 (29 issue, 11 fix, 997 test, 9.5/10)
 S387  [DONE]  Confidence Types (8o modulo, confidence.py, 178 LOC) - FASE B inizio!
 S388  [DONE]  Trust Composition (9o modulo, trust.py, 168 LOC)
 S395  [DONE]  Code Generation (10o modulo, codegen.py, 730 LOC, 107 test) - CICLO COMPLETO!
-S???  [NEXT]  Intent Parser - da linguaggio naturale a specifica formale (Fase B.4)
+S396  [DONE]  Intent Parser (12o modulo, intent.py, 649 LOC, 67 test) - PONTE UMANO!
+S???  [NEXT]  Specification Language - sintassi accessibile per proprieta formali (Fase B.5)
 ```
 
 Ogni sessione = un step.
@@ -231,7 +232,7 @@ Fatto BENE > Fatto VELOCE.
 
 ## IL CAMPO VERGINE
 
-242+ fonti consultate. 1380 test, 98% coverage. 11 moduli, ZERO deps. La verita:
+270+ fonti consultate. 1447 test, 98% coverage. 12 moduli, ZERO deps. La verita:
 
 - **Python ha ZERO librerie di session types** (campo totalmente vergine)
 - **Nessun framework AI** usa session types formali (AutoGen, CrewAI, LangGraph, MCP, A2A)
