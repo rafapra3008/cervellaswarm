@@ -1,30 +1,18 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-25 - Sessione 402
-> **STATUS:** PyPI 9/9 LIVE! Fase 4 Launch - pre-submit finale.
+> **Ultimo aggiornamento:** 2026-02-25 - Sessione 403
+> **STATUS:** PyPI 9/9 LIVE! Fase 4 Launch - pre-submit in corso.
 
 ---
 
-## SESSIONE 402 - Cosa e successo
+## SESSIONE 403 - Cosa e successo
 
-### Pre-Submit Finale
-Preparazione finale per il submit su Show HN.
+### Pre-Submit Verification
+Verifica completa pre-submit Show HN. Pulizia docs.
 
-**Modifiche:**
-- README.md: aggiunto badge "Open in Colab", sezione "Try It Now" con codice verificato, link blog+Colab nel footer, session count 401+
-- MEMORY.md: sfoltito da 425 a <200 righe (dettagli in file separati)
-- Guardiana audit README: 9.5/10 APPROVED (0 P0, 0 P1, 1 P2 fixato, 4 P3)
+**S402 recap:** README pre-submit DONE (Colab badge, Try It Now, Guardiana 9.5/10). Bump lingua-universale v0.1.1 (errors, spec, codegen, intent). Verifica Colab interrotta da auto-compact.
 
-**Test suite:** 9/9 packages VERDI (3790 test)
-
-### S401 (sessione precedente) - Riepilogo
-- F4.1d Step 2: Colab Notebook Demo DONE (25 celle, 9.5/10)
-- F4.1d Step 3: Show HN Draft DONE (titolo + primo commento + 7 risposte, Guardiana OK)
-- Reports ricerca: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260225_*`
-
-### S400 - Riepilogo
-- F4.1c GitHub Release: DONE (9.3/10)
-- F4.1d Blog Post: DONE (74 fonti, 9.3/10)
+**S400-S401 recap:** Blog post DONE. Colab notebook DONE. Show HN draft DONE. GitHub Release DONE.
 
 ---
 
@@ -71,26 +59,25 @@ LINGUAGGIO CERVELLASWARM (la missione vera):
 
 ---
 
-## Lezioni Apprese (S402)
+## Lezioni Apprese (S403)
 
 ### Cosa ha funzionato bene
-- Health check interno PRIMA di iniziare lavoro = chiarezza totale sullo stato
-- Parallelizzazione: Guardiana audit + MEMORY.md slim + PROMPT_RIPRESA update simultanei
-- Strategia step-by-step con audit dopo ogni step: conferma qualita incrementale
+- (da completare a fine sessione)
 
 ### Cosa non ha funzionato
 - (da completare a fine sessione)
 
 ### Pattern candidato
-- "Health check interno a inizio sessione" -> CANDIDATO (prima volta, monitorare)
+- "Health check interno a inizio sessione" -> CANDIDATO (seconda volta S402+S403, monitorare)
 
 ---
 
 ## Prossimi step
 
-1. **F4.1d Step 5: Submit su Show HN** - Domenica 12:00-14:00 UTC
+1. **F4.1d Step 5: Submit su Show HN** - Prossima domenica 12:00-14:00 UTC
    - Draft pronto: `docs/blog/show-hn-draft.md`
-   - Pre-submit: Rafa testa Colab in incognito
+   - Pre-submit checklist: `docs/blog/show-hn-draft.md` (sezione PRE-SUBMIT CHECKLIST)
+   - S403: verifica pre-submit in corso
 2. **Fase C** - Il Linguaggio vero (CervellaLang Alpha, 2027+)
 
 ---
@@ -103,26 +90,6 @@ LINGUAGGIO CERVELLASWARM (la missione vera):
 - `docs/blog/show-hn-draft.md` - Show HN draft + response strategy
 - `.sncp/roadmaps/MAPPA_LINGUAGGIO_CERVELLASWARM.md` - LA MAPPA del linguaggio
 
-Archivio: S337-S398 (vedi MEMORY.md). S399 PyPI 9/9. S400 Release+Blog. S401 Colab+ShowHN draft. S402 README pre-submit.
+Archivio: S337-S399 (vedi MEMORY.md). S400 Release+Blog. S401 Colab+ShowHN draft. S402 README pre-submit + v0.1.1. S403 Pre-submit verification.
 
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
-
----
-
----
-
-## AUTO-CHECKPOINT: 2026-02-25 12:25 (unknown)
-
-### Stato Git
-- **Branch**: main
-- **Ultimo commit**: 7366d2b9 - S401: F4.1d Show HN draft (title + first comment + response strategy)
-- **File modificati** (3):
-  - sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
-  - .sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md
-  - README.md
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: unknown
-
----

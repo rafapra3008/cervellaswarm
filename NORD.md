@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 25 Febbraio 2026 - S397 (B.5 Spec Language DONE + 1563 test)
+> Aggiornato: 25 Febbraio 2026 - S403 (FASE B COMPLETA, 1820 test, pre-submit Show HN)
 
 ```
 +==================================================================+
@@ -112,11 +112,16 @@ FASE 3: Session Memory System     [####################] 100% COMPLETA!
   F3.4 Documentation               DONE (S392) - 3 docs, CLI verificate, ~9.5/10
   F3.5 Auto-Handoff                DONE (S379) - 8 step, 14 file, 9.5/10
 
-FASE 4: Launch                    [############........] 60% IN CORSO
+FASE 4: Launch                    [##################..] 90% IN CORSO
   F4.1a CI/CD Pipeline             DONE (S393) - 15 workflow, Guardiana 9.5/10
   F4.1b PyPI Publication           DONE (S399) - 9/9 LIVE! Guardiana 9.7/10
-  F4.1c GitHub Release              TODO
-  F4.1d Blog + Social              TODO
+  F4.1c GitHub Release             DONE (S400) - Guardiana 9.3/10
+  F4.1d Blog + Social              IN PROGRESS
+    Step 1: Blog post               DONE (S400, 9.3/10)
+    Step 2: Colab notebook           DONE (S401, 9.5/10)
+    Step 3: Show HN draft            DONE (S401, Guardiana OK)
+    Step 4: README pre-submit        DONE (S402, 9.5/10)
+    Step 5: Submit                   TODO (pre-submit verification S403)
 ```
 
 ### LA STELLA POLARE - LINGUA UNIVERSALE (S375-S396)
@@ -135,11 +140,11 @@ FASE 4: Launch                    [############........] 60% IN CORSO
 |     3. Protocolli che si provano da soli (Lean 4)                |
 |                                                                  |
 |   FASE A: COMPLETA + HARDENED (S380-S386)                        |
-|   FASE B: B.1+B.2+B.3+B.4+B.5 DONE! (S387-S397)                |
+|   FASE B: COMPLETA! B.1-B.7 DONE (S387-S398)                    |
 |     B.5 Spec Language = PROPRIETA FORMALI USER-FRIENDLY!         |
-|     "always terminates, no deadlock, A before B" -> PROVED!      |
-|   PyPI: LIVE! pip install cervellaswarm-lingua-universale (S389) |
-|   13 moduli, 1563 test, 102 API symbols, ZERO deps              |
+|     B.6 Error Messages + B.7 Showcase DONE (S398)               |
+|   PyPI: LIVE! pip install cervellaswarm-lingua-universale (S399) |
+|   13 moduli, 1820 test, ZERO deps                               |
 |   NORD completo: packages/lingua-universale/NORD.md              |
 |                                                                  |
 +==================================================================+

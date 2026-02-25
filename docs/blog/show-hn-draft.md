@@ -126,7 +126,7 @@ direction.
 - "We searched 242 sources and couldn't find prior work applying session types to AI agents in Python. Happy to be corrected -- we'd love to study it."
 
 **If asked about production readiness:**
-- "It's v0.1.0 -- the API will evolve. We use it daily to coordinate 17 agents, but we're honest that it hasn't been tested outside our setup yet."
+- "It's v0.1.x -- the API will evolve. We use it daily to coordinate 17 agents, but we're honest that it hasn't been tested outside our setup yet."
 
 **If asked about Lean 4 proofs:**
 - "The proofs cover structural properties (valid roles, no self-loops, non-empty). They don't prove behavioral properties like liveness of arbitrary protocols. That's Fase C."
@@ -157,10 +157,10 @@ direction.
 
 ## PRE-SUBMIT CHECKLIST
 
-- [ ] `pip install cervellaswarm-lingua-universale` works in fresh env
-- [ ] Colab notebook "Run All" works (test in incognito)
-- [ ] GitHub README has Colab badge link
-- [ ] All 9 packages installable from PyPI
-- [ ] First comment ready (copy-paste, no edits under pressure)
-- [ ] Response strategy reviewed
-- [ ] Blog post link ready for comments
+- [x] `pip install cervellaswarm-lingua-universale` works in fresh env (S403: v0.1.1, all imports OK)
+- [ ] Colab notebook "Run All" works (test in incognito) -- Rafa manual check
+- [x] GitHub README has Colab badge link (S403: 3 links verified)
+- [x] All 9 packages installable from PyPI (S403: all HTTP 200)
+- [x] First comment ready (copy-paste, no edits under pressure) (S403: code snippet verified)
+- [x] Response strategy reviewed (S403: 7 scenarios)
+- [x] Blog post link ready for comments
