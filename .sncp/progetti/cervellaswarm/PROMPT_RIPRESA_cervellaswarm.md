@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 2026-02-26 - Sessione 407
-> **STATUS:** Context Optimization COMPLETA! FASE 1+2+3 tutte DONE (100%). Score complessivo 9.4/10.
+> **STATUS:** Context Optimization COMPLETA (9.4/10). Subroadmap FASE C creata. Pronta per Step C1.1.
 
 ---
 
@@ -92,20 +92,38 @@ LINGUAGGIO CERVELLASWARM (la missione vera):
 
 ---
 
+## Fase C - Il Linguaggio (SUBROADMAP CREATA S407)
+
+Subroadmap: `.sncp/roadmaps/SUBROADMAP_FASE_C_LINGUAGGIO.md`
+Ricerca: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260226_DUAL_READABLE_LANGUAGE.md`
+Ricerca: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260226_AI_NATIVE_LANGUAGE_LANDSCAPE.md`
+
+**L'insight di Rafa (S407):** "Python e diventato gigante perche era piu facile da capire.
+Ora ci vuole un linguaggio che la propria AI e piu facile da capire E gli umani capire."
+
+**3 sotto-fasi:**
+- **C1: La Grammatica** (~4-6 sessioni) - sintassi EBNF + parser
+- **C2: Il Compilatore** (~6-8 sessioni) - linguaggio -> Python verificato + interop
+- **C3: L'Esperienza** (~4-6 sessioni) - REPL + errori umani + demo "nonna"
+
+**Prossimo step immediato:** Step C1.1 STUDIO moduli esistenti (spec.py, dsl.py, intent.py, codegen.py)
+
+---
+
 ## Prossimi step
 
-1. **Monitorare Show HN** - response strategy in `docs/blog/show-hn-draft.md`
-2. **Fase C** - CervellaLang Alpha (LA MISSIONE, guidata dal feedback community)
-3. **Promuovere pattern a validated_patterns.md** - "Guardiana dopo ogni step" (5x), "STUDIO prima di edit" (3x)
+1. **Step C1.1** - STUDIO moduli esistenti come base per il linguaggio
+2. **Monitorare Show HN** - response strategy in `docs/blog/show-hn-draft.md`
+3. **Promuovere pattern** - "Guardiana dopo ogni step" (5x), "STUDIO prima di edit" (3x)
 
 ---
 
 ## File chiave
 
-- `.sncp/roadmaps/SUBROADMAP_CONTEXT_OPTIMIZATION_V2.md` - Piano context (COMPLETATO!)
-- `~/.claude/COSTITUZIONE_OPERATIVA.md` - NUOVO: versione condensata 83 righe
-- `~/.claude/CHECKLIST_SESSIONE.md` - Checklist sessione (70 righe)
-- `~/.claude/CHECKLIST_EDIT.md` - Checklist edit (67 righe)
+- `.sncp/roadmaps/SUBROADMAP_FASE_C_LINGUAGGIO.md` - Piano FASE C (NUOVO!)
+- `.sncp/roadmaps/SUBROADMAP_CONTEXT_OPTIMIZATION_V2.md` - Context Optimization (COMPLETATO!)
 - `packages/lingua-universale/NORD.md` - LA VISIONE (leggere SEMPRE!)
+- `~/.claude/COSTITUZIONE_OPERATIVA.md` - Versione condensata 83 righe
 
+*"La domanda e la risposta nello STESSO linguaggio." - Rafa*
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
