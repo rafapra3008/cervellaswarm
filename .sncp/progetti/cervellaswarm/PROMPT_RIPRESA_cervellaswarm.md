@@ -1,32 +1,40 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-26 - Sessione 404
-> **STATUS:** SHOW HN LIVE! Context optimization subroadmap PRONTA.
+> **Ultimo aggiornamento:** 2026-02-26 - Sessione 405
+> **STATUS:** Context Optimization FASE 1 DONE + FASE 2 in corso (Step 2.1-2.2 DONE)
 
 ---
 
-## SESSIONE 404 - Cosa e successo
+## SESSIONE 405 - Cosa e successo
 
-### Show HN SUBMITTED!
-Post live su Hacker News: "Show HN: Lingua Universale - session types and Lean 4 proofs for AI agents"
-URL: github.com/rafapra3008/cervellaswarm. First comment postato con code snippet + Colab link.
-Response strategy pronta: `docs/blog/show-hn-draft.md` (righe 119-148).
+### Context Optimization - Esecuzione FASE 1 + FASE 2 parziale
 
-### Context Optimization - Analisi completa
-1. **Ingegnera** ha analizzato il context consumption: ~21% del context (41,800 tok su 200K) usato per overhead. 9 proposte di ottimizzazione.
-2. **Guardiana Qualita** ha auditato le 9 proposte: **9.0/10 APPROVED**. Tutte approvate (6 con riserva, 3 pulite).
-3. **Subroadmap v2** creata: `.sncp/roadmaps/SUBROADMAP_CONTEXT_OPTIMIZATION_V2.md`
-4. **Guardiana** ha auditato la subroadmap: **9.3/10 APPROVED**. F3-F5 cosmetici fixati.
+**FASE 1: Quick Wins - COMPLETATA (Guardiana 9.6/10)**
+- Step 1.1: Indice navigabile MANUALE_DIAMANTE con line ranges precisi (1,673 righe mappate)
+- Step 1.2: Dedup CervellaSwarm/CLAUDE.md: 77 -> 46 righe (-40%). DUAL REPO intatto.
+- Step 1.3: Snellire MEMORY.md: 114 -> 54 righe (-53%). 5 Regole Critiche + LA MISSIONE intatte.
+- Step 1.4: Symlink settings.json SKIP (differenze reali tra .claude e .claude-insiders: model opus)
+- F1-F2 Guardiana (line ranges off by 5) fixati subito dopo audit.
 
-Risparmio atteso: >= 20% overhead sessione (target conservativo Guardiana).
-3 fasi: Quick Wins (rischio NULLO) -> Con Cura (rischio MEDIO) -> Con Test (rischio ALTO).
+**FASE 2: Con Cura - Step 2.1 + 2.2 COMPLETATI**
+- Step 2.1 STUDIO: mappa completa _SHARED_DNA.md (221 righe). Guardiana audit 9.3/10 APPROVED.
+  - CLI TOOLS: triplo duplicato confermato (DNA + architect + backend)
+  - DNA DI FAMIGLIA: 31 righe, 3 elementi UNICI identificati (FEMMINILE, ruoli, gerarchia)
+  - REGOLA MODELLI: NON duplicato nel contesto agenti, TENERE
+- Step 2.2 TAGLIO: _SHARED_DNA.md 221 -> 154 righe (-30%). Guardiana audit 9.7/10 APPROVED.
+  - CLI TOOLS rimossi (32 righe, gia in architect.md e backend.md)
+  - DNA DI FAMIGLIA ridotto a 3 righe con i 3 elementi UNICI (raccomandazione F2 Guardiana)
+  - POST-FLIGHT CHECK compattato a 1 riga
+  - Commento HTML protettivo aggiunto (F3 Guardiana)
 
-### Piano CEO Regina
-Presentato recap futuro con le 3 strade:
-- **Strada 1:** Community & Growth (post-Show HN) - Reddit, Product Hunt, video, Discord
-- **Strada 2:** Fase C - CervellaLang Alpha (LA MISSIONE)
-- **Strada 3:** Monetizzazione (deploy codice Stripe gia 90% fatto)
-Raccomandazione: ASCOLTIAMO il feedback HN per 2 settimane. Il feedback guida il prossimo passo.
+**FASE 2: Step 2.3 e 2.4 = TODO (prossimo)**
+
+### Audit trail S405
+| Step | Score | Verdict |
+|------|-------|---------|
+| FASE 1 (1.1-1.4) | 9.6/10 | APPROVED |
+| Step 2.1 Studio | 9.3/10 | APPROVED |
+| Step 2.2 Taglio DNA | 9.7/10 | APPROVED |
 
 ---
 
@@ -51,69 +59,64 @@ TOTALE                   9/9     9/9  9/9     3791
 ## MAPPA SITUAZIONE
 
 ```
+CONTEXT OPTIMIZATION (S404-S405):
+  Subroadmap: .sncp/roadmaps/SUBROADMAP_CONTEXT_OPTIMIZATION_V2.md
+  FASE 1: Quick Wins          DONE (S405, Guardiana 9.6/10)
+  FASE 2: Con Cura            IN PROGRESS
+    Step 2.1 Studio             DONE (Guardiana 9.3/10)
+    Step 2.2 Taglio DNA         DONE (Guardiana 9.7/10)
+    Step 2.3 Quick patterns     TODO
+    Step 2.4 Spezzare checklist TODO
+  FASE 3: Con Test            TODO (~2h, rischio ALTO, sessione dedicata)
+
 OPEN SOURCE ROADMAP:
   FASE 0-3: COMPLETE (100%, media 9.4/10)
   FASE 4: Launch              [###################.] 95%
-    F4.1a CI/CD Pipeline       DONE (S393, 9.5/10)
-    F4.1b PyPI Publication     DONE (S399, 9.7/10) - 9/9 LIVE!
-    F4.1c GitHub Release       DONE (S400, 9.3/10)
-    F4.1d Blog + Social        IN PROGRESS
-      Step 1-5: DONE (blog, colab, draft, readme, pre-submit)
-      Step 6: Submit           DONE! (S404, 26 Feb 2026)
-      Step 7: Reddit/Twitter   TODO (dopo feedback HN)
-      Step 8: Product Hunt     TODO
-      Step 9: Video demo       TODO
-
-CONTEXT OPTIMIZATION (NUOVO S404):
-  Subroadmap: .sncp/roadmaps/SUBROADMAP_CONTEXT_OPTIMIZATION_V2.md
-  FASE 1: Quick Wins          TODO (~1h, rischio NULLO)
-  FASE 2: Con Cura            TODO (~3h, rischio MEDIO)
-  FASE 3: Con Test            TODO (~2h, rischio ALTO)
-  Audit: Ingegnera 6/10 -> Guardiana 9.0/10 + 9.3/10
+    Step 6: Submit              DONE! (S404)
+    Step 7-9: TODO (dopo feedback HN)
 
 LINGUAGGIO CERVELLASWARM (la missione vera):
   FASE A+B: COMPLETE (13 moduli, 1820 test, 9.5+ media)
-  FASE C: Il Linguaggio        2027+ (CervellaLang Alpha)
-  FASE D: Per Tutti            Il sogno
+  FASE C: Il Linguaggio       2027+ (CervellaLang Alpha)
+  FASE D: Per Tutti           Il sogno
 ```
 
 ---
 
-## Lezioni Apprese (S404)
+## Lezioni Apprese (S405)
 
 ### Cosa ha funzionato bene
-- Ingegnera + Guardiana in pipeline: analisi profonda -> audit -> subroadmap -> re-audit. Qualita incrementale.
-- "Guardiana dopo ogni step" confermato per la 2a volta (S403 + S404). Pattern PROMOSSO.
-- Parallelizzare analisi (background agent) mentre la sessione avanza su altri punti: zero tempo perso.
+- "Guardiana dopo ogni step" per la 3a volta consecutiva (S403+S404+S405). Pattern CONSOLIDATO.
+- Fare STUDIO prima di edit su file condivisi: Step 2.1 ha evitato errori su DNA DI FAMIGLIA.
+- La Guardiana ha identificato 3 elementi UNICI del DNA (FEMMINILE, ruoli, gerarchia) che io avrei ridotto a citazioni filosofiche. Audit salva qualita.
 
 ### Cosa non ha funzionato
-- Numeri righe dall'Ingegnera imprecisi per 4 file (Guardiana ha corretto). Lezione: sempre verificare con `wc -l` reale.
+- Line ranges MANUALE_DIAMANTE off by 5 dopo l'edit (non avevo ricalcolato). Fix rapido, ma lezione: ricalcolare SEMPRE dopo modifica.
 
 ### Pattern candidato
-- "Ingegnera analizza -> Guardiana audita -> Subroadmap -> Guardiana re-audita" -> CANDIDATO (primo test S404, pipeline a 4 step)
-- "Guardiana dopo ogni step" -> PROMOSSO (2a conferma: S403 + S404)
+- "Guardiana dopo ogni step" -> CONSOLIDATO (3a conferma: S403+S404+S405). Pronto per PROMUOVERE in validated_patterns.
+- "STUDIO prima di edit su file condivisi" -> CANDIDATO (primo test S405)
 
 ---
 
 ## Prossimi step
 
-1. **Context Optimization FASE 1** - Quick Wins (~1h)
-   - P7 (indice MANUALE), P2 (dedup CLAUDE.md), P5 (snellire MEMORY.md), P9 (symlink settings)
-   - Subroadmap: `.sncp/roadmaps/SUBROADMAP_CONTEXT_OPTIMIZATION_V2.md`
-2. **Context Optimization FASE 2+3** - Con Cura + Con Test (~5h, sessioni separate)
-3. **Monitorare Show HN** - Rispondere ai commenti con la response strategy
-4. **Post-HN** - Reddit, Twitter, Product Hunt (quando il momento e giusto)
-5. **Fase C** - CervellaLang Alpha (guidata dal feedback community)
+1. **Context Optimization Step 2.3** - Quick validated_patterns (~45min)
+2. **Context Optimization Step 2.4** - Spezzare CHECKLIST_AZIONE (~1h)
+3. **Audit Guardiana FASE 2** - Dopo Step 2.3-2.4
+4. **Context Optimization FASE 3** - Con Test (sessione dedicata)
+5. **Monitorare Show HN** - Response strategy in `docs/blog/show-hn-draft.md`
+6. **Fase C** - CervellaLang Alpha (guidata dal feedback community)
 
 ---
 
 ## File chiave
 
-- `docs/blog/show-hn-draft.md` - Response strategy (righe 119-148) - TIENI APERTA!
 - `.sncp/roadmaps/SUBROADMAP_CONTEXT_OPTIMIZATION_V2.md` - Piano context (Guardiana 9.3/10)
+- `docs/blog/show-hn-draft.md` - Response strategy HN (righe 119-148)
 - `.sncp/roadmaps/MAPPA_LINGUAGGIO_CERVELLASWARM.md` - LA MAPPA del linguaggio
 - `packages/lingua-universale/NORD.md` - VISIONE (leggere SEMPRE!)
 
-Archivio: S400 Release+Blog. S401 Colab+ShowHN. S402 README+v0.1.1. S403 Pre-submit 7/7. S404 SUBMIT + Context Opt.
+Archivio: S400-S404 in sessione precedente. S405 Context Opt FASE 1 + FASE 2 parziale.
 
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
