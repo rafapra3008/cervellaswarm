@@ -81,10 +81,10 @@
 **Rischio:** NULLO (studio puro)
 
 **Criterio completamento:**
-- [ ] Tabella "modulo -> feature del linguaggio -> gap"
-- [ ] Inventario di tutte le keyword/strutture gia usate nel DSL
-- [ ] Proposta: "il linguaggio nasce da QUI" (quale modulo diventa il core?)
-- [ ] Guardiana verifica
+- [x] Tabella "modulo -> feature del linguaggio -> gap"
+- [x] Inventario di tutte le keyword/strutture gia usate nel DSL
+- [x] Proposta: "il linguaggio nasce da QUI" (quale modulo diventa il core?)
+- [x] Guardiana verifica (9.3/10 S408)
 
 ---
 
@@ -103,12 +103,12 @@
 **Rischio:** ALTO (questa decisione e irreversibile nel lungo termine)
 
 **Criterio completamento:**
-- [ ] Grammatica EBNF completa (< 100 regole)
-- [ ] 10 esempi "dual-readable" annotati (umano capisce + AI genera)
-- [ ] Confronto con sintassi attuale DSL (cosa cambia, cosa resta)
-- [ ] Revisione Marketing (leggibilita per non-sviluppatori)
-- [ ] Revisione Ingegnera (implementabilita)
-- [ ] Guardiana verifica
+- [x] Grammatica EBNF completa (62 produzioni, < 100 regole)
+- [x] 10 esempi "dual-readable" annotati (umano capisce + AI genera)
+- [x] Confronto con sintassi attuale DSL (cosa cambia, cosa resta)
+- [x] Revisione Marketing (6.8/10 leggibilita)
+- [x] Revisione Ingegnera (7/10 implementabilita)
+- [x] Guardiana verifica (8.8/10 S409)
 
 ---
 
@@ -271,10 +271,10 @@ Questo e il **showcase_v2.py** - la prova che funziona REALE.
 |   SUBROADMAP FASE C: IL LINGUAGGIO                               |
 +================================================================+
 
-FASE C1: La Grammatica             [....................] 0%
-  C1.1 STUDIO moduli esistenti       1 sess    TODO
-  C1.2 Design sintassi (BNF/EBNF)   2-3 sess  TODO (decisione chiave!)
-  C1.3 Parser del linguaggio         2-3 sess  TODO
+FASE C1: La Grammatica             [########............] 40%
+  C1.1 STUDIO moduli esistenti       1 sess    DONE (S408, 9.3/10)
+  C1.2 Design sintassi (BNF/EBNF)   2-3 sess  DONE (S408-409, 8.8/10)
+  C1.3 Parser del linguaggio         2-3 sess  TODO (prossimo!)
 
 FASE C2: Il Compilatore            [....................] 0%
   C2.1 STUDIO architettura           1 sess    TODO
