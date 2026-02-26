@@ -11,7 +11,7 @@
 
 | Hook | Cosa Fa |
 |------|---------|
-| session_start_swarm.py | Carica COSTITUZIONE + PROMPT_RIPRESA |
+| session_start_swarm.py | Carica PROMPT_RIPRESA + warnings (COSTITUZIONE via _SHARED_DNA) |
 | file_limits_guard.py | Verifica limiti PROMPT_RIPRESA (max 300 righe) |
 | subagent_context_inject.py | Inietta FATOS + PROMPT_RIPRESA agli agenti |
 

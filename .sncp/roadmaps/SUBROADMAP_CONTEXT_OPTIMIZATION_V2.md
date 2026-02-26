@@ -287,10 +287,12 @@ RISULTATO Step 2.1-2.4 (S405-S406):
 **Effort:** 45 minuti
 
 **Criterio completamento:**
-- [ ] Conteggio righe reale COSTITUZIONE con `wc -l`
-- [ ] Lista sezioni operative vs storiche/motivazionali documentata
-- [ ] Draft COSTITUZIONE_OPERATIVA (~80 righe) pronto per revisione Guardiana
-- [ ] Verifica come `mi sento persa` trigger funziona (hook o manuale?)
+- [x] Conteggio righe reale COSTITUZIONE con `wc -l` -> 509 righe
+- [x] Lista sezioni operative vs storiche/motivazionali documentata (7 operative + 6 motivazionali)
+- [x] Draft COSTITUZIONE_OPERATIVA (~80 righe) pronto per revisione Guardiana
+- [x] Verifica: `mi sento persa` = trigger MANUALE in CLAUDE.md riga 88 (nessun hook)
+- [x] Scoperta: `session_start_swarm.py` NON carica COSTITUZIONE (dal S352, v3.0.0). Agenti la leggono via _SHARED_DNA.
+- [x] Guardiana audit Step 3.1: 8.5/10 APPROVED w/riserve (F1-F2 corretti prima di Step 3.2)
 
 ---
 
@@ -318,8 +320,20 @@ RISULTATO Step 2.1-2.4 (S405-S406):
 - Test: 3 agenti leggono OPERATIVA -> comportamento invariato
 
 **Aggiornare:**
-- `session_start_swarm.py`: carica OPERATIVA al posto di COMPLETA
-- `_SHARED_DNA.md`: punta a OPERATIVA
+- `_SHARED_DNA.md`: punta a OPERATIVA (AZIONE #1 riga 13 + commento riga 68)
+- `session_start_swarm.py`: aggiornare commento (riga 13) + reminder (riga 170) - NON carica COSTITUZIONE dal S352
+- `CervellaSwarm/CLAUDE.md`: fix tabella hook stale (diceva "Carica COSTITUZIONE")
+- `~/.claude/CLAUDE.md`: tabella PRIMA DI TUTTO aggiornata a OPERATIVA (riga 11)
+
+**Risultato Step 3.2 (S407):**
+- [x] COSTITUZIONE_OPERATIVA.md creato: 83 righe (target ~80)
+- [x] COSTITUZIONE.md originale INTATTA (509 righe)
+- [x] _SHARED_DNA.md aggiornato (155 righe, invariato)
+- [x] session_start_swarm.py aggiornato (commenti + reminder)
+- [x] CervellaSwarm/CLAUDE.md fix tabella hook stale
+- [x] ~/.claude/CLAUDE.md tabella PRIMA DI TUTTO aggiornata
+- [x] "mi sento persa" resta alla COMPLETA
+- [x] Guardiana audit Step 3.2: 9.5/10 APPROVED (0P0, 0P1, 0P2, 5P3)
 
 ---
 
@@ -374,10 +388,12 @@ FASE 2: Con Cura (Rischio MEDIO)     [####################] 100%
   2.3 Quick validated_patterns        45min   DONE (45 righe, 9.5/10)
   2.4 Spezzare CHECKLIST_AZIONE       1h      DONE (355->152, 9.3/10)
 
-FASE 3: Con Test (Rischio ALTO)      [....................] 0%
-  3.1 STUDIO COSTITUZIONE             45min   TODO
-  3.2 COSTITUZIONE_OPERATIVA          1h      TODO
-  3.3 SubagentStart ottimizzazione    20min   TODO
+FASE 3: Con Test (Rischio ALTO)      [####################] 100% (S407, 9.5/10)
+  3.1 STUDIO COSTITUZIONE             45min   DONE (8.5/10, S407)
+  3.2 COSTITUZIONE_OPERATIVA          1h      DONE (9.5/10, S407, 509->83 righe)
+  3.3 SubagentStart ottimizzazione    20min   DONE (S407, 50->40 righe)
+  TEST COMPORTAMENTALE 3 agenti               DONE (3/3, 0 degradazione)
+  AUDIT FINALE FASE 3                         DONE (9.5/10, APPROVED)
 
 EFFORT TOTALE: ~6-7 ore (2-3 sessioni)
 ORDINE: FASE 1 -> FASE 2 -> FASE 3 (mai saltare)

@@ -10,7 +10,7 @@ Carica automaticamente all'avvio sessione:
 - Warning se ultimo handoff > 3 giorni (SNCP 2.0)
 
 NON carica (B.3 Smart Loading - S352):
-- COSTITUZIONE.md -> disponibile via trigger "mi sento persa" o Read diretto (~/.claude/COSTITUZIONE.md)
+- COSTITUZIONE_OPERATIVA.md -> caricata dagli agenti via _SHARED_DNA (AZIONE #1). Completa via "mi sento persa".
 - NORD.md -> disponibile via /swarm-context skill (carica NORD + PROMPT_RIPRESA on-demand)
 
 Versione: 3.0.0
@@ -167,7 +167,7 @@ def main():
         context_parts.append("- 17 membri della famiglia pronti")
         context_parts.append("- 3 Guardiane (Opus) + 1 Architect (Opus) + 2 Analiste (Opus) + 10 Worker (Sonnet)")
         context_parts.append("- DELEGA sempre, MAI edit diretti!")
-        context_parts.append("- COSTITUZIONE: leggi con `Read ~/.claude/COSTITUZIONE.md` quando serve")
+        context_parts.append("- COSTITUZIONE: agenti leggono OPERATIVA via _SHARED_DNA. Completa: `Read ~/.claude/COSTITUZIONE.md`")
         context_parts.append("- NORD + Contesto: usa `/swarm-context` per caricare on-demand")
         context_parts.append("")
         context_parts.append("## 3 Livelli Rischio")
