@@ -112,16 +112,24 @@
 
 ---
 
-### Step C1.3: Parser del Linguaggio
+### Step C1.3: Parser del Linguaggio (IN PROGRESS - S410)
 
 **Implementare il parser dalla grammatica.**
 
 **Approccio:** Recursive descent parser in Python puro (0 deps, come il resto).
-La grammatica EBNF diventa direttamente il parser.
+La grammatica EBNF diventa direttamente il parser. Spezzato in 6 sub-step.
 
 **Output:** `packages/lingua-universale/src/.../parser.py` + test completi
 **Effort:** 2-3 sessioni
 **Rischio:** MEDIO
+
+**Sub-step (S410):**
+- [x] C1.3.1 Tokenizer unificato (320 LOC, 80 test, Guardiana 9.6/10)
+- [x] C1.3.2 Nodi AST (304 LOC, 96 test, Guardiana 9.5/10)
+- [x] C1.3.3 Parser Core - protocol/step/choice/properties (652 LOC, 53 test, Guardiana 9.5/10)
+- [ ] C1.3.4 Parser nuovi costrutti - agent/type/use + espressioni
+- [ ] C1.3.5 Integration + backward compat (10 esempi canonici end-to-end)
+- [ ] C1.3.6 Guardiana finale + coverage >= 95%
 
 **Criterio completamento:**
 - [ ] Parser che accetta tutti i 10 esempi del Step C1.2
@@ -271,10 +279,10 @@ Questo e il **showcase_v2.py** - la prova che funziona REALE.
 |   SUBROADMAP FASE C: IL LINGUAGGIO                               |
 +================================================================+
 
-FASE C1: La Grammatica             [########............] 40%
+FASE C1: La Grammatica             [##############......] 70%
   C1.1 STUDIO moduli esistenti       1 sess    DONE (S408, 9.3/10)
   C1.2 Design sintassi (BNF/EBNF)   2-3 sess  DONE (S408-409, 8.8/10)
-  C1.3 Parser del linguaggio         2-3 sess  TODO (prossimo!)
+  C1.3 Parser del linguaggio         2-3 sess  IN PROGRESS (S410, 3/6 sub-step)
 
 FASE C2: Il Compilatore            [....................] 0%
   C2.1 STUDIO architettura           1 sess    TODO

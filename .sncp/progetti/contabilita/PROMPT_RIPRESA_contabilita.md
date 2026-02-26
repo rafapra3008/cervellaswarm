@@ -1,133 +1,130 @@
 # PROMPT RIPRESA - Contabilita Antigravity
 
-> **Ultimo aggiornamento:** 26 Febbraio 2026 - Sessione 170
+> **Ultimo aggiornamento:** 26 Febbraio 2026 - Sessione 184
 > **Branch attivo:** lab-v3 (sviluppo V3) + lab-v2 (intoccato) + main (produzione)
 > **Versione canonica:** `CervellaSwarm/.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md`
 
 ---
 
-## Stato Attuale
+## Stato Attuale - POST S184 (Deploy agent HP+NL + fix .env tutti)
 
 | Cosa | Stato |
 |------|-------|
-| **Produzione** | v2.11.0 LIVE su contabilitafamigliapra.it (INTATTA) |
-| **V3 VM** | Frontend S165 + Backend v1.6.0 (security fix S169-S170 NON ancora deployati) |
-| **Agent NL/SHE/HP** | **v2.1.0 LIVE** - 3/3 attivi |
-| **Test** | **1888 PASS** (1532 portale + 356 agent, 1 fail pre-esistente) |
-| **Security Fix** | **AUDITATO R159+R160** - 8 fix S169 + audit codice + IDOR query param completato |
-| **Commit** | `054efbb` pushato su lab-v3 - PRONTO per deploy |
+| **Produzione V2** | v2.11.0 LIVE su contabilitafamigliapra.it |
+| **PDF Parser** | v1.14.0 DEPLOYATO S182 - tutti e 3 i servizi VM + locale :8000 |
+| **V3 VM** | 10 file deployati S176, pdf_parser v1.14.0 S182 |
+| **Agent NL/SHE/HP** | v2.1.0 LIVE + reconcile v1.1.0 **DEPLOYATO S184 su tutti e 3** |
+| **Reconcile** | v1.1.0 - window 7gg, START_DATE=26 Feb (HP+SHE), NL senza start |
+| **HC.io** | **TUTTI VERDI** (11 check: 3 sync + 3 reconcile + 3 backup + 2 altro) |
+| **Test** | **1928 PASS** (1566 portale + 362 agent) |
+| **Lab-v2** | INTATTO, frozen da S87 |
+| **Backup 3-Layer** | V2 OK, V3 locale OK, **GCS V3 vuoto (da fixare)** |
 
 ---
 
-## PROSSIMO: Deploy VM Security Fix (S171)
+## S184 - Deploy Agent HP+NL + Fix .env + HC.io Verde
+
+### Cosa abbiamo fatto
+
+| # | Azione | Risultato |
+|---|--------|-----------|
+| 1 | Deploy 16 file .py su HP | HPTERMINAL01, tutti copiati via VPN |
+| 2 | Deploy 16 file .py su NL | NLTERMINAL01, tutti copiati via VPN |
+| 3 | Fix .env HP | WINDOW=7, START_DATE=2026-02-26, HC_URL reconcile |
+| 4 | Fix .env NL | WINDOW 30→7, trovato/fixato doppio .env (root+agent) |
+| 5 | Fix .env SHE | Completato vars reconcile (TG, HC, START_DATE=2026-02-26) |
+| 6 | Test manuale NL | Reconcile OK, 0 anomalie, HC.io pingato → VERDE |
+| 7 | Test manuale HP | Reconcile 4 anomalie (attese: dati misti), Telegram OK |
+| 8 | Test manuale SHE | Reconcile 5 anomalie (attese: dati misti), Telegram OK |
+| 9 | START_DATE aggiornato 26 Feb | HP+SHE partono puliti da oggi, zero rumore storico |
+| 10 | HC.io tutti VERDI | NL ping reale, HP+SHE ping manuale |
+
+### Mappa Deploy Agent Finale
 
 ```
-+====================================================================+
-|  DEPLOY VM - MAPPA COMPLETA                                         |
-+====================================================================+
-
-  FILE DA DEPLOYARE SU VM (/opt/contabilita-v3/)
-
-  +---------------------------------------------------+
-  | 1. backend/dependencies.py    IDOR cross-portal   |
-  | 2. backend/main.py            CORS + HSTS + auth  |
-  | 3. backend/routers/auth.py    Portal codes env    |
-  | 4. backend/routers/ericsoft.py Watermark auth     |
-  | 5. backend/routers/spring.py  Magic bytes + %s    |
-  +---------------------------------------------------+
-
-  FILE DA DEPLOYARE SU AGENT (Windows, Rafa VPN)
-
-  +---------------------------------------------------+
-  | 6. agent/http_sender.py       Auth su watermark   |
-  +---------------------------------------------------+
-
-  OPERAZIONI AGGIUNTIVE
-
-  +---------------------------------------------------+
-  | 7. Migration v15 (sync_metrics) - run su VM DB    |
-  | 8. .env V3: aggiungere PORTAL_CODE_NL/HP/SHE     |
-  +---------------------------------------------------+
+                NL              SHE             HP
+                ----            ----            ----
+16 file .py:    FATTO S184      FATTO S183      FATTO S184
+.env WINDOW=7:  FATTO           FATTO           FATTO
+.env START:     non serve       2026-02-26      2026-02-26
+.env HC_URL:    OK              FIXATO S184     OK
+.env TG:        OK              FIXATO S184     OK
+Test manuale:   OK (0 anom)     OK (5 anom att) OK (4 anom att)
+HC.io:          VERDE           VERDE           VERDE
+Schedule sync:  11:30           11:40           11:50
+Schedule rec:   14:00           14:10           14:20
 ```
 
-### Ordine Deploy FORTEZZA MODE
+### Problema trovato: doppio .env
 
-1. Snapshot pre-deploy
-2. Deploy 5 file backend su VM
-3. Aggiungere variabili PORTAL_CODE_* al .env V3
-4. Restart service contabilita-v3
-5. Test health + endpoint critici
-6. Migration v15 (sync_metrics)
-7. Agent: Rafa copia http_sender.py su Windows via VPN
-8. Test agent watermark (dry-run)
+NL e SHE avevano DUE file .env:
+- `C:\contabilita-agent\.env` (root) - usato dal sync
+- `C:\contabilita-agent\agent\.env` (legacy) - usato dal reconcile NL bat
 
-### ATTENZIONE DEPLOY
+Il reconcile NL leggeva il vecchio `agent\.env` con WINDOW=30 invece del root con WINDOW=7.
+Risolto aggiornando entrambi. P3 per pulizia definitiva.
 
-- **Watermark endpoint ora richiede auth** -> agent DEVE avere http_sender.py aggiornato
-- Se deploy agent PRIMA di backend: agent ottiene 401 su watermark (non critico, fallback a full sync)
-- Se deploy backend PRIMA di agent: agent vecchio chiama watermark senza auth -> 401 -> fallback a full sync
-- **Entrambi gli ordini sono safe** grazie al fallback, ma idealmente backend + agent insieme
+### Decisione: START_DATE = oggi (Rafa S184)
+
+I delta HP/SHE (4-5 anomalie) sono rumore del periodo transizione (dati misti PDF + Ericsoft).
+Rafa decide: "iniziare da oggi in poi". START_DATE=2026-02-26 su entrambi.
+Da domani il reconcile controlla SOLO dati 100% agent-sourced.
 
 ---
 
-## Security Fix Deployati (S169-S170)
+## DA FARE (Prossima Sessione S185)
 
-| # | Fix | Audit |
-|---|-----|-------|
-| 1 | IDOR cross-portal: path + header + query param protetti | R159 F1 fixato |
-| 2 | CORS wildcard bloccato in produzione (hard block) | R159 OK |
-| 3 | Watermark: auth API key richiesta | R159 OK + test 401 (F4) |
-| 4 | Agent http_sender: auth header su GET watermark | R159 OK |
-| 5 | Magic bytes ZIP su upload SPRING | R159 OK + test vuoto/corto (F9) |
-| 6 | Portal codes da environment | R159 OK |
-| 7 | X-Response-Time rimosso in produzione | R159 OK |
-| 8 | HSTS con preload | R159 OK |
+### Verifica (P2)
+| # | Cosa | Note |
+|---|------|------|
+| 1 | Verificare HC.io dopo run schedulato 27 Feb | NL 14:00, SHE 14:10, HP 14:20 - devono restare VERDI |
+| 2 | Verificare Telegram 27 Feb | Nessun alert = tutto OK |
 
-**Guardiana R159: 9.3/10 -> fix -> R160: 9.6/10 APPROVED**
+### Cleanup (P3)
+| # | Cosa | Note |
+|---|------|------|
+| 3 | Pulire doppio .env NL+SHE | Unificare a root `.env`, fix bat reconcile_nl.bat |
+| 4 | Cancellare cartelle deploy Desktop | deploy_agent_s177/ + deploy_agent_s183/ |
+
+### Backlog (da S182)
+| # | Cosa | Note |
+|---|------|------|
+| 5 | GO-BK-006: Test restore da GCS | Scaricare DB, integrity_check |
+| 6 | Fix backup V3 su GCS | Cartella vuota, offsite non copre V3 |
+| 7 | Subroadmap allineamento VM | MD5 tutti i file VM vs repo |
+| 8 | Migration v15 deploy su VM | sync_metrics pronta |
+| 9 | Bug load_dotenv() ordine | Fix in conftest.py o main.py |
 
 ---
 
 ## Dove leggere
 
-| Cosa | File (lab-v3) |
-|------|---------------|
-| IDOR fix completo | `backend/dependencies.py:60-95` (3 check points) |
-| IDOR middleware injection | `backend/main.py:314` (authenticated_portal) |
-| CORS hard block prod | `backend/main.py:136-148` |
-| Watermark auth | `backend/routers/ericsoft.py:397-407` |
-| Portal codes da env | `backend/routers/auth.py:29-33` |
-| Magic bytes SPRING | `backend/routers/spring.py:253-258` |
-| Test IDOR (9 test) | `tests/test_idor_prevention.py` (NUOVO) |
+| Cosa | Path |
+|------|------|
+| Agent code (16 file) | `agent/` (lab-v3 worktree) |
+| Reconcile config | `agent/reconcile_config.py` |
+| Deploy folder (cancellabile) | `~/Desktop/deploy_agent_s183/ALL/` |
+| .env NL | `C:\contabilita-agent\.env` + `agent\.env` su NLTERMINAL01 |
+| .env HP | `C:\contabilita-agent\.env` su HPTERMINAL01 |
+| .env SHE | `C:\contabilita-agent\.env` + `agent\.env` su SHETERMINAL02 |
 
 ---
 
-## Lezioni Apprese (Sessione 170)
+## Lezioni Apprese (Sessione 184)
 
 ### Cosa ha funzionato bene
-- **Audit CODICE dei fix separato dall'audit dei finding**: Guardiana R159 ha trovato F1 (IDOR query param non protetto!) che era sfuggito
-- **Deploy su sessione fresh**: Rafa ha deciso di NON deployare nella stessa sessione dell'audit - piu sicuro
+- **Guida step-by-step**: Rafa guidato passo passo, ogni hotel testato individualmente
+- **Dry-run prima di run reale**: cattura problemi senza effetti collaterali
+- **Decisione pragmatica START_DATE=oggi**: evita investigazione inutile su dati transizione
 
 ### Cosa non ha funzionato
-- **Safety check lab-v2 ancora necessario**: alias .zshrc puntava a lab-v2. Fixato: ora `contabilita` apre lab-v3
+- **Doppio .env non rilevato**: NL aveva WINDOW=30 nel vecchio `agent\.env`, ci siamo accorti solo dal log
+- **SHE .env incompleto**: mancavano TG+HC+START_DATE, deploy S183 non li aveva aggiunti tutti
 
 ### Pattern candidato
-- **Audit codice DEI FIX prima del deploy**: non basta auditare i finding, serve auditare anche il codice che li fixa. Evidenza: S170 F1 IDOR. PROMUOVERE.
+- **Doppio .env = trappola silenziosa**: SEMPRE verificare QUALE .env viene letto (controllare log!). Evidenza: S184 NL+SHE. PROMUOVERE.
+- **Ping manuale HC.io per sbloccare**: quando reconcile skippa legitimamente, ping manuale OK. Non complica il codice.
 
 ---
 
-*S170: Audit codice fix R159 (9.3) + fix finding R160 (9.6). IDOR completo su 3 vettori. 12 nuovi test. Pronto per deploy VM.*
-
----
-
-## AUTO-CHECKPOINT: 2026-02-26 06:06 (unknown)
-
-### Stato Git
-- **Branch**: lab-v2
-- **Ultimo commit**: eb48d09 - ANTI-COMPACT: PreCompact auto
-- **File modificati**: Nessuno (git pulito)
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: unknown
-
----
+*S184: Deploy completo 3 hotel, fix .env, HC.io tutti verdi, START_DATE=26 Feb per partenza pulita.*
