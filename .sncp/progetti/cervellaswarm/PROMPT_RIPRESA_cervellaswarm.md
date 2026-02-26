@@ -1,30 +1,36 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-25 - Sessione 403
-> **STATUS:** PyPI 9/9 LIVE! Pre-submit COMPLETO. PRONTO per Show HN!
+> **Ultimo aggiornamento:** 2026-02-26 - Sessione 404
+> **STATUS:** SHOW HN LIVE! Context optimization subroadmap PRONTA.
 
 ---
 
-## SESSIONE 403 - Cosa e successo
+## SESSIONE 404 - Cosa e successo
 
-### Pre-Submit Verification COMPLETATA
-Verifica completa di tutti i materiali pre-submit per Show HN.
+### Show HN SUBMITTED!
+Post live su Hacker News: "Show HN: Lingua Universale - session types and Lean 4 proofs for AI agents"
+URL: github.com/rafapra3008/cervellaswarm. First comment postato con code snippet + Colab link.
+Response strategy pronta: `docs/blog/show-hn-draft.md` (righe 119-148).
 
-**Lavoro svolto:**
-1. Pulizia casa: PROMPT_RIPRESA snellito, NORD.md allineato a S403, file spazzatura rimossi
-2. Pre-submit checklist: **7/7 check VERDI** (pip install, Colab Run All, README badges, 9/9 PyPI, first comment code, response strategy, blog link)
-3. Guardiana Audit #1: 9.16/10 - trovati 7 P2 (inconsistenze numeriche cross-file)
-4. Fix 7 P2: README (13 modules, Apache 2.0, "To our knowledge"), NORD (S403, 1820 test, FASE B completa), Show HN checklist
-5. Guardiana Re-Audit: **9.7/10 APPROVED** - 7/7 fix verificati, 0 regressioni
-6. Fix Colab: setup cell forzata a `--no-cache-dir >=0.1.1` (Colab cachava v0.1.0). **Rafa ha testato in incognito: 25/25 celle VERDI**
-7. Commit + push origin + sync repo pubblico DONE
-8. Analisi Ingegnera: lingua-universale NON e integrata nel workflow interno (per il futuro)
+### Context Optimization - Analisi completa
+1. **Ingegnera** ha analizzato il context consumption: ~21% del context (41,800 tok su 200K) usato per overhead. 9 proposte di ottimizzazione.
+2. **Guardiana Qualita** ha auditato le 9 proposte: **9.0/10 APPROVED**. Tutte approvate (6 con riserva, 3 pulite).
+3. **Subroadmap v2** creata: `.sncp/roadmaps/SUBROADMAP_CONTEXT_OPTIMIZATION_V2.md`
+4. **Guardiana** ha auditato la subroadmap: **9.3/10 APPROVED**. F3-F5 cosmetici fixati.
 
-**S400-S402 recap:** Blog post + Colab notebook + Show HN draft + README pre-submit + lingua-universale v0.1.1 su PyPI.
+Risparmio atteso: >= 20% overhead sessione (target conservativo Guardiana).
+3 fasi: Quick Wins (rischio NULLO) -> Con Cura (rischio MEDIO) -> Con Test (rischio ALTO).
+
+### Piano CEO Regina
+Presentato recap futuro con le 3 strade:
+- **Strada 1:** Community & Growth (post-Show HN) - Reddit, Product Hunt, video, Discord
+- **Strada 2:** Fase C - CervellaLang Alpha (LA MISSIONE)
+- **Strada 3:** Monetizzazione (deploy codice Stripe gia 90% fatto)
+Raccomandazione: ASCOLTIAMO il feedback HN per 2 settimane. Il feedback guida il prossimo passo.
 
 ---
 
-## Stato packages
+## Stato packages (invariato da S403)
 
 ```
 PACKAGE                  PYPI    CI   BUILD   TESTS
@@ -52,60 +58,62 @@ OPEN SOURCE ROADMAP:
     F4.1b PyPI Publication     DONE (S399, 9.7/10) - 9/9 LIVE!
     F4.1c GitHub Release       DONE (S400, 9.3/10)
     F4.1d Blog + Social        IN PROGRESS
-      Step 1: Blog post         DONE (S400, 9.3/10)
-      Step 2: Colab notebook    DONE (S401, 9.5/10)
-      Step 3: Show HN draft     DONE (S401, Guardiana OK)
-      Step 4: README pre-submit DONE (S402, 9.5/10)
-      Step 5: Pre-submit check  DONE (S403, 7/7 verde, Guardiana 9.7/10)
-      Step 6: Submit             PRONTO! Rafa decide quando.
+      Step 1-5: DONE (blog, colab, draft, readme, pre-submit)
+      Step 6: Submit           DONE! (S404, 26 Feb 2026)
+      Step 7: Reddit/Twitter   TODO (dopo feedback HN)
+      Step 8: Product Hunt     TODO
+      Step 9: Video demo       TODO
+
+CONTEXT OPTIMIZATION (NUOVO S404):
+  Subroadmap: .sncp/roadmaps/SUBROADMAP_CONTEXT_OPTIMIZATION_V2.md
+  FASE 1: Quick Wins          TODO (~1h, rischio NULLO)
+  FASE 2: Con Cura            TODO (~3h, rischio MEDIO)
+  FASE 3: Con Test            TODO (~2h, rischio ALTO)
+  Audit: Ingegnera 6/10 -> Guardiana 9.0/10 + 9.3/10
 
 LINGUAGGIO CERVELLASWARM (la missione vera):
-  FASE A: Fondamenta           COMPLETA (7 moduli, 9.5+ media)
-  FASE B: Il Toolkit           COMPLETA (7/7 DONE, media 9.33/10)
-  FASE C: Il Linguaggio        2027+ (include integrazione interna)
+  FASE A+B: COMPLETE (13 moduli, 1820 test, 9.5+ media)
+  FASE C: Il Linguaggio        2027+ (CervellaLang Alpha)
   FASE D: Per Tutti            Il sogno
 ```
 
 ---
 
-## Lezioni Apprese (S403)
+## Lezioni Apprese (S404)
 
 ### Cosa ha funzionato bene
-- Health check a inizio sessione: quadro chiaro, zero tempo perso
-- Step-by-step con Guardiana audit dopo ogni step: qualita incrementale confermata (9.16 -> 9.7)
-- Ingegnera analisi onesta sull'uso interno: "FATTI non opinioni" = decisione informata
+- Ingegnera + Guardiana in pipeline: analisi profonda -> audit -> subroadmap -> re-audit. Qualita incrementale.
+- "Guardiana dopo ogni step" confermato per la 2a volta (S403 + S404). Pattern PROMOSSO.
+- Parallelizzare analisi (background agent) mentre la sessione avanza su altri punti: zero tempo perso.
 
 ### Cosa non ha funzionato
-- Colab cachava v0.1.0 nonostante v0.1.1 su PyPI: aggiunto `--no-cache-dir` e version pin
-- Wheel PyPI sembrava buggy ma era cache Colab: investigazione ha mostrato wheel corretto
+- Numeri righe dall'Ingegnera imprecisi per 4 file (Guardiana ha corretto). Lezione: sempre verificare con `wc -l` reale.
 
 ### Pattern candidato
-- "Health check a inizio sessione" -> PROMOSSO (terza volta: S401, S402, S403 - sempre utile)
-- "Fix + Re-audit Guardiana immediato" -> CANDIDATO (primo test S403, da monitorare)
+- "Ingegnera analizza -> Guardiana audita -> Subroadmap -> Guardiana re-audita" -> CANDIDATO (primo test S404, pipeline a 4 step)
+- "Guardiana dopo ogni step" -> PROMOSSO (2a conferma: S403 + S404)
 
 ---
 
 ## Prossimi step
 
-1. **F4.1d Step 6: Submit su Show HN** - PRONTO! Rafa decide quando
-   - Draft: `docs/blog/show-hn-draft.md` (copia-incolla, zero edits)
-   - Slot ottimale ricerca: domenica 12:00-14:00 UTC (ma qualsiasi giorno va bene)
-   - Checklist 7/7 verde, Guardiana 9.7/10
-2. **Integrazione interna lingua-universale** - FUTURO (Fase C)
-   - Analisi Ingegnera S403: 3 livelli possibili (passivo/strutturato/runtime)
-   - Livello 1 (validazione passiva) implementabile in 1 sessione
-3. **Fase C** - CervellaLang Alpha (2027+)
+1. **Context Optimization FASE 1** - Quick Wins (~1h)
+   - P7 (indice MANUALE), P2 (dedup CLAUDE.md), P5 (snellire MEMORY.md), P9 (symlink settings)
+   - Subroadmap: `.sncp/roadmaps/SUBROADMAP_CONTEXT_OPTIMIZATION_V2.md`
+2. **Context Optimization FASE 2+3** - Con Cura + Con Test (~5h, sessioni separate)
+3. **Monitorare Show HN** - Rispondere ai commenti con la response strategy
+4. **Post-HN** - Reddit, Twitter, Product Hunt (quando il momento e giusto)
+5. **Fase C** - CervellaLang Alpha (guidata dal feedback community)
 
 ---
 
 ## File chiave
 
-- `packages/lingua-universale/NORD.md` - VISIONE (leggere SEMPRE!)
-- `docs/blog/from-vibecoding-to-vericoding.md` - Blog post
-- `docs/blog/from-vibecoding-to-vericoding-demo.ipynb` - Colab notebook (25 celle, testato)
-- `docs/blog/show-hn-draft.md` - Show HN draft + response strategy + checklist 7/7
+- `docs/blog/show-hn-draft.md` - Response strategy (righe 119-148) - TIENI APERTA!
+- `.sncp/roadmaps/SUBROADMAP_CONTEXT_OPTIMIZATION_V2.md` - Piano context (Guardiana 9.3/10)
 - `.sncp/roadmaps/MAPPA_LINGUAGGIO_CERVELLASWARM.md` - LA MAPPA del linguaggio
+- `packages/lingua-universale/NORD.md` - VISIONE (leggere SEMPRE!)
 
-Archivio: S337-S399 (vedi MEMORY.md). S400 Release+Blog. S401 Colab+ShowHN. S402 README+v0.1.1. S403 Pre-submit 7/7 DONE.
+Archivio: S400 Release+Blog. S401 Colab+ShowHN. S402 README+v0.1.1. S403 Pre-submit 7/7. S404 SUBMIT + Context Opt.
 
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*

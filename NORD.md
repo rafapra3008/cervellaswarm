@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 25 Febbraio 2026 - S403 (FASE B COMPLETA, 1820 test, pre-submit Show HN)
+> Aggiornato: 26 Febbraio 2026 - S404 (SHOW HN LIVE! Context Optimization subroadmap v2)
 
 ```
 +==================================================================+
@@ -112,7 +112,7 @@ FASE 3: Session Memory System     [####################] 100% COMPLETA!
   F3.4 Documentation               DONE (S392) - 3 docs, CLI verificate, ~9.5/10
   F3.5 Auto-Handoff                DONE (S379) - 8 step, 14 file, 9.5/10
 
-FASE 4: Launch                    [##################..] 90% IN CORSO
+FASE 4: Launch                    [###################.] 95% IN CORSO
   F4.1a CI/CD Pipeline             DONE (S393) - 15 workflow, Guardiana 9.5/10
   F4.1b PyPI Publication           DONE (S399) - 9/9 LIVE! Guardiana 9.7/10
   F4.1c GitHub Release             DONE (S400) - Guardiana 9.3/10
@@ -121,7 +121,8 @@ FASE 4: Launch                    [##################..] 90% IN CORSO
     Step 2: Colab notebook           DONE (S401, 9.5/10)
     Step 3: Show HN draft            DONE (S401, Guardiana OK)
     Step 4: README pre-submit        DONE (S402, 9.5/10)
-    Step 5: Submit                   TODO (pre-submit verification S403)
+    Step 5: Pre-submit check          DONE (S403, 7/7 verde, Guardiana 9.7/10)
+    Step 6: Submit                   DONE! (S404, 26 Feb 2026)
 ```
 
 ### LA STELLA POLARE - LINGUA UNIVERSALE (S375-S396)
