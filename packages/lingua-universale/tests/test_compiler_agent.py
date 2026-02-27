@@ -11,7 +11,6 @@ Test structure:
   - ContractViolation preamble import
   - Confident[T] preamble import (P2 fix)
   - Keyword escaping in agent names
-  - _escape_contract_str helper
   - Full program with agent + other declarations
   - Generated code is valid Python (syntax check)
   - Generated code is executable (round-trip exec)
@@ -317,25 +316,9 @@ class TestCompileAgentContracts:
 
 
 # ===================================================================
-# _escape_contract_str helper
+# _escape_contract_str -- moved to test_compiler_core.py (C2.3.1)
+# Full hardened suite (8 tests) supersedes the 4 basic tests.
 # ===================================================================
-
-
-class TestEscapeContractStr:
-    """Tests for the _escape_contract_str static method."""
-
-    def test_no_special_chars(self, compiler: ASTCompiler) -> None:
-        assert compiler._escape_contract_str("task.valid") == "task.valid"
-
-    def test_double_quotes_escaped(self, compiler: ASTCompiler) -> None:
-        assert compiler._escape_contract_str('x == "ok"') == 'x == \\"ok\\"'
-
-    def test_backslash_escaped(self, compiler: ASTCompiler) -> None:
-        assert compiler._escape_contract_str("a\\b") == "a\\\\b"
-
-    def test_both_escaped(self, compiler: ASTCompiler) -> None:
-        result = compiler._escape_contract_str('"a\\b"')
-        assert result == '\\"a\\\\b\\"'
 
 
 # ===================================================================

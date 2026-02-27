@@ -60,6 +60,7 @@ class TestGoldenVariantType:
         assert result.source_file == "variant.lu"
         assert result.agents == ()
         assert result.protocols == ()
+        assert result.types == ("Status",)
 
     def test_generates_literal(self) -> None:
         result = _roundtrip(self.SOURCE)
@@ -97,6 +98,7 @@ class TestGoldenRecordType:
         result = _roundtrip(self.SOURCE, "record.lu")
         assert result.agents == ()
         assert result.protocols == ()
+        assert result.types == ("TaskData",)
 
     def test_generates_dataclass(self) -> None:
         result = _roundtrip(self.SOURCE)
@@ -449,6 +451,7 @@ class TestGoldenMixedProgram:
         assert result.imports == ("math",)
         assert result.agents == ("Worker",)
         assert result.protocols == ("SimpleTask",)
+        assert result.types == ("TaskStatus", "TaskInfo")
 
     def test_all_declarations_present(self) -> None:
         result = _roundtrip(self.SOURCE)

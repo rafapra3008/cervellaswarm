@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Tests for _compiler.py (C2.2.2 core + C2.2.3 types).
+"""Tests for _compiler.py (C2.2.2 core + C2.2.3 types + C2.3.1 hardening).
 
 Test structure:
   - _expr_to_python: all 8 Expr types + edge cases
@@ -12,6 +12,8 @@ Test structure:
   - CompiledModule: frozen dataclass
   - compile(): full program with UseNode declarations
   - Error handling: verify TypeError for unknown decl types
+  - _escape_contract_str: hardening with \\n, \\r, alignment with codegen (C2.3.1a)
+  - CompiledModule.types: variant + record tracking (C2.3.1b)
 
 Agent compilation tests: see test_compiler_agent.py (C2.2.4).
 Protocol compilation tests: see test_compiler_protocol.py (C2.2.5).
@@ -685,3 +687,124 @@ class TestCompilerErrors:
         """Passing an unexpected type to _compile_declaration raises TypeError."""
         with pytest.raises(TypeError, match="Unknown declaration type"):
             compiler._compile_declaration("not_a_decl")  # type: ignore[arg-type]
+
+
+# ===================================================================
+# _escape_contract_str hardening (C2.3.1a)
+# ===================================================================
+
+
+class TestEscapeContractStr:
+    """Tests for _escape_contract_str edge cases (aligned with codegen._escape_string)."""
+
+    def test_backslash(self, compiler: ASTCompiler) -> None:
+        assert compiler._escape_contract_str('a\\b') == 'a\\\\b'
+
+    def test_double_quote(self, compiler: ASTCompiler) -> None:
+        assert compiler._escape_contract_str('x == "hello"') == 'x == \\"hello\\"'
+
+    def test_newline(self, compiler: ASTCompiler) -> None:
+        assert compiler._escape_contract_str("line1\nline2") == "line1\\nline2"
+
+    def test_carriage_return(self, compiler: ASTCompiler) -> None:
+        assert compiler._escape_contract_str("line1\rline2") == "line1\\rline2"
+
+    def test_combined_escapes(self, compiler: ASTCompiler) -> None:
+        """All four escape types in one string."""
+        raw = 'a\\b\n"c"\rd'
+        expected = 'a\\\\b\\n\\"c\\"\\rd'
+        assert compiler._escape_contract_str(raw) == expected
+
+    def test_empty_string(self, compiler: ASTCompiler) -> None:
+        assert compiler._escape_contract_str("") == ""
+
+    def test_no_special_chars(self, compiler: ASTCompiler) -> None:
+        """Plain string passes through unchanged."""
+        assert compiler._escape_contract_str("input.is_valid") == "input.is_valid"
+
+    def test_alignment_with_codegen_escape_string(self) -> None:
+        """Verify alignment: same output as codegen._escape_string for same input."""
+        from cervellaswarm_lingua_universale.codegen import _escape_string
+
+        cases = [
+            'hello',
+            'a\\b',
+            '"quoted"',
+            "new\nline",
+            "cr\rreturn",
+            'all\\four\n"types"\r!',
+        ]
+        for case in cases:
+            assert (
+                ASTCompiler._escape_contract_str(case) == _escape_string(case)
+            ), f"Mismatch for {case!r}"
+
+
+# ===================================================================
+# CompiledModule.types tracking (C2.3.1b)
+# ===================================================================
+
+
+class TestCompiledModuleTypes:
+    """Tests for the new CompiledModule.types field."""
+
+    def test_default_empty(self) -> None:
+        mod = CompiledModule(
+            source_file="test.lu",
+            python_source="x = 1\n",
+            agents=(),
+            protocols=(),
+            imports=(),
+        )
+        assert mod.types == ()
+
+    def test_variant_tracked(self, compiler: ASTCompiler) -> None:
+        prog = ProgramNode(
+            (VariantTypeDecl("Status", ("Active", "Inactive"), LOC),),
+            LOC,
+        )
+        result = compiler.compile(prog, source_file="test.lu")
+        assert result.types == ("Status",)
+
+    def test_record_tracked(self, compiler: ASTCompiler) -> None:
+        from cervellaswarm_lingua_universale._ast import FieldNode
+        field = FieldNode("name", SimpleType("String", False, LOC), LOC)
+        prog = ProgramNode(
+            (RecordTypeDecl("TaskData", (field,), LOC),),
+            LOC,
+        )
+        result = compiler.compile(prog, source_file="test.lu")
+        assert result.types == ("TaskData",)
+
+    def test_mixed_types_tracked(self, compiler: ASTCompiler) -> None:
+        """Both variant and record types tracked in order."""
+        from cervellaswarm_lingua_universale._ast import FieldNode
+        field = FieldNode("name", SimpleType("String", False, LOC), LOC)
+        prog = ProgramNode(
+            (
+                VariantTypeDecl("Status", ("Active", "Inactive"), LOC),
+                RecordTypeDecl("TaskData", (field,), LOC),
+                VariantTypeDecl("Priority", ("High", "Low"), LOC),
+            ),
+            LOC,
+        )
+        result = compiler.compile(prog, source_file="test.lu")
+        assert result.types == ("Status", "TaskData", "Priority")
+
+    def test_agents_not_in_types(self, compiler: ASTCompiler) -> None:
+        """AgentNode names go in agents, not types."""
+        from cervellaswarm_lingua_universale._ast import AgentNode
+        agent = AgentNode(
+            name="Worker", role="worker", trust=None,
+            accepts=(), produces=(), requires=(), ensures=(),
+            loc=LOC,
+        )
+        prog = ProgramNode((agent,), LOC)
+        result = compiler.compile(prog, source_file="test.lu")
+        assert result.types == ()
+        assert result.agents == ("Worker",)
+
+    def test_empty_program_no_types(self, compiler: ASTCompiler) -> None:
+        prog = ProgramNode((), LOC)
+        result = compiler.compile(prog, source_file="test.lu")
+        assert result.types == ()

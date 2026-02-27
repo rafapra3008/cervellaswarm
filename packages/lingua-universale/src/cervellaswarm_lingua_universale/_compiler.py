@@ -23,6 +23,9 @@ Implementation plan (7 sub-steps):
   C2.2.5  _compile_protocol (bridge to codegen.py)        DONE (S414)
   C2.2.6  Golden file tests + round-trip exec             DONE (S415)
   C2.2.7  Guardiana audit finale C2.2                     DONE (S415, 9.5/10)
+
+C2.3 Python Interop (ongoing):
+  C2.3.1  Hardening + types tracking                      S416
 """
 
 from __future__ import annotations
@@ -93,13 +96,23 @@ _PYTHON_KEYWORDS: frozenset[str] = frozenset(keyword.kwlist) | frozenset(
 
 @dataclass(frozen=True)
 class CompiledModule:
-    """Result of compiling a ProgramNode to Python source."""
+    """Result of compiling a ProgramNode to Python source.
+
+    Attributes:
+        source_file: Path or name of the ``.lu`` source file.
+        python_source: Generated Python source code.
+        agents: Names of agent declarations found in the program.
+        protocols: Names of protocol declarations found in the program.
+        imports: Module names from ``use`` statements.
+        types: Names of variant and record type declarations (C2.3.1).
+    """
 
     source_file: str
     python_source: str
     agents: tuple[str, ...]
     protocols: tuple[str, ...]
     imports: tuple[str, ...]
+    types: tuple[str, ...] = ()
 
 
 # ============================================================
@@ -141,6 +154,7 @@ class ASTCompiler:
         agents: list[str] = []
         protocols: list[str] = []
         imports: list[str] = []
+        types: list[str] = []
 
         for decl in program.declarations:
             decl_lines = self._compile_declaration(decl)
@@ -154,6 +168,8 @@ class ASTCompiler:
                 agents.append(decl.name)
             elif isinstance(decl, ProtocolNode):
                 protocols.append(decl.name)
+            elif isinstance(decl, (VariantTypeDecl, RecordTypeDecl)):
+                types.append(decl.name)
 
         # Assemble: docstring + preamble imports + body
         lines: list[str] = [
@@ -173,6 +189,7 @@ class ASTCompiler:
             agents=tuple(agents),
             protocols=tuple(protocols),
             imports=tuple(imports),
+            types=tuple(types),
         )
 
     # ----------------------------------------------------------
@@ -700,8 +717,15 @@ class ASTCompiler:
     def _escape_contract_str(expr: str) -> str:
         """Escape a Python expression string for embedding in a string literal.
 
-        Handles backslashes and double-quotes so the generated
-        ``ContractViolation("...")`` call is always valid Python.
+        Handles backslashes, double-quotes, newlines, and carriage returns so
+        the generated ``ContractViolation("...")`` call is always valid Python.
+
+        Aligned with ``codegen._escape_string`` (F10 finding, C2.3.1).
         """
-        return expr.replace("\\", "\\\\").replace('"', '\\"')
+        return (
+            expr.replace("\\", "\\\\")
+            .replace('"', '\\"')
+            .replace("\n", "\\n")
+            .replace("\r", "\\r")
+        )
 
