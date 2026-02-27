@@ -151,6 +151,10 @@ from ._interop import (
     load_module,
     load_file,
 )
+from ._grammar_export import (
+    GrammarExporter,
+    GRAMMAR_VERSION,
+)
 from .errors import (
     ErrorCategory,
     ErrorSeverity,
@@ -291,6 +295,9 @@ __all__ = [
     "save_module",
     "load_module",
     "load_file",
+    # Grammar Export (C2.4)
+    "GrammarExporter",
+    "GRAMMAR_VERSION",
     # Errors
     "ErrorCategory",
     "ErrorSeverity",
