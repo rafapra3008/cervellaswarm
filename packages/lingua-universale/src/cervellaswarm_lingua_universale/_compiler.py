@@ -24,9 +24,10 @@ Implementation plan (7 sub-steps):
   C2.2.6  Golden file tests + round-trip exec             DONE (S415)
   C2.2.7  Guardiana audit finale C2.2                     DONE (S415, 9.5/10)
 
-C2.3 Python Interop (ongoing):
+C2.3 Python Interop (DONE, S416-S418):
   C2.3.1  Hardening + types tracking                      S416
   C2.3.2  __all__ + module metadata                       S416
+  C2.3.3-C2.3.6  File I/O + runtime in _interop.py       S417-S418
 """
 
 from __future__ import annotations

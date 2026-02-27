@@ -144,6 +144,13 @@ from ._compiler import (
     ASTCompiler,
     CompiledModule,
 )
+from ._interop import (
+    InteropError,
+    compile_file,
+    save_module,
+    load_module,
+    load_file,
+)
 from .errors import (
     ErrorCategory,
     ErrorSeverity,
@@ -278,6 +285,12 @@ __all__ = [
     # Compiler (C2)
     "ASTCompiler",
     "CompiledModule",
+    # Interop (C2.3)
+    "InteropError",
+    "compile_file",
+    "save_module",
+    "load_module",
+    "load_file",
     # Errors
     "ErrorCategory",
     "ErrorSeverity",

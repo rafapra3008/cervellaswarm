@@ -316,6 +316,17 @@ class TestI6ContractsPass:
         assert mod.Worker.__lu_role__ == "executor"
         assert mod.Worker.__lu_accepts__ == ("task_request",)
 
+    def test_multi_contract_metadata(self, tmp_path: Path) -> None:
+        """Multi-contract agent metadata (trust, produces) accessible."""
+        lu = tmp_path / "analyst.lu"
+        lu.write_text(MULTI_CONTRACT_AGENT, encoding="utf-8")
+
+        mod = load_file(lu)
+        assert mod.Analyst.__lu_role__ == "researcher"
+        assert mod.Analyst.__lu_trust__ == "trusted"
+        assert mod.Analyst.__lu_accepts__ == ("ResearchQuery",)
+        assert mod.Analyst.__lu_produces__ == ("ResearchReport",)
+
     def test_multi_contract_pass(self, tmp_path: Path) -> None:
         """Multi-line requires/ensures all satisfied."""
         lu = tmp_path / "analyst.lu"
