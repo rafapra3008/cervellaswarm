@@ -123,21 +123,21 @@ La grammatica EBNF diventa direttamente il parser. Spezzato in 6 sub-step.
 **Effort:** 2-3 sessioni
 **Rischio:** MEDIO
 
-**Sub-step (S410):**
+**Sub-step (S410-411):**
 - [x] C1.3.1 Tokenizer unificato (320 LOC, 80 test, Guardiana 9.6/10)
 - [x] C1.3.2 Nodi AST (304 LOC, 96 test, Guardiana 9.5/10)
 - [x] C1.3.3 Parser Core - protocol/step/choice/properties (652 LOC, 53 test, Guardiana 9.5/10)
-- [ ] C1.3.4 Parser nuovi costrutti - agent/type/use + espressioni
-- [ ] C1.3.5 Integration + backward compat (10 esempi canonici end-to-end)
+- [x] C1.3.4 Parser nuovi costrutti - agent/type/use + espressioni (+356 LOC, 58 test, Guardiana 9.5/10, fix P2+P3)
+- [x] C1.3.5 Integration test - 10 esempi canonici end-to-end (1141 LOC, 86 test, Guardiana 9.6/10)
 - [ ] C1.3.6 Guardiana finale + coverage >= 95%
 
 **Criterio completamento:**
-- [ ] Parser che accetta tutti i 10 esempi del Step C1.2
-- [ ] Error messages umani (non "unexpected token at line 42")
+- [x] Parser che accetta tutti i 10 esempi del Step C1.2 (verificato in C1.3.5)
+- [x] Error messages umani con line/col e suggerimenti (verificato in C1.3.3+C1.3.4)
 - [ ] Round-trip: parse -> AST -> render == originale
 - [ ] Export grammatica per constrained decoding (JSON/EBNF)
 - [ ] Test coverage >= 95%
-- [ ] Guardiana verifica
+- [ ] Guardiana verifica finale
 
 ---
 
@@ -279,10 +279,10 @@ Questo e il **showcase_v2.py** - la prova che funziona REALE.
 |   SUBROADMAP FASE C: IL LINGUAGGIO                               |
 +================================================================+
 
-FASE C1: La Grammatica             [##############......] 70%
+FASE C1: La Grammatica             [##################..] 90%
   C1.1 STUDIO moduli esistenti       1 sess    DONE (S408, 9.3/10)
   C1.2 Design sintassi (BNF/EBNF)   2-3 sess  DONE (S408-409, 8.8/10)
-  C1.3 Parser del linguaggio         2-3 sess  IN PROGRESS (S410, 3/6 sub-step)
+  C1.3 Parser del linguaggio         2-3 sess  5/6 DONE (S410-411, 9.54/10 media)
 
 FASE C2: Il Compilatore            [....................] 0%
   C2.1 STUDIO architettura           1 sess    TODO

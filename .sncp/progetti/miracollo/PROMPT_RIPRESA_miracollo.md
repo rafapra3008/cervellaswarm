@@ -2,8 +2,8 @@
 
 # PROMPT RIPRESA - Ecosistema Miracollo
 
-> **Ultimo aggiornamento:** 22 Febbraio 2026 - FASE 1 Online COMPLETATA!
-> **Status:** miracollo.com LIVE! Score Guardiana 9.1/10
+> **Ultimo aggiornamento:** 26 Febbraio 2026 - VM Migrata a e2-small + Fix Security
+> **Status:** miracollo.com LIVE! VM e2-small x86 | Score Guardiana 9.3/10
 
 ---
 
@@ -48,14 +48,17 @@ FASE F - Audit Guardiana      [####################] 100% (9.1/10)
 ```
 VM miracollo-cervella (GCP us-central1-b):
   - STATO: RUNNING
-  - Machine: n4a-standard-1, ARM64 Google Axion, 4GB RAM
+  - Machine: e2-small, x86_64, 2 vCPU, 2GB RAM (~$16/mese)
   - IP statico: 34.134.72.207
-  - Disco: 39G (63% usato dopo cleanup)
+  - Disco: 20G (48% usato)
   - Path repo: /home/rafapra/app
-  - Docker: v29.1.3 + Compose v5.0.0
+  - Git remote: SSH con deploy key (ed25519)
+  - Docker: backend + nginx (healthy)
   - SSL: Let's Encrypt valido fino 1 Apr 2026
-  - SSL auto-renew: webroot mode, certbot timer systemd (TESTATO OK!)
+  - SSL auto-renew: certbot timer systemd + webroot (dry-run OK!)
   - ACME challenge: /.well-known/acme-challenge/ in nginx port 80
+  - SECRET_KEY: 128 char random (aggiornata 26 Feb 2026)
+  - MIRACOLLO_API_URL: http://backend:8001/api (rete Docker interna)
 
 DNS: miracollo.com -> 34.134.72.207 (register.it)
 SSH: miracollo-vm (34.134.72.207, chiave cervella_miracollo)
@@ -76,52 +79,62 @@ gcloud: Cervella ha accesso CLI completo (progetto data-frame-476309-v3)
 | `slowapi` exempt_when non supportato v0.1.9 | Custom key_func per health | 62b6251 |
 | CORS con vecchio IP | Aggiornato a https://miracollo.com | (VM .env) |
 | Certbot renewal falliva (authenticator=nginx) | Webroot + ACME location | 025ada5 |
+| BeSync poller 401 (passava per nginx auth) | MIRACOLLO_API_URL=http://backend:8001/api | d1b14e9 |
+| Security headers duplicati nginx/backend | proxy_hide_header in nginx | efc52ee |
+| SECRET_KEY="test123" in produzione | Generata key random 128 char | (VM .env) |
+| Certbot non installato su nuova VM | apt install certbot + timer OK | (VM) |
+| Git pull impossibile (no credentials) | Deploy key SSH ed25519 | (VM) |
 
 ## BUG CRITICI NOTI (pre-esistenti)
 
-- `guests.py:74-88` - INSERT 22 colonne ma 9 placeholder
+- ~~`guests.py:74-88` - INSERT 22 colonne ma 9 placeholder~~ FIXATO (33 col + 33 ?)
 - 98% endpoint senza auth app-level (mitigato con Basic Auth Nginx)
 - ~411 innerHTML senza escape in 94 file JS (mitigato con CSP-RO)
-- Machine type ARM64 vs target e2-small (costo da valutare)
 
 ---
 
 ## PROSSIMI STEP
 
-1. **Monitorare** miracollo.com nei prossimi giorni (uptime, errori)
-2. **Bug fix** guests.py INSERT (crash quando si crea ospite)
-3. **Valutare costo** VM attuale vs e2-small ($16/mese target)
-4. **CSP enforce** (da Report-Only a enforce dopo monitoraggio)
-5. **Auth app-level** (login vero per sostituire Basic Auth nel futuro)
+1. **Aggiornare GitHub Secrets** per auto-deploy (VM_HOST=34.134.72.207, VM_USER=rafapra, SSH_PRIVATE_KEY)
+2. **Monitorare** miracollo.com nei prossimi giorni (uptime, errori, RAM 57%)
+3. **CSP enforce** (da Report-Only a enforce dopo monitoraggio)
+4. **Auth app-level** (login vero per sostituire Basic Auth nel futuro)
+5. **Valutare WORKERS=1** se RAM scende sotto 500M available
 
 ## DECISIONI CHIUSE
 
-D1 e2-small target | D2 rimuovere cervellamiracollo | D3 register.it | D4 demo non urgente | D5 Room HW dopo | D6 gcloud CLI | D7 Basic Auth resta (Rafa approvato)
+D1 e2-small target | D2 rimuovere cervellamiracollo | D3 register.it | D4 demo non urgente | D5 Room HW dopo | D6 gcloud CLI | D7 Basic Auth resta | D8 VM migrata a e2-small (risparmio costo, Rafa approvato 26 Feb)
 
-## BRACCI: `bracci/pms-core/`, `bracci/miracallook/`, `bracci/room-hardware/`
+## PUNTATORI
 
-## SUBROADMAP: `roadmaps/SUBROADMAP_RECAP_RINASCITA_2026.md` (8.8/10)
+| Cosa | Path |
+|------|------|
+| **Fortezza (accessi, infra, security)** | `guide/FORTEZZA_MIRACOLLO.md` |
+| Bracci | `bracci/pms-core/`, `bracci/miracallook/`, `bracci/room-hardware/` |
+| Subroadmap | `roadmaps/SUBROADMAP_RECAP_RINASCITA_2026.md` (8.8/10) |
 
 ---
 
-## Lezioni Apprese (Sessione FASE 1 Online - Deploy)
+## Lezioni Apprese (Sessione Migrazione VM - 26 Feb 2026)
 
 ### Funzionato bene
-- **gcloud CLI** - Cervella fa TUTTO senza bloccare Rafa (VM, IP, firewall)
-- **Step-by-step con audit** - ogni fase -> Guardiana -> score -> prossima
-- **Fix in corsa** - 4 bug trovati e risolti senza interrompere il flusso
+- **Step-by-step con Guardiana audit** - ogni step -> score -> fix P2 -> avanti
+- **Deploy key SSH** - soluzione pulita per git pull sulla VM senza credenziali
+- **Rete Docker interna** - MIRACOLLO_API_URL=http://backend:8001/api bypassa nginx auth
 
 ### Non funzionato
-- **requirements.txt incompleto** - tenacity usato ma mai aggiunto
-- **slowapi API break** - exempt_when documentato online ma non in v0.1.9
-- **Certbot config stale** - authenticator=nginx ma nginx in Docker
+- **docker compose restart non rilegge .env** - serve down/up per nuove variabili
+- **Certbot non migrato** - la nuova VM non aveva certbot installato
+- **Default API URL nel codice** - puntava a https://miracollo.com che passa per nginx auth
 
 ### Pattern candidato
-- **SEMPRE docker build locale prima del deploy** - avrebbe trovato i bug prima
-- **gcloud CLI > GCP Console** - piu sicuro, tracciabile, ripetibile
-- **Certbot webroot per Docker** - mai usare authenticator=nginx con Docker
+- **Post-migrazione: verificare SEMPRE certbot, git, secrets** - Evidenza: 3 cose mancanti sulla nuova VM
+- **proxy_hide_header per security headers** - nginx e source of truth, backend non deve duplicare
+- **docker compose down/up (non restart) per .env changes** - Evidenza: restart non rilegge env_file
 
 ---
 
 *"Lavoriamo in pace! Senza casino! Dipende da noi!"*
-*Cervella & Rafa - 22 Febbraio 2026*
+*Cervella & Rafa - 26 Febbraio 2026*
+
+---

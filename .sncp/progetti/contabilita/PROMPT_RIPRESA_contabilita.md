@@ -1,99 +1,121 @@
 # PROMPT RIPRESA - Contabilita Antigravity
 
-> **Ultimo aggiornamento:** 26 Febbraio 2026 - Sessione 184
+> **Ultimo aggiornamento:** 26 Febbraio 2026 - Sessione 188
 > **Branch attivo:** lab-v3 (sviluppo V3) + lab-v2 (intoccato) + main (produzione)
 > **Versione canonica:** `CervellaSwarm/.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md`
 
 ---
 
-## Stato Attuale - POST S184 (Deploy agent HP+NL + fix .env tutti)
+## Stato Attuale - S188 (tipo_gir Pareggi + checkout Puzzle + Deploy)
 
 | Cosa | Stato |
 |------|-------|
-| **Produzione V2** | v2.11.0 LIVE su contabilitafamigliapra.it |
-| **PDF Parser** | v1.14.0 DEPLOYATO S182 - tutti e 3 i servizi VM + locale :8000 |
-| **V3 VM** | 10 file deployati S176, pdf_parser v1.14.0 S182 |
-| **Agent NL/SHE/HP** | v2.1.0 LIVE + reconcile v1.1.0 **DEPLOYATO S184 su tutti e 3** |
-| **Reconcile** | v1.1.0 - window 7gg, START_DATE=26 Feb (HP+SHE), NL senza start |
-| **HC.io** | **TUTTI VERDI** (11 check: 3 sync + 3 reconcile + 3 backup + 2 altro) |
-| **Test** | **1928 PASS** (1566 portale + 362 agent) |
+| **Produzione V2** | v2.11.0 LIVE su contabilitafamigliapra.it (INTATTA) |
+| **V3 VM** | main.py v1.15.0 + pdf_parser v1.14.1 + **8 file frontend S188** |
+| **Agent NL/SHE/HP** | v2.1.0 LIVE + reconcile v1.1.0 DEPLOYATO S184 |
+| **HC.io** | **11 check** - TUTTI VERDI S184 |
+| **Test portale** | **1559 PASS** (lab-v3) |
+| **Test agent** | 362 PASS |
 | **Lab-v2** | INTATTO, frozen da S87 |
-| **Backup 3-Layer** | V2 OK, V3 locale OK, **GCS V3 vuoto (da fixare)** |
+| **Migrations DB VM** | **v15** su TUTTI e 3 i DB V3 |
+| **GCP Snapshot** | `pre-deploy-s188-20260226-195604` |
 
 ---
 
-## S184 - Deploy Agent HP+NL + Fix .env + HC.io Verde
+## S188 - Cosa abbiamo fatto
 
-### Cosa abbiamo fatto
+### Feature 1: tipo_gir nei Pareggi (pareggi-display.js)
 
-| # | Azione | Risultato |
-|---|--------|-----------|
-| 1 | Deploy 16 file .py su HP | HPTERMINAL01, tutti copiati via VPN |
-| 2 | Deploy 16 file .py su NL | NLTERMINAL01, tutti copiati via VPN |
-| 3 | Fix .env HP | WINDOW=7, START_DATE=2026-02-26, HC_URL reconcile |
-| 4 | Fix .env NL | WINDOW 30→7, trovato/fixato doppio .env (root+agent) |
-| 5 | Fix .env SHE | Completato vars reconcile (TG, HC, START_DATE=2026-02-26) |
-| 6 | Test manuale NL | Reconcile OK, 0 anomalie, HC.io pingato → VERDE |
-| 7 | Test manuale HP | Reconcile 4 anomalie (attese: dati misti), Telegram OK |
-| 8 | Test manuale SHE | Reconcile 5 anomalie (attese: dati misti), Telegram OK |
-| 9 | START_DATE aggiornato 26 Feb | HP+SHE partono puliti da oggi, zero rumore storico |
-| 10 | HC.io tutti VERDI | NL ping reale, HP+SHE ping manuale |
+Aggiunto numero fattura (tipo_gir) con icona 🏷️ in 4 punti del foglio Pareggi:
+- GIR singolo (riga 613)
+- GIR in gruppo espanso con checkbox (riga 478)
+- GIR in gruppo senza checkbox (riga 556)
+- GIR non pareggiati/unmatched (riga 774)
 
-### Mappa Deploy Agent Finale
+Pattern: `${g.tipo_gir ? '| 🏷️ ${escapeHtml(g.tipo_gir)}' : ''}` - conditional, XSS-safe.
+Audit Guardiana: **9.6/10** (4 P3 cosmetici, F2 unmatched fixato).
 
-```
-                NL              SHE             HP
-                ----            ----            ----
-16 file .py:    FATTO S184      FATTO S183      FATTO S184
-.env WINDOW=7:  FATTO           FATTO           FATTO
-.env START:     non serve       2026-02-26      2026-02-26
-.env HC_URL:    OK              FIXATO S184     OK
-.env TG:        OK              FIXATO S184     OK
-Test manuale:   OK (0 anom)     OK (5 anom att) OK (4 anom att)
-HC.io:          VERDE           VERDE           VERDE
-Schedule sync:  11:30           11:40           11:50
-Schedule rec:   14:00           14:10           14:20
-```
+### Feature 2: checkout_date nel Puzzle (pareggi-puzzle.js)
 
-### Problema trovato: doppio .env
+Aggiunta data di checkout sulle caparre nel Rompicapo con emoji aereo 🛫.
+- Variabile: `const checkoutDate = type === 'caparra' ? escapeHtml(item.checkout_date || '') : '';`
+- Rendering: `${checkoutDate ? '<div class="puzzle-item-detail">🛫 ${checkoutDate}</div>' : ''}`
+- Posizione: dopo stagione, prima di tipo_gir
 
-NL e SHE avevano DUE file .env:
-- `C:\contabilita-agent\.env` (root) - usato dal sync
-- `C:\contabilita-agent\agent\.env` (legacy) - usato dal reconcile NL bat
+Audit Guardiana: **9.6/10** (4 P3 pre-esistenti).
 
-Il reconcile NL leggeva il vecchio `agent\.env` con WINDOW=30 invece del root con WINDOW=7.
-Risolto aggiornando entrambi. P3 per pulizia definitiva.
+### Feature 3: Loading stat-card Pareggi (parziale)
 
-### Decisione: START_DATE = oggi (Rafa S184)
+Fix per skeleton loader sulle 4 stat-card quando si cambia al tab Pareggi:
+- tabs.js: re-aggiunge `is-loading` alle stat-card al tab switch
+- pareggi-core.js: `finally` block in `refreshPareggiStatus()` rimuove skeleton per tutti i path
+- style.css: aggiunto `.stat-total` ai selettori `is-loading` e `transition`
 
-I delta HP/SHE (4-5 anomalie) sono rumore del periodo transizione (dati misti PDF + Ericsoft).
-Rafa decide: "iniziare da oggi in poi". START_DATE=2026-02-26 su entrambi.
-Da domani il reconcile controlla SOLO dati 100% agent-sourced.
+Audit Guardiana: **9.3/10** (F1 P2 fixato - skeleton eterno).
+**NOTA: Flash 0 persiste ~1-2s su VM** - vedi sezione "DA RISOLVERE" sotto.
+
+### Deploy VM
+
+8 file totali deployati in 2 round:
+- Round 1 (5 file): style.css, app-init.js, data.js, pareggi-display.js, pareggi-puzzle.js
+- Round 2 (3 file): tabs.js, pareggi-core.js, style.css (aggiornato)
+- MD5 tutti verificati post-deploy
+- Rafa ha testato: tipo_gir OK, checkout OK, loading ancora flash 0
 
 ---
 
-## DA FARE (Prossima Sessione S185)
+## DA RISOLVERE - Loading stat-card Pareggi (P2)
 
-### Verifica (P2)
-| # | Cosa | Note |
-|---|------|------|
-| 1 | Verificare HC.io dopo run schedulato 27 Feb | NL 14:00, SHE 14:10, HP 14:20 - devono restare VERDI |
-| 2 | Verificare Telegram 27 Feb | Nessun alert = tutto OK |
+### Il Problema
+Quando si cambia al tab Pareggi su VM, le 4 stat-card (Caparre Pareggiate, GIR Pareggiati, Importo Pareggiato, Importo Non Pareggiato) mostrano "0" per 1-2 secondi prima dei numeri reali. In locale troppo veloce per vedere, su VM con latenza si vede.
 
-### Cleanup (P3)
-| # | Cosa | Note |
-|---|------|------|
-| 3 | Pulire doppio .env NL+SHE | Unificare a root `.env`, fix bat reconcile_nl.bat |
-| 4 | Cancellare cartelle deploy Desktop | deploy_agent_s177/ + deploy_agent_s183/ |
+### Root Cause Analisi
+La chain asincrona e' il problema:
+1. `showTab('pareggi')` -> aggiunge `is-loading` (skeleton visibile) -> chiama `refreshPareggiStatus()`
+2. `refreshPareggiStatus()` -> fetch `/pareggi/status` (1a API call, ~200ms su VM)
+3. Se status='completato' -> `loadPareggi()` -> fetch `/pareggi/status` ANCORA (2a call, ~200ms) + fetch `/pareggi/list` (3a call, ~500ms)
+4. `displayPareggi()` -> `calculateQuadraturaStats()` -> aggiorna numeri -> rimuove `is-loading`
 
-### Backlog (da S182)
-| # | Cosa | Note |
-|---|------|------|
-| 5 | GO-BK-006: Test restore da GCS | Scaricare DB, integrity_check |
-| 6 | Fix backup V3 su GCS | Cartella vuota, offsite non copre V3 |
-| 7 | Subroadmap allineamento VM | MD5 tutti i file VM vs repo |
-| 8 | Migration v15 deploy su VM | sync_metrics pronta |
-| 9 | Bug load_dotenv() ordine | Fix in conftest.py o main.py |
+**Il `finally` block rimuove `is-loading` alla fine del passo 2**, ma i numeri vengono aggiornati solo al passo 4. Quindi tra passo 2 e passo 4 c'e' il gap dove i numeri mostrano 0 (valore HTML iniziale) senza skeleton.
+
+### Possibili Soluzioni (da studiare S189)
+
+**Soluzione A - Rimuovere `is-loading` SOLO in `calculateQuadraturaStats()`:**
+- Togliere il `finally` block da `refreshPareggiStatus()`
+- Aggiungere rimozione `is-loading` nei rami non-completato di `refreshPareggiStatus()` (in_corso, errore, default)
+- PRO: skeleton resta finche i numeri sono pronti
+- CON: se `loadPareggi()` fallisce silenziosamente, skeleton eterno
+
+**Soluzione B - Nascondere stat-card finche non pronte:**
+- Usare `visibility: hidden` sulle stat-card finche `calculateQuadraturaStats()` le rivela
+- PRO: zero flash
+- CON: layout shift (spazio vuoto)
+
+**Soluzione C - Ridurre le API call:**
+- `loadPareggi()` fa una fetch duplicata di `/pareggi/status` (gia' fatta da `refreshPareggiStatus()`). Passare il risultato come parametro elimina ~200ms
+- PRO: piu veloce, meno fetch
+- CON: refactoring piu ampio
+
+**Soluzione D - Soluzione A + C combinata (RACCOMANDATA):**
+- Rimuovere `finally`, gestire `is-loading` nei branch non-completato
+- Passare statusData a `loadPareggi()` per evitare double fetch
+- Skeleton resta visibile finche `calculateQuadraturaStats()` lo rimuove con i dati reali
+
+### File coinvolti
+- `frontend/js/pareggi-core.js` - `refreshPareggiStatus()` (riga 72) + `loadPareggi()` (riga 221) + `calculateQuadraturaStats()` (riga 352)
+- `frontend/js/tabs.js` - `showTab()` (riga 109)
+- `frontend/css/style.css` - selettori `is-loading`
+
+---
+
+## Prossima Sessione (S189)
+
+| # | Prio | Cosa | Note |
+|---|------|------|------|
+| 1 | **P2** | **Fix loading stat-card Pareggi** | Soluzione D raccomandata (vedi sopra) |
+| 2 | P2 | Verificare HC.io prossimo run | NL 14:00, SHE 14:10, HP 14:20 |
+| 3 | P3 | Dipendenze vecchie (fastapi 0.104.1) | requirements_PROPOSTO.txt esiste |
+| 4 | P3 | Pulire doppio .env NL+SHE | Prossima volta agent |
 
 ---
 
@@ -101,30 +123,28 @@ Da domani il reconcile controlla SOLO dati 100% agent-sourced.
 
 | Cosa | Path |
 |------|------|
-| Agent code (16 file) | `agent/` (lab-v3 worktree) |
-| Reconcile config | `agent/reconcile_config.py` |
-| Deploy folder (cancellabile) | `~/Desktop/deploy_agent_s183/ALL/` |
-| .env NL | `C:\contabilita-agent\.env` + `agent\.env` su NLTERMINAL01 |
-| .env HP | `C:\contabilita-agent\.env` su HPTERMINAL01 |
-| .env SHE | `C:\contabilita-agent\.env` + `agent\.env` su SHETERMINAL02 |
+| **tipo_gir Pareggi (S188)** | `frontend/js/pareggi-display.js` (righe 478, 556, 613, 774) |
+| **checkout Puzzle (S188)** | `frontend/js/pareggi-puzzle.js` (righe 173, 203) |
+| **Loading stat-card (S188)** | `frontend/js/tabs.js` (110-116), `frontend/js/pareggi-core.js` (141-151) |
+| **Loading UX S187** | `frontend/css/style.css`, `frontend/js/data.js`, `frontend/js/app-init.js` |
 
 ---
 
-## Lezioni Apprese (Sessione 184)
+## Lezioni Apprese (Sessione 188)
 
 ### Cosa ha funzionato bene
-- **Guida step-by-step**: Rafa guidato passo passo, ogni hotel testato individualmente
-- **Dry-run prima di run reale**: cattura problemi senza effetti collaterali
-- **Decisione pragmatica START_DATE=oggi**: evita investigazione inutile su dati transizione
+- **Audit Guardiana dopo ogni step**: P2 reale trovato (skeleton eterno) su loading fix - fixato prima del deploy
+- **Triple check MD5 pre/post deploy**: 8 file, tutti match, zero divergenze
+- **Snapshot GCP pre-deploy**: safety net standard
 
 ### Cosa non ha funzionato
-- **Doppio .env non rilevato**: NL aveva WINDOW=30 nel vecchio `agent\.env`, ci siamo accorti solo dal log
-- **SHE .env incompleto**: mancavano TG+HC+START_DATE, deploy S183 non li aveva aggiunti tutti
+- **Chain asincrona non analizzata a fondo**: il `finally` block rimuove skeleton prima che i dati arrivino. Serviva analisi piu profonda della timeline
 
 ### Pattern candidato
-- **Doppio .env = trappola silenziosa**: SEMPRE verificare QUALE .env viene letto (controllare log!). Evidenza: S184 NL+SHE. PROMUOVERE.
-- **Ping manuale HC.io per sbloccare**: quando reconcile skippa legitimamente, ping manuale OK. Non complica il codice.
+- **Analizzare la TIMELINE asincrona prima di fixare loading**: non basta aggiungere/rimuovere classi CSS - serve capire QUANDO ogni step della chain finisce. Evidenza: S188 flash 0 persiste. MONITORARE.
 
 ---
 
-*S184: Deploy completo 3 hotel, fix .env, HC.io tutti verdi, START_DATE=26 Feb per partenza pulita.*
+*S188: tipo_gir Pareggi + checkout Puzzle + deploy 8 file VM. "Ultrapassar os proprios limites!"*
+
+---

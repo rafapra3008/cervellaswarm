@@ -15,8 +15,8 @@ Design notes:
 - LL(1) everywhere except:
     - ``step`` (pattern matching on action words, not a fixed token)
     - ``primary`` (LL(3) lookahead: IDENT '.' IDENT '(' vs IDENT '.' IDENT)
-- ``_parse_agent``, ``_parse_type_decl``, ``_parse_use_decl`` are stubs
-  that raise :class:`ParseError`.  They will be implemented in C1.3.4.
+- ``_parse_agent``, ``_parse_type_decl``, ``_parse_use_decl`` are fully
+  implemented (C1.3.4), including expression parsing for requires/ensures.
 
 Public API::
 
@@ -68,6 +68,24 @@ from ._ast import (
 # ---------------------------------------------------------------------------
 # ParseError
 # ---------------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------------
+# Shared constants
+# ---------------------------------------------------------------------------
+
+_VALID_CONFIDENCE = ("certain", "high", "medium", "low", "speculative")
+
+_VALID_TRUST = ("verified", "trusted", "standard", "untrusted")
+
+_CMP_OPS: dict[TokKind, str] = {
+    TokKind.EQ: "==",
+    TokKind.NEQ: "!=",
+    TokKind.LT: "<",
+    TokKind.GT: ">",
+    TokKind.LTE: "<=",
+    TokKind.GTE: ">=",
+}
 
 
 class ParseError(Exception):
@@ -520,7 +538,6 @@ class Parser:
             self._advance()
             self._expect(TokKind.GTE)
             level_tok = self._expect_ident()
-            _VALID_CONFIDENCE = ("certain", "high", "medium", "low", "speculative")
             if level_tok.value not in _VALID_CONFIDENCE:
                 raise ParseError(
                     f"invalid confidence level: '{level_tok.value}'. "
@@ -536,7 +553,6 @@ class Parser:
             self._advance()
             self._expect(TokKind.GTE)
             tier_tok = self._expect_ident()
-            _VALID_TRUST = ("verified", "trusted", "standard", "untrusted")
             if tier_tok.value not in _VALID_TRUST:
                 raise ParseError(
                     f"invalid trust tier: '{tier_tok.value}'. "
@@ -580,35 +596,375 @@ class Parser:
         )
 
     # ------------------------------------------------------------------
-    # Stubs for C1.3.4
+    # expressions (C1.3.4)
+    # ------------------------------------------------------------------
+
+    def _parse_expr(self) -> Expr:
+        """Parse: expr ::= or_expr"""
+        return self._parse_or_expr()
+
+    def _parse_or_expr(self) -> Expr:
+        """Parse: or_expr ::= and_expr ('or' and_expr)*"""
+        left = self._parse_and_expr()
+        while self._at_ident("or"):
+            loc = self._loc()
+            self._advance()
+            right = self._parse_and_expr()
+            left = BinOpExpr(left=left, op="or", right=right, loc=loc)
+        return left
+
+    def _parse_and_expr(self) -> Expr:
+        """Parse: and_expr ::= not_expr ('and' not_expr)*"""
+        left = self._parse_not_expr()
+        while self._at_ident("and"):
+            loc = self._loc()
+            self._advance()
+            right = self._parse_not_expr()
+            left = BinOpExpr(left=left, op="and", right=right, loc=loc)
+        return left
+
+    def _parse_not_expr(self) -> Expr:
+        """Parse: not_expr ::= 'not' not_expr | comparison"""
+        if self._at_ident("not"):
+            loc = self._loc()
+            self._advance()
+            operand = self._parse_not_expr()
+            return NotExpr(operand=operand, loc=loc)
+        return self._parse_comparison()
+
+    def _parse_comparison(self) -> Expr:
+        """Parse: comparison ::= primary (comparison_op primary)?"""
+        left = self._parse_primary()
+        tok = self._peek()
+        if tok.kind in _CMP_OPS:
+            loc = self._loc()
+            op = _CMP_OPS[tok.kind]
+            self._advance()
+            right = self._parse_primary()
+            return BinOpExpr(left=left, op=op, right=right, loc=loc)
+        return left
+
+    def _parse_primary(self) -> Expr:
+        """Parse: primary ::= IDENT '.' IDENT '(' args? ')' (LL(3) method call)
+                            | IDENT '.' IDENT              (attribute access)
+                            | IDENT                         (bare identifier)
+                            | NUMBER
+                            | STRING
+                            | '(' expr ')'                  (grouped expression)
+        """
+        tok = self._peek()
+        loc = self._loc()
+
+        if tok.kind == TokKind.NUMBER:
+            self._advance()
+            return NumberExpr(value=tok.value, loc=loc)
+
+        if tok.kind == TokKind.STRING:
+            self._advance()
+            return StringExpr(value=tok.value, loc=loc)
+
+        if tok.kind == TokKind.LPAREN:
+            self._advance()
+            inner = self._parse_expr()
+            self._expect(TokKind.RPAREN)
+            return GroupExpr(inner=inner, loc=loc)
+
+        if tok.kind == TokKind.IDENT:
+            # LL(3) lookahead for IDENT.IDENT( vs IDENT.IDENT vs bare IDENT
+            if (
+                self._peek_at(1).kind == TokKind.DOT
+                and self._peek_at(2).kind == TokKind.IDENT
+            ):
+                if self._peek_at(3).kind == TokKind.LPAREN:
+                    # Method call: obj.method(args)
+                    obj_tok = self._advance()    # IDENT
+                    self._advance()              # DOT
+                    method_tok = self._advance() # IDENT
+                    self._advance()              # LPAREN
+                    args: list[Expr] = []
+                    if not self._at(TokKind.RPAREN):
+                        args.append(self._parse_expr())
+                        while self._at(TokKind.COMMA):
+                            self._advance()
+                            args.append(self._parse_expr())
+                    self._expect(TokKind.RPAREN)
+                    return MethodCallExpr(
+                        obj=obj_tok.value, method=method_tok.value,
+                        args=tuple(args), loc=loc,
+                    )
+                else:
+                    # Attribute access: obj.attr
+                    obj_tok = self._advance()   # IDENT
+                    self._advance()             # DOT
+                    attr_tok = self._advance()  # IDENT
+                    return AttrExpr(obj=obj_tok.value, attr=attr_tok.value, loc=loc)
+            else:
+                # Bare identifier
+                return IdentExpr(name=self._advance().value, loc=loc)
+
+        raise ParseError(
+            f"expected expression, got {tok.kind.name} ({tok.value!r})",
+            line=tok.line,
+            col=tok.col,
+        )
+
+    # ------------------------------------------------------------------
+    # use_decl (C1.3.4)
+    # ------------------------------------------------------------------
+
+    def _parse_use_decl(self) -> UseNode:
+        """Parse: use_decl ::= 'use' 'python' dotted_name ('as' IDENT)? NEWLINE"""
+        loc = self._loc()
+        self._expect_ident("use")
+        self._expect_ident("python")
+
+        # dotted_name ::= IDENT ('.' IDENT)*
+        parts = [self._expect_ident().value]
+        while self._at(TokKind.DOT):
+            self._advance()
+            parts.append(self._expect_ident().value)
+        module = ".".join(parts)
+
+        # optional alias: 'as' IDENT
+        alias: str | None = None
+        if self._at_ident("as"):
+            self._advance()
+            alias = self._expect_ident().value
+
+        self._expect(TokKind.NEWLINE)
+        return UseNode(module=module, alias=alias, loc=loc)
+
+    # ------------------------------------------------------------------
+    # type_decl (C1.3.4)
+    # ------------------------------------------------------------------
+
+    def _parse_type_decl(self) -> VariantTypeDecl | RecordTypeDecl:
+        """Parse: type_decl ::= 'type' IDENT '=' variant_type NEWLINE
+                              | 'type' IDENT '=' NEWLINE INDENT field+ DEDENT
+
+        Discriminant LL(1): after '=' -> IDENT means variant, NEWLINE means record.
+        """
+        loc = self._loc()
+        self._expect_ident("type")
+        name_tok = self._expect_ident()
+        self._expect(TokKind.EQUALS)
+
+        if self._at(TokKind.NEWLINE):
+            # Record type
+            self._advance()  # NEWLINE
+            self._expect(TokKind.INDENT)
+
+            fields: list[FieldNode] = []
+            while not self._at(TokKind.DEDENT) and not self._at(TokKind.EOF):
+                self._skip_newlines()
+                if self._at(TokKind.DEDENT) or self._at(TokKind.EOF):
+                    break
+                fields.append(self._parse_field())
+
+            self._expect(TokKind.DEDENT)
+
+            if not fields:
+                raise ParseError(
+                    f"record type '{name_tok.value}' must have at least one field",
+                    line=name_tok.line,
+                    col=name_tok.col,
+                )
+            return RecordTypeDecl(
+                name=name_tok.value, fields=tuple(fields), loc=loc,
+            )
+        else:
+            # Variant type: IDENT ('|' IDENT)+
+            variants = [self._expect_ident().value]
+            while self._at(TokKind.PIPE):
+                self._advance()
+                variants.append(self._expect_ident().value)
+
+            self._expect(TokKind.NEWLINE)
+
+            if len(variants) < 2:
+                raise ParseError(
+                    f"variant type '{name_tok.value}' must have at least 2 variants "
+                    f"(got {len(variants)})",
+                    line=name_tok.line,
+                    col=name_tok.col,
+                )
+            return VariantTypeDecl(
+                name=name_tok.value, variants=tuple(variants), loc=loc,
+            )
+
+    def _parse_type_expr(self) -> SimpleType | GenericType:
+        """Parse: type_expr ::= base_type '?'?
+                  base_type ::= IDENT '[' type_expr ']' | IDENT
+        """
+        name_tok = self._expect_ident()
+        loc = self._tok_loc(name_tok)
+
+        if self._at(TokKind.LBRACKET):
+            self._advance()  # [
+            arg = self._parse_type_expr()
+            self._expect(TokKind.RBRACKET)  # ]
+            optional = self._at(TokKind.QUESTION)
+            if optional:
+                self._advance()
+            return GenericType(
+                name=name_tok.value, arg=arg, optional=optional, loc=loc,
+            )
+
+        optional = self._at(TokKind.QUESTION)
+        if optional:
+            self._advance()
+        return SimpleType(name=name_tok.value, optional=optional, loc=loc)
+
+    def _parse_field(self) -> FieldNode:
+        """Parse: field ::= IDENT ':' type_expr NEWLINE"""
+        loc = self._loc()
+        name_tok = self._expect_ident()
+        self._expect(TokKind.COLON)
+        type_expr = self._parse_type_expr()
+        self._expect(TokKind.NEWLINE)
+        return FieldNode(name=name_tok.value, type_expr=type_expr, loc=loc)
+
+    # ------------------------------------------------------------------
+    # agent_decl (C1.3.4)
     # ------------------------------------------------------------------
 
     def _parse_agent(self) -> AgentNode:
-        """Stub: agent declarations are implemented in C1.3.4."""
-        tok = self._peek()
-        raise ParseError(
-            "agent declarations not yet implemented",
-            line=tok.line,
-            col=tok.col,
+        """Parse: agent_decl ::= 'agent' IDENT ':' NEWLINE INDENT agent_body DEDENT"""
+        loc = self._loc()
+        self._expect_ident("agent")
+        name_tok = self._expect_ident()
+        self._expect(TokKind.COLON)
+        self._expect(TokKind.NEWLINE)
+        self._expect(TokKind.INDENT)
+
+        role: str | None = None
+        trust: str | None = None
+        accepts: tuple[str, ...] = ()
+        produces: tuple[str, ...] = ()
+        requires: tuple[Expr, ...] = ()
+        ensures: tuple[Expr, ...] = ()
+        _seen: set[str] = set()
+
+        while not self._at(TokKind.DEDENT) and not self._at(TokKind.EOF):
+            self._skip_newlines()
+            if self._at(TokKind.DEDENT) or self._at(TokKind.EOF):
+                break
+
+            tok = self._peek()
+            if tok.kind != TokKind.IDENT:
+                raise ParseError(
+                    f"expected agent clause keyword (role, trust, accepts, "
+                    f"produces, requires, ensures), got {tok.kind.name} ({tok.value!r})",
+                    line=tok.line,
+                    col=tok.col,
+                )
+
+            # Detect duplicate clauses
+            _AGENT_CLAUSES = ("role", "trust", "accepts", "produces", "requires", "ensures")
+            if tok.value in _AGENT_CLAUSES:
+                if tok.value in _seen:
+                    raise ParseError(
+                        f"duplicate agent clause '{tok.value}' "
+                        f"(already defined earlier in this agent)",
+                        line=tok.line,
+                        col=tok.col,
+                    )
+                _seen.add(tok.value)
+
+            if tok.value == "role":
+                self._advance()
+                self._expect(TokKind.COLON)
+                role = self._expect_ident().value
+                self._expect(TokKind.NEWLINE)
+
+            elif tok.value == "trust":
+                self._advance()
+                self._expect(TokKind.COLON)
+                trust_tok = self._expect_ident()
+                if trust_tok.value not in _VALID_TRUST:
+                    raise ParseError(
+                        f"invalid trust tier: '{trust_tok.value}'. "
+                        f"Valid: {', '.join(_VALID_TRUST)}",
+                        line=trust_tok.line,
+                        col=trust_tok.col,
+                    )
+                trust = trust_tok.value
+                self._expect(TokKind.NEWLINE)
+
+            elif tok.value == "accepts":
+                self._advance()
+                self._expect(TokKind.COLON)
+                msgs = [self._expect_ident().value]
+                while self._at(TokKind.COMMA):
+                    self._advance()
+                    msgs.append(self._expect_ident().value)
+                accepts = tuple(msgs)
+                self._expect(TokKind.NEWLINE)
+
+            elif tok.value == "produces":
+                self._advance()
+                self._expect(TokKind.COLON)
+                msgs = [self._expect_ident().value]
+                while self._at(TokKind.COMMA):
+                    self._advance()
+                    msgs.append(self._expect_ident().value)
+                produces = tuple(msgs)
+                self._expect(TokKind.NEWLINE)
+
+            elif tok.value == "requires":
+                requires = self._parse_condition_list("requires")
+
+            elif tok.value == "ensures":
+                ensures = self._parse_condition_list("ensures")
+
+            else:
+                raise ParseError(
+                    f"unknown agent clause: '{tok.value}'. "
+                    f"Expected: role, trust, accepts, produces, requires, ensures",
+                    line=tok.line,
+                    col=tok.col,
+                )
+
+        self._expect(TokKind.DEDENT)
+        return AgentNode(
+            name=name_tok.value,
+            role=role,
+            trust=trust,
+            accepts=accepts,
+            produces=produces,
+            requires=requires,
+            ensures=ensures,
+            loc=loc,
         )
 
-    def _parse_type_decl(self) -> VariantTypeDecl | RecordTypeDecl:
-        """Stub: type declarations are implemented in C1.3.4."""
-        tok = self._peek()
-        raise ParseError(
-            "type declarations not yet implemented",
-            line=tok.line,
-            col=tok.col,
-        )
+    def _parse_condition_list(self, keyword: str) -> tuple[Expr, ...]:
+        """Parse: requires/ensures clause, block or inline.
 
-    def _parse_use_decl(self) -> UseNode:
-        """Stub: use declarations are implemented in C1.3.4."""
-        tok = self._peek()
-        raise ParseError(
-            "use declarations not yet implemented",
-            line=tok.line,
-            col=tok.col,
-        )
+        Block form:  keyword ':' NEWLINE INDENT condition+ DEDENT
+        Inline form: keyword ':' expr NEWLINE
+        """
+        self._expect_ident(keyword)
+        self._expect(TokKind.COLON)
+
+        if self._at(TokKind.NEWLINE):
+            # Block form
+            self._advance()
+            self._expect(TokKind.INDENT)
+            conditions: list[Expr] = []
+            while not self._at(TokKind.DEDENT) and not self._at(TokKind.EOF):
+                self._skip_newlines()
+                if self._at(TokKind.DEDENT) or self._at(TokKind.EOF):
+                    break
+                expr = self._parse_expr()
+                self._expect(TokKind.NEWLINE)
+                conditions.append(expr)
+            self._expect(TokKind.DEDENT)
+            return tuple(conditions)
+        else:
+            # Inline form
+            expr = self._parse_expr()
+            self._expect(TokKind.NEWLINE)
+            return (expr,)
 
 
 # ---------------------------------------------------------------------------
