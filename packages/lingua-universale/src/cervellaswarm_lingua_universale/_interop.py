@@ -3,23 +3,26 @@
 
 """Python interop layer for compiled Lingua Universale modules (C2.3).
 
-Provides file I/O operations on top of the pure-string compiler:
+Provides file I/O and runtime operations on top of the pure-string compiler:
 
   - ``compile_file()`` -- read a ``.lu`` file, parse, and compile to a
     ``CompiledModule``.
   - ``save_module()`` -- write a ``CompiledModule``'s Python source to disk.
+  - ``load_module()`` -- execute a ``CompiledModule`` into a live Python module.
+  - ``load_file()``   -- convenience: .lu -> live module in one step.
 
 Architecture (STUDIO C2.3):
   - ``_compiler.py`` = pure string generation (no I/O, no importlib).
   - ``_interop.py``  = I/O and runtime module management.
 
-Future additions (C2.3.4):
-  - ``load_module()`` -- exec() a ``CompiledModule`` into a live module.
-  - ``load_file()``   -- convenience: .lu -> ModuleType in one step.
+Security:
+  ``load_module`` and ``load_file`` execute generated Python code via ``exec()``.
+  Do not load untrusted ``.lu`` files without review.
 """
 
 from __future__ import annotations
 
+import types
 from pathlib import Path
 
 from ._compiler import ASTCompiler, CompiledModule
@@ -208,3 +211,117 @@ def save_module(
         ) from exc
 
     return out.resolve()
+
+
+# ============================================================
+# load_module
+# ============================================================
+
+
+def load_module(
+    compiled: CompiledModule,
+    *,
+    module_name: str | None = None,
+) -> types.ModuleType:
+    """Execute a ``CompiledModule`` and return a live Python module.
+
+    The generated Python source is executed via ``exec()`` into a fresh
+    ``types.ModuleType`` namespace.  The resulting module has proper
+    ``__name__``, ``__file__``, and ``__spec__`` attributes but is
+    **not** registered in ``sys.modules`` -- it exists only as long as
+    the caller holds a reference.
+
+    .. warning::
+
+       This function executes generated code via ``exec()``.  Do not
+       load untrusted ``.lu`` files without review.
+
+    Args:
+        compiled: The compiled module to load.
+        module_name: Name for the module's ``__name__`` attribute.
+            Defaults to the source file stem (e.g. ``"example"`` for
+            ``"example.lu"``).
+
+    Returns:
+        A live ``types.ModuleType`` containing the compiled declarations.
+
+    Raises:
+        InteropError: If execution of the generated code fails.
+
+    Example::
+
+        from cervellaswarm_lingua_universale._interop import (
+            compile_file, load_module,
+        )
+
+        compiled = compile_file("protocols/delegate.lu")
+        mod = load_module(compiled)
+        print(mod.DelegateTaskSession)
+    """
+    # Derive module name from source_file if not given
+    if module_name is None:
+        module_name = Path(compiled.source_file).stem
+
+    # Create module object
+    mod = types.ModuleType(module_name)
+    mod.__file__ = compiled.source_file
+    mod.__spec__ = None  # Not loaded via importlib
+    mod.__loader__ = None
+
+    # Execute generated code into module namespace
+    try:
+        code = compile(compiled.python_source, compiled.source_file, "exec")
+        exec(code, mod.__dict__)  # noqa: S102
+    except Exception as exc:
+        raise InteropError(
+            f"Failed to execute compiled module "
+            f"{compiled.source_file!r}: {exc}",
+            path=compiled.source_file,
+            operation="load_module:exec",
+        ) from exc
+
+    return mod
+
+
+# ============================================================
+# load_file
+# ============================================================
+
+
+def load_file(
+    path: str | Path,
+    *,
+    encoding: str = "utf-8",
+    module_name: str | None = None,
+) -> types.ModuleType:
+    """Compile a ``.lu`` file and return a live Python module.
+
+    Convenience function combining ``compile_file()`` + ``load_module()``.
+
+    .. warning::
+
+       This function executes generated code via ``exec()``.  Do not
+       load untrusted ``.lu`` files without review.
+
+    Args:
+        path: Path to the ``.lu`` source file.
+        encoding: File encoding (default ``"utf-8"``).
+        module_name: Name for the module's ``__name__`` attribute.
+            Defaults to the source file stem.
+
+    Returns:
+        A live ``types.ModuleType`` containing the compiled declarations.
+
+    Raises:
+        InteropError: If the file cannot be read, parsed, compiled, or
+            executed.
+
+    Example::
+
+        from cervellaswarm_lingua_universale._interop import load_file
+
+        mod = load_file("protocols/delegate.lu")
+        session = mod.DelegateTaskSession()
+    """
+    compiled = compile_file(path, encoding=encoding)
+    return load_module(compiled, module_name=module_name)

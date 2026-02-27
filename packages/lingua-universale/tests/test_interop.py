@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Tests for _interop.py (C2.3.3 -- compile_file + save_module).
+"""Tests for _interop.py (C2.3.3 + C2.3.4).
 
 Test structure:
   - InteropError: attributes, message, subclass
@@ -9,6 +9,9 @@ Test structure:
     unreadable, parse error, round-trip exec
   - save_module: happy path, overwrite=False, overwrite=True, parent missing,
     content verification
+  - load_module: module attributes, __name__, __file__, __spec__, not in
+    sys.modules, exec error, GC, variant/agent/contract access
+  - load_file: convenience wrapper, full pipeline
 """
 
 from __future__ import annotations
@@ -22,6 +25,8 @@ from cervellaswarm_lingua_universale._compiler import ASTCompiler, CompiledModul
 from cervellaswarm_lingua_universale._interop import (
     InteropError,
     compile_file,
+    load_file,
+    load_module,
     save_module,
 )
 
@@ -421,3 +426,271 @@ class TestInteropEdgeCases:
         ns: dict = {}
         exec(compile(result.python_source, "test", "exec"), ns)  # noqa: S102
         assert ns["__lu_source__"] == 'file"with"quotes.lu'
+
+
+# ============================================================
+# load_module (C2.3.4)
+# ============================================================
+
+
+class TestLoadModule:
+    """Tests for load_module()."""
+
+    def test_returns_module_type(self, tmp_path: Path) -> None:
+        """load_module returns a types.ModuleType instance."""
+        import types
+
+        lu_file = tmp_path / "variant.lu"
+        lu_file.write_text(SIMPLE_VARIANT, encoding="utf-8")
+
+        compiled = compile_file(lu_file)
+        mod = load_module(compiled)
+        assert isinstance(mod, types.ModuleType)
+
+    def test_module_name_from_source_file(self, tmp_path: Path) -> None:
+        """__name__ defaults to source file stem."""
+        lu_file = tmp_path / "my_types.lu"
+        lu_file.write_text(SIMPLE_VARIANT, encoding="utf-8")
+
+        compiled = compile_file(lu_file)
+        mod = load_module(compiled)
+        assert mod.__name__ == "my_types"
+
+    def test_module_name_override(self, tmp_path: Path) -> None:
+        """module_name parameter overrides default."""
+        lu_file = tmp_path / "variant.lu"
+        lu_file.write_text(SIMPLE_VARIANT, encoding="utf-8")
+
+        compiled = compile_file(lu_file)
+        mod = load_module(compiled, module_name="custom_mod")
+        assert mod.__name__ == "custom_mod"
+
+    def test_module_file_attribute(self, tmp_path: Path) -> None:
+        """__file__ is set to compiled.source_file."""
+        lu_file = tmp_path / "variant.lu"
+        lu_file.write_text(SIMPLE_VARIANT, encoding="utf-8")
+
+        compiled = compile_file(lu_file)
+        mod = load_module(compiled)
+        assert mod.__file__ == "variant.lu"
+
+    def test_module_spec_is_none(self, tmp_path: Path) -> None:
+        """__spec__ is None (not loaded via importlib)."""
+        lu_file = tmp_path / "variant.lu"
+        lu_file.write_text(SIMPLE_VARIANT, encoding="utf-8")
+
+        compiled = compile_file(lu_file)
+        mod = load_module(compiled)
+        assert mod.__spec__ is None
+
+    def test_module_loader_is_none(self, tmp_path: Path) -> None:
+        """__loader__ is None."""
+        lu_file = tmp_path / "variant.lu"
+        lu_file.write_text(SIMPLE_VARIANT, encoding="utf-8")
+
+        compiled = compile_file(lu_file)
+        mod = load_module(compiled)
+        assert mod.__loader__ is None
+
+    def test_not_in_sys_modules(self, tmp_path: Path) -> None:
+        """Loaded module is NOT registered in sys.modules."""
+        import sys
+
+        lu_file = tmp_path / "variant.lu"
+        lu_file.write_text(SIMPLE_VARIANT, encoding="utf-8")
+
+        compiled = compile_file(lu_file)
+        mod = load_module(compiled, module_name="lu_test_not_registered")
+        assert "lu_test_not_registered" not in sys.modules
+
+    def test_variant_type_accessible(self, tmp_path: Path) -> None:
+        """Variant type is accessible as a module attribute."""
+        lu_file = tmp_path / "variant.lu"
+        lu_file.write_text(SIMPLE_VARIANT, encoding="utf-8")
+
+        compiled = compile_file(lu_file)
+        mod = load_module(compiled)
+        assert hasattr(mod, "Status")
+        assert mod.__lu_version__ == "0.2"
+
+    def test_agent_class_accessible(self, tmp_path: Path) -> None:
+        """Agent class is accessible and instantiable."""
+        lu_file = tmp_path / "agent.lu"
+        lu_file.write_text(AGENT_WITH_CONTRACTS, encoding="utf-8")
+
+        compiled = compile_file(lu_file)
+        mod = load_module(compiled)
+        assert hasattr(mod, "Worker")
+        worker = mod.Worker()
+        assert worker.__lu_role__ == "executor"
+
+    def test_agent_contracts_enforced(self, tmp_path: Path) -> None:
+        """Contract violations raise ContractViolation at runtime."""
+        from cervellaswarm_lingua_universale._contracts import ContractViolation
+
+        lu_file = tmp_path / "contracts.lu"
+        lu_file.write_text(AGENT_WITH_CONTRACTS, encoding="utf-8")
+
+        compiled = compile_file(lu_file)
+        mod = load_module(compiled)
+        worker = mod.Worker()
+        with pytest.raises(ContractViolation, match="requires violated"):
+            worker.process(priority=0, result=None)
+
+    def test_mixed_program_attributes(self, tmp_path: Path) -> None:
+        """Mixed program: imports, types, agents all accessible."""
+        lu_file = tmp_path / "mixed.lu"
+        lu_file.write_text(MIXED_PROGRAM, encoding="utf-8")
+
+        compiled = compile_file(lu_file)
+        mod = load_module(compiled)
+        assert hasattr(mod, "Color")
+        assert hasattr(mod, "Painter")
+        assert hasattr(mod, "math")
+        assert hasattr(mod, "__all__")
+        assert mod.__all__ == ["Color", "Painter"]
+
+    def test_all_attribute_matches_exports(self, tmp_path: Path) -> None:
+        """Module __all__ matches CompiledModule.exports."""
+        lu_file = tmp_path / "exports.lu"
+        lu_file.write_text(MIXED_PROGRAM, encoding="utf-8")
+
+        compiled = compile_file(lu_file)
+        mod = load_module(compiled)
+        assert list(mod.__all__) == list(compiled.exports)
+
+    def test_exec_error_wrapped(self) -> None:
+        """InteropError wraps exec() failures."""
+        broken = CompiledModule(
+            source_file="broken.lu",
+            python_source="raise ValueError('boom')\n",
+            agents=(),
+            protocols=(),
+            imports=(),
+        )
+        with pytest.raises(InteropError, match="Failed to execute") as exc_info:
+            load_module(broken)
+        assert exc_info.value.operation == "load_module:exec"
+        assert exc_info.value.path == "broken.lu"
+
+    def test_exec_syntax_error_wrapped(self) -> None:
+        """InteropError wraps SyntaxError in generated code."""
+        broken = CompiledModule(
+            source_file="syntax.lu",
+            python_source="def (invalid syntax\n",
+            agents=(),
+            protocols=(),
+            imports=(),
+        )
+        with pytest.raises(InteropError, match="Failed to execute"):
+            load_module(broken)
+
+    def test_gc_no_leak(self, tmp_path: Path) -> None:
+        """Module is garbage-collectable when reference is dropped."""
+        import gc
+        import weakref
+
+        lu_file = tmp_path / "gc.lu"
+        lu_file.write_text(SIMPLE_VARIANT, encoding="utf-8")
+
+        compiled = compile_file(lu_file)
+        mod = load_module(compiled)
+        ref = weakref.ref(mod)
+        del mod
+        gc.collect()
+        assert ref() is None
+
+    def test_multiple_loads_independent(self, tmp_path: Path) -> None:
+        """Loading same CompiledModule twice gives independent modules."""
+        lu_file = tmp_path / "multi.lu"
+        lu_file.write_text(SIMPLE_VARIANT, encoding="utf-8")
+
+        compiled = compile_file(lu_file)
+        mod1 = load_module(compiled, module_name="mod1")
+        mod2 = load_module(compiled, module_name="mod2")
+        assert mod1 is not mod2
+        assert mod1.__name__ == "mod1"
+        assert mod2.__name__ == "mod2"
+
+    def test_lu_source_attribute(self, tmp_path: Path) -> None:
+        """Module has __lu_source__ from generated code."""
+        lu_file = tmp_path / "source.lu"
+        lu_file.write_text(SIMPLE_VARIANT, encoding="utf-8")
+
+        compiled = compile_file(lu_file)
+        mod = load_module(compiled)
+        assert mod.__lu_source__ == "source.lu"
+
+
+# ============================================================
+# load_file (C2.3.4)
+# ============================================================
+
+
+class TestLoadFile:
+    """Tests for load_file() -- convenience wrapper."""
+
+    def test_simple_variant(self, tmp_path: Path) -> None:
+        """Load a variant type directly from .lu file."""
+        import types
+
+        lu_file = tmp_path / "variant.lu"
+        lu_file.write_text(SIMPLE_VARIANT, encoding="utf-8")
+
+        mod = load_file(lu_file)
+        assert isinstance(mod, types.ModuleType)
+        assert hasattr(mod, "Status")
+
+    def test_module_name_override(self, tmp_path: Path) -> None:
+        """module_name is passed through to load_module."""
+        lu_file = tmp_path / "variant.lu"
+        lu_file.write_text(SIMPLE_VARIANT, encoding="utf-8")
+
+        mod = load_file(lu_file, module_name="my_variant")
+        assert mod.__name__ == "my_variant"
+
+    def test_module_name_defaults_to_stem(self, tmp_path: Path) -> None:
+        """Default module name is the file stem."""
+        lu_file = tmp_path / "my_types.lu"
+        lu_file.write_text(SIMPLE_VARIANT, encoding="utf-8")
+
+        mod = load_file(lu_file)
+        assert mod.__name__ == "my_types"
+
+    def test_string_path(self, tmp_path: Path) -> None:
+        """Accept string path."""
+        lu_file = tmp_path / "variant.lu"
+        lu_file.write_text(SIMPLE_VARIANT, encoding="utf-8")
+
+        mod = load_file(str(lu_file))
+        assert hasattr(mod, "Status")
+
+    def test_encoding_passthrough(self, tmp_path: Path) -> None:
+        """Encoding is passed to compile_file."""
+        lu_file = tmp_path / "latin.lu"
+        lu_file.write_text(SIMPLE_VARIANT, encoding="latin-1")
+
+        mod = load_file(lu_file, encoding="latin-1")
+        assert hasattr(mod, "Status")
+
+    def test_file_not_found_propagates(self, tmp_path: Path) -> None:
+        """InteropError propagates from compile_file."""
+        missing = tmp_path / "missing.lu"
+
+        with pytest.raises(InteropError, match="File not found"):
+            load_file(missing)
+
+    def test_full_pipeline_with_contracts(self, tmp_path: Path) -> None:
+        """Full pipeline: .lu -> load_file -> use agent with contracts."""
+        from cervellaswarm_lingua_universale._contracts import ContractViolation
+
+        lu_file = tmp_path / "worker.lu"
+        lu_file.write_text(AGENT_WITH_CONTRACTS, encoding="utf-8")
+
+        mod = load_file(lu_file)
+        worker = mod.Worker()
+        # Valid contract
+        assert worker.__lu_role__ == "executor"
+        # Invalid contract
+        with pytest.raises(ContractViolation):
+            worker.process(priority=-1, result=None)
