@@ -1,43 +1,37 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-27 - Sessione 412
-> **STATUS:** FASE C1 COMPLETATA + C2.1 STUDIO DONE. Prossimo: C2.2 implementazione compilatore.
+> **Ultimo aggiornamento:** 2026-02-27 - Sessione 413
+> **STATUS:** C2.2 in corso. C2.2.1-C2.2.3 DONE. Prossimo: C2.2.4 _compile_agent.
 
 ---
 
-## SESSIONE 412 - Cosa e successo
+## SESSIONE 413 - Cosa e successo
 
-### Step C1.3.6 - Guardiana Finale + Coverage (COMPLETATO, 9.5/10)
+### 3 sub-step completati, 3 audit Guardiana, tutti sopra target
 
-**Cosa:** Coverage gap analysis + 24 test nuovi + Guardiana audit FINALE + fix P3 diamante.
+**C2.2.1 - `_contracts.py` (9.6/10)**
+- `ContractViolation(RuntimeError)` con `condition`, `kind`, `source`
+- `kind` keyword-only (evita inversioni), validazione boundary (P12)
+- `__slots__` + `__reduce__` per pickling corretto
+- 32 test, 100% coverage, 0 P0/P1/P2
 
-**Coverage PRIMA -> DOPO:**
-- `_tokenizer.py`: 100% -> 100%, `_ast.py`: 100% -> 100%, `_parser.py`: 96% -> **100%**
-- 24 test in `test_parser_coverage.py` (EOF guards, error paths, functional gaps)
-- Fix P3: `_AGENT_CLAUSES` -> costante modulo, header commento residuo rimosso
+**C2.2.2 - `_compiler.py` core scaffold (9.5/10)**
+- `CompiledModule` frozen dataclass (result type)
+- `ASTCompiler` con `compile()`, `_compile_declaration()` dispatch
+- `_expr_to_python()`: tutti 8 tipi Expr con parentesizzazione sempre
+- `_type_to_python()`: SimpleType/GenericType, `X | None` per optional (PEP 604)
+- `_compile_use()`: UseNode -> import statement con `# [LU:line:col]`
+- `_safe_ident()`: keyword escaping (pass -> pass_)
+- Fix P2: `Optional[X]` -> `X | None` (zero import necessari nel generato)
+- Fix P2: `_LU_GENERIC_MAP` alzato a costante modulo
+- 78 test, 96% coverage (4 miss = stubs futuri)
 
-**Verdetto Guardiana:** 9.5/10 - 0 P0/P1/P2
-
-### Step C2.1 - STUDIO Architettura Compilatore (COMPLETATO, 9.3/10)
-
-**Cosa:** Studio completo di 8 moduli esistenti + ricerca esterna (18 fonti) + proposta architettura.
-
-**5 Decisioni architetturali prese:**
-1. **String emission + Visitor dispatch** (come codegen.py, come Cython)
-2. **ContractViolation raise inline** (non assert, non decoratori - zero deps)
-3. **Source annotations `# [LU:line:col]`** (come Coconut)
-4. **File separato `_compiler.py`** (non tocca codegen.py)
-5. **Testing progressivo** (golden -> round-trip exec -> Hypothesis)
-
-**2 file nuovi pianificati:**
-- `_contracts.py` (~30 LOC): `ContractViolation(RuntimeError)` con condition/kind/source
-- `_compiler.py` (~400-600 LOC): `ASTCompiler` con `compile(ProgramNode) -> CompiledModule`
-
-**P2 da risolvere in C2.2:**
-- F1: `_safe_python_ident` e privata in codegen.py, serve condividerla o duplicarla
-- F2: `Confident[T]` mapping serve esempio concreto
-
-**Verdetto Guardiana:** 9.3/10 - 0 P1, 2 P2, 8 P3
+**C2.2.3 - Type compilation (9.5/10)**
+- `_compile_variant_type`: `type Status = A | B` -> `Status = Literal["A", "B"]`
+- `_compile_record_type`: `type TaskData: ...` -> `@dataclass(frozen=True) class TaskData: ...`
+- **Preamble import tracker**: `set[str]` in `compile()`, emette `from typing import Literal` etc.
+- Campi opzionali: `str | None`, campi generici: `list[str]`, record vuoto: `pass`
+- 93 test (era 78), 98% coverage (2 miss = stubs futuri)
 
 ---
 
@@ -48,9 +42,16 @@ LINGUAGGIO CERVELLASWARM (la missione vera):
   FASE A+B: COMPLETE (13 moduli, 1820 test, 9.5+ media)
   FASE C: Il Linguaggio
     C1: La Grammatica    [####################] 100% DONE!
-    C2: Il Compilatore   [##..................] 10%
-      C2.1 STUDIO           DONE (S412, 9.3/10)  <-- OGGI
-      C2.2 AST -> Python    TODO (7 sub-step pianificati)  <-- PROSSIMO
+    C2: Il Compilatore   [########............] 40%
+      C2.1 STUDIO           DONE (S412, 9.3/10)
+      C2.2 AST -> Python    IN PROGRESS
+        C2.2.1 _contracts.py   DONE (S413, 9.6/10)
+        C2.2.2 _compiler core  DONE (S413, 9.5/10)
+        C2.2.3 types           DONE (S413, 9.5/10)
+        C2.2.4 agents          TODO  <-- PROSSIMO
+        C2.2.5 protocols       TODO
+        C2.2.6 golden tests    TODO
+        C2.2.7 audit finale    TODO
       C2.3 Python interop   TODO
       C2.4 Constrained gen  TODO
     C3: L'Esperienza     [....................] 0%
@@ -58,53 +59,60 @@ LINGUAGGIO CERVELLASWARM (la missione vera):
 
 ---
 
-## I NUMERI TOTALI (dopo S412)
+## I NUMERI TOTALI (dopo S413)
 
 | Metrica | Valore |
 |---------|--------|
-| Test totali | 2217 |
-| Test passanti | 2217 (100%) |
-| Coverage parser | 100% (0 miss) |
-| LOC parser (3 file) | ~1630 |
-| LOC test parser (4 file) | ~3900 |
-| Tempo test suite | 0.49s |
+| Test totali | 2342 (+125 da S412) |
+| Test passanti | 2342 (100%) |
+| Coverage _contracts.py | 100% |
+| Coverage _compiler.py | 98% |
+| Coverage parser | 100% |
+| File nuovi S413 | 4 (2 src + 2 test) |
+| Tempo test suite | 0.57s |
 | Regressioni | 0 |
 
 ---
 
-## Lezioni Apprese (S412)
+## P2 aperti da risolvere
+
+- **Confident[T] import**: `_LU_GENERIC_MAP` mappa `Confident` -> `Confident` ma nessun preamble import registrato. Serve `from cervellaswarm_lingua_universale.confidence import Confident` quando usato. Risolvere in C2.2.4.
+
+---
+
+## Lezioni Apprese (S413)
 
 ### Cosa ha funzionato bene
-- "Guardiana dopo ogni step" (12a volta, S403-S412). Pattern CONSOLIDATO e PROVATO.
-- "Coverage gap analysis chirurgica" (19 righe -> 24 test -> 100%): tecnica precisa e ripetibile.
-- "STUDIO prima di implementare" (ricerca 18 fonti + codebase analysis): decisioni solide.
-- "Hand-crafted token lists per EOF guards": tecnica valida per branch irraggiungibili.
+- "Guardiana dopo ogni step" (15a volta, S403-S413). 3 audit in una sessione, tutti 9.5+.
+- "Fix P2 diamante subito" (4a volta): `Optional` -> `X | None` e mapping costante fixati tra C2.2.2 e C2.2.3.
+- "Preamble import tracker": design semplice (set + sorted) che scala per C2.2.4-C2.2.5.
+- "Pickle round-trip test": ha scovato il bug `__reduce__` subito in C2.2.1.
 
 ### Cosa non ha funzionato
-- Coverage `--cov` richiede Python module name, non file path. 2 tentativi falliti prima del giusto.
+- Dopo refactor `_type_to_python` (inline `_LU_GENERIC_MAP.get`), il metodo `_generic_to_python` e diventato dead code. Rilevato solo dal coverage check. Lezione: controllare coverage DOPO ogni refactor.
 
 ### Pattern candidato
-- "Fix P3 diamante prima di chiudere step" (3a volta, S411+S412x2): accumulo debt = 0. PROMUOVERE?
+- "Fix P2/P3 diamante prima di chiudere step" (4a volta, S411-S413): PROMUOVERE a P21? Evidenza: S411, S412x2, S413.
 
 ---
 
 ## Prossimi step
 
-1. **C2.2.1** - `_contracts.py` + test (ContractViolation)
-2. **C2.2.2** - `_compiler.py` core: `_expr_to_python`, `_type_to_python`, `_compile_use`
-3. **Aggiornare P07** nei validated_patterns (evidenza S403-S412, 12x)
+1. **C2.2.4** - `_compile_agent` (il cuore: contratti runtime + metadata). Include fix Confident[T] import.
+2. **C2.2.5** - `_compile_protocol` (bridge a codegen.py)
+3. **C2.2.6** - Golden file tests + round-trip exec per 10 esempi canonici
+4. **C2.2.7** - Guardiana audit finale C2.2
 
 ---
 
 ## File chiave
 
-- `.sncp/roadmaps/SUBROADMAP_FASE_C_LINGUAGGIO.md` - Piano FASE C (aggiornato S412)
-- `.sncp/progetti/cervellaswarm/reports/STUDIO_C2_1_ARCHITETTURA_COMPILATORE.md` - Architettura C2
-- `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260227_C2_compiler_ast_python.md` - Ricerca C2
-- `.sncp/progetti/cervellaswarm/reports/DESIGN_C1_2_SYNTAX_GRAMMAR.md` - EBNF grammar
-- `packages/lingua-universale/src/cervellaswarm_lingua_universale/_parser.py` - Parser
-- `packages/lingua-universale/src/cervellaswarm_lingua_universale/codegen.py` - CodeGen esistente
-- `packages/lingua-universale/NORD.md` - LA VISIONE
+- `packages/lingua-universale/src/cervellaswarm_lingua_universale/_contracts.py` - ContractViolation (C2.2.1)
+- `packages/lingua-universale/src/cervellaswarm_lingua_universale/_compiler.py` - ASTCompiler (C2.2.2-C2.2.3)
+- `packages/lingua-universale/tests/test_contracts.py` - 32 test
+- `packages/lingua-universale/tests/test_compiler_core.py` - 93 test
+- `.sncp/roadmaps/SUBROADMAP_FASE_C_LINGUAGGIO.md` - Piano FASE C
+- `.sncp/progetti/cervellaswarm/reports/STUDIO_C2_1_ARCHITETTURA_COMPILATORE.md` - Architettura
 
 *"La domanda e la risposta nello STESSO linguaggio." - Rafa*
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*

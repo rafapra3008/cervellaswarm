@@ -137,6 +137,13 @@ from .spec import (
     check_properties,
     check_session,
 )
+from ._contracts import (
+    ContractViolation,
+)
+from ._compiler import (
+    ASTCompiler,
+    CompiledModule,
+)
 from .errors import (
     ErrorCategory,
     ErrorSeverity,
@@ -266,6 +273,11 @@ __all__ = [
     "parse_spec",
     "check_properties",
     "check_session",
+    # Contracts (C2)
+    "ContractViolation",
+    # Compiler (C2)
+    "ASTCompiler",
+    "CompiledModule",
     # Errors
     "ErrorCategory",
     "ErrorSeverity",

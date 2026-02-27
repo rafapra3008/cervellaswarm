@@ -166,17 +166,26 @@ La grammatica EBNF diventa direttamente il parser. Spezzato in 6 sub-step.
 
 ---
 
-### Step C2.2: AST -> Python Code Generation
+### Step C2.2: AST -> Python Code Generation (IN PROGRESS - S413)
 
 **Il codice generato DEVE rispettare i contratti.**
 
-`requires` -> precondizioni Python (assert/raise)
+`requires` -> precondizioni Python (raise ContractViolation)
 `ensures` -> postcondizioni Python (verificate)
 `confidence` -> tipo `Confident[T]` nel codice generato
 `protocol` -> `SessionChecker` enforcement
 
 **Effort:** 3-4 sessioni
 **Rischio:** ALTO
+
+**Sub-step (S413):**
+- [x] C2.2.1 `_contracts.py` (32 test, 100% cov, Guardiana 9.6/10)
+- [x] C2.2.2 `_compiler.py` core: expr, type, use, scaffold (78 test, 96% cov, Guardiana 9.5/10)
+- [x] C2.2.3 `_compile_variant_type`, `_compile_record_type` + import tracker (93 test, 98% cov, Guardiana 9.5/10)
+- [ ] C2.2.4 `_compile_agent` (contratti + metadata)
+- [ ] C2.2.5 `_compile_protocol` (bridge a codegen.py)
+- [ ] C2.2.6 Golden file tests + round-trip exec per 10 esempi canonici
+- [ ] C2.2.7 Guardiana audit finale C2.2
 
 **Criterio completamento:**
 - [ ] Compilazione dei 10 esempi canonici in Python funzionante
@@ -291,9 +300,9 @@ FASE C1: La Grammatica             [####################] 100% DONE!
   C1.2 Design sintassi (BNF/EBNF)   2-3 sess  DONE (S408-409, 8.8/10)
   C1.3 Parser del linguaggio         3 sess    DONE (S410-412, 9.52/10 media)
 
-FASE C2: Il Compilatore            [##..................] 10%
+FASE C2: Il Compilatore            [########............] 40%
   C2.1 STUDIO architettura           1 sess    DONE (S412, 9.3/10)
-  C2.2 AST -> Python generation      3-4 sess  TODO
+  C2.2 AST -> Python generation      3-4 sess  IN PROGRESS (3/7 sub-step, S413)
   C2.3 Python interop                2-3 sess  TODO
   C2.4 Constrained generation        1-2 sess  TODO
 
