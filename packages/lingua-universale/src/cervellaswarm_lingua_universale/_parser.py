@@ -66,17 +66,14 @@ from ._ast import (
 
 
 # ---------------------------------------------------------------------------
-# ParseError
-# ---------------------------------------------------------------------------
-
-
-# ---------------------------------------------------------------------------
 # Shared constants
 # ---------------------------------------------------------------------------
 
 _VALID_CONFIDENCE = ("certain", "high", "medium", "low", "speculative")
 
 _VALID_TRUST = ("verified", "trusted", "standard", "untrusted")
+
+_AGENT_CLAUSES = ("role", "trust", "accepts", "produces", "requires", "ensures")
 
 _CMP_OPS: dict[TokKind, str] = {
     TokKind.EQ: "==",
@@ -860,7 +857,6 @@ class Parser:
                 )
 
             # Detect duplicate clauses
-            _AGENT_CLAUSES = ("role", "trust", "accepts", "produces", "requires", "ensures")
             if tok.value in _AGENT_CLAUSES:
                 if tok.value in _seen:
                     raise ParseError(

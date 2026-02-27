@@ -1,38 +1,60 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-27 - Sessione 411
-> **STATUS:** Step C1.3 Parser QUASI COMPLETO - 5/6 sub-step DONE (media Guardiana 9.54/10). Manca SOLO C1.3.6 Guardiana finale + coverage >= 95%.
+> **Ultimo aggiornamento:** 2026-02-27 - Sessione 412
+> **STATUS:** FASE C1 LA GRAMMATICA COMPLETATA! Parser 100% coverage, Guardiana 9.5/10. Prossimo: C2 Il Compilatore.
 
 ---
 
-## SESSIONE 411 - Cosa e successo
+## SESSIONE 412 - Cosa e successo
 
-### Step C1.3.4 - Nuovi Costrutti (COMPLETATO, 9.5/10)
+### Step C1.3.6 - Guardiana Finale + Coverage (COMPLETATO, 9.5/10)
 
-**Cosa:** Implementati i 3 stub del parser (`_parse_agent`, `_parse_type_decl`, `_parse_use_decl`) + parser espressioni completo.
+**Cosa:** Coverage gap analysis + 24 test nuovi + Guardiana audit FINALE + fix P3 diamante.
 
-**Processo:** Architect PLAN -> Backend implementa -> Guardiana audita -> Fix P2+P3 diamante.
+**Processo:** Regina misura coverage -> Backend scrive 24 test gap -> Guardiana audit finale -> Fix P3 -> CHIUSO.
 
-**Metodi aggiunti a `_parser.py` (11 metodi, +356 LOC):**
-- Expression parser: `_parse_expr`, `_parse_or_expr`, `_parse_and_expr`, `_parse_not_expr`, `_parse_comparison`, `_parse_primary` (LL(3) per method call vs attr access)
-- Use: `_parse_use_decl` (dotted name + alias opzionale)
-- Type: `_parse_type_decl` (variant LL(1) vs record), `_parse_type_expr` (generics + optional), `_parse_field`
-- Agent: `_parse_agent` (6 clausole, duplicate detection), `_parse_condition_list` (block + inline)
+**Coverage PRIMA -> DOPO:**
+- `_tokenizer.py`: 100% -> 100%
+- `_ast.py`: 100% -> 100%
+- `_parser.py`: 96% (19 miss) -> **100% (0 miss)**
 
-**Fix applicati (100000% diamante):**
-- P2 F1: Clausole duplicate in agent body -> ParseError (era silenzioso)
-- P3 F2: `_VALID_TRUST` estratta come costante modulo (era duplicata in 2 posti)
-- P3 F3: `_CMP_OPS` estratta come costante modulo (era locale in metodo)
-- P3 F5: Test `not not x` (doppia negazione) aggiunto
-- P3 F7: Test `List[String]?` (optional generic) aggiunto
+**24 test aggiunti in `test_parser_coverage.py`:**
+- EOF guards: hand-crafted token lists per branch irraggiungibili via parse() (NEWLINE prima DEDENT)
+- Error paths: input invalidi per tutti i raise ParseError non coperti
+- Functional: `produces: Msg1, Msg2, Msg3` (comma-separated list non testata)
 
-### Step C1.3.5 - Integration Tests (COMPLETATO, 9.6/10)
+**Fix P3 applicati (diamante):**
+- F1: `_AGENT_CLAUSES` estratta come costante modulo (era ri-creata ad ogni iterazione del loop)
+- F2: Header commento "ParseError" vuoto rimosso (residuo)
+- F3-F5: Documentati come note future (escape chars, agent body vuoto check, step verb validation)
 
-**Cosa:** 86 integration test end-to-end che coprono TUTTI i 10 esempi canonici dalla specifica DESIGN_C1_2.
+**Verdetto Guardiana:**
+- Architettura: 9.8/10 - Separazione esemplare tokenizer/AST/parser
+- Qualita Codice: 9.5/10 - Naming, docstring, error messages tutti consistenti
+- Completezza: 9.5/10 - 62/62 produzioni EBNF implementate, zero gap
+- Test Quality: 9.4/10 - 221 test parser, coverage 100% genuina
+- Robustezza: 9.5/10 - No loop infiniti, indent validation, paren depth safe
+- **Score: 9.5/10 - APPROVED - 0 P0/P1/P2**
 
-**Fix applicati:**
-- F1: Commento stale "5 decl" corretto a 6
-- F2: Docstring "7 tipi" chiarito (7 istanze, 6 tipi unici)
+---
+
+## MILESTONE: FASE C1 LA GRAMMATICA - COMPLETATA!
+
+```
+FASE C1: La Grammatica    [####################] 100% DONE!
+  C1.1 STUDIO           DONE (S408, 9.3/10)
+  C1.2 Design sintassi  DONE (S408-409, 8.8/10)
+  C1.3 Parser            DONE (S410-412, 9.52/10 media)
+    C1.3.1 Tokenizer       DONE (9.6/10)
+    C1.3.2 AST Nodes       DONE (9.5/10)
+    C1.3.3 Parser Core     DONE (9.5/10)
+    C1.3.4 Nuovi Costrutti DONE (9.5/10)
+    C1.3.5 Integration     DONE (9.6/10)
+    C1.3.6 Guardiana Finale DONE (9.5/10)  <-- OGGI S412
+```
+
+**Media score C1.3 (6 sub-step):** 9.52/10
+**Media score C1 (3 step):** 9.21/10
 
 ---
 
@@ -42,95 +64,74 @@
 LINGUAGGIO CERVELLASWARM (la missione vera):
   FASE A+B: COMPLETE (13 moduli, 1820 test, 9.5+ media)
   FASE C: Il Linguaggio
-    C1: La Grammatica    [##################..] 90%
-      C1.1 STUDIO           DONE (S408, 9.3/10)
-      C1.2 Design sintassi  DONE (S408-409, 8.8/10)
-      C1.3 Parser            5/6 sub-step DONE (S410-411, 9.54/10 media)
-        C1.3.1 Tokenizer       DONE (9.6/10)
-        C1.3.2 AST Nodes       DONE (9.5/10)
-        C1.3.3 Parser Core     DONE (9.5/10)
-        C1.3.4 Nuovi Costrutti DONE (9.5/10, fix P2+P3 inclusi)
-        C1.3.5 Integration     DONE (9.6/10)
-        C1.3.6 Guardiana finale TODO (coverage >= 95%)  <-- PROSSIMO
-    C2: Il Compilatore   [....................] 0%
+    C1: La Grammatica    [####################] 100% DONE!
+    C2: Il Compilatore   [....................] 0%    <-- PROSSIMO
     C3: L'Esperienza     [....................] 0%
 ```
 
 ---
 
-## I NUMERI DEL PARSER (C1.3 completo finora)
+## I NUMERI DEL PARSER (C1.3 COMPLETO)
 
-### File sorgente (3 file, 1632 LOC totali)
+### File sorgente (3 file, ~1630 LOC)
 
 | File | LOC | Cosa fa |
 |------|-----|---------|
 | `_tokenizer.py` | 320 | Tokenizer: 23 TokKind, indent stack CPython, paren depth |
 | `_ast.py` | 304 | 26 nodi AST frozen dataclass, 8 Expr + 7 Property + etc |
-| `_parser.py` | 1008 | Parser ricorsivo discendente, TUTTE le 62 produzioni EBNF |
+| `_parser.py` | ~1005 | Parser ricorsivo discendente, TUTTE le 62 produzioni EBNF |
 
-### File test (3 file, 2710 LOC, 197 test parser)
+### File test (4 file, ~3900 LOC, 221 test parser)
 
 | File | LOC | Test | Cosa testa |
 |------|-----|------|------------|
-| `test_parser_core.py` | 820 | 53 | protocol/step/choice/properties (C1.3.3) |
-| `test_parser_constructs.py` | 749 | 58 | expr/use/type/agent (C1.3.4) |
-| `test_parser_integration.py` | 1141 | 86 | 10 esempi canonici end-to-end (C1.3.5) |
+| `test_parser_core.py` | 820 | 53 | protocol/step/choice/properties |
+| `test_parser_constructs.py` | 749 | 58 | expr/use/type/agent |
+| `test_parser_integration.py` | 1141 | 86 | 10 esempi canonici end-to-end |
+| `test_parser_coverage.py` | ~1090 | 24 | coverage gaps (EOF guards, error paths, functional) |
 
 ### Test suite lingua-universale
 
 | Metrica | Valore |
 |---------|--------|
-| Test totali | 2193 |
-| Test passanti | 2193 (100%) |
-| Tempo | 0.57s |
+| Test totali | 2217 |
+| Test passanti | 2217 (100%) |
+| Coverage parser | 100% (0 miss) |
+| Tempo | 0.49s |
 | Regressioni | 0 |
 
 ---
 
-## Design Decisions chiave (S410-411)
-
-1. **Keywords come IDENT** - il tokenizer NON distingue. Il parser dispatcha su `tok.value`.
-2. **Indent stack CPython** - stack `[0, 4, 8, ...]`, INDENT/DEDENT espliciti.
-3. **Paren depth tracking** - dentro `()` e `[]` sopprime NEWLINE/INDENT/DEDENT.
-4. **LL(3) per primary** - IDENT.IDENT( = method call, IDENT.IDENT = attr, IDENT = bare.
-5. **Costanti modulo** - `_VALID_TRUST`, `_VALID_CONFIDENCE`, `_CMP_OPS` condivise.
-6. **Duplicate clause detection** - `_seen` set in `_parse_agent`, ParseError su duplicati.
-7. **File privati** (underscore) - `_tokenizer.py`, `_ast.py`, `_parser.py`. API pubblica sara `parser.py`.
-
----
-
-## Lezioni Apprese (S411)
+## Lezioni Apprese (S412)
 
 ### Cosa ha funzionato bene
-- "Guardiana dopo ogni sub-step" (9a e 10a volta). Pattern CONSOLIDATO x10.
-- "Fix TUTTI gli issue, non solo i bloccanti" (P2 + tutti i P3). 100000% diamante.
-- Architect PLAN con pseudocodice -> Backend implementa in una passata -> 0 iterazioni.
+- "Coverage analysis prima, test mirati dopo" - approccio chirurgico: 19 righe -> 24 test -> 100%.
+- "Hand-crafted token lists per branch irraggiungibili" - tecnica valida per testare EOF guards.
+- "Guardiana audit finale su TUTTO" (11a volta pattern confermato). Standard 9.5/10 raggiunto.
 
 ### Cosa non ha funzionato
-- Nulla di significativo. Flusso fluido come S410.
+- Coverage `--cov` richiede Python module name, non file path. Primo tentativo fallito.
 
 ### Pattern candidato
-- "Fix diamante: P2 + tutti P3 prima di procedere" (1a volta): previene accumulo technical debt. MONITORARE.
+- "Fix P3 diamante prima di chiudere step" (2a volta, S411+S412): previene accumulo debt. MONITORARE.
 
 ---
 
 ## Prossimi step
 
-1. **C1.3.6** - Guardiana finale + `pytest --cov` >= 95%
-   - Misurare coverage attuale
-   - Se < 95%: aggiungere test per righe non coperte
-   - Se >= 95%: Guardiana audit finale su TUTTO C1.3
-   - Chiude Step C1.3!
-2. **Aggiornare P07** nei validated_patterns con evidenza S403-S411 (10x)
-3. **C2.1** - STUDIO architettura compilatore (AST -> Python)
+1. **C2.1** - STUDIO architettura compilatore (AST -> Python)
+   - Come `codegen.py` gia genera Python
+   - Come la pipeline spec -> codegen funziona
+   - Session types come contratti per codice generato
+   - Proposta architettura per Guardiana
+2. **Aggiornare P07** nei validated_patterns (evidenza S403-S412, 11x)
 
 ---
 
 ## File chiave
 
-- `.sncp/roadmaps/SUBROADMAP_FASE_C_LINGUAGGIO.md` - Piano FASE C (aggiornato S411)
+- `.sncp/roadmaps/SUBROADMAP_FASE_C_LINGUAGGIO.md` - Piano FASE C (aggiornato S412)
 - `.sncp/progetti/cervellaswarm/reports/DESIGN_C1_2_SYNTAX_GRAMMAR.md` - EBNF grammar
-- `.sncp/progetti/cervellaswarm/reports/PLAN_C1_3_4_NUOVI_COSTRUTTI.md` - Plan Architect C1.3.4
 - `packages/lingua-universale/src/cervellaswarm_lingua_universale/_tokenizer.py` - Tokenizer
 - `packages/lingua-universale/src/cervellaswarm_lingua_universale/_ast.py` - AST Nodes
 - `packages/lingua-universale/src/cervellaswarm_lingua_universale/_parser.py` - Parser (COMPLETO!)
