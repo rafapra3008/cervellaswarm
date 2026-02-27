@@ -61,6 +61,7 @@ class TestGoldenVariantType:
         assert result.agents == ()
         assert result.protocols == ()
         assert result.types == ("Status",)
+        assert result.exports == ("Status",)
 
     def test_generates_literal(self) -> None:
         result = _roundtrip(self.SOURCE)
@@ -70,11 +71,18 @@ class TestGoldenVariantType:
         result = _roundtrip(self.SOURCE)
         assert "# [LU:1:0]" in result.python_source
 
+    def test_metadata(self) -> None:
+        result = _roundtrip(self.SOURCE, "variant.lu")
+        assert '__lu_version__' in result.python_source
+        assert '__lu_source__ = "variant.lu"' in result.python_source
+        assert '__all__ = ["Status"]' in result.python_source
+
     def test_exec_roundtrip(self) -> None:
         result = _roundtrip(self.SOURCE)
         ns = _exec_source(result)
         # Literal type alias is accessible in the namespace
         assert "Status" in ns
+        assert ns["__lu_version__"] == "0.2"
 
 
 # ============================================================
@@ -99,6 +107,7 @@ class TestGoldenRecordType:
         assert result.agents == ()
         assert result.protocols == ()
         assert result.types == ("TaskData",)
+        assert result.exports == ("TaskData",)
 
     def test_generates_dataclass(self) -> None:
         result = _roundtrip(self.SOURCE)
@@ -452,6 +461,7 @@ class TestGoldenMixedProgram:
         assert result.agents == ("Worker",)
         assert result.protocols == ("SimpleTask",)
         assert result.types == ("TaskStatus", "TaskInfo")
+        assert result.exports == ("TaskStatus", "TaskInfo", "Worker", "SimpleTaskSession")
 
     def test_all_declarations_present(self) -> None:
         result = _roundtrip(self.SOURCE)

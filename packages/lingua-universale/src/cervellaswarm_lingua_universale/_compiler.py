@@ -26,6 +26,7 @@ Implementation plan (7 sub-steps):
 
 C2.3 Python Interop (ongoing):
   C2.3.1  Hardening + types tracking                      S416
+  C2.3.2  __all__ + module metadata                       S416
 """
 
 from __future__ import annotations
@@ -82,6 +83,10 @@ _LU_GENERIC_MAP: dict[str, str] = {
     "Confident": "Confident",
 }
 
+# Compiler format version -- embedded as __lu_version__ in generated modules.
+# Bump when the generated code structure changes (C2.3.2).
+_LU_FORMAT_VERSION = "0.2"
+
 # Python keywords that need a trailing underscore when used as identifiers
 # in generated code (e.g. method name "pass" -> "pass_").
 _PYTHON_KEYWORDS: frozenset[str] = frozenset(keyword.kwlist) | frozenset(
@@ -105,6 +110,7 @@ class CompiledModule:
         protocols: Names of protocol declarations found in the program.
         imports: Module names from ``use`` statements.
         types: Names of variant and record type declarations (C2.3.1).
+        exports: Names listed in the generated ``__all__`` (C2.3.2).
     """
 
     source_file: str
@@ -113,6 +119,7 @@ class CompiledModule:
     protocols: tuple[str, ...]
     imports: tuple[str, ...]
     types: tuple[str, ...] = ()
+    exports: tuple[str, ...] = ()
 
 
 # ============================================================
@@ -171,15 +178,32 @@ class ASTCompiler:
             elif isinstance(decl, (VariantTypeDecl, RecordTypeDecl)):
                 types.append(decl.name)
 
-        # Assemble: docstring + preamble imports + body
+        # Assemble: docstring + metadata + preamble imports + body
+        safe_source = self._escape_contract_str(source_file)
         lines: list[str] = [
-            f'"""Auto-generated from {source_file} by Lingua Universale compiler."""',
+            f'"""Auto-generated from {safe_source} by Lingua Universale compiler."""',
+            "",
+            f'__lu_version__ = "{_LU_FORMAT_VERSION}"',
+            f'__lu_source__ = "{safe_source}"',
         ]
         if self._preamble_imports:
             lines.append("")
             lines.extend(sorted(self._preamble_imports))
         lines.append("")
         lines.extend(body_lines)
+
+        # Build __all__: types + agents + session classes (C2.3.2)
+        # Only Session classes are public API; Role classes are internal,
+        # accessible via session.{role} property.
+        exports: list[str] = []
+        exports.extend(types)
+        exports.extend(agents)
+        for p in protocols:
+            exports.append(f"{p}Session")
+        if exports:
+            all_items = ", ".join(f'"{e}"' for e in exports)
+            lines.append(f"__all__ = [{all_items}]")
+            lines.append("")
 
         python_source = "\n".join(lines).rstrip("\n") + "\n"
 
@@ -190,6 +214,7 @@ class ASTCompiler:
             protocols=tuple(protocols),
             imports=tuple(imports),
             types=tuple(types),
+            exports=tuple(exports),
         )
 
     # ----------------------------------------------------------

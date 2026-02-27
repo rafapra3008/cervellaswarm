@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Tests for _compiler.py (C2.2.2 core + C2.2.3 types + C2.3.1 hardening).
+"""Tests for _compiler.py (C2.2.2 core + C2.2.3 types + C2.3.1-C2.3.2).
 
 Test structure:
   - _expr_to_python: all 8 Expr types + edge cases
@@ -14,6 +14,8 @@ Test structure:
   - Error handling: verify TypeError for unknown decl types
   - _escape_contract_str: hardening with \\n, \\r, alignment with codegen (C2.3.1a)
   - CompiledModule.types: variant + record tracking (C2.3.1b)
+  - Module metadata: __lu_version__, __lu_source__ (C2.3.2a)
+  - __all__ generation + CompiledModule.exports (C2.3.2b)
 
 Agent compilation tests: see test_compiler_agent.py (C2.2.4).
 Protocol compilation tests: see test_compiler_protocol.py (C2.2.5).
@@ -808,3 +810,232 @@ class TestCompiledModuleTypes:
         prog = ProgramNode((), LOC)
         result = compiler.compile(prog, source_file="test.lu")
         assert result.types == ()
+
+
+# ===================================================================
+# Module metadata: __lu_version__ and __lu_source__ (C2.3.2a)
+# ===================================================================
+
+
+class TestModuleMetadata:
+    """Tests for __lu_version__ and __lu_source__ in generated code."""
+
+    def test_lu_version_present(self, compiler: ASTCompiler) -> None:
+        prog = ProgramNode((), LOC)
+        result = compiler.compile(prog, source_file="test.lu")
+        assert '__lu_version__ = "0.2"' in result.python_source
+
+    def test_lu_source_present(self, compiler: ASTCompiler) -> None:
+        prog = ProgramNode((), LOC)
+        result = compiler.compile(prog, source_file="example.lu")
+        assert '__lu_source__ = "example.lu"' in result.python_source
+
+    def test_lu_source_default(self, compiler: ASTCompiler) -> None:
+        prog = ProgramNode((), LOC)
+        result = compiler.compile(prog)
+        assert '__lu_source__ = "<input>"' in result.python_source
+
+    def test_lu_source_with_special_chars(self, compiler: ASTCompiler) -> None:
+        """Source file path with quotes is properly escaped."""
+        prog = ProgramNode((), LOC)
+        result = compiler.compile(prog, source_file='path/"weird".lu')
+        assert '__lu_source__ = "path/\\"weird\\".lu"' in result.python_source
+        # Exec roundtrip: escaped path is valid Python (F4 fix)
+        ns: dict[str, object] = {}
+        exec(result.python_source, ns)  # noqa: S102
+        assert ns["__lu_source__"] == 'path/"weird".lu'
+
+    def test_metadata_after_docstring(self, compiler: ASTCompiler) -> None:
+        """Metadata comes right after the module docstring."""
+        prog = ProgramNode((), LOC)
+        result = compiler.compile(prog, source_file="test.lu")
+        lines = result.python_source.splitlines()
+        # Line 0: docstring, Line 1: blank, Line 2: __lu_version__, Line 3: __lu_source__
+        assert lines[0].startswith('"""')
+        assert lines[2] == '__lu_version__ = "0.2"'
+        assert lines[3] == '__lu_source__ = "test.lu"'
+
+    def test_metadata_exec_roundtrip(self, compiler: ASTCompiler) -> None:
+        """Metadata is accessible after exec()."""
+        prog = ProgramNode(
+            (UseNode("math", None, LOC),),
+            LOC,
+        )
+        result = compiler.compile(prog, source_file="meta.lu")
+        ns: dict[str, object] = {}
+        exec(result.python_source, ns)  # noqa: S102
+        assert ns["__lu_version__"] == "0.2"
+        assert ns["__lu_source__"] == "meta.lu"
+
+    def test_metadata_before_preamble(self, compiler: ASTCompiler) -> None:
+        """Metadata appears before preamble imports."""
+        prog = ProgramNode(
+            (VariantTypeDecl("Status", ("A", "B"), LOC),),
+            LOC,
+        )
+        result = compiler.compile(prog, source_file="test.lu")
+        src = result.python_source
+        meta_pos = src.index("__lu_version__")
+        import_pos = src.index("from typing import Literal")
+        assert meta_pos < import_pos
+
+
+# ===================================================================
+# __all__ generation (C2.3.2b)
+# ===================================================================
+
+
+class TestAllGeneration:
+    """Tests for __all__ list generation in compiled code."""
+
+    def test_empty_program_no_all(self, compiler: ASTCompiler) -> None:
+        """Empty program has no __all__ (nothing to export)."""
+        prog = ProgramNode((), LOC)
+        result = compiler.compile(prog, source_file="test.lu")
+        assert "__all__" not in result.python_source
+        assert result.exports == ()
+
+    def test_use_only_no_all(self, compiler: ASTCompiler) -> None:
+        """Programs with only imports have no __all__."""
+        prog = ProgramNode(
+            (UseNode("math", None, LOC),),
+            LOC,
+        )
+        result = compiler.compile(prog, source_file="test.lu")
+        assert "__all__" not in result.python_source
+        assert result.exports == ()
+
+    def test_variant_in_all(self, compiler: ASTCompiler) -> None:
+        prog = ProgramNode(
+            (VariantTypeDecl("Status", ("Active", "Inactive"), LOC),),
+            LOC,
+        )
+        result = compiler.compile(prog, source_file="test.lu")
+        assert '__all__ = ["Status"]' in result.python_source
+        assert result.exports == ("Status",)
+
+    def test_record_in_all(self, compiler: ASTCompiler) -> None:
+        from cervellaswarm_lingua_universale._ast import FieldNode
+        field = FieldNode("name", SimpleType("String", False, LOC), LOC)
+        prog = ProgramNode(
+            (RecordTypeDecl("TaskData", (field,), LOC),),
+            LOC,
+        )
+        result = compiler.compile(prog, source_file="test.lu")
+        assert '__all__ = ["TaskData"]' in result.python_source
+        assert result.exports == ("TaskData",)
+
+    def test_agent_in_all(self, compiler: ASTCompiler) -> None:
+        from cervellaswarm_lingua_universale._ast import AgentNode
+        agent = AgentNode(
+            name="Worker", role="worker", trust=None,
+            accepts=(), produces=(), requires=(), ensures=(),
+            loc=LOC,
+        )
+        prog = ProgramNode((agent,), LOC)
+        result = compiler.compile(prog, source_file="test.lu")
+        assert '__all__ = ["Worker"]' in result.python_source
+        assert result.exports == ("Worker",)
+
+    def test_protocol_session_in_all(self, compiler: ASTCompiler) -> None:
+        """Protocol exports its Session class name."""
+        from cervellaswarm_lingua_universale._ast import ProtocolNode, StepNode
+        step = StepNode("regina", "asks", "worker", "do task", LOC)
+        proto = ProtocolNode(
+            name="DelegateTask", roles=("regina", "worker"),
+            steps=(step,), properties=(), loc=LOC,
+        )
+        prog = ProgramNode((proto,), LOC)
+        result = compiler.compile(prog, source_file="test.lu")
+        assert '"DelegateTaskSession"' in result.python_source
+        assert "DelegateTaskSession" in result.exports
+
+    def test_mixed_program_all_order(self, compiler: ASTCompiler) -> None:
+        """__all__ order: types first, then agents, then session classes."""
+        from cervellaswarm_lingua_universale._ast import (
+            AgentNode, FieldNode, ProtocolNode, StepNode,
+        )
+        step = StepNode("regina", "asks", "worker", "do task", LOC)
+        prog = ProgramNode(
+            (
+                VariantTypeDecl("Status", ("A", "B"), LOC),
+                RecordTypeDecl("TaskData", (
+                    FieldNode("x", SimpleType("String", False, LOC), LOC),
+                ), LOC),
+                AgentNode(
+                    name="Worker", role="worker", trust=None,
+                    accepts=(), produces=(), requires=(), ensures=(),
+                    loc=LOC,
+                ),
+                ProtocolNode(
+                    name="SimpleTask", roles=("regina", "worker"),
+                    steps=(step,), properties=(), loc=LOC,
+                ),
+            ),
+            LOC,
+        )
+        result = compiler.compile(prog, source_file="test.lu")
+        assert result.exports == ("Status", "TaskData", "Worker", "SimpleTaskSession")
+        assert (
+            '__all__ = ["Status", "TaskData", "Worker", "SimpleTaskSession"]'
+            in result.python_source
+        )
+
+    def test_all_at_end_of_source(self, compiler: ASTCompiler) -> None:
+        """__all__ appears at the end of the generated source."""
+        prog = ProgramNode(
+            (VariantTypeDecl("Color", ("Red", "Blue"), LOC),),
+            LOC,
+        )
+        result = compiler.compile(prog, source_file="test.lu")
+        lines = result.python_source.rstrip().splitlines()
+        # __all__ should be near the end (last non-empty line)
+        all_lines = [i for i, l in enumerate(lines) if "__all__" in l]
+        assert len(all_lines) == 1
+        # Should be in the last 3 lines
+        assert all_lines[0] >= len(lines) - 3
+
+    def test_all_exec_roundtrip(self, compiler: ASTCompiler) -> None:
+        """__all__ is accessible after exec()."""
+        prog = ProgramNode(
+            (VariantTypeDecl("Status", ("Active", "Inactive"), LOC),),
+            LOC,
+        )
+        result = compiler.compile(prog, source_file="test.lu")
+        ns: dict[str, object] = {}
+        exec(result.python_source, ns)  # noqa: S102
+        assert ns["__all__"] == ["Status"]
+
+    def test_exports_default_empty(self) -> None:
+        """CompiledModule.exports defaults to empty tuple."""
+        mod = CompiledModule(
+            source_file="test.lu",
+            python_source="x = 1\n",
+            agents=(),
+            protocols=(),
+            imports=(),
+        )
+        assert mod.exports == ()
+
+    def test_two_protocols_in_all(self, compiler: ASTCompiler) -> None:
+        """Two protocols produce two Session entries in __all__."""
+        from cervellaswarm_lingua_universale._ast import ProtocolNode, StepNode
+        step1 = StepNode("a", "asks", "b", "do task", LOC)
+        step2 = StepNode("c", "asks", "d", "check result", LOC)
+        prog = ProgramNode(
+            (
+                ProtocolNode(
+                    name="Alpha", roles=("a", "b"),
+                    steps=(step1,), properties=(), loc=LOC,
+                ),
+                ProtocolNode(
+                    name="Beta", roles=("c", "d"),
+                    steps=(step2,), properties=(), loc=LOC,
+                ),
+            ),
+            LOC,
+        )
+        result = compiler.compile(prog, source_file="test.lu")
+        assert result.exports == ("AlphaSession", "BetaSession")
+        assert '"AlphaSession"' in result.python_source
+        assert '"BetaSession"' in result.python_source
