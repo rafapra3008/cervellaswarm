@@ -1,46 +1,59 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-27 - Sessione 422
-> **STATUS:** C3.2 DONE + C3.3 DONE. Prossimo: C3.4 REPL interattivo.
+> **Ultimo aggiornamento:** 2026-02-27 - Sessione 423
+> **STATUS:** C3.4 REPL DONE (9.5/10). Prossimo: C3.5 File .lu + showcase v2.
 
 ---
 
-## SESSIONE 422 - Cosa e successo
+## SESSIONE 423 - Cosa e successo
 
-### C3.2 CLI + eval -- COMPLETATO (Guardiana 9.5/10)
+### Code Review mirato S421-S422 -- COMPLETATO
 
-**Audit Guardiana:** 9.5/10, 0 P0, 0 P1, 2 P2 fixati.
+Reviewer ha trovato 1 P1, 5 P2, 4 P3 nei file C3.2/C3.3.
+Fix applicati dalla Regina (4 su 10):
+- **F1 (P1):** `import re` inline ripetuto 5 volte in errors.py -> spostato al top-level
+- **F3 (P2):** `source.split("\n")` in render_snippet -> `source.splitlines() or [""]` (gestisce `\r\n` Windows)
+- **F6 (P3):** +2 test render_snippet: CRLF line endings, col negativo
+- **F7 (P3):** +1 test humanize ParseError senza virgolette (fallback LU-N010)
 
-**Fix applicati:**
-- **F1 (P2):** `run_file()` allineato a `check_file()`/`verify_file()` -- stesso pattern DRY: leggi file -> delega a `*_source()`. Rimosso import `compile_file` non piu necessario.
-- **F2 (P2):** `_protocol_node_to_lean4()` ora mappa `StepNode.action` al `MessageKind` corretto (`asks`->TASK_REQUEST, `returns`->TASK_RESULT, `sends`->DM, `tells`->BROADCAST, `proposes`->PLAN_PROPOSAL) invece di hardcodare TASK_REQUEST.
-- **F8 (P3):** `_cmd_compile()` gestisce `PermissionError`/`OSError` su `-o` output.
-- **+4 test:** frozen immutability, stdout check, stdout run, bad compile path.
+Annotati per futuro (non bloccanti): F2 regex got greedy, F4 path security note, F5 classifier coupling, F8 stderr colors, F9 performance large files.
 
-### C3.3 Error messages -- COMPLETATO (Guardiana 9.3/10)
+### C3.4 REPL interattivo -- COMPLETATO (Guardiana 9.5/10)
 
-**Ricerca:** 38 fonti esterne (Rust rustc-dev-guide, Elm "Compiler Errors for Humans", Gleam v1.6, Roc, Python 3.14 PEP 657).
-**Gap Analysis:** Ingegnera ha mappato 8 gap (G1-G8). Insight chiave: le info di location (line+col) ESISTONO gia in ogni token e AST node. Il lavoro era di COLLEGAMENTO, non di costruzione.
+**Ricerca:** 20+ fonti (Python stdlib, PEP 762, IPython, Elixir IEx, Deno REPL, Gleam, craftinginterpreters).
+**Report:** `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260227_repl_design.md`
+
+**Decisioni architetturali (confermate dalla ricerca):**
+- D2: stdlib REPL (readline, ZERO deps) -- confermato, non cmd.Cmd (scarso fit per linguaggio)
+- D4: REPLSession class stateful -- confermato, con input_fn/output_fn injection per testing
+- Raw readline loop (non cmd.Cmd) perche la maggior parte dell'input e codice LU, non comandi
+- Multiline via "parse-and-check" (delega a check_source() esistente)
+- Comandi meta prefissati con `:` (stile IEx/Elixir)
+- NO_COLOR / FORCE_COLOR / CLICOLOR_FORCE supportati
 
 **Cosa e stato costruito:**
-1. **`render_snippet()`** (~50 LOC) -- generatore snippet stile Rust/Elm con numeri riga, gutter, caret `^`, label, context lines
-2. **12 codici LU-N001..N012** nel catalogo trilingue (en/it/pt):
-   - N001 tab, N002 bad indent, N003 unterminated string, N004 unexpected char, N005 dedent mismatch
-   - N006 unknown top-level keyword, N007 generic expected/got, N008 missing colon
-   - N009 empty protocol, N010 unknown step action, N011 unknown property, N012 unknown agent clause
-3. **`ErrorCategory.SYNTAX`** -- nuova categoria per pipeline C1
-4. **`_classify_tokenize_error()`** + **`_classify_parse_error()`** -- classifier pattern-matching
-5. **`_parser_similar()`** -- fuzzy matching per N006/N010/N011/N012 (keywords, actions, properties, agent clauses)
-6. **`humanize()`** -- nuovi branch per TokenizeError e ParseError (prima di tutti gli altri match)
-7. **`format_error(source="")`** -- nuovo parametro opzionale per snippet rendering
-8. **`_eval.py` integrato** -- `_parse_and_compile()` ora usa `humanize()` + `format_error(source=source)` con fallback
+1. **`_repl.py`** (~260 LOC) -- modulo nuovo:
+   - `REPLSession` class con `run()` (loop), `eval()` (programmatico), `handle_command()` (meta)
+   - `_is_complete()` + `_looks_incomplete()` -- heuristics multiline (colon ending, indented, EOF/INDENT signals)
+   - `_compiled_summary()` -- helper DRY per summary OK output
+   - `_setup_readline()` / `_save_readline()` con graceful fallback
+   - `_init_colors()` con NO_COLOR/FORCE_COLOR/CLICOLOR_FORCE
+   - `CommandResult` dataclass per risultati comandi
+   - `_HELP_TEXT` con tutti i comandi e shortcut documentati
+   - Banner con versione: "Lingua Universale v{version} -- the first language native to AI"
+2. **Comandi meta:** `:help`, `:quit/:q/:exit`, `:reset`, `:history`, `:check <src>`
+3. **Multiline:** linee che finiscono con `:` accumulano, riga vuota esegue, doppia vuota forza reset
+4. **`_cli.py`** -- +`lu repl` subcommand, `_cmd_repl` handler (lazy import)
+5. **`__init__.py`** -- +export `REPLSession` + `__all__`
 
-**Audit Guardiana:** 9.3/10, 0 P0, 0 P1, 2 P2 fixati.
-- **F1 (P2):** `_parser_similar` N011 aveva "all messages received" (non esiste) -> corretto con le 7 property reali del parser
-- **F2 (P2):** catalogo LU-N011 hint incompleto (4 proprieta su 7) -> corretto con tutte e 7
-- **F3-F8 (P3):** docstring humanize aggiornata, docstring test corretta, render_snippet edge case col>len(riga) fixato
+**Audit Guardiana:** 9.5/10, 0 P0, 0 P1, 2 P2, 6 P3. Tutti i P2 fixati:
+- **F1 (P2):** Rimosso `TextIO` import non usato
+- **F2 (P2):** `:check` senza argomento ora mostra "Usage: :check <source>" invece di "Unknown command"
+- **F3 (P3):** DRY: estratto `_compiled_summary()` usato sia in `_execute()` che in `:check`
+- **F4 (P3):** `:exit` aggiunto alla help text
+- **F5 (P3):** +1 test double-empty-line buffer reset
 
-**Report ricerca:** `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260227_C3_error_messages_deep.md`
+**Test nuovi S423:** +45 totale (+3 code review + 42 REPL)
 
 ---
 
@@ -52,77 +65,74 @@ LINGUAGGIO CERVELLASWARM:
   FASE C: Il Linguaggio
     C1: La Grammatica    [####################] 100% DONE!
     C2: Il Compilatore   [####################] 100% DONE!
-    C3: L'Esperienza     [############........] ~50%
+    C3: L'Esperienza     [################....] ~67%
       C3.1 STUDIO             DONE (S421, 9.3/10)
       C3.2 CLI + eval         DONE (S422, 9.5/10)
       C3.3 Error messages     DONE (S422, 9.3/10)
-      C3.4 REPL interattivo   TODO
+      C3.4 REPL interattivo   DONE (S423, 9.5/10)
       C3.5 File .lu + showcase TODO
       C3.6 Guardiana finale   TODO
 ```
 
 ---
 
-## I NUMERI TOTALI (dopo S422)
+## I NUMERI TOTALI (dopo S423)
 
 | Metrica | Valore |
 |---------|--------|
-| Test totali | **2724** (+42 da S421) |
-| Test passanti | 2724 (100%) |
-| Moduli .py nel package | 23 |
+| Test totali | **2769** (+45 da S422) |
+| Test passanti | 2769 (100%) |
+| Moduli .py nel package | **24** (+1 _repl.py) |
 | File .lu di esempio | 1 (examples/hello.lu) |
 | Codici errore LU | **72** (60 + 12 LU-N) |
 | Locali errori | 3 (en, it, pt) |
 | Regressioni | 0 |
 | Tempo suite | 0.86s |
-| Guardiana audit S422 | 2 (C3.2: 9.5/10, C3.3: 9.3/10) |
+| Guardiana audit S423 | 1 (C3.4: 9.5/10) |
 
 ---
 
-## PROSSIMO: C3.4 REPL interattivo
+## PROSSIMO: C3.5 File .lu + showcase v2
 
-1. **STUDIO** -- ricerca REPL design (Python, IPython, Elixir IEx, Gleam, Deno)
-2. **Implementare `_repl.py`** -- REPLSession class con:
-   - `lu repl` subcommand (da aggiungere a _cli.py)
-   - Prompt `lu>` con readline/stdin
-   - Valutazione incrementale (check, run, verify inline)
-   - History + multiline input
-   - Colori TTY-aware (riusa _cli.py pattern)
-3. **Test** -- pytest con capsys/monkeypatch per stdin
+1. **Arricchire `examples/`** -- aggiungere 3-5 file .lu che mostrano tutte le feature:
+   - hello.lu (esiste gia: type + agent + protocol)
+   - confidence.lu (tipi con confidence)
+   - multiagent.lu (protocollo complesso con choice/branch)
+   - errors.lu (file intenzionalmente sbagliato per mostrare error messages)
+2. **showcase_v2.py** -- script che esegue il flusso completo:
+   - Parsa file .lu -> compila -> verifica -> esegue
+   - Mostra error messages stile Rust su file errato
+   - Mostra REPL session (automated via REPLSession con input_fn)
+3. **Test** -- pytest per showcase + file .lu
 4. **Guardiana audit** -- target 9.5/10
 
-Decisioni architetturali gia prese (STUDIO C3.1 S421):
-- D2: stdlib REPL (readline/cmd, ZERO deps)
-- D4: REPLSession class stateful
-
-Poi: C3.5 File .lu + showcase v2, C3.6 Guardiana finale
+Poi: C3.6 Guardiana audit finale (review completa Fase C3)
 
 ---
 
-## File chiave (C3.2 + C3.3)
+## File chiave (C3.4)
 
-- **errors.py** (~1900 righe) -- +12 codici LU-N, render_snippet, humanize per TokenizeError/ParseError
-- **_eval.py** (~270 righe) -- integrato con humanize(), run_file DRY fix
-- **_cli.py** (~235 righe) -- compile -o error handling
-- **test_errors_c33.py** (36 test) -- snippet, codici, integration
-- **test_eval.py** (+1 test frozen) -- EvalResult immutability
-- **test_cli.py** (+3 test) -- stdout check, stdout run, bad compile path
-- **RICERCA C3.3:** `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260227_C3_error_messages_deep.md`
+- **_repl.py** (~260 LOC) -- REPLSession, comandi, multiline, colori
+- **_cli.py** (~245 LOC) -- +lu repl subcommand
+- **test_repl.py** (42 test) -- eval, commands, multiline, loop, colors, CLI
+- **RICERCA:** `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260227_repl_design.md`
 
 ---
 
-## Lezioni Apprese (S422)
+## Lezioni Apprese (S423)
 
 ### Cosa ha funzionato bene
-- **2 Cervelle parallele per STUDIO** (Researcher + Ingegnera) -- completate in 5 min parallelo, output complementari (38 fonti + 8 gap)
-- **Audit -> Fix -> Re-audit** ha portato 9.3 -> 9.3 con fix mirati (nessun re-audit necessario, fix erano chirurgici)
-- **Classifier pattern in errors.py** -- estendibile senza rompere nulla. Aggiungere TokenizeError/ParseError ha richiesto solo nuovi branch
+- **Code review + REPL in una sessione** -- partire dal review ha fixato bug esistenti PRIMA di aggiungere nuovo codice
+- **Ricerca REPL parallela al review** -- massima efficienza, 0 tempo perso
+- **DI pattern (input_fn/output_fn)** -- 42 test REPL senza mockare stdin/readline (Guardiana ha lodato)
 
 ### Cosa non ha funzionato
-- **`_extract_quoted` prendeva la PRIMA** quoted string dal messaggio ParseError, non quella dopo "got". Fix: regex specifico `r"got\s+'([^']+)'"` per N006
+- **`type Color = Red` non e valido** in LU (serve `|` per variant) -- test scritti con assunzione errata, fixati subito
+- **`splitlines()` vs `split("\n")`** per stringa vuota: `"".splitlines()` -> `[]` vs `"".split("\n")` -> `[""]` -- edge case sottile, richiesto `or [""]` fallback
 
 ### Pattern confermato
-- **"Research First + Guardiana dopo step" (28a volta consecutiva)** -- il metodo funziona
+- **"Research First + Guardiana dopo step" (29a volta consecutiva)** -- il metodo funziona
+- **"Code Review trova bug che l'audit post-step non vede"** -- review fresco su codice "gia approvato" ha trovato F1 P1 (import re) e F3 P2 (splitlines)
 
 ---
 

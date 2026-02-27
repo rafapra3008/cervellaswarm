@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Command-line interface for Lingua Universale (C3.2).
+"""Command-line interface for Lingua Universale (C3.2 + C3.4).
 
 Subcommands::
 
@@ -9,6 +9,7 @@ Subcommands::
     lu check <file.lu>    Parse and compile without executing (fast).
     lu verify <file.lu>   Parse, compile, and formally verify with Lean 4.
     lu compile <file.lu>  Show the generated Python source.
+    lu repl               Start the interactive REPL.
     lu version            Show version information.
 
 Design decisions (STUDIO C3):
@@ -140,6 +141,15 @@ def _cmd_compile(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_repl(args: argparse.Namespace) -> int:
+    """Handle ``lu repl``."""
+    from ._repl import REPLSession
+
+    session = REPLSession()
+    session.run()
+    return 0
+
+
 def _cmd_version(args: argparse.Namespace) -> int:
     """Handle ``lu version``."""
     from . import __version__
@@ -195,6 +205,9 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Write Python output to file instead of stdout",
     )
 
+    # lu repl
+    subparsers.add_parser("repl", help="Start the interactive REPL")
+
     # lu version
     subparsers.add_parser("version", help="Show version information")
 
@@ -211,6 +224,7 @@ _COMMAND_HANDLERS = {
     "run": _cmd_run,
     "verify": _cmd_verify,
     "compile": _cmd_compile,
+    "repl": _cmd_repl,
     "version": _cmd_version,
 }
 

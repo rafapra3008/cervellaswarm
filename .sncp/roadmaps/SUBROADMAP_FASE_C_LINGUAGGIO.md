@@ -306,11 +306,11 @@ FASE C2: Il Compilatore            [####################] 100% DONE!
   C2.3 Python interop                3 sess    DONE (S416-S418, media 9.5/10)
   C2.4 Constrained generation        2 sess    DONE (S419-S420, media 9.575/10)
 
-FASE C3: L'Esperienza             [############........] ~50%
+FASE C3: L'Esperienza             [################....] ~67%
   C3.1 STUDIO                        1 sess    DONE (S421, 9.3/10)
   C3.2 CLI + eval (lu run/check)     1 sess    DONE (S422, 9.5/10)
   C3.3 Error messages C1-C2          1 sess    DONE (S422, 9.3/10)
-  C3.4 REPL interattivo              2 sess    TODO
+  C3.4 REPL interattivo              1 sess    DONE (S423, 9.5/10)
   C3.5 File .lu + showcase v2        1-2 sess  TODO
   C3.6 Guardiana audit finale        1 sess    TODO
 

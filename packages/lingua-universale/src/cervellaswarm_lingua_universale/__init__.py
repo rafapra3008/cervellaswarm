@@ -164,6 +164,7 @@ from ._eval import (
     run_source,
     run_file,
 )
+from ._repl import REPLSession
 from ._cli import main as cli_main
 from .errors import (
     ErrorCategory,
@@ -318,6 +319,8 @@ __all__ = [
     "run_source",
     "run_file",
     "cli_main",
+    # REPL (C3.4)
+    "REPLSession",
     # Errors
     "ErrorCategory",
     "ErrorSeverity",

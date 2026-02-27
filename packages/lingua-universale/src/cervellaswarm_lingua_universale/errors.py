@@ -43,6 +43,7 @@ Usage::
 from __future__ import annotations
 
 import difflib
+import re
 from dataclasses import dataclass
 from enum import Enum
 from types import MappingProxyType
@@ -163,7 +164,7 @@ def render_snippet(
     Returns:
         Multi-line string with line numbers, source, and caret indicator.
     """
-    src_lines = source.split("\n")
+    src_lines = source.splitlines() or [""]
     if line < 1 or line > len(src_lines):
         return ""
 
@@ -1835,7 +1836,6 @@ def _classify_parse_error(exc: ParseError) -> tuple[str, dict[str, str]]:
 
     if "expected 'protocol'" in msg and "'agent'" in msg and "'type'" in msg:
         # Extract the "got" value -- the quoted token AFTER "got"
-        import re
         m = re.search(r"got\s+'([^']+)'", msg)
         got = m.group(1) if m else (_extract_quoted(msg) or "")
         return "LU-N006", {"got": got}
@@ -2001,14 +2001,12 @@ def _classify_intent_error(exc: IntentParseError) -> tuple[str, dict[str, str]]:
 
 def _extract_quoted(text: str) -> Optional[str]:
     """Extract first single- or double-quoted token from text."""
-    import re
     m = re.search(r"['\"]([^'\"]+)['\"]", text)
     return m.group(1) if m else None
 
 
 def _extract_parenthesized(text: str) -> Optional[str]:
     """Extract first parenthesized number from text, e.g. '(got 6)'."""
-    import re
     m = re.search(r"\(got\s+([^\)]+)\)", text)
     if m:
         return m.group(1)
@@ -2019,7 +2017,6 @@ def _extract_parenthesized(text: str) -> Optional[str]:
 
 def _extract_expected_got(text: str) -> dict[str, str]:
     """Extract 'expected X, got Y' substrings from an error message."""
-    import re
     result: dict[str, str] = {}
     m_exp = re.search(r"expected\s+([^,]+)", text)
     if m_exp:
@@ -2032,7 +2029,6 @@ def _extract_expected_got(text: str) -> dict[str, str]:
 
 def _extract_value_error_ctx(msg: str, code: str) -> dict[str, str]:
     """Extract substitution context from a ValueError message string."""
-    import re
     ctx: dict[str, str] = {}
 
     # Pattern: "X cannot be empty" -> field = X

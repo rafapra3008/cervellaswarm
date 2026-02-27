@@ -95,6 +95,17 @@ class TestRenderSnippet:
         result = render_snippet("", line=1, col=0)
         assert "^" in result
 
+    def test_crlf_line_endings(self) -> None:
+        source = "line one\r\nline two\r\nline three"
+        result = render_snippet(source, line=2, col=0)
+        assert "line two" in result
+        assert "^" in result
+        assert "\r" not in result  # \r must not leak into output
+
+    def test_negative_col_does_not_crash(self) -> None:
+        result = render_snippet("hello", line=1, col=-1)
+        assert "^" in result
+
 
 # ============================================================
 # ErrorCategory.SYNTAX
@@ -196,6 +207,13 @@ class TestHumanizeParseError:
         exc = ParseError("cannot parse action 'yells'", line=5, col=4)
         err = humanize(exc)
         assert err.code == "LU-N010"
+
+    def test_unknown_action_no_quotes(self) -> None:
+        exc = ParseError("cannot parse action yells", line=5, col=4)
+        err = humanize(exc)
+        assert err.code == "LU-N010"
+        # got falls back to full msg when no quotes -- at least code is correct
+        assert err.got is not None
 
     def test_unknown_property(self) -> None:
         exc = ParseError("unknown property 'maybe terminates'", line=10, col=8)
