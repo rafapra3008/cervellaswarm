@@ -79,6 +79,12 @@ class TestCmdCheck:
         exit_code = main(["check", str(hello_lu)])
         assert exit_code == 0
 
+    def test_check_valid_output(self, hello_lu: Path, capsys: pytest.CaptureFixture) -> None:
+        main(["check", str(hello_lu)])
+        captured = capsys.readouterr()
+        assert "OK" in captured.out
+        assert "agent" in captured.out.lower() or "protocol" in captured.out.lower()
+
     def test_check_invalid_file(self, bad_lu: Path) -> None:
         exit_code = main(["check", str(bad_lu)])
         assert exit_code == 1
@@ -99,6 +105,12 @@ class TestCmdRun:
     def test_run_valid_file(self, hello_lu: Path) -> None:
         exit_code = main(["run", str(hello_lu)])
         assert exit_code == 0
+
+    def test_run_valid_output(self, hello_lu: Path, capsys: pytest.CaptureFixture) -> None:
+        main(["run", str(hello_lu)])
+        captured = capsys.readouterr()
+        assert "OK" in captured.out
+        assert "Loaded" in captured.out
 
     def test_run_invalid_file(self, bad_lu: Path) -> None:
         exit_code = main(["run", str(bad_lu)])
@@ -152,6 +164,10 @@ class TestCmdCompile:
         assert out_py.exists()
         content = out_py.read_text()
         assert "Auto-generated" in content
+
+    def test_compile_to_bad_path(self, hello_lu: Path) -> None:
+        exit_code = main(["compile", str(hello_lu), "-o", "/nonexistent/dir/out.py"])
+        assert exit_code == 1
 
     def test_compile_invalid(self, bad_lu: Path) -> None:
         exit_code = main(["compile", str(bad_lu)])

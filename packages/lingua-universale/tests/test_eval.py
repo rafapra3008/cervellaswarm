@@ -104,6 +104,11 @@ class TestEvalResult:
         assert r.ok is False
         assert len(r.errors) == 1
 
+    def test_frozen(self) -> None:
+        r = EvalResult(ok=True, source_file="test.lu")
+        with pytest.raises(AttributeError):
+            r.ok = False  # type: ignore[misc]
+
 
 # ============================================================
 # check_source / check_file

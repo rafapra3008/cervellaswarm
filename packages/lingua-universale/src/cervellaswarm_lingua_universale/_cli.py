@@ -126,7 +126,11 @@ def _cmd_compile(args: argparse.Namespace) -> int:
     if result.python_source:
         if args.output:
             out_path = Path(args.output)
-            out_path.write_text(result.python_source, encoding="utf-8")
+            try:
+                out_path.write_text(result.python_source, encoding="utf-8")
+            except (PermissionError, OSError) as exc:
+                print(f"{_RED}{_BOLD}ERROR{_RESET} {exc}", file=sys.stderr)
+                return 1
             print(
                 f"{_GREEN}{_BOLD}OK{_RESET} "
                 f"Compiled {result.source_file} -> {out_path}"

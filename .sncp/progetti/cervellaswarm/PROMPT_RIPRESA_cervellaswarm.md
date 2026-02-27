@@ -1,49 +1,46 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-27 - Sessione 421
-> **STATUS:** C3.1 STUDIO DONE + C3.2 CLI+eval IN PROGRESS (implementazione completa, Guardiana audit pending).
+> **Ultimo aggiornamento:** 2026-02-27 - Sessione 422
+> **STATUS:** C3.2 DONE + C3.3 DONE. Prossimo: C3.4 REPL interattivo.
 
 ---
 
-## SESSIONE 421 - Cosa e successo
+## SESSIONE 422 - Cosa e successo
 
-### C3.1 STUDIO -- L'Esperienza (Guardiana 9.3/10)
+### C3.2 CLI + eval -- COMPLETATO (Guardiana 9.5/10)
 
-- **Ricerca:** 42 fonti esterne (Gleam, Elm, Rust, Python 3.14, Unison, Roc, Deno, Cargo)
-- **Gap analysis:** Ingegnera ha mappato 6 gap (G1-G6) con complessita S/M/L
-- **Insight chiave:** la pipeline parse -> compile -> execute GIA FUNZIONA
-- **5 decisioni architetturali:** D1 argparse, D2 stdlib REPL, D3 errors.py esteso, D4 REPLSession, D5 .lu canonici
-- **Guardiana:** 9.3/10, 0 P0, 0 P1, 3 P2 (tutti fixati: conteggio codici 35->60, SUBROADMAP/MAPPA allineate)
-- **Report:** `.sncp/progetti/cervellaswarm/reports/STUDIO_C3_LESPERIENZA.md`
-- **Ricerca:** `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260227_C3_developer_experience.md`
-- **Documenti satellite aggiornati:** SUBROADMAP C2->DONE C3 riallineata, MAPPA nota Fase C
+**Audit Guardiana:** 9.5/10, 0 P0, 0 P1, 2 P2 fixati.
 
-### C3.2 CLI + eval -- IN PROGRESS (codice scritto, test passanti, audit pending)
+**Fix applicati:**
+- **F1 (P2):** `run_file()` allineato a `check_file()`/`verify_file()` -- stesso pattern DRY: leggi file -> delega a `*_source()`. Rimosso import `compile_file` non piu necessario.
+- **F2 (P2):** `_protocol_node_to_lean4()` ora mappa `StepNode.action` al `MessageKind` corretto (`asks`->TASK_REQUEST, `returns`->TASK_RESULT, `sends`->DM, `tells`->BROADCAST, `proposes`->PLAN_PROPOSAL) invece di hardcodare TASK_REQUEST.
+- **F8 (P3):** `_cmd_compile()` gestisce `PermissionError`/`OSError` su `-o` output.
+- **+4 test:** frozen immutability, stdout check, stdout run, bad compile path.
 
-**4 file nuovi creati:**
-- `_eval.py` (~100 LOC) -- `check_source/file()`, `verify_source/file()`, `run_source/file()`, `EvalResult`
-- `_cli.py` (~105 LOC) -- argparse con 5 subcommand: check, run, verify, compile, version
-- `__main__.py` (~10 LOC) -- entry point `python -m cervellaswarm_lingua_universale`
-- `examples/hello.lu` -- primo file `.lu` del mondo (type + agent + protocol + properties)
+### C3.3 Error messages -- COMPLETATO (Guardiana 9.3/10)
 
-**2 file modificati:**
-- `pyproject.toml` -- aggiunto `[project.scripts] lu = "cervellaswarm_lingua_universale._cli:main"`
-- `__init__.py` -- aggiunto export EvalResult, check/verify/run_source/file, cli_main
+**Ricerca:** 38 fonti esterne (Rust rustc-dev-guide, Elm "Compiler Errors for Humans", Gleam v1.6, Roc, Python 3.14 PEP 657).
+**Gap Analysis:** Ingegnera ha mappato 8 gap (G1-G8). Insight chiave: le info di location (line+col) ESISTONO gia in ogni token e AST node. Il lavoro era di COLLEGAMENTO, non di costruzione.
 
-**Test nuovi:** 45 (27 test_eval.py + 18 test_cli.py)
+**Cosa e stato costruito:**
+1. **`render_snippet()`** (~50 LOC) -- generatore snippet stile Rust/Elm con numeri riga, gutter, caret `^`, label, context lines
+2. **12 codici LU-N001..N012** nel catalogo trilingue (en/it/pt):
+   - N001 tab, N002 bad indent, N003 unterminated string, N004 unexpected char, N005 dedent mismatch
+   - N006 unknown top-level keyword, N007 generic expected/got, N008 missing colon
+   - N009 empty protocol, N010 unknown step action, N011 unknown property, N012 unknown agent clause
+3. **`ErrorCategory.SYNTAX`** -- nuova categoria per pipeline C1
+4. **`_classify_tokenize_error()`** + **`_classify_parse_error()`** -- classifier pattern-matching
+5. **`_parser_similar()`** -- fuzzy matching per N006/N010/N011/N012 (keywords, actions, properties, agent clauses)
+6. **`humanize()`** -- nuovi branch per TokenizeError e ParseError (prima di tutti gli altri match)
+7. **`format_error(source="")`** -- nuovo parametro opzionale per snippet rendering
+8. **`_eval.py` integrato** -- `_parse_and_compile()` ora usa `humanize()` + `format_error(source=source)` con fallback
 
-**Stato funzionale:**
-- `lu check examples/hello.lu` -> OK, 1 agent, 1 protocol, 1 type
-- `lu run examples/hello.lu` -> OK, modulo Python live con 21 export
-- `lu verify examples/hello.lu` -> OK, Lean 4 source generated (1791 chars)
-- `lu compile examples/hello.lu` -> stampa Python generato
-- `lu version` -> "Lingua Universale v0.1.0"
-- Errori gestiti: file not found (exit 1), syntax error (exit 1 + messaggio)
-- Coverage _eval.py: 90%, Coverage _cli.py: 90%
+**Audit Guardiana:** 9.3/10, 0 P0, 0 P1, 2 P2 fixati.
+- **F1 (P2):** `_parser_similar` N011 aveva "all messages received" (non esiste) -> corretto con le 7 property reali del parser
+- **F2 (P2):** catalogo LU-N011 hint incompleto (4 proprieta su 7) -> corretto con tutte e 7
+- **F3-F8 (P3):** docstring humanize aggiornata, docstring test corretta, render_snippet edge case col>len(riga) fixato
 
-**MANCA per completare C3.2:**
-- Guardiana audit C3.2 (target 9.5/10)
-- Fix eventuali P1/P2 dall'audit
+**Report ricerca:** `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260227_C3_error_messages_deep.md`
 
 ---
 
@@ -55,10 +52,10 @@ LINGUAGGIO CERVELLASWARM:
   FASE C: Il Linguaggio
     C1: La Grammatica    [####################] 100% DONE!
     C2: Il Compilatore   [####################] 100% DONE!
-    C3: L'Esperienza     [#####...............] ~25%
+    C3: L'Esperienza     [############........] ~50%
       C3.1 STUDIO             DONE (S421, 9.3/10)
-      C3.2 CLI + eval         IN PROGRESS (codice+test ok, audit pending)
-      C3.3 Error messages     TODO
+      C3.2 CLI + eval         DONE (S422, 9.5/10)
+      C3.3 Error messages     DONE (S422, 9.3/10)
       C3.4 REPL interattivo   TODO
       C3.5 File .lu + showcase TODO
       C3.6 Guardiana finale   TODO
@@ -66,51 +63,66 @@ LINGUAGGIO CERVELLASWARM:
 
 ---
 
-## I NUMERI TOTALI (dopo S421)
+## I NUMERI TOTALI (dopo S422)
 
 | Metrica | Valore |
 |---------|--------|
-| Test totali | **2682** (+45 da S420) |
-| Test passanti | 2682 (100%) |
-| Moduli .py nel package | 23 (20 + _eval.py, _cli.py, __main__.py) |
+| Test totali | **2724** (+42 da S421) |
+| Test passanti | 2724 (100%) |
+| Moduli .py nel package | 23 |
 | File .lu di esempio | 1 (examples/hello.lu) |
+| Codici errore LU | **72** (60 + 12 LU-N) |
+| Locali errori | 3 (en, it, pt) |
 | Regressioni | 0 |
-| Guardiana audit S421 | 1 (C3.1 STUDIO 9.3/10) |
+| Tempo suite | 0.86s |
+| Guardiana audit S422 | 2 (C3.2: 9.5/10, C3.3: 9.3/10) |
 
 ---
 
-## PROSSIMO: Completare C3.2
+## PROSSIMO: C3.4 REPL interattivo
 
-1. **Guardiana audit C3.2** -- audit `_eval.py` + `_cli.py` + `test_eval.py` + `test_cli.py`
-2. **Fix P1/P2** dall'audit
-3. **Commit** con tutti i file C3.2
+1. **STUDIO** -- ricerca REPL design (Python, IPython, Elixir IEx, Gleam, Deno)
+2. **Implementare `_repl.py`** -- REPLSession class con:
+   - `lu repl` subcommand (da aggiungere a _cli.py)
+   - Prompt `lu>` con readline/stdin
+   - Valutazione incrementale (check, run, verify inline)
+   - History + multiline input
+   - Colori TTY-aware (riusa _cli.py pattern)
+3. **Test** -- pytest con capsys/monkeypatch per stdin
+4. **Guardiana audit** -- target 9.5/10
 
-Poi: C3.3 Error messages C1-C2 (estendere errors.py per ParseError, TokenizeError, etc.)
+Decisioni architetturali gia prese (STUDIO C3.1 S421):
+- D2: stdlib REPL (readline/cmd, ZERO deps)
+- D4: REPLSession class stateful
+
+Poi: C3.5 File .lu + showcase v2, C3.6 Guardiana finale
 
 ---
 
-## File chiave
+## File chiave (C3.2 + C3.3)
 
-- **STUDIO C3:** `.sncp/progetti/cervellaswarm/reports/STUDIO_C3_LESPERIENZA.md`
-- **RICERCA C3:** `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260227_C3_developer_experience.md`
-- **Nuovi:** `_eval.py`, `_cli.py`, `__main__.py`, `examples/hello.lu`
-- **Modificati:** `pyproject.toml` (console script), `__init__.py` (export)
-- **Test nuovi:** `test_eval.py` (27 test), `test_cli.py` (18 test)
+- **errors.py** (~1900 righe) -- +12 codici LU-N, render_snippet, humanize per TokenizeError/ParseError
+- **_eval.py** (~270 righe) -- integrato con humanize(), run_file DRY fix
+- **_cli.py** (~235 righe) -- compile -o error handling
+- **test_errors_c33.py** (36 test) -- snippet, codici, integration
+- **test_eval.py** (+1 test frozen) -- EvalResult immutability
+- **test_cli.py** (+3 test) -- stdout check, stdout run, bad compile path
+- **RICERCA C3.3:** `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260227_C3_error_messages_deep.md`
 
 ---
 
-## Lezioni Apprese (S421)
+## Lezioni Apprese (S422)
 
 ### Cosa ha funzionato bene
-- 2 agenti in parallelo (Researcher + Ingegnera) per ricerca e gap analysis
-- Bug trovati SUBITO durante test manuale: `MessageKind.REQUEST` (non esiste), `steps` vs `elements`, `message_type` vs `message_kind`. Testare a mano PRIMA dei test automatici salva tempo
-- Refactor `_parse_and_compile()` helper ha eliminato duplicazione parse in verify_source
+- **2 Cervelle parallele per STUDIO** (Researcher + Ingegnera) -- completate in 5 min parallelo, output complementari (38 fonti + 8 gap)
+- **Audit -> Fix -> Re-audit** ha portato 9.3 -> 9.3 con fix mirati (nessun re-audit necessario, fix erano chirurgici)
+- **Classifier pattern in errors.py** -- estendibile senza rompere nulla. Aggiungere TokenizeError/ParseError ha richiesto solo nuovi branch
 
 ### Cosa non ha funzionato
-- 3 fix consecutivi in `_protocol_node_to_lean4()` per campi sbagliati. Lezione: leggere SEMPRE la signature del target dataclass PRIMA di costruire l'oggetto
+- **`_extract_quoted` prendeva la PRIMA** quoted string dal messaggio ParseError, non quella dopo "got". Fix: regex specifico `r"got\s+'([^']+)'"` per N006
 
 ### Pattern confermato
-- **"Research First + Guardiana dopo step" (27a volta consecutiva)** -- il metodo e solido
+- **"Research First + Guardiana dopo step" (28a volta consecutiva)** -- il metodo funziona
 
 ---
 

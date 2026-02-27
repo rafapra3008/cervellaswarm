@@ -21,7 +21,7 @@ from pathlib import Path
 
 from ._ast import ProgramNode, ProtocolNode
 from ._compiler import ASTCompiler, CompiledModule
-from ._interop import compile_file, load_module, InteropError
+from ._interop import load_module, InteropError
 from ._parser import parse
 
 
@@ -60,13 +60,23 @@ def _parse_and_compile(
     try:
         program = parse(source)
     except Exception as exc:
-        return None, None, [str(exc)]
+        try:
+            from .errors import humanize, format_error
+            herr = humanize(exc)
+            return None, None, [format_error(herr, source=source)]
+        except Exception:
+            return None, None, [str(exc)]
 
     try:
         compiler = ASTCompiler()
         compiled = compiler.compile(program, source_file=source_file)
     except Exception as exc:
-        return program, None, [str(exc)]
+        try:
+            from .errors import humanize, format_error
+            herr = humanize(exc)
+            return None, None, [format_error(herr, source=source)]
+        except Exception:
+            return None, None, [str(exc)]
 
     return program, compiled, []
 
@@ -215,32 +225,15 @@ def run_file(path: str | Path) -> EvalResult:
     """Parse, compile, and execute a ``.lu`` file."""
     file_path = Path(path)
     try:
-        compiled = compile_file(file_path)
-    except InteropError as exc:
+        source = file_path.read_text(encoding="utf-8")
+    except (FileNotFoundError, PermissionError, OSError) as exc:
         return EvalResult(
             ok=False,
             source_file=str(file_path),
             errors=[str(exc)],
         )
 
-    try:
-        mod = load_module(compiled)
-    except InteropError as exc:
-        return EvalResult(
-            ok=False,
-            source_file=str(file_path),
-            compiled=compiled,
-            python_source=compiled.python_source,
-            errors=[str(exc)],
-        )
-
-    return EvalResult(
-        ok=True,
-        source_file=str(file_path),
-        compiled=compiled,
-        module=mod,
-        python_source=compiled.python_source,
-    )
+    return run_source(source, source_file=str(file_path))
 
 
 # ============================================================
@@ -258,16 +251,27 @@ def _protocol_node_to_lean4(node: ProtocolNode) -> str:
     from .types import MessageKind
     from .lean4_bridge import generate_lean4
 
+    _ACTION_TO_KIND: dict[str, MessageKind] = {
+        "asks": MessageKind.TASK_REQUEST,
+        "returns": MessageKind.TASK_RESULT,
+        "sends": MessageKind.DM,
+        "tells": MessageKind.BROADCAST,
+        "proposes": MessageKind.PLAN_PROPOSAL,
+    }
+
     steps: list[ProtocolStep] = []
     for step_node in node.steps:
         # ChoiceNode has branches, not sender/receiver -- skip for now
         if not hasattr(step_node, "sender"):
             continue
+        kind = _ACTION_TO_KIND.get(
+            step_node.action, MessageKind.TASK_REQUEST,
+        )
         steps.append(
             ProtocolStep(
                 sender=step_node.sender,
                 receiver=step_node.receiver,
-                message_kind=MessageKind.TASK_REQUEST,
+                message_kind=kind,
                 description=step_node.payload,
             )
         )

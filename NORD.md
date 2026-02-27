@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 26 Febbraio 2026 - S406 (Context Optimization FASE 1+2 DONE, FASE 3 prossima sessione)
+> Aggiornato: 27 Febbraio 2026 - S422 (C3.2 CLI+eval DONE, C3.3 Error messages DONE, 2724 test)
 
 ```
 +==================================================================+
@@ -142,10 +142,11 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |                                                                  |
 |   FASE A: COMPLETA + HARDENED (S380-S386)                        |
 |   FASE B: COMPLETA! B.1-B.7 DONE (S387-S398)                    |
-|     B.5 Spec Language = PROPRIETA FORMALI USER-FRIENDLY!         |
-|     B.6 Error Messages + B.7 Showcase DONE (S398)               |
+|   FASE C: IL LINGUAGGIO (S407-S422)                              |
+|     C1 Grammatica DONE! C2 Compilatore DONE!                    |
+|     C3 L'Esperienza 50% (CLI+eval+errors DONE, REPL next)      |
 |   PyPI: LIVE! pip install cervellaswarm-lingua-universale (S399) |
-|   13 moduli, 1820 test, ZERO deps                               |
+|   23 moduli, 2724 test, 72 error codes, ZERO deps              |
 |   NORD completo: packages/lingua-universale/NORD.md              |
 |                                                                  |
 +==================================================================+

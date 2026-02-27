@@ -106,12 +106,13 @@ Scelta architetturale: micro-DSL strutturato (come B.4) > builder/decorator/inli
 ### B.6 - Error Messages per Umani -- DONE (S398)
 
 Translator layer: errori tecnici -> messaggi user-friendly stile Elm/Rust.
-- `errors.py`: humanize(), format_error(), suggest_similar(), _SafeDict
-- 35 error codes (LU-T/P/R/D/S/I/L/G/C/A/X), 3 locales (en, it, pt)
+- `errors.py`: humanize(), format_error(), render_snippet(), suggest_similar(), _SafeDict
+- 72 error codes (LU-T/P/R/D/S/I/L/G/C/A/X/N), 3 locales (en, it, pt)
 - Fuzzy matching via difflib.get_close_matches() (stdlib, ZERO deps)
 - Guardiana 9.3/10 APPROVED, 5 bug trovati e fixati (2 Tester + 3 Guardiana)
 - Ricerca: 27 fonti (Elm 2015, Rust diagnostics, miette, Alloy, FizzBee, Dafny)
-- **Output:** 1784 LOC, 257 test, ZERO deps
+- **Output:** ~1900 LOC, 293 test (257 + 36 C3.3), ZERO deps
+- C3.3 (S422): +12 codici LU-N per pipeline C1 (tokenizer+parser), render_snippet() Rust-style
 
 ### B.7 - Showcase e Community
 

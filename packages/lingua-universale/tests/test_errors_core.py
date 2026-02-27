@@ -31,7 +31,7 @@ from cervellaswarm_lingua_universale.errors import (
 
 
 class TestErrorCategory:
-    """All 7 ErrorCategory values exist and are accessible."""
+    """All 8 ErrorCategory values exist and are accessible."""
 
     def test_validation_value(self):
         assert ErrorCategory.VALIDATION.value == "validation"
@@ -55,11 +55,12 @@ class TestErrorCategory:
         assert ErrorCategory.INTEGRATION.value == "integration"
 
     def test_membership(self):
-        """All 7 members are present."""
+        """All 8 members are present."""
         members = {m.value for m in ErrorCategory}
         assert members == {
             "validation", "protocol", "parse",
             "verification", "codegen", "confidence", "integration",
+            "syntax",
         }
 
 
