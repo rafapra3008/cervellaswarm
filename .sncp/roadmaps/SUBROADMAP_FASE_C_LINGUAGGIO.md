@@ -145,7 +145,7 @@ La grammatica EBNF diventa direttamente il parser. Spezzato in 6 sub-step.
 
 > Da "linguaggio nostro" a "Python che funziona e e verificato"
 
-### Step C2.1: STUDIO - Architettura compilatore
+### Step C2.1: STUDIO - Architettura compilatore (DONE - S412)
 
 **Non toccare nulla.** Studiare:
 - Come `codegen.py` gia genera Python da protocolli
@@ -156,6 +156,13 @@ La grammatica EBNF diventa direttamente il parser. Spezzato in 6 sub-step.
 **Output:** Proposta architettura compilatore per Guardiana.
 **Effort:** 1 sessione
 **Rischio:** NULLO
+
+**Criterio completamento:**
+- [x] Tutti i moduli esistenti mappati (8 moduli, 4330+ LOC)
+- [x] Ricerca esterna (18 fonti: Cython, Hy, Coconut, icontract, deal, etc.)
+- [x] 5 decisioni architetturali documentate e motivate
+- [x] Piano implementazione C2.2 (7 sub-step)
+- [x] Guardiana verifica (9.3/10, 0 P1, 2 P2)
 
 ---
 
@@ -284,8 +291,8 @@ FASE C1: La Grammatica             [####################] 100% DONE!
   C1.2 Design sintassi (BNF/EBNF)   2-3 sess  DONE (S408-409, 8.8/10)
   C1.3 Parser del linguaggio         3 sess    DONE (S410-412, 9.52/10 media)
 
-FASE C2: Il Compilatore            [....................] 0%
-  C2.1 STUDIO architettura           1 sess    TODO
+FASE C2: Il Compilatore            [##..................] 10%
+  C2.1 STUDIO architettura           1 sess    DONE (S412, 9.3/10)
   C2.2 AST -> Python generation      3-4 sess  TODO
   C2.3 Python interop                2-3 sess  TODO
   C2.4 Constrained generation        1-2 sess  TODO
