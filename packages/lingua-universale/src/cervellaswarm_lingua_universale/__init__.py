@@ -155,6 +155,16 @@ from ._grammar_export import (
     GrammarExporter,
     GRAMMAR_VERSION,
 )
+from ._eval import (
+    EvalResult,
+    check_source,
+    check_file,
+    verify_source,
+    verify_file,
+    run_source,
+    run_file,
+)
+from ._cli import main as cli_main
 from .errors import (
     ErrorCategory,
     ErrorSeverity,
@@ -298,6 +308,15 @@ __all__ = [
     # Grammar Export (C2.4)
     "GrammarExporter",
     "GRAMMAR_VERSION",
+    # Eval (C3.2)
+    "EvalResult",
+    "check_source",
+    "check_file",
+    "verify_source",
+    "verify_file",
+    "run_source",
+    "run_file",
+    "cli_main",
     # Errors
     "ErrorCategory",
     "ErrorSeverity",

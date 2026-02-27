@@ -1,0 +1,19 @@
+type TaskStatus = Pending | Running | Done
+
+agent Worker:
+    role: backend
+    trust: standard
+    accepts: TaskRequest
+    produces: TaskResult
+    requires: task.well_defined
+    ensures: result.done
+
+protocol DelegateTask:
+    roles: regina, worker, guardiana
+    regina asks worker to do task
+    worker returns result to regina
+    regina asks guardiana to verify
+    guardiana returns verdict to regina
+    properties:
+        always terminates
+        no deadlock

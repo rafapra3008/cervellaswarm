@@ -300,18 +300,21 @@ FASE C1: La Grammatica             [####################] 100% DONE!
   C1.2 Design sintassi (BNF/EBNF)   2-3 sess  DONE (S408-409, 8.8/10)
   C1.3 Parser del linguaggio         3 sess    DONE (S410-412, 9.52/10 media)
 
-FASE C2: Il Compilatore            [########............] 40%
+FASE C2: Il Compilatore            [####################] 100% DONE!
   C2.1 STUDIO architettura           1 sess    DONE (S412, 9.3/10)
-  C2.2 AST -> Python generation      3-4 sess  IN PROGRESS (3/7 sub-step, S413)
-  C2.3 Python interop                2-3 sess  TODO
-  C2.4 Constrained generation        1-2 sess  TODO
+  C2.2 AST -> Python generation      4 sess    DONE (S413-S415, media 9.5/10)
+  C2.3 Python interop                3 sess    DONE (S416-S418, media 9.5/10)
+  C2.4 Constrained generation        2 sess    DONE (S419-S420, media 9.575/10)
 
-FASE C3: L'Esperienza             [....................] 0%
-  C3.1 REPL interattivo              2-3 sess  TODO
-  C3.2 Error messages umani          1-2 sess  TODO
-  C3.3 Flusso completo (showcase v2) 2-3 sess  TODO
+FASE C3: L'Esperienza             [#####...........] ~25%
+  C3.1 STUDIO                        1 sess    DONE (S421, 9.3/10)
+  C3.2 CLI + eval (lu run/check)     1-2 sess  IN PROGRESS (S421, codice+test ok, audit pending)
+  C3.3 Error messages C1-C2          1 sess    TODO
+  C3.4 REPL interattivo              2 sess    TODO
+  C3.5 File .lu + showcase v2        1-2 sess  TODO
+  C3.6 Guardiana audit finale        1 sess    TODO
 
-EFFORT TOTALE: ~15-25 sessioni (~2-4 mesi, un progresso al giorno)
+EFFORT TOTALE: ~19-27 sessioni (~2-4 mesi, un progresso al giorno)
 ORDINE: C1 -> C2 -> C3 (mai saltare)
 AUDIT: Guardiana dopo OGNI step
 ```

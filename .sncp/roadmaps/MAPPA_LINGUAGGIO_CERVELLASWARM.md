@@ -131,6 +131,10 @@ Il mondo deve sapere che esistiamo.
 
 ## FASE C: IL LINGUAGGIO -- 2027
 
+> **NOTA (S421):** Fase C e stata dettagliata e ridefinita nella SUBROADMAP:
+> `.sncp/roadmaps/SUBROADMAP_FASE_C_LINGUAGGIO.md` (C1 Grammatica, C2 Compilatore, C3 L'Esperienza).
+> I sub-step C.1-C.7 sotto sono la visione originale S394; il piano esecutivo reale e nella SUBROADMAP.
+
 > Obiettivo: il layer di specifica diventa un linguaggio di programmazione vero.
 > CervellaLang: il primo linguaggio nativo per AI con verifica formale.
 
