@@ -19,10 +19,10 @@ Implementation plan (7 sub-steps):
           - CompiledModule, ASTCompiler, compile()
           - _expr_to_python, _type_to_python, _compile_use
   C2.2.3  _compile_variant_type, _compile_record_type     DONE (S413)
-  C2.2.4  _compile_agent (contracts + metadata)           THIS FILE (S414)
-  C2.2.5  _compile_protocol (bridge to codegen.py)        THIS FILE (S414)
-  C2.2.6  Golden file tests + round-trip exec             TODO
-  C2.2.7  Guardiana audit finale C2.2                     TODO
+  C2.2.4  _compile_agent (contracts + metadata)           DONE (S414)
+  C2.2.5  _compile_protocol (bridge to codegen.py)        DONE (S414)
+  C2.2.6  Golden file tests + round-trip exec             DONE (S415)
+  C2.2.7  Guardiana audit finale C2.2                     DONE (S415, 9.5/10)
 """
 
 from __future__ import annotations
