@@ -22,6 +22,7 @@ Security:
 
 from __future__ import annotations
 
+import sys
 import types
 from pathlib import Path
 
@@ -228,8 +229,15 @@ def load_module(
     The generated Python source is executed via ``exec()`` into a fresh
     ``types.ModuleType`` namespace.  The resulting module has proper
     ``__name__``, ``__file__``, and ``__spec__`` attributes but is
-    **not** registered in ``sys.modules`` -- it exists only as long as
-    the caller holds a reference.
+    **not** persistently registered in ``sys.modules`` -- it exists only
+    as long as the caller holds a reference.
+
+    .. note::
+
+       The module is temporarily registered in ``sys.modules`` during
+       ``exec()`` because stdlib decorators like ``@dataclass`` require
+       ``sys.modules[cls.__module__]`` to be resolvable.  Any previous
+       entry under the same name is saved and restored after ``exec()``.
 
     .. warning::
 
@@ -268,7 +276,14 @@ def load_module(
     mod.__spec__ = None  # Not loaded via importlib
     mod.__loader__ = None
 
-    # Execute generated code into module namespace
+    # Temporarily register in sys.modules during exec().
+    # Python's @dataclass (and other stdlib decorators) internally do
+    # sys.modules[cls.__module__].__dict__ -- this fails if the module
+    # is not registered.  We remove it after exec() so the module is
+    # NOT persistently in sys.modules (design requirement F5).
+    _sentinel = object()
+    previous = sys.modules.get(module_name, _sentinel)
+    sys.modules[module_name] = mod
     try:
         code = compile(compiled.python_source, compiled.source_file, "exec")
         exec(code, mod.__dict__)  # noqa: S102
@@ -279,6 +294,12 @@ def load_module(
             path=compiled.source_file,
             operation="load_module:exec",
         ) from exc
+    finally:
+        # Restore previous state: put back the original or remove entirely
+        if previous is _sentinel:
+            sys.modules.pop(module_name, None)
+        else:
+            sys.modules[module_name] = previous
 
     return mod
 
