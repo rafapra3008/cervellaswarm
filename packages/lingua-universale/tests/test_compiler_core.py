@@ -11,7 +11,10 @@ Test structure:
   - _safe_ident: keyword avoidance
   - CompiledModule: frozen dataclass
   - compile(): full program with UseNode declarations
-  - Stubs: verify NotImplementedError for unimplemented decl types
+  - Error handling: verify TypeError for unknown decl types
+
+Agent compilation tests: see test_compiler_agent.py (C2.2.4).
+Protocol compilation tests: see test_compiler_protocol.py (C2.2.5).
 """
 
 from __future__ import annotations
@@ -19,7 +22,6 @@ from __future__ import annotations
 import pytest
 
 from cervellaswarm_lingua_universale._ast import (
-    AgentNode,
     AttrExpr,
     BinOpExpr,
     GenericType,
@@ -30,7 +32,6 @@ from cervellaswarm_lingua_universale._ast import (
     NotExpr,
     NumberExpr,
     ProgramNode,
-    ProtocolNode,
     RecordTypeDecl,
     SimpleType,
     StringExpr,
@@ -673,57 +674,14 @@ class TestPreambleImports:
 
 
 # ===================================================================
-# Stubs -- verify NotImplementedError (agent, protocol)
+# Error handling (all declaration types now implemented)
 # ===================================================================
 
 
-class TestCompilerStubs:
-    """Verify that unimplemented declaration types raise NotImplementedError."""
-
-    def test_agent_stub(self, compiler: ASTCompiler) -> None:
-        node = AgentNode(
-            name="Worker", role="backend", trust="standard",
-            accepts=(), produces=(), requires=(), ensures=(), loc=LOC,
-        )
-        with pytest.raises(NotImplementedError, match="AgentNode.*Worker"):
-            compiler._compile_agent(node)
-
-    def test_agent_via_dispatch(self, compiler: ASTCompiler) -> None:
-        """Test AgentNode through _compile_declaration dispatch."""
-        node = AgentNode(
-            name="Worker", role="backend", trust="standard",
-            accepts=(), produces=(), requires=(), ensures=(), loc=LOC,
-        )
-        with pytest.raises(NotImplementedError):
-            compiler._compile_declaration(node)
-
-    def test_protocol_stub(self, compiler: ASTCompiler) -> None:
-        node = ProtocolNode(
-            name="DelegateTask", roles=("regina", "worker"),
-            steps=(), properties=(), loc=LOC,
-        )
-        with pytest.raises(NotImplementedError, match="ProtocolNode.*DelegateTask"):
-            compiler._compile_protocol(node)
-
-    def test_protocol_via_dispatch(self, compiler: ASTCompiler) -> None:
-        """Test ProtocolNode through _compile_declaration dispatch."""
-        node = ProtocolNode(
-            name="DelegateTask", roles=("regina", "worker"),
-            steps=(), properties=(), loc=LOC,
-        )
-        with pytest.raises(NotImplementedError):
-            compiler._compile_declaration(node)
+class TestCompilerErrors:
+    """Verify error handling for invalid inputs."""
 
     def test_unknown_declaration_raises(self, compiler: ASTCompiler) -> None:
         """Passing an unexpected type to _compile_declaration raises TypeError."""
         with pytest.raises(TypeError, match="Unknown declaration type"):
             compiler._compile_declaration("not_a_decl")  # type: ignore[arg-type]
-
-    def test_compile_program_with_unimplemented_decl(self, compiler: ASTCompiler) -> None:
-        """A program containing an unimplemented decl type raises."""
-        prog = ProgramNode(
-            (AgentNode("W", "backend", "standard", (), (), (), (), LOC),),
-            Loc(1, 0),
-        )
-        with pytest.raises(NotImplementedError):
-            compiler.compile(prog)

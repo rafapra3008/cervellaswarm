@@ -15,12 +15,12 @@ Architecture (STUDIO C2.1, S412):
 
 Implementation plan (7 sub-steps):
   C2.2.1  _contracts.py                DONE (S413)
-  C2.2.2  _compiler.py core scaffold   THIS FILE (S413)
+  C2.2.2  _compiler.py core scaffold   DONE (S413)
           - CompiledModule, ASTCompiler, compile()
           - _expr_to_python, _type_to_python, _compile_use
-  C2.2.3  _compile_variant_type, _compile_record_type     THIS FILE (S413)
-  C2.2.4  _compile_agent (contracts + metadata)           TODO
-  C2.2.5  _compile_protocol (bridge to codegen.py)        TODO
+  C2.2.3  _compile_variant_type, _compile_record_type     DONE (S413)
+  C2.2.4  _compile_agent (contracts + metadata)           THIS FILE (S414)
+  C2.2.5  _compile_protocol (bridge to codegen.py)        THIS FILE (S414)
   C2.2.6  Golden file tests + round-trip exec             TODO
   C2.2.7  Guardiana audit finale C2.2                     TODO
 """
@@ -35,6 +35,8 @@ from ._ast import (
     AgentNode,
     AttrExpr,
     BinOpExpr,
+    BranchNode,
+    ChoiceNode,
     GenericType,
     GroupExpr,
     IdentExpr,
@@ -46,13 +48,16 @@ from ._ast import (
     ProtocolNode,
     RecordTypeDecl,
     SimpleType,
+    StepNode,
     StringExpr,
     UseNode,
     VariantTypeDecl,
 )
 
 if TYPE_CHECKING:
-    from ._ast import Declaration, Expr, TypeExpr
+    from ._ast import Declaration, Expr, StepOrChoice, TypeExpr
+    from .protocols import Protocol, ProtocolElement
+    from .types import MessageKind
 
 
 # ============================================================
@@ -237,24 +242,320 @@ class ASTCompiler:
         return lines
 
     # ----------------------------------------------------------
-    # Agent (stub -- C2.2.4)
+    # Agent declaration (C2.2.4)
     # ----------------------------------------------------------
 
     def _compile_agent(self, node: AgentNode) -> list[str]:
-        """Compile agent declaration. Full implementation in C2.2.4."""
-        raise NotImplementedError(
-            f"AgentNode compilation not yet implemented: {node.name}"
+        """Compile ``agent Worker: ...`` to a Python class.
+
+        Generates:
+          - Class with ``__lu_role__``, ``__lu_trust__``, ``__lu_accepts__``,
+            ``__lu_produces__`` metadata attributes.
+          - ``process()`` method with ``requires`` guards (preconditions) and
+            ``ensures`` guards (postconditions) using ``ContractViolation``.
+          - ``_execute()`` stub for user implementation.
+
+        Registers ``from cervellaswarm_lingua_universale._contracts import
+        ContractViolation`` in the preamble when any contract clause exists.
+        """
+        loc = self._loc_comment(node.loc)
+        name = self._safe_ident(node.name)
+        lines: list[str] = [
+            f"class {name}:  {loc}",
+            f'    """Agent \'{node.name}\' -- compiled from Lingua Universale."""',
+        ]
+
+        # --- Metadata attributes ---
+        if node.role is not None:
+            lines.append(f'    __lu_role__ = "{node.role}"')
+        if node.trust is not None:
+            lines.append(f'    __lu_trust__ = "{node.trust}"')
+        if node.accepts:
+            accept_str = ", ".join(f'"{a}"' for a in node.accepts)
+            lines.append(f"    __lu_accepts__ = ({accept_str},)")
+        if node.produces:
+            produce_str = ", ".join(f'"{p}"' for p in node.produces)
+            lines.append(f"    __lu_produces__ = ({produce_str},)")
+
+        # --- Register ContractViolation import if contracts exist ---
+        has_contracts = bool(node.requires or node.ensures)
+        if has_contracts:
+            self._preamble_imports.add(
+                "from cervellaswarm_lingua_universale._contracts"
+                " import ContractViolation"
+            )
+
+        # --- process() method ---
+        lines.append("")
+        lines.append("    def process(self, **kwargs):")
+
+        if not has_contracts:
+            lines.append(
+                '        """Process input. No contracts declared."""'
+            )
+            lines.append("        return self._execute(**kwargs)")
+        else:
+            lines.append(
+                '        """Process input with contract enforcement."""'
+            )
+            # requires (preconditions)
+            if node.requires:
+                lines.append("        # --- requires (preconditions) ---")
+                for req in node.requires:
+                    guard_py = self._contract_expr_to_python(req)
+                    # Human-readable condition uses plain expr (no kwargs[])
+                    human_py = self._expr_to_python(req)
+                    req_loc = self._loc_comment(req.loc)
+                    source = f"line {req.loc.line}, col {req.loc.col}"
+                    lines.append(f"        if not ({guard_py}):  {req_loc}")
+                    lines.append(
+                        f"            raise ContractViolation("
+                        f'"{self._escape_contract_str(human_py)}"'
+                        f', kind="requires"'
+                        f', source="{source}"'
+                        f")"
+                    )
+
+            # execute
+            lines.append("        _result = self._execute(**kwargs)")
+
+            # ensures (postconditions)
+            if node.ensures:
+                lines.append("        # --- ensures (postconditions) ---")
+                for ens in node.ensures:
+                    guard_py = self._contract_expr_to_python(ens)
+                    human_py = self._expr_to_python(ens)
+                    ens_loc = self._loc_comment(ens.loc)
+                    source = f"line {ens.loc.line}, col {ens.loc.col}"
+                    lines.append(f"        if not ({guard_py}):  {ens_loc}")
+                    lines.append(
+                        f"            raise ContractViolation("
+                        f'"{self._escape_contract_str(human_py)}"'
+                        f', kind="ensures"'
+                        f', source="{source}"'
+                        f")"
+                    )
+
+            lines.append("        return _result")
+
+        # --- _execute() stub ---
+        lines.append("")
+        lines.append("    def _execute(self, **kwargs):")
+        lines.append(
+            f'        raise NotImplementedError("{node.name}._execute")'
         )
 
+        return lines
+
     # ----------------------------------------------------------
-    # Protocol (stub -- C2.2.5)
+    # Protocol declaration (C2.2.5)
     # ----------------------------------------------------------
 
     def _compile_protocol(self, node: ProtocolNode) -> list[str]:
-        """Compile protocol declaration. Full implementation in C2.2.5."""
-        raise NotImplementedError(
-            f"ProtocolNode compilation not yet implemented: {node.name}"
+        """Compile ``protocol DelegateTask: ...`` to Python via codegen bridge.
+
+        Pipeline: ProtocolNode AST -> Protocol runtime object -> PythonGenerator.
+        The bridge transforms AST step/choice nodes into runtime ProtocolStep
+        and ProtocolChoice objects, then delegates code generation to the
+        existing ``codegen.PythonGenerator``.
+
+        Registers protocol-specific imports in the preamble.
+        """
+        from .codegen import PythonGenerator
+        from .protocols import Protocol, ProtocolChoice, ProtocolStep
+        from .types import MessageKind
+
+        # 1. Transform AST -> Protocol runtime object
+        protocol = self._ast_to_protocol(node)
+
+        # 2. Generate code via PythonGenerator (individual sections)
+        gen = PythonGenerator()
+        proto_def = gen.generate_protocol_definition(protocol)
+        role_classes = gen.generate_role_classes(protocol)
+        session_class = gen.generate_session_class(protocol)
+
+        # 2b. Prefix class names to avoid collision in multi-protocol programs.
+        # "ProtocolSession" -> "{Name}Session", "{Role}Role" -> "{Name}{Role}Role"
+        prefix = node.name
+        session_class = session_class.replace(
+            "class ProtocolSession:", f"class {prefix}Session:",
         )
+        for role in node.roles:
+            from .codegen import _to_class_name
+            cls_name = f"{_to_class_name(role)}Role"
+            prefixed = f"{prefix}{cls_name}"
+            role_classes = role_classes.replace(
+                f"class {cls_name}:", f"class {prefixed}:",
+            )
+            session_class = session_class.replace(
+                f"{cls_name}(self)", f"{prefixed}(self)",
+            )
+            session_class = session_class.replace(
+                f"-> {cls_name}:", f"-> {prefixed}:",
+            )
+
+        # 3. Register preamble imports
+        self._preamble_imports.add(
+            "from cervellaswarm_lingua_universale.types import MessageKind"
+        )
+        self._preamble_imports.add(
+            "from cervellaswarm_lingua_universale.protocols import ("
+            "\n    Protocol,"
+            "\n    ProtocolChoice,"
+            "\n    ProtocolStep,"
+            "\n)"
+        )
+        self._preamble_imports.add(
+            "from cervellaswarm_lingua_universale.checker import ("
+            "\n    SessionChecker,"
+            "\n    ProtocolViolation,"
+            "\n    SessionComplete,"
+            "\n)"
+        )
+        self._preamble_imports.add("from typing import Optional")
+
+        # Import message dataclasses used by this protocol
+        from .codegen import _kind_to_message_class, _used_message_kinds
+        kind_map = _kind_to_message_class()
+        for kind in _used_message_kinds(protocol):
+            cls_name = kind_map.get(kind)
+            if cls_name:
+                self._preamble_imports.add(
+                    f"from cervellaswarm_lingua_universale.types import {cls_name}"
+                )
+
+        # 4. Assemble output lines with source annotation
+        loc = self._loc_comment(node.loc)
+        lines: list[str] = [f"# Protocol: {node.name}  {loc}"]
+
+        # Emit declared properties as comments (verification is Lean 4's job)
+        if node.properties:
+            lines.append(f"# Declared properties ({len(node.properties)}):")
+            for prop in node.properties:
+                lines.append(f"#   - {type(prop).__name__}")
+
+        # Protocol definition, role classes, session class
+        for section in (proto_def, role_classes, session_class):
+            for line in section.splitlines():
+                lines.append(line)
+
+        return lines
+
+    def _ast_to_protocol(self, node: ProtocolNode) -> Protocol:
+        """Transform a ``ProtocolNode`` AST into a runtime ``Protocol`` object.
+
+        Maps StepNode -> ProtocolStep, ChoiceNode -> ProtocolChoice.
+        Returns a ``Protocol`` instance ready for code generation.
+        """
+        from .protocols import Protocol, ProtocolChoice, ProtocolStep
+
+        elements = self._transform_steps(node.steps)
+
+        return Protocol(
+            name=node.name,
+            roles=node.roles,
+            elements=elements,
+        )
+
+    def _transform_steps(
+        self, steps: tuple[StepOrChoice, ...],
+    ) -> tuple[ProtocolElement, ...]:
+        """Transform AST step/choice nodes into runtime protocol elements."""
+        from .protocols import ProtocolChoice, ProtocolStep
+
+        result: list[object] = []
+        for item in steps:
+            if isinstance(item, StepNode):
+                result.append(ProtocolStep(
+                    sender=item.sender,
+                    receiver=item.receiver,
+                    message_kind=self._step_to_message_kind(item),
+                    description=item.payload,
+                ))
+            elif isinstance(item, ChoiceNode):
+                branches: dict[str, tuple[ProtocolStep, ...]] = {}
+                for branch in item.branches:
+                    branch_steps = tuple(
+                        ProtocolStep(
+                            sender=s.sender,
+                            receiver=s.receiver,
+                            message_kind=self._step_to_message_kind(s),
+                            description=s.payload,
+                        )
+                        for s in branch.steps
+                    )
+                    branches[branch.label] = branch_steps
+                result.append(ProtocolChoice(
+                    decider=item.decider,
+                    branches=branches,
+                ))
+        return tuple(result)
+
+    @staticmethod
+    def _step_to_message_kind(step: StepNode) -> MessageKind:
+        """Map a StepNode's action + payload to a ``MessageKind`` enum value.
+
+        Uses keyword-based heuristics on the action verb and payload text.
+        Falls back to ``MessageKind.DM`` for unrecognized patterns.
+
+        Mapping rules:
+          - asks + "verify"/"audit"/"check" -> AUDIT_REQUEST
+          - asks + "plan"                   -> PLAN_REQUEST
+          - asks + "research"/"search"      -> RESEARCH_QUERY
+          - asks (default)                  -> TASK_REQUEST
+          - returns + "verdict"/"audit"     -> AUDIT_VERDICT
+          - returns + "plan"/"proposal"     -> PLAN_PROPOSAL
+          - returns + "report"/"research"   -> RESEARCH_REPORT
+          - returns (default)               -> TASK_RESULT
+          - tells + "decision"              -> PLAN_DECISION
+          - tells (default)                 -> DM
+          - proposes                        -> PLAN_PROPOSAL
+          - sends + "shutdown"              -> SHUTDOWN_REQUEST
+          - sends + "context"              -> CONTEXT_INJECT
+          - sends + "broadcast"            -> BROADCAST
+          - sends (default)                -> DM
+        """
+        from .types import MessageKind
+
+        action = step.action
+        payload = step.payload.lower()
+
+        if action == "asks":
+            if any(w in payload for w in ("verify", "audit", "check")):
+                return MessageKind.AUDIT_REQUEST
+            if "plan" in payload:
+                return MessageKind.PLAN_REQUEST
+            if any(w in payload for w in ("research", "search")):
+                return MessageKind.RESEARCH_QUERY
+            return MessageKind.TASK_REQUEST
+
+        if action == "returns":
+            if any(w in payload for w in ("verdict", "audit")):
+                return MessageKind.AUDIT_VERDICT
+            if any(w in payload for w in ("plan", "proposal")):
+                return MessageKind.PLAN_PROPOSAL
+            if any(w in payload for w in ("report", "research")):
+                return MessageKind.RESEARCH_REPORT
+            return MessageKind.TASK_RESULT
+
+        if action == "tells":
+            if "decision" in payload:
+                return MessageKind.PLAN_DECISION
+            return MessageKind.DM
+
+        if action == "proposes":
+            return MessageKind.PLAN_PROPOSAL
+
+        if action == "sends":
+            if "shutdown" in payload:
+                return MessageKind.SHUTDOWN_REQUEST
+            if "context" in payload:
+                return MessageKind.CONTEXT_INJECT
+            if "broadcast" in payload:
+                return MessageKind.BROADCAST
+            return MessageKind.DM
+
+        return MessageKind.DM
 
     # ----------------------------------------------------------
     # Expr -> Python expression string
@@ -319,6 +620,12 @@ class ASTCompiler:
 
         if isinstance(tex, GenericType):
             base = _LU_GENERIC_MAP.get(tex.name, tex.name)
+            # Fix P2: register preamble import for Confident[T]
+            if tex.name == "Confident":
+                self._preamble_imports.add(
+                    "from cervellaswarm_lingua_universale.confidence"
+                    " import Confident"
+                )
             arg = self._type_to_python(tex.arg)
             inner = f"{base}[{arg}]"
             if tex.optional:
@@ -345,4 +652,56 @@ class ASTCompiler:
         if name in _PYTHON_KEYWORDS:
             return f"{name}_"
         return name
+
+    def _contract_expr_to_python(self, expr: Expr) -> str:
+        """Convert a contract expression to Python with kwargs lookup.
+
+        Like ``_expr_to_python`` but top-level identifiers resolve to
+        ``kwargs["name"]`` so that ``process(**kwargs)`` can evaluate
+        contract guards against its keyword arguments.
+
+        ``AttrExpr("task", "valid")`` becomes ``kwargs["task"].valid``
+        (the object is looked up in kwargs, the attribute is accessed normally).
+        """
+        if isinstance(expr, IdentExpr):
+            name = self._safe_ident(expr.name)
+            return f'kwargs["{name}"]'
+
+        if isinstance(expr, AttrExpr):
+            obj = self._safe_ident(expr.obj)
+            attr = self._safe_ident(expr.attr)
+            return f'kwargs["{obj}"].{attr}'
+
+        if isinstance(expr, MethodCallExpr):
+            obj = self._safe_ident(expr.obj)
+            method = self._safe_ident(expr.method)
+            args = ", ".join(self._contract_expr_to_python(a) for a in expr.args)
+            return f'kwargs["{obj}"].{method}({args})'
+
+        # For all other expressions (BinOp, Not, Group, Number, String),
+        # recurse normally but with contract-aware sub-expressions.
+        if isinstance(expr, BinOpExpr):
+            left = self._contract_expr_to_python(expr.left)
+            right = self._contract_expr_to_python(expr.right)
+            return f"({left}) {expr.op} ({right})"
+
+        if isinstance(expr, NotExpr):
+            operand = self._contract_expr_to_python(expr.operand)
+            return f"not ({operand})"
+
+        if isinstance(expr, GroupExpr):
+            inner = self._contract_expr_to_python(expr.inner)
+            return f"({inner})"
+
+        # Literals (Number, String) don't need kwargs lookup
+        return self._expr_to_python(expr)
+
+    @staticmethod
+    def _escape_contract_str(expr: str) -> str:
+        """Escape a Python expression string for embedding in a string literal.
+
+        Handles backslashes and double-quotes so the generated
+        ``ContractViolation("...")`` call is always valid Python.
+        """
+        return expr.replace("\\", "\\\\").replace('"', '\\"')
 
