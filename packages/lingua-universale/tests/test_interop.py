@@ -368,12 +368,12 @@ class TestInteropEdgeCases:
         assert ns["__lu_source__"] == "path\\to\\file.lu"
 
     def test_compile_file_oserror(self, tmp_path: Path) -> None:
-        """InteropError wraps OSError (e.g. permission denied)."""
+        """InteropError wraps PermissionError with distinct message."""
         lu_file = tmp_path / "unreadable.lu"
         lu_file.write_text(SIMPLE_VARIANT, encoding="utf-8")
         lu_file.chmod(0o000)
         try:
-            with pytest.raises(InteropError, match="Cannot read file") as exc_info:
+            with pytest.raises(InteropError, match="Permission denied") as exc_info:
                 compile_file(lu_file)
             assert exc_info.value.operation == "compile_file:read"
         finally:

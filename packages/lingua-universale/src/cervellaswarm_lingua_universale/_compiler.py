@@ -404,6 +404,7 @@ class ASTCompiler:
 
         Registers protocol-specific imports in the preamble.
         """
+        # Local imports: circular import guard (codegen <-> compiler).
         from .codegen import PythonGenerator
         from .protocols import Protocol, ProtocolChoice, ProtocolStep
         from .types import MessageKind
@@ -424,7 +425,7 @@ class ASTCompiler:
             "class ProtocolSession:", f"class {prefix}Session:",
         )
         for role in node.roles:
-            from .codegen import _to_class_name
+            from .codegen import _to_class_name  # intentional internal API use (C2.2.5)
             cls_name = f"{_to_class_name(role)}Role"
             prefixed = f"{prefix}{cls_name}"
             role_classes = role_classes.replace(
@@ -458,7 +459,7 @@ class ASTCompiler:
         self._preamble_imports.add("from typing import Optional")
 
         # Import message dataclasses used by this protocol
-        from .codegen import _kind_to_message_class, _used_message_kinds
+        from .codegen import _kind_to_message_class, _used_message_kinds  # intentional internal API use (C2.2.5)
         kind_map = _kind_to_message_class()
         for kind in _used_message_kinds(protocol):
             cls_name = kind_map.get(kind)
@@ -506,7 +507,7 @@ class ASTCompiler:
         """Transform AST step/choice nodes into runtime protocol elements."""
         from .protocols import ProtocolChoice, ProtocolStep
 
-        result: list[object] = []
+        result: list[ProtocolStep | ProtocolChoice] = []
         for item in steps:
             if isinstance(item, StepNode):
                 result.append(ProtocolStep(
@@ -532,6 +533,8 @@ class ASTCompiler:
                     decider=item.decider,
                     branches=branches,
                 ))
+            else:
+                raise TypeError(f"Unknown step type: {type(item).__name__}")
         return tuple(result)
 
     @staticmethod

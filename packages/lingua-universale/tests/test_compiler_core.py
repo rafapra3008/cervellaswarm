@@ -690,6 +690,11 @@ class TestCompilerErrors:
         with pytest.raises(TypeError, match="Unknown declaration type"):
             compiler._compile_declaration("not_a_decl")  # type: ignore[arg-type]
 
+    def test_unknown_step_type_raises(self, compiler: ASTCompiler) -> None:
+        """Passing an unexpected type to _transform_steps raises TypeError."""
+        with pytest.raises(TypeError, match="Unknown step type"):
+            compiler._transform_steps(("not_a_step",))  # type: ignore[arg-type]
+
 
 # ===================================================================
 # _escape_contract_str hardening (C2.3.1a)

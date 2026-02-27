@@ -107,6 +107,12 @@ def compile_file(
             path=str(file_path),
             operation="compile_file:read",
         ) from None
+    except PermissionError as exc:
+        raise InteropError(
+            f"Permission denied: {file_path}: {exc}",
+            path=str(file_path),
+            operation="compile_file:read",
+        ) from exc
     except OSError as exc:
         raise InteropError(
             f"Cannot read file: {file_path}: {exc}",
