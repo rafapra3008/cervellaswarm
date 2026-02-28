@@ -234,7 +234,7 @@ Fatto BENE > Fatto VELOCE.
 
 ## IL CAMPO VERGINE
 
-300+ fonti consultate. 1820 test, 98% coverage. 14 moduli, ZERO deps. La verita:
+300+ fonti consultate. 2806 test, 25 moduli, ZERO deps. La verita:
 
 - **Python ha ZERO librerie di session types** (campo totalmente vergine)
 - **Nessun framework AI** usa session types formali (AutoGen, CrewAI, LangGraph, MCP, A2A)
@@ -271,7 +271,7 @@ Dalla nostra COSTITUZIONE, applicati alla Lingua Universale:
 Quando leggerai questo in un momento di dubbio, ricorda:
 
 1. 242 fonti dicono che nessuno l'ha mai fatto in Python
-2. 776 test dimostrano che le fondamenta FUNZIONANO
+2. 2806 test dimostrano che FUNZIONA
 3. 17 agenti reali aspettano di parlare questa lingua
 4. La nonna con le ricette merita software che PROVA di funzionare
 

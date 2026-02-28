@@ -6,7 +6,7 @@
 > "La domanda e la risposta nello STESSO linguaggio." - Rafa
 
 **Creata:** 24 Febbraio 2026 - Sessione 394
-**Aggiornata:** 25 Febbraio 2026 - Sessione 398 (B.6 DONE)
+**Aggiornata:** 28 Febbraio 2026 - Sessione 425 (FASE C COMPLETA!)
 **Autrice:** Cervella Architect (su commissione della Regina)
 **Fonti:** NORD.md + 3 report di ricerca (64+ fonti esterne) + analisi codebase
 **Score target:** 9.5/10 per ogni step (audit Guardiana)
@@ -24,7 +24,7 @@ LAYER 3: Code Generation certificata                      OPERATIVO (S395!)
 LAYER 2: Agent Hooks + Quality Gates                      OPERATIVO
 LAYER 1: CI/CD + PyPI + Fly.io                            OPERATIVO
 
-Asset: 14 moduli, 1820 test, ~8400 LOC, ZERO deps esterne
+Asset: 25 moduli, 2806 test, ~12000+ LOC, ZERO deps esterne
 Campo vergine confermato da 242+ fonti (session types per AI in Python)
 ```
 
@@ -38,7 +38,7 @@ Dettagli: NORD.md sezione "FASE A - DETTAGLIO SESSIONI".
 
 ---
 
-## FASE B: IL TOOLKIT -- IN CORSO
+## FASE B: IL TOOLKIT -- COMPLETA
 
 > Obiettivo: da "protocolli verificati" a "codice certificato generato".
 > Lingua Universale diventa uno strumento completo: specifica, verifica, genera.
@@ -111,10 +111,11 @@ Translator layer: errori tecnici -> messaggi user-friendly stile Elm/Rust.
 - Fuzzy matching via difflib.get_close_matches() (stdlib, ZERO deps)
 - Guardiana 9.3/10 APPROVED, 5 bug trovati e fixati (2 Tester + 3 Guardiana)
 - Ricerca: 27 fonti (Elm 2015, Rust diagnostics, miette, Alloy, FizzBee, Dafny)
-- **Output:** ~1900 LOC, 293 test (257 + 36 C3.3), ZERO deps
+- **Output:** ~2200 LOC, 293 test (257 + 36 C3.3), ZERO deps, 74 error codes (72 + LU-N013 + LU-N014)
 - C3.3 (S422): +12 codici LU-N per pipeline C1 (tokenizer+parser), render_snippet() Rust-style
+- C3.5 (S424): +2 codici LU-N013 (invalid trust tier) + LU-N014 (invalid confidence level)
 
-### B.7 - Showcase e Community
+### B.7 - Showcase e Community -- DONE (S398-S404)
 
 Il mondo deve sapere che esistiamo.
 
@@ -130,10 +131,11 @@ Il mondo deve sapere che esistiamo.
 
 ---
 
-## FASE C: IL LINGUAGGIO -- 2027
+## FASE C: IL LINGUAGGIO -- COMPLETA! (S407-S425)
 
-> **NOTA (S421):** Fase C e stata dettagliata e ridefinita nella SUBROADMAP:
+> **NOTA (S425):** Fase C COMPLETATA! Piano esecutivo:
 > `.sncp/roadmaps/SUBROADMAP_FASE_C_LINGUAGGIO.md` (C1 Grammatica, C2 Compilatore, C3 L'Esperienza).
+> 25 moduli, 2806 test, 74 error codes, 5 file .lu, ZERO deps. Media 9.45/10.
 > I sub-step C.1-C.7 sotto sono la visione originale S394; il piano esecutivo reale e nella SUBROADMAP.
 
 > Obiettivo: il layer di specifica diventa un linguaggio di programmazione vero.
@@ -181,7 +183,14 @@ Il mondo deve sapere che esistiamo.
 
 ---
 
-## FASE D: PER TUTTI -- IL SOGNO
+## FASE D: L'ECOSISTEMA (rinominata da "Per Tutti", S425)
+
+> **NOTA (S425):** Fase D ridefinita come "L'Ecosistema" dopo ricerca su come i linguaggi
+> di successo crescono (46+ fonti, Python/Rust/Go/Gleam).
+> Piano esecutivo: `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md`
+> (D1 Syntax Highlighting, D2 LSP, D3 Playground, D4 Tutorial, D5 LSP Avanzato, D6 Launch)
+>
+> La visione "Per Tutti" (IntentBridge, voce, multi-lingua) diventa FASE E.
 
 > "Un mondo dove OGNI persona puo creare software parlando nella sua lingua."
 > La barriera tra "avere un'idea" e "realizzarla" diventa ZERO.

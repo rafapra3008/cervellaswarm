@@ -134,8 +134,8 @@ La grammatica EBNF diventa direttamente il parser. Spezzato in 6 sub-step.
 **Criterio completamento:**
 - [x] Parser che accetta tutti i 10 esempi del Step C1.2 (verificato in C1.3.5)
 - [x] Error messages umani con line/col e suggerimenti (verificato in C1.3.3+C1.3.4)
-- [ ] Round-trip: parse -> AST -> render == originale (deferred to C2)
-- [ ] Export grammatica per constrained decoding (deferred to C2.4)
+- [x] Round-trip: parse -> AST -> render == originale (C2.3 interop, S416-S418)
+- [x] Export grammatica per constrained decoding (C2.4 GrammarExporter, S419-S420)
 - [x] Test coverage >= 95% (RAGGIUNTO 100% - S412)
 - [x] Guardiana verifica finale (9.5/10 - S412)
 
@@ -166,7 +166,7 @@ La grammatica EBNF diventa direttamente il parser. Spezzato in 6 sub-step.
 
 ---
 
-### Step C2.2: AST -> Python Code Generation (IN PROGRESS - S413)
+### Step C2.2: AST -> Python Code Generation (DONE - S413-S415)
 
 **Il codice generato DEVE rispettare i contratti.**
 
@@ -182,17 +182,17 @@ La grammatica EBNF diventa direttamente il parser. Spezzato in 6 sub-step.
 - [x] C2.2.1 `_contracts.py` (32 test, 100% cov, Guardiana 9.6/10)
 - [x] C2.2.2 `_compiler.py` core: expr, type, use, scaffold (78 test, 96% cov, Guardiana 9.5/10)
 - [x] C2.2.3 `_compile_variant_type`, `_compile_record_type` + import tracker (93 test, 98% cov, Guardiana 9.5/10)
-- [ ] C2.2.4 `_compile_agent` (contratti + metadata)
-- [ ] C2.2.5 `_compile_protocol` (bridge a codegen.py)
-- [ ] C2.2.6 Golden file tests + round-trip exec per 10 esempi canonici
-- [ ] C2.2.7 Guardiana audit finale C2.2
+- [x] C2.2.4 `_compile_agent` (contratti + metadata) -- DONE (S414)
+- [x] C2.2.5 `_compile_protocol` (bridge a codegen.py) -- DONE (S414-S415)
+- [x] C2.2.6 Golden file tests + round-trip exec per 10 esempi canonici -- DONE (S415)
+- [x] C2.2.7 Guardiana audit finale C2.2 -- DONE (S415, 9.5/10)
 
 **Criterio completamento:**
-- [ ] Compilazione dei 10 esempi canonici in Python funzionante
-- [ ] Il codice generato ha contratti runtime (non solo commenti)
-- [ ] Round-trip: linguaggio -> Python -> test -> OK
-- [ ] Source maps: errore Python traccia alla riga nel linguaggio
-- [ ] Guardiana verifica
+- [x] Compilazione dei 10 esempi canonici in Python funzionante (S415)
+- [x] Il codice generato ha contratti runtime (_contracts.py, S413)
+- [x] Round-trip: linguaggio -> Python -> test -> OK (S415)
+- [x] Source maps: errore Python traccia alla riga nel linguaggio (S414)
+- [x] Guardiana verifica (S415, 9.5/10)
 
 ---
 
@@ -339,13 +339,13 @@ AUDIT: Guardiana dopo OGNI step
 
 ## SUCCESS CRITERIA
 
-- [ ] Il linguaggio ha una grammatica formale esplicita (EBNF pubblicata)
-- [ ] Un LLM puo generare codice nel linguaggio senza errori di sintassi (constrained decoding)
-- [ ] Un non-sviluppatore legge il codice e capisce cosa fa
-- [ ] Il codice generato in Python ha contratti runtime verificati
-- [ ] Le proprieta formali sono provate da Lean 4
-- [ ] Python interop bidirezionale funziona
-- [ ] Il demo "nonna con le ricette" e REALE (non su carta)
+- [x] Il linguaggio ha una grammatica formale esplicita (62 produzioni EBNF, C1.2 S408-409)
+- [x] Un LLM puo generare codice nel linguaggio senza errori di sintassi (GrammarExporter C2.4, S419-420)
+- [x] Un non-sviluppatore legge il codice e capisce cosa fa (ricette.lu, C3.5 S424)
+- [x] Il codice generato in Python ha contratti runtime verificati (_contracts.py, C2.2 S413)
+- [x] Le proprieta formali sono provate da Lean 4 (lean4_bridge, showcase_v2 S4, S424)
+- [x] Python interop bidirezionale funziona (_interop.py, C2.3 S416-418)
+- [x] Il demo "nonna con le ricette" e REALE (ricette.lu + showcase_v2.py, C3.5 S424)
 
 ---
 
