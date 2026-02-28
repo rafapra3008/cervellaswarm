@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 27 Febbraio 2026 - S424 (C3.5 Showcase v2 DONE, 2801 test, 74 error codes)
+> Aggiornato: 28 Febbraio 2026 - S425 (FASE C COMPLETA! 2806 test. Fase D: Ecosistema)
 
 ```
 +==================================================================+
@@ -142,12 +142,14 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |                                                                  |
 |   FASE A: COMPLETA + HARDENED (S380-S386)                        |
 |   FASE B: COMPLETA! B.1-B.7 DONE (S387-S398)                    |
-|   FASE C: IL LINGUAGGIO (S407-S423)                              |
-|     C1 Grammatica DONE! C2 Compilatore DONE!                    |
-|     C3 L'Esperienza 83% (CLI+eval+errors+REPL+showcase DONE)   |
+|   FASE C: IL LINGUAGGIO -- COMPLETA! (S407-S425)                 |
+|     C1 Grammatica DONE! C2 Compilatore DONE! C3 Esperienza DONE!|
+|   FASE D: L'ECOSISTEMA -- IN CORSO (S425+)                       |
+|     D1 Syntax Highlighting, D2 LSP, D3 Playground, D4 Tutorial  |
 |   PyPI: LIVE! pip install cervellaswarm-lingua-universale (S399) |
-|   24 moduli, 2801 test, 74 error codes, 5 .lu examples          |
+|   25 moduli, 2806 test, 74 error codes, 5 .lu examples          |
 |   NORD completo: packages/lingua-universale/NORD.md              |
+|   SUBROADMAP: .sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md    |
 |                                                                  |
 +==================================================================+
 ```
@@ -203,6 +205,7 @@ STATO ATTUALE:
 | Cosa | Dove |
 |------|------|
 | **MAPPA LINGUAGGIO (LA MISSIONE!)** | `.sncp/roadmaps/MAPPA_LINGUAGGIO_CERVELLASWARM.md` |
+| **FASE D: ECOSISTEMA (ATTIVA!)** | `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md` |
 | **MAPPA COMPLETA (BIBBIA!)** | `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_COMPLETA_STEP_BY_STEP.md` |
 | **MAPPA MIGLIORAMENTI (ATTIVA!)** | `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_MIGLIORAMENTI_INTERNI.md` |
 | **MARKETING DIAMANTE** | `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_DIAMANTE_MARKETING_LANCIO.md` |
