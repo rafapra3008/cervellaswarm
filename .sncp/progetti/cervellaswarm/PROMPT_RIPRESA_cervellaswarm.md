@@ -1,37 +1,34 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-28 - Sessione 425
-> **STATUS:** FASE C COMPLETA! Fase D: L'Ecosistema PIANIFICATA. Prossimo: D1.
+> **Ultimo aggiornamento:** 2026-02-28 - Sessione 426
+> **STATUS:** FASE D IN CORSO! D1 Syntax Highlighting COMPLETO (9.5/10). Prossimo: D2 LSP Base.
 
 ---
 
-## SESSIONE 425 - Cosa e successo
+## SESSIONE 426 - Cosa e successo
 
-### 1. C3.6 Guardiana Audit Finale C3 -- COMPLETATO (9.5/10)
-- Audit cross-cutting di tutta la Fase C3 (6 step, 25 moduli, 8 file test)
-- 1 P2 (NO_COLOR _cli.py) + 7 P3 -> fixati 5/8
-- Nuovo modulo `_colors.py` (colori condivisi CLI+REPL, NO_COLOR/FORCE_COLOR)
-- **2806 test** (+5 nuovi), 0 regressioni, 0.91s
+### 1. D1: Syntax Highlighting + VS Code Extension -- COMPLETATO (9.5/10)
+- **TextMate grammar** (`lingua-universale.tmLanguage.json`): 33 costrutti, 100% copertura
+  - 5 action verbs, 7 properties, 4 trust tiers, 5 confidence levels, 4 builtin types
+  - Scope names conformi a standard TextMate/Sublime
+- **VS Code extension** completa: package.json, language-configuration.json, icon, README, LICENSE
+- **Test coverage**: 47/47 check su tutti i 5 file .lu
+- **.vsix** packaged (11.5 KB), installato in VS Code locale
+- **Guardiana audit**: 2 P2 trovati e FIXATI (Confident scope, confidence levels lowercase)
+- ID extension: `cervellaswarm.lingua-universale`
 
-### 2. FASE C DICHIARATA COMPLETA
-- C1 Grammatica + C2 Compilatore + C3 Esperienza = DONE
-- 25 moduli, 74 error codes, 5 file .lu, ZERO deps
+### 2. Struttura creata
+```
+extensions/lingua-universale-vscode/
+  package.json                               # VS Code manifest
+  language-configuration.json                # brackets, comments, folding
+  syntaxes/lingua-universale.tmLanguage.json # TextMate grammar (33 rules)
+  tests/test_grammar_coverage.py             # 47/47 check
+  README.md, CHANGELOG.md, LICENSE, icon.png
+  .vscodeignore, .gitignore
+```
 
-### 3. Ricerca Fase D -- 3 Researcher, 46+ fonti
-- **Ecosystem growth:** Python/Rust/Go/Gleam/Zig -- come sono cresciuti
-- **LSP patterns:** pygls, TextMate grammar, VS Code extension
-- **VM/Playground:** Pyodide (WASM, $0) = perfetto per noi (ZERO deps)
-- Report in: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260228_*.md`
-
-### 4. SUBROADMAP FASE D CREATA
-- **File:** `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md`
-- 6 step: D1 Syntax Highlighting -> D2 LSP -> D3 Playground -> D4 Tutorial -> D5 LSP Avanzato -> D6 Launch
-- Effort: 10-15 sessioni
-
-### 5. Audit coerenza documenti (Guardiana)
-- Trovate 4 P2 + 4 P3: numeri stale in MAPPA_LINGUAGGIO, NORD LU, SUBROADMAP_FASE_C
-- Fix applicati: PROMPT_RIPRESA, NORD.md, SUBROADMAP_FASE_C
-- Fix ancora da fare: MAPPA_LINGUAGGIO (numeri S398), NORD LU (numeri S380)
+### 3. Suite linguaggio: 2806 test, 0 regressioni, 0.83s
 
 ---
 
@@ -41,16 +38,13 @@
 LINGUAGGIO CERVELLASWARM:
   FASE A+B: COMPLETE (9.5+ media)
   FASE C: Il Linguaggio -- COMPLETA! (S407-S425, media 9.45/10)
-    C1: La Grammatica    [####################] 100% DONE!
-    C2: Il Compilatore   [####################] 100% DONE!
-    C3: L'Esperienza     [####################] 100% DONE!
-  FASE D: L'Ecosistema -- PROSSIMA (subroadmap creata)
-    D1: Syntax Highlighting + VS Code  TODO (1-2 sess)
-    D2: LSP Base (lu lsp)             TODO (2-3 sess)
-    D3: Playground Online (Pyodide)   TODO (1-2 sess)
-    D4: "A Tour of LU" tutorial       TODO (2-3 sess)
-    D5: LSP Avanzato                  TODO (2-3 sess)
-    D6: Guardiana Finale + Launch     TODO (1 sess)
+  FASE D: L'Ecosistema -- IN CORSO
+    D1: Syntax Highlighting + VS Code  [####################] DONE! (S426, 9.5/10)
+    D2: LSP Base (lu lsp)             [....................] PROSSIMO
+    D3: Playground Online (Pyodide)   [....................] TODO
+    D4: "A Tour of LU" tutorial       [....................] TODO
+    D5: LSP Avanzato                  [....................] TODO
+    D6: Guardiana Finale + Launch     [....................] TODO
 ```
 
 ---
@@ -65,49 +59,66 @@ LINGUAGGIO CERVELLASWARM:
 | File .lu | **5** |
 | Dipendenze esterne | **ZERO** |
 | PyPI packages LIVE | **9/9** |
-| Tempo suite | 0.91s |
+| VS Code extension | **installabile** (.vsix) |
+| Tempo suite | 0.83s |
 
 ---
 
-## PROSSIMO: D1 -- Syntax Highlighting + VS Code Extension
+## PROSSIMO: D2 -- LSP Base (lu lsp)
 
 **Subroadmap completa:** `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md`
 
-**D1 in breve:**
-- TextMate grammar (.tmLanguage.json) per file .lu
-- VS Code extension con syntax highlighting
-- Pubblicazione su VS Code Marketplace
-- Screenshot "wow" per README
-- 1-2 sessioni, rischio BASSO
+**D2 in breve:**
+- pygls (Python Generic Language Server) come optional dependency `[lsp]`
+- `lu lsp` subcommand nella CLI (STDIO mode)
+- Diagnostics in tempo reale: errori LU-N inline nell'editor
+- Collegare VS Code extension al language server
+- 2-3 sessioni, rischio MEDIO (prima dipendenza esterna: pygls)
 
 **Decisioni gia prese:**
-- Stack LSP: pygls (Python, come optional dep `[lsp]`)
-- Playground: Pyodide + Monaco Editor + GitHub Pages ($0)
-- Ordine: D1 -> D2 -> D3 -> D4 -> D5 -> D6
+- Stack: pygls v2.0.1 (STDIO, stabile)
+- Il 60-70% del lavoro e GIA fatto (parser, error codes, Loc(line,col))
+- pygls come optional dep: `pip install cervellaswarm-lingua-universale[lsp]`
+- Core resta ZERO DEPS
+
+**Architettura prevista:**
+```python
+# _lsp.py - nuovo modulo (~200-300 righe)
+from pygls.server import LanguageServer
+lu_server = LanguageServer("lingua-universale-lsp", "v0.1")
+
+@lu_server.feature(TEXT_DOCUMENT_DID_OPEN)
+@lu_server.feature(TEXT_DOCUMENT_DID_CHANGE)
+def validate(ls, params):
+    # 1. source dal documento
+    # 2. check_source() (GIA ESISTE!)
+    # 3. LU-N errors -> LSP Diagnostics
+    # 4. Loc(line,col) -> LSP Range/Position
+```
 
 ---
 
-## Fix documentazione ancora da fare (dalla Guardiana)
+## Fix documentazione ancora da fare
 
 | Doc | Problema | Priorita |
 |-----|----------|----------|
 | MAPPA_LINGUAGGIO | Numeri fermi a S398 (14 mod, 1820 test) | P2 |
 | NORD LU | Numeri fermi a S380 (14 mod, 1820 test) | P2 |
-| SUBROADMAP_FASE_C | Checkbox C2.2.4-7 e success criteria non checkate | P3 |
 | README.md pubblico | "13 modules, 1820 tests" stale | P3 |
+| VS Code Marketplace | Pubblicazione (serve Azure DevOps publisher) | P3 |
 
 ---
 
-## Lezioni Apprese (S425)
+## Lezioni Apprese (S426)
 
 ### Cosa ha funzionato bene
-- **Audit cross-cutting** scopre inconsistenze invisibili agli audit singoli
-- **Ricerca PRIMA di pianificare** -- 46 fonti, 3 report, decisioni informate
-- **"Due piccioni con una fava"** -- _colors.py risolve P2 + P3 insieme
+- **Ricerca + build in parallelo** -- Explorer + Researcher in parallelo, poi build mirato
+- **Guardiana dopo ogni step** -- 2 P2 scoperti e fixati subito (Confident scope, lowercase levels)
+- **Test grammar-vs-files** -- 47 check automatici garantiscono copertura reale
 
 ### Pattern confermato
-- **"Step + Guardiana audit"** (31a volta) -- il metodo funziona
-- **"Audit documenti"** -- nuovo pattern: Guardiana verifica coerenza docs
+- **"Step + Guardiana audit"** (32a volta) -- il metodo continua a funzionare
+- **TextMate scope standard** -- seguire le convenzioni evita problemi con i theme
 
 ---
 

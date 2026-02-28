@@ -1,0 +1,367 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Lingua Universale",
+  "scopeName": "source.lu",
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#use-statement" },
+    { "include": "#type-declaration" },
+    { "include": "#record-type-declaration" },
+    { "include": "#agent-declaration" },
+    { "include": "#protocol-declaration" },
+    { "include": "#when-block" },
+    { "include": "#properties-block" },
+    { "include": "#roles-declaration" },
+    { "include": "#agent-clauses" },
+    { "include": "#choice-branch" },
+    { "include": "#protocol-step" },
+    { "include": "#string-double" },
+    { "include": "#string-single" },
+    { "include": "#number" },
+    { "include": "#operators" },
+    { "include": "#logical-operators" },
+    { "include": "#trust-tiers" },
+    { "include": "#confidence-levels" },
+    { "include": "#builtin-types" },
+    { "include": "#property-keywords" },
+    { "include": "#punctuation" },
+    { "include": "#type-name" },
+    { "include": "#identifier" }
+  ],
+  "repository": {
+    "comment": {
+      "name": "comment.line.number-sign.lu",
+      "match": "#.*$"
+    },
+
+    "use-statement": {
+      "match": "^\\s*(use)\\s+(python)\\s+([A-Za-z_][A-Za-z0-9_.]*?)(?:\\s+(as)\\s+([A-Za-z_][A-Za-z0-9_]*))?\\s*$",
+      "captures": {
+        "1": { "name": "keyword.control.import.lu" },
+        "2": { "name": "keyword.control.import.lu" },
+        "3": { "name": "entity.name.import.lu" },
+        "4": { "name": "keyword.control.import.lu" },
+        "5": { "name": "entity.name.import.lu" }
+      }
+    },
+
+    "type-declaration": {
+      "comment": "Variant type: type Name = A | B | C",
+      "match": "^\\s*(type)\\s+([A-Z][A-Za-z0-9]*)\\s*(=)\\s*(.+)$",
+      "captures": {
+        "1": { "name": "storage.type.lu" },
+        "2": { "name": "entity.name.type.lu" },
+        "3": { "name": "keyword.operator.assignment.lu" },
+        "4": {
+          "patterns": [
+            { "include": "#type-variants" },
+            { "include": "#builtin-types" },
+            { "include": "#type-name" },
+            { "include": "#punctuation" }
+          ]
+        }
+      }
+    },
+
+    "type-variants": {
+      "comment": "Variant constructors: Pending | Running | Done",
+      "match": "\\b([A-Z][A-Za-z0-9]*)\\b",
+      "name": "entity.name.tag.variant.lu"
+    },
+
+    "record-type-declaration": {
+      "comment": "Record type: type Name =",
+      "match": "^\\s*(type)\\s+([A-Z][A-Za-z0-9]*)\\s*(=)\\s*$",
+      "captures": {
+        "1": { "name": "storage.type.lu" },
+        "2": { "name": "entity.name.type.lu" },
+        "3": { "name": "keyword.operator.assignment.lu" }
+      }
+    },
+
+    "agent-declaration": {
+      "comment": "Agent: agent Name:",
+      "match": "^\\s*(agent)\\s+([A-Z][A-Za-z0-9]*)\\s*(:)\\s*$",
+      "captures": {
+        "1": { "name": "storage.type.agent.lu" },
+        "2": { "name": "entity.name.type.agent.lu" },
+        "3": { "name": "punctuation.separator.colon.lu" }
+      }
+    },
+
+    "protocol-declaration": {
+      "comment": "Protocol: protocol Name:",
+      "match": "^\\s*(protocol)\\s+([A-Z][A-Za-z0-9]*)\\s*(:)\\s*$",
+      "captures": {
+        "1": { "name": "storage.type.protocol.lu" },
+        "2": { "name": "entity.name.type.protocol.lu" },
+        "3": { "name": "punctuation.separator.colon.lu" }
+      }
+    },
+
+    "when-block": {
+      "comment": "Choice: when ROLE decides:",
+      "match": "\\b(when)\\s+([a-z_][a-z0-9_]*)\\s+(decides)\\s*(:)",
+      "captures": {
+        "1": { "name": "keyword.control.choice.lu" },
+        "2": { "name": "variable.other.role.lu" },
+        "3": { "name": "keyword.control.choice.lu" },
+        "4": { "name": "punctuation.separator.colon.lu" }
+      }
+    },
+
+    "properties-block": {
+      "comment": "Properties block header",
+      "match": "^\\s*(properties)\\s*(:)\\s*$",
+      "captures": {
+        "1": { "name": "keyword.other.properties.lu" },
+        "2": { "name": "punctuation.separator.colon.lu" }
+      }
+    },
+
+    "agent-clauses": {
+      "comment": "Agent clause keywords: role, trust, accepts, produces, requires, ensures",
+      "match": "^\\s*(role|trust|accepts|produces|requires|ensures)\\s*(:)",
+      "captures": {
+        "1": { "name": "storage.modifier.clause.lu" },
+        "2": { "name": "punctuation.separator.colon.lu" }
+      }
+    },
+
+    "protocol-step": {
+      "comment": "Protocol step: role VERB role ...",
+      "patterns": [
+        {
+          "comment": "asks ... to do/verify/plan/research/shutdown",
+          "match": "\\b([a-z_][a-z0-9_]*)\\s+(asks)\\s+([a-z_][a-z0-9_]*)\\s+(to)\\b",
+          "captures": {
+            "1": { "name": "variable.other.role.sender.lu" },
+            "2": { "name": "keyword.other.action.lu" },
+            "3": { "name": "variable.other.role.receiver.lu" },
+            "4": { "name": "keyword.other.action.lu" }
+          }
+        },
+        {
+          "comment": "returns ... to ROLE",
+          "match": "\\b([a-z_][a-z0-9_]*)\\s+(returns)\\b(.+?)\\b(to)\\s+([a-z_][a-z0-9_]*)\\b",
+          "captures": {
+            "1": { "name": "variable.other.role.sender.lu" },
+            "2": { "name": "keyword.other.action.lu" },
+            "4": { "name": "keyword.other.action.lu" },
+            "5": { "name": "variable.other.role.receiver.lu" }
+          }
+        },
+        {
+          "comment": "tells ROLE ...",
+          "match": "\\b([a-z_][a-z0-9_]*)\\s+(tells)\\s+([a-z_][a-z0-9_]*)\\b",
+          "captures": {
+            "1": { "name": "variable.other.role.sender.lu" },
+            "2": { "name": "keyword.other.action.lu" },
+            "3": { "name": "variable.other.role.receiver.lu" }
+          }
+        },
+        {
+          "comment": "proposes ... to ROLE",
+          "match": "\\b([a-z_][a-z0-9_]*)\\s+(proposes)\\b(.+?)\\b(to)\\s+([a-z_][a-z0-9_]*)\\b",
+          "captures": {
+            "1": { "name": "variable.other.role.sender.lu" },
+            "2": { "name": "keyword.other.action.lu" },
+            "4": { "name": "keyword.other.action.lu" },
+            "5": { "name": "variable.other.role.receiver.lu" }
+          }
+        },
+        {
+          "comment": "sends ... to ROLE",
+          "match": "\\b([a-z_][a-z0-9_]*)\\s+(sends)\\b(.+?)\\b(to)\\s+([a-z_][a-z0-9_]*)\\b",
+          "captures": {
+            "1": { "name": "variable.other.role.sender.lu" },
+            "2": { "name": "keyword.other.action.lu" },
+            "4": { "name": "keyword.other.action.lu" },
+            "5": { "name": "variable.other.role.receiver.lu" }
+          }
+        }
+      ]
+    },
+
+    "choice-branch": {
+      "comment": "Choice branch label: approve:, reject:, needs_revision:",
+      "match": "^\\s+([a-z_][a-z0-9_]*)\\s*(:)\\s*$",
+      "captures": {
+        "1": { "name": "entity.name.tag.branch.lu" },
+        "2": { "name": "punctuation.separator.colon.lu" }
+      }
+    },
+
+    "property-keywords": {
+      "patterns": [
+        {
+          "comment": "always terminates",
+          "match": "\\b(always)\\s+(terminates)\\b",
+          "captures": {
+            "1": { "name": "keyword.other.property.lu" },
+            "2": { "name": "keyword.other.property.lu" }
+          }
+        },
+        {
+          "comment": "no deadlock",
+          "match": "\\b(no)\\s+(deadlock)\\b",
+          "captures": {
+            "1": { "name": "keyword.other.property.lu" },
+            "2": { "name": "keyword.other.property.lu" }
+          }
+        },
+        {
+          "comment": "all roles participate",
+          "match": "\\b(all)\\s+(roles)\\s+(participate)\\b",
+          "captures": {
+            "1": { "name": "keyword.other.property.lu" },
+            "2": { "name": "keyword.other.property.lu" },
+            "3": { "name": "keyword.other.property.lu" }
+          }
+        },
+        {
+          "comment": "ordering: X before Y",
+          "match": "\\b([a-z_][a-z0-9_]*)\\s+(before)\\s+([a-z_][a-z0-9_]*)\\b",
+          "captures": {
+            "1": { "name": "variable.other.role.lu" },
+            "2": { "name": "keyword.other.property.lu" },
+            "3": { "name": "variable.other.role.lu" }
+          }
+        },
+        {
+          "comment": "exclusion: X cannot send Y",
+          "match": "\\b([a-z_][a-z0-9_]*)\\s+(cannot)\\s+(send)\\s+([a-z_][a-z0-9_]*)\\b",
+          "captures": {
+            "1": { "name": "variable.other.role.lu" },
+            "2": { "name": "keyword.other.property.lu" },
+            "3": { "name": "keyword.other.property.lu" },
+            "4": { "name": "variable.other.identifier.lu" }
+          }
+        },
+        {
+          "comment": "confidence >= LEVEL",
+          "match": "\\b(confidence)\\s*(>=)\\s*(certain|high|medium|low|speculative)\\b",
+          "captures": {
+            "1": { "name": "keyword.other.property.lu" },
+            "2": { "name": "keyword.operator.comparison.lu" },
+            "3": { "name": "constant.language.confidence.lu" }
+          }
+        },
+        {
+          "comment": "trust >= TIER",
+          "match": "\\b(trust)\\s*(>=)\\s*(verified|trusted|standard|untrusted)\\b",
+          "captures": {
+            "1": { "name": "keyword.other.property.lu" },
+            "2": { "name": "keyword.operator.comparison.lu" },
+            "3": { "name": "constant.language.trust.lu" }
+          }
+        }
+      ]
+    },
+
+    "trust-tiers": {
+      "comment": "Trust tier values in agent declarations",
+      "match": "\\b(verified|trusted|standard|untrusted)\\b",
+      "name": "constant.language.trust.lu"
+    },
+
+    "confidence-levels": {
+      "comment": "Confidence level values (lowercase in .lu, PascalCase in Python)",
+      "match": "\\b(certain|high|medium|low|speculative|Certain|High|Medium|Low|Speculative)\\b",
+      "name": "constant.language.confidence.lu"
+    },
+
+    "builtin-types": {
+      "comment": "Built-in type names",
+      "match": "\\b(String|Number|Boolean|List|Confident)\\b",
+      "name": "support.type.builtin.lu"
+    },
+
+    "logical-operators": {
+      "comment": "Logical: and, or, not",
+      "match": "\\b(and|or|not)\\b",
+      "name": "keyword.operator.logical.lu"
+    },
+
+    "operators": {
+      "comment": "Comparison operators",
+      "match": "(>=|<=|==|!=|>|<)",
+      "name": "keyword.operator.comparison.lu"
+    },
+
+    "string-double": {
+      "name": "string.quoted.double.lu",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.lu",
+          "match": "\\\\."
+        }
+      ]
+    },
+
+    "string-single": {
+      "name": "string.quoted.single.lu",
+      "begin": "'",
+      "end": "'",
+      "patterns": [
+        {
+          "name": "constant.character.escape.lu",
+          "match": "\\\\."
+        }
+      ]
+    },
+
+    "number": {
+      "comment": "Integer and float literals",
+      "match": "\\b\\d+(?:\\.\\d+)?\\b",
+      "name": "constant.numeric.lu"
+    },
+
+    "punctuation": {
+      "patterns": [
+        { "match": ":", "name": "punctuation.separator.colon.lu" },
+        { "match": ",", "name": "punctuation.separator.comma.lu" },
+        { "match": "\\.", "name": "punctuation.accessor.dot.lu" },
+        { "match": "\\?", "name": "punctuation.optional.lu" },
+        { "match": "\\|", "name": "punctuation.separator.pipe.lu" },
+        { "match": "\\[", "name": "punctuation.bracket.open.lu" },
+        { "match": "\\]", "name": "punctuation.bracket.close.lu" },
+        { "match": "\\(", "name": "punctuation.paren.open.lu" },
+        { "match": "\\)", "name": "punctuation.paren.close.lu" },
+        { "match": "=", "name": "keyword.operator.assignment.lu" }
+      ]
+    },
+
+    "type-name": {
+      "comment": "PascalCase type names and variant constructors",
+      "match": "\\b([A-Z][A-Za-z0-9]*)\\b",
+      "name": "entity.name.type.lu"
+    },
+
+    "roles-declaration": {
+      "comment": "roles: role1, role2, role3",
+      "match": "^\\s*(roles)\\s*(:)\\s*(.+)$",
+      "captures": {
+        "1": { "name": "keyword.other.roles.lu" },
+        "2": { "name": "punctuation.separator.colon.lu" },
+        "3": {
+          "patterns": [
+            {
+              "match": "\\b([a-z_][a-z0-9_]*)\\b",
+              "name": "variable.other.role.lu"
+            },
+            { "include": "#punctuation" }
+          ]
+        }
+      }
+    },
+
+    "identifier": {
+      "comment": "General identifiers (lowercase)",
+      "match": "\\b[a-z_][a-z0-9_]*\\b",
+      "name": "variable.other.lu"
+    }
+  }
+}
