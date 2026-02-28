@@ -8,7 +8,7 @@ from importlib.metadata import version, PackageNotFoundError
 try:
     __version__ = version("cervellaswarm-lingua-universale")
 except PackageNotFoundError:
-    __version__ = "0.1.1"
+    __version__ = "0.2.0"
 
 # Public API re-exports for convenience.
 # Users can also import directly from submodules.

@@ -10,8 +10,8 @@ build-backend = "hatchling.build"
 # ---------------------------------------------------------------------------
 [project]
 name = "cervellaswarm-lingua-universale"
-version = "0.1.1"
-description = "Session types and formal protocols for AI agent communication"
+version = "0.2.0"
+description = "The first programming language designed for AI — session types, compiler, REPL, and formal verification"
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
@@ -26,6 +26,10 @@ keywords = [
     "protocols",
     "multi-agent",
     "type-checking",
+    "programming-language",
+    "compiler",
+    "vericoding",
+    "constrained-decoding",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
