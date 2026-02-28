@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Interactive REPL for Lingua Universale (C3.4).
+"""Interactive REPL for Lingua Universale (C3.4 + C3.6).
 
 Usage::
 
@@ -25,7 +25,7 @@ Design decisions (STUDIO C3.1, S421):
     Raw readline loop (not cmd.Cmd) -- better fit for a language REPL.
     Colon-prefixed commands (:help, :quit, :reset, :history, :check).
     Multiline via parse-and-check heuristics.
-    NO_COLOR / FORCE_COLOR support (de-facto standard).
+    NO_COLOR / FORCE_COLOR support via shared ``_colors`` module (C3.6).
 """
 
 from __future__ import annotations
@@ -35,35 +35,8 @@ import sys
 from dataclasses import dataclass
 from typing import Callable
 
+from ._colors import colors as _c, init_colors as _init_colors
 from ._eval import check_source, run_source, EvalResult
-
-
-# ============================================================
-# Module-level color state (same pattern as _cli.py)
-# ============================================================
-
-_RESET = ""
-_BOLD = ""
-_RED = ""
-_GREEN = ""
-_YELLOW = ""
-_CYAN = ""
-
-
-def _init_colors() -> None:
-    """Enable ANSI colors if TTY or FORCE_COLOR, respecting NO_COLOR."""
-    global _RESET, _BOLD, _RED, _GREEN, _YELLOW, _CYAN  # noqa: PLW0603
-    if os.environ.get("NO_COLOR"):
-        return
-    force = os.environ.get("FORCE_COLOR") or os.environ.get("CLICOLOR_FORCE")
-    is_tty = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
-    if force or is_tty:
-        _RESET = "\033[0m"
-        _BOLD = "\033[1m"
-        _RED = "\033[31m"
-        _GREEN = "\033[32m"
-        _YELLOW = "\033[33m"
-        _CYAN = "\033[36m"
 
 
 # ============================================================
@@ -177,7 +150,7 @@ class REPLSession:
 
         while True:
             prompt = self.PROMPT_CONT if buffer else self.PROMPT
-            colored_prompt = f"{_CYAN}{_BOLD}{prompt}{_RESET}" if _CYAN else prompt
+            colored_prompt = f"{_c.CYAN}{_c.BOLD}{prompt}{_c.RESET}" if _c.CYAN else prompt
 
             try:
                 line = self._input_fn(colored_prompt)
@@ -255,13 +228,13 @@ class REPLSession:
             return CommandResult(should_exit=True)
 
         if name == ":help":
-            return CommandResult(output=f"{_YELLOW}{_HELP_TEXT}{_RESET}")
+            return CommandResult(output=f"{_c.YELLOW}{_HELP_TEXT}{_c.RESET}")
 
         if name == ":history":
             if not self._source_history:
-                return CommandResult(output=f"  {_YELLOW}(empty){_RESET}")
+                return CommandResult(output=f"  {_c.YELLOW}(empty){_c.RESET}")
             lines = [
-                f"  {_CYAN}{i + 1}{_RESET}: {s[:72]}"
+                f"  {_c.CYAN}{i + 1}{_c.RESET}: {s[:72]}"
                 for i, s in enumerate(self._source_history)
             ]
             return CommandResult(output="\n".join(lines))
@@ -270,26 +243,26 @@ class REPLSession:
             self._source_history.clear()
             self._last_result = None
             self._last_error = None
-            return CommandResult(output=f"{_GREEN}Session reset.{_RESET}")
+            return CommandResult(output=f"{_c.GREEN}Session reset.{_c.RESET}")
 
         if name == ":check":
             if not arg:
                 return CommandResult(
-                    output=f"{_RED}Usage: :check <source>{_RESET}",
+                    output=f"{_c.RED}Usage: :check <source>{_c.RESET}",
                 )
             result = check_source(arg)
             if result.ok:
                 summary = self._compiled_summary(result)
-                msg = f"{_GREEN}{_BOLD}OK{_RESET}"
+                msg = f"{_c.GREEN}{_c.BOLD}OK{_c.RESET}"
                 if summary:
-                    msg += f"  {_CYAN}{summary}{_RESET}"
+                    msg += f"  {_c.CYAN}{summary}{_c.RESET}"
                 return CommandResult(output=msg)
             return CommandResult(
-                output=f"{_RED}{result.errors[0]}{_RESET}",
+                output=f"{_c.RED}{result.errors[0]}{_c.RESET}",
             )
 
         return CommandResult(
-            output=f"{_RED}Unknown command: {name}{_RESET}  Type :help for commands.",
+            output=f"{_c.RED}Unknown command: {name}{_c.RESET}  Type :help for commands.",
         )
 
     # --------------------------------------------------------
@@ -315,10 +288,10 @@ class REPLSession:
         if result.ok:
             summary = self._compiled_summary(result)
             tail = f"  {summary}" if summary else ""
-            self._output_fn(f"{_GREEN}{_BOLD}OK{_RESET}{tail}")
+            self._output_fn(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET}{tail}")
         else:
             for err in result.errors:
-                self._output_fn(f"{_RED}{err}{_RESET}")
+                self._output_fn(f"{_c.RED}{err}{_c.RESET}")
 
     def _is_complete(self, source: str) -> tuple[bool, bool]:
         """Check whether accumulated source is complete.
@@ -340,12 +313,12 @@ class REPLSession:
     def _print_banner(self) -> None:
         from . import __version__
         self._output_fn(
-            f"{_CYAN}{_BOLD}Lingua Universale v{__version__}{_RESET}  "
+            f"{_c.CYAN}{_c.BOLD}Lingua Universale v{__version__}{_c.RESET}  "
             f"-- the first language native to AI",
         )
         self._output_fn(
-            f"Type {_BOLD}:help{_RESET} for commands, "
-            f"{_BOLD}Ctrl+D{_RESET} to exit.",
+            f"Type {_c.BOLD}:help{_c.RESET} for commands, "
+            f"{_c.BOLD}Ctrl+D{_c.RESET} to exit.",
         )
 
     def _setup_readline(self) -> None:

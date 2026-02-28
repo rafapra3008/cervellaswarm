@@ -285,6 +285,7 @@ class TestShowcaseV2:
         spec = importlib.util.spec_from_file_location(
             "showcase_v2", EXAMPLES / "showcase_v2.py",
         )
+        assert spec is not None and spec.loader is not None
         mod = importlib.util.module_from_spec(spec)
         # Set NO_COLOR to avoid terminal issues in test
         old = os.environ.get("NO_COLOR")
@@ -305,6 +306,7 @@ class TestShowcaseV2:
         spec = importlib.util.spec_from_file_location(
             "showcase", EXAMPLES / "showcase.py",
         )
+        assert spec is not None and spec.loader is not None
         mod = importlib.util.module_from_spec(spec)
         old = os.environ.get("NO_COLOR")
         os.environ["NO_COLOR"] = "1"

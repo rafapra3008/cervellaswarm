@@ -315,4 +315,4 @@ class TestCheckSourceHumanized:
         assert result.ok is False
         # Should have snippet with line numbers
         err_text = result.errors[0]
-        assert "LU-N" in err_text or "expected" in err_text.lower()
+        assert "LU-N" in err_text

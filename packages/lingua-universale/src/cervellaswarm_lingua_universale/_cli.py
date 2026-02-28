@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Command-line interface for Lingua Universale (C3.2 + C3.4).
+"""Command-line interface for Lingua Universale (C3.2 + C3.4 + C3.6).
 
 Subcommands::
 
@@ -15,6 +15,7 @@ Subcommands::
 Design decisions (STUDIO C3):
     D1: argparse stdlib -- ZERO external dependencies.
     Console script entry: ``lu = cervellaswarm_lingua_universale._cli:main``
+    C3.6: Colors shared via ``_colors`` module (NO_COLOR / FORCE_COLOR).
 """
 
 from __future__ import annotations
@@ -23,45 +24,21 @@ import argparse
 import sys
 from pathlib import Path
 
+from ._colors import colors as _c, init_colors as _init_colors
 from ._eval import check_file, verify_file, run_file, EvalResult
-
-
-# ============================================================
-# Output formatting
-# ============================================================
-
-# ANSI escape codes -- disabled if not a TTY
-_RESET = ""
-_BOLD = ""
-_RED = ""
-_GREEN = ""
-_YELLOW = ""
-_CYAN = ""
-
-
-def _init_colors() -> None:
-    """Enable ANSI colors if stdout is a TTY."""
-    global _RESET, _BOLD, _RED, _GREEN, _YELLOW, _CYAN  # noqa: PLW0603
-    if hasattr(sys.stdout, "isatty") and sys.stdout.isatty():
-        _RESET = "\033[0m"
-        _BOLD = "\033[1m"
-        _RED = "\033[31m"
-        _GREEN = "\033[32m"
-        _YELLOW = "\033[33m"
-        _CYAN = "\033[36m"
 
 
 def _print_result(result: EvalResult, *, verbose: bool = False) -> None:
     """Print an EvalResult to stdout/stderr."""
     if result.ok:
-        print(f"{_GREEN}{_BOLD}OK{_RESET} {result.source_file}")
+        print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {result.source_file}")
     else:
         print(
-            f"{_RED}{_BOLD}ERROR{_RESET} {result.source_file}",
+            f"{_c.RED}{_c.BOLD}ERROR{_c.RESET} {result.source_file}",
             file=sys.stderr,
         )
         for err in result.errors:
-            print(f"  {_RED}{err}{_RESET}", file=sys.stderr)
+            print(f"  {_c.RED}{err}{_c.RESET}", file=sys.stderr)
 
 
 # ============================================================
@@ -87,7 +64,7 @@ def _cmd_check(args: argparse.Namespace) -> int:
                 parts.append(f"{len(result.compiled.imports)} import(s)")
             decls = ", ".join(parts)
         if decls:
-            print(f"  {_CYAN}{decls}{_RESET}")
+            print(f"  {_c.CYAN}{decls}{_c.RESET}")
     return 0 if result.ok else 1
 
 
@@ -103,7 +80,7 @@ def _cmd_run(args: argparse.Namespace) -> int:
             if not name.startswith("_")
         ]
         if exports:
-            print(f"  {_CYAN}Loaded: {', '.join(exports)}{_RESET}")
+            print(f"  {_c.CYAN}Loaded: {', '.join(exports)}{_c.RESET}")
     return 0 if result.ok else 1
 
 
@@ -113,7 +90,7 @@ def _cmd_verify(args: argparse.Namespace) -> int:
     _print_result(result)
     if result.ok:
         for line in result.verification:
-            print(f"  {_YELLOW}{line}{_RESET}")
+            print(f"  {_c.YELLOW}{line}{_c.RESET}")
     return 0 if result.ok else 1
 
 
@@ -130,10 +107,10 @@ def _cmd_compile(args: argparse.Namespace) -> int:
             try:
                 out_path.write_text(result.python_source, encoding="utf-8")
             except (PermissionError, OSError) as exc:
-                print(f"{_RED}{_BOLD}ERROR{_RESET} {exc}", file=sys.stderr)
+                print(f"{_c.RED}{_c.BOLD}ERROR{_c.RESET} {exc}", file=sys.stderr)
                 return 1
             print(
-                f"{_GREEN}{_BOLD}OK{_RESET} "
+                f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} "
                 f"Compiled {result.source_file} -> {out_path}"
             )
         else:
@@ -154,9 +131,9 @@ def _cmd_version(args: argparse.Namespace) -> int:
     """Handle ``lu version``."""
     from . import __version__
 
-    print(f"Lingua Universale {_BOLD}v{__version__}{_RESET}")
+    print(f"Lingua Universale {_c.BOLD}v{__version__}{_c.RESET}")
     print("The first programming language native to AI.")
-    print(f"  {_CYAN}Session types + Formal verification + ZERO deps{_RESET}")
+    print(f"  {_c.CYAN}Session types + Formal verification + ZERO deps{_c.RESET}")
     return 0
 
 

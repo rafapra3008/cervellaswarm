@@ -65,6 +65,7 @@ def _parse_and_compile(
             herr = humanize(exc)
             return None, None, [format_error(herr, source=source)]
         except Exception:
+            # Fallback if humanize() itself fails -- avoids crash in error layer
             return None, None, [str(exc)]
 
     try:
@@ -76,6 +77,7 @@ def _parse_and_compile(
             herr = humanize(exc)
             return None, None, [format_error(herr, source=source)]
         except Exception:
+            # Fallback if humanize() itself fails -- avoids crash in error layer
             return None, None, [str(exc)]
 
     return program, compiled, []

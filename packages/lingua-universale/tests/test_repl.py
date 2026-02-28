@@ -333,23 +333,29 @@ class TestREPLLoop:
 class TestREPLColors:
     """Test color initialization respects env vars."""
 
+    @pytest.fixture(autouse=True)
+    def _clean_colors(self) -> None:  # noqa: PT004
+        """Reset color singleton after each test to avoid pollution."""
+        yield
+        from cervellaswarm_lingua_universale._colors import reset_colors
+        reset_colors()
+
     def test_no_color_disables(self, monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.setenv("NO_COLOR", "1")
-        from cervellaswarm_lingua_universale._repl import _init_colors, _RESET
-        _init_colors()
-        from cervellaswarm_lingua_universale import _repl
-        assert _repl._RESET == ""
-        assert _repl._RED == ""
+        from cervellaswarm_lingua_universale._colors import colors, init_colors, reset_colors
+        reset_colors()
+        init_colors()
+        assert colors.RESET == ""
+        assert colors.RED == ""
 
     def test_force_color_enables(self, monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.setenv("FORCE_COLOR", "1")
         monkeypatch.delenv("NO_COLOR", raising=False)
-        from cervellaswarm_lingua_universale import _repl
-        _repl._RESET = ""
-        _repl._RED = ""
-        _repl._init_colors()
-        assert _repl._RESET == "\033[0m"
-        assert _repl._RED == "\033[31m"
+        from cervellaswarm_lingua_universale._colors import colors, init_colors, reset_colors
+        reset_colors()
+        init_colors()
+        assert colors.RESET == "\033[0m"
+        assert colors.RED == "\033[31m"
 
 
 # ============================================================

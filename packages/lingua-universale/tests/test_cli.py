@@ -210,3 +210,61 @@ class TestNoCommand:
         # argparse will error on unknown subcommand
         with pytest.raises(SystemExit):
             main(["unknown_command"])
+
+
+# ============================================================
+# NO_COLOR / FORCE_COLOR (C3.6 -- shared _colors module)
+# ============================================================
+
+
+class TestCLIColors:
+    """CLI respects NO_COLOR/FORCE_COLOR via shared _colors module."""
+
+    @pytest.fixture(autouse=True)
+    def _clean_colors(self) -> None:  # noqa: PT004
+        """Reset color singleton after each test to avoid pollution."""
+        yield
+        from cervellaswarm_lingua_universale._colors import reset_colors
+        reset_colors()
+
+    def test_no_color_disables(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setenv("NO_COLOR", "1")
+        from cervellaswarm_lingua_universale._colors import colors, init_colors, reset_colors
+        reset_colors()
+        init_colors()
+        assert colors.RESET == ""
+        assert colors.RED == ""
+        assert colors.GREEN == ""
+
+    def test_force_color_enables(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setenv("FORCE_COLOR", "1")
+        monkeypatch.delenv("NO_COLOR", raising=False)
+        from cervellaswarm_lingua_universale._colors import colors, init_colors, reset_colors
+        reset_colors()
+        init_colors()
+        assert colors.RESET == "\033[0m"
+        assert colors.RED == "\033[31m"
+        assert colors.GREEN == "\033[32m"
+
+    def test_clicolor_force_enables(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setenv("CLICOLOR_FORCE", "1")
+        monkeypatch.delenv("NO_COLOR", raising=False)
+        monkeypatch.delenv("FORCE_COLOR", raising=False)
+        from cervellaswarm_lingua_universale._colors import colors, init_colors, reset_colors
+        reset_colors()
+        init_colors()
+        assert colors.RESET == "\033[0m"
+
+    def test_no_color_overrides_force(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setenv("NO_COLOR", "1")
+        monkeypatch.setenv("FORCE_COLOR", "1")
+        from cervellaswarm_lingua_universale._colors import colors, init_colors, reset_colors
+        reset_colors()
+        init_colors()
+        assert colors.RESET == ""
+
+    def test_reset_colors(self) -> None:
+        from cervellaswarm_lingua_universale._colors import colors, reset_colors
+        colors.RESET = "\033[0m"
+        reset_colors()
+        assert colors.RESET == ""
