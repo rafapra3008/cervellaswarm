@@ -1,8 +1,8 @@
 {
   "name": "lingua-universale",
   "displayName": "Lingua Universale",
-  "description": "Syntax highlighting for the Lingua Universale programming language (.lu files) - the first language designed for AI agents",
-  "version": "0.1.0",
+  "description": "Syntax highlighting and diagnostics for the Lingua Universale programming language (.lu files) - the first language designed for AI agents",
+  "version": "0.2.0",
   "publisher": "cervellaswarm",
   "license": "Apache-2.0",
   "repository": {
@@ -13,7 +13,8 @@
     "vscode": "^1.75.0"
   },
   "categories": [
-    "Programming Languages"
+    "Programming Languages",
+    "Linters"
   ],
   "keywords": [
     "lingua-universale",
@@ -22,13 +23,18 @@
     "agents",
     "protocols",
     "formal-verification",
-    "cervellaswarm"
+    "cervellaswarm",
+    "lsp"
   ],
   "icon": "icon.png",
   "galleryBanner": {
     "color": "#1a1a2e",
     "theme": "dark"
   },
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:lingua-universale"
+  ],
   "contributes": {
     "languages": [
       {
@@ -54,6 +60,30 @@
         "scopeName": "source.lu",
         "path": "./syntaxes/lingua-universale.tmLanguage.json"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Lingua Universale",
+      "properties": {
+        "lingua-universale.luPath": {
+          "type": "string",
+          "default": "lu",
+          "description": "Path to the 'lu' command. Set this if 'lu' is not on your PATH."
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.75.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "@vscode/vsce": "^3.0.0"
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
   }
 }

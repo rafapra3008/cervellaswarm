@@ -6,4 +6,5 @@
 **/tsconfig.json
 node_modules/**
 tests/**
+src/**
 *.vsix

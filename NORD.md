@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 28 Febbraio 2026 - S426 (FASE D IN CORSO! D1 Syntax Highlighting DONE. 2806 test)
+> Aggiornato: 28 Febbraio 2026 - S426 (FASE D: D1+D2 DONE! LSP server funzionante. 2828 test)
 
 ```
 +==================================================================+
@@ -145,9 +145,9 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |   FASE C: IL LINGUAGGIO -- COMPLETA! (S407-S425)                 |
 |     C1 Grammatica DONE! C2 Compilatore DONE! C3 Esperienza DONE!|
 |   FASE D: L'ECOSISTEMA -- IN CORSO (S426+)                       |
-|     D1 Syntax Highlighting DONE! D2 LSP, D3 Playground, D4 Tour |
+|     D1 Syntax DONE! D2 LSP DONE! D3 Playground, D4 Tour         |
 |   PyPI: LIVE! pip install cervellaswarm-lingua-universale (S399) |
-|   25 moduli, 2806 test, 74 error codes, 5 .lu examples          |
+|   26 moduli, 2828 test, 74 error codes, 5 .lu examples          |
 |   NORD completo: packages/lingua-universale/NORD.md              |
 |   SUBROADMAP: .sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md    |
 |                                                                  |

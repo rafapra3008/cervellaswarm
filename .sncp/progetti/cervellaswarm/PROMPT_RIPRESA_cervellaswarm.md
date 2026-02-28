@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 2026-02-28 - Sessione 426
-> **STATUS:** FASE D IN CORSO! D1 Syntax Highlighting COMPLETO (9.5/10). Prossimo: D2 LSP Base.
+> **STATUS:** FASE D IN CORSO! D1 + D2 COMPLETATI (9.5/10 entrambi). Prossimo: D3 Playground.
 
 ---
 
@@ -9,26 +9,29 @@
 
 ### 1. D1: Syntax Highlighting + VS Code Extension -- COMPLETATO (9.5/10)
 - **TextMate grammar** (`lingua-universale.tmLanguage.json`): 33 costrutti, 100% copertura
-  - 5 action verbs, 7 properties, 4 trust tiers, 5 confidence levels, 4 builtin types
-  - Scope names conformi a standard TextMate/Sublime
-- **VS Code extension** completa: package.json, language-configuration.json, icon, README, LICENSE
-- **Test coverage**: 47/47 check su tutti i 5 file .lu
-- **.vsix** packaged (11.5 KB), installato in VS Code locale
-- **Guardiana audit**: 2 P2 trovati e FIXATI (Confident scope, confidence levels lowercase)
-- ID extension: `cervellaswarm.lingua-universale`
+- **VS Code extension**: package.json, language-configuration, icon 128x128, README
+- **Test**: 47/47 check su 5 file .lu
+- **Guardiana**: 2 P2 fixati (Confident scope, confidence levels lowercase)
+- ID: `cervellaswarm.lingua-universale`
 
-### 2. Struttura creata
-```
-extensions/lingua-universale-vscode/
-  package.json                               # VS Code manifest
-  language-configuration.json                # brackets, comments, folding
-  syntaxes/lingua-universale.tmLanguage.json # TextMate grammar (33 rules)
-  tests/test_grammar_coverage.py             # 47/47 check
-  README.md, CHANGELOG.md, LICENSE, icon.png
-  .vscodeignore, .gitignore
-```
+### 2. D2: LSP Base (lu lsp) -- COMPLETATO (9.5/10)
+- **_lsp.py**: language server con pygls v2 (STDIO), ~200 righe
+  - didOpen + didChange + didSave -> parse() -> diagnostics
+  - humanize() per errori ricchi: code LU-N + message + suggestion
+  - Coordinate: LU 1-indexed -> LSP 0-indexed
+  - didClose pulisce diagnostics
+  - `_source_diagnostics()` separata per testabilita
+- **CLI**: `lu lsp` subcommand (lazy import, zero impatto su altri comandi)
+- **pyproject.toml**: `[lsp]` extra con `pygls>=2.0`. Core resta ZERO DEPS
+- **VS Code client**: `extension.ts` lancia `lu lsp` via STDIO
+  - Configurazione `lingua-universale.luPath` per path custom
+  - Gestione graceful se `lu` non trovato
+- **Test**: 22 nuovi test (valid, tokenize errors, parse errors, structure, edge cases)
+- **Guardiana**: 2 P2 fixati (__version__ in server, dead import)
 
-### 3. Suite linguaggio: 2806 test, 0 regressioni, 0.83s
+### 3. Numeri aggiornati
+- **2828 test** (2806 + 22 LSP), 0 regressioni, 0.97s
+- **26 moduli .py** (25 + _lsp.py)
 
 ---
 
@@ -37,14 +40,14 @@ extensions/lingua-universale-vscode/
 ```
 LINGUAGGIO CERVELLASWARM:
   FASE A+B: COMPLETE (9.5+ media)
-  FASE C: Il Linguaggio -- COMPLETA! (S407-S425, media 9.45/10)
-  FASE D: L'Ecosistema -- IN CORSO
-    D1: Syntax Highlighting + VS Code  [####################] DONE! (S426, 9.5/10)
-    D2: LSP Base (lu lsp)             [....................] PROSSIMO
-    D3: Playground Online (Pyodide)   [....................] TODO
-    D4: "A Tour of LU" tutorial       [....................] TODO
-    D5: LSP Avanzato                  [....................] TODO
-    D6: Guardiana Finale + Launch     [....................] TODO
+  FASE C: Il Linguaggio -- COMPLETA! (S407-S425)
+  FASE D: L'Ecosistema -- IN CORSO (S426+)
+    D1: Syntax Highlighting   [####################] DONE! (S426, 9.5/10)
+    D2: LSP Base (lu lsp)     [####################] DONE! (S426, 9.5/10)
+    D3: Playground Online      [....................] PROSSIMO
+    D4: "A Tour of LU"        [....................] TODO
+    D5: LSP Avanzato           [....................] TODO
+    D6: Guardiana Finale       [....................] TODO
 ```
 
 ---
@@ -53,48 +56,56 @@ LINGUAGGIO CERVELLASWARM:
 
 | Metrica | Valore |
 |---------|--------|
-| Test totali | **2806** |
-| Moduli .py | **25** |
+| Test totali | **2828** |
+| Moduli .py | **26** |
 | Codici errore LU | **74** (3 lingue) |
 | File .lu | **5** |
-| Dipendenze esterne | **ZERO** |
+| Dipendenze core | **ZERO** |
+| Dipendenze LSP (optional) | **pygls>=2.0** |
 | PyPI packages LIVE | **9/9** |
 | VS Code extension | **installabile** (.vsix) |
-| Tempo suite | 0.83s |
+| LSP server | **funzionante** (lu lsp, STDIO) |
+| Tempo suite | 0.97s |
 
 ---
 
-## PROSSIMO: D2 -- LSP Base (lu lsp)
+## STRUTTURA FILE NUOVI (D1 + D2)
+
+```
+extensions/lingua-universale-vscode/    # VS Code extension
+  package.json                          # v0.2.0 con LSP client
+  language-configuration.json           # brackets, comments, folding
+  syntaxes/lingua-universale.tmLanguage.json  # TextMate grammar
+  src/extension.ts                      # LSP client (lancia lu lsp)
+  tsconfig.json                         # TypeScript config
+  tests/test_grammar_coverage.py        # 47/47 grammar check
+  README.md, CHANGELOG.md, LICENSE, icon.png
+
+packages/lingua-universale/
+  src/.../                              # Package
+    _lsp.py                             # NUOVO: LSP server (~200 righe)
+    _cli.py                             # AGGIORNATO: +lu lsp subcommand
+  pyproject.toml                        # AGGIORNATO: +[lsp] optional dep
+  tests/test_lsp.py                     # NUOVO: 22 test LSP
+```
+
+---
+
+## PROSSIMO: D3 -- Playground Online (Pyodide)
 
 **Subroadmap completa:** `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md`
 
-**D2 in breve:**
-- pygls (Python Generic Language Server) come optional dependency `[lsp]`
-- `lu lsp` subcommand nella CLI (STDIO mode)
-- Diagnostics in tempo reale: errori LU-N inline nell'editor
-- Collegare VS Code extension al language server
-- 2-3 sessioni, rischio MEDIO (prima dipendenza esterna: pygls)
+**D3 in breve:**
+- Monaco Editor + Pyodide (Python in WASM) + GitHub Pages
+- `micropip.install("cervellaswarm-lingua-universale")` nel browser
+- "Try it in 30 seconds" senza installare nulla
+- Costo: $0 (statico su GitHub Pages)
+- 1-2 sessioni, rischio BASSO
 
 **Decisioni gia prese:**
-- Stack: pygls v2.0.1 (STDIO, stabile)
-- Il 60-70% del lavoro e GIA fatto (parser, error codes, Loc(line,col))
-- pygls come optional dep: `pip install cervellaswarm-lingua-universale[lsp]`
-- Core resta ZERO DEPS
-
-**Architettura prevista:**
-```python
-# _lsp.py - nuovo modulo (~200-300 righe)
-from pygls.server import LanguageServer
-lu_server = LanguageServer("lingua-universale-lsp", "v0.1")
-
-@lu_server.feature(TEXT_DOCUMENT_DID_OPEN)
-@lu_server.feature(TEXT_DOCUMENT_DID_CHANGE)
-def validate(ls, params):
-    # 1. source dal documento
-    # 2. check_source() (GIA ESISTE!)
-    # 3. LU-N errors -> LSP Diagnostics
-    # 4. Loc(line,col) -> LSP Range/Position
-```
+- Stack: Pyodide (WASM) + Monaco Editor (come VS Code)
+- Deploy: GitHub Pages ($0)
+- Il nostro ZERO DEPS e' il caso PERFETTO per Pyodide
 
 ---
 
@@ -102,9 +113,9 @@ def validate(ls, params):
 
 | Doc | Problema | Priorita |
 |-----|----------|----------|
-| MAPPA_LINGUAGGIO | Numeri fermi a S398 (14 mod, 1820 test) | P2 |
-| NORD LU | Numeri fermi a S380 (14 mod, 1820 test) | P2 |
-| README.md pubblico | "13 modules, 1820 tests" stale | P3 |
+| MAPPA_LINGUAGGIO | Numeri fermi a S398 | P2 |
+| NORD LU | Numeri fermi a S380 | P2 |
+| README.md pubblico | Numeri stale | P3 |
 | VS Code Marketplace | Pubblicazione (serve Azure DevOps publisher) | P3 |
 
 ---
@@ -112,13 +123,13 @@ def validate(ls, params):
 ## Lezioni Apprese (S426)
 
 ### Cosa ha funzionato bene
-- **Ricerca + build in parallelo** -- Explorer + Researcher in parallelo, poi build mirato
-- **Guardiana dopo ogni step** -- 2 P2 scoperti e fixati subito (Confident scope, lowercase levels)
-- **Test grammar-vs-files** -- 47 check automatici garantiscono copertura reale
+- **2 step in 1 sessione** -- D1 + D2 completati insieme (entrambi 9.5/10)
+- **Ricerca parallela** -- Explorer + Researcher in parallelo, poi build mirato
+- **_source_diagnostics() separata** -- testabile senza server = 22 test unit puri
+- **humanize() bridge** -- errori LU-N con code + suggestion nel LSP diagnostic
 
 ### Pattern confermato
-- **"Step + Guardiana audit"** (32a volta) -- il metodo continua a funzionare
-- **TextMate scope standard** -- seguire le convenzioni evita problemi con i theme
+- **"Step + Guardiana audit"** (33a e 34a volta) -- il metodo funziona SEMPRE
 
 ---
 
