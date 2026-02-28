@@ -1,36 +1,32 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-28 - Sessione 427
-> **STATUS:** BLOCCO SCOPERTO! PyPI v0.1.1 vecchio (14 moduli). Serve v0.2.0 (26 moduli) PRIMA di D3 Playground.
+> **Ultimo aggiornamento:** 2026-02-28 - Sessione 428
+> **STATUS:** "Organizza la Casa" v0.2.0 -- Step 1-3 FATTI, Step 4-6 pronti (build + publish + audit)
 
 ---
 
-## SESSIONE 427 - Cosa e successo
+## SESSIONE 428 - Cosa e successo
 
-### 1. D3 Playground: Costruito ma BLOCCATO
-- **playground/index.html** (2187 righe): Monaco Editor + Pyodide, dark theme, split view
-- **playground/examples.js** (205 righe): 4 esempi precaricati (hello, confidence, multiagent, ricette)
-- Testato nel browser: layout OK, Pyodide carica OK, Monaco funziona
-- **BLOCCANTE:** `check_source()` e `run_source()` (Fase C) NON sono nel package su PyPI
-- PyPI v0.1.1 ha solo 14 moduli (Fase A+B). Servono i 26 moduli (Fase A+B+C+D)
+### 1. Context Window Optimization (COMPLETATA)
+- **Problema:** context si riempiva troppo velocemente (Contabilita ~15-18K token all'avvio)
+- **Causa:** duplicazioni massive, COSTITUZIONE/NORD/PROMPT_RIPRESA caricati integralmente negli hook
+- **Soluzione (6 step):**
+  - MEMORY.md CervellaSwarm: 58->44 righe | Contabilita: 54->38 righe
+  - session_start_swarm.py v3.1.0: output da ~4,829 a 298 char (solo puntatori)
+  - session_start_contabilita.py v2->v3: output da ~7,000 a 437 char
+  - Hook duplicati eliminati + filtri CWD aggiunti
+  - NORD.md Contabilita: 407->115 righe (3 file archivio in docs/)
+  - CLAUDE.md consolidati + compact instructions aggiunte
+- **Risultato:** Contabilita ~60% riduzione, CervellaSwarm ~35% riduzione
+- **Guardiana:** 9.5/10 | COSTITUZIONE intatta | Zero info perse
+- **Commit:** `48ee2ed7` (CervellaSwarm) + `01e5016` (Contabilita)
 
-### 2. Audit Guardiana Qualita: Score 5.5/10 coerenza PyPI vs locale
-- **Report completo:** `.sncp/progetti/cervellaswarm/ricerche/AUDIT_PYPI_COERENZA.md`
-- **12 moduli mancanti su PyPI**: tutta Fase C (_tokenizer, _ast, _parser, _contracts, _compiler, _interop, _grammar_export, _eval, _colors, _repl, _cli) + D2 (_lsp)
-- **README.md massicciamente stale**: dice "9 moduli, 84 symbols, 1273 test" -- reale: 26 moduli, 124 symbols, 2828 test
-- **CHANGELOG.md**: manca TUTTA Fase C
-- pyproject.toml description troppo stretta
-
-### 3. Subroadmap "Organizza la Casa" creata
-- **Path:** `.sncp/roadmaps/SUBROADMAP_ORGANIZZA_CASA_v020.md`
-- 6 step: bump version -> CHANGELOG -> README -> test+build -> publish -> audit
-- PREREQUISITO per D3 Playground
-
-### 4. Ricerca PTC (Programmatic Tool Calling) -- background
-- **Report:** `.sncp/progetti/cervellaswarm/ricerche/PTC_RESEARCH_REPORT.md`
-- PTC di Anthropic: 37-86% riduzione token, GA dal 17 Feb 2026
-- **Verdetto: MONITORARE, non implementare** -- Claude Code CLI non supporta PTC (issue #12836)
-- Non blocca il nostro lavoro, da rivalutare quando Anthropic lo porta in Claude Code
+### 2. Organizza la Casa v0.2.0 -- Step 1-3 FATTI
+- **Step 1 DONE:** pyproject.toml + __init__.py bumped a 0.2.0
+- **Step 2 DONE:** CHANGELOG [0.2.0] con 12 moduli nuovi documentati
+- **Step 3 DONE:** README riscritto (26 moduli, 131 symbols, 2828 test)
+- **Guardiana:** 9.3/10 | Fix P2 symbol count (124->131) applicato
+- **Commit:** `50eba284`
 
 ---
 
@@ -48,42 +44,38 @@ LINGUAGGIO CERVELLASWARM:
     D5: LSP Avanzato           [....................] TODO
     D6: Guardiana Finale       [....................] TODO
 
-  BLOCCO: Organizza Casa (v0.2.0)
-    Step 1: Bump versione      [....................] TODO
-    Step 2: CHANGELOG v0.2.0   [....................] TODO
-    Step 3: README aggiornato  [....................] TODO
-    Step 4: Test + build wheel [....................] TODO
+  Organizza Casa (v0.2.0)
+    Step 1: Bump versione      [####################] DONE (S428)
+    Step 2: CHANGELOG v0.2.0   [####################] DONE (S428)
+    Step 3: README aggiornato  [####################] DONE (S428)
+    Step 4: Test + build wheel [....................] PROSSIMO
     Step 5: Pubblica su PyPI   [....................] TODO
     Step 6: Guardiana audit    [....................] TODO
 ```
 
 ---
 
-## PROSSIMA SESSIONE: Organizza la Casa (v0.2.0)
+## PROSSIMA SESSIONE: Step 4-6 + D3 Playground
 
-**Subroadmap:** `.sncp/roadmaps/SUBROADMAP_ORGANIZZA_CASA_v020.md`
+### Step 4: Test + Build (~5 min)
+- `cd packages/lingua-universale && pytest` -- confermare 2828 test PASS
+- `python -m build` -- generare wheel v0.2.0
+- Verificare: wheel contiene tutti 27 file .py (26 moduli + __init__.py)
 
-### Step 1-3: Versione + Docs (~30 min)
-- `pyproject.toml`: version "0.1.1" -> "0.2.0", description aggiornata, keywords
-- `__init__.py`: fallback "0.1.1" -> "0.2.0"
-- CHANGELOG.md: sezione [0.2.0] con tutti i moduli Fase C (12 nuovi)
-- README.md: numeri reali (26 moduli, 124 symbols, 2828 test)
+### Step 5: Pubblica su PyPI (~5 min)
+- Trusted Publisher via GitHub Actions (gia configurato)
+- Alternativa: `twine upload dist/*` con token
+- Verifica: `pip install cervellaswarm-lingua-universale==0.2.0`
+- Verifica: `from cervellaswarm_lingua_universale import check_source` funziona
 
-### Step 4-5: Build + Publish (~10 min)
-- pytest: conferma 2828 test
-- python -m build: wheel v0.2.0
-- Verifica wheel contiene 27 file .py
-- Pubblica su PyPI (Trusted Publisher via GitHub Actions)
-
-### Step 6: Audit (~10 min)
-- Guardiana conferma score >= 9.5/10 coerenza
-- `pip install cervellaswarm-lingua-universale` -> v0.2.0
-- `from cervellaswarm_lingua_universale import check_source` -> funziona
+### Step 6: Guardiana audit (~10 min)
+- Score target: >= 9.5/10 coerenza PyPI vs locale
+- Tutti i numeri docs = numeri reali
 
 ### DOPO: D3 Playground RIPRENDE
-- Il playground (playground/index.html) e GIA costruito e funzionante
-- Serve SOLO che PyPI abbia v0.2.0 con check_source/run_source
-- Testare nel browser, Guardiana audit, deploy GitHub Pages
+- Il playground (playground/index.html) e GIA costruito (S427)
+- Con v0.2.0 su PyPI: check_source/run_source disponibili via Pyodide
+- Test nel browser -> Guardiana audit -> deploy GitHub Pages
 
 ---
 
@@ -93,46 +85,26 @@ LINGUAGGIO CERVELLASWARM:
 |---------|--------|
 | Test totali | **2828** |
 | Moduli .py | **26** |
+| Public symbols | **131** |
 | Codici errore LU | **74** (3 lingue) |
-| File .lu | **5** |
 | Dipendenze core | **ZERO** |
-| PyPI version | **0.1.1** (STALE! Serve 0.2.0) |
-| PyPI packages LIVE | **9/9** |
-| Playground | **costruito** (playground/index.html, bloccato da PyPI) |
-| Tempo suite | 0.97s |
+| PyPI version | **0.1.1** (Step 4-5 portano a 0.2.0) |
+| Playground | **costruito** (bloccato da PyPI) |
 
 ---
 
-## FILE NUOVI (S427)
-
-```
-playground/
-  index.html          # 2187 righe - Monaco + Pyodide, dark theme, split view
-  examples.js         # 205 righe - 4 esempi .lu precaricati
-
-.sncp/roadmaps/
-  SUBROADMAP_ORGANIZZA_CASA_v020.md   # Piano per release v0.2.0
-
-.sncp/progetti/cervellaswarm/ricerche/
-  AUDIT_PYPI_COERENZA.md              # Audit Guardiana (5.5/10)
-  PTC_RESEARCH_REPORT.md              # Ricerca Programmatic Tool Calling
-```
-
----
-
-## Lezioni Apprese (S427)
+## Lezioni Apprese (S428)
 
 ### Cosa ha funzionato bene
-- **Audit Guardiana PRIMA di procedere** -- ha scoperto il gap critico PyPI
-- **Costituzione riletta** -- "RICERCA prima di implementare", "Su carta != REALE"
-- **Ricerca parallela PTC** -- ha girato in background senza bloccare il lavoro
+- **Delegare fuori contesto** -- agenti lavorano in context separato, risultati controllati, poi audit
+- **Ogni step -> Guardiana audit** -- score 9.5/10 + 9.3/10, finding concreti fixati subito
+- **Analisi prima di agire** -- Ingegnera ha misurato TUTTO, poi piano chirurgico
 
 ### Cosa non ha funzionato
-- **Playground costruito PRIMA di verificare PyPI** -- spreco di effort (il codice e' OK ma non funziona end-to-end)
-- Avremmo dovuto verificare il package PyPI PRIMA di costruire il playground
+- **Context overhead accumulato silenziosamente** -- 428 sessioni senza mai misurare il consumo reale
 
 ### Pattern candidato
-- **"Verifica dipendenze esterne PRIMA di costruire"** -- Evidenza: S427 (playground bloccato da PyPI stale). Azione: MONITORARE
+- **"Misura il tuo overhead periodicamente"** -- Evidenza: S428 (60% overhead scoperto). Azione: PROMUOVERE
 
 ---
 
