@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale: Intentionally Broken File
+# This file contains syntax errors to demonstrate error messages.
+# Used by showcase_v2.py to show Rust-style error reporting.
+
+type Mood = Happy | Sad
+
+agent BrokenBot:
+    role: backend
+    trust: legendary
+    accepts: TaskRequest

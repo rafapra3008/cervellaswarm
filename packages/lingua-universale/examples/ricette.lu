@@ -1,0 +1,47 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale: La Nonna con le Ricette
+# "Un mondo dove OGNI persona puo creare software parlando nella sua lingua."
+# This example shows how a non-developer's intent maps to verified code.
+
+type Category = Antipasto | Primo | Secondo | Dolce | Contorno
+
+type Recipe =
+    name: String
+    category: Category
+    ingredients: List[String]
+    steps: List[String]
+    servings: Number
+    notes: String?
+
+type SearchResult =
+    recipes: List[String]
+    total: Number
+
+agent RecipeManager:
+    role: backend
+    trust: standard
+    accepts: TaskRequest
+    produces: TaskResult
+    requires: request.valid
+    ensures: result.done
+
+agent QualityChecker:
+    role: guardiana
+    trust: verified
+    accepts: AuditRequest
+    produces: AuditVerdict
+    requires: data.submitted
+    ensures: verdict.justified
+
+protocol AddRecipe:
+    roles: nonna, manager, checker
+
+    nonna asks manager to do save recipe
+    manager returns result to nonna
+    nonna asks checker to verify recipe data
+    checker returns verdict to nonna
+
+    properties:
+        always terminates
+        no deadlock
+        manager before checker

@@ -1334,6 +1334,36 @@ _CATALOG: MappingProxyType = MappingProxyType({
         ),
     }),
 
+    "LU-N013": MappingProxyType({
+        "en": (
+            "invalid trust tier `{got}`.",
+            "Valid trust tiers: verified, trusted, standard, untrusted.",
+        ),
+        "it": (
+            "livello di trust non valido `{got}`.",
+            "Livelli validi: verified, trusted, standard, untrusted.",
+        ),
+        "pt": (
+            "nivel de confianca invalido `{got}`.",
+            "Niveis validos: verified, trusted, standard, untrusted.",
+        ),
+    }),
+
+    "LU-N014": MappingProxyType({
+        "en": (
+            "invalid confidence level `{got}`.",
+            "Valid levels: certain, high, medium, low, speculative.",
+        ),
+        "it": (
+            "livello di confidence non valido `{got}`.",
+            "Livelli validi: certain, high, medium, low, speculative.",
+        ),
+        "pt": (
+            "nivel de certeza invalido `{got}`.",
+            "Niveis validos: certain, high, medium, low, speculative.",
+        ),
+    }),
+
     # ------------------------------------------------------------------
     # LU-X - unknown / fallback
     # ------------------------------------------------------------------
@@ -1858,6 +1888,14 @@ def _classify_parse_error(exc: ParseError) -> tuple[str, dict[str, str]]:
         got = _extract_quoted(msg) or ""
         return "LU-N012", {"got": got}
 
+    if "invalid trust tier" in msg:
+        got = _extract_quoted(msg) or ""
+        return "LU-N013", {"got": got}
+
+    if "invalid confidence level" in msg:
+        got = _extract_quoted(msg) or ""
+        return "LU-N014", {"got": got}
+
     # Generic parse error: expected X got Y
     parts = _extract_expected_got(msg)
     return "LU-N007", parts
@@ -1877,6 +1915,14 @@ def _parser_similar(code: str, got: str) -> tuple[str, ...]:
     if code == "LU-N012" and got:
         return suggest_similar(
             got, ["role", "trust", "accepts", "produces", "requires", "ensures"]
+        )
+    if code == "LU-N013" and got:
+        return suggest_similar(
+            got, ["verified", "trusted", "standard", "untrusted"]
+        )
+    if code == "LU-N014" and got:
+        return suggest_similar(
+            got, ["certain", "high", "medium", "low", "speculative"]
         )
     return ()
 

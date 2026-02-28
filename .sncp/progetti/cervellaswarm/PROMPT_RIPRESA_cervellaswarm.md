@@ -1,59 +1,38 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-27 - Sessione 423
-> **STATUS:** C3.4 REPL DONE (9.5/10). Prossimo: C3.5 File .lu + showcase v2.
+> **Ultimo aggiornamento:** 2026-02-27 - Sessione 424
+> **STATUS:** C3.5 Showcase v2 DONE (9.5/10). Prossimo: C3.6 Guardiana audit finale C3.
 
 ---
 
-## SESSIONE 423 - Cosa e successo
+## SESSIONE 424 - Cosa e successo
 
-### Code Review mirato S421-S422 -- COMPLETATO
-
-Reviewer ha trovato 1 P1, 5 P2, 4 P3 nei file C3.2/C3.3.
-Fix applicati dalla Regina (4 su 10):
-- **F1 (P1):** `import re` inline ripetuto 5 volte in errors.py -> spostato al top-level
-- **F3 (P2):** `source.split("\n")` in render_snippet -> `source.splitlines() or [""]` (gestisce `\r\n` Windows)
-- **F6 (P3):** +2 test render_snippet: CRLF line endings, col negativo
-- **F7 (P3):** +1 test humanize ParseError senza virgolette (fallback LU-N010)
-
-Annotati per futuro (non bloccanti): F2 regex got greedy, F4 path security note, F5 classifier coupling, F8 stderr colors, F9 performance large files.
-
-### C3.4 REPL interattivo -- COMPLETATO (Guardiana 9.5/10)
-
-**Ricerca:** 20+ fonti (Python stdlib, PEP 762, IPython, Elixir IEx, Deno REPL, Gleam, craftinginterpreters).
-**Report:** `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260227_repl_design.md`
-
-**Decisioni architetturali (confermate dalla ricerca):**
-- D2: stdlib REPL (readline, ZERO deps) -- confermato, non cmd.Cmd (scarso fit per linguaggio)
-- D4: REPLSession class stateful -- confermato, con input_fn/output_fn injection per testing
-- Raw readline loop (non cmd.Cmd) perche la maggior parte dell'input e codice LU, non comandi
-- Multiline via "parse-and-check" (delega a check_source() esistente)
-- Comandi meta prefissati con `:` (stile IEx/Elixir)
-- NO_COLOR / FORCE_COLOR / CLICOLOR_FORCE supportati
+### C3.5 File .lu + Showcase v2 -- COMPLETATO (Guardiana 9.5/10)
 
 **Cosa e stato costruito:**
-1. **`_repl.py`** (~260 LOC) -- modulo nuovo:
-   - `REPLSession` class con `run()` (loop), `eval()` (programmatico), `handle_command()` (meta)
-   - `_is_complete()` + `_looks_incomplete()` -- heuristics multiline (colon ending, indented, EOF/INDENT signals)
-   - `_compiled_summary()` -- helper DRY per summary OK output
-   - `_setup_readline()` / `_save_readline()` con graceful fallback
-   - `_init_colors()` con NO_COLOR/FORCE_COLOR/CLICOLOR_FORCE
-   - `CommandResult` dataclass per risultati comandi
-   - `_HELP_TEXT` con tutti i comandi e shortcut documentati
-   - Banner con versione: "Lingua Universale v{version} -- the first language native to AI"
-2. **Comandi meta:** `:help`, `:quit/:q/:exit`, `:reset`, `:history`, `:check <src>`
-3. **Multiline:** linee che finiscono con `:` accumulano, riga vuota esegue, doppia vuota forza reset
-4. **`_cli.py`** -- +`lu repl` subcommand, `_cmd_repl` handler (lazy import)
-5. **`__init__.py`** -- +export `REPLSession` + `__all__`
 
-**Audit Guardiana:** 9.5/10, 0 P0, 0 P1, 2 P2, 6 P3. Tutti i P2 fixati:
-- **F1 (P2):** Rimosso `TextIO` import non usato
-- **F2 (P2):** `:check` senza argomento ora mostra "Usage: :check <source>" invece di "Unknown command"
-- **F3 (P3):** DRY: estratto `_compiled_summary()` usato sia in `_execute()` che in `:check`
-- **F4 (P3):** `:exit` aggiunto alla help text
-- **F5 (P3):** +1 test double-empty-line buffer reset
+1. **4 nuovi file .lu in `examples/`:**
+   - `confidence.lu` -- variant+record types con Confident[T], agents con trust tiers, confidence properties
+   - `multiagent.lu` -- complex protocol con 4 ruoli, choice branches, ordering/exclusion properties, use statement
+   - `ricette.lu` -- "la nonna con le ricette" (vision di Rafa), 3 types, 2 agents, 1 protocol
+   - `errors.lu` -- file intenzionalmente rotto (`trust: legendary`) per demo error messages
 
-**Test nuovi S423:** +45 totale (+3 code review + 42 REPL)
+2. **`showcase_v2.py`** (~230 LOC) -- Phase C demo end-to-end, 6 sezioni:
+   - S1: Parse & compile tutte le .lu files
+   - S2: Generated Python preview (ricette.lu -> 238 linee Python)
+   - S3: Execute hello.lu -> live module inspection
+   - S4: Formal verification (Lean 4 pipeline)
+   - S5: Rust-style error messages su errors.lu (LU-N013)
+   - S6: REPL session automatizzata
+
+3. **Bug fix: LU-N013 + LU-N014** -- 2 nuovi codici errore in errors.py:
+   - LU-N013: `invalid trust tier` (era fallback LU-N007 con `{expected}/{got}` non interpolati)
+   - LU-N014: `invalid confidence level` (stesso bug)
+   - 3 locali (en, it, pt), classifier patterns, fuzzy suggestions
+
+4. **32 test nuovi** in `test_showcase_v2.py`
+
+**Audit Guardiana:** 9.5/10, 0 P0, 0 P1, 0 P2, 6 P3. Fixati 5/6 P3.
 
 ---
 
@@ -65,76 +44,91 @@ LINGUAGGIO CERVELLASWARM:
   FASE C: Il Linguaggio
     C1: La Grammatica    [####################] 100% DONE!
     C2: Il Compilatore   [####################] 100% DONE!
-    C3: L'Esperienza     [################....] ~67%
+    C3: L'Esperienza     [##################..] ~83%
       C3.1 STUDIO             DONE (S421, 9.3/10)
       C3.2 CLI + eval         DONE (S422, 9.5/10)
       C3.3 Error messages     DONE (S422, 9.3/10)
       C3.4 REPL interattivo   DONE (S423, 9.5/10)
-      C3.5 File .lu + showcase TODO
+      C3.5 File .lu + showcase DONE (S424, 9.5/10)
       C3.6 Guardiana finale   TODO
 ```
 
 ---
 
-## I NUMERI TOTALI (dopo S423)
+## I NUMERI TOTALI (dopo S424)
 
 | Metrica | Valore |
 |---------|--------|
-| Test totali | **2769** (+45 da S422) |
-| Test passanti | 2769 (100%) |
-| Moduli .py nel package | **24** (+1 _repl.py) |
-| File .lu di esempio | 1 (examples/hello.lu) |
-| Codici errore LU | **72** (60 + 12 LU-N) |
+| Test totali | **2801** (+32 da S423) |
+| Test passanti | 2801 (100%) |
+| Moduli .py nel package | **24** |
+| File .lu di esempio | **5** (+4 nuovi) |
+| Codici errore LU | **74** (72 + 2 nuovi LU-N013/N014) |
 | Locali errori | 3 (en, it, pt) |
 | Regressioni | 0 |
-| Tempo suite | 0.86s |
-| Guardiana audit S423 | 1 (C3.4: 9.5/10) |
+| Tempo suite | 0.89s |
+| Guardiana audit S424 | 1 (C3.5: 9.5/10) |
 
 ---
 
-## PROSSIMO: C3.5 File .lu + showcase v2
+## PROSSIMO: C3.6 Guardiana audit finale C3
 
-1. **Arricchire `examples/`** -- aggiungere 3-5 file .lu che mostrano tutte le feature:
-   - hello.lu (esiste gia: type + agent + protocol)
-   - confidence.lu (tipi con confidence)
-   - multiagent.lu (protocollo complesso con choice/branch)
-   - errors.lu (file intenzionalmente sbagliato per mostrare error messages)
-2. **showcase_v2.py** -- script che esegue il flusso completo:
-   - Parsa file .lu -> compila -> verifica -> esegue
-   - Mostra error messages stile Rust su file errato
-   - Mostra REPL session (automated via REPLSession con input_fn)
-3. **Test** -- pytest per showcase + file .lu
-4. **Guardiana audit** -- target 9.5/10
+1. **Review completa Fase C3** -- Guardiana esamina tutti i 6 step insieme
+2. **Cross-cutting concerns** -- coerenza API, docstring, edge cases
+3. **Fix eventuali P1/P2**
+4. **Se passa 9.5/10** -> FASE C COMPLETA!
 
-Poi: C3.6 Guardiana audit finale (review completa Fase C3)
+Poi: decidere prossimo step (Fase D? packaging update?)
 
 ---
 
-## File chiave (C3.4)
+## File chiave (C3.5)
 
-- **_repl.py** (~260 LOC) -- REPLSession, comandi, multiline, colori
-- **_cli.py** (~245 LOC) -- +lu repl subcommand
-- **test_repl.py** (42 test) -- eval, commands, multiline, loop, colors, CLI
-- **RICERCA:** `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260227_repl_design.md`
+- **examples/confidence.lu** -- 2 types, 2 agents, 1 protocol con choice
+- **examples/multiagent.lu** -- 3 types, 3 agents, 1 protocol con use+choice+6 properties
+- **examples/ricette.lu** -- la visione della nonna
+- **examples/errors.lu** -- file rotto per demo
+- **examples/showcase_v2.py** -- 6 sezioni Phase C
+- **tests/test_showcase_v2.py** -- 32 test
+- **errors.py** -- +LU-N013, +LU-N014
 
 ---
 
-## Lezioni Apprese (S423)
+## Lezioni Apprese (S424)
 
 ### Cosa ha funzionato bene
-- **Code review + REPL in una sessione** -- partire dal review ha fixato bug esistenti PRIMA di aggiungere nuovo codice
-- **Ricerca REPL parallela al review** -- massima efficienza, 0 tempo perso
-- **DI pattern (input_fn/output_fn)** -- 42 test REPL senza mockare stdin/readline (Guardiana ha lodato)
+- **Validazione immediata con il parser** -- errori scoperti subito (commenti `--` vs `#`, nested when)
+- **Bug fix "along the way"** -- scoperto e fixato LU-N007 template interpolation bug
+- **Guardiana P3 fix rapido** -- 5/6 fixati in minuti (PT translation, test assertion, SPDX)
 
 ### Cosa non ha funzionato
-- **`type Color = Red` non e valido** in LU (serve `|` per variant) -- test scritti con assunzione errata, fixati subito
-- **`splitlines()` vs `split("\n")`** per stringa vuota: `"".splitlines()` -> `[]` vs `"".split("\n")` -> `[""]` -- edge case sottile, richiesto `or [""]` fallback
+- **Commenti `--` vs `#`** -- assunzione da NORD.md, il tokenizer usa solo `#`
 
 ### Pattern confermato
-- **"Research First + Guardiana dopo step" (29a volta consecutiva)** -- il metodo funziona
-- **"Code Review trova bug che l'audit post-step non vede"** -- review fresco su codice "gia approvato" ha trovato F1 P1 (import re) e F3 P2 (splitlines)
+- **"Step + Guardiana audit" (30a volta consecutiva)** -- il metodo funziona
+- **"Fix bugs you find along the way"** -- LU-N013/N014 migliorano il prodotto senza rallentare
 
 ---
 
 *"La domanda e la risposta nello STESSO linguaggio." - Rafa*
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
+
+---
+
+## AUTO-CHECKPOINT: 2026-02-28 06:01 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: e019be92 - S423: C3.4 REPL Interattivo DONE (9.5/10) + Code Review fixes (2769 test)
+- **File modificati** (5):
+  - coverage
+  - .sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
+  - .sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md
+  - .sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md
+  - .sncp/progetti/miracollo/bracci/miracallook/stato.md
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---

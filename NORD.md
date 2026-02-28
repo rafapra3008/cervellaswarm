@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 27 Febbraio 2026 - S423 (C3.4 REPL DONE, 2769 test, 72 error codes)
+> Aggiornato: 27 Febbraio 2026 - S424 (C3.5 Showcase v2 DONE, 2801 test, 74 error codes)
 
 ```
 +==================================================================+
@@ -144,9 +144,9 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |   FASE B: COMPLETA! B.1-B.7 DONE (S387-S398)                    |
 |   FASE C: IL LINGUAGGIO (S407-S423)                              |
 |     C1 Grammatica DONE! C2 Compilatore DONE!                    |
-|     C3 L'Esperienza 67% (CLI+eval+errors+REPL DONE)            |
+|     C3 L'Esperienza 83% (CLI+eval+errors+REPL+showcase DONE)   |
 |   PyPI: LIVE! pip install cervellaswarm-lingua-universale (S399) |
-|   24 moduli, 2769 test, 72 error codes, ZERO deps              |
+|   24 moduli, 2801 test, 74 error codes, 5 .lu examples          |
 |   NORD completo: packages/lingua-universale/NORD.md              |
 |                                                                  |
 +==================================================================+

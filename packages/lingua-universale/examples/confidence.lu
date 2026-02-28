@@ -1,0 +1,48 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale: Confidence Types
+# Demonstrates: variant types, record types with Confident[T],
+# agents with trust tiers and contracts, confidence properties.
+
+type AnalysisStatus = InProgress | Complete | NeedsReview
+
+type AnalysisResult =
+    summary: String
+    score: Confident[Number]
+    details: List[String]
+    status: AnalysisStatus
+
+agent Analyst:
+    role: researcher
+    trust: standard
+    accepts: ResearchQuery
+    produces: ResearchReport
+    requires: task.well_defined
+    ensures: result.confidence >= 0.7
+
+agent Reviewer:
+    role: guardiana
+    trust: verified
+    accepts: AuditRequest
+    produces: AuditVerdict
+    requires: result.submitted
+    ensures: verdict.justified
+
+protocol ConfidenceReview:
+    roles: analyst, reviewer, regina
+
+    analyst returns report to regina
+    regina asks reviewer to verify report
+    when reviewer decides:
+        approve:
+            reviewer returns verdict to regina
+        needs_revision:
+            reviewer tells analyst revise findings
+            analyst returns revised report to regina
+            reviewer returns verdict to regina
+
+    properties:
+        always terminates
+        no deadlock
+        confidence >= high
+        trust >= standard
+        analyst before reviewer
