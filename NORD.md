@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 28 Febbraio 2026 - S426 (FASE D: D1+D2 DONE! LSP server funzionante. 2828 test)
+> Aggiornato: 28 Febbraio 2026 - S427 (BLOCCO: PyPI stale v0.1.1. Serve v0.2.0 PRIMA di D3. Playground costruito.)
 
 ```
 +==================================================================+
@@ -145,11 +145,15 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |   FASE C: IL LINGUAGGIO -- COMPLETA! (S407-S425)                 |
 |     C1 Grammatica DONE! C2 Compilatore DONE! C3 Esperienza DONE!|
 |   FASE D: L'ECOSISTEMA -- IN CORSO (S426+)                       |
-|     D1 Syntax DONE! D2 LSP DONE! D3 Playground, D4 Tour         |
+|     D1 Syntax DONE! D2 LSP DONE!                                |
+|     D3 Playground COSTRUITO ma BLOCCATO (serve PyPI v0.2.0)     |
+|     PROSSIMO: "Organizza Casa" -> v0.2.0 -> D3 riprende        |
 |   PyPI: LIVE! pip install cervellaswarm-lingua-universale (S399) |
 |   26 moduli, 2828 test, 74 error codes, 5 .lu examples          |
+|   PyPI: v0.1.1 STALE (14 moduli). Serve v0.2.0 (26 moduli)     |
 |   NORD completo: packages/lingua-universale/NORD.md              |
-|   SUBROADMAP: .sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md    |
+|   SUBROADMAP D: .sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md  |
+|   ORGANIZZA CASA: .sncp/roadmaps/SUBROADMAP_ORGANIZZA_CASA_v020 |
 |                                                                  |
 +==================================================================+
 ```

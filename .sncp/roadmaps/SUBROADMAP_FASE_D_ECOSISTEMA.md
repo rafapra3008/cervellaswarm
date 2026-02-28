@@ -291,8 +291,9 @@ FASE D2: LSP Base (lu lsp)           [####################] DONE (S426, 9.5/10)
   pygls + diagnostics in tempo reale   1 sessione! (con D1)
   VS Code collegato al server
 
-FASE D3: Playground Online            [....................] TODO
-  Monaco + Pyodide + GitHub Pages      1-2 sess
+FASE D3: Playground Online            [####................] BLOCCATO
+  Monaco + Pyodide + GitHub Pages      playground/ costruito (S427)
+  BLOCCO: PyPI v0.1.1 manca Fase C    Serve v0.2.0 (SUBROADMAP_ORGANIZZA_CASA)
   "Try it in 30 seconds"
 
 FASE D4: "A Tour of LU"              [....................] TODO
