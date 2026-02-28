@@ -176,11 +176,26 @@ def auto_rebuild() -> tuple[str, str]:
         return HealthStatus.FAIL, f"Auto-rebuild errore: {e}"
 
 
+def is_cervellaswarm_context() -> bool:
+    """Check if current working directory is within the CervellaSwarm project."""
+    try:
+        cwd = os.getcwd()
+        return "CervellaSwarm" in cwd
+    except Exception:
+        # Graceful fallback: if CWD cannot be determined, assume we are in context
+        return True
+
+
 def main():
     """Run all health checks."""
     verbose = "--verbose" in sys.argv
     do_rebuild = "--auto-rebuild" in sys.argv
     hook_mode = "--hook" in sys.argv
+
+    # In hook mode: skip silently if not in CervellaSwarm context
+    if hook_mode and not is_cervellaswarm_context():
+        print(json.dumps({}))
+        sys.exit(0)
 
     checks = [
         ("Build", check_build_exists),
