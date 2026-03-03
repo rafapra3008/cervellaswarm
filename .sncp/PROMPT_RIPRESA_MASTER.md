@@ -13,7 +13,7 @@
 | **CervellaBrasil** | `.sncp/progetti/cervellabrasil/PROMPT_RIPRESA_cervellabrasil.md` | 2026-02-12 | FASE 0-2.5 completas, pronto FASE 3 (Execucao) |
 | **Chavefy** | `.sncp/progetti/chavefy/PROMPT_RIPRESA_chavefy.md` | 2026-02-12 | FASE 0: 13 pesquisas, pronto validacao online |
 | **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-30 | In pausa (Cache Layer v2.1.0 completato) |
-| **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-02-24 | S139: Agent v2.0.0 daily_closed DEPLOYATO su 3 hotel! Reconcile rischedulato post-sync. 1744 test. QA 9.5+9.8+9.6. Prossimo: monitor 25 Feb, fix Puzzle P2 |
+| **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-02-28 | S222: Subroadmap C.7 COMPLETATA! Script v4.5.0 batch, 8 doc giorno completo SPRING. 1908 test. Prossimo: Fase D automazione pipeline V3->SPRING |
 | **CervellaCostruzione** | `.sncp/progetti/cervellacostruzione/PROMPT_RIPRESA_cervellacostruzione.md` | 2026-02-04 | Costituzione digitale |
 
 ---

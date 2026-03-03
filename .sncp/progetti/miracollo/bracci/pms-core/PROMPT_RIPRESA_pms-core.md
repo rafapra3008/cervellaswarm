@@ -5,46 +5,55 @@
 
 # PROMPT RIPRESA - PMS Core
 
-> **Ultimo aggiornamento:** 22 Febbraio 2026
-> **STATO:** 90% LIVE | Health codice 6.5/10 (post-audit dettagliato)
+> **Ultimo aggiornamento:** 27 Febbraio 2026 - FASE 3 Documentazione COMPLETATA
+> **STATO:** 90% LIVE | FASE 2 Sicurezza DONE | FASE 3 Docs DONE
 
 ---
 
-## SESSIONE 22 FEB - AUDIT COMPLETO + SUBROADMAP
+## COSA E SUCCESSO QUESTA SESSIONE
 
 ```
-+================================================================+
-|   RECAP GIGANTE - 3 Audit Paralleli Completati                 |
-|                                                                |
-|   Ingegnera:    Codice 6.5/10 (4 critici, 5 alti)             |
-|   Guardiana QA: Docs   6.5/10 (3 critici, ~250 orfani)        |
-|   DevOps:       VM spenta, DNS sbagliato                       |
-|                                                                |
-|   SUBROADMAP RINASCITA creata e validata (8.8/10)              |
-+================================================================+
+FASE 3 - DOCUMENTAZIONE (27 Feb 2026)
+
+Obiettivo: portare Health Docs da 6.5/10 a 9.5/10
+Risultato: 9.0/10 (Guardiana) + fix P2 applicati
+
+Cosa abbiamo fatto:
+1. Verificato e aggiornato PROMPT_RIPRESA root (redirect OK)
+2. Fixato 6 contraddizioni nei docs (score, porte, stack, container)
+3. Rimosso 390 file da git tracking (.sncp/ + .swarm/ obsoleti)
+4. Eliminato 250+ file locali (checkpoints, reports, task output)
+5. Allineato FORTEZZA_MIRACOLLO.md con realta FASE 2
+6. Aggiornato metriche nella SUBROADMAP
+
+Guardiana: 9.0/10 -> 4 P2 fixati (FORTEZZA), 6 P3 fixati
+Commit: 1a72310 | 393 file, -51,179 righe | PUSHATO
 ```
-
-### Cosa e stato fatto oggi
-- Audit codice completo (85 tool calls, 83 file router, 396 endpoint)
-- Audit documentazione (46 tool calls, tutte le contraddizioni mappate)
-- Audit infrastruttura (32 tool calls, porte, VM, DNS)
-- Subroadmap 6 fasi creata e validata dalla Guardiana
-
-### Cosa NON e stato modificato
-- Zero righe di codice cambiate
-- Zero file di produzione toccati
-- Solo documentazione SNCP aggiornata
 
 ---
 
-## BUG CRITICI DA FIXARE (FASE 0)
+## FASE 2 SICUREZZA - COMPLETATA (sessione precedente)
 
-| Bug | File | Dettaglio |
-|-----|------|-----------|
-| **create_guest ROTTO** | `backend/routers/guests.py:74-88` | INSERT 22 colonne, 9 placeholder. Crash SQLite. |
-| **Auth mancante** | 83 router files | Solo 23/396 endpoint protetti (5.8%) |
-| **XSS frontend** | 82 file JS | ~362 innerHTML senza escape, no CSP header |
-| **DB backup in git history** | storia Git | 2 file con dati personali clienti |
+```
+2.1 Auth Middleware       ✅ LIVE (9.5/10) - API Key + Nginx Basic Auth
+2.2 CSP Enforce          ✅ DONE (9.0/10) - unsafe-eval rimosso, HSTS
+2.3 escapeHtml globale   ✅ DONE (9.3/10) - 8 copie -> 1 centralizzata
+2.4 DB purge git history ✅ DONE (9.3/10) - .git 17->8.7 MB
+2.5 Rate limiting Nginx  ✅ DONE (9.3/10) - 3 zone granulari
+```
+
+---
+
+## BUG NOTI RESIDUI (P3)
+
+| Bug | Severita | Mitigazione |
+|-----|----------|-------------|
+| ~434 innerHTML admin-only | P3 | CSP enforce + Basic Auth |
+| 76 onclick inline | P3 | richiedono unsafe-inline in CSP |
+| security.js in 12/29 HTML | P2 | planning.html manca (93 innerHTML!) |
+| `on_event("startup")` deprecato | P3 | funziona ma deprecated warning |
+| except Exception generico 100+ | P3 | FASE 4 |
+| Rate limiting Python in-memory | P3 | Nginx rate limiting 3 zone |
 
 ---
 
@@ -52,57 +61,34 @@
 
 ```
 396 endpoint API in 83 file router
-Backend: Python 3.11, FastAPI, SQLite, Gunicorn (5 workers)
+Backend: Python 3.11, FastAPI, SQLite, Gunicorn (2 workers)
 Frontend: HTML/CSS/JS puro (NON React!)
 Docker: Multi-stage build, non-root user, Nginx reverse proxy
+5 middleware: APIKeyAuth -> SecurityHeaders -> CORS -> Logging -> GZip
 ```
-
-### Punti di Forza (confermati dall'audit)
-- Buona modularizzazione (50+ file < 400 righe)
-- Pydantic settings, optimistic locking, security headers
-- HMAC webhook validation, GZip compression, rate limiting
-- Dockerfile best practices
-
-### Debiti Tecnici Principali
-- except Exception generico in 100+ punti
-- Rate limiting in-memory (non funziona con multi-worker)
-- on_event("startup") deprecato -> migrare a lifespan
-- 13 file Python > 650 righe (candidati split)
-- revenue.js 1296 righe (piu grande nel frontend)
 
 ---
 
-## FASE 3 FEATURE - PROGRESSO REALE: 4/5 (80%)
+## FASE 3 FEATURE - PROGRESSO: 4/5 (80%)
 
-| Task | Status | Note |
-|------|--------|------|
-| **F3.1 Batch Operations** | **DONE 9/10** | POST /api/batch/* |
-| **F3.2 Webhooks Outbound** | **DONE 9/10** | HMAC, retry, DLQ |
-| **F3.3 Revenue Dashboard** | **DONE 8/10** | Gia esistente, enhancement minor |
-| **F3.4 Housekeeping Quick Wins** | **DONE 9/10** | Auto-dirty, panel, bulk |
-| F3.5 Channel Manager 2-Way | FUTURO | dopo F3.2 (ora possibile!) |
+| Task | Status |
+|------|--------|
+| F3.1 Batch Operations | DONE 9/10 |
+| F3.2 Webhooks Outbound | DONE 9/10 |
+| F3.3 Revenue Dashboard | DONE 8/10 |
+| F3.4 Housekeeping QW | DONE 9/10 |
+| F3.5 Channel Manager | FUTURO |
 
 ---
 
 ## PROSSIMI STEP
 
-**Seguire SUBROADMAP:** `roadmaps/SUBROADMAP_RECAP_RINASCITA_2026.md`
-
-```
-FASE 0 -> Fix bug guests.py + .gitignore
-FASE 1 -> Riattivare VM per demo ditta tedesca
-FASE 2 -> Auth su tutti endpoint + CSP + XSS fix
-```
+1. **FASE 4 - Qualita Codice** (target: 8.5/10)
+2. O fix security.js in HTML mancanti (P2 residuo)
+3. Decidere con Rafa
+4. **Subroadmap:** `roadmaps/SUBROADMAP_RECAP_RINASCITA_2026.md`
 
 ---
 
-## WARNING ESISTENTI
-
-- **FK violations:** 1262 nel DB (problema pre-esistente)
-- **VM:** In pausa, IP non fisso, DNS da aggiornare
-- **Contabilita:** USA porte simili in locale (8000, 8001) - NON toccare
-
----
-
-*"Audit fatto con calma, ogni punto trovato. Ora si sistema."*
-*22 Febbraio 2026*
+*"Lavoriamo in pace! Senza casino! Dipende da noi!"*
+*27 Febbraio 2026*

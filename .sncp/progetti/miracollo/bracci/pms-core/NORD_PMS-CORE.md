@@ -19,7 +19,7 @@
 
 ---
 
-## STATO: 85% - PRODUZIONE
+## STATO: 90% - PRODUZIONE (FASE 2 Sicurezza 9.2/10)
 
 ```
 CORE FEATURES           [####################] 100%
@@ -90,7 +90,7 @@ EVOLUZIONE (quando serve):
 ```
         +-------------+
         |  PMS CORE   |  <-- FONTE DI VERITA
-        |   :8000     |
+        |   :8001     |
         +------+------+
                |
     +----------+----------+

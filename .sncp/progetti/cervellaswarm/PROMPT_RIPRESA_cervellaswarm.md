@@ -110,3 +110,23 @@ LINGUAGGIO CERVELLASWARM:
 
 *"La casa deve essere in ordine prima di invitare ospiti."*
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
+
+---
+
+## AUTO-CHECKPOINT: 2026-02-28 23:16 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 0d362127 - S428: Checkpoint -- PROMPT_RIPRESA aggiornato con handoff completo
+- **File modificati** (5):
+  - coverage
+  - .sncp/PROMPT_RIPRESA_MASTER.md
+  - .sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md
+  - .sncp/progetti/miracollo/bracci/miracallook/stato.md
+  - .sncp/progetti/miracollo/bracci/pms-core/NORD_PMS-CORE.md
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+---

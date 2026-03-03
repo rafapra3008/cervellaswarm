@@ -1,106 +1,99 @@
 # PROMPT RIPRESA - Contabilita Antigravity
 
-> **Ultimo aggiornamento:** 28 Febbraio 2026 - Sessione 223
+> **Ultimo aggiornamento:** 3 Marzo 2026 - Sessione 268 (SPRING-019 Step 1-2 backend + audit piano)
 > **Versione canonica:** `CervellaSwarm/.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md`
 
-## Quick Status S223
+## Quick Status S268
 
 | Cosa | Stato |
 |------|-------|
-| Produzione V2 | v2.11.0 LIVE (INTATTA) |
-| V3 VM | v1.16.0 + 33 file (S199) |
-| Agent 3 hotel | v2.1.0 + reconcile v1.1.0, HC.io VERDI |
-| **SPRING DB** | **Subroadmap C.7 COMPLETATA! Script INSERT v4.5.0** |
-| **Fase D** | **IN CORSO! D.0 endpoint IMPLEMENTATO, audit in corso** |
-| **Prossimo** | **Leggere audit Guardiana D.0 + test locale + D.1 pipeline** |
+| **Produzione MAIN** | **V3 LIVE v1.16.1 su contabilitafamigliapra.it** |
+| **SPRING-019** | **IN PROGRESS - Step 1-2 DONE, Step 3-9 TODO** |
+| **Test** | **2335 portale + 362 agent + 298 verify = 2995 totali** |
+| **MAPPA** | **`docs/MAPPA_MIGLIORAMENTI_S262.md` - 20 item (13 TODO, 1 IN_PROGRESS, 1 BLOCCATO, 5 DONE)** |
+| **Piano** | **`docs/PLAN_SPRING_019_MATCHING_MANUALE.md` - aggiornato con decisioni S268** |
 
-## S223 - Lavoro Fatto
+## Cosa Ha Fatto S268
 
-### Studio + Piano (3 cervelle + 2 audit Guardiana)
-- Ingegnera: gap analysis planner vs INSERT (7 GAP, 10 rischi)
-- Researcher: pattern big players (Trial Balance, Idempotency SHA256, Audit SQLite)
-- Scienziata: architettura pipeline professionale (SAP/QuickBooks/Stripe patterns)
-- Audit idee Guardiana: **8.7/10** (1 P1 risolto da Rafa, 6 P2, 6 P3)
-- Piano completo scritto: `docs/PLAN_FASE_D_AUTOMAZIONE.md`
-- Audit piano Guardiana: **9.1/10** (0 P1, 5 P2, 5 P3) -- fix incorporati
+### Audit piano SPRING-019 (2 Cervelle in parallelo)
+- **Guardiana Qualita: 9.1/10** APPROVED w/riserve
+  - F1 P1: specifica `conferma_annullamento_manuale()` - RISOLTO (decisione architetturale presa)
+  - F2 P1: "Segna Parziale" non definito - RISOLTO (caparra resta attiva, solo RES collegata)
+  - F7 P2: formato response cambiato - RISOLTO (backward compat con campo `coppie`)
+  - F13 P3: `event-delegation.js` mancava dalla lista file - AGGIUNTO
+  - 5 P2 + 6 P3 documentati nel piano (sezione 4b)
+- **Guardiana Ops: 8.5/10** APPROVED con condizioni
+  - GO-S019-001 P2: caparra annullata prima di SPRING - RISOLTO (per parziali la caparra resta attiva)
+  - GO-S019-003 P3: stato DB per parziali - RISOLTO (decisione Rafa: caparra resta attiva)
+  - Deploy: 6 file VM, singolo batch, snapshot obbligatorio, ZERO impatto SPRING pipeline
 
-### Idea CHIAVE di Rafa (risolve P1)
-Come l'agent hotel (Windows -> Ericsoft -> POST -> V3), al contrario:
-```
-HPTERMINAL01 -> GET -> V3 portale -> INSERT -> SPRING
-```
-ZERO trasporto file! HPTERMINAL01 ha gia' HTTPS a v3.contabilitafamigliapra.it.
+### Decisione architetturale chiave (confermata da Rafa)
+**Due percorsi per annullamento manuale:**
+1. **Annullamento completo** (|importo| uguali): caparra → annullata, RES → ref_id (come esistente, senza vincolo nome)
+2. **Collegamento parziale** (importi diversi): caparra RESTA ATTIVA, solo RES → ref_id. Perche: i 975 EUR residui devono ancora matchare un GIR.
 
-### D.0 Endpoint IMPLEMENTATO (3 file modificati)
-1. `backend/database/ericsoft.py` v1.7.0 -- 2 nuovi metodi:
-   - `get_gir_for_spring(data_iso)` -- WHERE fatto IN ('si','si') AND source='ericsoft'
-   - `get_caparre_for_spring(data_iso)` -- WHERE fatto IN ('si','si') AND source='ericsoft' AND stato='attiva'
-2. `backend/routers/ericsoft.py` v1.7.0 -- nuovo endpoint:
-   - `GET /api/v3/spring-batch?portale=she&date=2026-01-10` (ISO 8601!)
-   - Auth: Bearer ERICSOFT_API_KEY_{PORTALE} (stessa dell'agent hotel)
-   - Response: JSON batch v1.0 (documents + summary)
-   - Helper: `_normalize_name()` (NFKC), `_parse_amount_spring()`, `_group_spring_documents()`
-3. `backend/main.py` riga 248 -- `/api/v3/spring-batch` aggiunto a AGENT_AUTH_ENDPOINTS
+### Step 1: extract_booking_info() - DONE
+- Funzione statica in `TransactionsMixin` per parsing nome caparra
+- Regex: `^(NL|HP|SHE)\s+(\d+)\s` -> hotel, booking_id, guest_name, circuito
+- **16 test PASS** (standard NL/SHE/HP, No Show, eccezioni SHE, dati reali)
+- File: `backend/database/transactions.py` riga 1359
 
-### Audit Guardiana D.0 in corso
-- Lanciata alla fine della sessione, risultati da leggere in S224
-- NON ancora letti -- la prossima Cervella DEVE leggerli prima di procedere
+### Step 2: get_coppie_annullamento() esteso - DONE
+- Ritorna Dict con 4 chiavi: `exact`, `suggested`, `orphans`, `coppie` (backward compat)
+- PASS 1: match esatto nome+importo (come SPRING-018)
+- PASS 2: match per booking ID (LIKE query: `NL 6667 %`)
+- `_build_orphan_dict()` helper per RES senza match
+- Router aggiornato: response include `exact/suggested/orphans/count_suggested/count_orphans`
+- **7 nuovi test** (booking ID match, parziale, metodo diverso, orphan, priorita, mix)
+- **57/57 test PASS** (tutti annullamento + SPRING-018 + SPRING-019, zero regressioni)
+- File: `backend/database/transactions.py` + `backend/routers/transactions.py`
 
-## Prossimi step (S224+)
+## Prossimi Step
 
-1. **Leggere audit Guardiana D.0** (risultati da S223, non ancora letti!)
-2. **Fixare finding** dell'audit se necessario
-3. **Test locale** dell'endpoint: avviare V3, curl con Bearer, confrontare con `c7_step4_she_20260110.json`
-4. **D.1: Pipeline script** (`scripts/spring_pipeline.py`) -- vedi piano completo
-5. **D.2+D.3: Telegram + HC.io + bat** -- vedi piano completo
-6. **D.4: Test E2E** su HPTERMINAL01
+### PRIORITA #1: SPRING-019 Implementazione (Step 3-9 restanti, ~11h)
+Piano dettagliato in `docs/PLAN_SPRING_019_MATCHING_MANUALE.md` (sezione 4b aggiornata S268).
 
-## Documenti Fase D
+| Step | Cosa | Stato |
+|------|------|:-----:|
+| 1 | `extract_booking_info()` + 16 test | **DONE S268** |
+| 2 | `get_coppie_annullamento()` esteso + 7 test + router | **DONE S268** |
+| 3 | Endpoint `cerca-candidati` + test | TODO |
+| 4 | `conferma_annullamento_manuale()` + `ripristina_collegamento()` + endpoint + test | TODO |
+| 5 | Frontend: pannello esteso (sezione "da collegare") | TODO |
+| 6 | Frontend: espansione inline sotto RES orfana | TODO |
+| 7 | Frontend: ricerca caparra + collegamento | TODO |
+| 8 | CSS + dark mode + accessibilita + event-delegation.js | TODO |
+| 9 | Test integrazione + audit Guardiana | TODO |
 
-| Documento | Path | Versione |
-|-----------|------|----------|
-| **Piano completo** | `docs/PLAN_FASE_D_AUTOMAZIONE.md` | **S223 - LEGGERE QUESTO!** |
-| Bibbia INSERT | `docs/SPRING_INSERT_STUDIO.md` | S220 |
-| Bibbia logica | `docs/SPRING_LOGICA_CONTABILE.md` | v1.5.0 S217 |
-| Subroadmap C.7 | `docs/SUBROADMAP_C7_COMMIT_TEST.md` | S222 COMPLETATA |
-| Script INSERT | `scripts/spring_insert_hotel.py` | v4.5.0 (su HPTERMINAL01) |
-| Script planner | `scripts/spring_day_planner.py` | v1.1.0 S217 |
-| JSON Step 4 | `scripts/batch/c7_step4_she_20260110.json` | v1.0 (riferimento test) |
+**Prossimo step: Step 3** (endpoint cerca-candidati). Backend-first, frontend dopo.
 
-## Architettura Pipeline (da piano)
+### File da deployare VM (quando tutto DONE):
+1. `backend/database/transactions.py`
+2. `backend/routers/transactions.py`
+3. `frontend/js/annullamenti.js`
+4. `frontend/js/data.js`
+5. `frontend/js/event-delegation.js`
+6. `frontend/css/style.css`
 
-```
-HPTERMINAL01 (Windows)
-  spring_pipeline.py (DA CREARE - D.1)
-    1. HTTP GET v3.contabilitafamigliapra.it/api/v3/spring-batch (FATTO - D.0)
-    2. Check idempotency (spring_audit.db SQLite locale)
-    3. INSERT in SPRING DB (riusa spring_insert_hotel.py con confirm_mode="automated")
-    4. Trial Balance post-batch: SUM(DARE) - SUM(AVERE) = 0
-    5. Log audit in spring_audit.db
-    6. Telegram report + HC.io ping
-    7. Task Scheduler 12:30 daily (dopo agent sync 11:30-11:50)
-```
+### Dopo SPRING-019
+1. **QC-004** (P2, 2-3h): test per telegram_notifier e scheduler
+2. **AGENT-005** (P3, 30 min): pulizia file duplicati/vecchi sui PC hotel
+3. **MON-003~005** (P3): backup DB audit, pipeline 0-doc, scheduler HC.io
 
-## Lezioni Apprese (Sessione 223)
+## Bloccato
+
+1. **SPRING-014** HP attivazione - accordo DIAMANTE Sig. Sergio
+
+## Lezioni Apprese (Sessione 268)
 
 ### Cosa ha funzionato bene
-- **3 cervelle parallele per studio**: ognuna con focus diverso, copertura completa in 1 sessione
-- **Audit idee PRIMA del piano**: la Guardiana ha trovato il P1 che Rafa ha risolto con l'idea del GET
-- **Audit piano DOPO il piano**: 4 fix incorporati subito (ISO date, EricsoftMixin, NFKC, fatto accento)
+- **Audit piano PRIMA di implementare**: 2 Guardiane in parallelo, 2 P1 trovati e risolti subito. Senza audit, avremmo implementato "Segna Parziale" senza sapere cosa fa nel DB.
+- **Decisione architetturale chiara**: Due percorsi (completo vs parziale) con logica contabile chiara. Rafa ha confermato immediatamente.
+- **Step 1+2 backend puliti**: 57/57 test, zero regressioni, backward compat mantenuto.
 
-### Cosa migliorare
-- **Context si riempie velocemente** con studio+piano+implementazione nella stessa sessione
-- Meglio: studio+piano in sessione 1, implementazione in sessione 2
-
-### Pattern confermato
-- **"Audit dopo ogni step"**: idee 8.7 -> piano 9.1 -> codice (in corso). 3 audit progressivi (S154-S223)
-- **"Rafa risolve i P1"**: l'idea del GET reversed ha eliminato tutto il problema trasporto file
+### Pattern candidato
+- **Audit piano + decisione architetturale PRIMA del coding**: Guardiana trova gap (F1+F2), Regina propone soluzione, Rafa conferma, poi si implementa. Previene rifacimenti. 6a evidenza dopo S228.cv, S229, S230, S265, S266, S268. PROMUOVERE.
 
 ---
 
-## AUTO-CHECKPOINT: 2026-02-28 20:40 (manuale)
-
-### Stato Git
-- **Branch**: lab-v3
-- **Ultimo commit**: (da committare)
-- **File modificati**: 3 backend + 1 docs + NORD + PROMPT_RIPRESA
+*"Lavoriamo in pace! Senza casino! Dipende da noi!"*

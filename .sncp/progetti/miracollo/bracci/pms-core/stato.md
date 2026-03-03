@@ -1,6 +1,6 @@
 # PMS Core - Stato
 
-> **Ultimo aggiornamento:** 16 Gennaio 2026
+> **Ultimo aggiornamento:** 27 Febbraio 2026 - FASE 3B fix
 
 ## In Una Riga
 
@@ -22,14 +22,15 @@
 | Layer | Tech | Porta |
 |-------|------|-------|
 | Backend | FastAPI | 8001 |
-| Frontend | React | 80/443 |
+| Frontend | HTML/CSS/JS vanilla | 80/443 |
 | Database | SQLite | file-based |
 
-## Stato: 85%
+## Stato: 90% LIVE
 
-- In produzione
-- Stabile
-- Bug fix al bisogno
+- In produzione su miracollo.com
+- FASE 2 Sicurezza completata (9.2/10)
+- Auth middleware, CSP enforce, rate limiting, escapeHtml
+- Stabile, bug fix al bisogno
 
 ---
 

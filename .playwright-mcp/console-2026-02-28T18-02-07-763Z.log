@@ -1,0 +1,32 @@
+[     516ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://127.0.0.1:8082/favicon.ico:0
+[   79087ms] [ERROR] execLU error: PythonError: Traceback (most recent call last):
+  File "/lib/python312.zip/_pyodide/_base.py", line 597, in eval_code_async
+    await CodeRunner(
+  File "/lib/python312.zip/_pyodide/_base.py", line 411, in run_async
+    coroutine = eval(self.code, globals, locals)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<exec>", line 2, in <module>
+ImportError: cannot import name 'check_source' from 'cervellaswarm_lingua_universale' (/lib/python3.12/site-packages/cervellaswarm_lingua_universale/__init__.py)
+
+    at new_error (https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.js:10:10009)
+    at https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm:wasm-function[308]:0x16e34c
+    at https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm:wasm-function[505]:0x178495
+    at https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm:wasm-function[4584]:0x328740
+    at https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm:wasm-function[1149]:0x1c441d
+    at https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm:wasm-function[3620]:0x2ca4c3
+    at https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm:wasm-function[2182]:0x20c31c
+    at https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm:wasm-function[1157]:0x1c4b18
+    at https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm:wasm-function[1160]:0x1c4e27
+    at https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm:wasm-function[1161]:0x1c4ea5
+    at https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm:wasm-function[3426]:0x2a0e46
+    at https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm:wasm-function[3427]:0x2a73f5
+    at https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm:wasm-function[1163]:0x1c4fe5
+    at https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm:wasm-function[1158]:0x1c4c4e
+    at https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm:wasm-function[492]:0x177af5
+    at https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm:wasm-function[493]:0x177c17
+    at wrapper (https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.js:10:120177)
+    at Object.promisingApply (https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.js:10:119922)
+    at callPyObjectKwargsPromising (https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.js:10:63452)
+    at Module.callPyObjectMaybePromising (https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.js:10:63952)
+    at wrapper (https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.js:10:27341)
+    at onGlobalMessage (https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.js:10:101379) @ http://127.0.0.1:8082/:2027

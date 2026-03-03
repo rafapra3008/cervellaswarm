@@ -12,11 +12,11 @@
 
 ```
 +================================================================+
-|   MIRACOLLO - STATO REALE (22 Febbraio 2026)                  |
+|   MIRACOLLO - STATO REALE (26 Febbraio 2026)                  |
 |                                                                |
-|   CODICE:         6.5/10 (4 critici, 5 alti)                  |
+|   CODICE:         6.5/10 (3 critici post-fix, 5 alti)         |
 |   DOCUMENTAZIONE: 6.5/10 (3 critici, 8 medi, ~250 orfani)    |
-|   INFRASTRUTTURA: VM spenta, DNS sbagliato, IP non fisso      |
+|   INFRASTRUTTURA: VM LIVE e2-small, DNS OK, IP statico        |
 |   OBIETTIVO:      9.5/10 su tutto                             |
 +================================================================+
 ```
@@ -26,22 +26,24 @@
 ## FASE 0 - EMERGENZE (fix subito, prima di tutto)
 
 > **Target:** Eliminare bug attivi e rischi immediati
+> **Status:** COMPLETATA (26 Feb 2026) - tutti i task verificati
 
-| # | Task | File | Stima | Prio |
-|---|------|------|-------|------|
-| 0.1 | Fix BUG create_guest (22 colonne, 9 placeholder) | `backend/routers/guests.py:74-88` | 10 min | CRITICO |
-| 0.2 | Verificare .env.production NON sia nella storia Git | `git log -- .env.production` (gia coperto da `.env.*` in .gitignore) | 5 min | CRITICO |
-| 0.3 | Aggiungere `reports/` a .gitignore | `.gitignore` (*.backup gia coperto) | 5 min | ALTO |
-| 0.4 | Fix uptime_seconds (psutil.boot_time -> app start) | `backend/main.py:479` | 5 min | BASSO |
+| # | Task | File | Stato |
+|---|------|------|-------|
+| 0.1 | ~~Fix BUG create_guest~~ | `backend/routers/guests.py:74-88` | GIA FIXATO: 33 col + 33 ? + 33 valori (corretto) |
+| 0.2 | ~~Verificare .env.production nella storia Git~~ | Audit completo Guardiana Ops | VERIFICATO: nessun .env reale, .db o .htpasswd nella storia. 3 secrets minori in file tracked (repo PRIVATO, rischio basso) |
+| 0.3 | ~~Aggiungere `reports/` a .gitignore~~ | `.gitignore:57-58` | GIA PRESENTE |
+| 0.4 | ~~Fix uptime_seconds~~ | `backend/main.py:483` | GIA FIXATO: usa `_app_start_time` |
 
-**Guardiana audit FASE 0 dopo completamento.**
+**Guardiana audit FASE 0: IN ATTESA (dopo completamento VM resize)**
 
 ---
 
 ## FASE 1 - DEMO DITTA TEDESCA (rendere Miracollo accessibile)
 
 > **Target:** miracollo.com funzionante e visitabile dall'esterno
-> **Prerequisito:** Rafa riattiva VM da Google Cloud Console
+> **Status:** COMPLETATA (22 Feb 2026) + VM RESIZE (26 Feb 2026)
+> **VM migrata:** n4a-standard-1 ARM64 (~$32/mese) -> e2-small x86 (~$17.51/mese) = -$15/mese
 
 | # | Task | Dettagli | Chi |
 |---|------|----------|-----|
@@ -65,74 +67,72 @@
 
 ---
 
-## FASE 2 - SICUREZZA (blindare il sistema)
+## FASE 2 - SICUREZZA (blindare il sistema) - COMPLETATA!
 
 > **Target:** Da 5.8% endpoint protetti a 100%
+> **Status:** COMPLETATA 27 Febbraio 2026 - Score Guardiana 9.2/10
 
-| # | Task | Dettagli | Stima |
-|---|------|----------|-------|
-| 2.1 | Autenticazione globale su TUTTI gli endpoint admin | Middleware o dependency injection su 396 route in 83 file. Whitelist: /health, /public/*. Richiede triage + test. | 1-2 giorni |
-| 2.2 | Aggiungere `Content-Security-Policy` header | `backend/middleware/security.py` | 1 ora |
-| 2.3 | Triage + fix XSS: `escapeHtml()` globale nel frontend | ~362 innerHTML assignments in 82 file JS (16 file hanno gia sanitize parziale). Serve triage prima, poi fix. | 1-2 giorni |
-| 2.4 | Rimuovere DB backup dalla storia Git | `git filter-repo` per eliminare dati GDPR | 30 min |
-| 2.5 | Valutare rate limiting con Redis o single-worker | Attuale in-memory non funziona con 5 workers | Studio |
+| # | Task | Stato | Score |
+|---|------|-------|-------|
+| 2.1 | Auth Middleware globale | ✅ LIVE | 9.5/10 |
+| 2.2 | CSP Enforce + Security Headers | ✅ DONE | 9.0/10 |
+| 2.3 | escapeHtml centralizzata + XSS fix | ✅ DONE | 9.0/10 |
+| 2.4 | DB purge git history (filter-repo) | ✅ DONE | 9.3/10 |
+| 2.5 | Rate limiting Nginx granulare (3 zone) | ✅ DONE | 9.2/10 |
 
-**NOTA SICUREZZA:**
-- 373 endpoint senza auth = chiunque puo modificare prenotazioni, tariffe, pagamenti
-- ~362 innerHTML senza escape in 82 file JS = rischio XSS stored
-- DB backup nella storia Git = dati personali esposti
-- NOTA: Score NORD.md diceva 9.5/10 ma era pre-audit dettagliato. Il 6.5/10 e il risultato del nuovo audit approfondito (85 tool calls, 83 file analizzati)
+**Residuo P2:** security.js incluso in 12/29 HTML (planning.html manca - prossima FASE)
 
-**Guardiana audit FASE 2 dopo completamento.**
+**Guardiana audit FASE 2: COMPLETATO 9.2/10**
 
 ---
 
-## FASE 3 - DOCUMENTAZIONE (sync e pulizia)
+## FASE 3 - DOCUMENTAZIONE (sync e pulizia) - COMPLETATA!
 
 > **Target:** Da 6.5/10 a 9.5/10 - zero contraddizioni
+> **Status:** COMPLETATA 27 Febbraio 2026 - Score Guardiana 9.0/10 -> fix P2 applicati
 
 ### 3A. Fix Critici (P1)
 
 | # | Task | Problema |
 |---|------|----------|
-| 3A.1 | Aggiornare o rimuovere `PROMPT_RIPRESA.md` nella ROOT | Fossile S167, dice "locale non esiste" (FALSO) |
-| 3A.2 | Aggiornare `PROMPT_RIPRESA_miracollo.md` (ecosistema) | Fermo S300, dice Pulizia 2/6 (e 6/6), Miracollook 8.5 (e 10) |
-| 3A.3 | Deprecare `.sncp/stato/oggi.md` locale | Fermo S167, hook ancora ci scrive |
+| 3A.1 | ~~Aggiornare PROMPT_RIPRESA.md nella ROOT~~ | ✅ Gia redirect corretto, data aggiornata |
+| 3A.2 | ~~Aggiornare PROMPT_RIPRESA_miracollo.md~~ | ✅ Gia aggiornato sessione FASE 2 |
+| 3A.3 | ~~Deprecare .sncp/stato/oggi.md locale~~ | ✅ Sostituito con redirect, hook non attivo |
 
 ### 3B. Fix Medi (P2)
 
 | # | Task | Problema |
 |---|------|----------|
-| 3B.1 | Fix NORD.md | FASE 3: 60% -> 80%, path Room Manager rotto, sessione stale |
-| 3B.2 | Fix NORD_PMS-CORE.md | Porta :8000 -> :8001, score 85% -> 90% |
-| 3B.3 | Fix stato.md PMS Core | "React" -> "HTML/CSS/JS", score 85% -> 90% |
-| 3B.4 | Aggiornare stato.md Miracollook | 92% -> 10/10, decisione READ-ONLY |
-| 3B.5 | Standardizzare container name in docs | -13, -35, -1 -> verificare nome reale su VM |
-| 3B.6 | Fix CLAUDE.md: container name, IP VM | Allineare con realta |
+| 3B.1 | ~~Fix NORD.md~~ | ✅ FASE 3 60%->80%, puntatori CervellaSwarm |
+| 3B.2 | ~~Fix NORD_PMS-CORE.md~~ | ✅ :8000->:8001, 85%->90% |
+| 3B.3 | ~~Fix stato.md PMS Core~~ | ✅ React->HTML/CSS/JS, 85%->90%, FASE 2 |
+| 3B.4 | ~~Fix stato.md Miracollook~~ | ✅ 92%->10/10, READ-ONLY, integration |
+| 3B.5 | ~~Standardizzare container name~~ | ✅ FORTEZZA fixato, storici lasciati |
+| 3B.6 | ~~Fix CLAUDE.md~~ | ✅ Gia corretto (nessun errore trovato) |
 
 ### 3C. Pulizia (P3)
 
 | # | Task | Dettagli |
 |---|------|----------|
-| 3C.1 | Deprecare formalmente `.sncp/` locale | README "OBSOLETO - usa CervellaSwarm" |
-| 3C.2 | Archiviare `.checkpoints/` | 49 file Dic 2025, peso morto |
-| 3C.3 | Archiviare `.swarm/tasks/` | 100+ file task Gen 2026 |
-| 3C.4 | Archiviare/rimuovere `reports/` | 82 JSON + 6.5MB |
-| 3C.5 | Spostare file orfani dalla ROOT | BULK_HOUSEKEEPING_OUTPUT.md, .task_output_* |
-| 3C.6 | Archiviare HANDOFF S170/S171 | Dalla root SNCP a archivio |
+| 3C.1 | ~~Deprecare .sncp/ locale~~ | ✅ README OBSOLETO + .gitignore + git rm --cached 100 file |
+| 3C.2 | ~~Archiviare .checkpoints/~~ | ✅ 49 file eliminati (erano in .gitignore) |
+| 3C.3 | ~~Archiviare .swarm/~~ | ✅ 290 file git rm --cached + .gitignore + tasks/handoff eliminati |
+| 3C.4 | ~~Archiviare reports/~~ | ✅ 90+ file eliminati (erano in .gitignore) |
+| 3C.5 | ~~File orfani ROOT~~ | ✅ BULK_HOUSEKEEPING_OUTPUT + .task_output eliminati |
+| 3C.6 | ~~HANDOFF nella .swarm/~~ | ✅ Eliminati con .swarm/ |
 
 **Contraddizioni da risolvere (tabella chiave):**
 
 ```
-Miracollook:  8.5/10 vs 10/10 vs 92% -> REALE: 10/10
-PMS Score:    85% vs 90%              -> REALE: 90%
-Pulizia Casa: 2/6 vs 6/6             -> REALE: 6/6 completata
-FASE 3:       60% (3/5) vs 80% (4/5) -> REALE: 80% (4/5)
-Container:    -13, -35, -1            -> VERIFICARE su VM
-Porta PMS:    :8000 vs :8001          -> REALE: :8001
+Miracollook:  8.5/10 vs 10/10 vs 92% -> ✅ FIXATO: 10/10 ovunque
+PMS Score:    85% vs 90%              -> ✅ FIXATO: 90% ovunque
+Pulizia Casa: 2/6 vs 6/6             -> ✅ FIXATO: 6/6 (gia corretto in PROMPT_RIPRESA)
+FASE 3:       60% (3/5) vs 80% (4/5) -> ✅ FIXATO: 80% in NORD.md
+Container:    -13, -35, -1            -> ✅ FIXATO: FORTEZZA aggiornata, storici OK
+Porta PMS:    :8000 vs :8001          -> ✅ FIXATO: :8001 in NORD_PMS-CORE
 ```
 
-**Guardiana audit FASE 3 dopo completamento.**
+**Guardiana audit FASE 3: COMPLETATO 9.0/10 -> fix P2 applicati (FORTEZZA allineata)**
 
 ---
 
@@ -225,18 +225,18 @@ STABILITA (lungo termine):
 
 | Metrica | Attuale | Target | Come |
 |---------|---------|--------|------|
-| Health Codice | 6.5/10 | 9.5/10 | FASE 0+2+4 |
-| Health Docs | 6.5/10 | 9.5/10 | FASE 3 |
-| Endpoint autenticati | 5.8% | 100% | FASE 2.1 |
-| File orfani | ~250 | 0 | FASE 3C |
-| Contraddizioni docs | 6+ | 0 | FASE 3A+3B |
-| VM accessibile | NO | SI | FASE 1 |
-| DNS corretto | NO | SI | FASE 1.5 |
-| Script deploy/backup | 0 | 4+ | FASE 5.5-5.8 |
+| Health Codice | 6.5/10 -> **9.2/10** | 9.5/10 | FASE 0+2 DONE! |
+| Health Docs | 6.5/10 -> **9.0/10** | 9.5/10 | FASE 3 DONE! |
+| Endpoint autenticati | ~~5.8%~~ -> **100%** | 100% | FASE 2.1 DONE! |
+| File orfani | ~250 -> **~0** | 0 | FASE 3C DONE! (390 file rimossi da tracking) |
+| Contraddizioni docs | 6+ -> **0** | 0 | FASE 3A+3B DONE! |
+| VM accessibile | ~~NO~~ -> **SI** | SI | FASE 1 DONE! |
+| DNS corretto | ~~NO~~ -> **SI** | SI | FASE 1 DONE! |
+| Script deploy/backup | 0 -> **CI/CD** | 4+ | GitHub Actions LIVE |
 
 ---
 
 *"Non abbiamo fretta. Vogliamo la PERFEZIONE."*
 *"Un progresso al giorno = 365 progressi all'anno."*
 
-*Cervella & Rafa - 22 Febbraio 2026*
+*Cervella & Rafa - 27 Febbraio 2026 (aggiornato FASE 2 COMPLETATA)*
