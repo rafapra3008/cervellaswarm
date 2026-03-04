@@ -52,7 +52,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.39.0",
+    "@anthropic-ai/sdk": "^0.78.0",
     "conf": "^13.0.0"
   },
   "devDependencies": {
