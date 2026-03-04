@@ -7,6 +7,7 @@
   <meta name="description" content="Try Lingua Universale in your browser — no install required. Write AI agent protocols in seconds." />
 
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="tour.css" />
 
   <!-- Monaco Editor loader -->
   <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs/loader.js"></script>
@@ -1099,6 +1100,13 @@
       Clear
     </button>
 
+    <button class="btn btn-tour" id="btn-tour" title="A Tour of Lingua Universale" aria-label="Start interactive tour">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1z"/>
+      </svg>
+      <span class="btn-tour-text">Tour</span>
+    </button>
+
     <div class="toolbar-spacer" aria-hidden="true"></div>
 
     <button class="btn btn-check" id="btn-check" disabled aria-label="Check syntax (parse and compile)">
@@ -1116,6 +1124,25 @@
       </svg>
       Run
     </button>
+  </div>
+
+  <!-- TOUR BAR (hidden until tour mode active) -->
+  <div id="tour-bar" class="tour-bar" style="display:none;" role="navigation" aria-label="Tour navigation">
+    <div class="tour-progress-container">
+      <div class="tour-progress-bar" id="tour-progress-bar"></div>
+    </div>
+    <div class="tour-nav">
+      <button class="btn-tour-nav" id="tour-prev" title="Previous step" aria-label="Previous step" disabled>
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      </button>
+      <span class="tour-position" id="tour-position">1 / 24</span>
+      <button class="btn-tour-nav" id="tour-next" title="Next step" aria-label="Next step">
+        <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </button>
+      <div class="tour-nav-spacer"></div>
+      <button class="btn-tour-nav" id="tour-chapters-btn" title="Chapter overview">Chapters</button>
+      <button class="btn-tour-nav tour-exit-btn" id="tour-exit" title="Exit tour">Exit Tour</button>
+    </div>
   </div>
 
   <!-- MAIN -->
@@ -1162,6 +1189,19 @@
           <p class="hint">Results will appear here</p>
         </div>
       </div>
+
+      <!-- TOUR PANEL (hidden until tour mode active) -->
+      <div id="tour-panel" class="tour-panel" style="display:none;">
+        <div class="tour-chapter-tag" id="tour-chapter-tag"></div>
+        <h2 class="tour-step-title" id="tour-step-title"></h2>
+        <div class="tour-explanation" id="tour-explanation"></div>
+        <div class="tour-hint" id="tour-hint"></div>
+        <div class="tour-action-prompt" id="tour-action-prompt"></div>
+        <div class="tour-result" id="tour-result"></div>
+        <div class="tour-exercise-controls" id="tour-exercise-controls" style="display:none;">
+          <button class="btn btn-check" id="tour-show-solution">Show Solution</button>
+        </div>
+      </div>
     </div>
 
   </main>
@@ -1196,12 +1236,27 @@
     </div>
   </footer>
 
+<!-- TOUR: Chapters overlay (hidden) -->
+<div id="tour-chapters-overlay" class="tour-chapters-overlay" style="display:none;">
+  <div class="tour-chapters-modal">
+    <h2>A Tour of Lingua Universale</h2>
+    <div id="tour-chapters-list" class="tour-chapters-list"></div>
+    <button class="btn btn-clear" id="tour-chapters-close">Close</button>
+  </div>
+</div>
+
 </div><!-- #app -->
 
 <!-- ============================================================
      EXAMPLES
 ============================================================ -->
 <script src="examples.js"></script>
+
+<!-- ============================================================
+     TOUR
+============================================================ -->
+<script src="tour.js"></script>
+<script src="tour-ui.js"></script>
 
 <!-- ============================================================
      PYODIDE
@@ -1742,8 +1797,11 @@ function clearOutput() {
 // ============================================================
 
 function renderOutput(result, mode, elapsed) {
+  // Tour mode: redirect output to tour panel
+  var targetArea = (typeof getTourOutputTarget === "function" && getTourOutputTarget()) || dom.outputArea;
+
   // Clear previous output
-  dom.outputArea.innerHTML = "";
+  targetArea.innerHTML = "";
 
   const container = document.createElement("div");
   container.className = "result-block";
@@ -1754,7 +1812,7 @@ function renderOutput(result, mode, elapsed) {
     renderError(container, result);
   }
 
-  dom.outputArea.appendChild(container);
+  targetArea.appendChild(container);
   dom.outputTiming.textContent = elapsed + "ms";
 }
 
@@ -2180,7 +2238,10 @@ window.addEventListener("resize", () => {
   // 2. Populate example selector
   initExampleSelector();
 
-  // 3. Start Pyodide load (async, shows loading overlay)
+  // 3. Init tour UI (buttons, keyboard shortcuts, URL hash)
+  if (typeof initTourUI === "function") initTourUI();
+
+  // 4. Start Pyodide load (async, shows loading overlay)
   initPyodide();
 })();
 
