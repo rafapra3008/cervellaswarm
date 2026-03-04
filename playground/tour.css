@@ -1,0 +1,299 @@
+/* ============================================================
+   TOUR MODE - A Tour of Lingua Universale
+   Uses existing CSS variables from index.html (Catppuccin Mocha)
+============================================================ */
+
+/* Tour button in toolbar */
+.btn-tour {
+  background: transparent;
+  border-color: var(--accent-violet);
+  color: var(--accent-violet);
+}
+.btn-tour:not(:disabled):hover {
+  background: rgba(203, 166, 247, 0.1);
+  box-shadow: 0 0 0 1px var(--accent-violet);
+}
+.btn-tour svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+}
+.btn-tour.active {
+  background: rgba(203, 166, 247, 0.15);
+  border-color: var(--accent-violet);
+}
+
+/* Tour bar (below toolbar when active) */
+.tour-bar {
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.tour-progress-container {
+  height: 3px;
+  background: var(--bg-panel);
+}
+.tour-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-violet), var(--accent-blue));
+  transition: width var(--t-base);
+  width: 0%;
+}
+
+.tour-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 20px;
+}
+
+.btn-tour-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-family: var(--font-ui);
+  transition: all var(--t-fast);
+}
+.btn-tour-nav:hover {
+  border-color: var(--accent-blue);
+  color: var(--text-primary);
+}
+.btn-tour-nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.btn-tour-nav svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.tour-position {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  min-width: 60px;
+  text-align: center;
+}
+.tour-nav-spacer {
+  flex: 1;
+}
+.tour-exit-btn {
+  border-color: var(--accent-red) !important;
+  color: var(--accent-red) !important;
+}
+.tour-exit-btn:hover {
+  background: rgba(243, 139, 168, 0.1) !important;
+}
+
+/* Tour panel (replaces output area) */
+.tour-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  font-family: var(--font-ui);
+  line-height: 1.7;
+}
+.tour-panel::-webkit-scrollbar {
+  width: 6px;
+}
+.tour-panel::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.tour-chapter-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  background: rgba(203, 166, 247, 0.12);
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-violet);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.tour-step-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 16px 0;
+}
+
+.tour-explanation {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+.tour-explanation p {
+  margin: 0 0 12px 0;
+}
+.tour-explanation code {
+  background: var(--bg-panel);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent-teal);
+}
+.tour-explanation strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.tour-explanation em {
+  color: var(--accent-yellow);
+  font-style: italic;
+}
+.tour-explanation ul {
+  margin: 8px 0 12px 20px;
+  padding: 0;
+}
+.tour-explanation li {
+  margin-bottom: 4px;
+}
+
+.tour-hint {
+  margin-top: 16px;
+  padding: 10px 14px;
+  background: rgba(137, 180, 250, 0.08);
+  border-left: 3px solid var(--accent-blue);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-size: 13px;
+  color: var(--accent-blue);
+}
+.tour-hint:empty {
+  display: none;
+}
+
+.tour-action-prompt {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.tour-result {
+  margin-top: 16px;
+}
+
+.tour-exercise-controls {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+/* Suggested button pulse animation */
+.suggested-btn {
+  animation: pulse-suggest 2s infinite;
+}
+@keyframes pulse-suggest {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(203, 166, 247, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(203, 166, 247, 0); }
+}
+
+/* Chapters overlay */
+.tour-chapters-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 8000;
+  background: rgba(17, 17, 27, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tour-chapters-modal {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  max-width: 520px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+.tour-chapters-modal h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+  color: var(--text-primary);
+}
+.tour-chapters-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.tour-chapter-card {
+  padding: 14px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--t-fast);
+}
+.tour-chapter-card:hover {
+  border-color: var(--accent-violet);
+  background: rgba(49, 50, 68, 0.8);
+}
+.ch-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.ch-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.ch-dots {
+  display: flex;
+  gap: 4px;
+}
+.ch-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+}
+.ch-dot.completed {
+  background: var(--accent-green);
+}
+.ch-dot.current {
+  background: var(--accent-blue);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tour-panel {
+    padding: 16px;
+  }
+  .tour-step-title {
+    font-size: 17px;
+  }
+  .tour-nav {
+    padding: 6px 12px;
+    gap: 4px;
+  }
+  .tour-chapters-btn-text {
+    display: none;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .suggested-btn {
+    animation: none;
+  }
+  .tour-progress-bar {
+    transition: none;
+  }
+}

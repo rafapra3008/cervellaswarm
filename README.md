@@ -122,7 +122,7 @@ All packages are on [PyPI](https://pypi.org/search/?q=cervellaswarm) -- install 
 
 Every package: Apache 2.0, Python 3.10+, tested, documented, zero or minimal dependencies.
 
-> **The crown jewel:** To our knowledge, `lingua-universale` is the first session type system for AI agent communication in Python. 13 modules, 1820 tests, ZERO external dependencies. [Read the vision](packages/lingua-universale/NORD.md).
+> **The crown jewel:** To our knowledge, `lingua-universale` is the first session type system for AI agent communication in Python. 25 modules, 2828 tests, ZERO external dependencies. [Read the vision](packages/lingua-universale/NORD.md).
 
 ## Try It Now
 
@@ -145,6 +145,8 @@ checker = SessionChecker(review)
 checker.send("dev", "reviewer", TaskResult(task_id="1", status=TaskStatus.OK, summary="Done"))
 # Wrong sender/receiver/order? -> ProtocolViolation raised immediately
 ```
+
+**[Try it in your browser](https://rafapra3008.github.io/cervellaswarm/)** -- no install needed, runs via Pyodide (Python in WebAssembly).
 
 Or try the **[interactive Colab notebook](https://colab.research.google.com/github/rafapra3008/cervellaswarm/blob/main/docs/blog/from-vibecoding-to-vericoding-demo.ipynb)** -- 2 minutes, zero setup, 9 features demoed live.
 
