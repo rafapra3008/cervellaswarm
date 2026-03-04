@@ -134,13 +134,10 @@ BLACKLIST_CONTENT_PATTERNS=(
     # "ContabilitaAntigravity" (above) already catches the private repo name.
     # MCP code uses "contabilita" as SNCP project alias - will be made configurable in F3.
     "famiglia digitale"
-    # API Key patterns (added post-incident S429 - GitHub Secret Scanning alert)
-    # NOTE: Only patterns specific enough to avoid false positives in our security
-    # tooling (secret_auditor.py uses short patterns like ghp_, sk_live_ as detection rules).
-    # Short patterns (ghp_, sk_live_, sk_test_) REMOVED: too many false positives.
-    "AIza"                    # Google API Key / Bedzzle format (39 char, very specific)
-    "sk-ant-api"              # Anthropic API key (full prefix)
-    "whsec_"                  # Stripe webhook signing secret
+    # NOTE on API Key patterns (S429): NOT added here because our security tooling
+    # (secret_auditor.py, test files, .env.example) legitimately contains key prefixes.
+    # Protection against key leaks relies on: (1) .sncp/ blacklist above, (2) GitHub
+    # Secret Scanning on the public repo, (3) packages/session-memory/secret_auditor.py.
 )
 
 cleanup() {
