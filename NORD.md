@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 4 Marzo 2026 - S429 (v0.2.0 LIVE su PyPI! D3 Playground SBLOCCATO.)
+> Aggiornato: 4 Marzo 2026 - S430 (D4 Tour DONE! D1-D4 Ecosistema COMPLETATI.)
 
 ```
 +==================================================================+
@@ -145,12 +145,12 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |   FASE C: IL LINGUAGGIO -- COMPLETA! (S407-S425)                 |
 |     C1 Grammatica DONE! C2 Compilatore DONE! C3 Esperienza DONE!|
 |   FASE D: L'ECOSISTEMA -- IN CORSO (S426+)                       |
-|     D1 Syntax DONE! D2 LSP DONE!                                |
-|     D3 Playground COSTRUITO -- SBLOCCATO! (v0.2.0 su PyPI)     |
-|     PROSSIMO: D3 test browser -> Guardiana -> deploy Pages      |
-|   PyPI: LIVE! pip install cervellaswarm-lingua-universale (S399) |
-|   25 moduli, 2828 test, 74 error codes, 5 .lu examples          |
-|   PyPI: v0.2.0 LIVE! (S429) -- 25 moduli, 131 symbols           |
+|     D1 Syntax DONE! D2 LSP DONE! D3 Playground DONE! D4 Tour DONE!|
+|     PROSSIMO: D5 LSP Avanzato (Hover + Completion + Go-to-def)  |
+|   PyPI: v0.2.0 LIVE! pip install cervellaswarm-lingua-universale|
+|   25 moduli, 2856 test, 74 error codes, 131 symbols             |
+|   Playground LIVE: https://rafapra3008.github.io/cervellaswarm/ |
+|   Tour: 24 step interattivi in 4 capitoli + 4 esercizi          |
 |   NORD completo: packages/lingua-universale/NORD.md              |
 |   SUBROADMAP D: .sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md  |
 |   ORGANIZZA CASA: .sncp/roadmaps/SUBROADMAP_ORGANIZZA_CASA_v020 |
