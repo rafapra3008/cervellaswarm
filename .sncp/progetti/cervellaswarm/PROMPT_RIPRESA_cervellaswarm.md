@@ -39,7 +39,7 @@ LINGUAGGIO CERVELLASWARM:
   FASE D: L'Ecosistema -- IN CORSO (S426+)
     D1: Syntax Highlighting   [####################] DONE! (S426, 9.5/10)
     D2: LSP Base (lu lsp)     [####################] DONE! (S426, 9.5/10)
-    D3: Playground Online      [####................] BLOCCATO (serve v0.2.0 PyPI)
+    D3: Playground Online      [####................] SBLOCCATO! (v0.2.0 su PyPI)
     D4: "A Tour of LU"        [....................] TODO
     D5: LSP Avanzato           [....................] TODO
     D6: Guardiana Finale       [....................] TODO
@@ -48,9 +48,9 @@ LINGUAGGIO CERVELLASWARM:
     Step 1: Bump versione      [####################] DONE (S428)
     Step 2: CHANGELOG v0.2.0   [####################] DONE (S428)
     Step 3: README aggiornato  [####################] DONE (S428)
-    Step 4: Test + build wheel [....................] PROSSIMO
-    Step 5: Pubblica su PyPI   [....................] TODO
-    Step 6: Guardiana audit    [....................] TODO
+    Step 4: Test + build wheel [####################] DONE (S429, 9.5/10)
+    Step 5: Pubblica su PyPI   [####################] DONE (S429, v0.2.0 LIVE!)
+    Step 6: Guardiana audit    [####################] DONE (S429, 9.3/10)
 ```
 
 ---
@@ -84,12 +84,12 @@ LINGUAGGIO CERVELLASWARM:
 | Metrica | Valore |
 |---------|--------|
 | Test totali | **2828** |
-| Moduli .py | **26** |
+| Moduli .py | **25** |
 | Public symbols | **131** |
 | Codici errore LU | **74** (3 lingue) |
 | Dipendenze core | **ZERO** |
-| PyPI version | **0.1.1** (Step 4-5 portano a 0.2.0) |
-| Playground | **costruito** (bloccato da PyPI) |
+| PyPI version | **0.2.0** (LIVE su PyPI!) |
+| Playground | **costruito** (SBLOCCATO! v0.2.0 su PyPI) |
 
 ---
 
