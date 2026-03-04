@@ -1140,7 +1140,7 @@
         <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
       </button>
       <div class="tour-nav-spacer"></div>
-      <button class="btn-tour-nav" id="tour-chapters-btn" title="Chapter overview">Chapters</button>
+      <button class="btn-tour-nav" id="tour-chapters-btn" title="Chapter overview" aria-label="Chapter overview">Chapters</button>
       <button class="btn-tour-nav tour-exit-btn" id="tour-exit" title="Exit tour">Exit Tour</button>
     </div>
   </div>
@@ -1237,9 +1237,9 @@
   </footer>
 
 <!-- TOUR: Chapters overlay (hidden) -->
-<div id="tour-chapters-overlay" class="tour-chapters-overlay" style="display:none;">
+<div id="tour-chapters-overlay" class="tour-chapters-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="tour-chapters-title">
   <div class="tour-chapters-modal">
-    <h2>A Tour of Lingua Universale</h2>
+    <h2 id="tour-chapters-title">A Tour of Lingua Universale</h2>
     <div id="tour-chapters-list" class="tour-chapters-list"></div>
     <button class="btn btn-clear" id="tour-chapters-close">Close</button>
   </div>

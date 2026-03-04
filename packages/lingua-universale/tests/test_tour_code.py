@@ -5,7 +5,6 @@ Each tour step's LU code is validated against check_source().
 Step 'verify-2-errors' is intentionally invalid (teaches error messages).
 """
 
-import json
 import re
 from pathlib import Path
 
@@ -41,7 +40,29 @@ def _extract_tour_codes():
     return list(zip(step_ids, codes))
 
 
+def _extract_solution_codes():
+    """Extract (step_id, solution_code) pairs from tour.js."""
+    content = TOUR_JS.read_text()
+    solutions = []
+
+    # Find solution blocks: `solution: \`...\``
+    parts = content.split("solution: `")
+    for part in parts[1:]:
+        end = part.index("`,")
+        code = part[:end].replace("\\n", "\n").replace("\\`", "`")
+        # Find the step ID by looking backwards for the nearest id: "..."
+        # Get position in original content
+        pos = content.index("solution: `" + part[:20])
+        preceding = content[:pos]
+        ids_before = re.findall(r'id:\s*"([^"]+)"', preceding)
+        step_id = ids_before[-1] if ids_before else "unknown"
+        solutions.append((step_id + "-solution", code))
+
+    return solutions
+
+
 TOUR_STEPS = _extract_tour_codes()
+TOUR_SOLUTIONS = _extract_solution_codes()
 
 # Step with intentional error (teaches error messages)
 INTENTIONAL_ERROR_STEPS = {"verify-2-errors"}
@@ -67,3 +88,17 @@ def test_tour_step_valid(step_id, code):
             f"Tour step '{step_id}' failed check_source():\n"
             f"{chr(10).join(result.errors)}"
         )
+
+
+@pytest.mark.parametrize(
+    "solution_id,code",
+    TOUR_SOLUTIONS,
+    ids=[s[0] for s in TOUR_SOLUTIONS],
+)
+def test_tour_solution_valid(solution_id, code):
+    """Each exercise solution must pass check_source()."""
+    result = check_source(code)
+    assert result.ok, (
+        f"Tour solution '{solution_id}' failed check_source():\n"
+        f"{chr(10).join(result.errors)}"
+    )
