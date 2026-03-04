@@ -2,7 +2,7 @@
 
 > **Creata:** 28 Febbraio 2026 - Sessione 425
 > **Fonti:** 3 report di ricerca (46+ fonti), studi su Python/Rust/Go/Gleam/Zig/Roc
-> **Prerequisiti:** FASE A+B+C COMPLETE (25 moduli, 2806 test, 0 deps)
+> **Prerequisiti:** FASE A+B+C COMPLETE (25 moduli, 2856 test, 0 deps)
 > **Score target:** 9.5/10 per ogni step (audit Guardiana)
 > **Filosofia:** "Fatto BENE > Fatto VELOCE" | "Un progresso al giorno"
 
@@ -204,8 +204,8 @@ await pyodide.runPython(`
 - [x] Carica e esegue codice .lu nel browser (S429, v0.2.0)
 - [x] Mostra errori formattati (S427)
 - [x] Deploy su GitHub Pages (S429, deploy-playground.yml)
-- [ ] "Try it now" link nella README
-- [ ] Guardiana verifica 9.5/10 (audit in corso S430)
+- [x] "Try it now" link nella README (S430)
+- [x] Guardiana verifica 9.5/10 (S430, 0 P0/P1/P2)
 
 ---
 
@@ -243,10 +243,10 @@ Capitolo 4: Verifica (3 step)
 **Integrato nel playground:** ogni step ha codice editabile e eseguibile.
 
 **Criterio completamento:**
-- [ ] 18+ step interattivi
-- [ ] Integrato nel playground Pyodide
-- [ ] Un non-sviluppatore capisce i primi 2 capitoli
-- [ ] Guardiana verifica 9.5/10
+- [x] 24 step interattivi (4 capitoli, 4 esercizi con soluzioni)
+- [x] Integrato nel playground Pyodide (tour.js + tour-ui.js + tour.css)
+- [x] Un non-sviluppatore capisce i primi 2 capitoli
+- [x] Guardiana verifica 9.5/10 (S430)
 
 ---
 
@@ -296,9 +296,9 @@ FASE D3: Playground Online            [####################] DONE (S429, LIVE!)
   URL: https://rafapra3008.github.io/cervellaswarm/
   "Try it in 30 seconds"
 
-FASE D4: "A Tour of LU"              [....................] TODO
-  Tutorial interattivo 18+ step        2-3 sess
-  Integrato nel playground
+FASE D4: "A Tour of LU"              [####################] DONE (S430, 9.5/10)
+  24 step interattivi in 4 capitoli     1 sessione!
+  Integrato nel playground, 28 test automatici
 
 FASE D5: LSP Avanzato                [....................] TODO
   Hover + Completion + Go-to-def       2-3 sess

@@ -1,33 +1,28 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-04 - Sessione 429
-> **STATUS:** v0.2.0 LIVE su PyPI! D3 Playground LIVE su GitHub Pages! Organizza Casa COMPLETA.
+> **Ultimo aggiornamento:** 2026-03-04 - Sessione 430
+> **STATUS:** D4 "A Tour of LU" COMPLETATA! D1-D4 DONE, D5-D6 TODO.
 
 ---
 
-## SESSIONE 429 - Cosa e successo
+## SESSIONE 430 - Cosa e successo
 
-### 1. Organizza la Casa v0.2.0 -- COMPLETATA!
-- **Step 4 DONE:** 2828 test PASSED (0.97s) + wheel v0.2.0 built (27 .py files)
-- **Step 5 DONE:** v0.2.0 LIVE su PyPI via Trusted Publisher
-  - Fix: Trusted Publisher puntava a `cervellaswarm-internal` (privato), corretto a `cervellaswarm` (pubblico)
-- **Step 6 DONE:** Guardiana audit 9.3/10 -- P2 fixati (NORD + PROMPT_RIPRESA stale, moduli 26->25)
-- **Guardiana Step 4:** 9.5/10 | P2: moduli contati 26 ma sono 25 (fixato)
+### 1. D3 Guardiana Audit -- 9.5/10
+- 0 P0/P1/P2, 5 P3 (fixati: blockComment Monaco, preconnect hint)
+- README aggiornato: playground link + stats corretti (25 moduli, 2856 test)
 
-### 2. D3 Playground -- LIVE!
-- **URL:** https://rafapra3008.github.io/cervellaswarm/
-- Pyodide + Monaco Editor, $0 costo, 4 esempi
-- check_source() e run_source() funzionanti nel browser
-- Deploy automatico via GitHub Actions (`deploy-playground.yml`)
-- `playground/` aggiunto alla whitelist di sync-to-public.sh
+### 2. D4 "A Tour of LU" -- COMPLETATA!
+- **24 step interattivi** in 4 capitoli: Types (7), Agents (7), Protocols (6), Verification (4)
+- **4 esercizi** con soluzioni (Show Solution button)
+- **File creati:** tour.js (~490 righe), tour-ui.js (~310 righe), tour.css (~240 righe)
+- **index.html** modificato: DOM elements + renderOutput redirect + initTourUI()
+- **28 test automatici** (24 step + 4 soluzioni) in test_tour_code.py
+- **Guardiana D4 audit: 9.5/10** - 0 P0/P1/P2, 6 P3 (tutti fixati: aria attrs, solution tests)
+- Features: progress bar, chapter overview, keyboard shortcuts (Alt+arrows), localStorage persistence, URL hash #tour, Resume Tour
 
-### 3. Security Incident -- RISOLTO
-- GitHub Secret Scanning: 5 alert (1 Google API Key, 3 Stripe, 1 Anthropic)
-- Tutte nella storia git da vecchi sync pre-v2.0 (`.sncp/` ora in blacklist)
-- git filter-repo: secret rimosse dalla storia
-- 5/5 alert chiuse come "revoked" via API
-- Content scanner: valutato aggiungere API key patterns, rimosso per falsi positivi
-- **TODO Rafa:** ruotare Bedzzle key su MyReception + attivare 2FA GitHub (scade 6 Mar)
+### 3. Sync + Subroadmap aggiornata
+- D3 e D4 marcati DONE nella subroadmap
+- Sync to public eseguito
 
 ---
 
@@ -41,8 +36,8 @@ LINGUAGGIO CERVELLASWARM:
     D1: Syntax Highlighting   [####################] DONE! (S426, 9.5/10)
     D2: LSP Base (lu lsp)     [####################] DONE! (S426, 9.5/10)
     D3: Playground Online      [####################] DONE! (S429, LIVE!)
-    D4: "A Tour of LU"        [....................] PROSSIMO
-    D5: LSP Avanzato           [....................] TODO
+    D4: "A Tour of LU"        [####################] DONE! (S430, 9.5/10)
+    D5: LSP Avanzato           [....................] PROSSIMO
     D6: Guardiana Finale       [....................] TODO
 
   Organizza Casa (v0.2.0)     [####################] 100% COMPLETA! (S428-S429)
@@ -50,19 +45,19 @@ LINGUAGGIO CERVELLASWARM:
 
 ---
 
-## PROSSIMA SESSIONE: D4 "A Tour of LU" + Guardiana D3
+## PROSSIMA SESSIONE: D5 LSP Avanzato
 
-### Guardiana D3 (prima cosa)
-- Audit D3 completo: playground live, deploy flow, URL accessibile
-- Target: 9.5/10
-
-### D4: "A Tour of LU"
-- Tutorial interattivo che guida un developer attraverso LU
-- Formato: markdown + esempi interattivi nel playground
-- Success criteria: un non-developer completa il tutorial e capisce "types + agents + protocols"
+### D5: LSP Avanzato + Hover + Completion
+- Hover: mostra tipo e documentazione al passaggio mouse
+- Completion: suggerimenti keyword, nomi ruoli, trust tiers
+- Go-to-definition per types e agents
 - Subroadmap: `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md`
 
-### Poi: D5 LSP Avanzato + D6 Guardiana Finale
+### Poi: D6 Guardiana Audit Finale + Launch
+
+### TODO Rafa (da S429)
+- Ruotare Bedzzle key su MyReception
+- Attivare 2FA GitHub (scade 6 Mar!)
 
 ---
 
@@ -70,51 +65,30 @@ LINGUAGGIO CERVELLASWARM:
 
 | Metrica | Valore |
 |---------|--------|
-| Test totali | **2828** |
+| Test totali | **2856** |
 | Moduli .py | **25** |
 | Public symbols | **131** |
 | Codici errore LU | **74** (3 lingue) |
 | Dipendenze core | **ZERO** |
 | PyPI version | **0.2.0** (LIVE!) |
 | Playground | **LIVE** (https://rafapra3008.github.io/cervellaswarm/) |
-| GitHub Release | **lingua-universale-v0.2.0** |
+| Tour steps | **24** (4 capitoli, 4 esercizi) |
 
 ---
 
-## Lezioni Apprese (S429)
+## Lezioni Apprese (S430)
 
 ### Cosa ha funzionato bene
-- **Ogni step -> Guardiana audit** -- 9.5 + 9.3, finding concreti fixati subito
-- **Agenti in parallelo** -- Researcher + Guardiana + Security in background, zero tempo perso
-- **Dual repo sync testato** -- dry-run prima, poi esecuzione. Catturato problema whitelist
+- **Guardiana audit del PIANO prima di implementare** -- ha catturato 4 P2 (sintassi errata, XSS risk, file size, no test). Fixati prima di scrivere codice = zero rework
+- **File separati (tour.js + tour-ui.js + tour.css)** -- segue pattern examples.js, evita bloat index.html
+- **Test automatici per codice tour** -- 28 test parametrizzati estraggono codice da tour.js e validano con check_source()
 
 ### Cosa non ha funzionato
-- **Content scanner + API key patterns = falsi positivi** -- i nostri stessi security tool contengono i pattern come regole
-- **Trusted Publisher puntava al repo sbagliato** -- non verificato dalla S399
+- **Context window consumato** -- D4 e un task grande (4 file nuovi + 1 modificato). Auto-compact necessario. Per D5 valutare split in sotto-task
 
 ### Pattern candidato
-- **"Verifica la config di deploy dopo ogni cambio repo"** -- Evidenza: S429 (Trusted Publisher mismatch). Azione: MONITORARE
+- **"Audit del piano PRIMA di implementare"** -- Evidenza: S430 (4 P2 catturati pre-implementation). Azione: PROMUOVERE (gia confermato in S429-S430)
 
 ---
 
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
-
----
-
-## AUTO-CHECKPOINT: 2026-03-04 14:03 (auto)
-
-### Stato Git
-- **Branch**: main
-- **Ultimo commit**: 969e681a - S429: Add playground/ to sync-to-public whitelist
-- **File modificati** (5):
-  - sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
-  - .sncp/progetti/cervellaswarm/reports/20260112_FIX_AGENTI_SWARM.md
-  - .sncp/progetti/cervellaswarm/reports/20260112_FIX_EISDIR_RESEARCHER.md
-  - .sncp/progetti/cervellaswarm/reports/20260113_AUDIT_DIAMANTE_OPS.md
-  - .sncp/progetti/cervellaswarm/reports/20260113_AUDIT_DIAMANTE_QUALITA.md
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: auto
-
----
