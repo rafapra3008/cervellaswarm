@@ -72,6 +72,7 @@ PUBLIC_FILES=(
     "docs/GIT_ATTRIBUTION.md"
     "docs/DUAL_REPO_STRATEGY.md"
     "docs/blog"
+    "playground"
 )
 
 # Files/directories that must NEVER appear in public root
