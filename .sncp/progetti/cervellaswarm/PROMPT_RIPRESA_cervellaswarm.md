@@ -1,32 +1,33 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-02-28 - Sessione 428
-> **STATUS:** "Organizza la Casa" v0.2.0 -- Step 1-3 FATTI, Step 4-6 pronti (build + publish + audit)
+> **Ultimo aggiornamento:** 2026-03-04 - Sessione 429
+> **STATUS:** v0.2.0 LIVE su PyPI! D3 Playground LIVE su GitHub Pages! Organizza Casa COMPLETA.
 
 ---
 
-## SESSIONE 428 - Cosa e successo
+## SESSIONE 429 - Cosa e successo
 
-### 1. Context Window Optimization (COMPLETATA)
-- **Problema:** context si riempiva troppo velocemente (Contabilita ~15-18K token all'avvio)
-- **Causa:** duplicazioni massive, COSTITUZIONE/NORD/PROMPT_RIPRESA caricati integralmente negli hook
-- **Soluzione (6 step):**
-  - MEMORY.md CervellaSwarm: 58->44 righe | Contabilita: 54->38 righe
-  - session_start_swarm.py v3.1.0: output da ~4,829 a 298 char (solo puntatori)
-  - session_start_contabilita.py v2->v3: output da ~7,000 a 437 char
-  - Hook duplicati eliminati + filtri CWD aggiunti
-  - NORD.md Contabilita: 407->115 righe (3 file archivio in docs/)
-  - CLAUDE.md consolidati + compact instructions aggiunte
-- **Risultato:** Contabilita ~60% riduzione, CervellaSwarm ~35% riduzione
-- **Guardiana:** 9.5/10 | COSTITUZIONE intatta | Zero info perse
-- **Commit:** `48ee2ed7` (CervellaSwarm) + `01e5016` (Contabilita)
+### 1. Organizza la Casa v0.2.0 -- COMPLETATA!
+- **Step 4 DONE:** 2828 test PASSED (0.97s) + wheel v0.2.0 built (27 .py files)
+- **Step 5 DONE:** v0.2.0 LIVE su PyPI via Trusted Publisher
+  - Fix: Trusted Publisher puntava a `cervellaswarm-internal` (privato), corretto a `cervellaswarm` (pubblico)
+- **Step 6 DONE:** Guardiana audit 9.3/10 -- P2 fixati (NORD + PROMPT_RIPRESA stale, moduli 26->25)
+- **Guardiana Step 4:** 9.5/10 | P2: moduli contati 26 ma sono 25 (fixato)
 
-### 2. Organizza la Casa v0.2.0 -- Step 1-3 FATTI
-- **Step 1 DONE:** pyproject.toml + __init__.py bumped a 0.2.0
-- **Step 2 DONE:** CHANGELOG [0.2.0] con 12 moduli nuovi documentati
-- **Step 3 DONE:** README riscritto (25 moduli, 131 symbols, 2828 test)
-- **Guardiana:** 9.3/10 | Fix P2 symbol count (124->131) applicato
-- **Commit:** `50eba284`
+### 2. D3 Playground -- LIVE!
+- **URL:** https://rafapra3008.github.io/cervellaswarm/
+- Pyodide + Monaco Editor, $0 costo, 4 esempi
+- check_source() e run_source() funzionanti nel browser
+- Deploy automatico via GitHub Actions (`deploy-playground.yml`)
+- `playground/` aggiunto alla whitelist di sync-to-public.sh
+
+### 3. Security Incident -- RISOLTO
+- GitHub Secret Scanning: 5 alert (1 Google API Key, 3 Stripe, 1 Anthropic)
+- Tutte nella storia git da vecchi sync pre-v2.0 (`.sncp/` ora in blacklist)
+- git filter-repo: secret rimosse dalla storia
+- 5/5 alert chiuse come "revoked" via API
+- Content scanner: valutato aggiungere API key patterns, rimosso per falsi positivi
+- **TODO Rafa:** ruotare Bedzzle key su MyReception + attivare 2FA GitHub (scade 6 Mar)
 
 ---
 
@@ -39,43 +40,29 @@ LINGUAGGIO CERVELLASWARM:
   FASE D: L'Ecosistema -- IN CORSO (S426+)
     D1: Syntax Highlighting   [####################] DONE! (S426, 9.5/10)
     D2: LSP Base (lu lsp)     [####################] DONE! (S426, 9.5/10)
-    D3: Playground Online      [####................] SBLOCCATO! (v0.2.0 su PyPI)
-    D4: "A Tour of LU"        [....................] TODO
+    D3: Playground Online      [####################] DONE! (S429, LIVE!)
+    D4: "A Tour of LU"        [....................] PROSSIMO
     D5: LSP Avanzato           [....................] TODO
     D6: Guardiana Finale       [....................] TODO
 
-  Organizza Casa (v0.2.0)
-    Step 1: Bump versione      [####################] DONE (S428)
-    Step 2: CHANGELOG v0.2.0   [####################] DONE (S428)
-    Step 3: README aggiornato  [####################] DONE (S428)
-    Step 4: Test + build wheel [####################] DONE (S429, 9.5/10)
-    Step 5: Pubblica su PyPI   [####################] DONE (S429, v0.2.0 LIVE!)
-    Step 6: Guardiana audit    [####################] DONE (S429, 9.3/10)
+  Organizza Casa (v0.2.0)     [####################] 100% COMPLETA! (S428-S429)
 ```
 
 ---
 
-## PROSSIMA SESSIONE: Step 4-6 + D3 Playground
+## PROSSIMA SESSIONE: D4 "A Tour of LU" + Guardiana D3
 
-### Step 4: Test + Build (~5 min)
-- `cd packages/lingua-universale && pytest` -- confermare 2828 test PASS
-- `python -m build` -- generare wheel v0.2.0
-- Verificare: wheel contiene tutti 27 file .py (25 moduli + __init__.py)
+### Guardiana D3 (prima cosa)
+- Audit D3 completo: playground live, deploy flow, URL accessibile
+- Target: 9.5/10
 
-### Step 5: Pubblica su PyPI (~5 min)
-- Trusted Publisher via GitHub Actions (gia configurato)
-- Alternativa: `twine upload dist/*` con token
-- Verifica: `pip install cervellaswarm-lingua-universale==0.2.0`
-- Verifica: `from cervellaswarm_lingua_universale import check_source` funziona
+### D4: "A Tour of LU"
+- Tutorial interattivo che guida un developer attraverso LU
+- Formato: markdown + esempi interattivi nel playground
+- Success criteria: un non-developer completa il tutorial e capisce "types + agents + protocols"
+- Subroadmap: `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md`
 
-### Step 6: Guardiana audit (~10 min)
-- Score target: >= 9.5/10 coerenza PyPI vs locale
-- Tutti i numeri docs = numeri reali
-
-### DOPO: D3 Playground RIPRENDE
-- Il playground (playground/index.html) e GIA costruito (S427)
-- Con v0.2.0 su PyPI: check_source/run_source disponibili via Pyodide
-- Test nel browser -> Guardiana audit -> deploy GitHub Pages
+### Poi: D5 LSP Avanzato + D6 Guardiana Finale
 
 ---
 
@@ -88,53 +75,46 @@ LINGUAGGIO CERVELLASWARM:
 | Public symbols | **131** |
 | Codici errore LU | **74** (3 lingue) |
 | Dipendenze core | **ZERO** |
-| PyPI version | **0.2.0** (LIVE su PyPI!) |
-| Playground | **costruito** (SBLOCCATO! v0.2.0 su PyPI) |
+| PyPI version | **0.2.0** (LIVE!) |
+| Playground | **LIVE** (https://rafapra3008.github.io/cervellaswarm/) |
+| GitHub Release | **lingua-universale-v0.2.0** |
 
 ---
 
-## Lezioni Apprese (S428)
+## Lezioni Apprese (S429)
 
 ### Cosa ha funzionato bene
-- **Delegare fuori contesto** -- agenti lavorano in context separato, risultati controllati, poi audit
-- **Ogni step -> Guardiana audit** -- score 9.5/10 + 9.3/10, finding concreti fixati subito
-- **Analisi prima di agire** -- Ingegnera ha misurato TUTTO, poi piano chirurgico
+- **Ogni step -> Guardiana audit** -- 9.5 + 9.3, finding concreti fixati subito
+- **Agenti in parallelo** -- Researcher + Guardiana + Security in background, zero tempo perso
+- **Dual repo sync testato** -- dry-run prima, poi esecuzione. Catturato problema whitelist
 
 ### Cosa non ha funzionato
-- **Context overhead accumulato silenziosamente** -- 428 sessioni senza mai misurare il consumo reale
+- **Content scanner + API key patterns = falsi positivi** -- i nostri stessi security tool contengono i pattern come regole
+- **Trusted Publisher puntava al repo sbagliato** -- non verificato dalla S399
 
 ### Pattern candidato
-- **"Misura il tuo overhead periodicamente"** -- Evidenza: S428 (60% overhead scoperto). Azione: PROMUOVERE
+- **"Verifica la config di deploy dopo ogni cambio repo"** -- Evidenza: S429 (Trusted Publisher mismatch). Azione: MONITORARE
 
 ---
 
-*"La casa deve essere in ordine prima di invitare ospiti."*
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
 
 ---
 
----
-
----
-
----
-
----
-
-## AUTO-CHECKPOINT: 2026-03-03 20:33 (unknown)
+## AUTO-CHECKPOINT: 2026-03-04 14:03 (auto)
 
 ### Stato Git
 - **Branch**: main
-- **Ultimo commit**: 0d362127 - S428: Checkpoint -- PROMPT_RIPRESA aggiornato con handoff completo
+- **Ultimo commit**: 969e681a - S429: Add playground/ to sync-to-public whitelist
 - **File modificati** (5):
-  - .coverage
-  - .playwright-mcp/console-2026-02-28T18-02-07-763Z.log
-  - .playwright-mcp/console-2026-02-28T18-02-41-388Z.log
-  - .sncp/PROMPT_RIPRESA_MASTER.md
-  - .sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
+  - sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
+  - .sncp/progetti/cervellaswarm/reports/20260112_FIX_AGENTI_SWARM.md
+  - .sncp/progetti/cervellaswarm/reports/20260112_FIX_EISDIR_RESEARCHER.md
+  - .sncp/progetti/cervellaswarm/reports/20260113_AUDIT_DIAMANTE_OPS.md
+  - .sncp/progetti/cervellaswarm/reports/20260113_AUDIT_DIAMANTE_QUALITA.md
 
 ### Note
 - Checkpoint automatico generato da hook
-- Trigger: unknown
+- Trigger: auto
 
 ---
