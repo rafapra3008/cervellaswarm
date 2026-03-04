@@ -26,6 +26,7 @@ Error code scheme:
     LU-G = codegen.py code gen
     LU-C = confidence.py + trust.py
     LU-A = integration.py agents
+    LU-N = _tokenizer.py + _parser.py syntax (C1 pipeline)
     LU-X = unknown / fallback
 
 Usage::
@@ -42,6 +43,7 @@ Usage::
 from __future__ import annotations
 
 import difflib
+import re
 from dataclasses import dataclass
 from enum import Enum
 from types import MappingProxyType
@@ -51,6 +53,8 @@ from .checker import ProtocolViolation, SessionComplete
 from .dsl import DSLParseError
 from .intent import IntentParseError
 from .spec import SpecParseError
+from ._tokenizer import TokenizeError
+from ._parser import ParseError
 
 
 # ============================================================
@@ -76,6 +80,7 @@ class ErrorCategory(Enum):
     CODEGEN = "codegen"             # codegen.py
     CONFIDENCE = "confidence"       # confidence.py, trust.py
     INTEGRATION = "integration"     # integration.py
+    SYNTAX = "syntax"               # _tokenizer.py, _parser.py (C1 pipeline)
 
 
 class ErrorSeverity(Enum):
@@ -129,6 +134,61 @@ class HumanError:
     got: Optional[str] = None
     expected: Optional[str] = None
     similar: tuple[str, ...] = ()
+
+
+# ============================================================
+# Snippet renderer
+# ============================================================
+
+
+def render_snippet(
+    source: str,
+    line: int,
+    col: int,
+    length: int = 1,
+    label: str = "",
+    context_lines: int = 1,
+) -> str:
+    """Generate a source code snippet with caret pointing to the error.
+
+    Inspired by Rust and Elm compiler diagnostics.
+
+    Args:
+        source:        Full source text.
+        line:          1-indexed line number of the error.
+        col:           0-indexed column of the error.
+        length:        Number of characters to underline.
+        label:         Label to show next to the caret (e.g., "expected ':'").
+        context_lines: Number of lines to show before and after the error.
+
+    Returns:
+        Multi-line string with line numbers, source, and caret indicator.
+    """
+    src_lines = source.splitlines() or [""]
+    if line < 1 or line > len(src_lines):
+        return ""
+
+    start = max(1, line - context_lines)
+    end = min(len(src_lines), line + context_lines)
+    gutter_w = len(str(end))
+
+    result: list[str] = []
+
+    for ln in range(start, end + 1):
+        src = src_lines[ln - 1]
+        prefix = f"{str(ln).rjust(gutter_w)} |  "
+        result.append(f"{prefix}{src}")
+
+        if ln == line:
+            # Caret line -- clamp col to line length
+            safe_col = min(col, len(src))
+            caret = "^" * max(1, length)
+            padding = " " * safe_col
+            gutter_pad = " " * gutter_w + " |  "
+            label_str = f" {label}" if label else ""
+            result.append(f"{gutter_pad}{padding}{caret}{label_str}")
+
+    return "\n".join(result)
 
 
 # ============================================================
@@ -1088,6 +1148,223 @@ _CATALOG: MappingProxyType = MappingProxyType({
     }),
 
     # ------------------------------------------------------------------
+    # LU-N - C1 pipeline: tokenizer + parser syntax errors
+    # ------------------------------------------------------------------
+
+    "LU-N001": MappingProxyType({
+        "en": (
+            "tab characters are not allowed; use spaces.",
+            "Replace tabs with spaces (4 spaces per indent level).",
+        ),
+        "it": (
+            "i caratteri tab non sono permessi; usa spazi.",
+            "Sostituisci i tab con spazi (4 spazi per livello di indentazione).",
+        ),
+        "pt": (
+            "caracteres tab nao sao permitidos; use espacos.",
+            "Substitua tabs por espacos (4 espacos por nivel de indentacao).",
+        ),
+    }),
+
+    "LU-N002": MappingProxyType({
+        "en": (
+            "indentation must be a multiple of 4 spaces (got {got}).",
+            "Adjust indentation to a multiple of 4 spaces.",
+        ),
+        "it": (
+            "l'indentazione deve essere un multiplo di 4 spazi (ricevuto {got}).",
+            "Correggi l'indentazione a un multiplo di 4 spazi.",
+        ),
+        "pt": (
+            "a indentacao deve ser um multiplo de 4 espacos (recebido {got}).",
+            "Ajuste a indentacao para um multiplo de 4 espacos.",
+        ),
+    }),
+
+    "LU-N003": MappingProxyType({
+        "en": (
+            "unterminated string literal.",
+            "Close the string with a matching quote.",
+        ),
+        "it": (
+            "stringa non terminata.",
+            "Chiudi la stringa con le virgolette corrispondenti.",
+        ),
+        "pt": (
+            "string nao terminada.",
+            "Feche a string com as aspas correspondentes.",
+        ),
+    }),
+
+    "LU-N004": MappingProxyType({
+        "en": (
+            "unexpected character: `{got}`.",
+            "Remove or replace this character.",
+        ),
+        "it": (
+            "carattere inaspettato: `{got}`.",
+            "Rimuovi o sostituisci questo carattere.",
+        ),
+        "pt": (
+            "caractere inesperado: `{got}`.",
+            "Remova ou substitua este caractere.",
+        ),
+    }),
+
+    "LU-N005": MappingProxyType({
+        "en": (
+            "dedent does not match any outer indentation level.",
+            "Align the line with a previous indentation level.",
+        ),
+        "it": (
+            "la dedentazione non corrisponde a nessun livello esterno.",
+            "Allinea la riga con un livello di indentazione precedente.",
+        ),
+        "pt": (
+            "a deindentacao nao corresponde a nenhum nivel externo.",
+            "Alinhe a linha com um nivel de indentacao anterior.",
+        ),
+    }),
+
+    "LU-N006": MappingProxyType({
+        "en": (
+            "unknown top-level keyword `{got}`.",
+            "Top-level declarations start with: type, agent, protocol, use.",
+        ),
+        "it": (
+            "keyword top-level sconosciuta `{got}`.",
+            "Le dichiarazioni top-level iniziano con: type, agent, protocol, use.",
+        ),
+        "pt": (
+            "palavra-chave top-level desconhecida `{got}`.",
+            "Declaracoes top-level comecam com: type, agent, protocol, use.",
+        ),
+    }),
+
+    "LU-N007": MappingProxyType({
+        "en": (
+            "expected {expected}, got `{got}`.",
+            "Check the syntax at this position.",
+        ),
+        "it": (
+            "atteso {expected}, ricevuto `{got}`.",
+            "Controlla la sintassi in questa posizione.",
+        ),
+        "pt": (
+            "esperado {expected}, recebido `{got}`.",
+            "Verifique a sintaxe nesta posicao.",
+        ),
+    }),
+
+    "LU-N008": MappingProxyType({
+        "en": (
+            "expected `:` after declaration name.",
+            "Add a colon after the name: `protocol MyProto:`",
+        ),
+        "it": (
+            "atteso `:` dopo il nome della dichiarazione.",
+            "Aggiungi i due punti dopo il nome: `protocol MioProto:`",
+        ),
+        "pt": (
+            "esperado `:` apos o nome da declaracao.",
+            "Adicione dois-pontos apos o nome: `protocol MeuProto:`",
+        ),
+    }),
+
+    "LU-N009": MappingProxyType({
+        "en": (
+            "protocol must have at least one step.",
+            "Add at least one message step (e.g., `a sends message to b`).",
+        ),
+        "it": (
+            "il protocollo deve avere almeno un passo.",
+            "Aggiungi almeno un passo (es: `a sends message to b`).",
+        ),
+        "pt": (
+            "o protocolo deve ter pelo menos um passo.",
+            "Adicione pelo menos um passo (ex: `a sends message to b`).",
+        ),
+    }),
+
+    "LU-N010": MappingProxyType({
+        "en": (
+            "cannot parse step action `{got}`.",
+            "Valid actions: asks, returns, sends, tells, proposes.",
+        ),
+        "it": (
+            "impossibile analizzare l'azione del passo `{got}`.",
+            "Azioni valide: asks, returns, sends, tells, proposes.",
+        ),
+        "pt": (
+            "nao foi possivel analisar a acao do passo `{got}`.",
+            "Acoes validas: asks, returns, sends, tells, proposes.",
+        ),
+    }),
+
+    "LU-N011": MappingProxyType({
+        "en": (
+            "unknown property `{got}`.",
+            "Valid properties: always terminates, no deadlock, all roles participate, "
+            "confidence >= level, trust >= tier, X before Y, X cannot send Y.",
+        ),
+        "it": (
+            "proprieta sconosciuta `{got}`.",
+            "Proprieta valide: always terminates, no deadlock, all roles participate, "
+            "confidence >= level, trust >= tier, X before Y, X cannot send Y.",
+        ),
+        "pt": (
+            "propriedade desconhecida `{got}`.",
+            "Propriedades validas: always terminates, no deadlock, all roles participate, "
+            "confidence >= level, trust >= tier, X before Y, X cannot send Y.",
+        ),
+    }),
+
+    "LU-N012": MappingProxyType({
+        "en": (
+            "unknown agent clause `{got}`.",
+            "Valid clauses: role, trust, accepts, produces, requires, ensures.",
+        ),
+        "it": (
+            "clausola agent sconosciuta `{got}`.",
+            "Clausole valide: role, trust, accepts, produces, requires, ensures.",
+        ),
+        "pt": (
+            "clausula de agente desconhecida `{got}`.",
+            "Clausulas validas: role, trust, accepts, produces, requires, ensures.",
+        ),
+    }),
+
+    "LU-N013": MappingProxyType({
+        "en": (
+            "invalid trust tier `{got}`.",
+            "Valid trust tiers: verified, trusted, standard, untrusted.",
+        ),
+        "it": (
+            "livello di trust non valido `{got}`.",
+            "Livelli validi: verified, trusted, standard, untrusted.",
+        ),
+        "pt": (
+            "nivel de confianca invalido `{got}`.",
+            "Niveis validos: verified, trusted, standard, untrusted.",
+        ),
+    }),
+
+    "LU-N014": MappingProxyType({
+        "en": (
+            "invalid confidence level `{got}`.",
+            "Valid levels: certain, high, medium, low, speculative.",
+        ),
+        "it": (
+            "livello di confidence non valido `{got}`.",
+            "Livelli validi: certain, high, medium, low, speculative.",
+        ),
+        "pt": (
+            "nivel de certeza invalido `{got}`.",
+            "Niveis validos: certain, high, medium, low, speculative.",
+        ),
+    }),
+
+    # ------------------------------------------------------------------
     # LU-X - unknown / fallback
     # ------------------------------------------------------------------
 
@@ -1220,11 +1497,12 @@ def humanize(
     """Translate any Lingua Universale exception to a human-friendly message.
 
     The chain of matchers (most specific first):
-    1. Custom exception types (ProtocolViolation, SessionComplete,
+    1. C1 pipeline errors (TokenizeError, ParseError).
+    2. Custom exception types (ProtocolViolation, SessionComplete,
        DSLParseError, SpecParseError, IntentParseError).
-    2. ValueError message substring matching.
-    3. RuntimeError / TimeoutError for Lean 4.
-    4. Fallback: LU-X001.
+    3. ValueError message substring matching.
+    4. RuntimeError / TimeoutError for Lean 4.
+    5. Fallback: LU-X001.
 
     Args:
         exc:     The exception to translate.
@@ -1243,6 +1521,48 @@ def humanize(
     # ------------------------------------------------------------------
     # 1. Custom exception types
     # ------------------------------------------------------------------
+
+    # ------------------------------------------------------------------
+    # C1 pipeline: tokenizer errors
+    # ------------------------------------------------------------------
+
+    if isinstance(exc, TokenizeError):
+        code, ctx_extra = _classify_tokenize_error(exc)
+        loc = ErrorLocation(line=exc.line, col=exc.col, source="tokenizer")
+        ctx_merged = {**_ctx, **ctx_extra}
+        return _build(
+            code=code,
+            category=ErrorCategory.SYNTAX,
+            severity=ErrorSeverity.ERROR,
+            locale=_locale,
+            technical=str(exc),
+            ctx=ctx_merged,
+            got=ctx_extra.get("got"),
+            expected=ctx_extra.get("expected"),
+            location=loc,
+        )
+
+    # ------------------------------------------------------------------
+    # C1 pipeline: parser errors
+    # ------------------------------------------------------------------
+
+    if isinstance(exc, ParseError):
+        code, ctx_extra = _classify_parse_error(exc)
+        loc = ErrorLocation(line=exc.line, col=exc.col, source="parser")
+        ctx_merged = {**_ctx, **ctx_extra}
+        similar = _parser_similar(code, ctx_extra.get("got", ""))
+        return _build(
+            code=code,
+            category=ErrorCategory.SYNTAX,
+            severity=ErrorSeverity.ERROR,
+            locale=_locale,
+            technical=str(exc),
+            ctx=ctx_merged,
+            got=ctx_extra.get("got"),
+            expected=ctx_extra.get("expected"),
+            location=loc,
+            similar=similar,
+        )
 
     if isinstance(exc, SessionComplete):
         return _build(
@@ -1383,7 +1703,7 @@ def humanize(
     return _build_fallback(_locale, str(exc), ErrorCategory.VALIDATION)
 
 
-def format_error(error: HumanError, verbose: bool = False) -> str:
+def format_error(error: HumanError, verbose: bool = False, source: str = "") -> str:
     """Format a HumanError for terminal display.
 
     Output style is inspired by Elm and Rust compiler diagnostics:
@@ -1392,6 +1712,7 @@ def format_error(error: HumanError, verbose: bool = False) -> str:
     Args:
         error:   The :class:`HumanError` to format.
         verbose: If True, include the original technical message.
+        source:  Optional full source text for snippet rendering.
 
     Returns:
         A multi-line string ready for ``print()``.
@@ -1410,6 +1731,19 @@ def format_error(error: HumanError, verbose: bool = False) -> str:
             loc_parts.append(f"Col {error.location.col}")
         if loc_parts:
             lines.append(f"  {', '.join(loc_parts)}")
+
+    # Source snippet
+    if source and error.location and error.location.line:
+        snippet = render_snippet(
+            source,
+            error.location.line,
+            error.location.col or 0,
+            label=error.message[:60] if len(error.message) > 60 else error.message,
+        )
+        if snippet:
+            lines.append("")
+            lines.append(snippet)
+            lines.append("")
 
     # Got / expected
     if error.got is not None and error.expected is not None:
@@ -1497,6 +1831,100 @@ def _build_fallback(
 # ============================================================
 # Classifiers for custom exception types
 # ============================================================
+
+
+def _classify_tokenize_error(exc: TokenizeError) -> tuple[str, dict[str, str]]:
+    """Determine LU-N00X code from a TokenizeError."""
+    raw = str(exc)
+    msg = raw.split(": ", 1)[-1] if ": " in raw else raw
+
+    if "tabs" in msg.lower() or "tab" in msg.lower():
+        return "LU-N001", {}
+
+    if "indentation must be" in msg:
+        got = _extract_parenthesized(msg) or ""
+        return "LU-N002", {"got": got}
+
+    if "unterminated string" in msg:
+        return "LU-N003", {}
+
+    if "unexpected character" in msg:
+        got = _extract_quoted(msg) or ""
+        return "LU-N004", {"got": got}
+
+    if "dedent" in msg:
+        return "LU-N005", {}
+
+    # Generic tokenizer error
+    return "LU-N007", _extract_expected_got(msg)
+
+
+def _classify_parse_error(exc: ParseError) -> tuple[str, dict[str, str]]:
+    """Determine LU-N00X code from a ParseError."""
+    raw = str(exc)
+    msg = raw.split(": ", 1)[-1] if ": " in raw else raw
+
+    if "expected 'protocol'" in msg and "'agent'" in msg and "'type'" in msg:
+        # Extract the "got" value -- the quoted token AFTER "got"
+        m = re.search(r"got\s+'([^']+)'", msg)
+        got = m.group(1) if m else (_extract_quoted(msg) or "")
+        return "LU-N006", {"got": got}
+
+    if "expected COLON" in msg:
+        return "LU-N008", _extract_expected_got(msg)
+
+    if "protocol must have at least one step" in msg:
+        return "LU-N009", {}
+
+    if "cannot parse action" in msg or "unknown action" in msg:
+        got = _extract_quoted(msg) or msg
+        return "LU-N010", {"got": got}
+
+    if "unknown property" in msg:
+        got = _extract_quoted(msg) or ""
+        return "LU-N011", {"got": got}
+
+    if "unknown agent clause" in msg:
+        got = _extract_quoted(msg) or ""
+        return "LU-N012", {"got": got}
+
+    if "invalid trust tier" in msg:
+        got = _extract_quoted(msg) or ""
+        return "LU-N013", {"got": got}
+
+    if "invalid confidence level" in msg:
+        got = _extract_quoted(msg) or ""
+        return "LU-N014", {"got": got}
+
+    # Generic parse error: expected X got Y
+    parts = _extract_expected_got(msg)
+    return "LU-N007", parts
+
+
+def _parser_similar(code: str, got: str) -> tuple[str, ...]:
+    """Build fuzzy suggestions for parser errors."""
+    if code == "LU-N006" and got:
+        return suggest_similar(got, ["type", "agent", "protocol", "use"])
+    if code == "LU-N010" and got:
+        return suggest_similar(got, ["asks", "returns", "sends", "tells", "proposes"])
+    if code == "LU-N011" and got:
+        return suggest_similar(
+            got, ["always terminates", "no deadlock", "all roles participate",
+                  "confidence", "trust", "before", "cannot send"]
+        )
+    if code == "LU-N012" and got:
+        return suggest_similar(
+            got, ["role", "trust", "accepts", "produces", "requires", "ensures"]
+        )
+    if code == "LU-N013" and got:
+        return suggest_similar(
+            got, ["verified", "trusted", "standard", "untrusted"]
+        )
+    if code == "LU-N014" and got:
+        return suggest_similar(
+            got, ["certain", "high", "medium", "low", "speculative"]
+        )
+    return ()
 
 
 def _classify_protocol_violation(exc: ProtocolViolation) -> str:
@@ -1619,14 +2047,12 @@ def _classify_intent_error(exc: IntentParseError) -> tuple[str, dict[str, str]]:
 
 def _extract_quoted(text: str) -> Optional[str]:
     """Extract first single- or double-quoted token from text."""
-    import re
     m = re.search(r"['\"]([^'\"]+)['\"]", text)
     return m.group(1) if m else None
 
 
 def _extract_parenthesized(text: str) -> Optional[str]:
     """Extract first parenthesized number from text, e.g. '(got 6)'."""
-    import re
     m = re.search(r"\(got\s+([^\)]+)\)", text)
     if m:
         return m.group(1)
@@ -1637,7 +2063,6 @@ def _extract_parenthesized(text: str) -> Optional[str]:
 
 def _extract_expected_got(text: str) -> dict[str, str]:
     """Extract 'expected X, got Y' substrings from an error message."""
-    import re
     result: dict[str, str] = {}
     m_exp = re.search(r"expected\s+([^,]+)", text)
     if m_exp:
@@ -1650,7 +2075,6 @@ def _extract_expected_got(text: str) -> dict[str, str]:
 
 def _extract_value_error_ctx(msg: str, code: str) -> dict[str, str]:
     """Extract substitution context from a ValueError message string."""
-    import re
     ctx: dict[str, str] = {}
 
     # Pattern: "X cannot be empty" -> field = X
@@ -1774,6 +2198,7 @@ _CODE_CATEGORY: MappingProxyType = MappingProxyType({
     "LU-G": ErrorCategory.CODEGEN,
     "LU-C": ErrorCategory.CONFIDENCE,
     "LU-A": ErrorCategory.INTEGRATION,
+    "LU-N": ErrorCategory.SYNTAX,
     "LU-X": ErrorCategory.VALIDATION,
 })
 

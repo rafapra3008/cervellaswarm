@@ -1,0 +1,69 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale: Multi-Agent Orchestration
+# Demonstrates: complex protocol with multiple roles, choice branches,
+# ordering properties, exclusion constraints, use statements.
+
+use python datetime
+
+type Priority = Critical | High | Normal | Low
+
+type DeploymentPlan =
+    target: String
+    version: String
+    priority: Priority
+    rollback: Boolean
+
+type DeploymentResult =
+    success: Boolean
+    log: List[String]
+    duration: Number
+
+agent Architect:
+    role: backend
+    trust: trusted
+    accepts: PlanRequest
+    produces: PlanProposal
+    requires: spec.approved
+    ensures: plan.complete and plan.tested
+
+agent Builder:
+    role: backend
+    trust: standard
+    accepts: TaskRequest
+    produces: TaskResult
+    requires: plan.approved
+    ensures: result.tests_pass
+
+agent Guardian:
+    role: guardiana
+    trust: verified
+    accepts: AuditRequest
+    produces: AuditVerdict
+    requires:
+        code.submitted
+        tests.pass_()
+    ensures: verdict.justified
+
+protocol DeployPipeline:
+    roles: regina, architect, builder, guardian
+
+    regina asks architect to plan deployment
+    architect returns proposal to regina
+
+    when regina decides:
+        approve:
+            regina asks builder to do implementation
+            builder returns result to regina
+            regina asks guardian to verify deployment
+            guardian returns verdict to regina
+        reject:
+            regina tells architect revise plan
+            architect returns revised proposal to regina
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+        architect before builder
+        builder before guardian
+        builder cannot send audit_verdict

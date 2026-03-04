@@ -8,7 +8,7 @@ from importlib.metadata import version, PackageNotFoundError
 try:
     __version__ = version("cervellaswarm-lingua-universale")
 except PackageNotFoundError:
-    __version__ = "0.1.1"
+    __version__ = "0.2.0"
 
 # Public API re-exports for convenience.
 # Users can also import directly from submodules.
@@ -137,6 +137,35 @@ from .spec import (
     check_properties,
     check_session,
 )
+from ._contracts import (
+    ContractViolation,
+)
+from ._compiler import (
+    ASTCompiler,
+    CompiledModule,
+)
+from ._interop import (
+    InteropError,
+    compile_file,
+    save_module,
+    load_module,
+    load_file,
+)
+from ._grammar_export import (
+    GrammarExporter,
+    GRAMMAR_VERSION,
+)
+from ._eval import (
+    EvalResult,
+    check_source,
+    check_file,
+    verify_source,
+    verify_file,
+    run_source,
+    run_file,
+)
+from ._repl import REPLSession
+from ._cli import main as cli_main
 from .errors import (
     ErrorCategory,
     ErrorSeverity,
@@ -144,6 +173,7 @@ from .errors import (
     HumanError,
     humanize,
     format_error,
+    render_snippet,
     suggest_similar,
     DEFAULT_LOCALE,
     SUPPORTED_LOCALES,
@@ -266,6 +296,31 @@ __all__ = [
     "parse_spec",
     "check_properties",
     "check_session",
+    # Contracts (C2)
+    "ContractViolation",
+    # Compiler (C2)
+    "ASTCompiler",
+    "CompiledModule",
+    # Interop (C2.3)
+    "InteropError",
+    "compile_file",
+    "save_module",
+    "load_module",
+    "load_file",
+    # Grammar Export (C2.4)
+    "GrammarExporter",
+    "GRAMMAR_VERSION",
+    # Eval (C3.2)
+    "EvalResult",
+    "check_source",
+    "check_file",
+    "verify_source",
+    "verify_file",
+    "run_source",
+    "run_file",
+    "cli_main",
+    # REPL (C3.4)
+    "REPLSession",
     # Errors
     "ErrorCategory",
     "ErrorSeverity",
@@ -273,6 +328,7 @@ __all__ = [
     "HumanError",
     "humanize",
     "format_error",
+    "render_snippet",
     "suggest_similar",
     "DEFAULT_LOCALE",
     "SUPPORTED_LOCALES",
