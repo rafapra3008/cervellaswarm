@@ -1,0 +1,2187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lingua Universale Playground</title>
+  <meta name="description" content="Try Lingua Universale in your browser — no install required. Write AI agent protocols in seconds." />
+
+  <!-- Monaco Editor loader -->
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs/loader.js"></script>
+
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      /* Color palette - dark theme */
+      --bg-base:        #1e1e2e;
+      --bg-surface:     #181825;
+      --bg-overlay:     #11111b;
+      --bg-panel:       #24253a;
+      --bg-panel-alt:   #2a2b40;
+      --border:         #313244;
+      --border-subtle:  #2a2b40;
+
+      /* Accent palette */
+      --accent-blue:    #89b4fa;
+      --accent-violet:  #cba6f7;
+      --accent-green:   #a6e3a1;
+      --accent-red:     #f38ba8;
+      --accent-yellow:  #f9e2af;
+      --accent-teal:    #94e2d5;
+      --accent-sky:     #74c7ec;
+
+      /* Text */
+      --text-primary:   #cdd6f4;
+      --text-secondary: #a6adc8;
+      --text-muted:     #6c7086;
+      --text-on-accent: #1e1e2e;
+
+      /* Fonts */
+      --font-ui:   system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+
+      /* Spacing */
+      --header-h:  64px;
+      --toolbar-h: 52px;
+      --footer-h:  48px;
+
+      /* Animation */
+      --t-fast:  0.15s ease;
+      --t-base:  0.25s ease;
+      --t-slow:  0.4s ease;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.6);
+
+      /* Border radius */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       LAYOUT SKELETON
+    ============================================================ */
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+    #header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--header-h);
+      padding: 0 24px;
+      background: var(--bg-overlay);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      gap: 16px;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--accent-violet), var(--accent-blue));
+      flex-shrink: 0;
+    }
+
+    .header-logo svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--text-on-accent);
+    }
+
+    .header-titles {
+      min-width: 0;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .header-tagline {
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       STATUS BADGE (loading indicator in header)
+    ============================================================ */
+    #status-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      transition: background var(--t-base), border-color var(--t-base), color var(--t-base);
+    }
+
+    #status-badge.loading {
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
+    }
+
+    #status-badge.ready {
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+    }
+
+    #status-badge.error {
+      border-color: var(--accent-red);
+      color: var(--accent-red);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+
+    .status-dot.pulse {
+      animation: pulse-dot 1.4s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    /* ============================================================
+       HEADER LINK BUTTONS
+    ============================================================ */
+    .header-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: var(--radius-md);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      background: transparent;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast);
+    }
+
+    .header-link:hover {
+      color: var(--text-primary);
+      border-color: var(--border);
+      background: var(--bg-panel);
+    }
+
+    .header-link svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      fill: currentColor;
+    }
+
+    /* ============================================================
+       TOOLBAR
+    ============================================================ */
+    #toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: var(--toolbar-h);
+      padding: 0 20px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    /* Example selector */
+    .examples-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    #example-select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      padding: 6px 32px 6px 12px;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%236c7086'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      transition: border-color var(--t-fast);
+    }
+
+    #example-select:hover,
+    #example-select:focus {
+      border-color: var(--accent-blue);
+      outline: none;
+    }
+
+    #example-select option {
+      background: var(--bg-panel);
+    }
+
+    .toolbar-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .toolbar-spacer {
+      flex: 1;
+    }
+
+    /* Action buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 18px;
+      border-radius: var(--radius-md);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background var(--t-fast), border-color var(--t-fast),
+                  color var(--t-fast), transform 0.1s, box-shadow var(--t-fast);
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn:not(:disabled):active {
+      transform: scale(0.97);
+    }
+
+    .btn svg {
+      width: 15px;
+      height: 15px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Check button - outlined */
+    .btn-check {
+      background: transparent;
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+
+    .btn-check:not(:disabled):hover {
+      background: rgba(137, 180, 250, 0.1);
+      box-shadow: 0 0 0 1px var(--accent-blue);
+    }
+
+    /* Run button - filled */
+    .btn-run {
+      background: linear-gradient(135deg, var(--accent-violet), var(--accent-blue));
+      color: var(--text-on-accent);
+      border: none;
+    }
+
+    .btn-run:not(:disabled):hover {
+      box-shadow: 0 0 0 2px rgba(137, 180, 250, 0.35), var(--shadow-sm);
+    }
+
+    /* Clear button */
+    .btn-clear {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text-muted);
+      font-size: 12px;
+      padding: 6px 12px;
+    }
+
+    .btn-clear:not(:disabled):hover {
+      border-color: var(--accent-red);
+      color: var(--accent-red);
+    }
+
+    /* ============================================================
+       MAIN AREA: split view
+    ============================================================ */
+    #main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ============================================================
+       EDITOR PANE
+    ============================================================ */
+    #editor-pane {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      border-right: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .pane-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 36px;
+      padding: 0 14px;
+      background: var(--bg-overlay);
+      border-bottom: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+    }
+
+    .pane-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .pane-label svg {
+      width: 13px;
+      height: 13px;
+      fill: currentColor;
+    }
+
+    .pane-info {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    #editor-container {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ============================================================
+       OUTPUT PANE
+    ============================================================ */
+    #output-pane {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    #output-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      background: var(--bg-base);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* Scrollbar */
+    #output-area::-webkit-scrollbar { width: 6px; }
+    #output-area::-webkit-scrollbar-track { background: transparent; }
+    #output-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    #output-area::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+    /* ============================================================
+       OUTPUT CONTENT STYLES
+    ============================================================ */
+
+    /* Empty state */
+    .output-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      font-family: var(--font-ui);
+    }
+
+    .output-empty svg {
+      width: 40px;
+      height: 40px;
+      fill: currentColor;
+      opacity: 0.3;
+    }
+
+    .output-empty p {
+      font-size: 13px;
+    }
+
+    .output-empty .hint {
+      font-size: 11px;
+      opacity: 0.6;
+    }
+
+    /* Success result */
+    .result-block {
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .result-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .result-icon.ok  { background: rgba(166, 227, 161, 0.15); }
+    .result-icon.err { background: rgba(243, 139, 168, 0.15); }
+
+    .result-title {
+      font-family: var(--font-ui);
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .result-title.ok  { color: var(--accent-green); }
+    .result-title.err { color: var(--accent-red); }
+
+    /* Stats grid */
+    .stats-grid {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .stat-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .stat-chip .stat-num {
+      font-weight: 700;
+      color: var(--accent-blue);
+    }
+
+    /* Error list */
+    .error-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .error-item {
+      padding: 12px 14px;
+      background: rgba(243, 139, 168, 0.07);
+      border: 1px solid rgba(243, 139, 168, 0.2);
+      border-left: 3px solid var(--accent-red);
+      border-radius: var(--radius-md);
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 12.5px;
+      color: var(--accent-red);
+      line-height: 1.55;
+    }
+
+    /* Python source section */
+    .python-section {
+      margin-top: 16px;
+    }
+
+    .python-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      cursor: pointer;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      user-select: none;
+      transition: color var(--t-fast), background var(--t-fast);
+    }
+
+    .python-toggle:hover {
+      color: var(--text-primary);
+      background: var(--bg-panel-alt);
+    }
+
+    .python-toggle .toggle-arrow {
+      display: inline-block;
+      transition: transform var(--t-fast);
+      font-size: 10px;
+    }
+
+    .python-toggle.open .toggle-arrow {
+      transform: rotate(90deg);
+    }
+
+    .python-code {
+      display: none;
+      background: var(--bg-overlay);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      padding: 14px;
+      overflow-x: auto;
+      max-height: 340px;
+      overflow-y: auto;
+    }
+
+    .python-code.visible {
+      display: block;
+    }
+
+    .python-code code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent-sky);
+      line-height: 1.6;
+      white-space: pre;
+    }
+
+    /* Python scrollbars */
+    .python-code::-webkit-scrollbar { width: 5px; height: 5px; }
+    .python-code::-webkit-scrollbar-track { background: transparent; }
+    .python-code::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* Run module info */
+    .module-section {
+      margin-top: 16px;
+    }
+
+    .module-section-title {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .module-attrs {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .module-attr {
+      display: flex;
+      gap: 10px;
+      padding: 6px 10px;
+      background: var(--bg-panel);
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+    }
+
+    .module-attr-key {
+      color: var(--accent-violet);
+      font-weight: 600;
+      min-width: 120px;
+    }
+
+    .module-attr-val {
+      color: var(--text-secondary);
+      word-break: break-all;
+    }
+
+    /* ============================================================
+       LOADING OVERLAY
+    ============================================================ */
+    #loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-overlay);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      z-index: 9000;
+      transition: opacity var(--t-slow);
+    }
+
+    #loading-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loading-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, var(--accent-violet), var(--accent-blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: logo-pulse 2s infinite ease-in-out;
+    }
+
+    .loading-logo svg {
+      width: 32px;
+      height: 32px;
+      fill: var(--text-on-accent);
+    }
+
+    @keyframes logo-pulse {
+      0%, 100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(203,166,247,0); }
+      50%       { transform: scale(1.04); box-shadow: 0 0 0 12px rgba(203,166,247,0); }
+    }
+
+    .loading-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .loading-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 300px;
+    }
+
+    .loading-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+      transition: color var(--t-base);
+    }
+
+    .loading-step.active {
+      color: var(--accent-yellow);
+    }
+
+    .loading-step.done {
+      color: var(--accent-green);
+    }
+
+    .step-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid currentColor;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
+      transition: border-color var(--t-base), background var(--t-base);
+    }
+
+    .loading-step.active .step-icon {
+      border-color: var(--accent-yellow);
+      background: rgba(249,226,175,0.12);
+    }
+
+    .loading-step.done .step-icon {
+      border-color: var(--accent-green);
+      background: rgba(166,227,161,0.12);
+    }
+
+    .step-spinner {
+      width: 10px;
+      height: 10px;
+      border: 2px solid rgba(249,226,175,0.3);
+      border-top-color: var(--accent-yellow);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Progress bar */
+    .loading-progress {
+      width: 300px;
+      height: 3px;
+      background: var(--bg-panel);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .loading-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-violet), var(--accent-blue));
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .loading-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* ============================================================
+       ERROR OVERLAY (Pyodide load failure)
+    ============================================================ */
+    #error-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-overlay);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      z-index: 9001;
+      display: none;
+    }
+
+    #error-overlay .err-icon {
+      font-size: 48px;
+    }
+
+    #error-overlay .err-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent-red);
+    }
+
+    #error-overlay .err-msg {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-align: center;
+      max-width: 480px;
+      line-height: 1.6;
+    }
+
+    #error-overlay .err-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    #footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--footer-h);
+      padding: 0 20px;
+      background: var(--bg-overlay);
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+      gap: 16px;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .footer-brand {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+    }
+
+    .footer-brand span {
+      color: var(--accent-violet);
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .footer-link {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 9px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--t-fast), background var(--t-fast);
+    }
+
+    .footer-link:hover {
+      color: var(--text-secondary);
+      background: var(--bg-panel);
+    }
+
+    .footer-link svg {
+      width: 12px;
+      height: 12px;
+      fill: currentColor;
+    }
+
+    .footer-right {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       RESIZE HANDLE
+    ============================================================ */
+    #resize-handle {
+      width: 4px;
+      background: var(--border);
+      cursor: col-resize;
+      flex-shrink: 0;
+      transition: background var(--t-fast);
+      position: relative;
+    }
+
+    #resize-handle:hover,
+    #resize-handle.dragging {
+      background: var(--accent-blue);
+    }
+
+    /* ============================================================
+       RESPONSIVE (tablet: stacked layout)
+    ============================================================ */
+    @media (max-width: 768px) {
+      #main {
+        flex-direction: column;
+      }
+
+      #editor-pane {
+        width: 100%;
+        height: 50%;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      #resize-handle {
+        display: none;
+      }
+
+      #output-pane {
+        height: 50%;
+      }
+
+      .header-tagline,
+      .header-link span {
+        display: none;
+      }
+
+      .examples-label {
+        display: none;
+      }
+
+      #footer .footer-brand {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #header {
+        padding: 0 14px;
+        gap: 10px;
+      }
+
+      #toolbar {
+        padding: 0 12px;
+        gap: 7px;
+      }
+
+      .btn {
+        padding: 7px 12px;
+        font-size: 12px;
+      }
+
+      #output-area {
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     LOADING OVERLAY
+============================================================ -->
+<div id="loading-overlay" role="status" aria-live="polite" aria-label="Loading Lingua Universale Playground">
+  <div class="loading-logo" aria-hidden="true">
+    <!-- Abstract LU symbol -->
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+    </svg>
+  </div>
+  <div class="loading-title">Lingua Universale</div>
+  <div class="loading-steps" id="loading-steps">
+    <div class="loading-step active" id="step-runtime">
+      <div class="step-icon"><div class="step-spinner"></div></div>
+      <span>Loading Python runtime...</span>
+    </div>
+    <div class="loading-step" id="step-install">
+      <div class="step-icon">2</div>
+      <span>Installing Lingua Universale...</span>
+    </div>
+    <div class="loading-step" id="step-ready">
+      <div class="step-icon">3</div>
+      <span>Ready!</span>
+    </div>
+  </div>
+  <div class="loading-progress">
+    <div class="loading-progress-bar" id="progress-bar"></div>
+  </div>
+  <div class="loading-note">First load ~26MB (Python WASM runtime). Cached on subsequent visits.</div>
+</div>
+
+<!-- ============================================================
+     ERROR OVERLAY (shown if Pyodide fails to load)
+============================================================ -->
+<div id="error-overlay" role="alert" aria-live="assertive">
+  <div class="err-icon" aria-hidden="true">&#x26A0;</div>
+  <div class="err-title">Failed to Load Playground</div>
+  <div class="err-msg" id="error-message">
+    Could not load the Python runtime. Please check your internet connection and try again.
+  </div>
+  <div class="err-hint">The playground requires a network connection to load Pyodide (~26MB).</div>
+  <button class="btn btn-run" onclick="location.reload()" style="margin-top:8px;">Retry</button>
+</div>
+
+<!-- ============================================================
+     APP SHELL
+============================================================ -->
+<div id="app">
+
+  <!-- HEADER -->
+  <header id="header">
+    <div class="header-brand">
+      <div class="header-logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+        </svg>
+      </div>
+      <div class="header-titles">
+        <div class="header-title">Lingua Universale Playground</div>
+        <div class="header-tagline">Try it in 30 seconds &mdash; no install required</div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <div id="status-badge" class="loading">
+        <div class="status-dot pulse"></div>
+        <span id="status-text">Loading...</span>
+      </div>
+
+      <a href="https://github.com/rafapra3008/cervellaswarm" target="_blank" rel="noopener"
+         class="header-link" title="GitHub">
+        <!-- GitHub icon -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.3c0 .32.21.7.82.58A12 12 0 0 0 24 12C24 5.37 18.63 0 12 0z"/>
+        </svg>
+        <span>GitHub</span>
+      </a>
+
+      <a href="https://pypi.org/project/cervellaswarm-lingua-universale/" target="_blank" rel="noopener"
+         class="header-link" title="PyPI">
+        <!-- PyPI / box icon -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18L20 8.1v7.8l-8 4-8-4V8.1l8-3.92zm0 2.64L6 9.64V14l6 3 6-3V9.64l-6-2.82zm0 2.18l4 1.88v3.24l-4 2-4-2V10.88l4-1.88z"/>
+        </svg>
+        <span>PyPI</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- TOOLBAR -->
+  <div id="toolbar" role="toolbar" aria-label="Editor toolbar">
+    <span class="examples-label">Example:</span>
+    <select id="example-select" aria-label="Select example" title="Load an example">
+      <option value="">-- choose an example --</option>
+    </select>
+
+    <div class="toolbar-divider" aria-hidden="true"></div>
+
+    <button class="btn btn-clear" id="btn-clear" title="Clear editor" aria-label="Clear editor">
+      Clear
+    </button>
+
+    <div class="toolbar-spacer" aria-hidden="true"></div>
+
+    <button class="btn btn-check" id="btn-check" disabled aria-label="Check syntax (parse and compile)">
+      <!-- Check / shield icon -->
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+      </svg>
+      Check
+    </button>
+
+    <button class="btn btn-run" id="btn-run" disabled aria-label="Run code (parse, compile and execute)">
+      <!-- Play icon -->
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+      Run
+    </button>
+  </div>
+
+  <!-- MAIN -->
+  <main id="main">
+
+    <!-- EDITOR PANE -->
+    <div id="editor-pane">
+      <div class="pane-header">
+        <div class="pane-label">
+          <!-- Code icon -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+          </svg>
+          Editor
+        </div>
+        <div class="pane-info" id="editor-info">hello.lu</div>
+      </div>
+      <div id="editor-container" aria-label="Code editor"></div>
+    </div>
+
+    <!-- RESIZE HANDLE -->
+    <div id="resize-handle" role="separator" aria-label="Resize panels" aria-orientation="vertical"
+         tabindex="0" title="Drag to resize panels"></div>
+
+    <!-- OUTPUT PANE -->
+    <div id="output-pane">
+      <div class="pane-header">
+        <div class="pane-label">
+          <!-- Terminal icon -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-2h16v2zm0-4H4V6h16v8zM6 10.5l1.5-1.5-1.5-1.5L7.5 6 11 9.5 7.5 13 6 11.5zm5.5 1.5h4v-2h-4v2z"/>
+          </svg>
+          Output
+        </div>
+        <div class="pane-info" id="output-timing"></div>
+      </div>
+      <div id="output-area" aria-live="polite" aria-label="Execution output">
+        <div class="output-empty" id="output-empty">
+          <!-- Placeholder icon -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M9 3L5 6.99h3V14h2V6.99h3L9 3zm7 14.01V10h-2v7.01h-3L15 21l4-3.99h-3z"/>
+          </svg>
+          <p>Press <strong>Check</strong> to validate or <strong>Run</strong> to execute</p>
+          <p class="hint">Results will appear here</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-left">
+      <div class="footer-brand">Lingua Universale &mdash; by <span>CervellaSwarm</span></div>
+      <nav class="footer-links" aria-label="External links">
+        <a href="https://github.com/rafapra3008/cervellaswarm" target="_blank" rel="noopener"
+           class="footer-link">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.3c0 .32.21.7.82.58A12 12 0 0 0 24 12C24 5.37 18.63 0 12 0z"/>
+          </svg>
+          GitHub
+        </a>
+        <a href="https://pypi.org/project/cervellaswarm-lingua-universale/" target="_blank" rel="noopener"
+           class="footer-link">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18L20 8.1v7.8l-8 4-8-4V8.1l8-3.92z"/>
+          </svg>
+          PyPI
+        </a>
+      </nav>
+    </div>
+    <div class="footer-right">
+      Powered by <a href="https://pyodide.org" target="_blank" rel="noopener"
+                    style="color:var(--accent-blue);text-decoration:none;">Pyodide</a>
+      &amp;
+      <a href="https://microsoft.github.io/monaco-editor/" target="_blank" rel="noopener"
+         style="color:var(--accent-blue);text-decoration:none;">Monaco Editor</a>
+    </div>
+  </footer>
+
+</div><!-- #app -->
+
+<!-- ============================================================
+     EXAMPLES
+============================================================ -->
+<script src="examples.js"></script>
+
+<!-- ============================================================
+     PYODIDE
+============================================================ -->
+<script src="https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.js"></script>
+
+<!-- ============================================================
+     MAIN APPLICATION SCRIPT
+============================================================ -->
+<script>
+// ============================================================
+// CONSTANTS & STATE
+// ============================================================
+
+// Package name on PyPI
+const PACKAGE_NAME = "cervellaswarm-lingua-universale";
+
+// Pyodide CDN (already loaded above, but we call loadPyodide())
+const PYODIDE_CDN = "https://cdn.jsdelivr.net/pyodide/v0.27.0/full/";
+
+// Application state
+const state = {
+  pyodide: null,       // Pyodide instance
+  luModule: null,      // Imported Python module (cervellaswarm_lingua_universale)
+  editor: null,        // Monaco editor instance
+  ready: false,        // True when Pyodide + package are loaded
+  running: false,      // True while check/run is executing
+  currentExample: "hello",  // Currently selected example ID
+};
+
+
+// ============================================================
+// DOM REFERENCES
+// ============================================================
+
+const $ = (id) => document.getElementById(id);
+
+const dom = {
+  loadingOverlay: $("loading-overlay"),
+  errorOverlay:   $("error-overlay"),
+  errorMessage:   $("error-message"),
+  progressBar:    $("progress-bar"),
+  stepRuntime:    $("step-runtime"),
+  stepInstall:    $("step-install"),
+  stepReady:      $("step-ready"),
+  statusBadge:    $("status-badge"),
+  statusText:     $("status-text"),
+  statusDot:      null,  // set after render
+  exampleSelect:  $("example-select"),
+  btnCheck:       $("btn-check"),
+  btnRun:         $("btn-run"),
+  btnClear:       $("btn-clear"),
+  editorContainer:$("editor-container"),
+  editorInfo:     $("editor-info"),
+  outputArea:     $("output-area"),
+  outputEmpty:    $("output-empty"),
+  outputTiming:   $("output-timing"),
+  resizeHandle:   $("resize-handle"),
+  editorPane:     $("editor-pane"),
+};
+
+dom.statusDot = dom.statusBadge.querySelector(".status-dot");
+
+
+// ============================================================
+// LOADING STEP HELPERS
+// ============================================================
+
+function setStep(stepEl, state) {
+  // state: 'active' | 'done' | 'idle'
+  stepEl.className = "loading-step " + state;
+  const icon = stepEl.querySelector(".step-icon");
+  const idx = Array.from($("loading-steps").children).indexOf(stepEl) + 1;
+
+  if (state === "active") {
+    icon.innerHTML = '<div class="step-spinner"></div>';
+  } else if (state === "done") {
+    icon.innerHTML = "&#x2713;";
+  } else {
+    icon.textContent = String(idx);
+  }
+}
+
+function setProgress(pct) {
+  dom.progressBar.style.width = pct + "%";
+}
+
+function updateStatus(mode, text) {
+  dom.statusBadge.className = mode;
+  dom.statusText.textContent = text;
+  if (mode === "loading") {
+    dom.statusDot.classList.add("pulse");
+  } else {
+    dom.statusDot.classList.remove("pulse");
+  }
+}
+
+
+// ============================================================
+// PYODIDE INITIALIZATION
+// ============================================================
+
+async function initPyodide() {
+  try {
+    // Step 1: Load Python runtime
+    setStep(dom.stepRuntime, "active");
+    setProgress(10);
+    updateStatus("loading", "Loading...");
+
+    state.pyodide = await loadPyodide({
+      indexURL: PYODIDE_CDN,
+      stdout: (text) => console.log("[py stdout]", text),
+      stderr: (text) => console.warn("[py stderr]", text),
+    });
+
+    setStep(dom.stepRuntime, "done");
+    setProgress(45);
+
+    // Step 2: Install package via micropip
+    setStep(dom.stepInstall, "active");
+    updateStatus("loading", "Installing...");
+
+    await state.pyodide.loadPackage("micropip");
+    const micropip = state.pyodide.pyimport("micropip");
+    await micropip.install(PACKAGE_NAME);
+
+    setStep(dom.stepInstall, "done");
+    setProgress(80);
+
+    // Step 3: Import and verify
+    setStep(dom.stepReady, "active");
+    updateStatus("loading", "Finalizing...");
+
+    state.luModule = state.pyodide.pyimport("cervellaswarm_lingua_universale");
+    const version = state.luModule.__version__;
+
+    setStep(dom.stepReady, "done");
+    setProgress(100);
+
+    // Brief pause to show the "done" state
+    await new Promise(r => setTimeout(r, 450));
+
+    // Hide overlay
+    dom.loadingOverlay.classList.add("hidden");
+    setTimeout(() => { dom.loadingOverlay.style.display = "none"; }, 400);
+
+    // Enable buttons
+    state.ready = true;
+    dom.btnCheck.disabled = false;
+    dom.btnRun.disabled = false;
+
+    updateStatus("ready", "Ready  v" + version);
+
+  } catch (err) {
+    console.error("Playground init failed:", err);
+    showFatalError(err.message || String(err));
+  }
+}
+
+function showFatalError(msg) {
+  dom.errorMessage.textContent = msg;
+  dom.loadingOverlay.classList.add("hidden");
+  dom.errorOverlay.style.display = "flex";
+  updateStatus("error", "Load failed");
+}
+
+
+// ============================================================
+// MONACO EDITOR SETUP
+// ============================================================
+
+function initMonaco() {
+  return new Promise((resolve) => {
+    require.config({
+      paths: {
+        vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs",
+      },
+    });
+
+    require(["vs/editor/editor.main"], function () {
+
+      // -- Register Lingua Universale language --
+      monaco.languages.register({ id: "lingua-universale" });
+
+      // Syntax highlighting via Monarch tokenizer
+      monaco.languages.setMonarchTokensProvider("lingua-universale", {
+        defaultToken: "",
+        tokenPostfix: ".lu",
+
+        // Keywords by category
+        keywords: [
+          "type", "agent", "protocol", "record", "variant", "use",
+        ],
+        agentKeywords: [
+          "role", "trust", "accepts", "produces", "requires", "ensures",
+        ],
+        protocolKeywords: [
+          "roles", "properties",
+        ],
+        controlKeywords: [
+          "when", "decides",
+        ],
+        actionKeywords: [
+          "asks", "returns", "sends", "tells", "confirms", "proposes",
+        ],
+        connectorKeywords: [
+          "to", "do", "can", "cannot", "before", "after",
+        ],
+        propertyKeywords: [
+          "always", "terminates", "no", "deadlock", "choice", "all", "participate",
+        ],
+        trustKeywords: [
+          "trusted", "verified", "standard", "untrusted",
+        ],
+        confidenceKeywords: [
+          "Confident", "Certain", "High", "Medium", "Low", "Speculative",
+        ],
+        builtinTypes: [
+          "String", "Number", "Boolean", "Integer", "Any",
+          "List", "Map", "Set",
+        ],
+
+        tokenizer: {
+          root: [
+            // Comments: -- line
+            [/--.*$/, "comment"],
+            // Comments: # line
+            [/#.*$/, "comment"],
+
+            // Strings
+            [/"([^"\\]|\\.)*"/, "string"],
+            [/'([^'\\]|\\.)*'/, "string"],
+
+            // Numbers
+            [/\b\d+(\.\d+)?\b/, "number"],
+
+            // Optional type marker
+            [/\?/, "type.parameter"],
+
+            // Identifiers and keywords
+            [/[a-zA-Z_]\w*/, {
+              cases: {
+                "@keywords":            "keyword",
+                "@agentKeywords":       "keyword.agent",
+                "@protocolKeywords":    "keyword.protocol",
+                "@controlKeywords":     "keyword.control",
+                "@actionKeywords":      "keyword.action",
+                "@connectorKeywords":   "keyword.connector",
+                "@propertyKeywords":    "keyword.property",
+                "@trustKeywords":       "keyword.trust",
+                "@confidenceKeywords":  "keyword.confidence",
+                "@builtinTypes":        "type.builtin",
+                "@default":             "identifier",
+              },
+            }],
+
+            // Operators and punctuation
+            [/[=|:,\[\]<>()]/, "delimiter"],
+            [/>=|<=|!=|==|->|\./, "operator"],
+
+            // Whitespace
+            [/\s+/, "white"],
+          ],
+        },
+      });
+
+      // -- Token color theme --
+      monaco.editor.defineTheme("lu-dark", {
+        base: "vs-dark",
+        inherit: true,
+        rules: [
+          { token: "keyword",            foreground: "cba6f7", fontStyle: "bold" },
+          { token: "keyword.agent",      foreground: "89b4fa" },
+          { token: "keyword.protocol",   foreground: "89b4fa" },
+          { token: "keyword.control",    foreground: "f38ba8", fontStyle: "bold" },
+          { token: "keyword.action",     foreground: "a6e3a1" },
+          { token: "keyword.connector",  foreground: "74c7ec" },
+          { token: "keyword.property",   foreground: "f9e2af" },
+          { token: "keyword.trust",      foreground: "fab387" },
+          { token: "keyword.confidence", foreground: "cba6f7", fontStyle: "italic" },
+          { token: "type.builtin",       foreground: "94e2d5" },
+          { token: "type.parameter",     foreground: "f9e2af" },
+          { token: "identifier",         foreground: "cdd6f4" },
+          { token: "string",             foreground: "a6e3a1" },
+          { token: "number",             foreground: "fab387" },
+          { token: "comment",            foreground: "6c7086", fontStyle: "italic" },
+          { token: "delimiter",          foreground: "89dceb" },
+          { token: "operator",           foreground: "89dceb" },
+        ],
+        colors: {
+          "editor.background":            "#11111b",
+          "editor.foreground":            "#cdd6f4",
+          "editorLineNumber.foreground":  "#45475a",
+          "editorLineNumber.activeForeground": "#7f849c",
+          "editor.selectionBackground":   "#313244",
+          "editor.inactiveSelectionBackground": "#2a2b40",
+          "editorCursor.foreground":      "#cba6f7",
+          "editor.lineHighlightBackground": "#1e1e2e",
+          "editorIndentGuide.background1": "#2a2b40",
+          "editorIndentGuide.activeBackground1": "#45475a",
+          "scrollbarSlider.background":   "#45475a80",
+          "scrollbarSlider.hoverBackground": "#585b7080",
+          "scrollbarSlider.activeBackground": "#6c708680",
+        },
+      });
+
+      // -- Language configuration (brackets, comments, folding) --
+      monaco.languages.setLanguageConfiguration("lingua-universale", {
+        comments: {
+          lineComment: "#",
+          blockComment: ["--", ""],
+        },
+        brackets: [
+          ["{", "}"],
+          ["[", "]"],
+          ["(", ")"],
+        ],
+        autoClosingPairs: [
+          { open: "[", close: "]" },
+          { open: "(", close: ")" },
+          { open: '"', close: '"', notIn: ["string"] },
+          { open: "'", close: "'", notIn: ["string"] },
+        ],
+        surroundingPairs: [
+          { open: "[", close: "]" },
+          { open: "(", close: ")" },
+          { open: '"', close: '"' },
+          { open: "'", close: "'" },
+        ],
+        indentationRules: {
+          increaseIndentPattern: /:\s*$/,
+          decreaseIndentPattern: /^\s*(when|decides|protocol|agent|type|record|variant|properties)\b/,
+        },
+        folding: {
+          offSide: true,
+        },
+      });
+
+      // -- Autocomplete provider --
+      monaco.languages.registerCompletionItemProvider("lingua-universale", {
+        provideCompletionItems: function(model, position) {
+          const word = model.getWordUntilPosition(position);
+          const range = {
+            startLineNumber: position.lineNumber,
+            endLineNumber: position.lineNumber,
+            startColumn: word.startColumn,
+            endColumn: word.endColumn,
+          };
+
+          const snippets = [
+            {
+              label: "agent",
+              kind: monaco.languages.CompletionItemKind.Snippet,
+              documentation: "Define a new agent",
+              insertText: [
+                "agent ${1:Name}:",
+                "    role: ${2:backend}",
+                "    trust: ${3:standard}",
+                "    accepts: ${4:TaskRequest}",
+                "    produces: ${5:TaskResult}",
+                "    requires: ${6:task.well_defined}",
+                "    ensures: ${7:result.done}",
+              ].join("\n"),
+              insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+              range,
+            },
+            {
+              label: "protocol",
+              kind: monaco.languages.CompletionItemKind.Snippet,
+              documentation: "Define a protocol",
+              insertText: [
+                "protocol ${1:Name}:",
+                "    roles: ${2:alice, bob}",
+                "    ${3:alice} asks ${4:bob} to do ${5:task}",
+                "    ${4:bob} returns ${6:result} to ${3:alice}",
+                "    properties:",
+                "        always terminates",
+                "        no deadlock",
+              ].join("\n"),
+              insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+              range,
+            },
+            {
+              label: "type (variant)",
+              kind: monaco.languages.CompletionItemKind.Snippet,
+              documentation: "Define a variant type (sum type)",
+              insertText: "type ${1:Status} = ${2:Active} | ${3:Inactive}",
+              insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+              range,
+            },
+            {
+              label: "type (record)",
+              kind: monaco.languages.CompletionItemKind.Snippet,
+              documentation: "Define a record type (product type)",
+              insertText: [
+                "type ${1:Result} =",
+                "    ${2:field}: ${3:String}",
+              ].join("\n"),
+              insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+              range,
+            },
+            {
+              label: "when decides",
+              kind: monaco.languages.CompletionItemKind.Snippet,
+              documentation: "Decision branch",
+              insertText: [
+                "when ${1:agent} decides:",
+                "    ${2:approve}:",
+                "        ${3:-- action}",
+                "    ${4:reject}:",
+                "        ${5:-- action}",
+              ].join("\n"),
+              insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+              range,
+            },
+          ];
+
+          // Simple keyword completions
+          const allKeywords = [
+            "type", "agent", "protocol", "use", "record", "variant",
+            "role", "trust", "accepts", "produces", "requires", "ensures",
+            "roles", "properties", "when", "decides", "asks", "returns",
+            "sends", "tells", "confirms", "proposes", "to", "do",
+            "can", "cannot", "before", "after",
+            "always", "terminates", "no", "deadlock", "all", "participate",
+            "trusted", "verified", "standard", "untrusted",
+            "Confident", "Certain", "High", "Medium", "Low", "Speculative",
+            "String", "Number", "Boolean", "Integer", "Any",
+            "List", "Map", "Set",
+          ];
+
+          const keywords = allKeywords.map(kw => ({
+            label: kw,
+            kind: monaco.languages.CompletionItemKind.Keyword,
+            insertText: kw,
+            range,
+          }));
+
+          return { suggestions: [...snippets, ...keywords] };
+        },
+      });
+
+      // -- Create editor instance --
+      const initialExample = window.LU_EXAMPLES[0];
+      state.currentExample = initialExample.id;
+
+      state.editor = monaco.editor.create(dom.editorContainer, {
+        value: initialExample.code,
+        language: "lingua-universale",
+        theme: "lu-dark",
+        fontSize: 14,
+        fontFamily: "'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace",
+        fontLigatures: true,
+        lineNumbers: "on",
+        minimap: { enabled: true, maxColumn: 60 },
+        scrollBeyondLastLine: false,
+        automaticLayout: true,
+        tabSize: 4,
+        insertSpaces: true,
+        wordWrap: "off",
+        renderWhitespace: "selection",
+        bracketPairColorization: { enabled: true },
+        smoothScrolling: true,
+        cursorBlinking: "smooth",
+        cursorSmoothCaretAnimation: "on",
+        padding: { top: 14, bottom: 14 },
+        renderLineHighlight: "all",
+        scrollbar: {
+          verticalScrollbarSize: 6,
+          horizontalScrollbarSize: 6,
+        },
+      });
+
+      // Keyboard shortcuts
+      // Ctrl+Enter / Cmd+Enter -> Run
+      state.editor.addCommand(
+        monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
+        () => { if (state.ready && !state.running) handleRun(); }
+      );
+
+      // Ctrl+Shift+Enter -> Check
+      state.editor.addCommand(
+        monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.Enter,
+        () => { if (state.ready && !state.running) handleCheck(); }
+      );
+
+      resolve();
+    });
+  });
+}
+
+
+// ============================================================
+// EXAMPLE SELECTOR
+// ============================================================
+
+function initExampleSelector() {
+  const select = dom.exampleSelect;
+  const examples = window.LU_EXAMPLES;
+
+  examples.forEach((ex) => {
+    const opt = document.createElement("option");
+    opt.value = ex.id;
+    opt.textContent = ex.label + " — " + ex.description;
+    select.appendChild(opt);
+  });
+
+  // Select first example
+  select.value = examples[0].id;
+
+  select.addEventListener("change", () => {
+    const id = select.value;
+    if (!id) return;
+    const ex = examples.find(e => e.id === id);
+    if (!ex) return;
+    state.currentExample = ex.id;
+    state.editor.setValue(ex.code);
+    dom.editorInfo.textContent = ex.id + ".lu";
+    clearOutput();
+  });
+}
+
+
+// ============================================================
+// CLEAR OUTPUT
+// ============================================================
+
+function clearOutput() {
+  dom.outputArea.innerHTML = "";
+  dom.outputArea.appendChild(dom.outputEmpty);
+  dom.outputEmpty.style.display = "";
+  dom.outputTiming.textContent = "";
+}
+
+
+// ============================================================
+// OUTPUT RENDERING
+// ============================================================
+
+function renderOutput(result, mode, elapsed) {
+  // Clear previous output
+  dom.outputArea.innerHTML = "";
+
+  const container = document.createElement("div");
+  container.className = "result-block";
+
+  if (result.ok) {
+    renderSuccess(container, result, mode);
+  } else {
+    renderError(container, result);
+  }
+
+  dom.outputArea.appendChild(container);
+  dom.outputTiming.textContent = elapsed + "ms";
+}
+
+function renderSuccess(container, result, mode) {
+  // Header
+  const header = document.createElement("div");
+  header.className = "result-header";
+
+  const icon = document.createElement("div");
+  icon.className = "result-icon ok";
+  icon.textContent = "✓";
+
+  const title = document.createElement("div");
+  title.className = "result-title ok";
+  title.textContent = mode === "check"
+    ? "Valid LU code!"
+    : "Executed successfully!";
+
+  header.appendChild(icon);
+  header.appendChild(title);
+  container.appendChild(header);
+
+  // Stats chips
+  if (result.compiled) {
+    const compiled = result.compiled;
+    const stats = document.createElement("div");
+    stats.className = "stats-grid";
+
+    const makeChip = (label, count) => {
+      const chip = document.createElement("div");
+      chip.className = "stat-chip";
+      chip.innerHTML = `<span class="stat-num">${count}</span> ${label}`;
+      return chip;
+    };
+
+    try {
+      const types     = compiled.types     ? Array.from(compiled.types).length     : 0;
+      const agents    = compiled.agents    ? Array.from(compiled.agents).length    : 0;
+      const protocols = compiled.protocols ? Array.from(compiled.protocols).length : 0;
+      const imports   = compiled.imports   ? Array.from(compiled.imports).length   : 0;
+
+      if (types     > 0) stats.appendChild(makeChip(types     === 1 ? "type defined"     : "types defined",     types));
+      if (agents    > 0) stats.appendChild(makeChip(agents    === 1 ? "agent defined"    : "agents defined",    agents));
+      if (protocols > 0) stats.appendChild(makeChip(protocols === 1 ? "protocol defined" : "protocols defined", protocols));
+      if (imports   > 0) stats.appendChild(makeChip(imports   === 1 ? "import"           : "imports",           imports));
+
+      if (stats.children.length > 0) {
+        container.appendChild(stats);
+      }
+    } catch (e) {
+      // Stats extraction failed silently -- non-critical
+      console.warn("Stats extraction:", e);
+    }
+  }
+
+  // Module attributes (run mode only)
+  if (mode === "run" && result.module) {
+    try {
+      const modSection = document.createElement("div");
+      modSection.className = "module-section";
+
+      const modTitle = document.createElement("div");
+      modTitle.className = "module-section-title";
+      modTitle.textContent = "Module exports";
+      modSection.appendChild(modTitle);
+
+      const attrsDiv = document.createElement("div");
+      attrsDiv.className = "module-attrs";
+
+      const mod = result.module;
+      // Get __all__ if available, or dir() filtered
+      let names = [];
+      try {
+        const allAttr = mod.__all__;
+        if (allAttr) {
+          names = Array.from(allAttr.toJs ? allAttr.toJs() : allAttr);
+        }
+      } catch (_) {}
+
+      if (names.length === 0) {
+        // Fall back to dir() minus private
+        try {
+          const dirResult = state.pyodide.runPython(`
+import cervellaswarm_lingua_universale as _m
+[n for n in dir(_m) if not n.startswith('_')]
+`);
+          names = dirResult.toJs();
+        } catch (_) {}
+      }
+
+      // Show first 8 meaningful attrs
+      const display = names.slice(0, 8);
+      if (display.length > 0) {
+        display.forEach(name => {
+          try {
+            const val = mod[name];
+            if (val === undefined || val === null) return;
+            const row = document.createElement("div");
+            row.className = "module-attr";
+            row.innerHTML = `
+              <span class="module-attr-key">${escHtml(name)}</span>
+              <span class="module-attr-val">${escHtml(String(val).substring(0, 80))}</span>
+            `;
+            attrsDiv.appendChild(row);
+          } catch (_) {}
+        });
+
+        if (names.length > 8) {
+          const more = document.createElement("div");
+          more.className = "module-attr";
+          more.style.color = "var(--text-muted)";
+          more.style.fontFamily = "var(--font-ui)";
+          more.innerHTML = `<span>... and ${names.length - 8} more exports</span>`;
+          attrsDiv.appendChild(more);
+        }
+
+        modSection.appendChild(attrsDiv);
+        container.appendChild(modSection);
+      }
+    } catch (e) {
+      console.warn("Module attrs:", e);
+    }
+  }
+
+  // Generated Python (collapsible)
+  if (result.python_source) {
+    const pySection = document.createElement("div");
+    pySection.className = "python-section";
+
+    const toggle = document.createElement("div");
+    toggle.className = "python-toggle";
+    toggle.setAttribute("role", "button");
+    toggle.setAttribute("tabindex", "0");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.innerHTML = `<span class="toggle-arrow">&#x25B6;</span> Generated Python`;
+
+    const codeDiv = document.createElement("div");
+    codeDiv.className = "python-code";
+    const code = document.createElement("code");
+    code.textContent = result.python_source;
+    codeDiv.appendChild(code);
+
+    toggle.addEventListener("click", () => {
+      const isOpen = codeDiv.classList.toggle("visible");
+      toggle.classList.toggle("open", isOpen);
+      toggle.setAttribute("aria-expanded", String(isOpen));
+    });
+    toggle.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggle.click();
+      }
+    });
+
+    pySection.appendChild(toggle);
+    pySection.appendChild(codeDiv);
+    container.appendChild(pySection);
+  }
+}
+
+function renderError(container, result) {
+  // Header
+  const header = document.createElement("div");
+  header.className = "result-header";
+
+  const icon = document.createElement("div");
+  icon.className = "result-icon err";
+  icon.textContent = "✗";
+
+  const title = document.createElement("div");
+  title.className = "result-title err";
+  title.textContent = "Error found";
+
+  header.appendChild(icon);
+  header.appendChild(title);
+  container.appendChild(header);
+
+  // Error list
+  const list = document.createElement("div");
+  list.className = "error-list";
+
+  const errors = result.errors;
+  let errArr = [];
+  try {
+    // errors might be a Pyodide Proxy (list)
+    if (errors && errors.toJs) {
+      errArr = errors.toJs();
+    } else if (Array.isArray(errors)) {
+      errArr = errors;
+    } else {
+      errArr = [String(errors)];
+    }
+  } catch (_) {
+    errArr = [String(errors)];
+  }
+
+  if (errArr.length === 0) {
+    errArr = ["Unknown error"];
+  }
+
+  errArr.forEach(msg => {
+    const item = document.createElement("div");
+    item.className = "error-item";
+    item.setAttribute("role", "alert");
+    item.textContent = String(msg);
+    list.appendChild(item);
+  });
+
+  container.appendChild(list);
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+
+// ============================================================
+// CHECK & RUN HANDLERS
+// ============================================================
+
+async function handleCheck() {
+  if (!state.ready || state.running) return;
+  await execLU("check");
+}
+
+async function handleRun() {
+  if (!state.ready || state.running) return;
+  await execLU("run");
+}
+
+async function execLU(mode) {
+  state.running = true;
+  dom.btnCheck.disabled = true;
+  dom.btnRun.disabled = true;
+
+  const source = state.editor.getValue();
+  const t0 = performance.now();
+
+  try {
+    let result;
+
+    if (mode === "check") {
+      // call check_source(source) -> EvalResult
+      result = await state.pyodide.runPythonAsync(`
+from cervellaswarm_lingua_universale import check_source as _cs
+_r = _cs(${JSON.stringify(source)})
+_r
+`);
+    } else {
+      // call run_source(source) -> EvalResult
+      result = await state.pyodide.runPythonAsync(`
+from cervellaswarm_lingua_universale import run_source as _rs
+_r = _rs(${JSON.stringify(source)})
+_r
+`);
+    }
+
+    const elapsed = Math.round(performance.now() - t0);
+
+    // Build a plain-JS result object from the Python proxy
+    const resultObj = extractResult(result);
+    renderOutput(resultObj, mode, elapsed);
+
+    // Cleanup proxy
+    if (result && result.destroy) result.destroy();
+
+  } catch (err) {
+    const elapsed = Math.round(performance.now() - t0);
+    console.error("execLU error:", err);
+    renderOutput(
+      { ok: false, errors: [err.message || String(err)], compiled: null, python_source: null, module: null },
+      mode,
+      elapsed
+    );
+  } finally {
+    state.running = false;
+    dom.btnCheck.disabled = false;
+    dom.btnRun.disabled = false;
+  }
+}
+
+/**
+ * Extract a plain JS object from a Pyodide EvalResult proxy.
+ * Avoids holding proxy references longer than needed.
+ */
+function extractResult(proxy) {
+  if (!proxy) return { ok: false, errors: ["No result returned"], compiled: null, python_source: null, module: null };
+
+  try {
+    const ok = Boolean(proxy.ok);
+    let errors = [];
+    let python_source = null;
+    let compiled = null;
+    let module = null;
+
+    // errors
+    try {
+      const rawErrors = proxy.errors;
+      if (rawErrors && rawErrors.toJs) {
+        errors = rawErrors.toJs();
+      } else if (rawErrors) {
+        errors = [String(rawErrors)];
+      }
+    } catch (_) {}
+
+    // python_source
+    try {
+      const ps = proxy.python_source;
+      python_source = ps ? String(ps) : null;
+    } catch (_) {}
+
+    // compiled (we keep the proxy for stats, extracted lazily in renderSuccess)
+    try {
+      compiled = proxy.compiled;
+    } catch (_) {}
+
+    // module (for run mode)
+    try {
+      module = proxy.module;
+    } catch (_) {}
+
+    return { ok, errors, python_source, compiled, module };
+  } catch (e) {
+    return { ok: false, errors: [String(e)], compiled: null, python_source: null, module: null };
+  }
+}
+
+
+// ============================================================
+// BUTTON HANDLERS
+// ============================================================
+
+dom.btnCheck.addEventListener("click", handleCheck);
+dom.btnRun.addEventListener("click", handleRun);
+
+dom.btnClear.addEventListener("click", () => {
+  if (!state.editor) return;
+  state.editor.setValue("");
+  dom.exampleSelect.value = "";
+  dom.editorInfo.textContent = "untitled.lu";
+  clearOutput();
+  state.editor.focus();
+});
+
+
+// ============================================================
+// RESIZE HANDLE (drag to resize split)
+// ============================================================
+
+(function initResize() {
+  const handle = dom.resizeHandle;
+  const editorPane = dom.editorPane;
+  const main = $("main");
+  let dragging = false;
+  let startX = 0;
+  let startWidth = 0;
+
+  handle.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    dragging = true;
+    startX = e.clientX;
+    startWidth = editorPane.getBoundingClientRect().width;
+    handle.classList.add("dragging");
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!dragging) return;
+    const mainW = main.getBoundingClientRect().width;
+    const delta = e.clientX - startX;
+    const newW = Math.max(200, Math.min(mainW - 200, startWidth + delta));
+    editorPane.style.width = newW + "px";
+  });
+
+  document.addEventListener("mouseup", () => {
+    if (!dragging) return;
+    dragging = false;
+    handle.classList.remove("dragging");
+    document.body.style.cursor = "";
+    document.body.style.userSelect = "";
+  });
+
+  // Keyboard: Arrow keys on focused handle
+  handle.addEventListener("keydown", (e) => {
+    const mainW = main.getBoundingClientRect().width;
+    const currentW = editorPane.getBoundingClientRect().width;
+    let step = 20;
+    if (e.key === "ArrowLeft") {
+      editorPane.style.width = Math.max(200, currentW - step) + "px";
+      e.preventDefault();
+    } else if (e.key === "ArrowRight") {
+      editorPane.style.width = Math.min(mainW - 200, currentW + step) + "px";
+      e.preventDefault();
+    }
+  });
+})();
+
+
+// ============================================================
+// WINDOW RESIZE: re-layout editor
+// ============================================================
+
+window.addEventListener("resize", () => {
+  if (state.editor) {
+    state.editor.layout();
+  }
+});
+
+
+// ============================================================
+// BOOT SEQUENCE
+// ============================================================
+
+(async function boot() {
+  // 1. Init Monaco (synchronous require, but wrapped in promise)
+  await initMonaco();
+
+  // 2. Populate example selector
+  initExampleSelector();
+
+  // 3. Start Pyodide load (async, shows loading overlay)
+  initPyodide();
+})();
+
+</script>
+</body>
+</html>
