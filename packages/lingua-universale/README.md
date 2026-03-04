@@ -120,7 +120,7 @@ lu lsp
 
 ## Features
 
-- **26 modules**, 131 public API symbols
+- **25 modules**, 131 public API symbols
 - **2828 tests**, 98% coverage, runs in under 1 second
 - **Zero dependencies** -- pure Python standard library
 - **Python 3.10+** including 3.13 free-threaded (thread-safe internals)
@@ -132,7 +132,7 @@ lu lsp
 ## Architecture
 
 ```
-Lingua Universale v0.2.0 -- 26 modules, zero dependencies
+Lingua Universale v0.2.0 -- 25 modules, zero dependencies
 
 FASE A: Session Types
   types.py           14 MessageKind, 14 message dataclasses, 17 AgentRole

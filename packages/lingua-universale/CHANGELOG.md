@@ -33,7 +33,7 @@ This project follows [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
-- **Module count**: 14 -> 26 modules
+- **Module count**: 14 -> 25 modules
 - **Public symbols**: 110 -> 131 symbols exported via `__init__.py`
 - **Test count**: 1820 -> 2828 tests, 98% coverage maintained
 - **Package description**: updated from "session types library" to reflect the full programming language (tokenizer, parser, compiler, REPL, CLI, LSP)

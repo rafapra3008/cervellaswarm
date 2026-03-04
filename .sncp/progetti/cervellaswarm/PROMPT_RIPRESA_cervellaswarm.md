@@ -24,7 +24,7 @@
 ### 2. Organizza la Casa v0.2.0 -- Step 1-3 FATTI
 - **Step 1 DONE:** pyproject.toml + __init__.py bumped a 0.2.0
 - **Step 2 DONE:** CHANGELOG [0.2.0] con 12 moduli nuovi documentati
-- **Step 3 DONE:** README riscritto (26 moduli, 131 symbols, 2828 test)
+- **Step 3 DONE:** README riscritto (25 moduli, 131 symbols, 2828 test)
 - **Guardiana:** 9.3/10 | Fix P2 symbol count (124->131) applicato
 - **Commit:** `50eba284`
 
@@ -60,7 +60,7 @@ LINGUAGGIO CERVELLASWARM:
 ### Step 4: Test + Build (~5 min)
 - `cd packages/lingua-universale && pytest` -- confermare 2828 test PASS
 - `python -m build` -- generare wheel v0.2.0
-- Verificare: wheel contiene tutti 27 file .py (26 moduli + __init__.py)
+- Verificare: wheel contiene tutti 27 file .py (25 moduli + __init__.py)
 
 ### Step 5: Pubblica su PyPI (~5 min)
 - Trusted Publisher via GitHub Actions (gia configurato)
@@ -113,17 +113,25 @@ LINGUAGGIO CERVELLASWARM:
 
 ---
 
-## AUTO-CHECKPOINT: 2026-02-28 23:16 (unknown)
+---
+
+---
+
+---
+
+---
+
+## AUTO-CHECKPOINT: 2026-03-03 20:33 (unknown)
 
 ### Stato Git
 - **Branch**: main
 - **Ultimo commit**: 0d362127 - S428: Checkpoint -- PROMPT_RIPRESA aggiornato con handoff completo
 - **File modificati** (5):
-  - coverage
+  - .coverage
+  - .playwright-mcp/console-2026-02-28T18-02-07-763Z.log
+  - .playwright-mcp/console-2026-02-28T18-02-41-388Z.log
   - .sncp/PROMPT_RIPRESA_MASTER.md
-  - .sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md
-  - .sncp/progetti/miracollo/bracci/miracallook/stato.md
-  - .sncp/progetti/miracollo/bracci/pms-core/NORD_PMS-CORE.md
+  - .sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
 
 ### Note
 - Checkpoint automatico generato da hook
