@@ -6,6 +6,8 @@
   <title>Lingua Universale Playground</title>
   <meta name="description" content="Try Lingua Universale in your browser — no install required. Write AI agent protocols in seconds." />
 
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
   <!-- Monaco Editor loader -->
   <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs/loader.js"></script>
 
@@ -1510,7 +1512,7 @@ function initMonaco() {
       monaco.languages.setLanguageConfiguration("lingua-universale", {
         comments: {
           lineComment: "#",
-          blockComment: ["--", ""],
+          // LU uses # for line comments only, no block comments
         },
         brackets: [
           ["{", "}"],

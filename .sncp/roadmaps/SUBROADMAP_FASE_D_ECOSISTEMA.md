@@ -200,12 +200,12 @@ await pyodide.runPython(`
 **Costo:** $0 (GitHub Pages statico, Pyodide via CDN)
 
 **Criterio completamento:**
-- [ ] Pagina HTML con Monaco Editor + Pyodide
-- [ ] Carica e esegue codice .lu nel browser
-- [ ] Mostra errori formattati
-- [ ] Deploy su GitHub Pages
+- [x] Pagina HTML con Monaco Editor + Pyodide (S427)
+- [x] Carica e esegue codice .lu nel browser (S429, v0.2.0)
+- [x] Mostra errori formattati (S427)
+- [x] Deploy su GitHub Pages (S429, deploy-playground.yml)
 - [ ] "Try it now" link nella README
-- [ ] Guardiana verifica 9.5/10
+- [ ] Guardiana verifica 9.5/10 (audit in corso S430)
 
 ---
 
@@ -291,9 +291,9 @@ FASE D2: LSP Base (lu lsp)           [####################] DONE (S426, 9.5/10)
   pygls + diagnostics in tempo reale   1 sessione! (con D1)
   VS Code collegato al server
 
-FASE D3: Playground Online            [####................] BLOCCATO
-  Monaco + Pyodide + GitHub Pages      playground/ costruito (S427)
-  BLOCCO: PyPI v0.1.1 manca Fase C    Serve v0.2.0 (SUBROADMAP_ORGANIZZA_CASA)
+FASE D3: Playground Online            [####################] DONE (S429, LIVE!)
+  Monaco + Pyodide + GitHub Pages      v0.2.0 su PyPI, deploy automatico
+  URL: https://rafapra3008.github.io/cervellaswarm/
   "Try it in 30 seconds"
 
 FASE D4: "A Tour of LU"              [....................] TODO
