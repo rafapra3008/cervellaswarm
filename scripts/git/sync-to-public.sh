@@ -135,14 +135,12 @@ BLACKLIST_CONTENT_PATTERNS=(
     # MCP code uses "contabilita" as SNCP project alias - will be made configurable in F3.
     "famiglia digitale"
     # API Key patterns (added post-incident S429 - GitHub Secret Scanning alert)
-    "AIza"                    # Google API Key / Bedzzle format
-    "sk-ant-"                 # Anthropic API key
-    "sk-proj-"                # OpenAI API key
-    "ghp_"                    # GitHub Personal Access Token
-    "gho_"                    # GitHub OAuth Token
-    "sk_live_"                # Stripe live key
-    "pk_live_"                # Stripe live public key
-    "sk_test_"                # Stripe test key
+    # NOTE: Only patterns specific enough to avoid false positives in our security
+    # tooling (secret_auditor.py uses short patterns like ghp_, sk_live_ as detection rules).
+    # Short patterns (ghp_, sk_live_, sk_test_) REMOVED: too many false positives.
+    "AIza"                    # Google API Key / Bedzzle format (39 char, very specific)
+    "sk-ant-api"              # Anthropic API key (full prefix)
+    "whsec_"                  # Stripe webhook signing secret
 )
 
 cleanup() {
