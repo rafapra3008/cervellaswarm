@@ -2,7 +2,7 @@
 # =============================================================================
 # sync-to-public.sh - Safe sync from private repo to public
 # =============================================================================
-# Version: 3.3.0 (S400 - Worktree cleanup, .git/.example exclusion, --no-verify push)
+# Version: 3.4.0 (S429 - API key patterns added to BLACKLIST_CONTENT_PATTERNS)
 #
 # HOW IT WORKS:
 # 1. Creates temporary worktree from public/main
@@ -134,6 +134,15 @@ BLACKLIST_CONTENT_PATTERNS=(
     # "ContabilitaAntigravity" (above) already catches the private repo name.
     # MCP code uses "contabilita" as SNCP project alias - will be made configurable in F3.
     "famiglia digitale"
+    # API Key patterns (added post-incident S429 - GitHub Secret Scanning alert)
+    "AIza"                    # Google API Key / Bedzzle format
+    "sk-ant-"                 # Anthropic API key
+    "sk-proj-"                # OpenAI API key
+    "ghp_"                    # GitHub Personal Access Token
+    "gho_"                    # GitHub OAuth Token
+    "sk_live_"                # Stripe live key
+    "pk_live_"                # Stripe live public key
+    "sk_test_"                # Stripe test key
 )
 
 cleanup() {
