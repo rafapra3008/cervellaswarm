@@ -1,39 +1,37 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-06 - Sessione 432
-> **STATUS:** S431 Migliora Casa + S432 Backlog Fix COMPLETATI. D5 LSP Avanzato PROSSIMO.
+> **Ultimo aggiornamento:** 2026-03-06 - Sessione 433
+> **STATUS:** S433 Migliora Casa v2 IN CORSO. D5 LSP Avanzato PROSSIMO.
 
 ---
 
-## SESSIONE 432 - Backlog Fix & Audit Finale
+## SESSIONE 433 - Migliora Casa v2
 
 ### Cosa e successo
-Completamento pendenze S431 + fix di tutto il backlog P2/P3. Due audit Guardiana (9.3/10 + 9.6/10).
+Ispezione completa del sistema + miglioramenti infrastruttura + Dependabot triage.
 
-### Fix applicati S432
-- **P2: bash_validator bypass $() e backtick** -- extract_subcommands + 18 nuovi test (76 totali)
-- **P3: git_reminder state file crescita infinita** -- max 20 entries con prune automatico
-- **P3: pre_compact_save `|` separator fragile** -- usa `%x00` null byte (sicuro)
-- **P3: context-monitor PROJECT_MAPPING solo 3 progetti** -- universale (6 progetti)
-- **P3: context-monitor 6x bare except** -- `except Exception:`
-- **P3: hook_debug.log 33MB senza rotation** -- rotation 5MB + troncato a 2MB
-- **P2: PROMPT_RIPRESA_MASTER data TL;DR stale** -- aggiornato 2026-03-06
-- **P3: NORD.md "Febbraio" -> "Marzo 2026"**
-- **P3: daily_memory_loader.py.backup residuo rimosso**
-- **INFO: 32 report obsoleti eliminati** (Gen/Feb 2026)
+### Fix applicati S433
+- **Status bar v2.0** -- context-monitor.py riscritto da zero (JSON nativo Claude Code)
+  - Mostra: CTX:XX% + modello + costo + progetto
+  - Fix Guardiana: sentinel _MISSING, from __future__ import annotations, __version__
+  - File: `~/.claude/scripts/context-monitor.py`
+- **2 .pyc orfani rimossi** (test_repo_mapper, test_symbol_extractor)
+- **2 .pyc tracked rimossi da git** (backend_properties_api, greeting)
+- **settings.json.backup rimosso** (stale, 4 Gen 2026)
+- **Path test corretto** nel PROMPT_RIPRESA (packages/agent-hooks/tests/)
+- **11/20 Dependabot PR mergiate** (5 Actions + 3 minor + 3 dev deps)
+- **MCP connectors** Gmail + Calendar autenticati, Notion disabilitato
+- **Thinking budget** impostato a High
 
-### Fix S431 (committati insieme)
-- P1: DB swarm_events CREATE TABLE + WAL mode
-- P1: update_prompt_ripresa marker HTML univoci
-- P1: memory_flush_auto duplicato rimosso
-- P2: PROJECT_MAPPING universale (7 hook, 6 progetti)
-- P2: post_commit_engineer async + timeout 55s
-- BUG: db.py Python 3.9 compat (weekly_retro funziona)
-- subagent_stop v2.0 su 3 repos
+### Dependabot: 9 major PR ancora aperte
+- ALTO: @anthropic-ai/sdk 0.39->0.75, zod 3->4, express 4->5, stripe 17->20
+- MEDIO: express-rate-limit 7->8, conf 13->15
+- BASSO: open 10->11, ora 8->9, commander 12->14
+- Strategia: sessione dedicata con test per batch
 
-### Audit Guardiana
-- MC7.4 audit S431: **9.3/10** APPROVED
-- MC7 Bug Hunt audit: **9.6/10** APPROVED
+### Audit Guardiana S433
+- context-monitor.py v2: **9.3/10** APPROVED (fix applicati)
+- Audit finale S433: **9.5/10** APPROVED
 
 ---
 
@@ -51,6 +49,7 @@ LINGUAGGIO CERVELLASWARM:
 
   Migliora Casa (S431)        [####################] COMPLETATA!
   Backlog Fix (S432)          [####################] COMPLETATA!
+  Migliora Casa v2 (S433)    [##################..] IN CORSO
 ```
 
 ---
@@ -68,31 +67,37 @@ LINGUAGGIO CERVELLASWARM:
 - Attivare 2FA GitHub (SCADUTO 6 Marzo!)
 - Ruotare Bedzzle key su MyReception
 
+### BACKLOG per sessione futura
+- 9 Dependabot major PR (serve test suite per ogni batch)
+- F5: centralizzare PROJECT_MAPPING (7 file duplicano lo stesso mapping)
+- F6: test automatizzati per context-monitor.py
+
 ---
 
 ## I NUMERI TOTALI
 
 | Metrica | Valore |
 |---------|--------|
-| Test agent-hooks | **253** (era 235) |
+| Test agent-hooks | **253** (packages/agent-hooks/tests/) |
 | Test totali LU | **2856** |
-| Fix S431+S432 | **24** totali |
-| Audit Guardiana | **4** (2 S431 + 2 S432) |
+| Fix S431+S432+S433 | **24 + 8** totali |
+| Audit Guardiana | **5+** (2 S431 + 2 S432 + 1+ S433) |
+| Dependabot mergiate | **11/20** |
 
 ---
 
-## Lezioni Apprese (S432)
+## Lezioni Apprese (S433)
 
 ### Cosa ha funzionato bene
-- **Backlog sistematico** -- completare TUTTO il backlog in una sessione dedicata
 - **Guardiana in background** -- audit corre mentre si lavora, zero tempo perso
-- **hook_debug.log scoperto a 33MB** -- il rotation avrebbe dovuto esserci dal giorno 1
+- **Researcher per status bar** -- scoperto JSON nativo di Claude Code che ignoravamo
+- **Ops autonoma su Dependabot** -- 11 PR mergiate senza intervento manuale
 
 ### Cosa non ha funzionato
-- **Commit S431 mai fatto** -- la sessione precedente e finita senza commit (auto-compact)
+- **Niente di grave** -- sessione fluida
 
 ### Pattern candidato
-- **"Commit PRIMA di auto-compact"** -- se context > 70%, fare commit preventivo
+- **"Ricerca PRIMA di riscrivere"** -- la Researcher ha scoperto dati JSON che non sapevamo esistessero, evitando reinvenzione
 
 ---
 

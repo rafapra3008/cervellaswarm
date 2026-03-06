@@ -1,99 +1,98 @@
 # PROMPT RIPRESA - Contabilita Antigravity
 
-> **Ultimo aggiornamento:** 3 Marzo 2026 - Sessione 268 (SPRING-019 Step 1-2 backend + audit piano)
+> **Ultimo aggiornamento:** 6 Marzo 2026 - Sessione 287 (SPRING-014 HP ATTIVATO!)
 > **Versione canonica:** `CervellaSwarm/.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md`
 
-## Quick Status S268
+## Quick Status S287
 
 | Cosa | Stato |
 |------|-------|
 | **Produzione MAIN** | **V3 LIVE v1.16.1 su contabilitafamigliapra.it** |
-| **SPRING-019** | **IN PROGRESS - Step 1-2 DONE, Step 3-9 TODO** |
-| **Test** | **2335 portale + 362 agent + 298 verify = 2995 totali** |
-| **MAPPA** | **`docs/MAPPA_MIGLIORAMENTI_S262.md` - 20 item (13 TODO, 1 IN_PROGRESS, 1 BLOCCATO, 5 DONE)** |
-| **Piano** | **`docs/PLAN_SPRING_019_MATCHING_MANUALE.md` - aggiornato con decisioni S268** |
+| **DEPLOY PENDENTI** | **ZERO** |
+| **MAPPA** | **`docs/MAPPA_MIGLIORAMENTI_S262.md` - 32 item, 3 TODO, 0 BLOCCATI, 29 DONE** |
+| **Test** | **111/111 verify PASS + 3264 totali** |
+| **SPRING HP** | **ATTIVO! Tutti e 3 hotel: NL+SHE+HP** |
 
-## Cosa Ha Fatto S268
+## Cosa Ha Fatto S287
 
-### Audit piano SPRING-019 (2 Cervelle in parallelo)
-- **Guardiana Qualita: 9.1/10** APPROVED w/riserve
-  - F1 P1: specifica `conferma_annullamento_manuale()` - RISOLTO (decisione architetturale presa)
-  - F2 P1: "Segna Parziale" non definito - RISOLTO (caparra resta attiva, solo RES collegata)
-  - F7 P2: formato response cambiato - RISOLTO (backward compat con campo `coppie`)
-  - F13 P3: `event-delegation.js` mancava dalla lista file - AGGIUNTO
-  - 5 P2 + 6 P3 documentati nel piano (sezione 4b)
-- **Guardiana Ops: 8.5/10** APPROVED con condizioni
-  - GO-S019-001 P2: caparra annullata prima di SPRING - RISOLTO (per parziali la caparra resta attiva)
-  - GO-S019-003 P3: stato DB per parziali - RISOLTO (decisione Rafa: caparra resta attiva)
-  - Deploy: 6 file VM, singolo batch, snapshot obbligatorio, ZERO impatto SPRING pipeline
+### SPRING-014: HP ATTIVATO! (Accordo DIAMANTE completato)
 
-### Decisione architetturale chiave (confermata da Rafa)
-**Due percorsi per annullamento manuale:**
-1. **Annullamento completo** (|importo| uguali): caparra → annullata, RES → ref_id (come esistente, senza vincolo nome)
-2. **Collegamento parziale** (importi diversi): caparra RESTA ATTIVA, solo RES → ref_id. Perche: i 975 EUR residui devono ancora matchare un GIR.
+Rafa ha presentato a Sig. Sergio con successo. HP sbloccato!
 
-### Step 1: extract_booking_info() - DONE
-- Funzione statica in `TransactionsMixin` per parsing nome caparra
-- Regex: `^(NL|HP|SHE)\s+(\d+)\s` -> hotel, booking_id, guest_name, circuito
-- **16 test PASS** (standard NL/SHE/HP, No Show, eccezioni SHE, dati reali)
-- File: `backend/database/transactions.py` riga 1359
+**7 file modificati:**
+1. `agent/scripts/spring_pipeline_hp.bat` v1.4.0 -> v1.5.0: HP decommentato (NL+SHE+HP)
+2. `scripts/spring_verify.py`: ACTIVE_HOTELS = ["NL", "SHE", "HP"]
+3. `agent/scripts/spring_verify_hp.bat`: header doc aggiornato (+ERICSOFT_API_KEY_HP)
+4. `tests/test_spring_verify.py`: test invertito (HP DEVE essere in ACTIVE_HOTELS)
+5. `scripts/verify_spring_verify_setup.py`: HP key ora REQUIRED
+6. `scripts/verify_spring_setup.py`: HP key ora REQUIRED
+7. `docs/MAPPA_MIGLIORAMENTI_S262.md`: SPRING-014 DONE, SCHED-003 DONE
 
-### Step 2: get_coppie_annullamento() esteso - DONE
-- Ritorna Dict con 4 chiavi: `exact`, `suggested`, `orphans`, `coppie` (backward compat)
-- PASS 1: match esatto nome+importo (come SPRING-018)
-- PASS 2: match per booking ID (LIKE query: `NL 6667 %`)
-- `_build_orphan_dict()` helper per RES senza match
-- Router aggiornato: response include `exact/suggested/orphans/count_suggested/count_orphans`
-- **7 nuovi test** (booking ID match, parziale, metodo diverso, orphan, priorita, mix)
-- **57/57 test PASS** (tutti annullamento + SPRING-018 + SPRING-019, zero regressioni)
-- File: `backend/database/transactions.py` + `backend/routers/transactions.py`
+**Deploy HPTERMINAL01 (2 file):**
+- `spring_pipeline_hp.bat` -> `C:\contabilita-agent\` (sovrascrive)
+- `spring_verify.py` -> `C:\contabilita-agent\scripts\` (sovrascrive)
+- `__pycache__` pulito
+- Dry-run HP: 0 doc (corretto: Rafa ha inserito manualmente)
+- Verify HP: 6 ERROR attesi (delta manuali vs V3, si normalizzeranno)
 
-## Prossimi Step
+**Audit Guardiana:**
+- Pre-edit: 9.5/10 APPROVED
+- Post-edit: 9.0/10 -> tutti finding fixati (1 P1 test rotto + 5 P2 stale refs)
+- Test: 111/111 PASS
 
-### PRIORITA #1: SPRING-019 Implementazione (Step 3-9 restanti, ~11h)
-Piano dettagliato in `docs/PLAN_SPRING_019_MATCHING_MANUALE.md` (sezione 4b aggiornata S268).
+### SCHED-003: HP Autonomo - DONE (incluso in SPRING-014)
+Task Scheduler 15:00 pipeline + 16:00 verify includeranno HP automaticamente.
 
-| Step | Cosa | Stato |
-|------|------|:-----:|
-| 1 | `extract_booking_info()` + 16 test | **DONE S268** |
-| 2 | `get_coppie_annullamento()` esteso + 7 test + router | **DONE S268** |
-| 3 | Endpoint `cerca-candidati` + test | TODO |
-| 4 | `conferma_annullamento_manuale()` + `ripristina_collegamento()` + endpoint + test | TODO |
-| 5 | Frontend: pannello esteso (sezione "da collegare") | TODO |
-| 6 | Frontend: espansione inline sotto RES orfana | TODO |
-| 7 | Frontend: ricerca caparra + collegamento | TODO |
-| 8 | CSS + dark mode + accessibilita + event-delegation.js | TODO |
-| 9 | Test integrazione + audit Guardiana | TODO |
+### Docs aggiornati
+- MAPPA: SPRING-014 DONE, SCHED-003 DONE, contatori 4/0/0/28
+- NORD.md: HP attivo, bat v1.5.0, ZERO bloccati
+- FORTEZZA_MODE_SERVERS.md: HP ATTIVO nella tabella hotel
+- CLAUDE.md: bat v1.5.0
 
-**Prossimo step: Step 3** (endpoint cerca-candidati). Backend-first, frontend dopo.
+## PROSSIMI STEP (S288)
 
-### File da deployare VM (quando tutto DONE):
-1. `backend/database/transactions.py`
-2. `backend/routers/transactions.py`
-3. `frontend/js/annullamenti.js`
-4. `frontend/js/data.js`
-5. `frontend/js/event-delegation.js`
-6. `frontend/css/style.css`
-
-### Dopo SPRING-019
-1. **QC-004** (P2, 2-3h): test per telegram_notifier e scheduler
-2. **AGENT-005** (P3, 30 min): pulizia file duplicati/vecchi sui PC hotel
-3. **MON-003~005** (P3): backup DB audit, pipeline 0-doc, scheduler HC.io
+1. **Monitorare primo run automatico HP** (oggi 15:00 pipeline + 16:00 verify) - verificare Telegram
+2. **Verify HP delta attesi**: 6 ERROR (inserimenti manuali vs V3). Si normalizzeranno quando pipeline prende il controllo.
+3. **Migration 2 record storici SHE** `CARTA DI CREDITO` -> `CARTA` (408 EUR) - decisione Rafa: flusso naturale agente
+4. **SPRING-015**: Dashboard SPRING status nel portale (P3)
+5. **QC-003**: File grandi candidati a split (P3)
+6. **IDEA-004 Step 11**: Home Rafa VM (~2.8G) - serve decisione
 
 ## Bloccato
 
-1. **SPRING-014** HP attivazione - accordo DIAMANTE Sig. Sergio
+**NESSUNO!** Tutti gli item sono sbloccati.
 
-## Lezioni Apprese (Sessione 268)
+## Lezioni Apprese (Sessione 287)
 
 ### Cosa ha funzionato bene
-- **Audit piano PRIMA di implementare**: 2 Guardiane in parallelo, 2 P1 trovati e risolti subito. Senza audit, avremmo implementato "Segna Parziale" senza sapere cosa fa nel DB.
-- **Decisione architetturale chiara**: Due percorsi (completo vs parziale) con logica contabile chiara. Rafa ha confermato immediatamente.
-- **Step 1+2 backend puliti**: 57/57 test, zero regressioni, backward compat mantenuto.
+- **3 cervelle ricerca in parallelo PRIMA di agire**: quadro completo HP in 60 sec. Zero sorprese durante edit.
+- **Guardiana pre + post edit**: pre-edit 9.5 ha validato piano, post-edit 9.0 ha trovato 1 test rotto (P1!) + 5 file stale. Senza Guardiana post-edit, il test sarebbe fallito al commit.
+- **Fortezza Mode Servers per guidare Rafa**: comandi precisi, zero errori di digitazione.
 
-### Pattern candidato
-- **Audit piano + decisione architetturale PRIMA del coding**: Guardiana trova gap (F1+F2), Regina propone soluzione, Rafa conferma, poi si implementa. Previene rifacimenti. 6a evidenza dopo S228.cv, S229, S230, S265, S266, S268. PROMUOVERE.
+### Cosa non ha funzionato
+- Nulla di critico. Processo liscio.
+
+### Pattern confermato
+- **Guardiana pre + post edit = STANDARD** per ogni modifica multi-file. 5a evidenza. PROMOSSO.
+- **Cartella Desktop per deploy manuali**: Rafa copia i file giusti senza cercare. Pratico. 1a evidenza.
 
 ---
 
 *"Lavoriamo in pace! Senza casino! Dipende da noi!"*
+
+<!-- AUTO-CHECKPOINT-START -->
+
+## AUTO-CHECKPOINT: 2026-03-06 09:13 (unknown)
+
+### Stato Git
+- **Branch**: lab-v3
+- **Ultimo commit**: 39d0c0f - S287: Audit Guardiana docs - 10/10 finding fixati (IDEA-003 DONE + pulizia stale refs)
+- **File modificati** (2):
+  - claude/hooks/subagent_stop.py
+  - backend/database/ericsoft.py
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+<!-- AUTO-CHECKPOINT-END -->
