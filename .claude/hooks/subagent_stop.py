@@ -5,13 +5,16 @@ Hook SubagentStop - Logga quando un subagent completa.
 Riceve dati da stdin in formato JSON.
 Salva nel database swarm_memory.db e in file di debug.
 
-Versione: 1.1.0
-Data: 2026-01-01
-Upgrade: Path ASSOLUTO a DB centrale CervellaSwarm (funziona da qualsiasi progetto!)
+Versione: 2.0.0
+Data: 2026-03-06
+Upgrade v2: Legge agent_type, agent_id, agent_transcript_path, last_assistant_message
+             (campi disponibili da Claude Code v2.1.49+, prima ignorati)
 """
 
 import sys
 import json
+import sqlite3
+import uuid
 from datetime import datetime
 from pathlib import Path
 
@@ -43,54 +46,83 @@ def main():
             f.write(json.dumps(input_data, indent=2))
             f.write(f"\n{'='*60}\n\n")
 
-        # Estrai informazioni disponibili
+        # Estrai informazioni disponibili (v2: campi agent_* da Claude Code v2.1.49+)
         session_id = input_data.get("session_id", "unknown")
-        transcript_path = input_data.get("transcript_path", "")
+        agent_type = input_data.get("agent_type", "subagent")
+        agent_id = input_data.get("agent_id", "")
+        transcript_path = input_data.get("agent_transcript_path", input_data.get("transcript_path", ""))
+        last_message = input_data.get("last_assistant_message", "")
 
-        # Determina il progetto dal CWD o transcript_path
+        # Determina il progetto dal CWD o transcript_path (case-insensitive)
         cwd = input_data.get("cwd", "")
+        search_str = (cwd + transcript_path).lower()
         project = "unknown"
-        if "CervellaSwarm" in cwd or "CervellaSwarm" in transcript_path:
+        if "cervellaswarm" in search_str:
             project = "cervellaswarm"
-        elif "miracollo" in cwd.lower() or "miracollo" in transcript_path.lower():
+        elif "miracollo" in search_str:
             project = "miracollo"
-        elif "Contabilita" in cwd or "Contabilita" in transcript_path:
+        elif "contabilita" in search_str:
             project = "contabilita"
+        elif "chavefy" in search_str:
+            project = "chavefy"
+        elif "cervellabrasil" in search_str:
+            project = "cervellabrasil"
+        elif "cervellacostruzione" in search_str:
+            project = "cervellacostruzione"
 
         # Salva evento nel database
         try:
-            import sqlite3
-            import uuid
+            summary = last_message[:500] if last_message else ""
+            notes_data = {
+                "agent_id": agent_id,
+                "transcript_path": transcript_path,
+                "summary": summary,
+            }
 
-            conn = sqlite3.connect(str(DB_PATH))
-            cursor = conn.cursor()
+            with sqlite3.connect(str(DB_PATH), timeout=10) as conn:
+                conn.execute("PRAGMA journal_mode=WAL")
+                cursor = conn.cursor()
 
-            cursor.execute("""
-                INSERT INTO swarm_events (
-                    id, timestamp, session_id, agent_name, event_type, project,
-                    task_description, task_status, notes
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (
-                str(uuid.uuid4()),
-                ts,
-                session_id,
-                "subagent",  # Non sappiamo quale agent specifico
-                "subagent_stop",
-                project,
-                "Subagent completed (from SubagentStop hook)",
-                "completed",
-                json.dumps(input_data)  # Raw payload va in notes
-            ))
+                # Auto-create tabella se non esiste (P1 fix)
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS swarm_events (
+                        id TEXT PRIMARY KEY,
+                        timestamp TEXT NOT NULL,
+                        session_id TEXT,
+                        agent_name TEXT,
+                        event_type TEXT,
+                        project TEXT,
+                        task_description TEXT,
+                        task_status TEXT,
+                        notes TEXT
+                    )
+                """)
 
-            conn.commit()
-            conn.close()
+                cursor.execute("""
+                    INSERT INTO swarm_events (
+                        id, timestamp, session_id, agent_name, event_type, project,
+                        task_description, task_status, notes
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """, (
+                    str(uuid.uuid4()),
+                    ts,
+                    session_id,
+                    agent_type,
+                    "subagent_stop",
+                    project,
+                    f"Agent '{agent_type}' completed",
+                    "completed",
+                    json.dumps(notes_data),
+                ))
 
-            # Output successo
+                conn.commit()
+
             print(json.dumps({
                 "status": "logged",
                 "timestamp": ts,
                 "project": project,
-                "session_id": session_id
+                "agent_type": agent_type,
+                "session_id": session_id,
             }))
 
         except Exception as db_error:

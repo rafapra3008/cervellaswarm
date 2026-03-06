@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - MASTER (Globale)
 
-> **Ultimo aggiornamento:** 21 Febbraio 2026 - Sessione 384
+> **Ultimo aggiornamento:** 6 Marzo 2026 - Sessione 431
 > **Tabella ecosistema condivisa - SOLO link ai file specifici**
 
 ---
@@ -9,11 +9,11 @@
 
 | Progetto | PROMPT_RIPRESA | Aggiornato | TL;DR |
 |----------|----------------|------------|-------|
-| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-02-21 | S385: FASE A COMPLETA! 7 moduli, 967 test, 9.5/10. Auto-Learning ricerca DONE (34 fonti). Next: S386 Code Review + Bug Hunt #9 |
-| **CervellaBrasil** | `.sncp/progetti/cervellabrasil/PROMPT_RIPRESA_cervellabrasil.md` | 2026-02-12 | FASE 0-2.5 completas, pronto FASE 3 (Execucao) |
-| **Chavefy** | `.sncp/progetti/chavefy/PROMPT_RIPRESA_chavefy.md` | 2026-02-12 | FASE 0: 13 pesquisas, pronto validacao online |
+| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-03-06 | S431: Migliora Casa DONE (14 fix). S432: backlog P2/P3. FASE D 4/6. 2856 test, PyPI v0.2.0 LIVE |
+| **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-03-05 | S286: Deploy SPRING-025 completo. Script v4.5.0 batch. 1908 test |
 | **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-30 | In pausa (Cache Layer v2.1.0 completato) |
-| **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-02-28 | S222: Subroadmap C.7 COMPLETATA! Script v4.5.0 batch, 8 doc giorno completo SPRING. 1908 test. Prossimo: Fase D automazione pipeline V3->SPRING |
+| **CervellaBrasil** | `.sncp/progetti/cervellabrasil/PROMPT_RIPRESA_cervellabrasil.md` | 2026-02-12 | FASE 0-2.5 completas, pronto FASE 3 |
+| **Chavefy** | `.sncp/progetti/chavefy/PROMPT_RIPRESA_chavefy.md` | 2026-02-12 | FASE 0: 13 pesquisas, pronto validacao |
 | **CervellaCostruzione** | `.sncp/progetti/cervellacostruzione/PROMPT_RIPRESA_cervellacostruzione.md` | 2026-02-04 | Costituzione digitale |
 
 ---
@@ -46,6 +46,7 @@ PROMPT_RIPRESA: max 150 righe
 *(Solo cose che riguardano 2+ progetti)*
 
 - **15 Gen 2026:** Separazione PROMPT_RIPRESA completata (Context Mesh pattern)
+- **6 Mar 2026:** Migliora Casa S431 - settings, hooks, SNCP maintenance
 
 ---
 

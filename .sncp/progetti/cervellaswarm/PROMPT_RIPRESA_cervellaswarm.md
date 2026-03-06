@@ -1,30 +1,39 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-04 - Sessione 430
-> **STATUS:** D4 "A Tour of LU" COMPLETATA! D1-D4 DONE, D5-D6 TODO.
+> **Ultimo aggiornamento:** 2026-03-06 - Sessione 432
+> **STATUS:** S431 Migliora Casa + S432 Backlog Fix COMPLETATI. D5 LSP Avanzato PROSSIMO.
 
 ---
 
-## SESSIONE 430 - Cosa e successo
+## SESSIONE 432 - Backlog Fix & Audit Finale
 
-### 1. D3 Guardiana Audit -- 9.5/10 APPROVATA
-- 0 P0/P1/P2, 5 P3 (fixati: blockComment Monaco, preconnect hint)
-- README aggiornato: link playground + stats corretti (25 moduli, 2856 test)
+### Cosa e successo
+Completamento pendenze S431 + fix di tutto il backlog P2/P3. Due audit Guardiana (9.3/10 + 9.6/10).
 
-### 2. D4 "A Tour of LU" -- COMPLETATA! 9.5/10
-- **24 step interattivi** in 4 capitoli: Types (7), Agents (7), Protocols (6), Verification (4)
-- **4 esercizi** con soluzioni (Show Solution button)
-- **File:** `playground/tour.js` (~490 righe), `playground/tour-ui.js` (~310 righe), `playground/tour.css` (~240 righe)
-- **index.html** modificato: DOM elements + renderOutput redirect + initTourUI()
-- **28 test automatici** (24 step + 4 soluzioni) in `packages/lingua-universale/tests/test_tour_code.py`
-- Guardiana piano: 9.0/10, 4 P2 catturati e fixati PRIMA di implementare
-- Guardiana implementazione: 9.5/10, 6 P3 tutti fixati (aria attrs, solution tests)
-- Features: progress bar, chapter overview, keyboard shortcuts, localStorage, URL hash #tour
-- Synced to public, LIVE su GitHub Pages
+### Fix applicati S432
+- **P2: bash_validator bypass $() e backtick** -- extract_subcommands + 18 nuovi test (76 totali)
+- **P3: git_reminder state file crescita infinita** -- max 20 entries con prune automatico
+- **P3: pre_compact_save `|` separator fragile** -- usa `%x00` null byte (sicuro)
+- **P3: context-monitor PROJECT_MAPPING solo 3 progetti** -- universale (6 progetti)
+- **P3: context-monitor 6x bare except** -- `except Exception:`
+- **P3: hook_debug.log 33MB senza rotation** -- rotation 5MB + troncato a 2MB
+- **P2: PROMPT_RIPRESA_MASTER data TL;DR stale** -- aggiornato 2026-03-06
+- **P3: NORD.md "Febbraio" -> "Marzo 2026"**
+- **P3: daily_memory_loader.py.backup residuo rimosso**
+- **INFO: 32 report obsoleti eliminati** (Gen/Feb 2026)
 
-### 3. Metodo confermato
-- **"Audit del piano PRIMA di implementare"** = 4 P2 catturati pre-implementation (zero rework)
-- **File separati** (tour.js + tour-ui.js + tour.css) = segue pattern examples.js
+### Fix S431 (committati insieme)
+- P1: DB swarm_events CREATE TABLE + WAL mode
+- P1: update_prompt_ripresa marker HTML univoci
+- P1: memory_flush_auto duplicato rimosso
+- P2: PROJECT_MAPPING universale (7 hook, 6 progetti)
+- P2: post_commit_engineer async + timeout 55s
+- BUG: db.py Python 3.9 compat (weekly_retro funziona)
+- subagent_stop v2.0 su 3 repos
+
+### Audit Guardiana
+- MC7.4 audit S431: **9.3/10** APPROVED
+- MC7 Bug Hunt audit: **9.6/10** APPROVED
 
 ---
 
@@ -32,35 +41,31 @@
 
 ```
 LINGUAGGIO CERVELLASWARM:
-  FASE A+B: COMPLETE (9.5+ media)
-  FASE C: Il Linguaggio -- COMPLETA! (S407-S425)
-  FASE D: L'Ecosistema -- 4/6 DONE (S426+)
-    D1: Syntax Highlighting   [####################] DONE! (S426, 9.5/10)
-    D2: LSP Base (lu lsp)     [####################] DONE! (S426, 9.5/10)
-    D3: Playground Online      [####################] DONE! (S429, LIVE!)
-    D4: "A Tour of LU"        [####################] DONE! (S430, 9.5/10)
+  FASE D: L'Ecosistema -- 4/6 DONE
+    D1: Syntax Highlighting   [####################] DONE! (9.5/10)
+    D2: LSP Base (lu lsp)     [####################] DONE! (9.5/10)
+    D3: Playground Online      [####################] DONE! (LIVE!)
+    D4: "A Tour of LU"        [####################] DONE! (9.5/10)
     D5: LSP Avanzato           [....................] PROSSIMO
     D6: Guardiana Finale       [....................] TODO
 
-  Organizza Casa (v0.2.0)     [####################] 100% COMPLETA! (S428-S429)
+  Migliora Casa (S431)        [####################] COMPLETATA!
+  Backlog Fix (S432)          [####################] COMPLETATA!
 ```
 
 ---
 
 ## PROSSIMA SESSIONE: D5 LSP Avanzato
 
-### D5: LSP Avanzato + Hover + Completion
-- **Hover:** mostra tipo e documentazione al passaggio mouse
-- **Completion:** suggerimenti keyword, nomi ruoli, trust tiers
-- **Go-to-definition:** click su tipo -> vai alla definizione
-- **Base LSP gia funzionante:** `packages/lingua-universale/src/cervellaswarm_lingua_universale/_lsp.py`
+- **Hover:** tipo + documentazione al passaggio mouse
+- **Completion:** keyword, ruoli, trust tiers
+- **Go-to-definition:** click su tipo -> definizione
+- **Base LSP:** `packages/lingua-universale/src/cervellaswarm_lingua_universale/_lsp.py`
 - **Subroadmap:** `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md`
-- **Metodo:** Researcher studia -> Piano -> Guardiana audit piano -> Implementa -> Guardiana audit impl
+- **Metodo:** Researcher -> Piano -> Guardiana audit piano -> Implementa -> Guardiana audit
 
-### Poi: D6 Guardiana Audit Finale + Launch
-
-### TODO Rafa (da S429, URGENTE!)
-- Attivare 2FA GitHub (scade 6 Mar = dopodomani!)
+### TODO Rafa
+- Attivare 2FA GitHub (SCADUTO 6 Marzo!)
 - Ruotare Bedzzle key su MyReception
 
 ---
@@ -69,29 +74,25 @@ LINGUAGGIO CERVELLASWARM:
 
 | Metrica | Valore |
 |---------|--------|
-| Test totali | **2856** |
-| Moduli .py | **25** |
-| Public symbols | **131** |
-| Codici errore LU | **74** (3 lingue) |
-| Dipendenze core | **ZERO** |
-| PyPI version | **0.2.0** (LIVE!) |
-| Playground | **LIVE** (https://rafapra3008.github.io/cervellaswarm/) |
-| Tour steps | **24** (4 capitoli, 4 esercizi) |
+| Test agent-hooks | **253** (era 235) |
+| Test totali LU | **2856** |
+| Fix S431+S432 | **24** totali |
+| Audit Guardiana | **4** (2 S431 + 2 S432) |
 
 ---
 
-## Lezioni Apprese (S430)
+## Lezioni Apprese (S432)
 
 ### Cosa ha funzionato bene
-- **Guardiana audit del PIANO prima di implementare** -- 4 P2 catturati pre-implementation = zero rework
-- **File separati** -- tour.js + tour-ui.js + tour.css seguono pattern examples.js
-- **Test automatici per codice tour** -- 28 test parametrizzati, catturano regressioni parser
+- **Backlog sistematico** -- completare TUTTO il backlog in una sessione dedicata
+- **Guardiana in background** -- audit corre mentre si lavora, zero tempo perso
+- **hook_debug.log scoperto a 33MB** -- il rotation avrebbe dovuto esserci dal giorno 1
 
 ### Cosa non ha funzionato
-- **Context window consumato** -- D4 e grande (4 file nuovi). Per D5: split in sotto-task + agenti
+- **Commit S431 mai fatto** -- la sessione precedente e finita senza commit (auto-compact)
 
-### Pattern candidato -> PROMOSSO
-- **"Audit del piano PRIMA di implementare"** -- Evidenza: S429 + S430. PROMUOVERE a validated_patterns
+### Pattern candidato
+- **"Commit PRIMA di auto-compact"** -- se context > 70%, fare commit preventivo
 
 ---
 

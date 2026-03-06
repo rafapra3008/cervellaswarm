@@ -78,8 +78,11 @@ def should_remind(cwd: str) -> bool:
         return True
 
 
+MAX_STATE_ENTRIES = 20  # Prune old entries to prevent unbounded growth
+
+
 def update_reminder_state(cwd: str):
-    """Update the timestamp of the last reminder."""
+    """Update the timestamp of the last reminder. Prunes old entries."""
     try:
         state = {}
         if REMINDER_STATE_FILE.exists():
@@ -87,6 +90,11 @@ def update_reminder_state(cwd: str):
                 state = json.load(f)
 
         state[cwd] = datetime.now().isoformat()
+
+        # Prune: keep only the MAX_STATE_ENTRIES most recent entries
+        if len(state) > MAX_STATE_ENTRIES:
+            sorted_entries = sorted(state.items(), key=lambda x: x[1], reverse=True)
+            state = dict(sorted_entries[:MAX_STATE_ENTRIES])
 
         REMINDER_STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
         with open(REMINDER_STATE_FILE, "w") as f:

@@ -24,6 +24,7 @@ NOTA:
 
 import sqlite3
 from pathlib import Path
+from typing import Optional
 
 from .paths import get_db_path
 
@@ -72,7 +73,7 @@ def connect_db() -> sqlite3.Connection:
         raise DatabaseConnectionError(f"Errore connessione database: {e}")
 
 
-def connect_db_safe() -> sqlite3.Connection | None:
+def connect_db_safe() -> Optional[sqlite3.Connection]:
     """
     Versione safe di connect_db che ritorna None invece di sollevare eccezioni.
 

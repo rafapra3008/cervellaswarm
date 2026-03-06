@@ -127,7 +127,11 @@ def check_settings_config(settings_path: Path) -> tuple[str, str]:
 
 
 def check_api_key() -> tuple[str, str]:
-    """Check if API key is available."""
+    """Check if API key is available.
+
+    Necessaria per spawn-worker (spawner.ts usa Anthropic client direttamente).
+    Non necessaria per gli altri tools (check_status, list_workers, ecc.).
+    """
     # Check environment variable first
     env_key = os.environ.get("ANTHROPIC_API_KEY", "")
     if env_key and env_key.startswith("sk-ant-"):
@@ -144,7 +148,7 @@ def check_api_key() -> tuple[str, str]:
         except Exception:
             pass
 
-    return HealthStatus.WARN, "API key non trovata (env o config)"
+    return HealthStatus.WARN, "API key non trovata (necessaria per spawn-worker)"
 
 
 def check_server_version() -> tuple[str, str]:
