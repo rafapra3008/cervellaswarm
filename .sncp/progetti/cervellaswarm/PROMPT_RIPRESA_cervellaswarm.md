@@ -1,32 +1,28 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-06 - Sessione 435
-> **STATUS:** D6 Guardiana Finale COMPLETATO. FASE D: L'ECOSISTEMA = COMPLETA!
+> **Ultimo aggiornamento:** 2026-03-06 - Sessione 436
+> **STATUS:** Maintenance + PyPI v0.3.0 release. FASE D COMPLETA. Prossimo: FASE E o nuova direzione.
 
 ---
 
-## SESSIONE 435 - D6 Guardiana Finale (COMPLETATA)
+## SESSIONE 436 - Maintenance + Release v0.3.0
 
 ### Cosa e successo
-Cross-cutting audit dell'intero ecosistema D1-D5, fix di tutti i problemi trovati, re-audit Guardiana.
-Aggiornati README (package + main), VS Code extension, playground, pyproject.toml.
+Dependabot cleanup (3 PR), refactoring 2 funzioni grandi, PyPI v0.3.0 release, Guardiana audit.
 
 ### Cambiamenti chiave
-- **README package**: test count 2828->2900, playground badge, sezioni Editor Support + Interactive Tutorial, comparison table aggiornata
-- **README main CervellaSwarm**: test count 3791->4887, playground link in footer
-- **VS Code ext**: package.json description aggiornata, README con LSP features, CHANGELOG 0.2.0 aggiunto
-- **Tour fix**: trust tiers "three"->"four", aggiunto `untrusted` (contenuto educativo corretto)
-- **Playground**: SPDX license headers su 3 file JS
-- **pyproject.toml**: Playground URL per discoverability PyPI
-- **VSIX filename**: 0.1.0->0.2.0 (coerenza versioni)
+- **Dependabot**: ora 8->9 (PR #20 merged), conf 13->15 (PR #13 merged), commander 12->14 (PR #22 closed stale, manual upgrade). Score: 17/20
+- **Refactoring checker.py**: `send()` 168->16 righe (4 private helpers)
+- **Refactoring codegen.py**: `generate_python_multi()` 171->43 righe (3 private helpers)
+- **PyPI v0.3.0**: version bump, CHANGELOG, tag pushed. Trusted Publisher via public repo
+- **Sync to public**: 49 file sincronizzati (research report spostato in .sncp)
+- **Guardiana audit**: 9.5/10 (0 P0/P1, 1 P2, 5 P3 -- tutti fixati)
+- **Test counts aggiornati**: 2909 LU, 5221 totali (4897 Python + 324 Node)
 
 ### Numeri
-- Audit Guardiana #1: **9.3/10** (0 P0/P1, 3 P2, 8 P3)
-- Tutti P2 fixati + 3 P3 notevoli fixati
-- Audit Guardiana #2: **9.7/10** APPROVED (tutti fix verificati)
-- Suite completa: **4896 test** (9 package), LU: 2909 test in 1.01s
-- test_colors.py aggiunto: 9 test, unico gap coverage chiuso
-- 3 Dependabot PR mergiate (#18 open, #21 express-rate-limit, #23 anthropic-sdk)
+- Suite completa: **5221 test** (9 Python pkg + 4 Node pkg), LU: 2909 in 1.01s
+- Guardiana S436: **9.5/10** APPROVED
+- Dependabot: **17/20** (was 14/20, +3 questa sessione)
 
 ---
 
@@ -35,37 +31,30 @@ Aggiornati README (package + main), VS Code extension, playground, pyproject.tom
 ```
 LINGUAGGIO CERVELLASWARM:
   FASE D: L'Ecosistema -- 6/6 DONE = COMPLETA!
-    D1: Syntax Highlighting   [####################] DONE! (9.5/10)
-    D2: LSP Base (lu lsp)     [####################] DONE! (9.5/10)
-    D3: Playground Online      [####################] DONE! (LIVE!)
-    D4: "A Tour of LU"        [####################] DONE! (9.5/10)
-    D5: LSP Avanzato           [####################] DONE! (9.5/10)
-    D6: Guardiana Finale       [####################] DONE! (9.7/10)
-
-  Migliora Casa (S431-S433)  [####################] COMPLETATA!
+    D1-D6 DONE (media 9.5/10)
+  PyPI: v0.3.0 (D5 LSP + refactoring)
+  Migliora Casa: COMPLETATA
 ```
 
 ---
 
 ## PROSSIMA SESSIONE
 
-La Fase D e COMPLETA. Opzioni per il futuro:
-- **Fase E**: IntentBridge, voce, multi-lingua (dalla MAPPA_LINGUAGGIO originale)
+La Fase D e COMPLETA. PyPI v0.3.0 in corso di pubblicazione. Opzioni:
+- **Fase E**: IntentBridge, voce, multi-lingua (dalla MAPPA_LINGUAGGIO)
 - **VS Code Marketplace**: pubblicazione (serve publisher account)
-- **PyPI v0.3.0**: includere D5 LSP features nel release
 - **Nuova direzione**: Rafa decide
 
 ### TODO Rafa
 - Attivare 2FA GitHub (SCADUTO!)
 - Ruotare Bedzzle key su MyReception
+- Approvare PyPI publish environment su GitHub (se in "waiting")
 
 ### BACKLOG
-- 6 Dependabot PR rimaste: 3 TEST FIRST (#22 commander, #20 ora, #13 conf), 3 SKIP (#19 stripe, #14 express, #11 zod)
-- Centralizzare PROJECT_MAPPING (7 file)
-- Test automatizzati context-monitor.py
-- SNCP come package open source
+- 3 Dependabot PR rimaste (SKIP tier): #19 stripe 17->20, #14 express 4->5, #11 zod 3->4
+- Centralizzare conf versione (core=15, cli/mcp-server=13 -- allineare)
 - VS Code Marketplace (publisher account)
-- Refactoring candidati: checker.send() 167 righe, codegen.generate_python_multi() 171 righe
+- Refactoring P2: _tokenizer.tokenize() 163 righe, _compiler._compile_agent() 101 righe, _parser._parse_agent() 107 righe, _lsp.build_symbol_table() 116 righe, _lsp.create_server() 136 righe
 
 ---
 
@@ -73,46 +62,27 @@ La Fase D e COMPLETA. Opzioni per il futuro:
 
 | Metrica | Valore |
 |---------|--------|
-| Test totali (9 pkg) | **4896** |
+| Test totali (13 pkg) | **5221** |
 | Test LU | **2909** |
-| Audit Guardiana S435 | **9.7/10** |
-| Fase D media | **~9.5/10** |
-| Dependabot mergiate | **14/20** (3 new: #18 #21 #23) |
+| Audit Guardiana S436 | **9.5/10** |
+| PyPI | **v0.3.0** (publishing) |
+| Dependabot mergiate | **17/20** |
 
 ---
 
-## Lezioni Apprese (S435)
+## Lezioni Apprese (S436)
 
 ### Cosa ha funzionato bene
-- **Audit cross-cutting** -- trova incoerenze che nessun singolo step vede
-- **Fix immediato P2+P3** -- zero debito tecnico, diamante pulito
-- **Numeri reali** -- ricalcolare SEMPRE i totali, i badge mentivano (3791 vs 4887!)
+- **Dependabot triage sistematico** -- test locale prima di merge, stale PR chiuse e rifatte manualmente
+- **Refactoring pulito** -- zero regression su 2909 test, orchestrator pattern chiaro
+- **Dual-repo awareness** -- research report catturato dal security scanner, spostato in .sncp
 
 ### Cosa non ha funzionato
-- **Nessun problema serio** -- sessione fluida, D6 in 1 sessione
+- **PyPI publish da repo interno** -- Trusted Publisher configurato per repo pubblico. Serve sempre sync-to-public.sh + tag sul pubblico
 
 ### Pattern candidato
-- **"Cross-cutting audit prima di ogni milestone"** -- Evidenza: S435 (3 P2 trovati che nessuno aveva visto)
+- **"Test locale Dependabot prima di merge"** -- Evidenza: S436 (commander PR stale con downgrade trovati)
 
 ---
 
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
-
-<!-- AUTO-CHECKPOINT-START -->
-
-## AUTO-CHECKPOINT: 2026-03-06 10:58 (auto)
-
-### Stato Git
-- **Branch**: main
-- **Ultimo commit**: 29f9e36f - S435: Add test_colors.py -- close last test coverage gap (2909 test)
-- **File modificati** (4):
-  - sncp/PROMPT_RIPRESA_MASTER.md
-  - .sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
-  - .sncp/roadmaps/MAPPA_LINGUAGGIO_CERVELLASWARM.md
-  - .sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: auto
-
-<!-- AUTO-CHECKPOINT-END -->
