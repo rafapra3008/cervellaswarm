@@ -165,6 +165,17 @@ from ._eval import (
     run_file,
 )
 from ._repl import REPLSession
+from ._intent_bridge import (
+    ChatPhase,
+    ChatResult,
+    ChatSession,
+    DraftChoice,
+    DraftMessage,
+    IntentDraft,
+    NLProcessor,
+    Turn,
+    render_intent_source,
+)
 from ._cli import main as cli_main
 from .errors import (
     ErrorCategory,
@@ -319,6 +330,16 @@ __all__ = [
     "run_source",
     "run_file",
     "cli_main",
+    # IntentBridge (E.2)
+    "ChatPhase",
+    "ChatResult",
+    "ChatSession",
+    "DraftChoice",
+    "DraftMessage",
+    "IntentDraft",
+    "NLProcessor",
+    "Turn",
+    "render_intent_source",
     # REPL (C3.4)
     "REPLSession",
     # Errors

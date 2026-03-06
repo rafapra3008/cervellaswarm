@@ -1,29 +1,34 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-06 - Sessione 437
-> **STATUS:** P2 Refactoring completo + Fase E research. FASE D COMPLETA. PyPI v0.3.0.
+> **Ultimo aggiornamento:** 2026-03-06 - Sessione 438
+> **STATUS:** FASE E avviata! E.1 DONE, E.2 IntentBridge Core quasi completo. PyPI v0.3.0.
 
 ---
 
-## SESSIONE 437 - Diamante Interno + Ricerca Strategica
+## SESSIONE 438 - IntentBridge: "Per Tutti"
 
 ### Cosa e successo
-P2 refactoring di 4 funzioni grandi, accuracy sweep docs, Fase E research (18 fonti).
+FASE E avviata. Script "La Nonna" scritto (E.1 DONE). IntentBridge Core implementato (E.2 quasi DONE).
 
 ### Cambiamenti chiave
-- **Refactoring build_symbol_table()**: 116->49 righe (4 helper `_symbol_from_*`)
-- **Refactoring tokenize()**: 163->78 righe (2 helper `_check_tabs`, `_tokenize_line_content`)
-- **Refactoring _parse_agent()**: 107->94 righe (1 helper `_parse_message_list`)
-- **Refactoring _compile_agent()**: 101->72 righe (1 helper `_emit_contract_guards`)
-- **create_server() SKIPPED**: rischio alto, beneficio basso (Ingegnera raccomanda)
-- **Accuracy sweep**: NORD, README, MAPPA_LINGUAGGIO, SUBROADMAP_D tutti aggiornati (2909/5221/v0.3.0)
-- **Fase E research**: report completo in `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260306_FASE_E_INTENTBRIDGE.md`
-- **Guardiana S437**: 9.5/10 APPROVED (1 P2 + 6 P3, tutti fixati)
+- **E.1 Script "La Nonna"**: screenplay 5 atti, 23 requisiti (R1-R23), pipeline architetturale
+  - File: `.sncp/progetti/cervellaswarm/reports/SCRIPT_LA_NONNA_DEMO.md`
+- **E.2 IntentBridge Core** (`_intent_bridge.py`, 1088 righe):
+  - ChatSession: state machine con injectable I/O, 10 fasi (WELCOME->DONE)
+  - IntentDraft: frozen dataclass IR (two-stage pattern Req2LTL)
+  - render_intent_source(): bridge deterministico IntentDraft -> B.4 source
+  - Pipeline completa: guided input -> B.4 -> parse_intent -> check_properties -> generate_python -> simulazione
+  - i18n: 25+ chiavi x 3 locales (en/it/pt), _ACTION_VERBS (10), _ACTION_MENU localizzato
+  - NLProcessor(Protocol): extension point per E.3 LLM
+  - CLI: `lu chat --lang it|pt|en` con `--output` per salvare codice
+- **Guardiana S438**: 9.3/10 APPROVED, 3 P2 tutti fixati (F1 attrs init, F2 confirm reset, F3 NLProcessor export)
+- **MAPPA/SUBROADMAP/NORD aggiornati** per FASE E
 
 ### Numeri
-- Suite completa: **5221 test** (9 Python pkg + 4 Node pkg), LU: 2909 in 0.97s
-- Guardiana S437: **9.5/10** APPROVED
-- Dependabot: **17/20** (invariato da S436)
+- Suite LU: **3062 test** (era 2909, +153 IntentBridge: 56 core + 47 session + 50 e2e)
+- Suite completa (13 pkg): ~5374 test
+- Guardiana S438: **9.3/10** APPROVED (3 P2 fixati, 8 P3 cosmetici)
+- Moduli LU: **26** (era 25, +_intent_bridge.py)
 
 ---
 
@@ -31,33 +36,39 @@ P2 refactoring di 4 funzioni grandi, accuracy sweep docs, Fase E research (18 fo
 
 ```
 LINGUAGGIO CERVELLASWARM:
-  FASE D: L'Ecosistema -- 6/6 DONE = COMPLETA!
-    D1-D6 DONE (media 9.5/10)
+  FASE A-D: COMPLETE (A+B+C+D, 25 moduli base, media 9.5/10)
+  FASE E: PER TUTTI -- IN PROGRESS
+    E.1 Script "La Nonna"           DONE (S438)
+    E.2 IntentBridge Core           QUASI DONE (S438, mancano: 3 protocolli e2e test)
+    E.3 NL Processing               TODO
+    E.4 Voice Interface              TODO
+    E.5 La Nonna Demo               TODO
+    E.6 CervellaLang 1.0            TODO
   PyPI: v0.3.0 (waiting Rafa environment approval)
-  P2 Refactoring: 4/5 DONE (create_server skipped)
-  Fase E Research: COMPLETA (18 fonti, report scritto)
 ```
 
 ---
 
 ## PROSSIMA SESSIONE
 
-### Fase E - IntentBridge (RACCOMANDAZIONE RESEARCHER)
-1. Scrivere script "La Nonna con le Ricette" (dialogo esatto parola per parola)
-2. IntentBridge MVP su CLI chat: NL -> IntentDraft via B.4 -> spec -> codice
-3. Multi-lingua (it/pt/en) PRIMA di voice
-4. Report: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260306_FASE_E_INTENTBRIDGE.md`
+### E.2 completamento
+1. Testare 3 protocolli end-to-end diversi (ricette, task delegation, data pipeline)
+2. Migliorare output narrativo in lingua target
+3. Guardiana audit finale E.2 -> target 9.5/10
+
+### E.3 NL Processing (se E.2 chiuso)
+1. anthropic come optional dependency ([nl] extra)
+2. LLM traduce NL libero -> B.4 micro-linguaggio
+3. Pattern two-stage: LLM -> IntentDraft -> deterministico
 
 ### TODO Rafa
-- Approvare PyPI publish environment su GitHub (Actions -> "Publish lingua-universale" -> approve "pypi")
+- Approvare PyPI publish environment su GitHub
 - Attivare 2FA GitHub (SCADUTO!)
-- Ruotare Bedzzle key su MyReception
 
 ### BACKLOG
-- 3 Dependabot PR rimaste (SKIP tier): #19 stripe 17->20, #14 express 4->5, #11 zod 3->4
-- Centralizzare conf versione (core=15, cli/mcp-server=13)
+- 3 Dependabot PR rimaste (SKIP tier): #19 stripe, #14 express, #11 zod
 - VS Code Marketplace (publisher account)
-- Refactoring P2 residuo: _lsp.create_server() 136 righe (rischio alto, rimandato)
+- Refactoring P2 residuo: _lsp.create_server() 136 righe (rimandato)
 
 ---
 
@@ -65,26 +76,27 @@ LINGUAGGIO CERVELLASWARM:
 
 | Metrica | Valore |
 |---------|--------|
-| Test totali (13 pkg) | **5221** |
-| Test LU | **2909** |
-| Audit Guardiana S437 | **9.5/10** |
+| Test LU | **3062** |
+| Test totali (13 pkg) | **~5374** |
+| Moduli LU | **26** |
+| Audit Guardiana S438 | **9.3/10** |
 | PyPI | **v0.3.0** (waiting approval) |
-| Dependabot mergiate | **17/20** |
+| IntentBridge test | **153** (56 core + 47 session + 50 e2e) |
 
 ---
 
-## Lezioni Apprese (S437)
+## Lezioni Apprese (S438)
 
 ### Cosa ha funzionato bene
-- **Ingegnera analisi prima di refactoring** -- priorita, rischio, helpers suggeriti = zero sorprese
-- **Pattern two-stage (Req2LTL)** -- la ricerca conferma che il nostro B.4 e esattamente il pattern giusto
-- **Skip create_server()** -- rischio alto/beneficio basso, decisione CEO giusta
+- **Script PRIMA del codice** -- "La Nonna" ha guidato TUTTE le decisioni (pattern validato)
+- **Two-stage (Req2LTL)** -- IntentDraft come IR: guided input -> deterministic output funziona perfettamente
+- **Fix proattivi** -- trovati e fixati 2 bug (attrs init, confirm reset) PRIMA della Guardiana
 
 ### Cosa non ha funzionato
-- **Crash Python SIGSEGV** -- non nostro (CPython 3.13 bug), ma va monitorato
+- **Auto-compact** -- context perso a meta lavoro, ripresa OK ma costo tempo
 
 ### Pattern candidato
-- **"Skip se rischio > beneficio"** -- Evidenza: S437 (create_server rischio ALTO, 5 CC bassa)
+- **"Script PRIMA, codice DOPO"** -- Evidenza: S438 (script ha estratto 23 requisiti, zero ambiguita)
 
 ---
 

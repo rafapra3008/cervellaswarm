@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 6 Marzo 2026 - S437 (PyPI v0.3.0, P2 Refactoring, FASE D COMPLETA!)
+> Aggiornato: 6 Marzo 2026 - S438 (FASE E avviata! IntentBridge Core, La Nonna Script)
 
 ```
 +==================================================================+
@@ -146,12 +146,14 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |     C1 Grammatica DONE! C2 Compilatore DONE! C3 Esperienza DONE!|
 |   FASE D: L'ECOSISTEMA -- COMPLETA! (S426-S435)                  |
 |     D1-D6 DONE! Media 9.5/10                                    |
-|     PROSSIMO: FASE E o nuova direzione                           |
+|   FASE E: PER TUTTI -- IN PROGRESS (S438+)                      |
+|     E.1 La Nonna Script DONE, E.2 IntentBridge Core IN PROGRESS |
 |   PyPI: v0.3.0 LIVE! pip install cervellaswarm-lingua-universale|
-|   25 moduli, 2909 test, 74 error codes, 131 symbols, 5221 total |
+|   26 moduli, 3062 test, 74 error codes, 131 symbols, 5374 total |
 |   Playground LIVE: https://rafapra3008.github.io/cervellaswarm/ |
 |   Tour: 24 step interattivi in 4 capitoli + 4 esercizi          |
 |   NORD completo: packages/lingua-universale/NORD.md              |
+|   SUBROADMAP E: .sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md|
 |   SUBROADMAP D: .sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md  |
 |   ORGANIZZA CASA: .sncp/roadmaps/SUBROADMAP_ORGANIZZA_CASA_v020 |
 |                                                                  |
@@ -209,7 +211,8 @@ STATO ATTUALE:
 | Cosa | Dove |
 |------|------|
 | **MAPPA LINGUAGGIO (LA MISSIONE!)** | `.sncp/roadmaps/MAPPA_LINGUAGGIO_CERVELLASWARM.md` |
-| **FASE D: ECOSISTEMA (ATTIVA!)** | `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md` |
+| **FASE E: INTENTBRIDGE (ATTIVA!)** | `.sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md` |
+| **FASE D: ECOSISTEMA (COMPLETA!)** | `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md` |
 | **MAPPA COMPLETA (BIBBIA!)** | `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_COMPLETA_STEP_BY_STEP.md` |
 | **MAPPA MIGLIORAMENTI (ATTIVA!)** | `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_MIGLIORAMENTI_INTERNI.md` |
 | **MARKETING DIAMANTE** | `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_DIAMANTE_MARKETING_LANCIO.md` |

@@ -10,6 +10,7 @@ Subcommands::
     lu verify <file.lu>   Parse, compile, and formally verify with Lean 4.
     lu compile <file.lu>  Show the generated Python source.
     lu repl               Start the interactive REPL.
+    lu chat               Interactive guided protocol builder (E.2).
     lu lsp                Start the Language Server Protocol server (STDIO).
     lu version            Show version information.
 
@@ -135,6 +136,26 @@ def _cmd_lsp(args: argparse.Namespace) -> int:
     return start_lsp()
 
 
+def _cmd_chat(args: argparse.Namespace) -> int:
+    """Handle ``lu chat``."""
+    from ._intent_bridge import ChatSession
+
+    session = ChatSession(lang=args.lang)
+    result = session.run()
+    if result and args.output:
+        out_path = Path(args.output)
+        try:
+            out_path.write_text(result.generated_code, encoding="utf-8")
+            print(
+                f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} "
+                f"Saved generated code to {out_path}"
+            )
+        except (PermissionError, OSError) as exc:
+            print(f"{_c.RED}{_c.BOLD}ERROR{_c.RESET} {exc}", file=sys.stderr)
+            return 1
+    return 0
+
+
 def _cmd_version(args: argparse.Namespace) -> int:
     """Handle ``lu version``."""
     from . import __version__
@@ -199,6 +220,22 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Start the Language Server Protocol server (requires pygls)",
     )
 
+    # lu chat
+    p_chat = subparsers.add_parser(
+        "chat",
+        help="Interactive guided protocol builder",
+    )
+    p_chat.add_argument(
+        "--lang",
+        choices=["en", "it", "pt"],
+        default="en",
+        help="Interface language (default: en)",
+    )
+    p_chat.add_argument(
+        "-o", "--output",
+        help="Save generated Python to file",
+    )
+
     # lu version
     subparsers.add_parser("version", help="Show version information")
 
@@ -217,6 +254,7 @@ _COMMAND_HANDLERS = {
     "compile": _cmd_compile,
     "repl": _cmd_repl,
     "lsp": _cmd_lsp,
+    "chat": _cmd_chat,
     "version": _cmd_version,
 }
 

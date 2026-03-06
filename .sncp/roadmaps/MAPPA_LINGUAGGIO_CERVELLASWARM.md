@@ -6,7 +6,7 @@
 > "La domanda e la risposta nello STESSO linguaggio." - Rafa
 
 **Creata:** 24 Febbraio 2026 - Sessione 394
-**Aggiornata:** 6 Marzo 2026 - Sessione 437 (FASE D COMPLETA! PyPI v0.3.0)
+**Aggiornata:** 6 Marzo 2026 - Sessione 438 (FASE D COMPLETA! FASE E avviata)
 **Autrice:** Cervella Architect (su commissione della Regina)
 **Fonti:** NORD.md + 3 report di ricerca (64+ fonti esterne) + analisi codebase
 **Score target:** 9.5/10 per ogni step (audit Guardiana)
@@ -24,7 +24,7 @@ LAYER 3: Code Generation certificata                      OPERATIVO (S395!)
 LAYER 2: Agent Hooks + Quality Gates                      OPERATIVO
 LAYER 1: CI/CD + PyPI + Fly.io                            OPERATIVO
 
-Asset: 25 moduli, 2909 test, ~12000+ LOC, ZERO deps esterne
+Asset: 26 moduli, 3062 test, ~13000+ LOC, ZERO deps esterne
 Campo vergine confermato da 242+ fonti (session types per AI in Python)
 ```
 
@@ -183,42 +183,64 @@ Il mondo deve sapere che esistiamo.
 
 ---
 
-## FASE D: L'ECOSISTEMA (rinominata da "Per Tutti", S425)
+## FASE D: L'ECOSISTEMA -- COMPLETA! (S425-S435)
 
-> **NOTA (S425):** Fase D ridefinita come "L'Ecosistema" dopo ricerca su come i linguaggi
-> di successo crescono (46+ fonti, Python/Rust/Go/Gleam).
 > Piano esecutivo: `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md`
-> (D1 Syntax Highlighting, D2 LSP, D3 Playground, D4 Tutorial, D5 LSP Avanzato, D6 Launch)
->
-> La visione "Per Tutti" (IntentBridge, voce, multi-lingua) diventa FASE E.
+> 6 step, media 9.5/10. "Come hanno fatto i big?" - Rafa, S425.
+> Fonti: 46+ (Python/Rust/Go/Gleam/Zig/Roc).
+
+```
+D1 Syntax Highlighting + VS Code Extension    DONE (S426, 9.5/10)
+D2 LSP Base (lu lsp, pygls, diagnostics)       DONE (S426, 9.5/10)
+D3 Playground Online (Pyodide, GitHub Pages)   DONE (S429, LIVE!)
+D4 "A Tour of LU" (24 step interattivi)        DONE (S430, 9.5/10)
+D5 LSP Avanzato (Hover, Completion, Go-to-def) DONE (S434, 9.5/10)
+D6 Guardiana Finale + Launch                   DONE (S435, 9.5/10)
+```
+
+---
+
+## FASE E: PER TUTTI -- IntentBridge (S438+)
 
 > "Un mondo dove OGNI persona puo creare software parlando nella sua lingua."
 > La barriera tra "avere un'idea" e "realizzarla" diventa ZERO.
+> Piano esecutivo: `.sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md`
+> Ricerca: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260306_FASE_E_INTENTBRIDGE.md` (18 fonti)
 
-### D.1 - IntentBridge
+### E.1 - "La Nonna" Script
 
-- Interfaccia conversazionale (chat, Telegram, WhatsApp).
-- L'utente descrive -> sistema capisce -> verifica -> genera -> deploya.
-- **Output:** MVP IntentBridge, 3 canali
+- Dialogo parola per parola della demo definitiva.
+- Guida TUTTE le decisioni architetturali. Si scrive PRIMA del codice.
+- **Output:** screenplay + requisiti tecnici estratti
 
-### D.2 - Voice Interface
+### E.2 - IntentBridge Core (CLI chat)
 
-- Speech-to-intent diretto. Dialogo di chiarimento a voce.
+- Pipeline: conversazione guidata -> B.4 intent -> spec -> check -> codegen.
+- Comando CLI: `lu chat` (interactive mode).
+- Multi-lingua dal giorno 1 (it/pt/en).
+- Pattern two-stage validato da Req2LTL: LLM -> IR strutturato -> deterministico (88% vs 43%).
+- **Output:** `_intent_bridge.py`, 100+ test, ZERO deps
+
+### E.3 - NL Processing (LLM Integration)
+
+- LLM traduce NL libero -> B.4 micro-linguaggio strutturato.
+- L'utente parla nella sua lingua, il sistema capisce.
+- anthropic come optional dependency (`pip install ...[nl]`).
+- **Output:** NL mode per `lu chat`
+
+### E.4 - Voice Interface
+
+- STT -> NL -> pipeline IntentBridge.
+- Voice-first per non-tecnici ("la nonna").
 - **Output:** prototipo voce, 3 lingue supportate
 
-### D.3 - Multi-Lingua
-
-- Proprieta formali universali, interfaccia nella lingua dell'utente.
-- Primo target: italiano + portoghese + inglese.
-- **Output:** 3 lingue complete
-
-### D.4 - "La Nonna con le Ricette"
+### E.5 - "La Nonna" Demo Finale
 
 - La demo definitiva. Persona non-tecnica descrive, sistema crea, con PROVA matematica.
 - Video demo 3 minuti. Il mondo lo vede. Tutto cambia.
-- **Output:** demo funzionante, video
+- **Output:** demo funzionante, video, blog post
 
-### D.5 - CervellaLang 1.0
+### E.6 - CervellaLang 1.0
 
 - Grammatica frozen 1.0. Standard library 100+ protocolli. 1000+ developer.
 - **Output:** CervellaLang 1.0, community attiva, "vericoding" riconosciuto
@@ -228,42 +250,36 @@ Il mondo deve sapere che esistiamo.
 ## MAPPA DELLE DIPENDENZE
 
 ```
-FASE A (DONE) --> B.1 (DONE) --> B.2 (DONE) --> B.3 (DONE S395!)
-                                                    |
-                                          B.4 (DONE S396!) <--+
-                                           |
-                                          B.5 (DONE S397!)
-                                           |
-                                          B.6 (DONE S398!)
-                                           |
-                                          B.7 --> C.1 --> C.2 --> C.3
-                                                    |        |
-                                                   C.4     C.5
-                                                    |
-                                                   C.6
-                                                    |
-                                                   C.7 --> D.1 --> D.2
-                                                             |
-                                                            D.3
-                                                             |
-                                                            D.4
-                                                             |
-                                                            D.5
+FASE A (DONE) --> B.1-B.7 (DONE) --> C (DONE) --> D (DONE, Ecosistema)
+                                                       |
+                                                      E.1 (La Nonna Script)
+                                                       |
+                                                      E.2 (IntentBridge Core)
+                                                       |
+                                                      E.3 (NL Processing)
+                                                       |
+                                                      E.4 (Voice)
+                                                       |
+                                                      E.5 (La Nonna Demo)
+                                                       |
+                                                      E.6 (CervellaLang 1.0)
 ```
 
 ---
 
 ## METRICHE DI SUCCESSO
 
-| Fase | Metrica | Target |
-|------|---------|--------|
-| B.3 | generate_python(protocol) funziona | Test suite 50+ |
-| B.7 | PyPI packages LIVE | 9/9 |
-| B.7 | Show HN post | Top 10 del giorno |
-| C.1 | Grammatica EBNF pubblica | RFC accettata |
-| C.7 | Utenti esterni | 10+ in produzione |
-| D.4 | Demo "la nonna" | Video virale |
-| D.5 | Community | 1000+ developer |
+| Fase | Metrica | Target | Status |
+|------|---------|--------|--------|
+| B.7 | PyPI packages LIVE | 9/9 | DONE |
+| B.7 | Show HN post | Top 10 del giorno | DONE (S404) |
+| C | Grammatica + Compilatore + LSP | 25 moduli, 2909 test | DONE |
+| D | Ecosistema (VS Code, Playground, Tour) | 6/6 step, 9.5/10 | DONE |
+| E.1 | Script "La Nonna" | Screenplay completo | DONE (S438) |
+| E.2 | `lu chat` funziona end-to-end | 3 lingue, 100+ test | IN PROGRESS (S438) |
+| E.3 | NL -> codice verificato | 80%+ accuracy | TODO |
+| E.5 | Demo "la nonna" | Video 3 minuti | TODO |
+| E.6 | Community | 1000+ developer | TODO |
 
 ---
 
