@@ -9,7 +9,9 @@ from cervellaswarm_agent_hooks.bash_validator import (
     check_autofix,
     check_blocked,
     check_risky,
+    extract_subcommands,
     is_safe_rm_target,
+    validate,
 )
 
 
@@ -228,3 +230,95 @@ class TestAutofix:
     def test_no_fix_for_empty(self):
         fixed, reason = check_autofix("")
         assert fixed is None
+
+
+# ---------------------------------------------------------------------------
+# SUBCOMMAND EXTRACTION
+# ---------------------------------------------------------------------------
+
+
+class TestExtractSubcommands:
+    def test_dollar_paren(self):
+        subs = extract_subcommands("echo $(rm -rf /)")
+        assert any("rm -rf /" in s for s in subs)
+
+    def test_backtick(self):
+        subs = extract_subcommands("echo `rm -rf /`")
+        assert any("rm -rf /" in s for s in subs)
+
+    def test_semicolon(self):
+        subs = extract_subcommands("echo ok; rm -rf /")
+        assert any("rm -rf /" in s for s in subs)
+
+    def test_and_chain(self):
+        subs = extract_subcommands("true && DROP TABLE users")
+        assert any("DROP TABLE users" in s for s in subs)
+
+    def test_or_chain(self):
+        subs = extract_subcommands("false || rm -rf /")
+        assert any("rm -rf /" in s for s in subs)
+
+    def test_nested_dollar_paren(self):
+        subs = extract_subcommands("echo $(echo $(rm -rf /))")
+        assert any("rm -rf /" in s for s in subs)
+
+    def test_no_subcommands(self):
+        subs = extract_subcommands("ls -la")
+        # Only the semicolon/chain split, which equals the original
+        assert not any("rm" in s for s in subs)
+
+    def test_empty(self):
+        subs = extract_subcommands("")
+        assert subs == []
+
+
+# ---------------------------------------------------------------------------
+# VALIDATE (integration: subcommand bypass prevention)
+# ---------------------------------------------------------------------------
+
+
+class TestValidateBypass:
+    """Ensure destructive commands hidden in subshells are caught."""
+
+    def test_blocked_in_dollar_paren(self):
+        result = validate("echo $(rm -rf /)")
+        assert result is not None
+        assert result["hookSpecificOutput"]["permissionDecision"] == "deny"
+
+    def test_blocked_in_backtick(self):
+        result = validate("echo `rm -rf /`")
+        assert result is not None
+        assert result["hookSpecificOutput"]["permissionDecision"] == "deny"
+
+    def test_blocked_after_semicolon(self):
+        result = validate("echo ok; DROP TABLE users")
+        assert result is not None
+        assert result["hookSpecificOutput"]["permissionDecision"] == "deny"
+
+    def test_blocked_after_and_chain(self):
+        result = validate("true && rm -rf /")
+        assert result is not None
+        assert result["hookSpecificOutput"]["permissionDecision"] == "deny"
+
+    def test_blocked_after_or_chain(self):
+        result = validate("false || rm -rf ~/")
+        assert result is not None
+        assert result["hookSpecificOutput"]["permissionDecision"] == "deny"
+
+    def test_risky_in_dollar_paren(self):
+        result = validate("echo $(git reset --hard)")
+        assert result is not None
+        assert result["hookSpecificOutput"]["permissionDecision"] == "ask"
+
+    def test_risky_after_semicolon(self):
+        result = validate("echo ok; git reset --hard HEAD~1")
+        assert result is not None
+        assert result["hookSpecificOutput"]["permissionDecision"] == "ask"
+
+    def test_safe_command_still_allowed(self):
+        result = validate("echo hello && ls -la")
+        assert result is None
+
+    def test_safe_subshell_allowed(self):
+        result = validate("echo $(date)")
+        assert result is None

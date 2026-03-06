@@ -190,6 +190,51 @@ def check_autofix(command: str) -> tuple[str | None, str | None]:
     return None, None
 
 
+def extract_subcommands(command: str) -> list[str]:
+    """Extract sub-commands from $(), backticks, ;, &&, ||.
+
+    Returns a list of sub-command strings that should also be validated.
+    Does NOT include the original command (caller handles that).
+    """
+    subs = []
+
+    # Extract $(...) contents (handles nested by using a simple bracket counter)
+    i = 0
+    while i < len(command):
+        if command[i:i+2] == "$(" :
+            depth = 1
+            start = i + 2
+            j = start
+            while j < len(command) and depth > 0:
+                if command[j:j+2] == "$(":
+                    depth += 1
+                    j += 2
+                    continue
+                if command[j] == ")":
+                    depth -= 1
+                    if depth == 0:
+                        subs.append(command[start:j])
+                        break
+                j += 1
+            i = j + 1
+        else:
+            i += 1
+
+    # Extract `...` contents (backtick substitution, no nesting)
+    for m in re.finditer(r"`([^`]+)`", command):
+        subs.append(m.group(1))
+
+    # Split on ; && || and validate each segment
+    # (the original command is already checked, but segments hide things like:
+    #  "echo ok; rm -rf /" or "true && DROP TABLE users")
+    for part in re.split(r"\s*(?:;|&&|\|\|)\s*", command):
+        stripped = part.strip()
+        if stripped and stripped != command.strip():
+            subs.append(stripped)
+
+    return subs
+
+
 def validate(command: str) -> dict | None:
     """Validate a bash command. Returns hook output dict or None (allow)."""
     if not command or not command.strip():
@@ -197,21 +242,25 @@ def validate(command: str) -> dict | None:
 
     all_blocked, all_risky, all_safe = _get_all_patterns()
 
-    # 1. Check BLOCKED
-    blocked_reason = check_blocked(command, all_blocked)
-    if blocked_reason:
-        return {
-            "hookSpecificOutput": {
-                "hookEventName": "PreToolUse",
-                "permissionDecision": "deny",
-                "permissionDecisionReason": (
-                    f"BLOCKED: {blocked_reason}. "
-                    f"Command: {command[:80]}"
-                ),
-            }
-        }
+    # Collect all commands to check: the original + any sub-commands
+    commands_to_check = [command] + extract_subcommands(command)
 
-    # 2. Check AUTO-FIX (before risky, because fix resolves the risk)
+    # 1. Check BLOCKED (across all commands/sub-commands)
+    for cmd in commands_to_check:
+        blocked_reason = check_blocked(cmd, all_blocked)
+        if blocked_reason:
+            return {
+                "hookSpecificOutput": {
+                    "hookEventName": "PreToolUse",
+                    "permissionDecision": "deny",
+                    "permissionDecisionReason": (
+                        f"BLOCKED: {blocked_reason}. "
+                        f"Command: {command[:80]}"
+                    ),
+                }
+            }
+
+    # 2. Check AUTO-FIX (only on the original command)
     fixed_command, fix_reason = check_autofix(command)
     if fixed_command:
         return {
@@ -223,19 +272,20 @@ def validate(command: str) -> dict | None:
             }
         }
 
-    # 3. Check RISKY
-    risky_reason = check_risky(command, all_risky, all_safe)
-    if risky_reason:
-        return {
-            "hookSpecificOutput": {
-                "hookEventName": "PreToolUse",
-                "permissionDecision": "ask",
-                "permissionDecisionReason": (
-                    f"WARNING: {risky_reason}. "
-                    f"Confirm to proceed."
-                ),
+    # 3. Check RISKY (across all commands/sub-commands)
+    for cmd in commands_to_check:
+        risky_reason = check_risky(cmd, all_risky, all_safe)
+        if risky_reason:
+            return {
+                "hookSpecificOutput": {
+                    "hookEventName": "PreToolUse",
+                    "permissionDecision": "ask",
+                    "permissionDecisionReason": (
+                        f"WARNING: {risky_reason}. "
+                        f"Confirm to proceed."
+                    ),
+                }
             }
-        }
 
     # 4. ALLOW (silent)
     return None

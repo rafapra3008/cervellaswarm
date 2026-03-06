@@ -4,6 +4,32 @@ All notable changes to `cervellaswarm-lingua-universale` will be documented in t
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.3.0] - 2026-03-06
+
+### Added
+
+**Ecosystem - Phase D: LSP Advanced (D5)**
+- `_lsp.py`: Hover support — shows type, docstring, and trust tier on mouse hover. Markdown-formatted hover content.
+- `_lsp.py`: Completion — context-aware suggestions for keywords, defined names, trust tiers, confidence levels. 7 completion contexts.
+- `_lsp.py`: Go-to-definition — click on a type or agent name to jump to its definition. Symbol table with line/column tracking.
+- `_lsp.py`: `build_symbol_table()` — AST-based symbol table with regex fallback for robustness.
+
+**Testing**
+- `test_colors.py`: 9 tests covering `_ColorState`, `init_colors()`, `reset_colors()`, and singleton behavior. Closes last test coverage gap.
+
+### Changed
+
+- **Refactoring**: `checker.send()` split from 168 lines into 4 private helpers (17-line orchestrator)
+- **Refactoring**: `codegen.generate_python_multi()` split from 171 lines into 3 private helpers (43-line orchestrator)
+- **Test count**: 2828 -> 2909 tests
+
+### Fixed
+
+- Tour: trust tiers corrected from "three" to "four", added `untrusted` tier
+- SPDX license headers added to playground JS files
+- VS Code extension README/CHANGELOG updated for D5 LSP features
+- Stale test counts fixed across 5 documentation files (2806 -> 2900)
+
 ## [0.2.0] - 2026-02-28
 
 ### Added
@@ -140,6 +166,7 @@ This project follows [Semantic Versioning](https://semver.org/).
 - Frozen dataclasses with `__post_init__` validation throughout
 - Pre-computed O(1) lookup tables for MessageKind <-> PascalCase conversion
 
+[0.3.0]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.3.0
 [0.2.0]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.2.0
 [0.1.1]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.1.1
 [0.1.0]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.1.0

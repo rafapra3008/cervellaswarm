@@ -15,15 +15,15 @@
   "dependencies": {
     "stripe": "^17.5.0",
     "express": "^4.21.2",
-    "express-rate-limit": "^7.5.0",
+    "express-rate-limit": "^8.2.1",
     "lowdb": "^7.0.1",
     "dotenv": "^16.4.7",
-    "cors": "^2.8.5"
+    "cors": "^2.8.6"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/cors": "^2.8.17",
-    "@types/node": "^22.10.7",
+    "@types/node": "^25.2.3",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"
   },

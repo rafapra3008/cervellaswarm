@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 CervellaSwarm Contributors
+
 /**
  * Tour UI logic for A Tour of Lingua Universale.
  *

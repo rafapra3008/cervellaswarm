@@ -6,7 +6,7 @@
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![PyPI Packages](https://img.shields.io/badge/PyPI-9_packages-orange.svg)](https://pypi.org/search/?q=cervellaswarm)
-[![Tests: 3791 passing](https://img.shields.io/badge/tests-3791_passing-brightgreen.svg)](packages/)
+[![Tests: 4887 passing](https://img.shields.io/badge/tests-4887_passing-brightgreen.svg)](packages/)
 [![Coverage: 95%](https://img.shields.io/badge/coverage-95%25-brightgreen.svg)](packages/)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-native-blueviolet.svg)](https://claude.ai/code)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rafapra3008/cervellaswarm/blob/main/docs/blog/from-vibecoding-to-vericoding-demo.ipynb)
@@ -122,7 +122,7 @@ All packages are on [PyPI](https://pypi.org/search/?q=cervellaswarm) -- install 
 
 Every package: Apache 2.0, Python 3.10+, tested, documented, zero or minimal dependencies.
 
-> **The crown jewel:** To our knowledge, `lingua-universale` is the first session type system for AI agent communication in Python. 25 modules, 2828 tests, ZERO external dependencies. [Read the vision](packages/lingua-universale/NORD.md).
+> **The crown jewel:** To our knowledge, `lingua-universale` is the first session type system for AI agent communication in Python. 25 modules, 2900 tests, ZERO external dependencies. [Try it in your browser](https://rafapra3008.github.io/cervellaswarm/) or [read the vision](packages/lingua-universale/NORD.md).
 
 ## Try It Now
 
@@ -237,8 +237,8 @@ Built-in tree-sitter powered code understanding:
 ## Battle-Tested
 
 ```
-400+ sessions of daily use since December 2025
-3,791 tests passing across 9 packages (95% coverage)
+430+ sessions of daily use since December 2025
+4,887 tests passing across 9 packages (95% coverage)
 17 agents used daily across real production codebases
 9 packages published on PyPI, all Apache 2.0
 Built before multi-agent was a buzzword
@@ -289,6 +289,6 @@ Copyright 2025-2026 CervellaSwarm Contributors.
 
 **CervellaSwarm** -- *17 brains are better than one.*
 
-[Getting Started](docs/GETTING_STARTED.md) | [Documentation](docs/) | [Blog: From Vibecoding to Vericoding](docs/blog/from-vibecoding-to-vericoding.md) | [Try in Colab](https://colab.research.google.com/github/rafapra3008/cervellaswarm/blob/main/docs/blog/from-vibecoding-to-vericoding-demo.ipynb) | [Contributing](CONTRIBUTING.md) | [Changelog](CHANGELOG.md)
+[Getting Started](docs/GETTING_STARTED.md) | [Documentation](docs/) | [Playground](https://rafapra3008.github.io/cervellaswarm/) | [Blog: From Vibecoding to Vericoding](docs/blog/from-vibecoding-to-vericoding.md) | [Colab Demo](https://colab.research.google.com/github/rafapra3008/cervellaswarm/blob/main/docs/blog/from-vibecoding-to-vericoding-demo.ipynb) | [Contributing](CONTRIBUTING.md)
 
 </div>

@@ -54,21 +54,21 @@
     ".env.example"
   ],
   "dependencies": {
-    "@cervellaswarm/core": "file:../core",
     "@anthropic-ai/sdk": "^0.39.0",
+    "@cervellaswarm/core": "file:../core",
     "@inquirer/prompts": "^7.2.0",
     "boxen": "^8.0.1",
     "chalk": "^5.3.0",
-    "commander": "^12.1.0",
+    "commander": "^14.0.3",
     "conf": "^13.0.1",
     "figures": "^6.1.0",
     "handlebars": "^4.7.8",
-    "open": "^10.2.0",
-    "ora": "^8.1.1",
+    "open": "^11.0.0",
+    "ora": "^9.3.0",
     "update-notifier": "^7.3.1"
   },
   "devDependencies": {
     "@inquirer/testing": "^3.0.4",
-    "eslint": "^9.17.0"
+    "eslint": "^10.0.0"
   }
 }

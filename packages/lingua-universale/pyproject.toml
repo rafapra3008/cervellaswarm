@@ -10,7 +10,7 @@ build-backend = "hatchling.build"
 # ---------------------------------------------------------------------------
 [project]
 name = "cervellaswarm-lingua-universale"
-version = "0.2.0"
+version = "0.3.0"
 description = "The first programming language designed for AI — session types, compiler, REPL, and formal verification"
 readme = "README.md"
 license = "Apache-2.0"
@@ -57,6 +57,7 @@ dependencies = []
 Homepage = "https://github.com/rafapra3008/cervellaswarm"
 Repository = "https://github.com/rafapra3008/cervellaswarm"
 Documentation = "https://github.com/rafapra3008/cervellaswarm/tree/main/packages/lingua-universale"
+Playground = "https://rafapra3008.github.io/cervellaswarm/"
 "Bug Tracker" = "https://github.com/rafapra3008/cervellaswarm/issues"
 
 # ---------------------------------------------------------------------------
