@@ -237,8 +237,8 @@ Built-in tree-sitter powered code understanding:
 ## Battle-Tested
 
 ```
-430+ sessions of daily use since December 2025
-4,887 tests passing across 9 packages (95% coverage)
+437+ sessions of daily use since December 2025
+5,221 tests passing across 13 packages (95% coverage)
 17 agents used daily across real production codebases
 9 packages published on PyPI, all Apache 2.0
 Built before multi-agent was a buzzword

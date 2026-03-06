@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 6 Marzo 2026 - S435 (D6 Guardiana Finale DONE. FASE D COMPLETA!)
+> Aggiornato: 6 Marzo 2026 - S437 (PyPI v0.3.0, P2 Refactoring, FASE D COMPLETA!)
 
 ```
 +==================================================================+
@@ -147,7 +147,7 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |   FASE D: L'ECOSISTEMA -- COMPLETA! (S426-S435)                  |
 |     D1-D6 DONE! Media 9.5/10                                    |
 |     PROSSIMO: FASE E o nuova direzione                           |
-|   PyPI: v0.2.0 LIVE! pip install cervellaswarm-lingua-universale|
+|   PyPI: v0.3.0 LIVE! pip install cervellaswarm-lingua-universale|
 |   25 moduli, 2909 test, 74 error codes, 131 symbols, 5221 total |
 |   Playground LIVE: https://rafapra3008.github.io/cervellaswarm/ |
 |   Tour: 24 step interattivi in 4 capitoli + 4 esercizi          |

@@ -6,7 +6,7 @@
 > "La domanda e la risposta nello STESSO linguaggio." - Rafa
 
 **Creata:** 24 Febbraio 2026 - Sessione 394
-**Aggiornata:** 28 Febbraio 2026 - Sessione 425 (FASE C COMPLETA!)
+**Aggiornata:** 6 Marzo 2026 - Sessione 437 (FASE D COMPLETA! PyPI v0.3.0)
 **Autrice:** Cervella Architect (su commissione della Regina)
 **Fonti:** NORD.md + 3 report di ricerca (64+ fonti esterne) + analisi codebase
 **Score target:** 9.5/10 per ogni step (audit Guardiana)
@@ -24,7 +24,7 @@ LAYER 3: Code Generation certificata                      OPERATIVO (S395!)
 LAYER 2: Agent Hooks + Quality Gates                      OPERATIVO
 LAYER 1: CI/CD + PyPI + Fly.io                            OPERATIVO
 
-Asset: 25 moduli, 2900 test, ~12000+ LOC, ZERO deps esterne
+Asset: 25 moduli, 2909 test, ~12000+ LOC, ZERO deps esterne
 Campo vergine confermato da 242+ fonti (session types per AI in Python)
 ```
 
@@ -135,7 +135,7 @@ Il mondo deve sapere che esistiamo.
 
 > **NOTA (S425):** Fase C COMPLETATA! Piano esecutivo:
 > `.sncp/roadmaps/SUBROADMAP_FASE_C_LINGUAGGIO.md` (C1 Grammatica, C2 Compilatore, C3 L'Esperienza).
-> 25 moduli, 2900 test, 74 error codes, 5 file .lu, ZERO deps. Media 9.45/10.
+> 25 moduli, 2909 test, 74 error codes, 5 file .lu, ZERO deps. Media 9.45/10.
 > I sub-step C.1-C.7 sotto sono la visione originale S394; il piano esecutivo reale e nella SUBROADMAP.
 
 > Obiettivo: il layer di specifica diventa un linguaggio di programmazione vero.

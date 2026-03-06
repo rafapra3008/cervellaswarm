@@ -341,43 +341,13 @@ class ASTCompiler:
             lines.append(
                 '        """Process input with contract enforcement."""'
             )
-            # requires (preconditions)
             if node.requires:
-                lines.append("        # --- requires (preconditions) ---")
-                for req in node.requires:
-                    guard_py = self._contract_expr_to_python(req)
-                    # Human-readable condition uses plain expr (no kwargs[])
-                    human_py = self._expr_to_python(req)
-                    req_loc = self._loc_comment(req.loc)
-                    source = f"line {req.loc.line}, col {req.loc.col}"
-                    lines.append(f"        if not ({guard_py}):  {req_loc}")
-                    lines.append(
-                        f"            raise ContractViolation("
-                        f'"{self._escape_contract_str(human_py)}"'
-                        f', kind="requires"'
-                        f', source="{source}"'
-                        f")"
-                    )
+                lines.extend(self._emit_contract_guards(node.requires, "requires"))
 
-            # execute
             lines.append("        _result = self._execute(**kwargs)")
 
-            # ensures (postconditions)
             if node.ensures:
-                lines.append("        # --- ensures (postconditions) ---")
-                for ens in node.ensures:
-                    guard_py = self._contract_expr_to_python(ens)
-                    human_py = self._expr_to_python(ens)
-                    ens_loc = self._loc_comment(ens.loc)
-                    source = f"line {ens.loc.line}, col {ens.loc.col}"
-                    lines.append(f"        if not ({guard_py}):  {ens_loc}")
-                    lines.append(
-                        f"            raise ContractViolation("
-                        f'"{self._escape_contract_str(human_py)}"'
-                        f', kind="ensures"'
-                        f', source="{source}"'
-                        f")"
-                    )
+                lines.extend(self._emit_contract_guards(node.ensures, "ensures"))
 
             lines.append("        return _result")
 
@@ -388,6 +358,27 @@ class ASTCompiler:
             f'        raise NotImplementedError("{node.name}._execute")'
         )
 
+        return lines
+
+    _CONTRACT_LABELS: dict[str, str] = {"requires": "requires (preconditions)", "ensures": "ensures (postconditions)"}
+
+    def _emit_contract_guards(self, exprs: tuple, kind: str) -> list[str]:
+        """Emit ``if not (guard): raise ContractViolation(...)`` for *kind*."""
+        label = self._CONTRACT_LABELS.get(kind, kind)
+        lines: list[str] = [f"        # --- {label} ---"]
+        for expr in exprs:
+            guard_py = self._contract_expr_to_python(expr)
+            human_py = self._expr_to_python(expr)
+            loc_comment = self._loc_comment(expr.loc)
+            source = f"line {expr.loc.line}, col {expr.loc.col}"
+            lines.append(f"        if not ({guard_py}):  {loc_comment}")
+            lines.append(
+                f"            raise ContractViolation("
+                f'"{self._escape_contract_str(human_py)}"'
+                f', kind="{kind}"'
+                f', source="{source}"'
+                f")"
+            )
         return lines
 
     # ----------------------------------------------------------

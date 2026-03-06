@@ -888,24 +888,10 @@ class Parser:
                 self._expect(TokKind.NEWLINE)
 
             elif tok.value == "accepts":
-                self._advance()
-                self._expect(TokKind.COLON)
-                msgs = [self._expect_ident().value]
-                while self._at(TokKind.COMMA):
-                    self._advance()
-                    msgs.append(self._expect_ident().value)
-                accepts = tuple(msgs)
-                self._expect(TokKind.NEWLINE)
+                accepts = self._parse_message_list()
 
             elif tok.value == "produces":
-                self._advance()
-                self._expect(TokKind.COLON)
-                msgs = [self._expect_ident().value]
-                while self._at(TokKind.COMMA):
-                    self._advance()
-                    msgs.append(self._expect_ident().value)
-                produces = tuple(msgs)
-                self._expect(TokKind.NEWLINE)
+                produces = self._parse_message_list()
 
             elif tok.value == "requires":
                 requires = self._parse_condition_list("requires")
@@ -932,6 +918,17 @@ class Parser:
             ensures=ensures,
             loc=loc,
         )
+
+    def _parse_message_list(self) -> tuple[str, ...]:
+        """Parse: ``keyword ':' IDENT (',' IDENT)* NEWLINE`` for accepts/produces."""
+        self._advance()
+        self._expect(TokKind.COLON)
+        msgs = [self._expect_ident().value]
+        while self._at(TokKind.COMMA):
+            self._advance()
+            msgs.append(self._expect_ident().value)
+        self._expect(TokKind.NEWLINE)
+        return tuple(msgs)
 
     def _parse_condition_list(self, keyword: str) -> tuple[Expr, ...]:
         """Parse: requires/ensures clause, block or inline.

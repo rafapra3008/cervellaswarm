@@ -154,6 +154,78 @@ _SINGLE_CHAR_MAP: dict[str, TokKind] = {
 # ---------------------------------------------------------------------------
 
 
+def _check_tabs(source: str) -> None:
+    """Reject tabs before textwrap.dedent (which can silently strip them)."""
+    for line_no, line in enumerate(source.split("\n"), start=1):
+        if "\t" in line:
+            raise TokenizeError(
+                "tabs are not allowed; use 4 spaces for indentation",
+                line=line_no,
+                col=line.index("\t"),
+            )
+
+
+def _tokenize_line_content(
+    content: str, pos: int, tokens: list[Tok], line_no: int, paren_depth: int,
+) -> int:
+    """Scan one line of content starting at *pos*, appending tokens.
+
+    Returns the updated *paren_depth* (may change on ``(``, ``)``, etc.).
+    """
+    while pos < len(content):
+        col = pos
+        ch = content[pos]
+
+        if ch == " ":
+            pos += 1
+            continue
+
+        if ch == "#":
+            break
+
+        two = content[pos : pos + 2]
+        if two in _MULTI_CHAR_OPS:
+            tokens.append(Tok(_MULTI_CHAR_OPS[two], two, line_no, col))
+            pos += 2
+            continue
+
+        if ch in _SINGLE_CHAR_MAP:
+            tokens.append(Tok(_SINGLE_CHAR_MAP[ch], ch, line_no, col))
+            if ch in "([":
+                paren_depth += 1
+            elif ch in ")]":
+                paren_depth = max(0, paren_depth - 1)
+            pos += 1
+            continue
+
+        if ch in ('"', "'"):
+            end = content.find(ch, pos + 1)
+            if end == -1:
+                raise TokenizeError(
+                    "unterminated string literal", line=line_no, col=col,
+                )
+            tokens.append(Tok(TokKind.STRING, content[pos : end + 1], line_no, col))
+            pos = end + 1
+            continue
+
+        if ch.isdigit():
+            m = _NUMBER_RE.match(content, pos)
+            if m:
+                tokens.append(Tok(TokKind.NUMBER, m.group(), line_no, col))
+                pos = m.end()
+                continue
+
+        m = _IDENT_RE.match(content, pos)
+        if m:
+            tokens.append(Tok(TokKind.IDENT, m.group(), line_no, col))
+            pos = m.end()
+            continue
+
+        raise TokenizeError(f"unexpected character: {ch!r}", line=line_no, col=col)
+
+    return paren_depth
+
+
 def tokenize(source: str) -> list[Tok]:
     """Tokenize Lingua Universale source into a flat token list.
 
@@ -176,23 +248,13 @@ def tokenize(source: str) -> list[Tok]:
         TokenizeError: On lexical errors: tabs, bad indent alignment,
             unterminated string literal, or unexpected character.
     """
-    # Check for tabs before dedent so they are never silently stripped.
-    # textwrap.dedent can consume a common leading tab, hiding the error.
-    pre_dedent_lines = source.split("\n")
-    for pre_no, pre_line in enumerate(pre_dedent_lines, start=1):
-        if "\t" in pre_line:
-            tab_col = pre_line.index("\t")
-            raise TokenizeError(
-                "tabs are not allowed; use 4 spaces for indentation",
-                line=pre_no,
-                col=tab_col,
-            )
+    _check_tabs(source)
 
     source = textwrap.dedent(source)
     lines = source.split("\n")
 
     tokens: list[Tok] = []
-    indent_stack: list[int] = [0]  # absolute column counts
+    indent_stack: list[int] = [0]
     paren_depth: int = 0
     last_line: int = 1
 
@@ -200,14 +262,11 @@ def tokenize(source: str) -> list[Tok]:
         last_line = line_no
         stripped = raw_line.rstrip()
 
-        # Skip blank lines and comment-only lines (no tokens produced)
         if not stripped or stripped.lstrip().startswith("#"):
             continue
 
-        # Count leading spaces (after dedent, raw_line is the source)
         leading_spaces = len(stripped) - len(stripped.lstrip())
 
-        # Validate: must be multiple of 4
         if leading_spaces % 4 != 0:
             raise TokenizeError(
                 f"indentation must be a multiple of 4 spaces (got {leading_spaces})",
@@ -218,100 +277,26 @@ def tokenize(source: str) -> list[Tok]:
         # INDENT / DEDENT logic (suppressed inside parentheses)
         if paren_depth == 0:
             if leading_spaces > indent_stack[-1]:
-                # Deeper: push and emit ONE INDENT
                 indent_stack.append(leading_spaces)
                 tokens.append(Tok(TokKind.INDENT, "", line_no, 0))
-
             elif leading_spaces < indent_stack[-1]:
-                # Shallower: pop and emit DEDENT for each level closed
                 while indent_stack and leading_spaces < indent_stack[-1]:
                     indent_stack.pop()
                     tokens.append(Tok(TokKind.DEDENT, "", line_no, 0))
-                # After popping, the top must match exactly
                 if leading_spaces != indent_stack[-1]:
                     raise TokenizeError(
                         "dedent does not match any outer indentation level",
                         line=line_no,
                         col=0,
                     )
-            # else: same level, no indent token
 
-        # Tokenize content (everything after the leading whitespace)
-        content = stripped  # keep full stripped line, use pos with offset
-        pos = leading_spaces  # start after indentation
+        paren_depth = _tokenize_line_content(
+            stripped, leading_spaces, tokens, line_no, paren_depth,
+        )
 
-        while pos < len(content):
-            col = pos  # col is position in the full stripped line
-            ch = content[pos]
-
-            # 1. Skip spaces
-            if ch == " ":
-                pos += 1
-                continue
-
-            # 2. Inline comment -> stop processing this line
-            if ch == "#":
-                break
-
-            # 3. Multi-char operators (MUST be before single-char checks)
-            two = content[pos : pos + 2]
-            if two in _MULTI_CHAR_OPS:
-                tokens.append(Tok(_MULTI_CHAR_OPS[two], two, line_no, col))
-                pos += 2
-                continue
-
-            # 4. Single-char symbols
-            if ch in _SINGLE_CHAR_MAP:
-                tokens.append(Tok(_SINGLE_CHAR_MAP[ch], ch, line_no, col))
-                # Track paren depth for line-continuation suppression
-                if ch in "([":
-                    paren_depth += 1
-                elif ch in ")]":
-                    paren_depth = max(0, paren_depth - 1)
-                pos += 1
-                continue
-
-            # 5. String literal (single or double quote)
-            if ch in ('"', "'"):
-                end = content.find(ch, pos + 1)
-                if end == -1:
-                    raise TokenizeError(
-                        "unterminated string literal",
-                        line=line_no,
-                        col=col,
-                    )
-                value = content[pos : end + 1]  # includes surrounding quotes
-                tokens.append(Tok(TokKind.STRING, value, line_no, col))
-                pos = end + 1
-                continue
-
-            # 6. Number literal
-            if ch.isdigit():
-                m = _NUMBER_RE.match(content, pos)
-                if m:
-                    tokens.append(Tok(TokKind.NUMBER, m.group(), line_no, col))
-                    pos = m.end()
-                    continue
-
-            # 7. Identifier (also captures keywords -- parser distinguishes)
-            m = _IDENT_RE.match(content, pos)
-            if m:
-                tokens.append(Tok(TokKind.IDENT, m.group(), line_no, col))
-                pos = m.end()
-                continue
-
-            # 8. Unknown character
-            raise TokenizeError(
-                f"unexpected character: {ch!r}",
-                line=line_no,
-                col=col,
-            )
-
-        # Emit NEWLINE at end of logical line (suppressed inside parens)
         if paren_depth == 0:
-            tokens.append(Tok(TokKind.NEWLINE, "", line_no, len(content)))
+            tokens.append(Tok(TokKind.NEWLINE, "", line_no, len(stripped)))
 
-    # After all lines: close all open indentation levels
     while len(indent_stack) > 1:
         indent_stack.pop()
         tokens.append(Tok(TokKind.DEDENT, "", last_line, 0))

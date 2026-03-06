@@ -2,7 +2,7 @@
 
 > **Creata:** 28 Febbraio 2026 - Sessione 425
 > **Fonti:** 3 report di ricerca (46+ fonti), studi su Python/Rust/Go/Gleam/Zig/Roc
-> **Prerequisiti:** FASE A+B+C COMPLETE (25 moduli, 2856 test, 0 deps)
+> **Prerequisiti:** FASE A+B+C COMPLETE (25 moduli, 2909 test, 0 deps)
 > **Score target:** 9.5/10 per ogni step (audit Guardiana)
 > **Filosofia:** "Fatto BENE > Fatto VELOCE" | "Un progresso al giorno"
 
@@ -276,8 +276,8 @@ Annuncio community.
 
 **Criterio completamento:**
 - [x] Cross-cutting audit Guardiana su D1-D5 (S435, 9.3/10 -> fix -> re-audit)
-- [x] README package aggiornato: test count 2900, playground badge, Editor Support, Interactive Tutorial sections
-- [x] README main aggiornato: test count 4887, playground link
+- [x] README package aggiornato: test count 2909, playground badge, Editor Support, Interactive Tutorial sections
+- [x] README main aggiornato: test count 5221, playground link
 - [x] VS Code ext README + CHANGELOG + package.json aggiornati per D5 features
 - [x] Tour fix: trust tiers "four" not "three", untrusted aggiunto
 - [x] SPDX headers playground JS files
@@ -303,7 +303,7 @@ FASE D2: LSP Base (lu lsp)           [####################] DONE (S426, 9.5/10)
   VS Code collegato al server
 
 FASE D3: Playground Online            [####################] DONE (S429, LIVE!)
-  Monaco + Pyodide + GitHub Pages      v0.2.0 su PyPI, deploy automatico
+  Monaco + Pyodide + GitHub Pages      v0.3.0 su PyPI, deploy automatico
   URL: https://rafapra3008.github.io/cervellaswarm/
   "Try it in 30 seconds"
 
@@ -327,7 +327,7 @@ AUDIT: Guardiana dopo OGNI step
 ## DIPENDENZE
 
 ```
-FASE A+B+C (COMPLETE - 25 moduli, 2900 test)
+FASE A+B+C (COMPLETE - 25 moduli, 2909 test)
    |
    v
 D1 (Syntax Highlighting - standalone)
@@ -394,7 +394,7 @@ D2 e D4 hanno dipendenze lineari.
       TUTTO in un singolo comando. Zero configurazione.
       Lezione: less is more, ma quel "less" deve funzionare PERFETTAMENTE.
 
-2026: Lingua Universale. Ha: 25 moduli, 2900 test, ZERO deps, CLI, REPL.
+2026: Lingua Universale. Ha: 25 moduli, 2909 test, ZERO deps, CLI, REPL.
       Manca: l'ecosistema che porta il mondo dentro.
       Fase D: costruiamolo.
 ```
