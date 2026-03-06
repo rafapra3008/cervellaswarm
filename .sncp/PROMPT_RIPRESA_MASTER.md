@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - MASTER (Globale)
 
-> **Ultimo aggiornamento:** 6 Marzo 2026 - Sessione 433
+> **Ultimo aggiornamento:** 6 Marzo 2026 - Sessione 435
 > **Tabella ecosistema condivisa - SOLO link ai file specifici**
 
 ---
@@ -9,7 +9,7 @@
 
 | Progetto | PROMPT_RIPRESA | Aggiornato | TL;DR |
 |----------|----------------|------------|-------|
-| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-03-06 | S433: Migliora Casa v2 (status bar v2, 11 Dependabot, pulizia). FASE D 4/6. 2856 test |
+| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-03-06 | S435: FASE D COMPLETA! D6 Guardiana Finale (9.7/10). 4887 test (2900 LU) |
 | **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-03-05 | S286: Deploy SPRING-025 completo. Script v4.5.0 batch. 1908 test |
 | **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-30 | In pausa (Cache Layer v2.1.0 completato) |
 | **CervellaBrasil** | `.sncp/progetti/cervellabrasil/PROMPT_RIPRESA_cervellabrasil.md` | 2026-02-12 | FASE 0-2.5 completas, pronto FASE 3 |

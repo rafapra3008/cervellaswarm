@@ -327,7 +327,7 @@ AUDIT: Guardiana dopo OGNI step
 ## DIPENDENZE
 
 ```
-FASE A+B+C (COMPLETE - 25 moduli, 2806 test)
+FASE A+B+C (COMPLETE - 25 moduli, 2900 test)
    |
    v
 D1 (Syntax Highlighting - standalone)
@@ -394,7 +394,7 @@ D2 e D4 hanno dipendenze lineari.
       TUTTO in un singolo comando. Zero configurazione.
       Lezione: less is more, ma quel "less" deve funzionare PERFETTAMENTE.
 
-2026: Lingua Universale. Ha: 25 moduli, 2806 test, ZERO deps, CLI, REPL.
+2026: Lingua Universale. Ha: 25 moduli, 2900 test, ZERO deps, CLI, REPL.
       Manca: l'ecosistema che porta il mondo dentro.
       Fase D: costruiamolo.
 ```

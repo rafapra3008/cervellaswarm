@@ -24,7 +24,9 @@ Aggiornati README (package + main), VS Code extension, playground, pyproject.tom
 - Audit Guardiana #1: **9.3/10** (0 P0/P1, 3 P2, 8 P3)
 - Tutti P2 fixati + 3 P3 notevoli fixati
 - Audit Guardiana #2: **9.7/10** APPROVED (tutti fix verificati)
-- Suite completa: **4887 test** (9 package), LU: 2900 test in 1.03s
+- Suite completa: **4896 test** (9 package), LU: 2909 test in 1.01s
+- test_colors.py aggiunto: 9 test, unico gap coverage chiuso
+- 3 Dependabot PR mergiate (#18 open, #21 express-rate-limit, #23 anthropic-sdk)
 
 ---
 
@@ -58,11 +60,12 @@ La Fase D e COMPLETA. Opzioni per il futuro:
 - Ruotare Bedzzle key su MyReception
 
 ### BACKLOG
-- 9 Dependabot major PR (sessione dedicata con test)
+- 6 Dependabot PR rimaste: 3 TEST FIRST (#22 commander, #20 ora, #13 conf), 3 SKIP (#19 stripe, #14 express, #11 zod)
 - Centralizzare PROJECT_MAPPING (7 file)
 - Test automatizzati context-monitor.py
 - SNCP come package open source
 - VS Code Marketplace (publisher account)
+- Refactoring candidati: checker.send() 167 righe, codegen.generate_python_multi() 171 righe
 
 ---
 
@@ -70,11 +73,11 @@ La Fase D e COMPLETA. Opzioni per il futuro:
 
 | Metrica | Valore |
 |---------|--------|
-| Test totali (9 pkg) | **4887** |
-| Test LU | **2900** |
+| Test totali (9 pkg) | **4896** |
+| Test LU | **2909** |
 | Audit Guardiana S435 | **9.7/10** |
 | Fase D media | **~9.5/10** |
-| Dependabot mergiate | **11/20** |
+| Dependabot mergiate | **14/20** (3 new: #18 #21 #23) |
 
 ---
 
@@ -94,3 +97,22 @@ La Fase D e COMPLETA. Opzioni per il futuro:
 ---
 
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
+
+<!-- AUTO-CHECKPOINT-START -->
+
+## AUTO-CHECKPOINT: 2026-03-06 10:58 (auto)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 29f9e36f - S435: Add test_colors.py -- close last test coverage gap (2909 test)
+- **File modificati** (4):
+  - sncp/PROMPT_RIPRESA_MASTER.md
+  - .sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
+  - .sncp/roadmaps/MAPPA_LINGUAGGIO_CERVELLASWARM.md
+  - .sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: auto
+
+<!-- AUTO-CHECKPOINT-END -->
