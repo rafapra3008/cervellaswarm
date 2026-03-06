@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 6 Marzo 2026 - S433 (Migliora Casa v2 + 11 Dependabot. D5 LSP Avanzato PROSSIMO.)
+> Aggiornato: 6 Marzo 2026 - S434 (D5 LSP Avanzato DONE 9.5/10. D6 Guardiana Finale PROSSIMO.)
 
 ```
 +==================================================================+
@@ -145,10 +145,10 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |   FASE C: IL LINGUAGGIO -- COMPLETA! (S407-S425)                 |
 |     C1 Grammatica DONE! C2 Compilatore DONE! C3 Esperienza DONE!|
 |   FASE D: L'ECOSISTEMA -- IN CORSO (S426+)                       |
-|     D1 Syntax DONE! D2 LSP DONE! D3 Playground DONE! D4 Tour DONE!|
-|     PROSSIMO: D5 LSP Avanzato (Hover + Completion + Go-to-def)  |
+|     D1-D4 DONE! D5 LSP Avanzato DONE! (9.5/10)                  |
+|     PROSSIMO: D6 Guardiana Finale + Launch                      |
 |   PyPI: v0.2.0 LIVE! pip install cervellaswarm-lingua-universale|
-|   25 moduli, 2856 test, 74 error codes, 131 symbols             |
+|   25 moduli, 2900 test, 74 error codes, 131 symbols             |
 |   Playground LIVE: https://rafapra3008.github.io/cervellaswarm/ |
 |   Tour: 24 step interattivi in 4 capitoli + 4 esercizi          |
 |   NORD completo: packages/lingua-universale/NORD.md              |

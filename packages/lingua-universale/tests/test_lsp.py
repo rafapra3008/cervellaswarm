@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Tests for the LSP server validation logic (D2).
+"""Tests for the LSP server (D2 diagnostics + D5 hover/completion/go-to-def).
 
 Tests the diagnostic conversion pipeline:
     LU source -> parse() -> TokenizeError|ParseError -> humanize() -> LSP Diagnostic
@@ -19,7 +19,15 @@ pygls = pytest.importorskip("pygls", reason="pygls not installed")
 
 from lsprotocol import types
 
-from cervellaswarm_lingua_universale._lsp import _source_diagnostics, _check_pygls_available
+from cervellaswarm_lingua_universale._lsp import (
+    _source_diagnostics,
+    _check_pygls_available,
+    build_symbol_table,
+    _word_at_pos,
+    _hover_info,
+    _goto_definition,
+    _completion_items,
+)
 
 
 # ============================================================
@@ -258,3 +266,349 @@ class TestServerCreation:
         assert server is not None
         assert server.name == "lingua-universale-lsp"
         assert server.version == __version__
+
+
+# ============================================================
+# D5: Symbol table
+# ============================================================
+
+HELLO_LU = """\
+type TaskStatus = Pending | Running | Done
+
+agent Worker:
+    role: backend
+    trust: standard
+    accepts: TaskRequest
+    produces: TaskResult
+    requires: task.well_defined
+    ensures: result.done
+
+protocol DelegateTask:
+    roles: regina, worker, guardiana
+    regina asks worker to do task
+    worker returns result to regina
+    regina asks guardiana to verify
+    guardiana returns verdict to regina
+    properties:
+        always terminates
+        no deadlock
+"""
+
+RECORD_LU = """\
+type DeploymentPlan =
+    target: String
+    version: String
+    priority: Priority
+"""
+
+USE_LU = "use python datetime"
+
+
+class TestSymbolTable:
+    def test_variant_type(self):
+        table = build_symbol_table("type Color = Red | Green | Blue")
+        assert "Color" in table
+        assert table["Color"].kind == "variant_type"
+        assert "Red" in table["Color"].detail
+        assert "Green" in table["Color"].detail
+
+    def test_variant_members(self):
+        table = build_symbol_table("type Color = Red | Green | Blue")
+        assert "Red" in table
+        assert table["Red"].kind == "variant_member"
+        assert "Color" in table["Red"].detail
+
+    def test_record_type(self):
+        table = build_symbol_table(RECORD_LU)
+        assert "DeploymentPlan" in table
+        assert table["DeploymentPlan"].kind == "record_type"
+        assert "target" in table["DeploymentPlan"].detail
+        assert "String" in table["DeploymentPlan"].detail
+
+    def test_agent(self):
+        table = build_symbol_table(HELLO_LU)
+        assert "Worker" in table
+        entry = table["Worker"]
+        assert entry.kind == "agent"
+        assert "backend" in entry.detail
+        assert "standard" in entry.detail
+
+    def test_protocol(self):
+        table = build_symbol_table(HELLO_LU)
+        assert "DelegateTask" in table
+        entry = table["DelegateTask"]
+        assert entry.kind == "protocol"
+        assert "regina" in entry.detail
+
+    def test_protocol_roles(self):
+        table = build_symbol_table(HELLO_LU)
+        assert "regina" in table
+        assert table["regina"].kind == "role"
+        assert "guardiana" in table
+        assert table["guardiana"].kind == "role"
+
+    def test_use_statement(self):
+        table = build_symbol_table(USE_LU)
+        assert "datetime" in table
+        assert table["datetime"].kind == "module"
+
+    def test_empty_source(self):
+        table = build_symbol_table("")
+        assert table == {}
+
+    def test_invalid_source(self):
+        table = build_symbol_table("this is not valid lu")
+        assert table == {}
+
+    def test_regex_fallback_partial_source(self):
+        """When parser fails on incomplete source, regex extracts what it can."""
+        source = "type Color = Red | Green | Blue\nagent Worker:\n    trust: "
+        table = build_symbol_table(source)
+        # Parser fails (incomplete agent), but regex extracts type and agent
+        assert "Color" in table
+        assert table["Color"].kind == "variant_type"
+        assert "Worker" in table
+        assert table["Worker"].kind == "agent"
+
+    def test_regex_fallback_use_statement(self):
+        """Regex fallback also extracts use statements."""
+        source = "use python datetime\nagent Broken:\n    oops"
+        table = build_symbol_table(source)
+        assert "datetime" in table
+        assert table["datetime"].kind == "module"
+
+    def test_hello_lu_complete(self):
+        table = build_symbol_table(HELLO_LU)
+        # Should have: TaskStatus, Pending, Running, Done, Worker, DelegateTask, regina, worker, guardiana
+        assert "TaskStatus" in table
+        assert "Pending" in table
+        assert "Worker" in table
+        assert "DelegateTask" in table
+        assert len(table) >= 9
+
+    def test_agent_hover_doc_has_accepts_produces(self):
+        table = build_symbol_table(HELLO_LU)
+        doc = table["Worker"].doc
+        assert "TaskRequest" in doc
+        assert "TaskResult" in doc
+
+    def test_protocol_hover_doc_has_properties(self):
+        table = build_symbol_table(HELLO_LU)
+        doc = table["DelegateTask"].doc
+        assert "always terminates" in doc
+        assert "no deadlock" in doc
+
+
+# ============================================================
+# D5: Word at position
+# ============================================================
+
+
+class TestWordAtPos:
+    def test_word_at_start(self):
+        result = _word_at_pos("type Color = Red", 0, 0)
+        assert result is not None
+        assert result[0] == "type"
+
+    def test_word_in_middle(self):
+        result = _word_at_pos("type Color = Red", 0, 6)
+        assert result is not None
+        assert result[0] == "Color"
+
+    def test_word_at_end(self):
+        result = _word_at_pos("type Color = Red", 0, 15)
+        assert result is not None
+        assert result[0] == "Red"
+
+    def test_no_word_on_symbol(self):
+        result = _word_at_pos("type Color = Red", 0, 11)
+        assert result is None  # on '='
+
+    def test_out_of_bounds_line(self):
+        result = _word_at_pos("hello", 5, 0)
+        assert result is None
+
+    def test_multiline(self):
+        source = "type Color = Red\nagent Worker:"
+        result = _word_at_pos(source, 1, 6)
+        assert result is not None
+        assert result[0] == "Worker"
+
+    def test_word_boundary_end(self):
+        """Cursor at the end of a word should still match."""
+        result = _word_at_pos("type Color = Red", 0, 4)
+        assert result is not None
+        assert result[0] == "type"
+
+
+# ============================================================
+# D5: Hover
+# ============================================================
+
+
+class TestHover:
+    def test_hover_on_type_name(self):
+        source = "type Color = Red | Green | Blue"
+        result = _hover_info(source, 0, 6)
+        assert result is not None
+        markdown, line, start, end = result
+        assert "**type Color**" in markdown
+        assert "Red" in markdown
+        assert line == 0
+
+    def test_hover_on_agent_name(self):
+        result = _hover_info(HELLO_LU, 2, 7)  # "Worker" starts at col 6
+        assert result is not None
+        markdown = result[0]
+        assert "**agent Worker**" in markdown
+        assert "backend" in markdown
+
+    def test_hover_on_protocol_name(self):
+        result = _hover_info(HELLO_LU, 10, 10)  # "DelegateTask"
+        assert result is not None
+        assert "**protocol DelegateTask**" in result[0]
+
+    def test_hover_on_variant_member(self):
+        source = "type Color = Red | Green | Blue"
+        result = _hover_info(source, 0, 14)  # "Red"
+        assert result is not None
+        assert "Variant" in result[0]
+        assert "Color" in result[0]
+
+    def test_hover_on_keyword_returns_none(self):
+        source = "type Color = Red | Green | Blue"
+        result = _hover_info(source, 0, 0)  # "type" keyword
+        assert result is None  # "type" is not in symbol table
+
+    def test_hover_on_empty_returns_none(self):
+        result = _hover_info("", 0, 0)
+        assert result is None
+
+    def test_hover_on_role_name(self):
+        result = _hover_info(HELLO_LU, 12, 5)  # "regina" in step line
+        assert result is not None
+        assert "Role" in result[0]
+
+    def test_hover_on_record_type(self):
+        result = _hover_info(RECORD_LU, 0, 6)  # "DeploymentPlan"
+        assert result is not None
+        markdown = result[0]
+        assert "**type DeploymentPlan**" in markdown
+        assert "target" in markdown
+
+
+# ============================================================
+# D5: Go-to-definition
+# ============================================================
+
+
+class TestGotoDefinition:
+    def test_goto_type(self):
+        source = "type Color = Red | Green | Blue\nagent W:\n    role: backend\n    trust: standard\n    accepts: Color\n    produces: Color"
+        # Cursor on "Color" in accepts line (line 4)
+        result = _goto_definition(source, 4, 14)
+        assert result is not None
+        def_line, def_col, name_len = result
+        assert def_line == 0  # "type Color" is at line 0 (0-indexed)
+
+    def test_goto_role(self):
+        # "    regina asks worker to do task" -> "worker" starts at col 16
+        result = _goto_definition(HELLO_LU, 12, 18)  # middle of "worker"
+        assert result is not None
+        # "worker" is a role, defined at protocol declaration line
+        assert result[0] >= 0
+
+    def test_goto_protocol(self):
+        source = "protocol DelegateTask:\n    roles: a, b\n    a asks b to go\n    b returns ok to a\n    properties:\n        always terminates"
+        result = _goto_definition(source, 0, 10)  # "DelegateTask"
+        assert result is not None
+        assert result[0] == 0
+
+    def test_goto_unknown_returns_none(self):
+        source = "type Color = Red | Green | Blue"
+        result = _goto_definition(source, 0, 0)  # "type" keyword
+        assert result is None
+
+    def test_goto_variant_member(self):
+        source = "type Color = Red | Green | Blue"
+        result = _goto_definition(source, 0, 14)  # "Red"
+        assert result is not None
+        assert result[0] == 0  # defined at same line as type
+
+
+# ============================================================
+# D5: Completion
+# ============================================================
+
+
+class TestCompletion:
+    def test_top_level_empty(self):
+        items = _completion_items("", 0, 0)
+        labels = [i["label"] for i in items]
+        assert "type" in labels
+        assert "agent" in labels
+        assert "protocol" in labels
+        assert "use" in labels
+
+    def test_agent_body(self):
+        source = "agent Worker:\n    "
+        items = _completion_items(source, 1, 4)
+        labels = [i["label"] for i in items]
+        assert "role:" in labels
+        assert "trust:" in labels
+        assert "accepts:" in labels
+
+    def test_trust_value(self):
+        source = "agent Worker:\n    trust: "
+        items = _completion_items(source, 1, 11)
+        labels = [i["label"] for i in items]
+        assert "standard" in labels
+        assert "verified" in labels
+        assert "trusted" in labels
+        assert "untrusted" in labels
+
+    def test_protocol_body(self):
+        source = "protocol P:\n    roles: a, b\n    "
+        items = _completion_items(source, 2, 4)
+        labels = [i["label"] for i in items]
+        assert "asks" in labels
+        assert "returns" in labels
+
+    def test_properties_body(self):
+        source = "protocol P:\n    roles: a, b\n    a asks b to go\n    b returns ok to a\n    properties:\n        "
+        items = _completion_items(source, 5, 8)
+        labels = [i["label"] for i in items]
+        assert "always terminates" in labels
+        assert "no deadlock" in labels
+
+    def test_includes_defined_types(self):
+        source = "type Color = Red | Green | Blue\n"
+        items = _completion_items(source, 1, 0)
+        labels = [i["label"] for i in items]
+        assert "Color" in labels
+
+    def test_type_ref_after_accepts(self):
+        source = "type Color = Red | Green | Blue\nagent W:\n    accepts: "
+        items = _completion_items(source, 2, 13)
+        labels = [i["label"] for i in items]
+        assert "Color" in labels
+
+    def test_confidence_value(self):
+        source = "protocol P:\n    roles: a, b\n    a asks b to go\n    b returns ok to a\n    properties:\n        confidence >= "
+        items = _completion_items(source, 5, 22)
+        labels = [i["label"] for i in items]
+        assert "high" in labels
+        assert "certain" in labels
+        assert "speculative" in labels
+
+    def test_type_ref_after_comma(self):
+        """After 'accepts: TaskRequest, ' should suggest types for second item."""
+        source = "type Color = Red | Green | Blue\nagent W:\n    accepts: TaskRequest, "
+        items = _completion_items(source, 2, 26)
+        labels = [i["label"] for i in items]
+        assert "Color" in labels
+
+    def test_completion_past_end(self):
+        items = _completion_items("", 99, 0)
+        labels = [i["label"] for i in items]
+        assert "type" in labels  # fallback to top-level

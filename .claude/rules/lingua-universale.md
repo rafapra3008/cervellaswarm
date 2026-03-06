@@ -16,16 +16,21 @@ paths:
 - `_parser.py` - Parser LU -> AST
 - `_compiler.py` - AST -> Python code
 - `_runtime.py` - Runtime con UncertainValue, TrustLevel
-- `_lsp.py` - Language Server Protocol
+- `_lsp.py` - Language Server Protocol (diagnostics + hover + completion + go-to-def)
 - `_errors.py` - 74 error codes (LU-E001 a LU-E074)
-- `_symbols.py` - 131 symbols table
+
+## LSP Architecture (D2 + D5)
+- Pure functions separated from server handlers (testable without LSP client)
+- `build_symbol_table()` - AST -> dict[name, SymbolEntry] with regex fallback
+- `_hover_info()`, `_goto_definition()`, `_completion_items()` - pure functions
+- Coordinate: LU 1-indexed line -> LSP 0-indexed (`lsp_line = lu_line - 1`)
 
 ## Convenzioni
 - Error codes: `LU-EXXX` con severity (error/warning/info)
-- Test: `pytest packages/lingua-universale/tests/` (2856 test)
+- Test: `pytest packages/lingua-universale/tests/` (2900 test)
 - Ogni modifica -> test -> Guardiana audit
 - MAI rompere backward compatibility senza versione major
 
 ## Fase Corrente
-- FASE D: L'Ecosistema (D1-D4 DONE, D5 LSP Avanzato PROSSIMO)
+- FASE D: L'Ecosistema (D1-D5 DONE, D6 Guardiana Finale PROSSIMO)
 - Subroadmap: `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md`

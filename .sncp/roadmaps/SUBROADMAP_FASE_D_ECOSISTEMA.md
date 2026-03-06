@@ -260,11 +260,11 @@ Rendono il linguaggio "comodo" da usare quotidianamente.
 **Go-to-definition:** click su un tipo -> vai alla definizione.
 
 **Criterio completamento:**
-- [ ] Hover mostra info su types, agents, protocols
-- [ ] Completion per keyword e nomi definiti
-- [ ] Go-to-definition per types e agents
-- [ ] Test del language server
-- [ ] Guardiana verifica 9.5/10
+- [x] Hover mostra info su types, agents, protocols (S434, Markdown con detail)
+- [x] Completion per keyword e nomi definiti (S434, 7 contesti context-aware)
+- [x] Go-to-definition per types e agents (S434, symbol table lookup)
+- [x] Test del language server (S434, 66 test, 44 nuovi)
+- [x] Guardiana verifica 9.5/10 (S434, 9.5/10 APPROVED)
 
 ---
 
@@ -300,8 +300,8 @@ FASE D4: "A Tour of LU"              [####################] DONE (S430, 9.5/10)
   24 step interattivi in 4 capitoli     1 sessione!
   Integrato nel playground, 28 test automatici
 
-FASE D5: LSP Avanzato                [....................] TODO
-  Hover + Completion + Go-to-def       2-3 sess
+FASE D5: LSP Avanzato                [####################] DONE (S434, 9.5/10)
+  Hover + Completion + Go-to-def       1 sessione!
 
 FASE D6: Guardiana Finale + Launch   [....................] TODO
   Audit cross-cutting + annuncio       1 sess

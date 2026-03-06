@@ -1,32 +1,31 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-06 - Sessione 433
-> **STATUS:** S433 Migliora Casa v2 COMPLETATA. D5 LSP Avanzato PROSSIMO.
+> **Ultimo aggiornamento:** 2026-03-06 - Sessione 434
+> **STATUS:** D5 LSP Avanzato COMPLETATO (9.5/10). D6 Guardiana Finale PROSSIMO.
 
 ---
 
-## SESSIONE 433 - Migliora Casa v2 (COMPLETATA)
+## SESSIONE 434 - D5 LSP Avanzato (COMPLETATA)
 
 ### Cosa e successo
-Ispezione sistema + status bar v2 + pulizia + 11 Dependabot + ricerca SNCP + quick wins.
-Handoff completo: `.sncp/handoff/HANDOFF_S433_migliora_casa_v2.md`
+Implementato hover, completion context-aware e go-to-definition per la Lingua Universale.
+Ricerca (8 fonti: pygls, jedi-language-server, LSP spec 3.17, Gleam LSP) -> implementazione -> Guardiana audit 9.5/10.
 
 ### Cambiamenti chiave
-- **Status bar v2.0** -- context-monitor.py riscritto (JSON nativo Claude Code)
-- **11/20 Dependabot PR mergiate** (Ops autonoma, 9 major aperte per sessione dedicata)
-- **Path-specific rules** per lingua-universale (`.claude/rules/`)
-- **Limite output Worker** aggiornato nel DNA (max 2000 token)
-- **Pulizia:** .pyc orfani, .pyc tracked, settings.json.backup
+- **Hover**: tipo + documentazione Markdown al passaggio mouse (types, agents, protocols, roles, use)
+- **Completion**: context-aware con 7 contesti (top-level, agent body, trust value, confidence, protocol body, properties, type ref)
+- **Go-to-definition**: click su nome -> vai alla definizione
+- **Symbol table**: costruita da AST con regex fallback per source incompleto
+- **Architettura**: 4 funzioni pure + 4 thin server handler (pattern D2 confermato)
+- **Regex fallback**: `_regex_extract_symbols` per completion mentre user scrive
+- **VS Code extension**: ZERO modifiche (auto-discovers capabilities)
 
-### Ricerca SNCP: risultato strategico
-- **SNCP validato empiricamente** (filesystem 74% > vector store 68.5%, benchmark LoCoMo)
-- **Mercato memoria AI:** $6.27B -> $28.45B (2030)
-- **Raccomandazione:** SNCP come package open source DOPO completamento D6
-- Report: `reports/RESEARCH_20260306_sncp_memory_state_of_art_2026.md`
-
-### Audit Guardiana S433
-- context-monitor.py v2: **9.3/10** APPROVED (fix applicati)
-- Audit finale S433: **9.5/10** APPROVED
+### Numeri
+- `_lsp.py`: 198 -> 714 righe
+- `test_lsp.py`: 22 -> 66 test
+- Suite completa: 2900 test passati in 1.00s (era 2856)
+- Audit Guardiana: **9.5/10** APPROVED, 0 P0/P1/P2, 6 P3 (tutti fixati)
+- Report ricerca: `packages/lingua-universale/reports/RESEARCH_D5_LSP_ADVANCED.md`
 
 ---
 
@@ -34,31 +33,28 @@ Handoff completo: `.sncp/handoff/HANDOFF_S433_migliora_casa_v2.md`
 
 ```
 LINGUAGGIO CERVELLASWARM:
-  FASE D: L'Ecosistema -- 4/6 DONE
+  FASE D: L'Ecosistema -- 5/6 DONE
     D1: Syntax Highlighting   [####################] DONE! (9.5/10)
     D2: LSP Base (lu lsp)     [####################] DONE! (9.5/10)
     D3: Playground Online      [####################] DONE! (LIVE!)
     D4: "A Tour of LU"        [####################] DONE! (9.5/10)
-    D5: LSP Avanzato           [....................] PROSSIMO
-    D6: Guardiana Finale       [....................] TODO
+    D5: LSP Avanzato           [####################] DONE! (9.5/10)
+    D6: Guardiana Finale       [....................] PROSSIMO
 
   Migliora Casa (S431-S433)  [####################] COMPLETATA!
 ```
 
 ---
 
-## PROSSIMA SESSIONE: D5 LSP Avanzato
+## PROSSIMA SESSIONE: D6 Guardiana Audit Finale + Launch
 
-- **Hover:** tipo + documentazione al passaggio mouse
-- **Completion:** keyword, ruoli, trust tiers
-- **Go-to-definition:** click su tipo -> definizione
-- **Base LSP:** `packages/lingua-universale/src/cervellaswarm_lingua_universale/_lsp.py`
+- **Review cross-cutting** tutto il tooling (D1-D5)
+- **README update** con screenshot e links
+- **Annuncio community**
 - **Subroadmap:** `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md`
-- **Rules auto:** `.claude/rules/lingua-universale.md` (caricato automaticamente)
-- **Metodo:** Researcher -> Piano -> Guardiana audit piano -> Implementa -> Guardiana audit
 
 ### TODO Rafa
-- Attivare 2FA GitHub (SCADUTO 6 Marzo!)
+- Attivare 2FA GitHub (SCADUTO!)
 - Ruotare Bedzzle key su MyReception
 
 ### BACKLOG
@@ -66,6 +62,7 @@ LINGUAGGIO CERVELLASWARM:
 - Centralizzare PROJECT_MAPPING (7 file)
 - Test automatizzati context-monitor.py
 - SNCP come package open source (dopo D6)
+- P3: Aggiornare description in VS Code extension package.json (post-D5)
 
 ---
 
@@ -74,22 +71,22 @@ LINGUAGGIO CERVELLASWARM:
 | Metrica | Valore |
 |---------|--------|
 | Test agent-hooks | **253** (packages/agent-hooks/tests/) |
-| Test totali LU | **2856** |
-| Fix S431-S433 | **32** totali |
-| Audit Guardiana | **6** (2+2+2) |
+| Test totali LU | **2900** |
+| Audit Guardiana S434 | **9.5/10** |
 | Dependabot mergiate | **11/20** |
 
 ---
 
-## Lezioni Apprese (S433)
+## Lezioni Apprese (S434)
 
 ### Cosa ha funzionato bene
-- **Ricerca PRIMA di riscrivere** -- scoperto JSON nativo Claude Code che ignoravamo
-- **Ops autonoma** -- 11 Dependabot PR gestite senza intervento
-- **Guardiana in background** -- audit mentre si lavora, zero tempo perso
+- **Ricerca PRIMA di implementare** -- 8 fonti, pattern confermati (jedi-language-server, Gleam)
+- **Funzioni pure separate** -- testabili senza server LSP, pattern D2 riutilizzato
+- **Regex fallback** -- soluzione elegante per source incompleto durante editing
+- **P3 fixati subito** -- diamante pulito, zero debito tecnico
 
 ### Pattern candidato
-- **"Ricerca PRIMA di riscrivere"** -- Evidenza: S433 (context-monitor)
+- **"Regex fallback per parser incompleto"** -- Evidenza: S434 (completion in LSP)
 
 ---
 
