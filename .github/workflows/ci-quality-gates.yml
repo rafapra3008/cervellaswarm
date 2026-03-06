@@ -61,7 +61,7 @@ jobs:
 
       - name: Upload coverage (Python 3.12 only)
         if: matrix.python-version == '3.12'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: quality-gates-coverage
           path: packages/quality-gates/coverage.xml
