@@ -557,6 +557,153 @@ def generate_python(protocol: Protocol) -> str:
     return PythonGenerator().generate(protocol)
 
 
+def _generate_multi_imports(
+    protocols: Sequence[Protocol],
+    kind_to_class: dict[MessageKind, str],
+) -> list[str]:
+    """Generate shared import block for multi-protocol module."""
+    all_kinds: set[MessageKind] = set()
+    for p in protocols:
+        all_kinds.update(_used_message_kinds(p))
+
+    classes_needed: list[str] = []
+    for kind in sorted(all_kinds, key=lambda k: k.value):
+        cls_name = kind_to_class.get(kind)
+        if cls_name and cls_name not in classes_needed:
+            classes_needed.append(cls_name)
+
+    lines = [
+        "from __future__ import annotations",
+        "",
+        "from typing import Optional",
+        "",
+        "from cervellaswarm_lingua_universale.types import (",
+        "    MessageKind,",
+    ]
+    for cls_name in sorted(classes_needed):
+        lines.append(f"    {cls_name},")
+    lines.extend([
+        "    message_kind,",
+        ")",
+        "from cervellaswarm_lingua_universale.protocols import (",
+        "    Protocol,",
+        "    ProtocolChoice,",
+        "    ProtocolStep,",
+        ")",
+        "from cervellaswarm_lingua_universale.checker import (",
+        "    SessionChecker,",
+        "    ProtocolViolation,",
+        "    SessionComplete,",
+        ")",
+    ])
+    return lines
+
+
+def _generate_multi_role_class(
+    protocol: Protocol,
+    role: str,
+    steps: list[tuple[ProtocolStep, "str | None"]],
+    kind_to_class: dict[MessageKind, str],
+) -> str:
+    """Generate a single Role class for a multi-protocol module."""
+    class_name = f"{protocol.name}{_to_class_name(role)}Role"
+    role_lines = [
+        "",
+        f"class {class_name}:",
+        f'    """Typed role for \\"{role}\\" in {protocol.name}."""',
+        "",
+        f"    def __init__(self, session: {protocol.name}Session) -> None:",
+        "        self._session = session",
+        f'        self._role = "{role}"',
+    ]
+
+    seen_methods: set[str] = set()
+    for step, branch_name in steps:
+        method_name = _to_method_name(step.message_kind)
+        method_key = f"{method_name}_{step.receiver}"
+        if method_key in seen_methods:
+            continue
+        seen_methods.add(method_key)
+
+        cls_name = kind_to_class.get(step.message_kind)
+        type_hint = cls_name if cls_name else "object"
+        role_lines.extend([
+            "",
+            f"    def {method_name}(self, msg: {type_hint}) -> None:",
+            f'        """Send {step.message_kind.value} to {step.receiver}."""',
+            f'        self._session.send(self._role, "{step.receiver}", msg)',
+        ])
+
+    if not steps:
+        role_lines.append("")
+        role_lines.append("    # This role only receives messages.")
+
+    return "\n".join(role_lines) + "\n"
+
+
+def _generate_multi_session_class(protocol: Protocol) -> str:
+    """Generate a Session class for a multi-protocol module."""
+    session_lines = [
+        "",
+        f"class {protocol.name}Session:",
+        f'    """Runtime-enforced session for {protocol.name}."""',
+        "",
+        "    def __init__(",
+        "        self,",
+        '        session_id: str = "",',
+        "        role_bindings: Optional[dict[str, str]] = None,",
+        "    ) -> None:",
+        f"        self._checker = SessionChecker(",
+        f"            protocol={protocol.name.upper()},",
+        f"            session_id=session_id,",
+        f"            role_bindings=role_bindings,",
+        f"        )",
+    ]
+
+    for role in protocol.roles:
+        attr_name = _safe_python_ident(role)
+        class_name = f"{protocol.name}{_to_class_name(role)}Role"
+        session_lines.append(f"        self._{attr_name} = {class_name}(self)")
+
+    session_lines.extend([
+        "",
+        "    def send(self, sender: str, receiver: str, msg: object) -> None:",
+        '        """Send a message through the session checker."""',
+        "        self._checker.send(sender, receiver, msg)",
+    ])
+
+    if _has_choices(protocol):
+        session_lines.extend([
+            "",
+            "    def choose_branch(self, branch_name: str) -> None:",
+            '        """Choose a branch at a choice point."""',
+            "        self._checker.choose_branch(branch_name)",
+        ])
+
+    session_lines.extend([
+        "",
+        "    @property",
+        "    def is_complete(self) -> bool:",
+        "        return self._checker.is_complete",
+        "",
+        "    @property",
+        "    def session_id(self) -> str:",
+        "        return self._checker.session_id",
+    ])
+
+    for role in protocol.roles:
+        attr_name = _safe_python_ident(role)
+        class_name = f"{protocol.name}{_to_class_name(role)}Role"
+        session_lines.extend([
+            "",
+            "    @property",
+            f"    def {attr_name}(self) -> {class_name}:",
+            f"        return self._{attr_name}",
+        ])
+
+    return "\n".join(session_lines) + "\n"
+
+
 def generate_python_multi(protocols: Sequence[Protocol]) -> str:
     """Generate a single Python module containing multiple protocols.
 
@@ -573,8 +720,8 @@ def generate_python_multi(protocols: Sequence[Protocol]) -> str:
 
     generator = PythonGenerator()
     timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    kind_to_class = _kind_to_message_class()
 
-    # Header
     parts: list[str] = [
         '"""Auto-generated by CervellaSwarm Code Generation Layer.',
         "",
@@ -585,146 +732,18 @@ def generate_python_multi(protocols: Sequence[Protocol]) -> str:
         "",
     ]
 
-    # Collect all used kinds across all protocols for shared imports
-    all_kinds: set[MessageKind] = set()
-    for p in protocols:
-        all_kinds.update(_used_message_kinds(p))
+    parts.extend(_generate_multi_imports(protocols, kind_to_class))
 
-    # Shared imports
-    kind_to_class = _kind_to_message_class()
-    classes_needed: list[str] = []
-    for kind in sorted(all_kinds, key=lambda k: k.value):
-        cls_name = kind_to_class.get(kind)
-        if cls_name and cls_name not in classes_needed:
-            classes_needed.append(cls_name)
-
-    parts.extend([
-        "from __future__ import annotations",
-        "",
-        "from typing import Optional",
-        "",
-        "from cervellaswarm_lingua_universale.types import (",
-        "    MessageKind,",
-    ])
-    for cls_name in sorted(classes_needed):
-        parts.append(f"    {cls_name},")
-    parts.extend([
-        "    message_kind,",
-        ")",
-        "from cervellaswarm_lingua_universale.protocols import (",
-        "    Protocol,",
-        "    ProtocolChoice,",
-        "    ProtocolStep,",
-        ")",
-        "from cervellaswarm_lingua_universale.checker import (",
-        "    SessionChecker,",
-        "    ProtocolViolation,",
-        "    SessionComplete,",
-        ")",
-    ])
-
-    # Per-protocol sections
     for protocol in protocols:
         parts.append(generator.generate_protocol_definition(protocol))
 
-        # Role classes with protocol-specific prefix to avoid name clashes
         role_steps = _collect_role_steps(protocol)
         for role in protocol.roles:
-            class_name = f"{protocol.name}{_to_class_name(role)}Role"
             steps = role_steps.get(role, [])
+            parts.append(_generate_multi_role_class(
+                protocol, role, steps, kind_to_class,
+            ))
 
-            role_lines = [
-                "",
-                f"class {class_name}:",
-                f'    """Typed role for \\"{role}\\" in {protocol.name}."""',
-                "",
-                f"    def __init__(self, session: {protocol.name}Session) -> None:",
-                "        self._session = session",
-                f'        self._role = "{role}"',
-            ]
-
-            seen_methods: set[str] = set()
-            for step, branch_name in steps:
-                method_name = _to_method_name(step.message_kind)
-                method_key = f"{method_name}_{step.receiver}"
-                if method_key in seen_methods:
-                    continue
-                seen_methods.add(method_key)
-
-                cls_name = kind_to_class.get(step.message_kind)
-                type_hint = cls_name if cls_name else "object"
-                role_lines.extend([
-                    "",
-                    f"    def {method_name}(self, msg: {type_hint}) -> None:",
-                    f'        """Send {step.message_kind.value} to {step.receiver}."""',
-                    f'        self._session.send(self._role, "{step.receiver}", msg)',
-                ])
-
-            if not steps:
-                role_lines.append("")
-                role_lines.append("    # This role only receives messages.")
-
-            parts.append("\n".join(role_lines) + "\n")
-
-        # Session class with protocol-specific name
-        session_lines = [
-            "",
-            f"class {protocol.name}Session:",
-            f'    """Runtime-enforced session for {protocol.name}."""',
-            "",
-            "    def __init__(",
-            "        self,",
-            '        session_id: str = "",',
-            "        role_bindings: Optional[dict[str, str]] = None,",
-            "    ) -> None:",
-            f"        self._checker = SessionChecker(",
-            f"            protocol={protocol.name.upper()},",
-            f"            session_id=session_id,",
-            f"            role_bindings=role_bindings,",
-            f"        )",
-        ]
-
-        for role in protocol.roles:
-            attr_name = _safe_python_ident(role)
-            class_name = f"{protocol.name}{_to_class_name(role)}Role"
-            session_lines.append(f"        self._{attr_name} = {class_name}(self)")
-
-        session_lines.extend([
-            "",
-            "    def send(self, sender: str, receiver: str, msg: object) -> None:",
-            '        """Send a message through the session checker."""',
-            "        self._checker.send(sender, receiver, msg)",
-        ])
-
-        if _has_choices(protocol):
-            session_lines.extend([
-                "",
-                "    def choose_branch(self, branch_name: str) -> None:",
-                '        """Choose a branch at a choice point."""',
-                "        self._checker.choose_branch(branch_name)",
-            ])
-
-        session_lines.extend([
-            "",
-            "    @property",
-            "    def is_complete(self) -> bool:",
-            "        return self._checker.is_complete",
-            "",
-            "    @property",
-            "    def session_id(self) -> str:",
-            "        return self._checker.session_id",
-        ])
-
-        for role in protocol.roles:
-            attr_name = _safe_python_ident(role)
-            class_name = f"{protocol.name}{_to_class_name(role)}Role"
-            session_lines.extend([
-                "",
-                "    @property",
-                f"    def {attr_name}(self) -> {class_name}:",
-                f"        return self._{attr_name}",
-            ])
-
-        parts.append("\n".join(session_lines) + "\n")
+        parts.append(_generate_multi_session_class(protocol))
 
     return "\n".join(parts)

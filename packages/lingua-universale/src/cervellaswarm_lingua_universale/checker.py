@@ -295,8 +295,15 @@ class SessionChecker:
             raise SessionComplete(self.protocol_name, self.session_id)
 
         kind = message_kind(msg)
+        self._auto_detect_branch(kind, sender, receiver)
+        self._validate_next_step(sender, receiver, kind)
+        record, current_branch = self._record_and_advance(sender, receiver, kind)
+        self._emit_post_send_events(record, current_branch, _t0)
 
-        # If at a choice point, auto-detect branch from message kind
+    def _auto_detect_branch(
+        self, kind: MessageKind, sender: str, receiver: str,
+    ) -> None:
+        """Auto-detect and select branch at choice points."""
         choice = self._state.at_choice
         if choice is not None and self._state.branch is None:
             matched_branch = self._detect_branch(choice, sender, receiver, kind)
@@ -313,16 +320,18 @@ class SessionChecker:
                         auto_detected=True,
                     ))
 
-        # Advance past exhausted branch if needed (explicit mutation)
         self._state.advance_past_exhausted_branch()
         if self._state.completed:
             raise SessionComplete(self.protocol_name, self.session_id)
 
+    def _validate_next_step(
+        self, sender: str, receiver: str, kind: MessageKind,
+    ) -> None:
+        """Validate that the next expected step matches sender/receiver/kind."""
         expected = self._state.peek_next_step()
         if expected is None:
             if self._state.completed:
                 raise SessionComplete(self.protocol_name, self.session_id)
-            # Still at an unresolved choice
             _expected = "branch selection (call choose_branch first)"
             _got = f"{sender}->{receiver}:{kind.value}"
             self._emit_violation(
@@ -336,37 +345,26 @@ class SessionChecker:
                 step=self._state.step_index,
             )
 
-        # Validate sender role
         resolved_sender = self._resolve_role(sender)
         resolved_receiver = self._resolve_role(receiver)
 
-        if resolved_sender != expected.sender:
-            _expected = f"sender={expected.sender}"
-            _got = f"sender={resolved_sender} (raw: {sender})"
-            self._emit_violation(
-                step=self._state.step_index, expected=_expected, got=_got,
-            )
-            raise ProtocolViolation(
-                protocol=self.protocol_name,
-                session_id=self.session_id,
-                expected=_expected,
-                got=_got,
-                step=self._state.step_index,
-            )
-
-        if resolved_receiver != expected.receiver:
-            _expected = f"receiver={expected.receiver}"
-            _got = f"receiver={resolved_receiver} (raw: {receiver})"
-            self._emit_violation(
-                step=self._state.step_index, expected=_expected, got=_got,
-            )
-            raise ProtocolViolation(
-                protocol=self.protocol_name,
-                session_id=self.session_id,
-                expected=_expected,
-                got=_got,
-                step=self._state.step_index,
-            )
+        for field, resolved, exp_val in [
+            ("sender", resolved_sender, expected.sender),
+            ("receiver", resolved_receiver, expected.receiver),
+        ]:
+            if resolved != exp_val:
+                _expected = f"{field}={exp_val}"
+                _got = f"{field}={resolved} (raw: {sender if field == 'sender' else receiver})"
+                self._emit_violation(
+                    step=self._state.step_index, expected=_expected, got=_got,
+                )
+                raise ProtocolViolation(
+                    protocol=self.protocol_name,
+                    session_id=self.session_id,
+                    expected=_expected,
+                    got=_got,
+                    step=self._state.step_index,
+                )
 
         if kind != expected.message_kind:
             _expected = f"message={expected.message_kind.value}"
@@ -382,7 +380,10 @@ class SessionChecker:
                 step=self._state.step_index,
             )
 
-        # Record the message
+    def _record_and_advance(
+        self, sender: str, receiver: str, kind: MessageKind,
+    ) -> tuple[MessageRecord, "str | None"]:
+        """Record the message and advance protocol state."""
         record = MessageRecord(
             timestamp=time.time(),
             sender=sender,
@@ -392,13 +393,10 @@ class SessionChecker:
         )
         self._state.log.append(record)
 
-        # Capture branch before advance (for event)
         current_branch = self._state.branch
 
-        # Advance state
         if self._state.branch is not None:
             self._state.branch_step_index += 1
-            # Check if branch is exhausted using step_index (not iterating)
             elem = self._state.protocol.elements[self._state.step_index]
             if isinstance(elem, ProtocolChoice):
                 branch_steps = elem.branches.get(self._state.branch, ())
@@ -409,22 +407,29 @@ class SessionChecker:
         else:
             self._state.step_index += 1
 
-        # Emit MessageSent event
+        return record, current_branch
+
+    def _emit_post_send_events(
+        self,
+        record: MessageRecord,
+        current_branch: "str | None",
+        t0: float,
+    ) -> None:
+        """Emit MessageSent event and check completion/repetition."""
         if self._monitor is not None:
-            _duration_ms = (time.monotonic() - _t0) * 1000.0
+            _duration_ms = (time.monotonic() - t0) * 1000.0
             self._monitor.emit(MessageSent(
                 session_id=self.session_id,
                 protocol_name=self.protocol_name,
                 timestamp=time.time(),
                 step_index=record.step_index,
-                sender=sender,
-                receiver=receiver,
-                message_kind=kind,
+                sender=record.sender,
+                receiver=record.receiver,
+                message_kind=record.kind,
                 duration_ms=_duration_ms,
                 branch=current_branch,
             ))
 
-        # Check completion or repetition
         prev_rep = self._state.repetition_count
         self._state._check_completion_or_repeat()
 
