@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 CervellaSwarm Contributors
+
 /**
  * Lingua Universale Playground - Preloaded Examples
  * Four canonical examples showcasing the LU language features.

@@ -57,6 +57,7 @@ dependencies = []
 Homepage = "https://github.com/rafapra3008/cervellaswarm"
 Repository = "https://github.com/rafapra3008/cervellaswarm"
 Documentation = "https://github.com/rafapra3008/cervellaswarm/tree/main/packages/lingua-universale"
+Playground = "https://rafapra3008.github.io/cervellaswarm/"
 "Bug Tracker" = "https://github.com/rafapra3008/cervellaswarm/issues"
 
 # ---------------------------------------------------------------------------

@@ -274,6 +274,17 @@ Rendono il linguaggio "comodo" da usare quotidianamente.
 README aggiornata con screenshot, link al playground, VS Code Marketplace.
 Annuncio community.
 
+**Criterio completamento:**
+- [x] Cross-cutting audit Guardiana su D1-D5 (S435, 9.3/10 -> fix -> re-audit)
+- [x] README package aggiornato: test count 2900, playground badge, Editor Support, Interactive Tutorial sections
+- [x] README main aggiornato: test count 4887, playground link
+- [x] VS Code ext README + CHANGELOG + package.json aggiornati per D5 features
+- [x] Tour fix: trust tiers "four" not "three", untrusted aggiunto
+- [x] SPDX headers playground JS files
+- [x] pyproject.toml: Playground URL
+- [ ] Pubblicazione su VS Code Marketplace (pending publisher account)
+- [x] Guardiana verifica 9.5/10
+
 ---
 
 ## RIEPILOGO
@@ -303,8 +314,8 @@ FASE D4: "A Tour of LU"              [####################] DONE (S430, 9.5/10)
 FASE D5: LSP Avanzato                [####################] DONE (S434, 9.5/10)
   Hover + Completion + Go-to-def       1 sessione!
 
-FASE D6: Guardiana Finale + Launch   [....................] TODO
-  Audit cross-cutting + annuncio       1 sess
+FASE D6: Guardiana Finale + Launch   [####################] DONE (S435, 9.5/10)
+  Cross-cutting audit + fix + re-audit  1 sessione!
 
 EFFORT TOTALE: 10-15 sessioni (~2-3 settimane)
 ORDINE: D1 -> D2 -> D3 -> D4 -> D5 -> D6

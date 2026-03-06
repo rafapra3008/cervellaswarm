@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 6 Marzo 2026 - S434 (D5 LSP Avanzato DONE 9.5/10. D6 Guardiana Finale PROSSIMO.)
+> Aggiornato: 6 Marzo 2026 - S435 (D6 Guardiana Finale DONE. FASE D COMPLETA!)
 
 ```
 +==================================================================+
@@ -144,11 +144,11 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |   FASE B: COMPLETA! B.1-B.7 DONE (S387-S398)                    |
 |   FASE C: IL LINGUAGGIO -- COMPLETA! (S407-S425)                 |
 |     C1 Grammatica DONE! C2 Compilatore DONE! C3 Esperienza DONE!|
-|   FASE D: L'ECOSISTEMA -- IN CORSO (S426+)                       |
-|     D1-D4 DONE! D5 LSP Avanzato DONE! (9.5/10)                  |
-|     PROSSIMO: D6 Guardiana Finale + Launch                      |
+|   FASE D: L'ECOSISTEMA -- COMPLETA! (S426-S435)                  |
+|     D1-D6 DONE! Media 9.5/10                                    |
+|     PROSSIMO: FASE E o nuova direzione                           |
 |   PyPI: v0.2.0 LIVE! pip install cervellaswarm-lingua-universale|
-|   25 moduli, 2900 test, 74 error codes, 131 symbols             |
+|   25 moduli, 2900 test, 74 error codes, 131 symbols, 4887 total |
 |   Playground LIVE: https://rafapra3008.github.io/cervellaswarm/ |
 |   Tour: 24 step interattivi in 4 capitoli + 4 esercizi          |
 |   NORD completo: packages/lingua-universale/NORD.md              |

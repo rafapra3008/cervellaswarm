@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 CervellaSwarm Contributors
+
 /**
  * A Tour of Lingua Universale
  * 24 interactive steps across 4 chapters.
@@ -142,14 +145,15 @@ Every agent has:
         {
           id: "agents-2-trust",
           title: "Trust Tiers",
-          explanation: `LU has three **trust tiers** that control what an agent can do:
+          explanation: `LU has four **trust tiers** that control what an agent can do:
 
 - \`verified\`: highest trust -- can make final decisions, audit others
 - \`trusted\`: mid-level -- can plan and coordinate
 - \`standard\`: basic -- executes assigned tasks
+- \`untrusted\`: lowest -- restricted access, sandboxed execution
 
 Trust is LU's **second pillar**: trust composition. A \`standard\` agent cannot override a \`verified\` decision.`,
-          code: `# Three trust tiers: verified > trusted > standard\n\ntype Priority = Critical | High | Normal\n\nagent Architect:\n    role: backend\n    trust: trusted\n    accepts: PlanRequest\n    produces: PlanProposal\n\nagent Builder:\n    role: backend\n    trust: standard\n    accepts: TaskRequest\n    produces: TaskResult\n\nagent Guardian:\n    role: guardiana\n    trust: verified\n    accepts: AuditRequest\n    produces: AuditVerdict`,
+          code: `# Four trust tiers: verified > trusted > standard > untrusted\n\ntype Priority = Critical | High | Normal\n\nagent Architect:\n    role: backend\n    trust: trusted\n    accepts: PlanRequest\n    produces: PlanProposal\n\nagent Builder:\n    role: backend\n    trust: standard\n    accepts: TaskRequest\n    produces: TaskResult\n\nagent Guardian:\n    role: guardiana\n    trust: verified\n    accepts: AuditRequest\n    produces: AuditVerdict`,
           suggestedAction: "check",
           hint: "Trust tiers prevent privilege escalation: a standard agent can't do what a verified agent does.",
         },

@@ -3,8 +3,9 @@
 [![PyPI](https://img.shields.io/pypi/v/cervellaswarm-lingua-universale.svg)](https://pypi.org/project/cervellaswarm-lingua-universale/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org)
-[![Tests](https://img.shields.io/badge/tests-2828%20passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-2900%20passed-brightgreen.svg)](tests/)
 [![Coverage](https://img.shields.io/badge/coverage-98%25-brightgreen.svg)](tests/)
+[![Playground](https://img.shields.io/badge/playground-try%20it%20now-blueviolet.svg)](https://rafapra3008.github.io/cervellaswarm/)
 [![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)]()
 
 **The first programming language designed for AI. By AI.**
@@ -15,6 +16,9 @@ built entirely on the Python standard library. **Zero external dependencies.**
 ```bash
 pip install cervellaswarm-lingua-universale
 ```
+
+> **No install needed?** [Try it in your browser](https://rafapra3008.github.io/cervellaswarm/) --
+> write and run LU code in seconds, powered by Pyodide (Python in WebAssembly).
 
 ---
 
@@ -118,10 +122,46 @@ lu lsp
 
 ---
 
+## Editor Support (VS Code)
+
+Install the [Lingua Universale VS Code extension](https://github.com/rafapra3008/cervellaswarm/tree/main/extensions/lingua-universale-vscode)
+for a full editing experience:
+
+| Feature | Description |
+|---------|-------------|
+| Syntax highlighting | Full TextMate grammar for all LU constructs |
+| Diagnostics | Real-time error checking as you type (74 error codes) |
+| Hover | Type info and Markdown documentation on mouse hover |
+| Completion | Context-aware suggestions (7 contexts: top-level, agent body, trust, confidence, protocol body, properties, type references) |
+| Go-to-definition | Click any type or agent name to jump to its definition |
+
+The extension connects to the `lu lsp` language server automatically. Install both:
+
+```bash
+pip install "cervellaswarm-lingua-universale[lsp]"
+code --install-extension lingua-universale-0.2.0.vsix
+```
+
+---
+
+## Interactive Tutorial
+
+Learn LU step by step with ["A Tour of Lingua Universale"](https://rafapra3008.github.io/cervellaswarm/) --
+24 interactive steps across 4 chapters, running directly in your browser:
+
+1. **Types** -- variant types, records, `Confident[T]`
+2. **Agents** -- trust tiers, capabilities, contracts
+3. **Protocols** -- roles, actions, choice branches, properties
+4. **Verification** -- `lu check`, `lu verify`, formal proofs
+
+Each step has editable, runnable code. No install required.
+
+---
+
 ## Features
 
 - **25 modules**, 131 public API symbols
-- **2828 tests**, 98% coverage, runs in under 1 second
+- **2900 tests**, 98% coverage, runs in under 1 second
 - **Zero dependencies** -- pure Python standard library
 - **Python 3.10+** including 3.13 free-threaded (thread-safe internals)
 - **Grammar**: 62 production rules, GBNF + Lark export for constrained decoding
@@ -338,7 +378,9 @@ print(report.all_proved)  # True -- mathematically proven
 | Lean 4 verification | No | No | No | **Yes** (7 properties) |
 | Confidence types | No | No | No | **Yes** (`Confident[T]`) |
 | Trust composition | No | No | No | **Yes** (transitive) |
-| REPL + LSP | No | No | No | **Yes** |
+| REPL + LSP (hover, completion, goto-def) | No | No | No | **Yes** |
+| Browser playground | No | No | No | **Yes** (Pyodide, $0) |
+| Interactive tutorial | No | No | No | **Yes** (24 steps) |
 | Constrained decoding export | No | No | No | **Yes** (GBNF + Lark) |
 | External dependencies | Many | Many | Many | **Zero** |
 
@@ -393,7 +435,7 @@ git clone https://github.com/rafapra3008/cervellaswarm.git
 cd cervellaswarm/packages/lingua-universale
 pip install -e ".[dev]"
 
-# Run tests (2828 tests, < 1s)
+# Run tests (2900 tests, < 1s)
 pytest
 
 # Run with coverage

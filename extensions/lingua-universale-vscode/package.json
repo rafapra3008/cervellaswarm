@@ -1,7 +1,7 @@
 {
   "name": "lingua-universale",
   "displayName": "Lingua Universale",
-  "description": "Syntax highlighting and diagnostics for the Lingua Universale programming language (.lu files) - the first language designed for AI agents",
+  "description": "Full language support for Lingua Universale (.lu files): syntax highlighting, diagnostics, hover, completion, and go-to-definition - the first language designed for AI agents",
   "version": "0.2.0",
   "publisher": "cervellaswarm",
   "license": "Apache-2.0",

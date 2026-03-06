@@ -32,5 +32,6 @@ paths:
 - MAI rompere backward compatibility senza versione major
 
 ## Fase Corrente
-- FASE D: L'Ecosistema (D1-D5 DONE, D6 Guardiana Finale PROSSIMO)
+- FASE D: L'Ecosistema -- COMPLETA! D1-D6 DONE (media 9.5/10)
 - Subroadmap: `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md`
+- Test: 2900 (LU), 4887 (totale 9 pkg)
