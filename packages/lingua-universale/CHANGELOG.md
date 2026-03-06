@@ -19,7 +19,7 @@ This project follows [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
-- **Refactoring**: `checker.send()` split from 168 lines into 4 private helpers (17-line orchestrator)
+- **Refactoring**: `checker.send()` split from 168 lines into 4 private helpers (16-line orchestrator)
 - **Refactoring**: `codegen.generate_python_multi()` split from 171 lines into 3 private helpers (43-line orchestrator)
 - **Test count**: 2828 -> 2909 tests
 

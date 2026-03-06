@@ -27,11 +27,11 @@ paths:
 
 ## Convenzioni
 - Error codes: `LU-EXXX` con severity (error/warning/info)
-- Test: `pytest packages/lingua-universale/tests/` (2900 test)
+- Test: `pytest packages/lingua-universale/tests/` (2909 test)
 - Ogni modifica -> test -> Guardiana audit
 - MAI rompere backward compatibility senza versione major
 
 ## Fase Corrente
 - FASE D: L'Ecosistema -- COMPLETA! D1-D6 DONE (media 9.5/10)
 - Subroadmap: `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md`
-- Test: 2900 (LU), 4887 (totale 9 pkg)
+- Test: 2909 (LU), 5221 (totale 9 pkg)
