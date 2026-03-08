@@ -2,141 +2,108 @@
 
 # PROMPT RIPRESA - Ecosistema Miracollo
 
-> **Ultimo aggiornamento:** 27 Febbraio 2026 - FASE 3 Documentazione COMPLETATA!
-> **Status:** miracollo.com LIVE! | FASE 0-3 DONE | Prossima: FASE 4 Qualita Codice
+> **Ultimo aggiornamento:** 8 Marzo 2026 - Sessione 13 (checkpoint finale)
+> **Status:** miracollo.com LIVE! | Health 9.5/10 | Security 10/10 | Design 9.5/10 | **Infra FASE 1+2 DONE**
 
 ---
 
 ## I 3 BRACCI
 
-| Braccio | Porta | Score | Focus |
-|---------|-------|-------|-------|
-| **PMS Core** | 8001 | **90% LIVE** | FASE 2 Sicurezza + FASE 3 Docs DONE |
-| **Miracollook** | 8002 | 10/10 | READ-ONLY. Non toccare fino PMS >= 9.0 |
-| **Room Hardware** | 8003 | 10% | Bloccato VLAN, DOPO |
+| Braccio | Porta locale | Workspace | Score |
+|---------|-------------|-----------|-------|
+| **PMS Core** | 9001 | `~/Developer/miracollogeminifocus/` | 90% LIVE, Health 9.5, Security 10/10 |
+| **Miracollook** | 9002 | `~/Developer/miracollook/` (REPO SEPARATO!) | FASE 0 95%, 6 fasi totali |
+| **Room Hardware** | 9003 | (futuro) | 10% - Bloccato VLAN |
 
 ---
 
-## SUBROADMAP RINASCITA - STATO (27 Feb 2026)
+## SESSIONE 13 - INFRASTRUTTURA (8 Mar 2026) - COMPLETATA
 
-```
-FASE 0 - Emergenze          ✅ COMPLETATA
-FASE 1 - Online/Demo        ✅ COMPLETATA (miracollo.com LIVE)
-FASE 2 - Sicurezza          ✅ COMPLETATA (9.2/10 Guardiana)
-FASE 3 - Documentazione     ✅ COMPLETATA (9.0/10 Guardiana)
-FASE 4 - Qualita Codice     ⬜ PROSSIMA (target: 8.5/10)
-FASE 5 - Infrastruttura     ⬜ (CI/CD gia LIVE, script mancanti)
-FASE 6 - Accessi/Stabilita  ⬜
-```
+Piano completo: `infra/PIANO_INFRASTRUTTURA_MIRACOLLO.md`
+
+### Analisi
+- Ops 7.4/10 | Qualita 4.5/10 -> post-FASE1: ~8.5/~7.0
+- 17 finding totali, 12+ fixati
+
+### Implementato (FASE 1+2)
+- I1: docker-compose.local.yml porta 9001 + bind 127.0.0.1
+- I4: pytest 400+ test in CI + pipefail fix critico
+- I5: Fortezza Mode v3 (`docs/FORTEZZA_MODE_v3.md`), v1+v2 archiviati
+- I8: DB backup pre-deploy
+- I9: @pytest.mark.critical 42 test (health, security, GDPR, alloggiati, revenue)
+- I10: Branch protection master (force push + delete bloccati)
+- Smoke test post-deploy (API /hotels verifica)
+- CORS default 9001, 8+ file stale fixati
+- Security audit: PASS (secrets, Docker, SQL, CORS tutti clean)
+- Guardiana: 9.3 -> 9.5 dopo fix P2
+
+### DA FARE (FASE 3 + Rafa)
+- **I14: Rafa nel browser** -> hetrixtools.com, monitor `miracollo.com/health`, 1 min, Telegram
+- I6: Docker cleanup ~11GB (sessione dedicata con audit Ops)
+- I7: Miracollook healthcheck (repo separato, healthcheck /health non esiste)
+- I11-I13: Miracollook pipeline, Playwright, linting
 
 ---
 
-## FASE 3 - DOCUMENTAZIONE (completata 27 Feb 2026)
+## PROSSIMI STEP (ordine priorita)
 
-### 3A - Fix Critici (P1)
-```
-✅ PROMPT_RIPRESA.md root -> verificato, era gia redirect corretto
-✅ PROMPT_RIPRESA ecosistema -> gia aggiornato dalla sessione FASE 2
-✅ .sncp/stato/oggi.md -> deprecato con redirect (hook non piu attivo)
-```
+### Rafa deve fare (browser, 5 min)
+1. **HetrixTools** -> registra, crea monitor `miracollo.com/health`, collega Telegram
 
-### 3B - Fix Medi (P2) - 6 contraddizioni risolte
-```
-✅ NORD.md -> FASE 3 Feature da 60% a 80%, puntatori CervellaSwarm
-✅ NORD_PMS-CORE.md -> porta :8000 corretta a :8001, score 85% a 90%
-✅ stato.md PMS Core -> "React" a "HTML/CSS/JS", 85% a 90%, FASE 2 security
-✅ stato.md Miracollook -> riscritto: da 92%/8.5 a 10/10, READ-ONLY
-✅ FORTEZZA_MIRACOLLO.md -> container, rate limit, auth, CSP, GitHub Actions
-✅ CLAUDE.md -> verificato, nessun errore
-```
+### Prossima sessione
+1. **Feature** -> Fatture XML (F1) o Channel Manager F3.5 (F2) o Miracollook FASE 2 (F3)
+2. **Infra** -> I6 Docker cleanup (sessione dedicata) o I7 Miracollook healthcheck
+3. **Root cleanup** -> 31 .md alla root da organizzare in docs/
 
-### 3C - Pulizia (P3) - 390 file rimossi da git
-```
-✅ .sncp/ locale -> README OBSOLETO, aggiunto .gitignore, git rm --cached 100 file
-✅ .swarm/ -> git rm --cached 290 file, .gitignore, eliminati da disco
-✅ .checkpoints/ -> 49 file eliminati (erano in .gitignore)
-✅ reports/ -> 90+ file eliminati (erano in .gitignore)
-✅ File orfani root -> BULK_HOUSEKEEPING + .task_output eliminati
-```
+### Decisioni aperte per Rafa
+- Quale feature prima? Fatture XML vs Channel Manager vs Miracollook
+- Docker cleanup: sessione dedicata quando?
+- Root file cleanup: approvare spostamento in docs/?
 
-### Guardiana Audit FASE 3
-```
-Score iniziale: 9.0/10 (4 P2 + 6 P3)
-4 P2 tutti in FORTEZZA_MIRACOLLO.md:
-  - Diagramma ASCII: "10r/s" -> "3 zone", "CSP Report-Only" -> "Enforce"
-  - Tabella vulnerabilita: rimossi bug fixati, corretto innerHTML count
-  - GitHub Actions: "DA AGGIORNARE" -> "ATTIVO, secrets aggiornati"
-  - Data: "26 Feb" -> "27 Feb"
-Fix P2 applicati. P3 fixati (PROMPT_RIPRESA, SUBROADMAP metriche).
-```
+---
+
+## DESIGN 9.5/10 - TARGET RAGGIUNTO! (S9-S12)
+
+Roadmap: `roadmaps/ROADMAP_DESIGN_95.md` | 22 commit, 22 audit, D1-D32 COMPLETATI
 
 ---
 
 ## INFRASTRUTTURA LIVE
 
 ```
-VM miracollo-cervella (GCP us-central1-b):
-  - STATO: RUNNING
-  - Machine: e2-small, x86_64, 2 vCPU, 2GB RAM (~$16/mese)
-  - IP statico: 34.134.72.207
-  - Path repo: /home/rafapra/app
-  - Docker: backend + nginx (healthy)
-  - SSL: Let's Encrypt valido fino 1 Apr 2026 (auto-renew)
-  - GitHub Actions: auto-deploy ATTIVO (push master -> deploy)
-  - Secrets: [tutti stored in VM .env, NON in git]
+VM: miracollo-cervella (GCP), e2-small, RUNNING
+IP: 34.134.72.207 | SSL: auto-renew OK (31 Mag 2026)
+Deploy: GitHub Actions + pytest gate + smoke test | Backup: 2x/giorno + pre-deploy
+Master: PROTETTO (no force push, no delete)
+Porte locale: 9001 (PMS), 9002 (Miracollook), 9003 (Room HW)
+Fortezza Mode v3: docs/FORTEZZA_MODE_v3.md (UNICO doc da seguire!)
 ```
-
----
-
-## PROSSIMI STEP
-
-1. **FASE 4 - Qualita Codice** (prossima nella roadmap)
-   - 4.1: Specializzare `except Exception` nei servizi critici
-   - 4.2: Migrare `on_event("startup")` a `lifespan`
-   - 4.3: Split `cm_reservation.py` (736L)
-   - 4.4: Split `revenue.js` (1296L)
-   - 4.5-4.7: Valutare altri split, async consistency, TODO/FIXME
-2. Oppure: Fix P2 escapeHtml (security.js in 17 HTML mancanti)
-3. Oppure: Nuove feature / Modulo Finanziario
-4. Monitorare VM stabilita + SSL renewal (1 Apr)
-
-## BUG NOTI RESIDUI (P3)
-
-- ~434 innerHTML in 98 file JS (admin-only, mitigato CSP enforce + Basic Auth)
-- 76 onclick handler inline (richiedono unsafe-inline in CSP)
-- security.js incluso solo in 12/29 HTML (planning.html manca)
-- `on_event("startup")` deprecato -> lifespan (FASE 4)
-
-## DECISIONI CHIUSE
-
-D1-D11 (sessioni precedenti) + D12: FASE 3 prima di FASE 4 (pulizia docs prima di codice)
 
 ## PUNTATORI
 
-| Cosa | Path |
-|------|------|
-| **Subroadmap Rinascita** | `roadmaps/SUBROADMAP_RECAP_RINASCITA_2026.md` |
-| Bracci | `bracci/pms-core/`, `bracci/miracallook/`, `bracci/room-hardware/` |
-| FORTEZZA (guida infra) | `guide/FORTEZZA_MIRACOLLO.md` |
+- Piano Infrastruttura: `infra/PIANO_INFRASTRUTTURA_MIRACOLLO.md`
+- Fortezza Mode v3: `docs/FORTEZZA_MODE_v3.md`
+- Researcher monitoring: `reports/RESEARCH_20260308_monitoring_esterno.md`
+- Researcher deploy: `reports/RESEARCH_20260308_deploy_best_practices.md`
 
 ---
 
-## Lezioni Apprese (Sessione FASE 3 Docs - 27 Feb 2026)
+## Lezioni Apprese (Sessione 13)
 
 ### Funzionato bene
-- **Guardiana POST-audit con fix immediato** - 4a sessione consecutiva! Pattern GOLD confermato
-- **git rm --cached per file storici** - rimuove dal tracking senza cancellare dal disco
-- **Mappa contraddizioni PRIMA di fixare** - trovare tutte le divergenze, poi fixare in batch
-- **FORTEZZA come documento critico** - contiene molte info operative, va tenuta allineata
+- Worker fuori context (Ops, Qualita, Security, Tester, Researcher) -> trovano piu della Regina sola
+- "Ogni step -> Guardiana audit" funziona per infra, non solo CSS
+- Batch P3 fixing ("facciamo persino P3") = diamante che brilla
 
-### Non funzionato
-- **FORTEZZA dimenticata nei fix P2** - la Guardiana ha trovato 4 P2 tutti li. Lezione: quando fix docs, controllare SEMPRE anche FORTEZZA
+### Cosa non ha funzionato
+- 429 test mai integrati in CI = debito tecnico silenzioso (ORA fixato)
+- Doc obsoleti (Fortezza v1/v2, vecchio IP in 13 file) = confusione (ORA fixato)
 
-### Pattern candidato
-- **Dopo ogni FASE: aggiornare FORTEZZA** - non solo NORD e PROMPT_RIPRESA, anche la guida operativa
-- **390 file tracked inutilmente** - .sncp/ e .swarm/ andavano in .gitignore dal giorno 1
+### Pattern confermato
+- "Guardiane fuori context" -> Ops/Qualita/Security trovano di piu separatamente
+- "UptimeRobot free = no commercial" -> sempre verificare ToS prima di scegliere tool
 
 ---
 
 *"Lavoriamo in pace! Senza casino! Dipende da noi!"*
-*Cervella & Rafa - 27 Febbraio 2026*
+*Cervella & Rafa - 8 Marzo 2026*

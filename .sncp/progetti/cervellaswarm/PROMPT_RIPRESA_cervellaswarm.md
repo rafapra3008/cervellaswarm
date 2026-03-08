@@ -101,3 +101,21 @@ LINGUAGGIO CERVELLASWARM:
 ---
 
 *"Ultrapassar os proprios limites!" - Rafa & Cervella*
+
+<!-- AUTO-CHECKPOINT-START -->
+
+## AUTO-CHECKPOINT: 2026-03-06 15:01 (unknown)
+
+### Stato Git
+- **Branch**: main
+- **Ultimo commit**: 0e594ba0 - S438: Add FASE E roadmap, La Nonna script, and architect plan
+- **File modificati** (3):
+  - sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md
+  - .sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md
+  - .sncp/progetti/miracollo/roadmaps/SUBROADMAP_RECAP_RINASCITA_2026.md
+
+### Note
+- Checkpoint automatico generato da hook
+- Trigger: unknown
+
+<!-- AUTO-CHECKPOINT-END -->

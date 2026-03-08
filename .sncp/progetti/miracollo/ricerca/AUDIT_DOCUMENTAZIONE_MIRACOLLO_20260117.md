@@ -53,7 +53,7 @@
 ```
 MIRACOLLO = 3 BRACCI
 - PMS CORE (:8000)        85%  PRODUZIONE
-- MIRACALLOOK (:8002)     60%  FUNZIONANTE
+- MIRACOLLOOK (:8002)     60%  FUNZIONANTE
 - ROOM HARDWARE (:8003)   10%  RICERCA OK
 ```
 
@@ -90,7 +90,7 @@ Focus: MiracollioPay, AI Document Parser, Night Audit
 **CervellaSwarm/stato.md:**
 ```
 PMS CORE:       85% - PRODUZIONE STABILE
-MIRACALLOOK:    60% - Email client funzionante
+MIRACOLLOOK:    60% - Email client funzionante
 ROOM HARDWARE:  10% - Ricerca completa
 ```
 
@@ -154,7 +154,7 @@ echo "QUESTO FILE E' OBSOLETO. Vedere CervellaSwarm/.sncp/progetti/miracollo/NOR
 | File | Stato | Scope |
 |------|-------|-------|
 | ROADMAP_RATEBOARD_MASTER.md | OK | Score 9.0/10 → 9.5/10 |
-| bracci/miracallook/ROADMAP_MIRACOLLOOK_MASTER.md | OK | Palette salutare |
+| bracci/miracollook/ROADMAP_MIRACOLLOOK_MASTER.md | OK | Palette salutare |
 | bracci/room-hardware/ROADMAP_ROOM_MANAGER_COMPLETA.md | OK | VDA integration |
 
 ### Roadmap Archiviate (miracollogeminifocus)

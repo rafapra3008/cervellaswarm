@@ -1,94 +1,112 @@
 <!-- DISCRIMINATORE: MIRACOLLO PMS CORE -->
 <!-- PORTA: 8001 | TIPO: Sistema alberghiero principale -->
 <!-- PATH: ~/Developer/miracollogeminifocus/ (backend principale) -->
-<!-- NON CONFONDERE CON: Miracollook (8002), Room Hardware (8003) -->
+<!-- NON CONFONDERE CON: Miracollook (8002 - repo separato), Room Hardware (8003) -->
 
 # PROMPT RIPRESA - PMS Core
 
-> **Ultimo aggiornamento:** 27 Febbraio 2026 - FASE 3 Documentazione COMPLETATA
-> **STATO:** 90% LIVE | FASE 2 Sicurezza DONE | FASE 3 Docs DONE
+> **Ultimo aggiornamento:** 6 Marzo 2026 - Sessione 2 post-RINASCITA
+> **STATO:** 90% LIVE | Health 9.3/10 | Security 10/10
 
 ---
 
-## COSA E SUCCESSO QUESTA SESSIONE
+## ULTIMA SESSIONE (6 Mar - pulizia profonda)
 
 ```
-FASE 3 - DOCUMENTAZIONE (27 Feb 2026)
+Da 7.8 a 9.3/10 in una sessione!
 
-Obiettivo: portare Health Docs da 6.5/10 a 9.5/10
-Risultato: 9.0/10 (Guardiana) + fix P2 applicati
+Security (3 MEDIO risolti):
+  - WhatsApp verify: secrets.compare_digest() + no log token
+  - /docs /redoc /openapi.json OFF in produzione (ENVIRONMENT check)
+  - Token Telegram rimosso (deploy.sh.DEPRECATED eliminato)
 
-Cosa abbiamo fatto:
-1. Verificato e aggiornato PROMPT_RIPRESA root (redirect OK)
-2. Fixato 6 contraddizioni nei docs (score, porte, stack, container)
-3. Rimosso 390 file da git tracking (.sncp/ + .swarm/ obsoleti)
-4. Eliminato 250+ file locali (checkpoints, reports, task output)
-5. Allineato FORTEZZA_MIRACOLLO.md con realta FASE 2
-6. Aggiornato metriche nella SUBROADMAP
+Codice:
+  - 22 except Exception -> tipi concreti (sqlite3.Error, httpx.HTTPError, etc.)
+  - 25 except Exception annotati "Intentional broad catch: [motivo]"
+  - 1 bare except: fixato (what_if_api.py)
+  - 22 print() -> logger (compliance, direct_scraping, playwright_scraping)
+  - 28 console.log debug rimossi (rateboard-core.js)
 
-Guardiana: 9.0/10 -> 4 P2 fixati (FORTEZZA), 6 P3 fixati
-Commit: 1a72310 | 393 file, -51,179 righe | PUSHATO
-```
+Pulizia:
+  - File duplicato models/subscription.py eliminato (= modules/subscription/models.py)
+  - 2 file esempio rimossi + backend/backend/ anomalia
+  - miracallook/ rimosso dal repo (workspace separato)
+  - 2 deploy scripts DEPRECATED eliminati
 
----
-
-## FASE 2 SICUREZZA - COMPLETATA (sessione precedente)
-
-```
-2.1 Auth Middleware       ✅ LIVE (9.5/10) - API Key + Nginx Basic Auth
-2.2 CSP Enforce          ✅ DONE (9.0/10) - unsafe-eval rimosso, HSTS
-2.3 escapeHtml globale   ✅ DONE (9.3/10) - 8 copie -> 1 centralizzata
-2.4 DB purge git history ✅ DONE (9.3/10) - .git 17->8.7 MB
-2.5 Rate limiting Nginx  ✅ DONE (9.3/10) - 3 zone granulari
+5 commit: dea5dd4, e34c57f, 95e8b22, 956a263, 440b01d
 ```
 
 ---
 
-## BUG NOTI RESIDUI (P3)
-
-| Bug | Severita | Mitigazione |
-|-----|----------|-------------|
-| ~434 innerHTML admin-only | P3 | CSP enforce + Basic Auth |
-| 76 onclick inline | P3 | richiedono unsafe-inline in CSP |
-| security.js in 12/29 HTML | P2 | planning.html manca (93 innerHTML!) |
-| `on_event("startup")` deprecato | P3 | funziona ma deprecated warning |
-| except Exception generico 100+ | P3 | FASE 4 |
-| Rate limiting Python in-memory | P3 | Nginx rate limiting 3 zone |
-
----
-
-## ARCHITETTURA ATTUALE
+## ARCHITETTURA
 
 ```
-396 endpoint API in 83 file router
+396 endpoint API in 83 router files
 Backend: Python 3.11, FastAPI, SQLite, Gunicorn (2 workers)
 Frontend: HTML/CSS/JS puro (NON React!)
-Docker: Multi-stage build, non-root user, Nginx reverse proxy
+Docker: WORKDIR=/app, backend.main:app, non-root user
 5 middleware: APIKeyAuth -> SecurityHeaders -> CORS -> Logging -> GZip
+Import path: from backend.services... = CORRETTO (WORKDIR=/app)
 ```
 
 ---
 
-## FASE 3 FEATURE - PROGRESSO: 4/5 (80%)
+## SICUREZZA (10/10 Guardiana)
 
-| Task | Status |
-|------|--------|
-| F3.1 Batch Operations | DONE 9/10 |
-| F3.2 Webhooks Outbound | DONE 9/10 |
-| F3.3 Revenue Dashboard | DONE 8/10 |
-| F3.4 Housekeeping QW | DONE 9/10 |
-| F3.5 Channel Manager | FUTURO |
+```
+Auth Middleware 100%:   API Key + Nginx Basic Auth (defense in depth)
+HMAC webhook:           secrets.compare_digest() (timing-safe)
+API Docs:               DISABILITATI in prod (/docs /redoc /openapi.json)
+CSP Enforce:            + HSTS + Permissions-Policy
+escapeHtml:             centralizzata 28/29 HTML (97%)
+Rate limiting:          3 zone Nginx granulari
+Secrets:                0 in codice, tutti in VM .env
+SSL:                    Auto-renew CONFERMATO (valido fino 31 Mag 2026)
+```
 
 ---
 
-## PROSSIMI STEP
+## PROSSIMO: 25 bare `except:` (9.3 -> 9.5)
 
-1. **FASE 4 - Qualita Codice** (target: 8.5/10)
-2. O fix security.js in HTML mancanti (P2 residuo)
-3. Decidere con Rafa
-4. **Subroadmap:** `roadmaps/SUBROADMAP_RECAP_RINASCITA_2026.md`
+```
+15 file, 25 occorrenze - task meccanico ~30 min:
+
+magic_link_service.py:167
+merge.py:100, 170, 177, 187
+research_orchestrator.py:92, 128, 318
+receipts.py:48
+analytics.py:157
+city_tax/models.py:73
+email/schedules.py:121, 231
+room_types.py:42, 146
+subscription/models.py:99
+subscription/service.py:129, 164, 191
+playwright_scraping_client.py:139
+document_scanner.py:260
+narrative_generator.py:211
+availability.py:163
+notifications.py:79
+```
+
+---
+
+## BUG RESIDUI P3 (mitigati)
+
+- ~434 innerHTML admin-only (CSP enforce + Basic Auth)
+- ~76 onclick inline + 133 generati in JS
+- 109 console.log in 70 file JS (molti in catch blocks)
+
+---
+
+## INFRASTRUTTURA
+
+```
+VM: e2-small RUNNING | IP 34.134.72.207 | SSL fino 31 Mag 2026
+Deploy: GitHub Actions auto (push master -> LIVE)
+Backup: cron 2x/giorno, 7d retention
+```
 
 ---
 
 *"Lavoriamo in pace! Senza casino! Dipende da noi!"*
-*27 Febbraio 2026*
+*6 Marzo 2026*

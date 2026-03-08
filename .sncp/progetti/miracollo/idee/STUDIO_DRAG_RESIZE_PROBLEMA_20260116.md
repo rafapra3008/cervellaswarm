@@ -453,7 +453,7 @@ import { ThreePanelResizable } from './components/Layout/ThreePanelResizable';
 **Comando:**
 
 ```bash
-cd miracallook/frontend
+cd miracollook/frontend
 npm install react-resizable-panels@^3.0.0
 ```
 
@@ -488,7 +488,7 @@ npm install react-resizable-panels@^3.0.0
 
 ```bash
 # File da creare
-miracallook/frontend/src/components/Layout/ThreePanelResizable.tsx
+miracollook/frontend/src/components/Layout/ThreePanelResizable.tsx
 ```
 
 **Contenuto:** Vedi "Codice Soluzione" sopra.

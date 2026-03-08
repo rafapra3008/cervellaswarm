@@ -46,7 +46,7 @@
 |   |   +-- PROMPT_RIPRESA_pms-core.md  [NUOVO]
 |   |   +-- stato.md
 |   |
-|   +-- miracallook/                 # Braccio 2 - Email client
+|   +-- miracollook/                 # Braccio 2 - Email client
 |   |   +-- COSTITUZIONE_MIRACOLLOOK.md
 |   |   +-- NORD_MIRACOLLOOK.md
 |   |   +-- PROMPT_RIPRESA_miracollook.md  [NUOVO]
@@ -83,7 +83,7 @@
 | Braccio | COSTITUZIONE | NORD | PROMPT_RIPRESA | stato.md | Score |
 |---------|--------------|------|----------------|----------|-------|
 | PMS-Core | OK | OK | OK | OK | 4/4 |
-| Miracallook | OK | OK | OK | OK | 4/4 |
+| Miracollook | OK | OK | OK | OK | 4/4 |
 | Room-Hardware | OK | OK | OK | OK | 4/4 |
 
 **Tutti i bracci ora hanno documentazione COMPLETA!**
@@ -99,10 +99,10 @@
 
 PMS CORE (fonte di verita)
     |
-    +---> Miracallook
+    +---> Miracollook
     |     - GET /guests/{email}     Chi e questo ospite?
     |     - GET /bookings/current   Prenotazioni attive
-    |     - Miracallook LEGGE, non scrive
+    |     - Miracollook LEGGE, non scrive
     |
     +---> Room Hardware
           - POST /rooms/{id}/status  Camera check-in/out
@@ -114,7 +114,7 @@ PMS CORE (fonte di verita)
 +------------------------------------------------------------------+
 
 :8000  PMS Core (FastAPI backend)
-:8002  Miracallook (FastAPI backend)
+:8002  Miracollook (FastAPI backend)
 :8003  Room Hardware (FastAPI + pymodbus) [futuro]
 :80    Frontend React (nginx)
 :443   Frontend React (SSL)
@@ -150,7 +150,7 @@ PMS CORE (fonte di verita)
 ```
 BRACCI = Servizi SEPARATI con porta propria
   - PMS Core (:8000)
-  - Miracallook (:8002)
+  - Miracollook (:8002)
   - Room Hardware (:8003)
 
 MODULI = Funzionalita INTERNE a PMS Core
@@ -166,7 +166,7 @@ MODULI = Funzionalita INTERNE a PMS Core
 | Braccio | Progresso | Fase | Note |
 |---------|-----------|------|------|
 | PMS Core | 85% | PRODUZIONE | Stabile, manutenzione |
-| Miracallook | 80% | FASE 1 | Drag/resize in corso |
+| Miracollook | 80% | FASE 1 | Drag/resize in corso |
 | Room Hardware | 10% | RICERCA | Attesa hardware |
 
 ---

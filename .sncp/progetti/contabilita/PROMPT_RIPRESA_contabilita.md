@@ -1,80 +1,100 @@
 # PROMPT RIPRESA - Contabilita Antigravity
 
-> **Ultimo aggiornamento:** 6 Marzo 2026 - Sessione 287 (SPRING-014 HP ATTIVATO!)
+> **Ultimo aggiornamento:** 6 Marzo 2026 - Sessione 293 (SPRING-008b DEPLOYATO + UX-004 fix)
 > **Versione canonica:** `CervellaSwarm/.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md`
 
-## Quick Status S287
+## Quick Status S293
 
 | Cosa | Stato |
 |------|-------|
 | **Produzione MAIN** | **V3 LIVE v1.16.1 su contabilitafamigliapra.it** |
-| **DEPLOY PENDENTI** | **ZERO** |
-| **MAPPA** | **`docs/MAPPA_MIGLIORAMENTI_S262.md` - 32 item, 3 TODO, 0 BLOCCATI, 29 DONE** |
-| **Test** | **111/111 verify PASS + 3264 totali** |
-| **SPRING HP** | **ATTIVO! Tutti e 3 hotel: NL+SHE+HP** |
+| **DEPLOY PENDENTI** | **1: annullamenti.js su VM (UX-004 scroll fix)** |
+| **MAPPA** | **`docs/MAPPA_MIGLIORAMENTI_S262.md` - 37 item, 0 TODO, 1 IN_PROGRESS (QC-003), 36 DONE** |
+| **Test** | **124/124 spring_insert PASS + 3264 test totali** |
+| **SPRING Pipeline** | **NL+SHE+HP TUTTI OK! RegisNumero #1005. Limite 5000. Automazione 15:00 attiva.** |
 
-## Cosa Ha Fatto S287
+## Cosa Ha Fatto S293
 
-### SPRING-014: HP ATTIVATO! (Accordo DIAMANTE completato)
+### 1. SPRING-008b: DEPLOYATO HPTERMINAL01!
 
-Rafa ha presentato a Sig. Sergio con successo. HP sbloccato!
+**Problema risolto:** Pipeline SHE+HP bloccata - RegisNumero #1001 superava limite 1000.
 
-**7 file modificati:**
-1. `agent/scripts/spring_pipeline_hp.bat` v1.4.0 -> v1.5.0: HP decommentato (NL+SHE+HP)
-2. `scripts/spring_verify.py`: ACTIVE_HOTELS = ["NL", "SHE", "HP"]
-3. `agent/scripts/spring_verify_hp.bat`: header doc aggiornato (+ERICSOFT_API_KEY_HP)
-4. `tests/test_spring_verify.py`: test invertito (HP DEVE essere in ACTIVE_HOTELS)
-5. `scripts/verify_spring_verify_setup.py`: HP key ora REQUIRED
-6. `scripts/verify_spring_setup.py`: HP key ora REQUIRED
-7. `docs/MAPPA_MIGLIORAMENTI_S262.md`: SPRING-014 DONE, SCHED-003 DONE
+**Deploy eseguito:**
+- Script automatico `deploy_spring_008b.ps1` (backup+sostituzione+pulizia __pycache__+verifica)
+- Audit script pre-deploy: corretto falso positivo pattern (commento storico matchava il check)
+- Dry-run `--all` OK: NL 0 doc (idempotency), SHE 2, HP 3
+- **Run reale: 5 doc committati con successo:**
 
-**Deploy HPTERMINAL01 (2 file):**
-- `spring_pipeline_hp.bat` -> `C:\contabilita-agent\` (sovrascrive)
-- `spring_verify.py` -> `C:\contabilita-agent\scripts\` (sovrascrive)
-- `__pycache__` pulito
-- Dry-run HP: 0 doc (corretto: Rafa ha inserito manualmente)
-- Verify HP: 6 ERROR attesi (delta manuali vs V3, si normalizzeranno)
+| Hotel | Tipo | RegisNumero | Totale | Trial Balance |
+|-------|------|-------------|--------|---------------|
+| SHE | GIR | #1001 | 953.60 | OK |
+| SHE | CARTE | #1002 | 1358.40 | OK |
+| HP | CARTE | #1003 | 1036.40 | OK |
+| HP | BONIFICI | #1004 | 200.00 | OK |
+| HP | BONIFICI | #1005 | 80.00 | OK |
 
-**Audit Guardiana:**
-- Pre-edit: 9.5/10 APPROVED
-- Post-edit: 9.0/10 -> tutti finding fixati (1 P1 test rotto + 5 P2 stale refs)
-- Test: 111/111 PASS
+- mark-done OK per SHE e HP, Telegram inviate, HC.io ping OK
+- Task Scheduler confermato attivo: prossimo run 07/03 15:00
+- File su Desktop Mac: `~/Desktop/spring_deploy_S292/` (backup deploy)
 
-### SCHED-003: HP Autonomo - DONE (incluso in SPRING-014)
-Task Scheduler 15:00 pipeline + 16:00 verify includeranno HP automaticamente.
+### 2. Bug "Collega" - RISOLTO! Era UX, non bug
 
-### Docs aggiornati
-- MAPPA: SPRING-014 DONE, SCHED-003 DONE, contatori 4/0/0/28
-- NORD.md: HP attivo, bat v1.5.0, ZERO bloccati
-- FORTEZZA_MODE_SERVERS.md: HP ATTIVO nella tabella hotel
-- CLAUDE.md: bat v1.5.0
+**Investigazione:** 3 cervelle parallele (Frontend+Reviewer+Data). Scoperto che:
+- Backend INTATTO (S291 non ha toccato codice)
+- Il pannello SI APRIVA ma `scrollIntoView({ block: 'nearest' })` non scrollava abbastanza
+- Il pannello appariva SOTTO la riga, fuori viewport - sembrava non funzionare
 
-## PROSSIMI STEP (S288)
+**Fix (UX-004):** `annullamenti.js` riga 633 - cambiato a `block: 'center'` con 50ms delay.
+- Guardiana 9.7/10 APPROVED (0 P1, 0 P2, 2 P3 cosmetici)
+- Testato localmente da Rafa: pannello si apre al centro della pagina
+- **Deploy VM pendente** (1 file: `frontend/js/annullamenti.js`)
 
-1. **Monitorare primo run automatico HP** (oggi 15:00 pipeline + 16:00 verify) - verificare Telegram
-2. **Verify HP delta attesi**: 6 ERROR (inserimenti manuali vs V3). Si normalizzeranno quando pipeline prende il controllo.
-3. **Migration 2 record storici SHE** `CARTA DI CREDITO` -> `CARTA` (408 EUR) - decisione Rafa: flusso naturale agente
-4. **SPRING-015**: Dashboard SPRING status nel portale (P3)
-5. **QC-003**: File grandi candidati a split (P3)
-6. **IDEA-004 Step 11**: Home Rafa VM (~2.8G) - serve decisione
+### 3. Commit e Documentazione
+
+- 3 commit: S292 fix + S293 deploy + S293 UX fix
+- MAPPA aggiornata: 37 item, 36 DONE
+- NORD.md, PROMPT_RIPRESA, memoria tutti aggiornati
+
+## Deploy Pendente (S294)
+
+```bash
+# 1 solo file - Fortezza Mode
+./scripts/deploy_v3_files.sh frontend/js/annullamenti.js
+
+# Verifica post-deploy:
+curl -s https://contabilitafamigliapra.it/static/js/annullamenti.js | head -4
+# Deve mostrare v2.1.0 (versione invariata, solo fix scroll interno)
+
+# Test: aprire NL Caparre, click "Collega" su una cancellazione
+# Il pannello deve apparire al CENTRO della pagina
+```
+
+## PROSSIMI STEP (S294)
+
+1. **DEPLOY VM**: `annullamenti.js` UX-004 (1 file, Fortezza Mode, procedura sopra)
+2. **QC-003**: Code Review split file grandi (IN_PROGRESS, 10/28 DONE)
+3. **AGENT-005**: Pulizia file duplicati/vecchi sui PC hotel (TODO P3)
 
 ## Bloccato
 
-**NESSUNO!** Tutti gli item sono sbloccati.
+**NESSUNO!** Pipeline funzionante per tutti e 3 hotel. Automazione attiva.
 
-## Lezioni Apprese (Sessione 287)
+## Lezioni Apprese (Sessione 293)
 
 ### Cosa ha funzionato bene
-- **3 cervelle ricerca in parallelo PRIMA di agire**: quadro completo HP in 60 sec. Zero sorprese durante edit.
-- **Guardiana pre + post edit**: pre-edit 9.5 ha validato piano, post-edit 9.0 ha trovato 1 test rotto (P1!) + 5 file stale. Senza Guardiana post-edit, il test sarebbe fallito al commit.
-- **Fortezza Mode Servers per guidare Rafa**: comandi precisi, zero errori di digitazione.
+- **Script PowerShell automatico > procedura manuale**: zero errori umani, backup+verifica inclusi.
+- **Audit script ANCHE su codice proprio**: trovato falso positivo (pattern commento storico). Senza audit lo script si sarebbe bloccato su HPTERMINAL01.
+- **Dry-run --all**: NL idempotency confermata, SHE+HP preview perfetto. Nessuna sorpresa al run reale.
+- **3 cervelle caccia bug = diagnosi completa**: anche se il "bug" era UX, l'investigazione ha confermato che backend e frontend sono integri.
+- **Test su hotel diverso (SHE)**: ha dimostrato che non era un bug di codice ma specifico al caso.
 
 ### Cosa non ha funzionato
-- Nulla di critico. Processo liscio.
+- **Falso allarme bug**: il "bug collega" era in realta' un problema di scroll UX. La caccia con 3 cervelle era overkill per questo caso. Lezione: prima verificare in produzione con DevTools, POI lanciare le cervelle.
 
 ### Pattern confermato
-- **Guardiana pre + post edit = STANDARD** per ogni modifica multi-file. 5a evidenza. PROMOSSO.
-- **Cartella Desktop per deploy manuali**: Rafa copia i file giusti senza cercare. Pratico. 1a evidenza.
+- **Script .py/.ps1 per deploy > comandi manuali** (Lezione #23, 5a evidenza).
+- **Audit SEMPRE prima di eseguire** (anche su codice proprio).
+- **Testare su piu' hotel per isolare il problema** (NL vs SHE ha chiarito subito).
 
 ---
 
@@ -82,14 +102,12 @@ Task Scheduler 15:00 pipeline + 16:00 verify includeranno HP automaticamente.
 
 <!-- AUTO-CHECKPOINT-START -->
 
-## AUTO-CHECKPOINT: 2026-03-06 09:13 (unknown)
+## AUTO-CHECKPOINT: 2026-03-06 18:50 (unknown)
 
 ### Stato Git
 - **Branch**: lab-v3
-- **Ultimo commit**: 39d0c0f - S287: Audit Guardiana docs - 10/10 finding fixati (IDEA-003 DONE + pulizia stale refs)
-- **File modificati** (2):
-  - claude/hooks/subagent_stop.py
-  - backend/database/ericsoft.py
+- **Ultimo commit**: e01e999 - S293: Checkpoint finale - MAPPA+NORD aggiornati (UX-004 + deploy pendente)
+- **File modificati**: Nessuno (git pulito)
 
 ### Note
 - Checkpoint automatico generato da hook
