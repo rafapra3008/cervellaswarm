@@ -182,6 +182,10 @@ from ._nl_processor import (  # anthropic imported lazily at instantiation
     NLProcessorError as NLProcessorError,
     TOOL_SCHEMA as _NL_TOOL_SCHEMA,
 )
+from ._voice import (  # faster-whisper+sounddevice imported lazily at instantiation
+    VoiceProcessor as VoiceProcessor,
+    VoiceProcessorError as VoiceProcessorError,
+)
 from ._cli import main as cli_main
 from .errors import (
     ErrorCategory,
@@ -363,4 +367,7 @@ __all__ = [
     # NL Processor (E.3, optional dep -- `pip install ...[nl]`)
     "ClaudeNLProcessor",
     "NLProcessorError",
+    # Voice Processor (E.4, optional dep -- `pip install ...[voice]`)
+    "VoiceProcessor",
+    "VoiceProcessorError",
 ]

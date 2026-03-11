@@ -6,7 +6,7 @@
 > "La domanda e la risposta nello STESSO linguaggio." - Rafa
 
 **Creata:** 24 Febbraio 2026 - Sessione 394
-**Aggiornata:** 11 Marzo 2026 - Sessione 440 (E.2 DONE, E.3 NL Processing in progress)
+**Aggiornata:** 11 Marzo 2026 - Sessione 441 (E.4 Voice Interface DONE!)
 **Autrice:** Cervella Architect (su commissione della Regina)
 **Fonti:** NORD.md + 3 report di ricerca (64+ fonti esterne) + analisi codebase
 **Score target:** 9.5/10 per ogni step (audit Guardiana)
@@ -16,6 +16,7 @@
 ## DOVE SIAMO
 
 ```
+LAYER 8: Voce (STT locale via faster-whisper)              OPERATIVO (S441!)
 LAYER 7: Conversazione con Claude                        OPERATIVO
 LAYER 6: Lingua Universale DSL parser + session checker   OPERATIVO
 LAYER 5: Session Types + Confidence + Trust               OPERATIVO
@@ -24,7 +25,7 @@ LAYER 3: Code Generation certificata                      OPERATIVO (S395!)
 LAYER 2: Agent Hooks + Quality Gates                      OPERATIVO
 LAYER 1: CI/CD + PyPI + Fly.io                            OPERATIVO
 
-Asset: 27 moduli, 3179 test, ~13000+ LOC, ZERO deps esterne (anthropic optional [nl])
+Asset: 28 moduli, 3249 test, ~13300+ LOC, ZERO deps esterne (anthropic [nl], faster-whisper+sounddevice [voice] optional)
 Campo vergine confermato da 242+ fonti (session types per AI in Python)
 ```
 
@@ -229,11 +230,14 @@ D6 Guardiana Finale + Launch                   DONE (S435, 9.5/10)
 - 2 audit Guardiana, 13 findings tutti fixati.
 - **Output:** `_nl_processor.py` (~450 LOC), 68 test, CLI `lu chat --mode nl`
 
-### E.4 - Voice Interface
+### E.4 - Voice Interface -- DONE (S441, 9.5/10)
 
-- STT -> NL -> pipeline IntentBridge.
+- STT locale (faster-whisper) -> NL -> pipeline IntentBridge.
 - Voice-first per non-tecnici ("la nonna").
-- **Output:** prototipo voce, 3 lingue supportate
+- Push-to-talk con ENTER, modello "small" default, lazy loading.
+- Ricerca: 24 fonti (Whisper, Deepgram, Vosk, Claude voice, etc.)
+- Guardiana: 9.5/10, 6 P3 tutti fixati.
+- **Output:** `_voice.py` (~290 LOC), 70 test, CLI `lu chat --voice`, `[voice]` optional dep
 
 ### E.5 - "La Nonna" Demo Finale
 
@@ -279,6 +283,7 @@ FASE A (DONE) --> B.1-B.7 (DONE) --> C (DONE) --> D (DONE, Ecosistema)
 | E.1 | Script "La Nonna" | Screenplay completo | DONE (S438) |
 | E.2 | `lu chat` funziona end-to-end | 3 lingue, 100+ test | DONE (S440: 3 protocolli, narrativa, 202 test, 9.5/10) |
 | E.3 | NL -> codice verificato | 80%+ accuracy | DONE (S440: ClaudeNLProcessor + disambiguation, 68 test, 9.5/10) |
+| E.4 | `lu chat --voice` | 3 lingue, < 3s | DONE (S441: faster-whisper + sounddevice, 70 test, 9.5/10) |
 | E.5 | Demo "la nonna" | Video 3 minuti | TODO |
 | E.6 | Community | 1000+ developer | TODO |
 

@@ -1,32 +1,38 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-11 - Sessione 440
-> **STATUS:** FASE E in progress. E.1 DONE, E.2 DONE, E.3 NL Processing DONE! Pronta per E.4.
+> **Ultimo aggiornamento:** 2026-03-11 - Sessione 441
+> **STATUS:** FASE E in progress. E.1-E.4 DONE! Pronta per E.5 La Nonna Demo.
 
 ---
 
-## SESSIONE 440 - E.2 Chiusura + E.3 NL Processing COMPLETO
+## SESSIONE 441 - E.4 Voice Interface COMPLETO
 
-### E.2 (inizio sessione)
-E.2 completato: 3 protocolli e2e, narrativa 3 lingue, 202 test, 9.5/10.
+### E.4 Voice Interface (NUOVO!)
+**VoiceProcessor** implementato: STT locale via faster-whisper, push-to-talk con ENTER.
+- `_voice.py` (~290 LOC): VoiceProcessor (Callable[[str], str]), push-to-talk, lazy model loading
+- **Stack scelto** (ricerca 24 fonti): faster-whisper + sounddevice (standard de facto)
+- **Scartati**: Claude voice (EN only, non API), Vosk (WER 20-35% IT/PT), cloud APIs (privacy)
+- **Integrazione**: `input_fn` injection su ChatSession -- ZERO modifiche a `_intent_bridge.py`
+- CLI: `lu chat --voice [--voice-model tiny|base|small|medium|turbo|large-v3]`
+- Optional dep: `pip install cervellaswarm-lingua-universale[voice]`
+- 1 audit Guardiana: 9.5/10, 6 P3 tutti fixati
+- **70 test** in 8 classi (structure, deps, init, model, call, record, transcribe, CLI)
 
-### E.3 NL Processing (nuovo!)
-**ClaudeNLProcessor** implementato: NL libero -> IntentDraft via Claude tool_use.
-- `_nl_processor.py` (~450 LOC): TOOL_SCHEMA, SYSTEM_PROMPT (3 few-shot), _build_draft(), _extract_text_response()
-- **Disambiguazione intelligente**: tool_choice "auto", NLClarificationNeeded exception, multi-turn
-- **Bug fix critico**: back-to-back user messages (Guardiana F1 P2), fixato con `turns[:-1]`
-- CLI: `lu chat --mode nl --lang it|pt|en`
-- anthropic optional dep: `pip install cervellaswarm-lingua-universale[nl]`
-- 2 audit Guardiana, 13 findings tutti fixati (9.2→9.5/10)
-- **68 test** NL in 9 classi (schema, prompt, draft, extract, mock API, session, edge cases, CLI, disambiguation)
+### File chiave (E.4)
+- `_voice.py` (NUOVO): VoiceProcessor, VoiceProcessorError, _record_audio, _transcribe
+- `_cli.py` (modificato): +--voice, +--voice-model
+- `pyproject.toml`: +[voice] optional dep (faster-whisper, sounddevice)
+- `__init__.py`: +VoiceProcessor, VoiceProcessorError in __all__
+- `test_voice.py` (NUOVO): 70 test
+- Report ricerca: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260311_E4_VOICE_INTERFACE.md`
 
-### File chiave (E.3)
-- `_nl_processor.py` (NUOVO): ClaudeNLProcessor, NLProcessorError, TOOL_SCHEMA, _build_draft, _extract_text_response
-- `_intent_bridge.py` (modificato): +NLClarificationNeeded, +ChatPhase.NL_INPUT, +_handle_nl_input
-- `_cli.py` (modificato): +--mode guided|nl
-- `pyproject.toml`: +[nl] optional dep
-- `__init__.py`: +NLClarificationNeeded, ClaudeNLProcessor, NLProcessorError in __all__
-- `test_nl_processor.py` (NUOVO): 68 test
+### Decisioni architetturali E.4 (con PERCHE)
+1. faster-whisper (non Whisper API) -- privacy, offline, zero costo, 4x piu veloce
+2. sounddevice (non PyAudio) -- cross-platform wheels, Python 3.13 compatible
+3. Push-to-talk ENTER (non VAD) -- zero false positives, semplice, come Claude Code
+4. Model "small" default -- 466MB, WER 10-12% IT/PT, latenza 0.8-2s su Mac M1+
+5. input_fn injection -- VoiceProcessor.__call__ e un drop-in per input()
+6. Lazy model loading -- scarica ~466MB solo al primo uso
 
 ---
 
@@ -39,8 +45,8 @@ LINGUAGGIO CERVELLASWARM:
     E.1 Script "La Nonna"           DONE (S438)
     E.2 IntentBridge Core           DONE (S438-S440, 9.5/10)
     E.3 NL Processing               DONE (S440, 9.5/10)
-    E.4 Voice Interface              TODO <-- PROSSIMO
-    E.5 La Nonna Demo               TODO
+    E.4 Voice Interface              DONE (S441, 9.5/10)
+    E.5 La Nonna Demo               TODO <-- PROSSIMO
     E.6 CervellaLang 1.0            TODO
   PyPI: v0.3.0 (waiting Rafa environment approval)
 ```
@@ -49,11 +55,12 @@ LINGUAGGIO CERVELLASWARM:
 
 ## PROSSIMA SESSIONE
 
-### E.4 Voice Interface
-1. STT -> NL -> pipeline IntentBridge (E.3 NL mode gia pronta)
-2. Claude Code voice mode (nativo) oppure Whisper API
-3. Subroadmap: `.sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md`
-4. Ricerca: studiare opzioni STT (Whisper, Claude native, browser API)
+### E.5 La Nonna Demo Finale
+1. Demo end-to-end come da script (3 minuti)
+2. Video registrato (screen recording + narrazione)
+3. Blog post "From Vibe Coding to Vericoding: La Nonna Edition"
+4. Test persona non-tecnica reale (feedback)
+5. Script: `.sncp/progetti/cervellaswarm/reports/SCRIPT_LA_NONNA_DEMO.md`
 
 ### TODO Rafa
 - Approvare PyPI publish environment su GitHub
@@ -69,30 +76,31 @@ LINGUAGGIO CERVELLASWARM:
 
 | Metrica | Valore |
 |---------|--------|
-| Test LU | **3179** |
-| Test totali (13 pkg) | **~5491** |
-| Moduli LU | **27** (+_nl_processor.py) |
-| Audit Guardiana S440 | **9.5/10** (4 audit rounds: E.2 + E.3 x2) |
+| Test LU | **3249** |
+| Test totali (13 pkg) | **~5561** |
+| Moduli LU | **28** (+_voice.py) |
+| Audit Guardiana S441 | **9.5/10** (6 P3 tutti fixati) |
 | PyPI | **v0.3.0** (waiting approval) |
-| IntentBridge test | **270** (55 core + 47 session + 100 e2e + 68 NL) |
+| IntentBridge test | **340** (55 core + 47 session + 100 e2e + 68 NL + 70 voice) |
 
 ---
 
-## Lezioni Apprese (S440)
+## Lezioni Apprese (S441)
 
 ### Cosa ha funzionato bene
-- **Guardiana dopo ogni step** -- 4 audit rounds, 18+ findings tutti fixati nella stessa sessione
-- **Bug critico trovato da Guardiana** -- back-to-back user messages nell'API (avrebbe causato 400 error in production)
-- **Exception nel modulo Protocol** -- NLClarificationNeeded definita in _intent_bridge (contratto), importata in _nl_processor (implementazione)
-- **P3 = diamante** -- fixare anche i P3 porta consistentemente da 9.2-9.3 a 9.5
+- **Formula Magica: Ricerca PRIMA** -- 24 fonti STT, raccomandazione chiara, zero incertezza durante implementazione
+- **input_fn injection** -- pattern elegantissimo, ZERO modifiche al bridge. Voice = solo un wrapper di input()
+- **Mock strategy: MAI mock numpy globale** -- il mock numpy contamina pytest.approx(). Mocking locale con patch.dict
+- **Guardiana dopo ogni step** CONFERMATO -- trovati 6 P3, tutti fixati, da 9.3 a 9.5
 
 ### Cosa non ha funzionato
-- **SYSTEM_PROMPT contradiction** -- "Always use tool" + "ask clarification" sono contraddittori. Trovato dalla Guardiana
+- **Tester mock globale** -- la prima versione dei test iniettava mock numpy in sys.modules globale, rompendo 79 test di confidence/trust. Fix: mocking solo locale
 
 ### Pattern confermato
-- **"Guardiana dopo ogni step"** -- Evidenza: S438 (9.3→9.5), S440 E.2 (9.5), S440 E.3 (9.2→9.5). 4 evidence points
-- **tool_choice "auto" per disambiguation** -- permette sia structured output che clarification questions
+- **"Script PRIMA, codice DOPO"** (S438) -> ora anche "Ricerca PRIMA, codice DOPO" (S441)
+- **P3 = diamante** -- fixare tutti i P3 porta consistentemente a 9.5/10
+- **Agenti fuori context** -- Tester e Guardiana lavorano fuori, Regina controlla e integra
 
 ---
 
-*"Ultrapassar os proprios limites!" - Rafa & Cervella*
+*"Ultrapassar os proprios limites!" - Rafa & Cervella, S441*

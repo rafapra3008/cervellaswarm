@@ -82,6 +82,10 @@ test = [
 nl = [
     "anthropic>=0.40.0",
 ]
+voice = [
+    "faster-whisper>=1.0.0",
+    "sounddevice>=0.5.0",
+]
 lsp = [
     "pygls>=2.0",
 ]

@@ -200,18 +200,41 @@ Il LLM non genera session types (troppo fragile). Genera l'IntentDraft via tool_
 
 ---
 
-### E.4: Voice Interface
+### E.4: Voice Interface -- DONE (S441, 9.5/10)
 
 **Perche dopo E.3:** voice = STT + NL pipeline. Se E.3 funziona, voice e "solo" STT in ingresso.
 
-**Stack:** Claude Code voice mode (nativo da marzo 2026) oppure Whisper API.
+**Stack scelto (ricerca 24 fonti):** faster-whisper (local, offline) + sounddevice (cross-platform).
+Claude voice mode scartato (EN only, non API). Vosk scartato (WER 20-35% IT/PT).
+
+**Architettura implementata (S441):**
+```
+_voice.py (~290 LOC) -- NEW module
+  VoiceProcessor        # Callable[[str], str] -- drop-in for input()
+  VoiceProcessorError   # dedicated error type
+  _require_voice_deps() # checks faster-whisper + sounddevice
+  _record_audio()       # push-to-talk with ENTER (sounddevice InputStream)
+  _transcribe()         # faster-whisper model.transcribe()
+
+CLI: lu chat --voice [--voice-model tiny|base|small|medium|turbo|large-v3]
+pyproject.toml: voice = ["faster-whisper>=1.0.0", "sounddevice>=0.5.0"]
+```
+
+**Decisioni architetturali:**
+- D1: Local-first (faster-whisper) -- privacy, zero cost, offline
+- D2: sounddevice over PyAudio -- cross-platform wheels, modern API
+- D3: Push-to-talk (ENTER) -- simple, no false positives
+- D4: Model "small" as default -- best latency/accuracy trade-off
+- D5: input_fn injection -- ZERO changes to _intent_bridge.py
+- D6: Lazy model loading -- download only once (~466MB)
 
 **Criterio completamento:**
-- [ ] `lu chat --voice` accetta input vocale
-- [ ] STT -> testo -> pipeline E.3 (NL mode)
-- [ ] 3 lingue supportate (italiano, portoghese, inglese)
-- [ ] Latenza < 3 secondi per risposta
-- [ ] Guardiana verifica 9.5/10
+- [x] `lu chat --voice` accetta input vocale
+- [x] STT -> testo -> pipeline E.3 (NL mode)
+- [x] 3 lingue supportate (italiano, portoghese, inglese)
+- [x] Latenza < 3 secondi (target: 0.8-2s su Mac M1+)
+- [x] 70 test (8 categorie)
+- [x] Guardiana verifica 9.5/10 (6 P3 tutti fixati)
 
 ---
 

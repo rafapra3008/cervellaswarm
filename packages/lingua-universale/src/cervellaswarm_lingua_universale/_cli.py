@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Command-line interface for Lingua Universale (C3.2 + C3.4 + C3.6 + D2).
+"""Command-line interface for Lingua Universale (C3.2 + C3.4 + C3.6 + D2 + E.3 + E.4).
 
 Subcommands::
 
@@ -10,7 +10,7 @@ Subcommands::
     lu verify <file.lu>   Parse, compile, and formally verify with Lean 4.
     lu compile <file.lu>  Show the generated Python source.
     lu repl               Start the interactive REPL.
-    lu chat               Interactive guided protocol builder (E.2).
+    lu chat               Interactive guided protocol builder (E.2+E.4).
     lu lsp                Start the Language Server Protocol server (STDIO).
     lu version            Show version information.
 
@@ -152,10 +152,29 @@ def _cmd_chat(args: argparse.Namespace) -> int:
             )
             return 1
 
-    session = ChatSession(
-        lang=args.lang,
-        nl_processor=nl_processor,
-    )
+    input_fn = None
+    if getattr(args, "voice", False):
+        try:
+            from ._voice import VoiceProcessor
+            input_fn = VoiceProcessor(
+                lang=args.lang,
+                model_size=getattr(args, "voice_model", None),
+            )
+        except ImportError as exc:
+            print(
+                f"{_c.RED}{_c.BOLD}ERROR{_c.RESET} {exc}",
+                file=sys.stderr,
+            )
+            return 1
+
+    kwargs: dict[str, object] = {
+        "lang": args.lang,
+        "nl_processor": nl_processor,
+    }
+    if input_fn is not None:
+        kwargs["input_fn"] = input_fn
+
+    session = ChatSession(**kwargs)  # type: ignore[arg-type]
     result = session.run()
     if result and args.output:
         out_path = Path(args.output)
@@ -251,6 +270,17 @@ def _build_parser() -> argparse.ArgumentParser:
         choices=["guided", "nl"],
         default="guided",
         help="Chat mode: guided (step-by-step) or nl (natural language, requires anthropic)",
+    )
+    p_chat.add_argument(
+        "--voice",
+        action="store_true",
+        help="Use voice input via microphone (requires [voice] extra)",
+    )
+    p_chat.add_argument(
+        "--voice-model",
+        choices=["tiny", "base", "small", "medium", "turbo", "large-v3"],
+        default=None,
+        help="Whisper model size for voice (default: small)",
     )
     p_chat.add_argument(
         "-o", "--output",
