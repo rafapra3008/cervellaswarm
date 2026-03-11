@@ -28,7 +28,7 @@ paths:
 
 ## Convenzioni
 - Error codes: `LU-EXXX` con severity (error/warning/info)
-- Test: `pytest packages/lingua-universale/tests/` (3062 test)
+- Test: `pytest packages/lingua-universale/tests/` (3111 test)
 - Ogni modifica -> test -> Guardiana audit
 - MAI rompere backward compatibility senza versione major
 
@@ -38,10 +38,12 @@ paths:
 - render_intent_source(): deterministic IntentDraft -> B.4 intent notation
 - Pipeline: guided input -> IntentDraft -> parse_intent() -> check_properties() -> generate_python()
 - i18n: 3 locales (en/it/pt) via _STRINGS dict (same pattern as errors.py)
+- _SIM_NARRATIVES: narrative descriptions per MessageKind x 3 lingue (simulation output)
+- Simulation: shows ALL branches (not just first), narrative in target language
 - CLI: `lu chat --lang it|pt|en`
 
 ## Fase Corrente
 - FASE E: Per Tutti (IntentBridge) -- IN PROGRESS (E.1 DONE, E.2 IN PROGRESS)
 - Subroadmap: `.sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md`
 - FASE D: L'Ecosistema -- COMPLETA! D1-D6 DONE (media 9.5/10)
-- Test: 3062+ (LU), 5374+ (totale 9 pkg)
+- Test: 3105+ (LU), 5417+ (totale 9 pkg)

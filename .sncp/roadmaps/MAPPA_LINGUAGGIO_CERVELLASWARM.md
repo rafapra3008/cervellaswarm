@@ -6,7 +6,7 @@
 > "La domanda e la risposta nello STESSO linguaggio." - Rafa
 
 **Creata:** 24 Febbraio 2026 - Sessione 394
-**Aggiornata:** 6 Marzo 2026 - Sessione 438 (FASE D COMPLETA! FASE E avviata)
+**Aggiornata:** 11 Marzo 2026 - Sessione 440 (E.2 quasi completo: 3 protocolli, narrativa)
 **Autrice:** Cervella Architect (su commissione della Regina)
 **Fonti:** NORD.md + 3 report di ricerca (64+ fonti esterne) + analisi codebase
 **Score target:** 9.5/10 per ogni step (audit Guardiana)
@@ -24,7 +24,7 @@ LAYER 3: Code Generation certificata                      OPERATIVO (S395!)
 LAYER 2: Agent Hooks + Quality Gates                      OPERATIVO
 LAYER 1: CI/CD + PyPI + Fly.io                            OPERATIVO
 
-Asset: 26 moduli, 3062 test, ~13000+ LOC, ZERO deps esterne
+Asset: 26 moduli, 3111 test, ~13000+ LOC, ZERO deps esterne
 Campo vergine confermato da 242+ fonti (session types per AI in Python)
 ```
 
@@ -276,7 +276,7 @@ FASE A (DONE) --> B.1-B.7 (DONE) --> C (DONE) --> D (DONE, Ecosistema)
 | C | Grammatica + Compilatore + LSP | 25 moduli, 2909 test | DONE |
 | D | Ecosistema (VS Code, Playground, Tour) | 6/6 step, 9.5/10 | DONE |
 | E.1 | Script "La Nonna" | Screenplay completo | DONE (S438) |
-| E.2 | `lu chat` funziona end-to-end | 3 lingue, 100+ test | IN PROGRESS (S438) |
+| E.2 | `lu chat` funziona end-to-end | 3 lingue, 100+ test | IN PROGRESS (S440: 3 protocolli, narrativa, 196 test) |
 | E.3 | NL -> codice verificato | 80%+ accuracy | TODO |
 | E.5 | Demo "la nonna" | Video 3 minuti | TODO |
 | E.6 | Community | 1000+ developer | TODO |

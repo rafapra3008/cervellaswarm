@@ -137,11 +137,13 @@ def _cmd_chat(args):
 **Criterio completamento:**
 - [x] `lu chat` funziona in modalita guidata (it/pt/en)
 - [x] Pipeline completa: input -> IntentDraft -> B.4 -> B.5 -> B.3 -> simulazione
-- [ ] Almeno 3 protocolli creabili end-to-end (ricette, task delegation, data pipeline)
-- [ ] Output narrativo in lingua target (non tecnico) -- parziale
-- [ ] 100+ test (`test_intent_bridge_core.py` + `test_intent_bridge_session.py`)
-- [x] ZERO regressioni sulla suite esistente (2965 test totali, +56 nuovi)
-- [ ] Guardiana verifica 9.5/10
+- [x] Almeno 3 protocolli creabili end-to-end (ricette EN, task delegation IT, data pipeline PT) -- S440
+- [x] Output narrativo in lingua target (non tecnico) -- S440: _SIM_NARRATIVES 3 lingue x 13 kinds
+- [x] 100+ test (202 test: 55 core + 47 session + 100 e2e) -- S440
+- [x] ZERO regressioni sulla suite esistente (3111 test totali)
+- [x] F5 fix: simulazione mostra TUTTI i branch -- S440
+- [x] F11 fix: enum test tautologici rimossi -- S440
+- [ ] Guardiana verifica 9.5/10 -- S440 audit in corso
 
 ---
 

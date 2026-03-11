@@ -206,10 +206,10 @@ _ACTION_MENU: MappingProxyType[str, MappingProxyType[str, str]] = MappingProxyTy
         "ask_verify": "pede para verificar",
         "return_verdict": "retorna um veredito",
         "ask_plan": "pede para planejar",
-        "propose_plan": "propõe um plano",
-        "tell_decision": "comunica uma decisão",
+        "propose_plan": "propoe um plano",
+        "tell_decision": "comunica uma decisao",
         "ask_research": "pede para pesquisar",
-        "return_report": "retorna um relatório",
+        "return_report": "retorna um relatorio",
         "send_message": "envia uma mensagem",
     }),
 })
@@ -220,6 +220,59 @@ _PROPERTY_NAMES: tuple[str, ...] = (
     "no_deadlock",
     "all_roles_participate",
 )
+
+# Narrative descriptions for simulation output per language.
+# Maps MessageKind.name -> human-readable sentence template.
+_SIM_NARRATIVES: MappingProxyType[str, MappingProxyType[str, str]] = MappingProxyType({
+    "en": MappingProxyType({
+        "TASK_REQUEST": "{sender} asks {receiver} to do a task",
+        "TASK_RESULT": "{sender} returns the result to {receiver}",
+        "AUDIT_REQUEST": "{sender} asks {receiver} to verify",
+        "AUDIT_VERDICT": "{sender} returns the verdict to {receiver}",
+        "PLAN_REQUEST": "{sender} asks {receiver} to plan",
+        "PLAN_PROPOSAL": "{sender} proposes a plan to {receiver}",
+        "PLAN_DECISION": "{sender} tells {receiver} the decision",
+        "RESEARCH_QUERY": "{sender} asks {receiver} to research",
+        "RESEARCH_REPORT": "{sender} returns a report to {receiver}",
+        "DM": "{sender} sends a message to {receiver}",
+        "BROADCAST": "{sender} broadcasts to {receiver}",
+        "SHUTDOWN_REQUEST": "{sender} requests {receiver} to shut down",
+        "SHUTDOWN_ACK": "{sender} acknowledges shutdown to {receiver}",
+        "CONTEXT_INJECT": "{sender} provides context to {receiver}",
+    }),
+    "it": MappingProxyType({
+        "TASK_REQUEST": "{sender} chiede a {receiver} di fare un compito",
+        "TASK_RESULT": "{sender} restituisce il risultato a {receiver}",
+        "AUDIT_REQUEST": "{sender} chiede a {receiver} di verificare",
+        "AUDIT_VERDICT": "{sender} restituisce il verdetto a {receiver}",
+        "PLAN_REQUEST": "{sender} chiede a {receiver} di pianificare",
+        "PLAN_PROPOSAL": "{sender} propone un piano a {receiver}",
+        "PLAN_DECISION": "{sender} comunica la decisione a {receiver}",
+        "RESEARCH_QUERY": "{sender} chiede a {receiver} di ricercare",
+        "RESEARCH_REPORT": "{sender} restituisce un report a {receiver}",
+        "DM": "{sender} invia un messaggio a {receiver}",
+        "BROADCAST": "{sender} comunica a {receiver}",
+        "SHUTDOWN_REQUEST": "{sender} chiede a {receiver} di fermarsi",
+        "SHUTDOWN_ACK": "{sender} conferma a {receiver}",
+        "CONTEXT_INJECT": "{sender} fornisce contesto a {receiver}",
+    }),
+    "pt": MappingProxyType({
+        "TASK_REQUEST": "{sender} pede a {receiver} para fazer uma tarefa",
+        "TASK_RESULT": "{sender} retorna o resultado para {receiver}",
+        "AUDIT_REQUEST": "{sender} pede a {receiver} para verificar",
+        "AUDIT_VERDICT": "{sender} retorna o veredito para {receiver}",
+        "PLAN_REQUEST": "{sender} pede a {receiver} para planejar",
+        "PLAN_PROPOSAL": "{sender} propoe um plano para {receiver}",
+        "PLAN_DECISION": "{sender} comunica a decisao para {receiver}",
+        "RESEARCH_QUERY": "{sender} pede a {receiver} para pesquisar",
+        "RESEARCH_REPORT": "{sender} retorna um relatorio para {receiver}",
+        "DM": "{sender} envia uma mensagem para {receiver}",
+        "BROADCAST": "{sender} comunica para {receiver}",
+        "SHUTDOWN_REQUEST": "{sender} pede a {receiver} para parar",
+        "SHUTDOWN_ACK": "{sender} confirma para {receiver}",
+        "CONTEXT_INJECT": "{sender} fornece contexto para {receiver}",
+    }),
+})
 
 
 # ============================================================
@@ -388,9 +441,19 @@ _STRINGS: MappingProxyType[str, MappingProxyType[str, str]] = MappingProxyType({
         "pt": "Simulacao:",
     }),
     "sim_step": MappingProxyType({
-        "en": "  [{sender}] -> {receiver}: {kind}",
-        "it": "  [{sender}] -> {receiver}: {kind}",
-        "pt": "  [{sender}] -> {receiver}: {kind}",
+        "en": "  {narrative}",
+        "it": "  {narrative}",
+        "pt": "  {narrative}",
+    }),
+    "sim_branch_header": MappingProxyType({
+        "en": "  {decider} decides:",
+        "it": "  {decider} decide:",
+        "pt": "  {decider} decide:",
+    }),
+    "sim_branch_option": MappingProxyType({
+        "en": "    If {label}:",
+        "it": "    Se {label}:",
+        "pt": "    Se {label}:",
     }),
     "sim_success": MappingProxyType({
         "en": "PROTOCOL COMPLETED SUCCESSFULLY\nMessages: {count} | Violations: 0",
@@ -1042,35 +1105,34 @@ class ChatSession:
 
         for element in protocol.elements:
             if isinstance(element, ProtocolStep):
+                narrative = self._step_narrative(element)
                 lines.append(
-                    _t(
-                        "sim_step",
-                        self._lang,
-                        sender=element.sender,
-                        receiver=element.receiver,
-                        kind=element.message_kind.name,
-                    )
+                    _t("sim_step", self._lang, narrative=narrative)
                 )
                 count += 1
             elif isinstance(element, ProtocolChoice):
-                # Show first branch for the narrative
-                branch_items = list(element.branches.items())
-                if branch_items:
-                    label, branch_steps = branch_items[0]
+                lines.append(
+                    _t(
+                        "sim_branch_header",
+                        self._lang,
+                        decider=element.decider,
+                    )
+                )
+                for label, branch_steps in element.branches.items():
                     lines.append(
-                        f"  [{element.decider}] decides: {label}"
+                        _t(
+                            "sim_branch_option",
+                            self._lang,
+                            label=label,
+                        )
                     )
                     for bstep in branch_steps:
                         if isinstance(bstep, ProtocolStep):
-                            lines.append(
-                                _t(
-                                    "sim_step",
-                                    self._lang,
-                                    sender=bstep.sender,
-                                    receiver=bstep.receiver,
-                                    kind=bstep.message_kind.name,
-                                )
+                            narrative = self._step_narrative(bstep)
+                            step_line = _t(
+                                "sim_step", self._lang, narrative=narrative,
                             )
+                            lines.append(f"    {step_line}")
                             count += 1
 
         lines.append("")
@@ -1080,6 +1142,15 @@ class ChatSession:
             + f"{_c.RESET}"
         )
         return "\n".join(lines)
+
+    def _step_narrative(self, step: ProtocolStep) -> str:
+        """Return a human-readable narrative for a protocol step."""
+        narratives = _SIM_NARRATIVES.get(self._lang, _SIM_NARRATIVES["en"])
+        template = narratives.get(
+            step.message_kind.name,
+            "{sender} -> {receiver}",
+        )
+        return template.format(sender=step.sender, receiver=step.receiver)
 
     def _help_text(self) -> str:
         """Return help text for the current context."""

@@ -453,3 +453,386 @@ class TestEdgeCases:
         session.process_input("Proto")
         user_turns = [t for t in session.turns if t.speaker == "user"]
         assert len(user_turns) >= 1
+
+
+# ============================================================
+# 8. Diverse protocol scenarios (E.2 completion)
+# ============================================================
+
+
+class TestDiverseProtocolRecipeExchange:
+    """RecipeExchange: 2-role kitchen protocol (English).
+
+    Cook asks Pantry for ingredients, Pantry returns them.
+    Simple linear protocol, no choices.
+    """
+
+    INPUTS = [
+        "RecipeExchange",       # protocol name
+        "Cook, Pantry",         # roles
+        "Cook", "Pantry", "1",  # Cook asks_task Pantry
+        "Pantry", "Cook", "2",  # Pantry return_result Cook
+        "done",                 # finish messages
+        "no",                   # no choices
+        "done",                 # keep default properties
+        "yes",                  # confirm
+    ]
+
+    def _run(self) -> tuple:
+        session, output = _session(self.INPUTS, lang="en")
+        result = session.run()
+        return result, output
+
+    def test_result_not_none(self) -> None:
+        result, _ = self._run()
+        assert result is not None
+
+    def test_protocol_name(self) -> None:
+        result, _ = self._run()
+        assert result.draft.protocol_name == "RecipeExchange"
+
+    def test_has_2_roles(self) -> None:
+        result, _ = self._run()
+        assert set(result.draft.roles) == {"Cook", "Pantry"}
+
+    def test_has_2_messages(self) -> None:
+        result, _ = self._run()
+        assert len(result.draft.messages) == 2
+
+    def test_first_message_is_cook_asks_pantry(self) -> None:
+        result, _ = self._run()
+        msg = result.draft.messages[0]
+        assert msg.sender == "Cook"
+        assert msg.receiver == "Pantry"
+        assert msg.action_key == "ask_task"
+
+    def test_second_message_is_pantry_returns_cook(self) -> None:
+        result, _ = self._run()
+        msg = result.draft.messages[1]
+        assert msg.sender == "Pantry"
+        assert msg.receiver == "Cook"
+        assert msg.action_key == "return_result"
+
+    def test_no_choices(self) -> None:
+        result, _ = self._run()
+        assert len(result.draft.choices) == 0
+
+    def test_default_properties(self) -> None:
+        result, _ = self._run()
+        assert "always_terminates" in result.draft.properties
+        assert "no_deadlock" in result.draft.properties
+
+    def test_intent_source_parseable(self) -> None:
+        result, _ = self._run()
+        assert result.intent_source.startswith("protocol RecipeExchange:")
+
+    def test_parse_result_has_correct_name(self) -> None:
+        result, _ = self._run()
+        assert result.parse_result.protocol.name == "RecipeExchange"
+
+    def test_parse_result_has_2_elements(self) -> None:
+        result, _ = self._run()
+        assert len(result.parse_result.protocol.elements) == 2
+
+    def test_generated_code_non_empty(self) -> None:
+        result, _ = self._run()
+        assert result.generated_code.strip() != ""
+
+    def test_simulation_contains_narrative(self) -> None:
+        """Simulation output uses natural language, not technical kind names."""
+        _, output = self._run()
+        combined = " ".join(output)
+        assert "asks" in combined.lower() or "returns" in combined.lower()
+
+    def test_simulation_contains_cook(self) -> None:
+        _, output = self._run()
+        combined = " ".join(output)
+        assert "Cook" in combined
+
+    def test_simulation_shows_success(self) -> None:
+        _, output = self._run()
+        combined = " ".join(output)
+        assert "COMPLETED" in combined or "SUCCESSFULLY" in combined
+
+
+class TestDiverseProtocolTaskDelegation:
+    """TaskDelegation: 3-role audit protocol (Italian).
+
+    Manager delegates to Worker, Worker returns, Manager asks
+    Reviewer to verify, Reviewer returns verdict.
+    Tests: 3 roles, 4 messages, extra property, Italian language.
+    """
+
+    INPUTS = [
+        "TaskDelegation",                   # protocol name
+        "Manager, Worker, Reviewer",        # 3 roles
+        "Manager", "Worker", "1",           # Manager asks_task Worker
+        "Worker", "Manager", "2",           # Worker return_result Manager
+        "Manager", "Reviewer", "3",         # Manager ask_verify Reviewer
+        "Reviewer", "Manager", "4",         # Reviewer return_verdict Manager
+        "fatto",                            # finish messages (Italian)
+        "no",                               # no choices
+        "3",                                # add all_roles_participate
+        "fatto",                            # finish properties (Italian)
+        "si",                               # confirm (Italian)
+    ]
+
+    def _run(self) -> tuple:
+        session, output = _session(self.INPUTS, lang="it")
+        result = session.run()
+        return result, output
+
+    def test_result_not_none(self) -> None:
+        result, _ = self._run()
+        assert result is not None
+
+    def test_protocol_name(self) -> None:
+        result, _ = self._run()
+        assert result.draft.protocol_name == "TaskDelegation"
+
+    def test_has_3_roles(self) -> None:
+        result, _ = self._run()
+        assert set(result.draft.roles) == {"Manager", "Worker", "Reviewer"}
+
+    def test_has_4_messages(self) -> None:
+        result, _ = self._run()
+        assert len(result.draft.messages) == 4
+
+    def test_messages_cover_all_4_action_types(self) -> None:
+        result, _ = self._run()
+        keys = {m.action_key for m in result.draft.messages}
+        assert keys == {"ask_task", "return_result", "ask_verify", "return_verdict"}
+
+    def test_all_3_roles_participate_in_messages(self) -> None:
+        result, _ = self._run()
+        senders = {m.sender for m in result.draft.messages}
+        receivers = {m.receiver for m in result.draft.messages}
+        all_involved = senders | receivers
+        assert all_involved == {"Manager", "Worker", "Reviewer"}
+
+    def test_has_all_roles_participate_property(self) -> None:
+        result, _ = self._run()
+        assert "all_roles_participate" in result.draft.properties
+
+    def test_has_3_properties_total(self) -> None:
+        result, _ = self._run()
+        assert len(result.draft.properties) == 3
+
+    def test_no_choices(self) -> None:
+        result, _ = self._run()
+        assert len(result.draft.choices) == 0
+
+    def test_parse_result_has_4_elements(self) -> None:
+        result, _ = self._run()
+        assert len(result.parse_result.protocol.elements) == 4
+
+    def test_generated_code_contains_roles(self) -> None:
+        result, _ = self._run()
+        code = result.generated_code
+        assert "Manager" in code or "manager" in code.lower()
+
+    def test_italian_output_present(self) -> None:
+        """Output should contain Italian strings."""
+        _, output = self._run()
+        combined = " ".join(output)
+        # Italian-language content in the output
+        assert (
+            "Protocollo" in combined
+            or "matematica" in combined
+            or "Simulazione" in combined
+            or "chiede" in combined
+        )
+
+    def test_simulation_narrative_italian(self) -> None:
+        """Simulation uses Italian narrative descriptions."""
+        _, output = self._run()
+        combined = " ".join(output)
+        assert (
+            "chiede" in combined
+            or "restituisce" in combined
+        )
+
+    def test_simulation_shows_success_italian(self) -> None:
+        """Success message should be in Italian."""
+        _, output = self._run()
+        combined = " ".join(output)
+        assert "SUCCESSO" in combined or "COMPLETATO" in combined
+
+
+class TestDiverseProtocolDataPipeline:
+    """DataPipeline: 3-role protocol with branching (Portuguese).
+
+    Collector sends data to Processor, Processor asks Analyzer to verify.
+    Analyzer decides: valid or invalid (branching).
+    Tests: 3 roles, 2 messages, 1 choice with 2 branches, Portuguese.
+    """
+
+    INPUTS = [
+        "DataPipeline",                     # protocol name
+        "Collector, Processor, Analyzer",   # 3 roles
+        "Collector", "Processor", "10",     # Collector send_message Processor
+        "Processor", "Analyzer", "3",       # Processor ask_verify Analyzer
+        "pronto",                           # finish messages (Portuguese)
+        "sim",                              # yes to choices (Portuguese)
+        "Analyzer",                         # decider
+        "valid, invalid",                   # branch names
+        "pronto",                           # finish properties (Portuguese)
+        "sim",                              # confirm (Portuguese)
+    ]
+
+    def _run(self) -> tuple:
+        session, output = _session(self.INPUTS, lang="pt")
+        result = session.run()
+        return result, output
+
+    def test_result_not_none(self) -> None:
+        result, _ = self._run()
+        assert result is not None
+
+    def test_protocol_name(self) -> None:
+        result, _ = self._run()
+        assert result.draft.protocol_name == "DataPipeline"
+
+    def test_has_3_roles(self) -> None:
+        result, _ = self._run()
+        assert set(result.draft.roles) == {"Collector", "Processor", "Analyzer"}
+
+    def test_has_2_messages(self) -> None:
+        result, _ = self._run()
+        assert len(result.draft.messages) == 2
+
+    def test_has_1_choice(self) -> None:
+        result, _ = self._run()
+        assert len(result.draft.choices) == 1
+
+    def test_choice_decider_is_analyzer(self) -> None:
+        result, _ = self._run()
+        assert result.draft.choices[0].decider == "Analyzer"
+
+    def test_choice_has_2_branches(self) -> None:
+        result, _ = self._run()
+        assert len(result.draft.choices[0].branches) == 2
+
+    def test_branch_names_are_valid_invalid(self) -> None:
+        result, _ = self._run()
+        names = [label for label, _ in result.draft.choices[0].branches]
+        assert "valid" in names
+        assert "invalid" in names
+
+    def test_intent_source_contains_when_block(self) -> None:
+        result, _ = self._run()
+        assert "when Analyzer decides:" in result.intent_source
+
+    def test_intent_source_contains_both_branches(self) -> None:
+        result, _ = self._run()
+        assert "valid:" in result.intent_source
+        assert "invalid:" in result.intent_source
+
+    def test_generated_code_non_empty(self) -> None:
+        result, _ = self._run()
+        assert result.generated_code.strip() != ""
+
+    def test_simulation_shows_all_branches(self) -> None:
+        """F5 fix: simulation must show ALL branches, not just the first."""
+        _, output = self._run()
+        combined = " ".join(output)
+        assert "valid" in combined.lower()
+        assert "invalid" in combined.lower()
+
+    def test_simulation_contains_decides(self) -> None:
+        _, output = self._run()
+        combined = " ".join(output)
+        assert "decide" in combined.lower()
+
+    def test_portuguese_output_present(self) -> None:
+        """Output should contain Portuguese strings."""
+        _, output = self._run()
+        combined = " ".join(output)
+        assert (
+            "Protocolo" in combined
+            or "matematica" in combined
+            or "Simulacao" in combined
+        )
+
+    def test_portuguese_narrative(self) -> None:
+        """Simulation uses Portuguese narrative descriptions."""
+        _, output = self._run()
+        combined = " ".join(output)
+        assert (
+            "pede" in combined
+            or "envia" in combined
+            or "retorna" in combined
+        )
+
+    def test_simulation_shows_success_portuguese(self) -> None:
+        """Success message should be in Portuguese."""
+        _, output = self._run()
+        combined = " ".join(output)
+        assert "SUCESSO" in combined or "COMPLETADO" in combined
+
+
+# ============================================================
+# 9. Narrative output quality
+# ============================================================
+
+
+class TestNarrativeOutputQuality:
+    """Verify simulation output uses natural language narratives."""
+
+    def test_no_arrow_format_in_simulation(self) -> None:
+        """Simulation should NOT use old technical format '[X] -> Y: KIND'."""
+        session, output = _session([
+            "NarrCheck", "A, B", "A", "B", "1",
+            "done", "no", "done", "yes",
+        ])
+        session.run()
+        combined = " ".join(output)
+        # Old format was "  [A] -> B: TASK_REQUEST" -- should not appear
+        assert "[A] -> B: TASK_REQUEST" not in combined
+
+    def test_narrative_uses_asks_for_task_request(self) -> None:
+        """Task request should show 'asks' in narrative."""
+        session, output = _session([
+            "NarrTest", "A, B", "A", "B", "1",
+            "done", "no", "done", "yes",
+        ])
+        session.run()
+        combined = " ".join(output)
+        assert "asks" in combined.lower()
+
+    def test_narrative_uses_returns_for_result(self) -> None:
+        """Return result should show 'returns' in narrative."""
+        session, output = _session([
+            "RetTest", "A, B", "A", "B", "1", "B", "A", "2",
+            "done", "no", "done", "yes",
+        ])
+        session.run()
+        combined = " ".join(output)
+        assert "returns" in combined.lower()
+
+    def test_branch_simulation_shows_all_options(self) -> None:
+        """All branches in a choice must appear in simulation output."""
+        session, output = _session([
+            "BranchNarr", "Alice, Bob",
+            "Alice", "Bob", "1",
+            "done",
+            "yes", "Alice", "approve, reject",
+            "done", "yes",
+        ])
+        session.run()
+        combined = " ".join(output)
+        assert "approve" in combined.lower()
+        assert "reject" in combined.lower()
+
+    def test_branch_simulation_shows_if_prefix(self) -> None:
+        """Branches should have 'If' prefix in narrative."""
+        session, output = _session([
+            "IfTest", "X, Y",
+            "X", "Y", "1",
+            "done",
+            "yes", "X", "left, right",
+            "done", "yes",
+        ])
+        session.run()
+        combined = " ".join(output)
+        assert "If left" in combined or "if left" in combined.lower()

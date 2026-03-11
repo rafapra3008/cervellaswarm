@@ -23,6 +23,7 @@ from cervellaswarm_lingua_universale._intent_bridge import (
     _ACTION_VERBS,
     _DONE_WORDS,
     _NO_WORDS,
+    _SIM_NARRATIVES,
     _STRINGS,
     _YES_WORDS,
     _t,
@@ -182,38 +183,30 @@ class TestChatResult:
 
 
 class TestChatPhaseEnum:
-    """ChatPhase enum has all expected values."""
+    """ChatPhase enum: structure and completeness."""
 
-    def test_welcome(self) -> None:
-        assert ChatPhase.WELCOME is not None
+    def test_has_exactly_10_phases(self) -> None:
+        assert len(list(ChatPhase)) == 10
 
-    def test_roles(self) -> None:
-        assert ChatPhase.ROLES is not None
-
-    def test_messages(self) -> None:
-        assert ChatPhase.MESSAGES is not None
-
-    def test_choices(self) -> None:
-        assert ChatPhase.CHOICES is not None
-
-    def test_properties(self) -> None:
-        assert ChatPhase.PROPERTIES is not None
-
-    def test_confirm(self) -> None:
-        assert ChatPhase.CONFIRM is not None
-
-    def test_verify(self) -> None:
-        assert ChatPhase.VERIFY is not None
-
-    def test_codegen(self) -> None:
-        assert ChatPhase.CODEGEN is not None
-
-    def test_done(self) -> None:
-        assert ChatPhase.DONE is not None
+    def test_all_expected_names_present(self) -> None:
+        names = {p.name for p in ChatPhase}
+        expected = {
+            "WELCOME", "ROLES", "MESSAGES", "CHOICES", "PROPERTIES",
+            "CONFIRM", "VERIFY", "CODEGEN", "SIMULATE", "DONE",
+        }
+        assert names == expected
 
     def test_all_are_distinct(self) -> None:
         phases = list(ChatPhase)
         assert len(phases) == len(set(phases))
+
+    def test_welcome_is_first(self) -> None:
+        phases = list(ChatPhase)
+        assert phases[0] == ChatPhase.WELCOME
+
+    def test_done_is_last(self) -> None:
+        phases = list(ChatPhase)
+        assert phases[-1] == ChatPhase.DONE
 
 
 # ============================================================
@@ -470,3 +463,35 @@ class TestI18n:
     def test_done_words_are_frozensets(self) -> None:
         for lang, words in _DONE_WORDS.items():
             assert isinstance(words, frozenset), f"_DONE_WORDS[{lang}] is not frozenset"
+
+    def test_sim_narratives_have_all_3_locales(self) -> None:
+        for lang in ("en", "it", "pt"):
+            assert lang in _SIM_NARRATIVES, f"_SIM_NARRATIVES missing '{lang}'"
+
+    def test_sim_narratives_locales_have_matching_keys(self) -> None:
+        """All locale narrative dicts must have the same MessageKind keys."""
+        en_keys = set(_SIM_NARRATIVES["en"].keys())
+        it_keys = set(_SIM_NARRATIVES["it"].keys())
+        pt_keys = set(_SIM_NARRATIVES["pt"].keys())
+        assert en_keys == it_keys, f"it keys differ: {en_keys ^ it_keys}"
+        assert en_keys == pt_keys, f"pt keys differ: {en_keys ^ pt_keys}"
+
+    def test_sim_narratives_contain_sender_receiver_placeholders(self) -> None:
+        """Every narrative template must include {sender} and {receiver}."""
+        for lang, narratives in _SIM_NARRATIVES.items():
+            for kind, template in narratives.items():
+                assert "{sender}" in template, (
+                    f"_SIM_NARRATIVES[{lang}][{kind}] missing {{sender}}"
+                )
+                assert "{receiver}" in template, (
+                    f"_SIM_NARRATIVES[{lang}][{kind}] missing {{receiver}}"
+                )
+
+    def test_sim_narratives_cover_all_reachable_kinds(self) -> None:
+        """Narrative mapping must cover at least the MessageKind values
+        produced by the guided mode action pipeline."""
+        from cervellaswarm_lingua_universale.types import MessageKind
+        reachable_kinds = {mk.name for mk in MessageKind}
+        en_keys = set(_SIM_NARRATIVES["en"].keys())
+        missing = reachable_kinds - en_keys
+        assert not missing, f"Missing narratives for: {missing}"
