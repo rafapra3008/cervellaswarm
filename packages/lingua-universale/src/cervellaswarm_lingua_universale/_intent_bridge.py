@@ -70,6 +70,7 @@ class ChatPhase(Enum):
     """Phases of the guided conversation."""
 
     WELCOME = auto()
+    NL_INPUT = auto()  # E.3: natural language description phase
     ROLES = auto()
     MESSAGES = auto()
     CHOICES = auto()
@@ -144,11 +145,26 @@ class ChatResult:
 # ============================================================
 
 
+class NLClarificationNeeded(Exception):
+    """Raised by NLProcessor when more information is needed.
+
+    The ``question`` attribute holds a clarification question in the
+    user's language.  The caller should display it, collect the answer,
+    and call ``process()`` again with the accumulated context.
+    """
+
+    def __init__(self, question: str) -> None:
+        self.question = question
+        super().__init__(question)
+
+
 class NLProcessor(typing.Protocol):
     """Interface for NL -> IntentDraft conversion (E.3).
 
     Implementations may use Claude, GPT, or any LLM.
     When provided, the ROLES phase uses free NL input instead of menus.
+
+    May raise ``NLClarificationNeeded`` if the input is too vague.
     """
 
     def process(
@@ -315,6 +331,21 @@ _STRINGS: MappingProxyType[str, MappingProxyType[str, str]] = MappingProxyType({
         "en": "What is the name of your protocol?",
         "it": "Come si chiama il tuo protocollo?",
         "pt": "Qual o nome do seu protocolo?",
+    }),
+    "nl_ask": MappingProxyType({
+        "en": "Describe the protocol you want to create, in your own words:",
+        "it": "Descrivi il protocollo che vuoi creare, con le tue parole:",
+        "pt": "Descreva o protocolo que voce quer criar, com suas palavras:",
+    }),
+    "nl_processing": MappingProxyType({
+        "en": "Analyzing your description...",
+        "it": "Analizzando la tua descrizione...",
+        "pt": "Analisando sua descricao...",
+    }),
+    "nl_error": MappingProxyType({
+        "en": "Could not extract a protocol. Please try again with more detail.",
+        "it": "Non sono riuscita a estrarre un protocollo. Riprova con piu dettagli.",
+        "pt": "Nao consegui extrair um protocolo. Tente novamente com mais detalhes.",
     }),
     "ask_roles": MappingProxyType({
         "en": "What are the roles? (comma-separated, e.g., Cook, Pantry)",
@@ -628,8 +659,14 @@ class ChatSession:
         """Main interactive loop.  Blocks until completion or exit."""
         _init_colors()
         self._emit(_t("welcome", self._lang))
-        self._phase = ChatPhase.ROLES
-        self._emit(_t("ask_name", self._lang))
+
+        # NL mode: start with free-text description
+        if self._nl_processor is not None:
+            self._phase = ChatPhase.NL_INPUT
+            self._emit(_t("nl_ask", self._lang))
+        else:
+            self._phase = ChatPhase.ROLES
+            self._emit(_t("ask_name", self._lang))
 
         while self._phase != ChatPhase.DONE:
             prompt = f"{_c.CYAN}{_c.BOLD}{self.PROMPT}{_c.RESET}" if _c.CYAN else self.PROMPT
@@ -677,6 +714,7 @@ class ChatSession:
     def _handle(self, text: str) -> str:
         """Dispatch input to the current phase handler."""
         handlers = {
+            ChatPhase.NL_INPUT: self._handle_nl_input,
             ChatPhase.ROLES: self._handle_roles,
             ChatPhase.MESSAGES: self._handle_messages,
             ChatPhase.CHOICES: self._handle_choices,
@@ -691,6 +729,42 @@ class ChatSession:
     # --------------------------------------------------------
     # Phase handlers
     # --------------------------------------------------------
+
+    def _handle_nl_input(self, text: str) -> str:
+        """Handle NL_INPUT phase: process free-text via NLProcessor (E.3)."""
+        if self._nl_processor is None:
+            # Fallback: should not happen, but switch to guided mode
+            self._phase = ChatPhase.ROLES
+            return _t("ask_name", self._lang)
+
+        self._emit(_t("nl_processing", self._lang))
+
+        # Pass previous turns only -- the current turn is already in `text`
+        # and will be added by _build_messages with the language hint.
+        past_turns = list(self._turns[:-1])
+        try:
+            draft = self._nl_processor.process(
+                text, self._lang, past_turns,
+            )
+        except NLClarificationNeeded as clarify:
+            # LLM needs more info -- show the question, stay in NL_INPUT
+            return clarify.question
+        except Exception as exc:
+            detail = str(exc)
+            base_msg = _t("nl_error", self._lang)
+            return f"{base_msg}\n({detail})" if detail else base_msg
+
+        # Apply extracted draft to session state
+        self._protocol_name = draft.protocol_name
+        self._roles = list(draft.roles)
+        self._messages = list(draft.messages)
+        self._choices = list(draft.choices)
+        if draft.properties:
+            self._properties = list(draft.properties)
+
+        # Jump to CONFIRM so user can review
+        self._phase = ChatPhase.CONFIRM
+        return self._render_confirmation()
 
     def _handle_roles(self, text: str) -> str:
         """Handle ROLES phase: collect protocol name and role names."""
@@ -896,8 +970,7 @@ class ChatSession:
         if lower in yes:
             return self._execute_pipeline()
         if lower in no:
-            # Go back to roles — reset ALL building state
-            self._phase = ChatPhase.ROLES
+            # Reset ALL building state
             self._protocol_name = ""
             self._roles.clear()
             self._messages.clear()
@@ -908,6 +981,11 @@ class ChatSession:
             self._current_receiver = ""
             self._choice_step = "ask"
             self._choice_decider = ""
+            # NL mode: go back to NL_INPUT; guided mode: go back to ROLES
+            if self._nl_processor is not None:
+                self._phase = ChatPhase.NL_INPUT
+                return _t("nl_ask", self._lang)
+            self._phase = ChatPhase.ROLES
             return _t("ask_name", self._lang)
 
         return _t("confirm_ask", self._lang)

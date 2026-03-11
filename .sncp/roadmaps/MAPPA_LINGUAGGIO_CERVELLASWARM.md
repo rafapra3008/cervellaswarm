@@ -6,7 +6,7 @@
 > "La domanda e la risposta nello STESSO linguaggio." - Rafa
 
 **Creata:** 24 Febbraio 2026 - Sessione 394
-**Aggiornata:** 11 Marzo 2026 - Sessione 440 (E.2 quasi completo: 3 protocolli, narrativa)
+**Aggiornata:** 11 Marzo 2026 - Sessione 440 (E.2 DONE, E.3 NL Processing in progress)
 **Autrice:** Cervella Architect (su commissione della Regina)
 **Fonti:** NORD.md + 3 report di ricerca (64+ fonti esterne) + analisi codebase
 **Score target:** 9.5/10 per ogni step (audit Guardiana)
@@ -24,7 +24,7 @@ LAYER 3: Code Generation certificata                      OPERATIVO (S395!)
 LAYER 2: Agent Hooks + Quality Gates                      OPERATIVO
 LAYER 1: CI/CD + PyPI + Fly.io                            OPERATIVO
 
-Asset: 26 moduli, 3111 test, ~13000+ LOC, ZERO deps esterne
+Asset: 27 moduli, 3179 test, ~13000+ LOC, ZERO deps esterne (anthropic optional [nl])
 Campo vergine confermato da 242+ fonti (session types per AI in Python)
 ```
 
@@ -221,12 +221,13 @@ D6 Guardiana Finale + Launch                   DONE (S435, 9.5/10)
 - Pattern two-stage validato da Req2LTL: LLM -> IR strutturato -> deterministico (88% vs 43%).
 - **Output:** `_intent_bridge.py`, 100+ test, ZERO deps
 
-### E.3 - NL Processing (LLM Integration)
+### E.3 - NL Processing (LLM Integration) -- DONE (S440, 9.5/10)
 
-- LLM traduce NL libero -> B.4 micro-linguaggio strutturato.
-- L'utente parla nella sua lingua, il sistema capisce.
+- LLM (Claude) traduce NL libero -> IntentDraft strutturato via tool_use.
+- Disambiguazione intelligente: se input vago, LLM chiede chiarimenti (NLClarificationNeeded).
 - anthropic come optional dependency (`pip install ...[nl]`).
-- **Output:** NL mode per `lu chat`
+- 2 audit Guardiana, 13 findings tutti fixati.
+- **Output:** `_nl_processor.py` (~450 LOC), 68 test, CLI `lu chat --mode nl`
 
 ### E.4 - Voice Interface
 
@@ -276,8 +277,8 @@ FASE A (DONE) --> B.1-B.7 (DONE) --> C (DONE) --> D (DONE, Ecosistema)
 | C | Grammatica + Compilatore + LSP | 25 moduli, 2909 test | DONE |
 | D | Ecosistema (VS Code, Playground, Tour) | 6/6 step, 9.5/10 | DONE |
 | E.1 | Script "La Nonna" | Screenplay completo | DONE (S438) |
-| E.2 | `lu chat` funziona end-to-end | 3 lingue, 100+ test | IN PROGRESS (S440: 3 protocolli, narrativa, 196 test) |
-| E.3 | NL -> codice verificato | 80%+ accuracy | TODO |
+| E.2 | `lu chat` funziona end-to-end | 3 lingue, 100+ test | DONE (S440: 3 protocolli, narrativa, 202 test, 9.5/10) |
+| E.3 | NL -> codice verificato | 80%+ accuracy | DONE (S440: ClaudeNLProcessor + disambiguation, 68 test, 9.5/10) |
 | E.5 | Demo "la nonna" | Video 3 minuti | TODO |
 | E.6 | Community | 1000+ developer | TODO |
 

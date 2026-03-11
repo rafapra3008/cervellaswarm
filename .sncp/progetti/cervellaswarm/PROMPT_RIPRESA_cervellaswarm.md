@@ -1,28 +1,32 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 2026-03-11 - Sessione 440
-> **STATUS:** FASE E in progress. E.1 DONE, E.2 IntentBridge Core DONE! Pronta per E.3 NL Processing.
+> **STATUS:** FASE E in progress. E.1 DONE, E.2 DONE, E.3 NL Processing DONE! Pronta per E.4.
 
 ---
 
-## SESSIONE 440 - E.2 Chiusura + Diamante
+## SESSIONE 440 - E.2 Chiusura + E.3 NL Processing COMPLETO
 
-### Cosa e successo
-E.2 completato! 3 protocolli e2e testati, output narrativo in 3 lingue, tutti P3 fixati.
+### E.2 (inizio sessione)
+E.2 completato: 3 protocolli e2e, narrativa 3 lingue, 202 test, 9.5/10.
 
-### Cambiamenti chiave
-- **3 protocolli e2e diversi**: RecipeExchange (EN, 2 ruoli lineare), TaskDelegation (IT, 3 ruoli 4 messaggi), DataPipeline (PT, 3 ruoli con branching)
-- **Output narrativo**: `_SIM_NARRATIVES` 14 MessageKind x 3 lingue. Simulazione mostra frasi naturali ("Cook asks Pantry to do a task") invece del vecchio formato tecnico
-- **F5 fix (P3 S438)**: simulazione mostra TUTTI i branch, non solo il primo
-- **F11 fix (P3 S438)**: enum test tautologici rimossi, sostituiti con 5 test significativi
-- **4 P3 Guardiana S440 fixati**: F2 DRY sim_step, F3 CONTEXT_INJECT aggiunto, F4 accenti PT normalizzati, F5 success localizzato IT/PT
-- **Guardiana S440**: 9.5/10 APPROVED (target raggiunto!)
+### E.3 NL Processing (nuovo!)
+**ClaudeNLProcessor** implementato: NL libero -> IntentDraft via Claude tool_use.
+- `_nl_processor.py` (~450 LOC): TOOL_SCHEMA, SYSTEM_PROMPT (3 few-shot), _build_draft(), _extract_text_response()
+- **Disambiguazione intelligente**: tool_choice "auto", NLClarificationNeeded exception, multi-turn
+- **Bug fix critico**: back-to-back user messages (Guardiana F1 P2), fixato con `turns[:-1]`
+- CLI: `lu chat --mode nl --lang it|pt|en`
+- anthropic optional dep: `pip install cervellaswarm-lingua-universale[nl]`
+- 2 audit Guardiana, 13 findings tutti fixati (9.2→9.5/10)
+- **68 test** NL in 9 classi (schema, prompt, draft, extract, mock API, session, edge cases, CLI, disambiguation)
 
-### File modificati
-- `_intent_bridge.py` (1178 LOC, era 1110): +_SIM_NARRATIVES, _step_narrative(), _render_simulation rewrite
-- `test_intent_bridge_session_e2e.py` (+383 righe): 3 classi protocollo + NarrativeOutputQuality
-- `test_intent_bridge_core.py`: F11 fix + narrative coverage tests
-- MAPPA, SUBROADMAP, rules: conteggi aggiornati
+### File chiave (E.3)
+- `_nl_processor.py` (NUOVO): ClaudeNLProcessor, NLProcessorError, TOOL_SCHEMA, _build_draft, _extract_text_response
+- `_intent_bridge.py` (modificato): +NLClarificationNeeded, +ChatPhase.NL_INPUT, +_handle_nl_input
+- `_cli.py` (modificato): +--mode guided|nl
+- `pyproject.toml`: +[nl] optional dep
+- `__init__.py`: +NLClarificationNeeded, ClaudeNLProcessor, NLProcessorError in __all__
+- `test_nl_processor.py` (NUOVO): 68 test
 
 ---
 
@@ -33,9 +37,9 @@ LINGUAGGIO CERVELLASWARM:
   FASE A-D: COMPLETE (A+B+C+D, 25 moduli base, media 9.5/10)
   FASE E: PER TUTTI -- IN PROGRESS
     E.1 Script "La Nonna"           DONE (S438)
-    E.2 IntentBridge Core           DONE! (S438-S440, 9.5/10)
-    E.3 NL Processing               TODO <-- PROSSIMO
-    E.4 Voice Interface              TODO
+    E.2 IntentBridge Core           DONE (S438-S440, 9.5/10)
+    E.3 NL Processing               DONE (S440, 9.5/10)
+    E.4 Voice Interface              TODO <-- PROSSIMO
     E.5 La Nonna Demo               TODO
     E.6 CervellaLang 1.0            TODO
   PyPI: v0.3.0 (waiting Rafa environment approval)
@@ -45,15 +49,11 @@ LINGUAGGIO CERVELLASWARM:
 
 ## PROSSIMA SESSIONE
 
-### E.3 NL Processing (LLM Integration)
-1. anthropic come optional dependency (`pip install cervellaswarm-lingua-universale[nl]`)
-2. LLM (Claude) traduce NL libero -> B.4 micro-linguaggio strutturato
-3. Pattern two-stage validato: LLM -> IntentDraft -> deterministico (88% vs 43%)
-4. NLProcessor(Protocol) gia definito come extension point in _intent_bridge.py
-5. `lu chat --mode nl` per free-text mode
-6. Fallback a guided mode se LLM non disponibile
-7. Ricerca: studiare come i big fanno NL -> structured (Req2LTL, Rasa, etc.)
-8. Subroadmap: `.sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md`
+### E.4 Voice Interface
+1. STT -> NL -> pipeline IntentBridge (E.3 NL mode gia pronta)
+2. Claude Code voice mode (nativo) oppure Whisper API
+3. Subroadmap: `.sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md`
+4. Ricerca: studiare opzioni STT (Whisper, Claude native, browser API)
 
 ### TODO Rafa
 - Approvare PyPI publish environment su GitHub
@@ -70,27 +70,29 @@ LINGUAGGIO CERVELLASWARM:
 
 | Metrica | Valore |
 |---------|--------|
-| Test LU | **3111** |
-| Test totali (13 pkg) | **~5423** |
-| Moduli LU | **26** |
-| Audit Guardiana S440 | **9.5/10** |
+| Test LU | **3179** |
+| Test totali (13 pkg) | **~5491** |
+| Moduli LU | **27** (+_nl_processor.py) |
+| Audit Guardiana S440 | **9.5/10** (4 audit rounds: E.2 + E.3 x2) |
 | PyPI | **v0.3.0** (waiting approval) |
-| IntentBridge test | **202** (55 core + 47 session + 100 e2e) |
+| IntentBridge test | **270** (55 core + 47 session + 100 e2e + 68 NL) |
 
 ---
 
 ## Lezioni Apprese (S440)
 
 ### Cosa ha funzionato bene
-- **Guardiana dopo ogni step** -- audit immediato ha trovato 5 finding, tutti fixati nella stessa sessione
-- **P3 = diamante** -- fixare anche i P3 porta da 9.3 a 9.5 (Rafa aveva ragione: "ci piace fissare tutto")
-- **Test coverage driven** -- il test `cover_all_reachable_kinds` ha trovato CONTEXT_INJECT mancante
+- **Guardiana dopo ogni step** -- 4 audit rounds, 18+ findings tutti fixati nella stessa sessione
+- **Bug critico trovato da Guardiana** -- back-to-back user messages nell'API (avrebbe causato 400 error in production)
+- **Exception nel modulo Protocol** -- NLClarificationNeeded definita in _intent_bridge (contratto), importata in _nl_processor (implementazione)
+- **P3 = diamante** -- fixare anche i P3 porta consistentemente da 9.2-9.3 a 9.5
 
 ### Cosa non ha funzionato
-- **Count mismatch** -- ho detto 201 test ma erano 196 dopo F11 fix. Verificare sempre i numeri dopo ogni modifica
+- **SYSTEM_PROMPT contradiction** -- "Always use tool" + "ask clarification" sono contraddittori. Trovato dalla Guardiana
 
 ### Pattern confermato
-- **"Guardiana dopo ogni step"** -- Evidenza: S438 (9.3/10), S440 (9.5/10). Audit immediato = fix immediato
+- **"Guardiana dopo ogni step"** -- Evidenza: S438 (9.3→9.5), S440 E.2 (9.5), S440 E.3 (9.2→9.5). 4 evidence points
+- **tool_choice "auto" per disambiguation** -- permette sia structured output che clarification questions
 
 ---
 

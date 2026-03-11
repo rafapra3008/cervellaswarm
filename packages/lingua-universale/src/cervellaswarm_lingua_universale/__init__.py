@@ -172,9 +172,15 @@ from ._intent_bridge import (
     DraftChoice,
     DraftMessage,
     IntentDraft,
+    NLClarificationNeeded,
     NLProcessor,
     Turn,
     render_intent_source,
+)
+from ._nl_processor import (  # anthropic imported lazily at instantiation
+    ClaudeNLProcessor as ClaudeNLProcessor,
+    NLProcessorError as NLProcessorError,
+    TOOL_SCHEMA as _NL_TOOL_SCHEMA,
 )
 from ._cli import main as cli_main
 from .errors import (
@@ -330,13 +336,14 @@ __all__ = [
     "run_source",
     "run_file",
     "cli_main",
-    # IntentBridge (E.2)
+    # IntentBridge (E.2+E.3)
     "ChatPhase",
     "ChatResult",
     "ChatSession",
     "DraftChoice",
     "DraftMessage",
     "IntentDraft",
+    "NLClarificationNeeded",
     "NLProcessor",
     "Turn",
     "render_intent_source",
@@ -353,4 +360,7 @@ __all__ = [
     "suggest_similar",
     "DEFAULT_LOCALE",
     "SUPPORTED_LOCALES",
+    # NL Processor (E.3, optional dep -- `pip install ...[nl]`)
+    "ClaudeNLProcessor",
+    "NLProcessorError",
 ]

@@ -140,7 +140,22 @@ def _cmd_chat(args: argparse.Namespace) -> int:
     """Handle ``lu chat``."""
     from ._intent_bridge import ChatSession
 
-    session = ChatSession(lang=args.lang)
+    nl_processor = None
+    if getattr(args, "mode", "guided") == "nl":
+        try:
+            from ._nl_processor import ClaudeNLProcessor
+            nl_processor = ClaudeNLProcessor()
+        except ImportError as exc:
+            print(
+                f"{_c.RED}{_c.BOLD}ERROR{_c.RESET} {exc}",
+                file=sys.stderr,
+            )
+            return 1
+
+    session = ChatSession(
+        lang=args.lang,
+        nl_processor=nl_processor,
+    )
     result = session.run()
     if result and args.output:
         out_path = Path(args.output)
@@ -230,6 +245,12 @@ def _build_parser() -> argparse.ArgumentParser:
         choices=["en", "it", "pt"],
         default="en",
         help="Interface language (default: en)",
+    )
+    p_chat.add_argument(
+        "--mode",
+        choices=["guided", "nl"],
+        default="guided",
+        help="Chat mode: guided (step-by-step) or nl (natural language, requires anthropic)",
     )
     p_chat.add_argument(
         "-o", "--output",

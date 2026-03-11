@@ -185,14 +185,14 @@ class TestChatResult:
 class TestChatPhaseEnum:
     """ChatPhase enum: structure and completeness."""
 
-    def test_has_exactly_10_phases(self) -> None:
-        assert len(list(ChatPhase)) == 10
+    def test_has_exactly_11_phases(self) -> None:
+        assert len(list(ChatPhase)) == 11
 
     def test_all_expected_names_present(self) -> None:
         names = {p.name for p in ChatPhase}
         expected = {
-            "WELCOME", "ROLES", "MESSAGES", "CHOICES", "PROPERTIES",
-            "CONFIRM", "VERIFY", "CODEGEN", "SIMULATE", "DONE",
+            "WELCOME", "NL_INPUT", "ROLES", "MESSAGES", "CHOICES",
+            "PROPERTIES", "CONFIRM", "VERIFY", "CODEGEN", "SIMULATE", "DONE",
         }
         assert names == expected
 
