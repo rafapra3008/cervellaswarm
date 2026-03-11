@@ -57,7 +57,6 @@ LINGUAGGIO CERVELLASWARM:
 
 ### TODO Rafa
 - Approvare PyPI publish environment su GitHub
-- Attivare 2FA GitHub (SCADUTO!)
 
 ### BACKLOG
 - 3 Dependabot PR rimaste (SKIP tier): #19 stripe, #14 express, #11 zod
