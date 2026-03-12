@@ -56,7 +56,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
     "@cervellaswarm/core": "file:../core",
-    "@inquirer/prompts": "^7.2.0",
+    "@inquirer/prompts": "^8.3.0",
     "boxen": "^8.0.1",
     "chalk": "^5.3.0",
     "commander": "^14.0.3",
