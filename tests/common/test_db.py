@@ -157,7 +157,7 @@ class TestConnectDbSafe:
         # Assert: Connection esiste ma query falliscono
         assert result is not None
         with pytest.raises(sqlite3.DatabaseError):
-            result.execute("SELECT 1")
+            result.execute("SELECT * FROM sqlite_master")
         result.close()
 
 
