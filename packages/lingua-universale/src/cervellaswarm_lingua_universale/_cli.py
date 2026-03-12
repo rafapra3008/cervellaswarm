@@ -11,6 +11,7 @@ Subcommands::
     lu compile <file.lu>  Show the generated Python source.
     lu repl               Start the interactive REPL.
     lu chat               Interactive guided protocol builder (E.2+E.4).
+    lu demo               Run the La Nonna demo autonomously (E.5).
     lu lsp                Start the Language Server Protocol server (STDIO).
     lu version            Show version information.
 
@@ -190,6 +191,105 @@ def _cmd_chat(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_demo(args: argparse.Namespace) -> int:
+    """Handle ``lu demo``: run a scripted La Nonna demo autonomously."""
+    import time
+    from ._intent_bridge import ChatSession
+
+    lang = args.lang
+    speed = getattr(args, "speed", "normal")
+    delay_map = {"slow": 0.06, "normal": 0.03, "fast": 0.01}
+    char_delay = delay_map.get(speed, 0.03)
+
+    # Scripted inputs for the La Nonna demo
+    demo_inputs = {
+        "it": [
+            "GestioneRicette",
+            "Cuoco, Dispensa",
+            "Cuoco", "Dispensa", "1",        # asks_task
+            "Dispensa", "Cuoco", "2",        # return_result
+            "fatto",
+            "si",                            # has choices
+            "Cuoco",                         # decider
+            "cucinare, aggiungere",          # branches
+            "3",                             # add no_deletion
+            "4",                             # add all_roles_participate
+            "fatto",
+            "si",                            # confirm
+        ],
+        "en": [
+            "RecipeManager",
+            "Cook, Pantry",
+            "Cook", "Pantry", "1",
+            "Pantry", "Cook", "2",
+            "done",
+            "yes",
+            "Cook",
+            "cook, add_recipe",
+            "3",                             # no_deletion
+            "4",                             # all_roles_participate
+            "done",
+            "yes",
+        ],
+        "pt": [
+            "GerenciamentoReceitas",
+            "Cozinheiro, Despensa",
+            "Cozinheiro", "Despensa", "1",
+            "Despensa", "Cozinheiro", "2",
+            "pronto",
+            "sim",
+            "Cozinheiro",
+            "cozinhar, adicionar",
+            "3",
+            "4",
+            "pronto",
+            "sim",
+        ],
+    }
+
+    inputs = demo_inputs.get(lang, demo_inputs["en"])
+    input_idx = 0
+
+    def _typewrite(text: str) -> None:
+        """Print text with typewriter effect."""
+        for ch in text:
+            sys.stdout.write(ch)
+            sys.stdout.flush()
+            if ch not in ("\n", " "):
+                time.sleep(char_delay)
+        sys.stdout.write("\n")
+        sys.stdout.flush()
+
+    def _demo_input(prompt: str) -> str:
+        nonlocal input_idx
+        if input_idx >= len(inputs):
+            raise EOFError
+        val = inputs[input_idx]
+        input_idx += 1
+        # Show the prompt + typed response with delay
+        sys.stdout.write(prompt)
+        sys.stdout.flush()
+        time.sleep(0.3)
+        _typewrite(val)
+        time.sleep(0.5)
+        return val
+
+    def _demo_output(*args: object) -> None:
+        text = " ".join(str(a) for a in args)
+        for line in text.split("\n"):
+            time.sleep(0.15)
+            print(line)
+        time.sleep(0.3)
+
+    session = ChatSession(
+        lang=lang,
+        input_fn=_demo_input,
+        output_fn=_demo_output,
+    )
+    session.run()
+    return 0
+
+
 def _cmd_version(args: argparse.Namespace) -> int:
     """Handle ``lu version``."""
     from . import __version__
@@ -287,6 +387,24 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Save generated Python to file",
     )
 
+    # lu demo
+    p_demo = subparsers.add_parser(
+        "demo",
+        help="Run the La Nonna demo autonomously (scripted)",
+    )
+    p_demo.add_argument(
+        "--lang",
+        choices=["en", "it", "pt"],
+        default="it",
+        help="Demo language (default: it)",
+    )
+    p_demo.add_argument(
+        "--speed",
+        choices=["slow", "normal", "fast"],
+        default="normal",
+        help="Typing speed (default: normal)",
+    )
+
     # lu version
     subparsers.add_parser("version", help="Show version information")
 
@@ -306,6 +424,7 @@ _COMMAND_HANDLERS = {
     "repl": _cmd_repl,
     "lsp": _cmd_lsp,
     "chat": _cmd_chat,
+    "demo": _cmd_demo,
     "version": _cmd_version,
 }
 

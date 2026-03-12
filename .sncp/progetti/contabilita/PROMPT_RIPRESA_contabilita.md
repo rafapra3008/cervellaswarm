@@ -1,116 +1,86 @@
 # PROMPT RIPRESA - Contabilita Antigravity
 
-> **Ultimo aggiornamento:** 6 Marzo 2026 - Sessione 293 (SPRING-008b DEPLOYATO + UX-004 fix)
+> **Ultimo aggiornamento:** 12 Marzo 2026 - Sessione 318 (Checkpoint completo + audit + landing v3.3 deployata)
 > **Versione canonica:** `CervellaSwarm/.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md`
 
-## Quick Status S293
+## Quick Status S318
 
 | Cosa | Stato |
 |------|-------|
-| **Produzione MAIN** | **V3 LIVE v1.16.1 su contabilitafamigliapra.it** |
-| **DEPLOY PENDENTI** | **1: annullamenti.js su VM (UX-004 scroll fix)** |
-| **MAPPA** | **`docs/MAPPA_MIGLIORAMENTI_S262.md` - 37 item, 0 TODO, 1 IN_PROGRESS (QC-003), 36 DONE** |
-| **Test** | **124/124 spring_insert PASS + 3264 test totali** |
-| **SPRING Pipeline** | **NL+SHE+HP TUTTI OK! RegisNumero #1005. Limite 5000. Automazione 15:00 attiva.** |
+| **Produzione** | **V3 v1.17.0 LIVE - GK S312. DB v16. Landing v3.3.** |
+| **SUBROADMAP** | **136/138 DONE (99%)** |
+| **SPRING** | **NL+SHE+HP ATTIVI. Pipeline v1.7.0 (surgical mark-done S317).** |
+| **Test** | **2695 PASS locale, 7 skipped, 0 FAIL** |
+| **Deploy pendenti** | **ZERO!** |
+| **MAPPA** | **79 item, 3 TODO (P3), 76 DONE (96%)** |
+| **Docker locale** | **split-v31 su porta 8003 (= produzione!)** |
+| **Git** | **split-v31 + main allineati e pushati.** |
 
-## Cosa Ha Fatto S293
+## Cosa Ha Fatto S318
 
-### 1. SPRING-008b: DEPLOYATO HPTERMINAL01!
+### Landing page v3.3 - DEPLOYATA PRODUZIONE
+- Footer versione: v3.1 -> v3.3 (reflect lavoro S312-S317)
+- File: `frontend/landing.html` riga 361
+- Deploy: Fortezza Mode, backup `*.backup.20260312_065839`
+- Verificato su VM: `sudo grep 'v3\.' /opt/contabilita-v3/frontend/landing.html` = v3.3 OK
+- Health check: OK, v1.17.0, last_deploy 2026-03-12T05:59:12Z
+- NOTA: landing.html NON e' cached in memoria (a differenza di index.html PERF-005), letto da disco ad ogni request
 
-**Problema risolto:** Pipeline SHE+HP bloccata - RegisNumero #1001 superava limite 1000.
+### Checkpoint completo + Audit documentazione
+- NORD.md aggiornato: S318, test 2695 (era 2492), priorita complete, landing v3.3
+- PROMPT_RIPRESA riscritto per S318
+- FORTEZZA_MODE_SERVERS.md: fix porte Docker stale (righe 30/36 invertite dal pre-S313)
+- MEMORY.md: test totali aggiornato 2492 -> 2695
+- MAPPA: verificata e aggiornata, 79 item coerenti (UX-005 aggiunta), 3 TODO P3 confermati
 
-**Deploy eseguito:**
-- Script automatico `deploy_spring_008b.ps1` (backup+sostituzione+pulizia __pycache__+verifica)
-- Audit script pre-deploy: corretto falso positivo pattern (commento storico matchava il check)
-- Dry-run `--all` OK: NL 0 doc (idempotency), SHE 2, HP 3
-- **Run reale: 5 doc committati con successo:**
+### Incongruenze trovate e fixate
+1. **FORTEZZA porte invertite**: testo diceva split-v31=8001, lab-v3=8003 (era il contrario). Tabella era corretta, testo stale. FIXATO.
+2. **Test totali**: NORD/MEMORY dicevano 2492, pytest reale = 2695 (+203 da S314-S317). FIXATO.
+3. **Banner "3304 test totali"**: includeva test HPTERMINAL01 non eseguibili su Mac. FIXATO con conteggio reale.
 
-| Hotel | Tipo | RegisNumero | Totale | Trial Balance |
-|-------|------|-------------|--------|---------------|
-| SHE | GIR | #1001 | 953.60 | OK |
-| SHE | CARTE | #1002 | 1358.40 | OK |
-| HP | CARTE | #1003 | 1036.40 | OK |
-| HP | BONIFICI | #1004 | 200.00 | OK |
-| HP | BONIFICI | #1005 | 80.00 | OK |
+## Recap S317 (sessione precedente)
 
-- mark-done OK per SHE e HP, Telegram inviate, HC.io ping OK
-- Task Scheduler confermato attivo: prossimo run 07/03 15:00
-- File su Desktop Mac: `~/Desktop/spring_deploy_S292/` (backup deploy)
+7 task completati + deploy 18 file VM + 1 HPTERMINAL01:
+- **BUG-016**: mark_spring_done() chirurgico per ID (P1, pipeline v1.7.0, 26 test)
+- **BUG-017**: Badge CSS cross-season (P2, grid-column fix)
+- **BUG-018**: Filtri pareggi overlap (P2, nasconde #filters)
+- **CLEAN-003**: rgba -> color-mix() (P3, 40 sostituzioni, 6 file JS)
+- **SEASON-009/010**: _safe_float italiano + POS Excel export (P3)
+- **SEASON-013-REV**: Rimozione blocco cross-season (P2, -417 righe, Ops+Qualita APPROVED)
+- **SEASON-011-CLEANUP**: Rimozione badge "Altra stagione" (P2, -73 righe)
+- Ops audit 9.2/10, tutti task 9.5+/10. Snapshot `snapshot-20260311-170058`.
 
-### 2. Bug "Collega" - RISOLTO! Era UX, non bug
+## PROSSIMA SESSIONE: S319
 
-**Investigazione:** 3 cervelle parallele (Frontend+Reviewer+Data). Scoperto che:
-- Backend INTATTO (S291 non ha toccato codice)
-- Il pannello SI APRIVA ma `scrollIntoView({ block: 'nearest' })` non scrollava abbastanza
-- Il pannello appariva SOTTO la riga, fuori viewport - sembrava non funzionare
+### Monitorare
+- SPRING pipeline 15:00: v1.7.0 surgical mark-done attivo da S317
+- SPRING verify 16:00: HP 4 discrepanze BONIFICI/GIR
+- Jerina Peter (HP, 166 EUR): dovrebbe essere inserito (SPRING-026 MASTERCARD S315)
 
-**Fix (UX-004):** `annullamenti.js` riga 633 - cambiato a `block: 'center'` con 50ms delay.
-- Guardiana 9.7/10 APPROVED (0 P1, 0 P2, 2 P3 cosmetici)
-- Testato localmente da Rafa: pannello si apre al centro della pagina
-- **Deploy VM pendente** (1 file: `frontend/js/annullamenti.js`)
+### TODO (8 item, tutti P3)
+1. **GK-LAB**: Spegnimento lab VM (3 giorni post-GK, target 1-2 settimane)
+2. **AGENT-005**: Pulizia file duplicati PC hotel (serve accesso fisico Rafa)
+3. **IDEA-001**: Automazione portali piu' ampia (da definire)
+4. **IDEA-002**: Tracking SPRING DB V3 (solo se performance lo richiede)
+5. **SPLIT-009 QW4**: 160 display toggle inline (cosmetico)
+6. **PERF-004**: JS bundling (irrilevante con HTTP/2 + 2-3 utenti)
+7. **mark_spring_done filtro circuito**: TODO futuro (lezione #99 MEMORY)
+8. **verifica_post_deploy falso positivo**: 17/18 PASS persistente (INFRA-005 file list DONE S315, residuo e' SSH parsing - lezione #43)
 
-### 3. Commit e Documentazione
+### Bloccato
+NESSUNO!
 
-- 3 commit: S292 fix + S293 deploy + S293 UX fix
-- MAPPA aggiornata: 37 item, 36 DONE
-- NORD.md, PROMPT_RIPRESA, memoria tutti aggiornati
-
-## Deploy Pendente (S294)
-
-```bash
-# 1 solo file - Fortezza Mode
-./scripts/deploy_v3_files.sh frontend/js/annullamenti.js
-
-# Verifica post-deploy:
-curl -s https://contabilitafamigliapra.it/static/js/annullamenti.js | head -4
-# Deve mostrare v2.1.0 (versione invariata, solo fix scroll interno)
-
-# Test: aprire NL Caparre, click "Collega" su una cancellazione
-# Il pannello deve apparire al CENTRO della pagina
-```
-
-## PROSSIMI STEP (S294)
-
-1. **DEPLOY VM**: `annullamenti.js` UX-004 (1 file, Fortezza Mode, procedura sopra)
-2. **QC-003**: Code Review split file grandi (IN_PROGRESS, 10/28 DONE)
-3. **AGENT-005**: Pulizia file duplicati/vecchi sui PC hotel (TODO P3)
-
-## Bloccato
-
-**NESSUNO!** Pipeline funzionante per tutti e 3 hotel. Automazione attiva.
-
-## Lezioni Apprese (Sessione 293)
+## Lezioni Apprese (S318)
 
 ### Cosa ha funzionato bene
-- **Script PowerShell automatico > procedura manuale**: zero errori umani, backup+verifica inclusi.
-- **Audit script ANCHE su codice proprio**: trovato falso positivo (pattern commento storico). Senza audit lo script si sarebbe bloccato su HPTERMINAL01.
-- **Dry-run --all**: NL idempotency confermata, SHE+HP preview perfetto. Nessuna sorpresa al run reale.
-- **3 cervelle caccia bug = diagnosi completa**: anche se il "bug" era UX, l'investigazione ha confermato che backend e frontend sono integri.
-- **Test su hotel diverso (SHE)**: ha dimostrato che non era un bug di codice ma specifico al caso.
+- **Checkpoint proattivo**: audit completo trova incongruenze prima che diventino bug
+- **Guardiana audit ogni step**: standard nostro, mantiene qualita 9.5+
+- **Verifica numeri con fonte reale**: pytest vs numeri nei docs = diversi. Sempre verificare
 
-### Cosa non ha funzionato
-- **Falso allarme bug**: il "bug collega" era in realta' un problema di scroll UX. La caccia con 3 cervelle era overkill per questo caso. Lezione: prima verificare in produzione con DevTools, POI lanciare le cervelle.
-
-### Pattern confermato
-- **Script .py/.ps1 per deploy > comandi manuali** (Lezione #23, 5a evidenza).
-- **Audit SEMPRE prima di eseguire** (anche su codice proprio).
-- **Testare su piu' hotel per isolare il problema** (NL vs SHE ha chiarito subito).
+### Pattern CONFERMATO
+- **Audit documentazione periodico**: i numeri nei docs diventano stale silenziosamente
+- **FORTEZZA_MODE_SERVERS documento vivente**: aggiornare SEMPRE quando si scopre qualcosa
 
 ---
 
 *"Lavoriamo in pace! Senza casino! Dipende da noi!"*
-
-<!-- AUTO-CHECKPOINT-START -->
-
-## AUTO-CHECKPOINT: 2026-03-06 18:50 (unknown)
-
-### Stato Git
-- **Branch**: lab-v3
-- **Ultimo commit**: e01e999 - S293: Checkpoint finale - MAPPA+NORD aggiornati (UX-004 + deploy pendente)
-- **File modificati**: Nessuno (git pulito)
-
-### Note
-- Checkpoint automatico generato da hook
-- Trigger: unknown
-
-<!-- AUTO-CHECKPOINT-END -->

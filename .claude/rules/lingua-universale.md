@@ -31,7 +31,7 @@ paths:
 
 ## Convenzioni
 - Error codes: `LU-EXXX` con severity (error/warning/info)
-- Test: `pytest packages/lingua-universale/tests/` (3249 test)
+- Test: `pytest packages/lingua-universale/tests/` (3310 test)
 - Ogni modifica -> test -> Guardiana audit
 - MAI rompere backward compatibility senza versione major
 
@@ -43,6 +43,9 @@ paths:
 - i18n: 3 locales (en/it/pt) via _STRINGS dict (same pattern as errors.py)
 - _SIM_NARRATIVES: narrative descriptions per MessageKind x 3 lingue (simulation output)
 - Simulation: shows ALL branches (not just first), narrative in target language
+- Violation demo (R20): _render_violation_demo() shows blocked attempts for proved properties
+  - Supports NO_DELETION (delete attempt blocked) and ROLE_EXCLUSIVE (wrong role blocked)
+  - Output narrativo in 3 lingue, integrated after simulation in pipeline step 5b
 - CLI: `lu chat --lang it|pt|en [--mode guided|nl] [--voice] [--voice-model small|turbo|...]`
 - NL mode: NLProcessor(Protocol) -> ClaudeNLProcessor (anthropic tool_use)
 - TOOL_SCHEMA constrains Claude output: action_key enum, properties enum
@@ -60,7 +63,10 @@ paths:
 
 ## Fase Corrente
 - FASE E: Per Tutti (IntentBridge) -- IN PROGRESS (E.1-E.4 DONE, E.5 IN PROGRESS)
-- E.5 S442: 2 bug critici fixati, +NO_DELETION, +ROLE_EXCLUSIVE, property explanations i18n
+- E.5 S442: 2 bug critici fixati, +NO_DELETION, +ROLE_EXCLUSIVE, property explanations i18n, R20 violation demo, `lu demo` command
+- `lu demo`: autonomous scripted demo (3 lingue, 3 speed, typewriter effect, injected I/O)
 - Subroadmap: `.sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md`
+- Task list dettagliata: `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md`
+- Ricerca demo/blog: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260312_demo_launch_strategy.md`
 - FASE D: L'Ecosistema -- COMPLETA! D1-D6 DONE (media 9.5/10)
-- Test: 3274 (LU), ~5586 (totale)
+- Test: 3310 (LU)

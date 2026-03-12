@@ -2,57 +2,95 @@
 
 # PROMPT RIPRESA - Ecosistema Miracollo
 
-> **Ultimo aggiornamento:** 8 Marzo 2026 - Sessione 13 (pulizia casa completata)
-> **Status:** miracollo.com LIVE! | Health 9.5/10 | Security 10/10 | Design 9.5/10 | **Pulizia Casa DONE**
+> **Ultimo aggiornamento:** 12 Marzo 2026 - Sessione 21
+> **Status:** miracollo.com LIVE | Security ~9.7/10 | 649 test (638 pass) | FOLIO Phase 4c + Quality Sprint DONE | S21 IN CORSO
 
 ---
 
-## I 3 BRACCI
+## COSA E STATO FATTO (S21)
 
-| Braccio | Porta locale | Workspace | Score |
-|---------|-------------|-----------|-------|
-| **PMS Core** | 9001 | `~/Developer/miracollogeminifocus/` | 90% LIVE, Health 9.5, Security 10/10 |
-| **Miracollook** | 9002 | `~/Developer/miracollook/` (REPO SEPARATO!) | FASE 0 95%, 6 fasi totali |
-| **Room Hardware** | 9003 | (futuro) | 10% - Bloccato VLAN |
+### PMS 360 FOLIO Phase 4c - Frontend UI Routing Rules
+- Sezione collassabile "Regole Routing" nel folio tab (tra sub-tabs e contenuto)
+- Visibile solo con 2+ folios (routing con 1 folio non ha senso)
+- Lista regole: tipo addebito -> folio target, date range, note
+- Toggle attiva/disattiva (PATCH is_active) + elimina (DELETE) per ogni regola
+- Form creazione: tipo addebito (dropdown), folio destinazione, date range, note
+- Graceful degradation: se migration 052 non applicata, sezione nascosta
+- XSS: `_escFolio()` su TUTTI i dati utente (incluso dateRange per coerenza)
+- CSS responsive mobile
+- Files: `reservation-tab-folio.js` (+360 righe), `06-modals.css` (+250 righe)
+
+### Guardiana Audit S21
+- Score: 9.5/10, 0 P1/P2, 7 P3
+- **Fixati:** dateRange escape (F1), dead code folios param (F4+F5), inline styles -> CSS (F6)
+- **Deferred MVP:** charge_source nel form (F2), priority nel form (F3), responsive form (F7)
+
+### Quality Sprint - Test Moduli Finanziari Critici (+85 test)
+- `test_bookings.py`: 37 test - list/search/update/guests CRUD/available-rooms (da 0!)
+- `test_night_audit.py`: 20 test - service layer, idempotency, no-show, API (da 0!)
+- `test_payments.py`: 28 test - CRUD, immutable guard, booking sync, Stripe config (da 0!)
+- `test_receipts.py`: 64 test - preview, PDF, email, exists, math consistency (da 0!)
+- `test_fiscal.py`: 57 test - printers CRUD, print, closures (skip: router non montato)
+- **BUG FIX:** receipts.py `check_receipt_exists` response type `Dict[str,bool]` -> `Dict[str,Any]`
+- **TOTALE: 499 -> 649 test** (638 pass, 10 skip, 1 xfail) = **+150 test!**
+- Motivazione: Ingegnera ha identificato 5000 righe di codice finanziario con ZERO test come rischio #1
+
+### NORD.md aggiornato
+- Phase 4a corretto da ❌ a ✅ (era rimasto vecchio)
+- PMS 360 da 85% a 90%
+- Test count aggiornato: 584 (dopo Quality Sprint)
+- Aggiunta sezione Quality Sprint
 
 ---
 
-## SESSIONE 13 - COMPLETATA (8 Mar 2026)
+## STORICO FOLIO
 
-### Parte 1: Infrastruttura (FASE 1+2)
-- I1: docker-compose.local.yml porta 9001 + bind 127.0.0.1
-- I4: pytest 400+ test in CI + pipefail fix
-- I5: Fortezza Mode v3, v1+v2 archiviati
-- I8: DB backup pre-deploy
-- I9: @pytest.mark.critical (ora 47 test, era 42)
-- I10: Branch protection master
-- Smoke test post-deploy + CORS default 9001
-- Security audit: PASS | Guardiana: 9.5
-- I14: HetrixTools monitoring (Rafa configurato, Telegram attivo)
-
-### Parte 2: Pulizia Casa
-- **Root cleanup:** 41 -> 8 file alla root
-  - 5 -> docs/ (attiva), 17 -> docs/archivio/, 6 -> scripts/, 6 eliminati (duplicati)
-  - Broken references fixate in CHANGELOG, GDPR, COSTITUZIONE, STRUCTURED_LOGGING
-- **Test conversion:** 3 file da `requests` a `pytest TestClient` (CI-compatible)
-  - test_immutable_guard.py (4 test, @critical - fiscal compliance)
-  - test_payment_flow_sprint2_3.py (1 e2e, @critical - payment flow)
-  - test_room_assignments_conflict.py (8 test - room segment conflicts)
-- **Docker VM cleanup:** 11.52 GB build cache pulita, disco 79% -> 24%
-  - `docker builder prune --all --force` aggiunto auto in deploy.yml
-- 4 Guardiana audit: test 9.5/10, cleanup 9.2/10 (fix P2+P3 applicati)
+| Phase | Cosa | Stato |
+|-------|------|-------|
+| Phase 1 | charges table + API + Night Audit posting | DONE S18 |
+| Phase 2 | checkout-preview + perform_checkout + city_tax | DONE S18 |
+| Phase 2c | extras come charges (source=booking, type=service) | DONE S18b |
+| Phase 3 | Split Folio backend: folios table + 6 API endpoint | DONE S18b |
+| Phase 3b | Frontend multi-folio sub-tabs | DONE S19 |
+| Phase 4a | Routing rules backend (resolve + API CRUD + 25 test) | DONE S20 |
+| **Phase 4c** | **Frontend UI routing rules nel folio tab** | **DONE S21** |
+| Phase 4b | Amount limit + splitting + company billing shortcut | NEXT |
 
 ---
 
-## PROSSIMI STEP (ordine priorita)
+## DA FARE (prossima sessione)
 
-### Prossima sessione
-1. **Feature** -> Fatture XML (F1) o Channel Manager F3.5 (F2) o Miracollook FASE 2 (F3)
-2. **Infra** -> I7 Miracollook healthcheck (repo separato)
-3. **Infra** -> I11-I13 Miracollook pipeline, Playwright, linting
+```
+PRIORITA 1 - PMS 360 FOLIO:
+  -> Phase 4b: Amount limit + splitting + UI shortcut "Company Billing Setup"
+  -> Phase 5: Fattura elettronica SDI
 
-### Decisioni aperte per Rafa
-- Quale feature prima? Fatture XML vs Channel Manager vs Miracollook
+PRIORITA 2 - QUALITY:
+  -> Test coverage: planning, fiscal, receipts (bookings+night_audit+payments DONE S21!)
+  -> hotelId = 1 hardcoded in 4-5 posti frontend -> centralizzare
+  -> IDOR cross-hotel: 9 finding P1, mitigato single-hotel
+
+PRIORITA 3 - FUTURE:
+  -> Redesign Booking Engine
+  -> z-index centralizzazione (68 dichiarazioni)
+  -> WhatsApp twilio_auth_token encryption
+
+PARCHEGGIATO:
+  -> Stripe LIVE: TEST ok, bonifico LIVE per produzione
+  -> Ericsoft Discovery + VERIFICA write (richiede LAN hotel)
+```
+
+---
+
+## PUNTATORI
+
+| Cosa | Dove |
+|------|------|
+| **NORD.md** | ROOT progetto (aggiornato S21) |
+| **Routing Rules Research** | `reports/RESEARCH_20260311_folio_routing_rules.md` |
+| **Routing UI Research** | `reports/RESEARCH_20260312_folio_routing_ui.md` |
+| **Split Folio Research** | `reports/RESEARCH_20260311_split_folio_pms_standards.md` |
+| **IDEAS BIBLE** | `roadmaps/IDEAS_BIBLE_2026.md` |
 
 ---
 
@@ -61,49 +99,43 @@
 ```
 VM: miracollo-cervella (GCP), e2-small, RUNNING
 IP: 34.134.72.207 | SSL: auto-renew OK (31 Mag 2026)
-Deploy: GitHub Actions + pytest gate + smoke test + auto Docker prune
-Backup: 2x/giorno + pre-deploy | Master: PROTETTO
-Porte locale: 9001 (PMS), 9002 (Miracollook), 9003 (Room HW)
-Fortezza Mode v3: docs/FORTEZZA_MODE_v3.md (UNICO doc!)
-Monitoring: HetrixTools 1min check + Telegram alert
-Disco VM: 24% (15GB liberi) dopo cleanup
+Deploy: GitHub Actions + pytest gate (649 test) + auto Docker prune
+Backup: 2x/giorno + pre-deploy | Disco: 24%
+S19+S20 DEPLOYATI su VM | Migration 050+051+052 APPLICATA
 ```
-
-## STRUTTURA ROOT (post-pulizia)
-
-```
-README.md, CLAUDE.md, NORD.md, INSTALL.md, QUICK_START.md,
-CHANGELOG.md, PROMPT_RIPRESA.md, deploy.sh
-(8 file totali - era 41)
-```
-
-## PUNTATORI
-
-- Piano Infrastruttura: `infra/PIANO_INFRASTRUTTURA_MIRACOLLO.md`
-- Fortezza Mode v3: `docs/FORTEZZA_MODE_v3.md`
-- Design Roadmap: `roadmaps/ROADMAP_DESIGN_95.md`
 
 ---
 
-## Lezioni Apprese (Sessione 13)
+## Lezioni Apprese (S21)
 
 ### Funzionato bene
-- Worker fuori context (Ops, Qualita, Ingegnera) -> trovano piu della Regina sola
-- "Ogni step -> Guardiana audit" funziona per TUTTO (infra, test, cleanup)
-- "Facciamo persino P3" = root broken refs catturate e fixate
-- Docker auto-prune in deploy.yml previene accumulo futuro
-
-### Cosa non ha funzionato
-- 3 test file usavano `requests` contro localhost:8001 -> mai eseguiti in CI (ORA fixati)
-- 41 file alla root creavano confusione (ORA organizzati)
-- Build cache Docker 11.52 GB mai pulita (ORA auto-prune)
+- Phase 4c prima di 4b: UI rende la feature REALE ("SU CARTA != REALE")
+- Guardiana immediata dopo implementazione: 7 P3 trovati e 4 fixati subito
+- Dead code cleanup proattivo: parametro `folios` non usato -> rimosso
+- Quality Sprint parallelo: 3 worker (bookings/night_audit/payments) in contemporanea -> +85 test in un colpo
+- Ingegnera come consulente strategica: ha identificato il rischio #1 (5000 righe finanziarie senza test)
 
 ### Pattern confermato
-- "git mv" preserva history -> sempre usare per spostamenti
-- Dopo ogni batch di file moves -> grep globale per broken refs (CRITICO!)
-- "Guardiane fuori context" -> trovano di piu separatamente
+- Sezione collassabile per feature avanzate: non intrusiva per utente base
+- `_escFolio()` anche su dati "sicuri" (dateRange da toLocaleDateString): coerenza > ragionamento caso per caso
+- CSS classes vs inline styles: sempre preferire CSS dedicato
+- Test pattern: TestClient + helpers + autouse cleanup + pytest.skip per dati mancanti
 
----
+### Da monitorare
+- `charge_source` e `priority` nel form routing: aggiungere quando utenti li chiedono
+- Phase 4b amount splitting: ricercare pattern Oracle Opera per amount_limit
+- Test coverage restante: planning, fiscal, receipts (3 moduli ancora senza test)
 
-*"Lavoriamo in pace! Senza casino! Dipende da noi!"*
-*Cervella & Rafa - 8 Marzo 2026*
+
+*"Lavoriamo in pace! Senza casino! Dipende da noi!" - Cervella & Rafa, 12 Mar 2026*
+<!-- AUTO-CHECKPOINT-START -->
+## AUTO-CHECKPOINT: 2026-03-12 07:28 (auto)
+- **Branch**: master
+- **Ultimo commit**: 66dfeb3 - test: Quality Sprint - +150 test per moduli finanziari critici
+- **File modificati** (5):
+  - ackend/routers/charges.py
+  - backend/routers/routing_rules.py
+  - backend/services/folio_routing.py
+  - backend/services/night_audit_service.py
+  - backend/database/migrations/053_folio_routing_amount_limit.sql
+<!-- AUTO-CHECKPOINT-END -->

@@ -395,7 +395,8 @@ FOCUS: Cerca task per 'cervella-devops' in .swarm/tasks/"
             ;;
         researcher)
             echo "Sei CERVELLA-RESEARCHER.
-Specializzazione: Ricerca tecnica, studi, analisi.
+Specializzazione: Ricerca TECNICA, paper accademici, architetture, benchmark, best practices.
+Diversa da scienziata (strategica): tu guardi CODICE, ARCHITETTURA, PAPER. La scienziata guarda MERCATO, NUMERI, STRATEGIA.
 
 BROWSER ACCESS (v4.0.0):
 Hai accesso a Playwright MCP per navigare il web!

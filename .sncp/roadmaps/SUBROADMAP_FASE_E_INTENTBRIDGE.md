@@ -255,22 +255,26 @@ pyproject.toml: voice = ["faster-whisper>=1.0.0", "sounddevice>=0.5.0"]
 **Criterio completamento:**
 - [x] Pipeline verifica funzionante (era rotta, ora PROVED!)
 - [x] Proprieta demo (no_deletion, role_exclusive)
-- [ ] R20 Demo violazione interattiva (Atto 5 Scena 5.3)
-- [ ] Video registrato (screen recording + narrazione)
-- [ ] Blog post "From Vibe Coding to Vericoding: La Nonna Edition"
-- [ ] Test persona non-tecnica reale (feedback)
-- [ ] Guardiana verifica finale 9.5/10
+- [x] R20 Demo violazione interattiva (Atto 5 Scena 5.3) -- S442: _render_violation_demo(), 11 test
+- [x] `lu demo` comando autonomo (T1.2) -- S442: 3 lingue, 3 speed, 15 test
+- [ ] Video registrato (T1.3: VHS tape file)
+- [ ] Blog post "From Vibe Coding to Vericoding" (T1.4)
+- [ ] Test persona non-tecnica reale (T1.5)
+- [ ] Guardiana verifica finale 9.5/10 (T1.6)
 
 ---
 
 ### E.6: CervellaLang 1.0
 
 **La meta finale.** Grammatica frozen, standard library, community.
+**Piano dettagliato:** `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md` (Fase 3)
 
 **Criterio completamento:**
 - [ ] Grammatica 1.0 frozen (RFC)
-- [ ] Standard library: 100+ protocolli verificati
-- [ ] 1000+ developer attivi
+- [ ] Standard library: 20+ protocolli verificati (milestone 1), poi 100+
+- [ ] `lu init` + `lu verify` CLI commands
+- [ ] VS Code Marketplace
+- [ ] 100+ GitHub stars (milestone 1), poi 1000+ developer
 - [ ] "Vericoding" riconosciuto come termine
 - [ ] Guardiana verifica 9.5/10
 

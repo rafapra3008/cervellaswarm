@@ -260,6 +260,11 @@ _PROPERTY_EXPLANATIONS: MappingProxyType[str, MappingProxyType[str, str]] = Mapp
         "it": "Tutti i ruoli partecipano al protocollo",
         "pt": "Todos os papeis participam do protocolo",
     }),
+    "role_exclusive": MappingProxyType({
+        "en": "Only the designated role can perform this action",
+        "it": "Solo il ruolo designato puo eseguire questa azione",
+        "pt": "Apenas o papel designado pode executar esta acao",
+    }),
 })
 
 # Narrative descriptions for simulation output per language.
@@ -525,6 +530,46 @@ _STRINGS: MappingProxyType[str, MappingProxyType[str, str]] = MappingProxyType({
         "en": '"Not magic. Mathematics."',
         "it": '"Non e magia. E matematica."',
         "pt": '"Nao e magia. E matematica."',
+    }),
+    # Violation demo strings (R20 - Atto 5 Scena 5.3)
+    "violation_title": MappingProxyType({
+        "en": "Security demonstration:",
+        "it": "Dimostrazione di sicurezza:",
+        "pt": "Demonstracao de seguranca:",
+    }),
+    "violation_attempt_delete": MappingProxyType({
+        "en": "  [{role}] tries: delete data",
+        "it": "  [{role}] tenta: cancellare dati",
+        "pt": "  [{role}] tenta: apagar dados",
+    }),
+    "violation_attempt_exclusive": MappingProxyType({
+        "en": "  [{wrong_role}] tries: {action} (reserved for {right_role})",
+        "it": "  [{wrong_role}] tenta: {action} (riservato a {right_role})",
+        "pt": "  [{wrong_role}] tenta: {action} (reservado para {right_role})",
+    }),
+    "violation_blocked": MappingProxyType({
+        "en": "  VIOLATION DETECTED!",
+        "it": "  VIOLAZIONE RILEVATA!",
+        "pt": "  VIOLACAO DETECTADA!",
+    }),
+    "violation_property": MappingProxyType({
+        "en": '    Property: {prop}\n    "{explanation}"\n    Action blocked.',
+        "it": '    Proprieta: {prop}\n    "{explanation}"\n    Azione bloccata.',
+        "pt": '    Propriedade: {prop}\n    "{explanation}"\n    Acao bloqueada.',
+    }),
+    "violation_conclusion": MappingProxyType({
+        "en": (
+            "The system BLOCKED the attempt, as promised.\n"
+            "Mathematical proofs are not just theory: THEY WORK."
+        ),
+        "it": (
+            "Il sistema ha IMPEDITO il tentativo, come promesso.\n"
+            "Le prove matematiche non sono solo teoria: FUNZIONANO."
+        ),
+        "pt": (
+            "O sistema BLOQUEOU a tentativa, como prometido.\n"
+            "As provas matematicas nao sao apenas teoria: FUNCIONAM."
+        ),
     }),
 })
 
@@ -1072,6 +1117,12 @@ class ChatSession:
         output_parts.append("")
         output_parts.append(sim_output)
 
+        # 5b. Violation demo (R20 - shows what happens when a rule is broken)
+        violation_output = self._render_violation_demo(draft, report)
+        if violation_output:
+            output_parts.append("")
+            output_parts.append(violation_output)
+
         # 6. Summary
         output_parts.append("")
         output_parts.append(
@@ -1260,6 +1311,113 @@ class ChatSession:
             "{sender} -> {receiver}",
         )
         return template.format(sender=step.sender, receiver=step.receiver)
+
+    def _render_violation_demo(
+        self, draft: IntentDraft, report: PropertyReport | None,
+    ) -> str:
+        """Render a violation demonstration for proved properties (R20).
+
+        Shows what would happen if someone tried to violate a proved
+        property.  The violation is PREVENTED by the formal proof, not
+        caught at runtime -- this is the key message of the demo.
+
+        Only generates scenarios for "demonstrable" properties:
+        ``no_deletion`` and ``role_exclusive``.
+        """
+        if report is None or not report.results:
+            return ""
+
+        lines: list[str] = []
+        showed = False
+
+        for result in report.results:
+            if result.verdict != PropertyVerdict.PROVED:
+                continue
+
+            kind = result.spec.kind
+
+            if kind == PropertyKind.NO_DELETION:
+                # Pick the non-primary role as the "attacker"
+                attacker = (
+                    draft.roles[-1] if len(draft.roles) > 1 else draft.roles[0]
+                )
+                if not showed:
+                    lines.append(_t("violation_title", self._lang))
+                    showed = True
+
+                lines.append("")
+                lines.append(
+                    _t("violation_attempt_delete", self._lang, role=attacker)
+                )
+                lines.append("")
+                lines.append(
+                    f"  {_c.RED}{_c.BOLD}"
+                    + _t("violation_blocked", self._lang)
+                    + f"{_c.RESET}"
+                )
+                explanation = _PROPERTY_EXPLANATIONS.get(
+                    "no_deletion", {},
+                ).get(self._lang, "No deletion allowed")
+                lines.append(
+                    _t(
+                        "violation_property",
+                        self._lang,
+                        prop="no_deletion",
+                        explanation=explanation,
+                    )
+                )
+
+            elif kind == PropertyKind.ROLE_EXCLUSIVE:
+                params = result.spec.params
+                if len(params) < 2:
+                    continue
+                excl_role = params[0]
+                excl_kind = params[1]
+                wrong_roles = [r for r in draft.roles if r != excl_role]
+                if not wrong_roles or not excl_role:
+                    continue
+
+                if not showed:
+                    lines.append(_t("violation_title", self._lang))
+                    showed = True
+
+                lines.append("")
+                lines.append(
+                    _t(
+                        "violation_attempt_exclusive",
+                        self._lang,
+                        wrong_role=wrong_roles[0],
+                        action=excl_kind,
+                        right_role=excl_role,
+                    )
+                )
+                lines.append("")
+                lines.append(
+                    f"  {_c.RED}{_c.BOLD}"
+                    + _t("violation_blocked", self._lang)
+                    + f"{_c.RESET}"
+                )
+                explanation = _PROPERTY_EXPLANATIONS.get(
+                    "role_exclusive", {},
+                ).get(self._lang, "Only the designated role can perform this action")
+                lines.append(
+                    _t(
+                        "violation_property",
+                        self._lang,
+                        prop="role_exclusive",
+                        explanation=explanation,
+                    )
+                )
+
+        if showed:
+            lines.append("")
+            lines.append(
+                f"{_c.GREEN}{_c.BOLD}"
+                + _t("violation_conclusion", self._lang)
+                + f"{_c.RESET}"
+            )
+
+        return "\n".join(lines) if showed else ""
 
     def _help_text(self) -> str:
         """Return help text for the current context."""

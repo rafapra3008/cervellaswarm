@@ -243,12 +243,15 @@ D6 Guardiana Finale + Launch                   DONE (S435, 9.5/10)
 
 - La demo definitiva. Persona non-tecnica descrive, sistema crea, con PROVA matematica.
 - S442: 2 bug critici fixati (verifica formale era ROTTA), 2 nuove proprieta (NO_DELETION, ROLE_EXCLUSIVE), property explanations i18n
-- Video demo 3 minuti. Il mondo lo vede. Tutto cambia.
+- Prossimi: R20 violation demo, `lu demo` command, video, blog post
+- **Piano dettagliato:** `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md`
 - **Output:** demo funzionante, video, blog post
 
 ### E.6 - CervellaLang 1.0
 
-- Grammatica frozen 1.0. Standard library 100+ protocolli. 1000+ developer.
+- Grammatica frozen 1.0. Standard library 20+ protocolli (poi 100+). Community.
+- RFC grammatica, `lu init` + `lu verify`, VS Code Marketplace.
+- **Piano dettagliato:** `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md` (Fase 3)
 - **Output:** CervellaLang 1.0, community attiva, "vericoding" riconosciuto
 
 ---

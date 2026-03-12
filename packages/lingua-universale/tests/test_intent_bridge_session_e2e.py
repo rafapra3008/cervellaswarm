@@ -921,3 +921,425 @@ class TestLaNonnaDemoVerification:
         _, output = self._run()
         combined = " ".join(output)
         assert "chiede" in combined or "restituisce" in combined
+
+
+# ============================================================
+# 12. Violation Demo (R20 - Atto 5 Scena 5.3)
+# ============================================================
+
+
+class TestViolationDemo:
+    """R20: Violation demo shows blocked attempts for proved properties.
+
+    When a protocol has no_deletion proved, the output must show a
+    demonstration of what happens when someone tries to violate it.
+    """
+
+    # Protocol with no_deletion property
+    INPUTS_WITH_NO_DELETION = [
+        "GestioneRicette",                  # protocol name
+        "Cuoco, Dispensa",                  # 2 roles
+        "Cuoco", "Dispensa", "1",           # Cuoco asks_task Dispensa
+        "Dispensa", "Cuoco", "2",           # Dispensa return_result Cuoco
+        "done",                             # finish messages
+        "no",                               # no choices
+        "3",                                # add no_deletion
+        "done",                             # finish properties
+        "yes",                              # confirm
+    ]
+
+    # Protocol WITHOUT no_deletion (only defaults)
+    INPUTS_NO_SPECIAL_PROPS = [
+        "SimpleProtocol",                   # protocol name
+        "Alice, Bob",                       # 2 roles
+        "Alice", "Bob", "1",               # Alice asks_task Bob
+        "Bob", "Alice", "2",               # Bob return_result Alice
+        "done",                             # finish messages
+        "no",                               # no choices
+        "done",                             # finish properties (only defaults)
+        "yes",                              # confirm
+    ]
+
+    def _run(self, inputs: list[str], lang: str = "en") -> tuple:
+        session, output = _session(inputs, lang=lang)
+        result = session.run()
+        return result, output
+
+    # -- Tests for protocols WITH no_deletion --
+
+    def test_violation_demo_present_with_no_deletion(self) -> None:
+        """When no_deletion is PROVED, violation demo must appear."""
+        _, output = self._run(self.INPUTS_WITH_NO_DELETION)
+        combined = " ".join(output)
+        assert "VIOLATION" in combined or "VIOLAT" in combined
+
+    def test_violation_demo_shows_blocked(self) -> None:
+        """Violation demo must show that the action was blocked."""
+        _, output = self._run(self.INPUTS_WITH_NO_DELETION)
+        combined = " ".join(output)
+        assert "blocked" in combined.lower() or "bloccata" in combined.lower()
+
+    def test_violation_demo_mentions_no_deletion(self) -> None:
+        """Violation demo must reference the no_deletion property."""
+        _, output = self._run(self.INPUTS_WITH_NO_DELETION)
+        combined = " ".join(output)
+        assert "no_deletion" in combined
+
+    def test_violation_demo_shows_attacker_role(self) -> None:
+        """Violation demo must show which role attempted the violation."""
+        _, output = self._run(self.INPUTS_WITH_NO_DELETION)
+        combined = " ".join(output)
+        # Dispensa is the non-primary role (attacker in the demo)
+        assert "Dispensa" in combined
+
+    def test_violation_demo_shows_conclusion(self) -> None:
+        """Violation demo must end with the proof conclusion."""
+        _, output = self._run(self.INPUTS_WITH_NO_DELETION)
+        combined = " ".join(output)
+        assert "WORK" in combined or "FUNZIONANO" in combined or "FUNCIONAM" in combined
+
+    def test_violation_demo_italian(self) -> None:
+        """Violation demo must work in Italian."""
+        inputs_it = [
+            "Ricette", "Cuoco, Dispensa",
+            "Cuoco", "Dispensa", "1",
+            "Dispensa", "Cuoco", "2",
+            "fatto",                         # Italian "done"
+            "no",
+            "3",                             # no_deletion
+            "fatto",
+            "si",                            # Italian "yes"
+        ]
+        _, output = self._run(inputs_it, lang="it")
+        combined = " ".join(output)
+        assert "VIOLAZIONE RILEVATA" in combined
+
+    def test_violation_demo_portuguese(self) -> None:
+        """Violation demo must work in Portuguese."""
+        inputs_pt = [
+            "Receitas", "Cozinheiro, Despensa",
+            "Cozinheiro", "Despensa", "1",
+            "Despensa", "Cozinheiro", "2",
+            "pronto",                        # Portuguese "done"
+            "nao",
+            "3",                             # no_deletion
+            "pronto",
+            "sim",                           # Portuguese "yes"
+        ]
+        _, output = self._run(inputs_pt, lang="pt")
+        combined = " ".join(output)
+        assert "VIOLACAO DETECTADA" in combined
+
+    # -- Tests for protocols WITHOUT demonstrable properties --
+
+    def test_no_violation_demo_without_special_props(self) -> None:
+        """Without no_deletion/role_exclusive, no violation demo shown."""
+        _, output = self._run(self.INPUTS_NO_SPECIAL_PROPS)
+        combined = " ".join(output)
+        assert "VIOLATION DETECTED" not in combined
+
+    def test_violation_conclusion_not_shown_without_demo(self) -> None:
+        """Conclusion should not appear when no violation demo."""
+        _, output = self._run(self.INPUTS_NO_SPECIAL_PROPS)
+        combined = " ".join(output)
+        assert "THEY WORK" not in combined
+
+    # -- Direct unit test of _render_violation_demo --
+
+    def test_render_violation_demo_empty_report(self) -> None:
+        """Empty property report produces no violation output."""
+        from cervellaswarm_lingua_universale._intent_bridge import (
+            ChatSession, IntentDraft,
+        )
+        from cervellaswarm_lingua_universale.spec import PropertyReport
+
+        session = ChatSession(
+            lang="en",
+            input_fn=lambda p: "",
+            output_fn=lambda *a, **kw: None,
+        )
+        draft = IntentDraft(
+            protocol_name="Test",
+            roles=("A", "B"),
+        )
+        empty_report = PropertyReport(protocol_name="Test", results=())
+        result = session._render_violation_demo(draft, empty_report)
+        assert result == ""
+
+    def test_render_violation_demo_none_report(self) -> None:
+        """None report produces no violation output."""
+        from cervellaswarm_lingua_universale._intent_bridge import (
+            ChatSession, IntentDraft,
+        )
+        session = ChatSession(
+            lang="en",
+            input_fn=lambda p: "",
+            output_fn=lambda *a, **kw: None,
+        )
+        draft = IntentDraft(
+            protocol_name="Test",
+            roles=("A", "B"),
+        )
+        result = session._render_violation_demo(draft, None)
+        assert result == ""
+
+    # -- Tests for ROLE_EXCLUSIVE violation demo path --
+
+    def test_role_exclusive_violation_demo(self) -> None:
+        """ROLE_EXCLUSIVE violation demo shows wrong role attempting action."""
+        from cervellaswarm_lingua_universale._intent_bridge import (
+            ChatSession, IntentDraft,
+        )
+        from cervellaswarm_lingua_universale.spec import (
+            PropertyKind, PropertyReport, PropertyResult,
+            PropertySpec, PropertyVerdict,
+        )
+
+        session = ChatSession(
+            lang="en",
+            input_fn=lambda p: "",
+            output_fn=lambda *a, **kw: None,
+        )
+        draft = IntentDraft(
+            protocol_name="Test",
+            roles=("Chef", "Pantry"),
+        )
+        report = PropertyReport(
+            protocol_name="Test",
+            results=(
+                PropertyResult(
+                    spec=PropertySpec(
+                        kind=PropertyKind.ROLE_EXCLUSIVE,
+                        params=("Chef", "TASK_REQUEST"),
+                    ),
+                    verdict=PropertyVerdict.PROVED,
+                    evidence="Only Chef sends TASK_REQUEST",
+                ),
+            ),
+        )
+        result = session._render_violation_demo(draft, report)
+        assert "VIOLATION" in result or "VIOLAT" in result
+        assert "Pantry" in result  # wrong role shown
+        assert "Chef" in result   # right role shown
+        assert "TASK_REQUEST" in result  # action shown
+
+    def test_role_exclusive_violation_demo_italian(self) -> None:
+        """ROLE_EXCLUSIVE violation demo works in Italian."""
+        from cervellaswarm_lingua_universale._intent_bridge import (
+            ChatSession, IntentDraft,
+        )
+        from cervellaswarm_lingua_universale.spec import (
+            PropertyKind, PropertyReport, PropertyResult,
+            PropertySpec, PropertyVerdict,
+        )
+
+        session = ChatSession(
+            lang="it",
+            input_fn=lambda p: "",
+            output_fn=lambda *a, **kw: None,
+        )
+        draft = IntentDraft(
+            protocol_name="Ricette",
+            roles=("Cuoco", "Dispensa"),
+        )
+        report = PropertyReport(
+            protocol_name="Ricette",
+            results=(
+                PropertyResult(
+                    spec=PropertySpec(
+                        kind=PropertyKind.ROLE_EXCLUSIVE,
+                        params=("Cuoco", "DM"),
+                    ),
+                    verdict=PropertyVerdict.PROVED,
+                    evidence="Only Cuoco sends DM",
+                ),
+            ),
+        )
+        result = session._render_violation_demo(draft, report)
+        assert "VIOLAZIONE RILEVATA" in result
+        assert "Dispensa" in result  # wrong role
+        assert "Cuoco" in result     # right role
+        assert "designato" in result or "ruolo" in result  # i18n explanation
+
+    def test_role_exclusive_with_insufficient_params(self) -> None:
+        """ROLE_EXCLUSIVE with < 2 params is skipped gracefully."""
+        from cervellaswarm_lingua_universale._intent_bridge import (
+            ChatSession, IntentDraft,
+        )
+        from cervellaswarm_lingua_universale.spec import (
+            PropertyKind, PropertyReport, PropertyResult,
+            PropertySpec, PropertyVerdict,
+        )
+
+        session = ChatSession(
+            lang="en",
+            input_fn=lambda p: "",
+            output_fn=lambda *a, **kw: None,
+        )
+        draft = IntentDraft(
+            protocol_name="Test",
+            roles=("A", "B"),
+        )
+        # Manually create a spec with only 1 param (edge case)
+        spec = PropertySpec.__new__(PropertySpec)
+        object.__setattr__(spec, "kind", PropertyKind.ROLE_EXCLUSIVE)
+        object.__setattr__(spec, "params", ("A",))  # Missing msg_kind
+        object.__setattr__(spec, "threshold", 0.0)
+
+        report = PropertyReport(
+            protocol_name="Test",
+            results=(
+                PropertyResult(
+                    spec=spec,
+                    verdict=PropertyVerdict.PROVED,
+                    evidence="",
+                ),
+            ),
+        )
+        result = session._render_violation_demo(draft, report)
+        assert result == ""  # Skipped gracefully
+
+    def test_both_no_deletion_and_role_exclusive(self) -> None:
+        """Both NO_DELETION and ROLE_EXCLUSIVE show in same violation demo."""
+        from cervellaswarm_lingua_universale._intent_bridge import (
+            ChatSession, IntentDraft,
+        )
+        from cervellaswarm_lingua_universale.spec import (
+            PropertyKind, PropertyReport, PropertyResult,
+            PropertySpec, PropertyVerdict,
+        )
+
+        session = ChatSession(
+            lang="en",
+            input_fn=lambda p: "",
+            output_fn=lambda *a, **kw: None,
+        )
+        draft = IntentDraft(
+            protocol_name="Combo",
+            roles=("Admin", "User"),
+        )
+        report = PropertyReport(
+            protocol_name="Combo",
+            results=(
+                PropertyResult(
+                    spec=PropertySpec(kind=PropertyKind.NO_DELETION),
+                    verdict=PropertyVerdict.PROVED,
+                    evidence="No deletion kinds",
+                ),
+                PropertyResult(
+                    spec=PropertySpec(
+                        kind=PropertyKind.ROLE_EXCLUSIVE,
+                        params=("Admin", "SHUTDOWN_REQUEST"),
+                    ),
+                    verdict=PropertyVerdict.PROVED,
+                    evidence="Only Admin sends SHUTDOWN_REQUEST",
+                ),
+            ),
+        )
+        result = session._render_violation_demo(draft, report)
+        # Both violations shown
+        assert result.count("VIOLATION") >= 2 or result.count("VIOLAT") >= 2
+        # Only ONE title (the showed flag)
+        assert result.count("Security demonstration") == 1
+        # Only ONE conclusion
+        assert result.count("THEY WORK") == 1
+
+
+# ============================================================
+# 13. Pipeline Smoke Tests (T2.2 - catches silent failures like BUG 1)
+# ============================================================
+
+
+class TestPipelineSmokeFlat:
+    """Smoke test: flat protocol through the full pipeline.
+
+    This test would have caught BUG 1 (spec format mismatch, S438-S441)
+    which was hidden by a try/except that ate the SpecParseError.
+    """
+
+    INPUTS = [
+        "SmokeFlat", "Alpha, Beta",
+        "Alpha", "Beta", "1",            # asks_task
+        "Beta", "Alpha", "2",            # return_result
+        "done", "no", "done", "yes",
+    ]
+
+    def test_pipeline_produces_proved(self) -> None:
+        from cervellaswarm_lingua_universale.spec import PropertyVerdict
+        session, _ = _session(self.INPUTS)
+        result = session.run()
+        assert result is not None
+        assert len(result.property_report.results) > 0
+        for r in result.property_report.results:
+            assert r.verdict == PropertyVerdict.PROVED
+
+    def test_generated_code_not_empty(self) -> None:
+        session, _ = _session(self.INPUTS)
+        result = session.run()
+        assert result is not None
+        assert result.generated_code
+        assert "class" in result.generated_code or "def" in result.generated_code
+
+
+class TestPipelineSmokeBranched:
+    """Smoke test: branched protocol through the full pipeline."""
+
+    INPUTS = [
+        "SmokeBranch", "Manager, Worker",
+        "Manager", "Worker", "1",         # asks_task
+        "Worker", "Manager", "2",         # return_result
+        "done",
+        "yes",                            # has choices
+        "Manager",                        # decider
+        "approve, reject",               # branch names
+        "done", "yes",                    # properties + confirm
+    ]
+
+    def test_branched_pipeline_produces_proved(self) -> None:
+        from cervellaswarm_lingua_universale.spec import PropertyVerdict
+        session, _ = _session(self.INPUTS)
+        result = session.run()
+        assert result is not None
+        assert len(result.property_report.results) > 0
+        for r in result.property_report.results:
+            assert r.verdict == PropertyVerdict.PROVED
+
+    def test_branched_code_mentions_decider(self) -> None:
+        session, _ = _session(self.INPUTS)
+        result = session.run()
+        assert result is not None
+        assert "Manager" in result.generated_code
+
+
+class TestPipelineSmokeWithProperties:
+    """Smoke test: protocol with extra properties (no_deletion + all_roles_participate)."""
+
+    INPUTS = [
+        "SmokeProps", "Sender, Receiver",
+        "Sender", "Receiver", "10",       # send_message
+        "Receiver", "Sender", "2",        # return_result
+        "done", "no",
+        "3",                              # add no_deletion
+        "4",                              # add all_roles_participate
+        "done", "yes",
+    ]
+
+    def test_all_4_properties_proved(self) -> None:
+        from cervellaswarm_lingua_universale.spec import PropertyVerdict
+        session, _ = _session(self.INPUTS)
+        result = session.run()
+        assert result is not None
+        assert len(result.property_report.results) == 4
+        for r in result.property_report.results:
+            assert r.verdict == PropertyVerdict.PROVED
+
+    def test_violation_demo_appears(self) -> None:
+        """Protocol with no_deletion should trigger violation demo."""
+        _, output = _session(self.INPUTS)
+        session = _session(self.INPUTS)[0]
+        session.run()
+        # Re-run to check output
+        session2, output2 = _session(self.INPUTS)
+        session2.run()
+        combined = " ".join(output2)
+        assert "VIOLATION" in combined or "VIOLAT" in combined
