@@ -6,7 +6,7 @@
 This module provides the lexical analysis layer for the unified parser
 (C1.3).  It replaces the two duplicate inline tokenizers in ``intent.py``
 and ``spec.py`` with a single, richer implementation that supports all
-terminals required by the 62-production EBNF grammar.
+terminals required by the 64-production EBNF grammar.
 
 Key design decisions (full rationale in PLAN_C1_3_1_TOKENIZER.md):
 

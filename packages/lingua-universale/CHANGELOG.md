@@ -35,8 +35,8 @@ This project follows [Semantic Versioning](https://semver.org/).
 ### Added
 
 **The Language - Phase C: Parsing Pipeline (C1)**
-- `_tokenizer.py`: Unified lexer for Lingua Universale v0.2. Replaces the two inline tokenizers in `intent.py` and `spec.py`. 62-production EBNF grammar support, explicit INDENT/DEDENT tokens, paren-depth tracking for line continuation, 4-space indent enforcement, `textwrap.dedent` pre-processing. Zero external dependencies.
-- `_ast.py`: Immutable frozen-dataclass AST node hierarchy for the 62-production grammar. Node families: `Expr` (8 types), `Property` (7 types), `Step/Choice` (3 types), `Protocol`, `Agent`, `Type` (5 types), `Use`, `Program`. All collections use `tuple` for hashability.
+- `_tokenizer.py`: Unified lexer for Lingua Universale v0.2. Replaces the two inline tokenizers in `intent.py` and `spec.py`. 64-production EBNF grammar support, explicit INDENT/DEDENT tokens, paren-depth tracking for line continuation, 4-space indent enforcement, `textwrap.dedent` pre-processing. Zero external dependencies.
+- `_ast.py`: Immutable frozen-dataclass AST node hierarchy for the 64-production grammar. Node families: `Expr` (8 types), `Property` (9 types), `Step/Choice` (3 types), `Protocol`, `Agent`, `Type` (5 types), `Use`, `Program`. All collections use `tuple` for hashability.
 - `_parser.py`: Recursive descent parser. Converts token list from `_tokenizer` into `ProgramNode` AST. LL(1) with targeted LL(3) lookahead for method-call disambiguation. Public API: `parse(source) -> ProgramNode`, `ParseError`.
 
 **The Language - Phase C: Compiler Pipeline (C2)**

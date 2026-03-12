@@ -6,12 +6,13 @@
 Every node is an immutable ``@dataclass(frozen=True)``.  Collections use
 ``tuple`` so that frozen dataclasses can hash their fields without issue.
 
-Node hierarchy (mirrors the 62-production EBNF grammar from C1.2):
+Node hierarchy (mirrors the 64-production EBNF grammar, RFC T3.1):
 
   Expr nodes        - IdentExpr, NumberExpr, StringExpr, AttrExpr,
                       MethodCallExpr, BinOpExpr, NotExpr, GroupExpr
   Property nodes    - AlwaysTerminates, NoDeadlock, OrderingProp,
-                      ExclusionProp, ConfidenceProp, TrustProp, AllParticipate
+                      ExclusionProp, ConfidenceProp, TrustProp, AllParticipate,
+                      NoDeletionProp, RoleExclusiveProp
   Step/Choice nodes - StepNode, ChoiceNode, BranchNode
   Protocol node     - ProtocolNode
   Agent node        - AgentNode
@@ -155,6 +156,18 @@ class AllParticipate:
     loc: Loc
 
 
+@dataclass(frozen=True)
+class NoDeletionProp:
+    loc: Loc
+
+
+@dataclass(frozen=True)
+class RoleExclusiveProp:
+    role: str     # the role with exclusive access  (e.g. "auditor")
+    message: str  # the message only that role can send  (e.g. "audit_verdict")
+    loc: Loc
+
+
 Property = Union[
     AlwaysTerminates,
     NoDeadlock,
@@ -163,6 +176,8 @@ Property = Union[
     ConfidenceProp,
     TrustProp,
     AllParticipate,
+    NoDeletionProp,
+    RoleExclusiveProp,
 ]
 
 
