@@ -19,9 +19,9 @@
 |   E.5 La Nonna Demo               DONE (S442-S443)              |
 |   E.6 CervellaLang 1.0            IN PROGRESS                   |
 |     T3.1 Grammar 1.0 RFC          DONE (S444)                   |
+|     T3.3 lu init                   DONE (S444)                   |
 |     T3.4 lu verify standalone      DONE (S444)                   |
 |     T3.2 Standard Library          PROSSIMO                     |
-|     T3.3 lu init                   TODO                          |
 |                                                                |
 |   Asset: 28 moduli, 3332 test, ~14000+ LOC, ZERO deps core    |
 +================================================================+
@@ -361,15 +361,30 @@ AI/ML:
 
 ```bash
 lu init my-protocol
-# Crea:
+# Creates:
 #   my-protocol/
-#     protocol.lu
-#     properties.lu
-#     README.md
-#     tests/
+#     my-protocol.lu       # protocol skeleton (parses + verifies PROVED)
+#     my-protocol_test.lu   # verification test
+#     README.md             # quick start guide
 ```
 
-**Effort:** 0.5 sessione
+**Design:** deno-init style. Non-interactive, one-shot. ZERO deps (pathlib + textwrap).
+
+**Opzioni:**
+- `--minimal` -- solo il .lu file
+- `--force` -- sovrascrive directory non-vuota
+
+**Criterio completamento:**
+- [x] `lu init` crea 3 file (protocol + test + README)
+- [x] `--minimal` crea solo .lu
+- [x] `--force` sovrascrive senza perdere file esistenti
+- [x] File generati parsano E verificano (PROVED)
+- [x] Nome validato (no digit-leading, no special chars)
+- [x] PascalCase conversion per hyphens/underscores
+- [x] 23 test (7 template + 12 core + 4 CLI)
+- [x] Guardiana audit 9.3/10 -> 7/7 findings fixati
+
+**Effort:** DONE S444 (0.3 sessione)
 
 ---
 

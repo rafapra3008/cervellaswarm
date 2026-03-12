@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Command-line interface for Lingua Universale (C3.2 + C3.4 + C3.6 + D2 + E.3 + E.4).
+"""Command-line interface for Lingua Universale (C3.2 + C3.4 + C3.6 + D2 + E.3 + E.4 + T3.3).
 
 Subcommands::
 
@@ -9,6 +9,7 @@ Subcommands::
     lu check <file.lu>    Parse and compile without executing (fast).
     lu verify <file.lu>   Parse, compile, and formally verify with Lean 4.
     lu compile <file.lu>  Show the generated Python source.
+    lu init <name>        Create a new LU project with scaffolding (T3.3).
     lu repl               Start the interactive REPL.
     lu chat               Interactive guided protocol builder (E.2+E.4).
     lu demo               Run the La Nonna demo autonomously (E.5).
@@ -137,6 +138,29 @@ def _cmd_repl(args: argparse.Namespace) -> int:
 
     session = REPLSession()
     session.run()
+    return 0
+
+
+def _cmd_init(args: argparse.Namespace) -> int:
+    """Handle ``lu init <name>``."""
+    from ._init_project import init_project
+
+    try:
+        created = init_project(
+            args.name, minimal=args.minimal, force=args.force,
+        )
+    except (ValueError, OSError) as exc:
+        print(f"{_c.RED}{_c.BOLD}ERROR{_c.RESET} {exc}", file=sys.stderr)
+        return 1
+
+    print(
+        f"{_c.GREEN}{_c.BOLD}Created{_c.RESET} "
+        f"LU project {_c.BOLD}{args.name}{_c.RESET}"
+    )
+    for path in created:
+        print(f"  {_c.CYAN}{path}{_c.RESET}")
+    print()
+    print(f"  Next: {_c.BOLD}lu check {args.name}/{args.name}.lu{_c.RESET}")
     return 0
 
 
@@ -355,6 +379,23 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Write Python output to file instead of stdout",
     )
 
+    # lu init
+    p_init = subparsers.add_parser(
+        "init",
+        help="Create a new LU project with scaffolding",
+    )
+    p_init.add_argument("name", help="Project name (e.g. my-protocol)")
+    p_init.add_argument(
+        "--minimal",
+        action="store_true",
+        help="Only create the .lu file (no README/test)",
+    )
+    p_init.add_argument(
+        "--force",
+        action="store_true",
+        help="Overwrite existing non-empty directory",
+    )
+
     # lu repl
     subparsers.add_parser("repl", help="Start the interactive REPL")
 
@@ -431,6 +472,7 @@ _COMMAND_HANDLERS = {
     "run": _cmd_run,
     "verify": _cmd_verify,
     "compile": _cmd_compile,
+    "init": _cmd_init,
     "repl": _cmd_repl,
     "lsp": _cmd_lsp,
     "chat": _cmd_chat,
