@@ -22,6 +22,7 @@ Set WindowBarSize 40
 Set BorderRadius 8
 Set TypingSpeed 60ms
 Set Framerate 30
+Set PlaybackSpeed 1.0
 
 # Title card: brief pause before starting
 Sleep 1s
