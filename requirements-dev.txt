@@ -21,6 +21,7 @@ ruff>=0.1.0
 tree-sitter>=0.20.0
 tree-sitter-language-pack>=0.1.0
 
-# NetworkX - Graph analysis per dependency ranking
-# Usato da: dependency_graph.py (PageRank)
+# NetworkX + NumPy - Graph analysis per dependency ranking
+# Usato da: dependency_graph.py (PageRank). NumPy needed by networkx.pagerank().
 networkx>=3.0
+numpy>=1.24.0

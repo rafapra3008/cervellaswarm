@@ -107,3 +107,13 @@ CODEBASE HEALTH:
 
 *"Il diamante si lucida nei dettagli."*
 *Cervella & Rafa, S443 - 12 Marzo 2026*
+<!-- AUTO-CHECKPOINT-START -->
+## AUTO-CHECKPOINT: 2026-03-12 17:49 (auto)
+- **Branch**: main
+- **Ultimo commit**: f4bfdeee - Fix: Skip test_semantic_search.py in CI (tree-sitter full-repo parse hangs)
+- **File modificati** (4):
+  - github/workflows/test-python.yml
+  - .sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md
+  - .sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md
+  - requirements-dev.txt
+<!-- AUTO-CHECKPOINT-END -->
