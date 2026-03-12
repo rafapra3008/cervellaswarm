@@ -16,12 +16,14 @@ jobs:
   review:
     runs-on: ubuntu-latest
 
-    # Run on PR or if @claude is mentioned in a PR comment
+    # Run on PR or if @claude is mentioned in a PR comment.
+    # Skip dependabot PRs (no access to ANTHROPIC_API_KEY secret).
     if: >
-      github.event_name == 'pull_request' ||
-      (github.event_name == 'issue_comment' &&
-       github.event.issue.pull_request &&
-       contains(github.event.comment.body, '@claude'))
+      github.actor != 'dependabot[bot]' &&
+      (github.event_name == 'pull_request' ||
+       (github.event_name == 'issue_comment' &&
+        github.event.issue.pull_request &&
+        contains(github.event.comment.body, '@claude')))
 
     permissions:
       contents: read

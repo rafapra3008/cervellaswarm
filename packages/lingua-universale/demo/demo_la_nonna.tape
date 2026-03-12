@@ -32,6 +32,7 @@ Type "lu demo --lang it --speed slow"
 Sleep 500ms
 Enter
 
-# The demo runs autonomously with typewriter effect (~68s at slow speed)
-# Wait for it to complete + 5s final pause
+# The demo runs autonomously with typewriter effect.
+# Timing: ~68s at slow speed + ~7s buffer for rendering/final pause = 75s.
+# If demo content changes, re-measure with: time lu demo --lang it --speed slow
 Sleep 75s

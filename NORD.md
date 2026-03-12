@@ -147,7 +147,7 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |   FASE D: L'ECOSISTEMA -- COMPLETA! (S426-S435)                  |
 |     D1-D6 DONE! Media 9.5/10                                    |
 |   FASE E: PER TUTTI -- IN PROGRESS (S438+)                      |
-|     E.1-E.4 DONE! E.5 La Nonna Demo QUASI DONE (9.3/10, S442+) |
+|     E.1-E.4 DONE! E.5 La Nonna Demo DONE (9.5/10, S443)        |
 |   PyPI: v0.3.0 LIVE! pip install cervellaswarm-lingua-universale|
 |   28 moduli, 3312 test, 9 PropertyKind, ZERO deps core         |
 |                                                                  |

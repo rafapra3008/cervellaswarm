@@ -77,7 +77,22 @@ class SpecParseError(Exception):
 
 
 class PropertyKind(Enum):
-    """Kinds of formal properties about protocols."""
+    """Kinds of formal properties about protocols.
+
+    Each kind represents a verifiable guarantee:
+
+    - ALWAYS_TERMINATES: protocol reaches an end state on every path.
+    - NO_DEADLOCK: no role waits indefinitely for a message.
+    - NO_DELETION: no step uses a destructive MessageKind (e.g. delete ops).
+    - ORDERING: message A must precede message B in every execution.
+    - EXCLUSION: a specific role is forbidden from sending a message kind.
+    - ROLE_EXCLUSIVE: only the named role may send the specified message kind;
+      any other sender is a violation.  Syntax: ``Cuoco exclusive dm``.
+    - CONFIDENCE_MIN: all messages must carry confidence >= threshold.
+    - TRUST_MIN: all senders must have trust tier >= the specified tier.
+    - ALL_ROLES_PARTICIPATE: every role defined in the protocol sends at least
+      one message.
+    """
 
     ALWAYS_TERMINATES = "always_terminates"
     NO_DEADLOCK = "no_deadlock"
@@ -900,7 +915,11 @@ def _check_exclusion_static(protocol: Protocol, spec: PropertySpec) -> PropertyR
 
 
 def _check_role_exclusive_static(protocol: Protocol, spec: PropertySpec) -> PropertyResult:
-    """VIOLATED if any step with the given msg_kind is sent by a role OTHER than the exclusive role."""
+    """Check that only the exclusive role sends the specified message kind.
+
+    VIOLATED if any step (top-level or inside a choice branch) has the
+    given message kind sent by a role other than ``spec.params[0]``.
+    """
     exclusive_role, msg_str = spec.params
     msg_kind = _VALUE_TO_KIND[msg_str]
 

@@ -32,6 +32,6 @@ Type "lu demo --lang it --speed fast"
 Sleep 100ms
 Enter
 
-# Wait for demo to complete (~20s real at fast speed, ~4s at 5x playback)
-# Extra buffer for output rendering and final pause
+# Timing: ~20s real at fast speed + ~10s buffer, ~4s at 5x playback.
+# If demo content changes, re-measure with: time lu demo --lang it --speed fast
 Sleep 30s
