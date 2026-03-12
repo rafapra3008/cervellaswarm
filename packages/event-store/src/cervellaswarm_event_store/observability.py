@@ -44,6 +44,9 @@ _MODEL_PRICING: dict[str, dict[str, float]] = {
     },
 }
 
+# Aliases for model names that may appear without date suffix
+_MODEL_PRICING["claude-haiku-4-5"] = _MODEL_PRICING["claude-haiku-4-5-20251001"]
+
 # Fallback for unknown models (use Sonnet pricing as safe middle ground)
 _DEFAULT_PRICING = _MODEL_PRICING["claude-sonnet-4-6"]
 

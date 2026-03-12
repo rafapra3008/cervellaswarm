@@ -71,6 +71,10 @@ class TestEstimateCost:
         cost = estimate_cost("claude-haiku-4-5-20251001", 1_000_000, 0)
         assert cost == 0.8
 
+    def test_haiku_alias_without_date(self):
+        cost = estimate_cost("claude-haiku-4-5", 1_000_000, 0)
+        assert cost == 0.8
+
     def test_rounding(self):
         # Small tokens should round to 6 decimal places
         cost = estimate_cost("claude-opus-4-6", 100, 10)

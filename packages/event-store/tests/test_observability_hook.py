@@ -15,7 +15,7 @@ sys.path.insert(0, str(Path(__file__).parents[3] / ".claude" / "hooks"))
 # We need cervella_hooks_common on the path for the import to work
 sys.path.insert(0, str(Path.home() / ".claude" / "hooks"))
 
-from observability_hook import parse_transcript
+from observability_hook import parse_transcript, find_transcript, store_usage
 
 
 def _write_transcript(lines: list[dict], tmp_path: Path) -> Path:
@@ -210,3 +210,79 @@ class TestParseTranscript:
         ]
         result = parse_transcript(_write_transcript(lines, tmp_path))
         assert result["total_messages"] == 1
+
+
+class TestFindTranscript:
+    def test_nonexistent_dir(self):
+        result = find_transcript("no-such-session", "/tmp/nonexistent-dir-xyz")
+        assert result is None
+
+    def test_with_real_project_dir(self, tmp_path):
+        # Create a fake .claude-insiders project structure
+        project_key = "-tmp-fakedir"
+        project_dir = tmp_path / "projects" / project_key
+        project_dir.mkdir(parents=True)
+
+        # Write a fake transcript
+        transcript = project_dir / "test-session-123.jsonl"
+        transcript.write_text('{"type":"progress"}\n')
+
+        # Monkey-patch home to use tmp_path
+        import unittest.mock
+        with unittest.mock.patch("pathlib.Path.home", return_value=tmp_path):
+            # Rename to match expected .claude-insiders structure
+            insiders_dir = tmp_path / ".claude-insiders" / "projects" / project_key
+            insiders_dir.mkdir(parents=True)
+            insiders_transcript = insiders_dir / "test-session-123.jsonl"
+            insiders_transcript.write_text('{"type":"progress"}\n')
+
+            result = find_transcript("test-session-123", "/tmp/fakedir")
+            assert result is not None
+            assert result.name == "test-session-123.jsonl"
+
+
+class TestStoreUsage:
+    def test_store_with_valid_data(self, tmp_path):
+        import os
+        db_path = tmp_path / "test-obs.db"
+        os.environ["CERVELLASWARM_EVENT_STORE_DB"] = str(db_path)
+        try:
+            totals = {
+                "input_tokens": 100,
+                "output_tokens": 50,
+                "cache_read_tokens": 200,
+                "cache_creation_tokens": 30,
+                "total_messages": 5,
+                "total_tool_calls": 2,
+                "models": {"claude-opus-4-6": 5},
+            }
+            result = store_usage("test-session", "cervellaswarm", totals)
+            assert result is True
+
+            # Verify data was stored
+            from cervellaswarm_event_store.database import EventStore
+            with EventStore(db_path) as store:
+                summary = store.query_usage()
+                assert summary.total_sessions == 1
+                assert summary.total_input_tokens == 100
+        finally:
+            os.environ.pop("CERVELLASWARM_EVENT_STORE_DB", None)
+
+    def test_store_with_empty_models(self, tmp_path):
+        import os
+        db_path = tmp_path / "test-obs2.db"
+        os.environ["CERVELLASWARM_EVENT_STORE_DB"] = str(db_path)
+        try:
+            totals = {
+                "input_tokens": 0,
+                "output_tokens": 0,
+                "cache_read_tokens": 0,
+                "cache_creation_tokens": 0,
+                "total_messages": 0,
+                "total_tool_calls": 0,
+                "models": {},
+            }
+            result = store_usage("test-session", "test", totals)
+            assert result is True
+        finally:
+            os.environ.pop("CERVELLASWARM_EVENT_STORE_DB", None)
