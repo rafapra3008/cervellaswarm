@@ -120,11 +120,11 @@ jobs:
         run: npm pack
         working-directory: packages/cli
 
-      - name: Install package globally
+      - name: Install core and CLI globally
         run: |
-          TARBALL=$(ls *.tgz)
-          npm install -g "$TARBALL"
-        working-directory: packages/cli
+          cd packages/core && npm pack && npm install -g *.tgz && cd ../..
+          cd packages/cli && npm install -g *.tgz
+        working-directory: .
 
       - name: Verify CLI works
         run: |
