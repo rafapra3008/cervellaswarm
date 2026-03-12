@@ -9,11 +9,18 @@ from pathlib import Path
 
 import pytest
 
-# Import hook functions -- hooks live in ~/.claude/hooks/
+# Import hook functions -- hooks live in ~/.claude/hooks/ (not in repo).
+# Skip tests if hook is not installed locally (e.g. in CI).
 import sys
 sys.path.insert(0, str(Path.home() / ".claude" / "hooks"))
 
-from observability_hook import parse_transcript, find_transcript, store_usage
+observability_hook = pytest.importorskip(
+    "observability_hook",
+    reason="observability_hook.py not found in ~/.claude/hooks/ (local-only hook)",
+)
+parse_transcript = observability_hook.parse_transcript
+find_transcript = observability_hook.find_transcript
+store_usage = observability_hook.store_usage
 
 
 def _write_transcript(lines: list[dict], tmp_path: Path) -> Path:
