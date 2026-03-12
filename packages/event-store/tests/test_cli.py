@@ -16,6 +16,7 @@ from cervellaswarm_event_store.cli import (
     main_stats,
     main_lessons,
     main_patterns,
+    main_usage,
     _get_version,
 )
 from cervellaswarm_event_store.writer import Event, Lesson
@@ -361,3 +362,75 @@ class TestMainDispatch:
         main(["patterns", f"--db-path={db}", "--json"])
         data = json.loads(capsys.readouterr().out)
         assert "total" in data
+
+    def test_usage_subcommand(self, tmp_path, capsys):
+        db = tmp_path / "x.db"
+        main(["usage", f"--db-path={db}", "--json"])
+        data = json.loads(capsys.readouterr().out)
+        assert "total_sessions" in data
+
+
+class TestMainUsage:
+    def test_usage_empty_json(self, tmp_path, capsys):
+        db = tmp_path / "test.db"
+        main_usage([f"--db-path={db}", "--json"])
+        data = json.loads(capsys.readouterr().out)
+        assert data["total_sessions"] == 0
+        assert data["total_cost_usd"] == 0.0
+
+    def test_usage_with_data_json(self, tmp_path, capsys):
+        db = tmp_path / "test.db"
+        from cervellaswarm_event_store.database import EventStore
+        from cervellaswarm_event_store.observability import TokenUsage
+
+        with EventStore(db) as store:
+            store.log_token_usage(
+                TokenUsage(
+                    session_id="test-1",
+                    project="cervellaswarm",
+                    model="claude-opus-4-6",
+                    input_tokens=10_000,
+                    output_tokens=5_000,
+                    cost_usd=1.23,
+                )
+            )
+
+        main_usage([f"--db-path={db}", "--json"])
+        data = json.loads(capsys.readouterr().out)
+        assert data["total_sessions"] == 1
+        assert data["total_input_tokens"] == 10_000
+        assert data["total_cost_usd"] == 1.23
+
+    def test_usage_text_output(self, tmp_path, capsys):
+        db = tmp_path / "test.db"
+        from cervellaswarm_event_store.database import EventStore
+        from cervellaswarm_event_store.observability import TokenUsage
+
+        with EventStore(db) as store:
+            store.log_token_usage(
+                TokenUsage(
+                    session_id="test-1",
+                    model="claude-opus-4-6",
+                    input_tokens=10_000,
+                    output_tokens=5_000,
+                    cost_usd=1.23,
+                )
+            )
+
+        main_usage([f"--db-path={db}"])
+        out = capsys.readouterr().out
+        assert "Token Usage" in out
+        assert "Sessions" in out
+        assert "$1.23" in out
+
+    def test_usage_today_flag(self, tmp_path, capsys):
+        db = tmp_path / "test.db"
+        main_usage([f"--db-path={db}", "--today", "--json"])
+        data = json.loads(capsys.readouterr().out)
+        assert data["total_sessions"] == 0
+
+    def test_usage_project_filter(self, tmp_path, capsys):
+        db = tmp_path / "test.db"
+        main_usage([f"--db-path={db}", "--project=cervellaswarm", "--json"])
+        data = json.loads(capsys.readouterr().out)
+        assert data["total_sessions"] == 0

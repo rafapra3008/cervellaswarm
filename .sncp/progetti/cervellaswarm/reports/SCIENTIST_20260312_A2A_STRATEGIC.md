@@ -3,6 +3,7 @@
 **Autrice:** Cervella Scienziata
 **Richiesta da:** Regina (sessione 442)
 **Contesto:** Valutazione posizionamento CervellaSwarm rispetto ad A2A
+**Fonti:** 18 consultate
 
 ---
 
@@ -57,14 +58,11 @@ Donare A2A alla Linux Foundation (giugno 2025) e stato un segnale forte: Google 
 
 ```
 +---------------------------------------------------+
-|  LAYER 3: Web Access                              |
-|  WebMCP -- accesso agenti al web aperto           |
+|  Layer 3: A2A  --> Agent-to-Agent coordination    |
 +---------------------------------------------------+
-|  LAYER 2: Agent-to-Agent (ORIZZONTALE)            |
-|  A2A (+ ACP fuso) -- comunicazione tra agenti     |
+|  Layer 2: MCP  --> Agent-to-Tool connections      |
 +---------------------------------------------------+
-|  LAYER 1: Agent-to-Tool (VERTICALE)               |
-|  MCP (Anthropic) -- tool, DB, risorse esterne     |
+|  Layer 1: Web  --> Structured web access           |
 +---------------------------------------------------+
 ```
 
@@ -194,7 +192,7 @@ POST 1.0:
 
 ### Perche NON ora
 
-1. **E.5 non e finita.** Il focus corretto e completare La Nonna Demo (T1.2-T1.6 ancora aperti).
+1. **E.5 non e finita.** Il focus corretto e completare La Nonna Demo (diversi task ancora aperti).
 2. **MCP prima di A2A.** MCP da valore immediato (today's problems), A2A e per tomorrow's scale.
 3. **Spec stabile.** A2A v0.3 (luglio 2025) e abbastanza matura -- non serve correre, non si perdera il treno.
 

@@ -18,6 +18,7 @@ if TYPE_CHECKING:
     from cervellaswarm_event_store.writer import Event, Lesson
     from cervellaswarm_event_store.reader import QueryResult, Statistics
     from cervellaswarm_event_store.analytics import DetectedPattern, ScoredLesson
+    from cervellaswarm_event_store.observability import TokenUsage, UsageSummary
 
 
 _CREATE_EVENTS = """
@@ -83,6 +84,24 @@ CREATE TABLE IF NOT EXISTS error_patterns (
 )
 """
 
+_CREATE_TOKEN_USAGE = """
+CREATE TABLE IF NOT EXISTS token_usage (
+    id TEXT PRIMARY KEY,
+    timestamp TEXT NOT NULL,
+    session_id TEXT NOT NULL,
+    project TEXT,
+    model TEXT,
+    input_tokens INTEGER DEFAULT 0,
+    output_tokens INTEGER DEFAULT 0,
+    cache_read_tokens INTEGER DEFAULT 0,
+    cache_creation_tokens INTEGER DEFAULT 0,
+    total_messages INTEGER DEFAULT 0,
+    total_tool_calls INTEGER DEFAULT 0,
+    cost_usd REAL DEFAULT 0.0,
+    created_at TEXT DEFAULT (datetime('now'))
+)
+"""
+
 _INDICES = [
     "CREATE INDEX IF NOT EXISTS idx_events_timestamp ON events(timestamp DESC)",
     "CREATE INDEX IF NOT EXISTS idx_events_agent ON events(agent_name)",
@@ -95,6 +114,10 @@ _INDICES = [
     "CREATE INDEX IF NOT EXISTS idx_lessons_project ON lessons(project)",
     "CREATE INDEX IF NOT EXISTS idx_patterns_severity ON error_patterns(severity)",
     "CREATE INDEX IF NOT EXISTS idx_patterns_status ON error_patterns(status)",
+    "CREATE INDEX IF NOT EXISTS idx_token_usage_session ON token_usage(session_id)",
+    "CREATE INDEX IF NOT EXISTS idx_token_usage_project ON token_usage(project)",
+    "CREATE INDEX IF NOT EXISTS idx_token_usage_timestamp ON token_usage(timestamp DESC)",
+    "CREATE INDEX IF NOT EXISTS idx_token_usage_model ON token_usage(model)",
 ]
 
 from cervellaswarm_event_store.writer import _VALID_EVENT_TYPES, _VALID_SEVERITIES
@@ -160,6 +183,7 @@ class EventStore:
         cursor.execute(_CREATE_EVENTS)
         cursor.execute(_CREATE_LESSONS)
         cursor.execute(_CREATE_ERROR_PATTERNS)
+        cursor.execute(_CREATE_TOKEN_USAGE)
         for idx in _INDICES:
             cursor.execute(idx)
         self._conn.commit()
@@ -293,6 +317,44 @@ class EventStore:
         from cervellaswarm_event_store.analytics import _get_lessons_scored
 
         return _get_lessons_scored(self._require_conn(), agent=agent, project=project, limit=limit)
+
+    # ------------------------------------------------------------------
+    # Observability API (delegates to observability module)
+    # ------------------------------------------------------------------
+
+    def log_token_usage(self, usage: "TokenUsage") -> str:
+        """Insert a token usage record and return its id.
+
+        Args:
+            usage: TokenUsage dataclass instance (frozen).
+
+        Returns:
+            The record id string (UUID).
+        """
+        from cervellaswarm_event_store.observability import _insert_token_usage
+
+        return _insert_token_usage(self._require_conn(), usage)
+
+    def query_usage(
+        self,
+        *,
+        project: str = "",
+        model: str = "",
+        days: int = 0,
+    ) -> "UsageSummary":
+        """Query aggregated token usage statistics.
+
+        Args:
+            project: Filter by project (exact match).
+            model: Filter by model (exact match).
+            days: Only include data from the last N days. 0 = no limit.
+
+        Returns:
+            UsageSummary frozen dataclass.
+        """
+        from cervellaswarm_event_store.observability import _query_usage
+
+        return _query_usage(self._require_conn(), project=project, model=model, days=days)
 
     # ------------------------------------------------------------------
     # Analytics API (delegates to analytics module)

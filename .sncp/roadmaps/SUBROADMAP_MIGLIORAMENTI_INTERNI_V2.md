@@ -106,11 +106,16 @@
 # FASE E: NEXT (FUTURE) -- DA FARE
 
 ## E.1: F3.6 Observability Layer (custom SQLite)
-**Stato:** [DA FARE]
+**Stato:** [IN PROGRESS] - S442
 **Dipende da:** C.2 (ricerca completa)
-**Piano:** Estendere event-store con tabelle token_usage + agent_traces.
-Stop hook Claude Code (~150 LOC). CLI `cervella-stats --today --by-agent`.
-**Sforzo:** 1 sessione
+**Implementazione:**
+- Modulo `observability.py`: TokenUsage dataclass, estimate_cost(), query con filtri
+- Tabella `token_usage` nello schema (4 indici: session, project, timestamp, model)
+- Hook `observability_hook.py`: parsa JSONL transcript, estrae usage metadata, fail-open
+- CLI `cervella-events usage --today --by-project --by-model --json`
+- **46 test nuovi** (35 observability + 11 hook transcript parser), 301 totali event-store
+- Pricing: Opus $15/$75, Sonnet $3/$15, Haiku $0.80/$4 (per MTok in/out)
+**Guardiana audit:** in corso
 
 ## E.2: Researcher/Scienziata confini definiti
 **Stato:** [FATTO] - S442
@@ -120,7 +125,7 @@ Aggiunta sezione "NON Faccio" in entrambi. Aggiornato spawn-workers.sh.
 
 ## E.3: A2A Protocol studio approfondito
 **Stato:** [FATTO] - S442
-**Soluzione:** Due report paralleli (Researcher tecnico + Scienziata strategico, 31 fonti totali).
+**Soluzione:** Due report paralleli (Researcher tecnico 14 fonti + Scienziata strategico 18 fonti).
 A2A = protocollo orizzontale agent-to-agent (complementare a MCP verticale agent-to-tool).
 150+ org, AAIF Linux Foundation. SDK Python v0.3.25, spec v0.3.0.
 **Decisione:** MONITOR. MCP prima (valore oggi), A2A durante E.6 (interoperabilita esterna).
@@ -162,9 +167,9 @@ FASE D: P3 Fixati              [####################] 100%
   D.2 Test collection errors    FATTO (S442)
 
 FASE E: Next                   [#################...] 87%
-  E.1 F3.6 Observability        DA FARE (unico pendente!)
+  E.1 F3.6 Observability        DA FARE (ultimo task operativo)
   E.2 Agent confini definiti    FATTO (S442)
-  E.3 A2A Protocol              FATTO (S442, 31 fonti, decisione: MCP prima)
+  E.3 A2A Protocol              FATTO (S442, 32 fonti, decisione: MCP prima)
   E.4 Report rotation           FATTO (S442)
 
 IMPATTO TOTALE S442:

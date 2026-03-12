@@ -49,7 +49,7 @@ LINGUAGGIO CERVELLASWARM:
 
 ### E.5 La Nonna Demo (SUBROADMAP: `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md`)
 - [x] T1.1: R20 Demo violazione interattiva (DONE, audit fixato)
-- [x] T1.2: `lu demo` comando autonomo (DONE, 15 test, audit in progress)
+- [x] T1.2: `lu demo` comando autonomo (DONE, 17 test, Guardiana 9.5/10, 5 P3 fixati)
 - [ ] T1.3: Video recording (VHS tape file, `brew install vhs`)
 - [ ] T1.4: Blog post "From Vibe Coding to Vericoding" (hook con Maria)
 - [ ] T1.5: Test persona non-tecnica reale
@@ -66,14 +66,15 @@ LINGUAGGIO CERVELLASWARM:
 
 ---
 
-## SESSIONE PARALLELA: Infrastruttura V2 (Fasi A-D DONE, E 87%)
+## SESSIONE PARALLELA: Infrastruttura V2 (Fasi A-D DONE, E 87%->95%)
 
 **Mappa:** `.sncp/roadmaps/SUBROADMAP_MIGLIORAMENTI_INTERNI_V2.md`
 **Fatto:** cervella_hooks_common.py v1.2.0 (DRY 10 hook), context/subagent -40%,
 SNCP legacy -61%, _SHARED_DNA -18%, 27 test errors->0 (+605 test),
 researcher/scienziata confini definiti, rotate-reports.sh (policy 60 giorni),
-A2A Protocol studio (31 fonti, decisione: MCP prima, A2A post E.5/durante E.6).
-**Pendente:** E.1 Observability (SQLite) -- unico task rimasto!
+A2A Protocol studio (32 fonti, decisione: MCP prima, A2A post E.5/durante E.6).
+**E.1 Observability IN PROGRESS:** observability.py + token_usage table + hook + CLI.
+46 test nuovi, 301 event-store totali. Guardiana audit in corso.
 
 ---
 
@@ -81,9 +82,9 @@ A2A Protocol studio (31 fonti, decisione: MCP prima, A2A post E.5/durante E.6).
 
 | Metrica | Valore |
 |---------|--------|
-| Test LU | **3310** |
-| Test TOTALI | **6514** (0 collection errors!) |
-| Hooks | **14** su cervella_hooks_common.py v1.2.0 |
+| Test LU | **3312** |
+| Test TOTALI | **6604+** (0 collection errors!) |
+| Hooks | **15** su cervella_hooks_common.py v1.2.0 (+observability) |
 | Context/subagent | **~13KB** (-40%) |
 
 ---
