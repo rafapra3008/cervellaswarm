@@ -3,6 +3,7 @@
 # Trigger: Push/PR to main on Python file changes
 # Matrix: Python 3.10, 3.11, 3.12
 # Output: Coverage report (55% CI threshold, actual: 95%)
+# S443: Added --ignore for tests/sncp and test_convert_agents.py (local-only hooks)
 #
 # Quality is not negotiable.
 
