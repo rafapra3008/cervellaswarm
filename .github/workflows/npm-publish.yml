@@ -1,72 +1,25 @@
-# Publish to npm when a new tag is pushed
-# Uses OIDC Trusted Publishing - NO TOKENS NEEDED!
+# DEPRECATED: Consolidated into publish.yml (which has CI gate + environment protection)
 #
-# Usage: git tag v0.1.0 && git push --tags
+# This workflow was disabled in S443 because it conflicted with publish.yml:
+# both triggered on tag push and both tried to publish CLI to npm.
+# The second publish would fail with "version already exists".
 #
-# SETUP REQUIRED (one-time per package):
+# publish.yml now handles CLI + MCP Server with proper CI gate.
+#
+# Original SETUP notes preserved:
 # 1. Go to npmjs.com/package/cervellaswarm/access
 # 2. Add Trusted Publisher → GitHub Actions
 # 3. Owner: rafapra3008
 # 4. Repository: CervellaSwarm
-# 5. Workflow: npm-publish.yml
-# 6. Environment: (leave empty)
+# 5. Workflow: publish.yml (NOT this file)
+# 6. Environment: production
 
-name: Publish to npm
+name: "[DEPRECATED] npm-publish"
 
+# Trigger disabled - use publish.yml instead
 on:
-  push:
-    tags:
-      - 'v*'
-
-jobs:
-  publish-cli:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write  # Required for OIDC trusted publishing
-    defaults:
-      run:
-        working-directory: packages/cli
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run tests
-        run: npm test
-
-      - name: Publish CLI
-        run: npm publish --access public --provenance
-
-  publish-mcp:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write  # Required for OIDC trusted publishing
-    defaults:
-      run:
-        working-directory: packages/mcp-server
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
-        run: npm run build
-
-      - name: Publish MCP Server
-        run: npm publish --access public --provenance
+  workflow_dispatch:
+    inputs:
+      note:
+        description: "DEPRECATED: Use publish.yml instead"
+        required: false

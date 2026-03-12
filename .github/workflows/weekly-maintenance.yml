@@ -21,6 +21,9 @@ jobs:
       issues: write
       pull-requests: read
 
+    # Skip if ANTHROPIC_API_KEY is not configured (prevents silent weekly failures)
+    if: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6

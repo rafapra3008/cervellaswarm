@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 12 Marzo 2026 - S442 (E.1-E.4 DONE, E.5 in progress, Infra V2 complete)
+> Aggiornato: 12 Marzo 2026 - S443 (E.1-E.5 DONE, CI fix + publish consolidation)
 
 ```
 +==================================================================+

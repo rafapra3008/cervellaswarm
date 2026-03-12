@@ -5,7 +5,7 @@
 #
 # Quality is not negotiable.
 
-name: Publish to npm
+name: Publish to npm (CLI + MCP)
 
 on:
   push:
@@ -34,6 +34,10 @@ jobs:
           node-version: '20.x'
           cache: 'npm'
           cache-dependency-path: 'packages/cli/package-lock.json'
+
+      - name: Install and build core dependency
+        run: npm ci && npm run build
+        working-directory: packages/core
 
       - name: Install dependencies
         run: npm ci
@@ -79,6 +83,10 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'packages/cli/package-lock.json'
 
+      - name: Install and build core dependency
+        run: npm ci && npm run build
+        working-directory: packages/core
+
       - name: Install dependencies
         run: npm ci
         working-directory: packages/cli
@@ -111,3 +119,44 @@ jobs:
             *"17 agents. 1 command. Your AI development team."*
           draft: false
           prerelease: ${{ contains(github.ref_name, 'beta') || contains(github.ref_name, 'alpha') }}
+
+  # Publish MCP Server alongside CLI
+  publish-mcp:
+    name: Publish MCP Server to npm
+    needs: [ci]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    environment:
+      name: production
+      url: https://www.npmjs.com/package/@cervellaswarm/mcp-server
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install and build core dependency
+        run: npm ci && npm run build
+        working-directory: packages/core
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: packages/mcp-server
+
+      - name: Build
+        run: npm run build
+        working-directory: packages/mcp-server
+
+      - name: Publish MCP Server (Trusted Publishing)
+        run: npm publish --provenance --access public
+        working-directory: packages/mcp-server
