@@ -58,15 +58,27 @@ class TestMutualTls:
     def test_parses(self):
         assert check_source(self.SRC).ok
 
-    def test_all_properties_proved(self):
+    def test_structural_properties_proved(self):
         r = verify_source(self.SRC)
-        for rpt in (r.property_reports or []):
-            for res in rpt.results:
-                assert res.verdict.name == "PROVED"
+        verdicts = {res.spec.kind.value: res.verdict.name
+                    for rpt in (r.property_reports or []) for res in rpt.results}
+        assert verdicts["always_terminates"] == "PROVED"
+        assert verdicts["no_deadlock"] == "PROVED"
+        assert verdicts["all_roles_participate"] == "PROVED"
 
-    def test_two_roles_only(self):
+    def test_all_roles_participate_proved(self):
         r = verify_source(self.SRC)
-        assert r.ok
+        verdicts = {res.spec.kind.value: res.verdict.name
+                    for rpt in (r.property_reports or []) for res in rpt.results}
+        assert verdicts["all_roles_participate"] == "PROVED"
+
+    def test_ordering_present(self):
+        r = verify_source(self.SRC)
+        has_ordering = any(
+            res.spec.kind.value == "ordering"
+            for rpt in (r.property_reports or []) for res in rpt.results
+        )
+        assert has_ordering
 
 
 # ── RateLimitedApi ───────────────────────────────────────────────

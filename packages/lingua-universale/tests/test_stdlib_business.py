@@ -23,7 +23,7 @@ class TestTwoBuyer:
     def test_parses(self):
         assert check_source(self.SRC).ok
 
-    def test_three_roles(self):
+    def test_compiles(self):
         r = check_source(self.SRC)
         assert r.compiled is not None
 

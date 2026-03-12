@@ -49,7 +49,7 @@ class TestPingPong:
     def test_parses(self):
         assert check_source(self.SRC).ok
 
-    def test_has_four_steps(self):
+    def test_compiles(self):
         r = check_source(self.SRC)
         assert r.compiled is not None
 
@@ -68,7 +68,7 @@ class TestPubSub:
     def test_parses(self):
         assert check_source(self.SRC).ok
 
-    def test_three_roles(self):
+    def test_compiles(self):
         r = check_source(self.SRC)
         assert r.compiled is not None
 
@@ -108,7 +108,7 @@ class TestPipeline:
     def test_parses(self):
         assert check_source(self.SRC).ok
 
-    def test_four_roles(self):
+    def test_compiles(self):
         r = check_source(self.SRC)
         assert r.compiled is not None
 

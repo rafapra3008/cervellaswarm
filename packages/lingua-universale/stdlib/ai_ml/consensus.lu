@@ -5,6 +5,8 @@
 # result. Ensures all validators participate in the decision.
 # Foundation for multi-agent trust and distributed AI governance.
 # Demonstrates confidence_min: votes must meet a minimum confidence level.
+# Design: validators send votes directly to aggregator (not back to proposer)
+# so the aggregator can tally independently; proposer receives only the final result.
 
 type VoteValue = Agree | Disagree | Abstain
 

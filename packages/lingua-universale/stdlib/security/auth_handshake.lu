@@ -5,6 +5,8 @@
 # resource server. Based on Scribble project's OAuth example. Ordering
 # guarantees the client MUST authenticate before accessing resources.
 # Demonstrates exclusion: the client cannot issue tokens (only auth can).
+# Note: `all roles participate` is intentionally absent -- in the denied branch,
+# the resource server is never contacted (correct: deny means no resource access).
 
 type AuthMethod = Password | OAuth | ApiKey | Certificate
 

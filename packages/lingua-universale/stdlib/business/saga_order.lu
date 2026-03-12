@@ -6,6 +6,8 @@
 # and correct ordering are GUARANTEED BY CONSTRUCTION.
 # Note: LU 1.0 supports single-level choice; the saga forward path
 # is modeled as a sequential flow with a single decision point.
+# `all roles participate` is intentionally absent -- in the failure branch,
+# inventory receives a cancellation but does not return (fire-and-forget).
 
 type OrderStatus = Created | Paid | Fulfilled | Compensated | Failed
 

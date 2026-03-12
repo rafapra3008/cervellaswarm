@@ -46,3 +46,5 @@ protocol MutualTls:
     properties:
         always terminates
         no deadlock
+        all roles participate
+        client before server

@@ -40,14 +40,14 @@ and verifies with `lu verify`.
 | **AgentDelegation** | `ai_ml/agent_delegation.lu` | supervisor, worker, validator | trust >= standard, ordering |
 | **ToolCalling** | `ai_ml/tool_calling.lu` | agent, registry, executor | ordering (registry before executor) |
 | **HumanInLoop** | `ai_ml/human_in_loop.lu` | agent, human, logger | **role exclusive** (only human decides) |
-| **Consensus** | `ai_ml/consensus.lu` | proposer, validator, aggregator | all roles participate, ordering |
+| **Consensus** | `ai_ml/consensus.lu` | proposer, validator, aggregator | all roles participate, ordering, **confidence >= medium** |
 
 ### Security (3)
 
 | Protocol | File | Roles | Key Properties |
 |----------|------|-------|----------------|
-| **AuthHandshake** | `security/auth_handshake.lu` | client, auth, resource | ordering (auth before resource) |
-| **MutualTls** | `security/mutual_tls.lu` | client, server | bidirectional certificate exchange |
+| **AuthHandshake** | `security/auth_handshake.lu` | client, auth, resource | ordering (auth before resource), **exclusion** (client cannot send token) |
+| **MutualTls** | `security/mutual_tls.lu` | client, server | all roles participate, ordering (client before server) |
 | **RateLimitedApi** | `security/rate_limited_api.lu` | client, limiter, backend | **role exclusive** (only limiter throttles) |
 
 ## Usage
@@ -67,12 +67,12 @@ cp stdlib/business/approval_workflow.lu my_workflow.lu
 
 | Property | Protocols |
 |----------|-----------|
-| `always terminates` | All 20 |
-| `no deadlock` | All 20 |
-| `all roles participate` | 13 protocols |
+| `always terminates` | All 20 (structural guarantee for finite protocols) |
+| `no deadlock` | All 20 (structural guarantee for finite protocols) |
+| `all roles participate` | 15 protocols |
 | `no deletion` | CrudSafe |
 | `role exclusive` | ApprovalWorkflow, HumanInLoop, RateLimitedApi |
-| `ordering` | Pipeline, DataSync, SagaOrder, RagPipeline, AgentDelegation, ToolCalling, Consensus, AuthHandshake, TwoBuyer |
+| `ordering` | Pipeline, DataSync, SagaOrder, RagPipeline, AgentDelegation, ToolCalling, Consensus, AuthHandshake, TwoBuyer, MutualTls |
 | `exclusion` | AuthHandshake (client cannot send token) |
 | `confidence >= level` | Consensus (confidence >= medium) |
 | `trust >= tier` | AgentDelegation (trust >= standard) |

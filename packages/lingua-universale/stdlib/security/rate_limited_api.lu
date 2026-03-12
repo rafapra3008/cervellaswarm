@@ -4,6 +4,8 @@
 # a rate limiter checks the quota, and decides whether to allow or
 # throttle the request. The role_exclusive property guarantees that
 # ONLY the rate limiter can make throttling decisions.
+# `all roles participate` is intentionally absent -- in the throttle branch,
+# the backend is never contacted (correct: throttled requests don't reach backend).
 
 type ThrottleAction = Allow | Throttle | Block
 
