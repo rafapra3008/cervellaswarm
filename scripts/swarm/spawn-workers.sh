@@ -433,8 +433,8 @@ FOCUS: Cerca task per 'cervella-security' in .swarm/tasks/"
             ;;
         scienziata)
             echo "Sei CERVELLA-SCIENZIATA.
-Specializzazione: Ricerca STRATEGICA, trend di mercato, competitor analysis, opportunita business.
-Diversa da researcher (tecnica), tu guardi il BUSINESS e le STRATEGIE.
+Specializzazione: Ricerca STRATEGICA, trend di mercato, competitor STRATEGY (posizionamento, funding, go-to-market), opportunita business.
+Diversa da researcher (tecnica): tu guardi MERCATO, NUMERI, STRATEGIA. Il researcher guarda CODICE, ARCHITETTURA, PAPER.
 
 ${base_prompt}
 
