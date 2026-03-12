@@ -31,7 +31,7 @@ paths:
 
 ## Convenzioni
 - Error codes: `LU-EXXX` con severity (error/warning/info)
-- Test: `pytest packages/lingua-universale/tests/` (3310 test)
+- Test: `pytest packages/lingua-universale/tests/` (3312 test)
 - Ogni modifica -> test -> Guardiana audit
 - MAI rompere backward compatibility senza versione major
 
@@ -69,4 +69,4 @@ paths:
 - Task list dettagliata: `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md`
 - Ricerca demo/blog: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260312_demo_launch_strategy.md`
 - FASE D: L'Ecosistema -- COMPLETA! D1-D6 DONE (media 9.5/10)
-- Test: 3310 (LU)
+- Test: 3312 (LU), 6612 totali repo

@@ -2,83 +2,89 @@
 
 # PROMPT RIPRESA - Ecosistema Miracollo
 
-> **Ultimo aggiornamento:** 12 Marzo 2026 - Sessione 21
-> **Status:** miracollo.com LIVE | Security ~9.7/10 | 649 test (638 pass) | FOLIO Phase 4c + Quality Sprint DONE | S21 IN CORSO
+> **Ultimo aggiornamento:** 12 Marzo 2026 - Sessione 21 (CHECKPOINT FINALE)
+> **Status:** miracollo.com LIVE | Security ~9.7/10 | 684 test | 3 deploy SUCCESS oggi
 
 ---
 
-## COSA E STATO FATTO (S21)
+## COSA E STATO FATTO (S21 - Completa)
 
-### PMS 360 FOLIO Phase 4c - Frontend UI Routing Rules
-- Sezione collassabile "Regole Routing" nel folio tab (tra sub-tabs e contenuto)
-- Visibile solo con 2+ folios (routing con 1 folio non ha senso)
-- Lista regole: tipo addebito -> folio target, date range, note
-- Toggle attiva/disattiva (PATCH is_active) + elimina (DELETE) per ogni regola
-- Form creazione: tipo addebito (dropdown), folio destinazione, date range, note
-- Graceful degradation: se migration 052 non applicata, sezione nascosta
-- XSS: `_escFolio()` su TUTTI i dati utente (incluso dateRange per coerenza)
-- CSS responsive mobile
-- Files: `reservation-tab-folio.js` (+360 righe), `06-modals.css` (+250 righe)
+### FOLIO Phase 4b - Amount Splitting + Company Billing (COMPLETATA)
+- Migration 053: `amount_limit`, `amount_routed`, `amount_limit_type` su `folio_routing_rules`
+- `folio_routing.py`: `resolve_folio_for_charge_split()` - Oracle Opera pattern (overflow a Window 1)
+- `charges.py`: `create_charge` crea 2 charges su split (tag "auto-split")
+- `night_audit_service.py`: `_post_room_charges` gestisce split routing
+- `routing_rules.py`: `amount_limit` su Create/Update + endpoint `company-billing-setup` (1-click)
+- Frontend: campo limite EUR, barra progresso routato/limite, bottone "Company Billing"
+- 35 test nuovi, tutti green | Audit Guardiana 9.3/10, 2 P2 fixati
+- **PERCHE**: Oracle Opera standard, azienda paga camere fino a EUR X, surplus al guest
 
-### Guardiana Audit S21
-- Score: 9.5/10, 0 P1/P2, 7 P3
-- **Fixati:** dateRange escape (F1), dead code folios param (F4+F5), inline styles -> CSS (F6)
-- **Deferred MVP:** charge_source nel form (F2), priority nel form (F3), responsive form (F7)
+### FOLIO Phase 4c - Frontend UI Routing Rules (COMPLETATA prima di 4b)
+- Sezione collassabile "Regole Routing" nel folio tab
+- Lista regole + toggle attiva/disattiva + elimina + form creazione
+- XSS: `_escFolio()` su tutti i dati utente | CSS responsive
+- Audit 9.5/10, 7 P3 (4 fixati, 3 deferred MVP)
 
-### Quality Sprint - Test Moduli Finanziari Critici (+85 test)
-- `test_bookings.py`: 37 test - list/search/update/guests CRUD/available-rooms (da 0!)
-- `test_night_audit.py`: 20 test - service layer, idempotency, no-show, API (da 0!)
-- `test_payments.py`: 28 test - CRUD, immutable guard, booking sync, Stripe config (da 0!)
-- `test_receipts.py`: 64 test - preview, PDF, email, exists, math consistency (da 0!)
-- `test_fiscal.py`: 57 test - printers CRUD, print, closures (skip: router non montato)
-- **BUG FIX:** receipts.py `check_receipt_exists` response type `Dict[str,bool]` -> `Dict[str,Any]`
-- **TOTALE: 499 -> 649 test** (638 pass, 10 skip, 1 xfail) = **+150 test!**
-- Motivazione: Ingegnera ha identificato 5000 righe di codice finanziario con ZERO test come rischio #1
+### Quality Sprint (+150 test moduli finanziari)
+- test_bookings (37), test_night_audit (20), test_payments (28), test_receipts (64), test_fiscal (57)
+- BUG FIX: receipts.py response type annotation
+- Da 499 a 649 test, poi +35 Phase 4b = 684 totali
 
-### NORD.md aggiornato
-- Phase 4a corretto da ❌ a ✅ (era rimasto vecchio)
-- PMS 360 da 85% a 90%
-- Test count aggiornato: 584 (dopo Quality Sprint)
-- Aggiunta sezione Quality Sprint
+### Audit Fixes (da Ingegnera + Guardiana Ops)
+- P1: schema.sql drift fixato (colonne migration 053 mancanti)
+- P2: 3x `str(e)` info disclosure in room_manager.py rimossi
+- P2: deploy backup `sqlite3 .backup` (era `cp`, rischio corruzione DB)
 
----
+### Scontrino RT Attivato
+- Fiscal router registrato in main.py (era stealth mode)
+- Tabelle fiscal aggiunte a schema.sql (fresh DB consistency)
+- 12 endpoint LIVE: printers CRUD, receipt printing, daily closure
+- Epson adapter production-ready (testato con TM-T800F)
 
-## STORICO FOLIO
-
-| Phase | Cosa | Stato |
-|-------|------|-------|
-| Phase 1 | charges table + API + Night Audit posting | DONE S18 |
-| Phase 2 | checkout-preview + perform_checkout + city_tax | DONE S18 |
-| Phase 2c | extras come charges (source=booking, type=service) | DONE S18b |
-| Phase 3 | Split Folio backend: folios table + 6 API endpoint | DONE S18b |
-| Phase 3b | Frontend multi-folio sub-tabs | DONE S19 |
-| Phase 4a | Routing rules backend (resolve + API CRUD + 25 test) | DONE S20 |
-| **Phase 4c** | **Frontend UI routing rules nel folio tab** | **DONE S21** |
-| Phase 4b | Amount limit + splitting + company billing shortcut | NEXT |
+### Recap Strategico (3 agenti in parallelo)
+- **Ingegnera** (8/10): 178K righe, 23 str(e) residui, ~60% moduli senza test
+- **Guardiana Ops** (8.7/10): CI/CD 9/10, Docker 9/10, tutto deployato
+- **Scienziata**: priorita strategiche + posizionamento competitivo (vedi sotto)
 
 ---
 
-## DA FARE (prossima sessione)
+## DA FARE (prossima sessione) - PRIORITA SCIENZIATA
+
+> Folio Phase 1-4 COMPLETE. Phase 5 (Fattura SDI) NEXT. Dettagli: `archivio/PROMPT_RIPRESA_S21_20260312.md`
 
 ```
-PRIORITA 1 - PMS 360 FOLIO:
-  -> Phase 4b: Amount limit + splitting + UI shortcut "Company Billing Setup"
-  -> Phase 5: Fattura elettronica SDI
+PRIORITA 1 - VALORE IMMEDIATO:
+  1. Stripe LIVE (0 dev, serve onboarding Rafa su Dashboard)
+     -> ROI MASSIMO: 13.500 EUR/anno commissioni Booking.com
+  2. Scontrino RT: integrazione checkout (auto-print dopo pagamento)
+     -> Obbligo fiscale, 2 ore di lavoro
+  3. WhatsApp pre/post-stay scheduler
+     -> pre_arrival -3gg + review_request +1gg, 2-3 ore
+     -> Infrastruttura 100% gia esistente, manca solo scheduler
 
-PRIORITA 2 - QUALITY:
-  -> Test coverage: planning, fiscal, receipts (bookings+night_audit+payments DONE S21!)
-  -> hotelId = 1 hardcoded in 4-5 posti frontend -> centralizzare
-  -> IDOR cross-hotel: 9 finding P1, mitigato single-hotel
+PRIORITA 2 - MEDIO TERMINE:
+  -> Booking Engine redesign (3 step, foto, calendario prezzi) - 3-4 settimane
+  -> Fattura elettronica SDI via intermediario (Fattura24/Aruba) - 2-4 sessioni
+  -> IDOR cross-hotel guard (prep multi-tenant) - 0.5 sessione
 
-PRIORITA 3 - FUTURE:
-  -> Redesign Booking Engine
-  -> z-index centralizzazione (68 dichiarazioni)
-  -> WhatsApp twilio_auth_token encryption
+NON FARE ADESSO:
+  -> Revenue Copilot (serve storico multi-hotel)
+  -> Sistema Karma (serve massa critica ospiti)
+  -> Ericsoft sync bidi (prima verificare write access su LAN)
+  -> Room Hardware (attesa VLAN)
 
 PARCHEGGIATO:
-  -> Stripe LIVE: TEST ok, bonifico LIVE per produzione
-  -> Ericsoft Discovery + VERIFICA write (richiede LAN hotel)
+  -> Stripe LIVE: serve onboarding Rafa
+  -> Ericsoft Discovery (richiede LAN hotel)
 ```
+
+---
+
+## STATO MODULI (chiave)
+- **Scontrino RT** (95%): 12 endpoint, 57 test. Manca: checkout integration, daily closure
+- **WhatsApp** (infra 100%, flows 0%): Manca `whatsapp_scheduler.py`
+- **Booking Engine** (95%): Redesign 3-4 settimane, quick win: foto camere (1 giorno)
+- Dettagli: `archivio/PROMPT_RIPRESA_S21_20260312.md`
 
 ---
 
@@ -86,10 +92,10 @@ PARCHEGGIATO:
 
 | Cosa | Dove |
 |------|------|
-| **NORD.md** | ROOT progetto (aggiornato S21) |
-| **Routing Rules Research** | `reports/RESEARCH_20260311_folio_routing_rules.md` |
-| **Routing UI Research** | `reports/RESEARCH_20260312_folio_routing_ui.md` |
-| **Split Folio Research** | `reports/RESEARCH_20260311_split_folio_pms_standards.md` |
+| **NORD.md** | ROOT progetto (aggiornato S21 checkpoint) |
+| **Phase 4b Research** | `reports/RESEARCH_20260312_folio_amount_splitting.md` |
+| **Guardiana Phase 4b Audit** | `reports/GUARDIANA_20260312_folio_phase4b_audit.md` |
+| **Scienziata Strategic Analysis** | `reports/SCIENTIST_20260312_strategic_analysis.md` |
 | **IDEAS BIBLE** | `roadmaps/IDEAS_BIBLE_2026.md` |
 
 ---
@@ -99,43 +105,33 @@ PARCHEGGIATO:
 ```
 VM: miracollo-cervella (GCP), e2-small, RUNNING
 IP: 34.134.72.207 | SSL: auto-renew OK (31 Mag 2026)
-Deploy: GitHub Actions + pytest gate (649 test) + auto Docker prune
+Deploy: GitHub Actions + pytest gate + auto Docker prune
+  -> 3 deploy SUCCESS oggi (Phase 4b, audit fixes, Scontrino RT)
+  -> Backup ora con sqlite3 .backup (era cp)
 Backup: 2x/giorno + pre-deploy | Disco: 24%
-S19+S20 DEPLOYATI su VM | Migration 050+051+052 APPLICATA
+TUTTO DEPLOYATO: migration 048-053 + Phase 4a/4b/4c + Quality Sprint + Scontrino RT
 ```
 
 ---
 
 ## Lezioni Apprese (S21)
 
-### Funzionato bene
-- Phase 4c prima di 4b: UI rende la feature REALE ("SU CARTA != REALE")
-- Guardiana immediata dopo implementazione: 7 P3 trovati e 4 fixati subito
-- Dead code cleanup proattivo: parametro `folios` non usato -> rimosso
-- Quality Sprint parallelo: 3 worker (bookings/night_audit/payments) in contemporanea -> +85 test in un colpo
-- Ingegnera come consulente strategica: ha identificato il rischio #1 (5000 righe finanziarie senza test)
+- Pattern "implement -> audit -> fix -> commit" confermato (3 cicli, score 9.3-9.5)
+- Da monitorare: 23 str(e) residui, ~60% moduli senza test, reservation-tab-folio.js 1462 righe
 
-### Pattern confermato
-- Sezione collassabile per feature avanzate: non intrusiva per utente base
-- `_escFolio()` anche su dati "sicuri" (dateRange da toLocaleDateString): coerenza > ragionamento caso per caso
-- CSS classes vs inline styles: sempre preferire CSS dedicato
-- Test pattern: TestClient + helpers + autouse cleanup + pytest.skip per dati mancanti
+---
 
-### Da monitorare
-- `charge_source` e `priority` nel form routing: aggiungere quando utenti li chiedono
-- Phase 4b amount splitting: ricercare pattern Oracle Opera per amount_limit
-- Test coverage restante: planning, fiscal, receipts (3 moduli ancora senza test)
+## IL NUMERO CHIAVE (Scienziata)
 
+```
+Commissioni Booking.com NL: ~13.500 EUR/anno
+Risparmio con 50% diretto:   ~6.750 EUR/anno
+Costo Miracollo:                ~600 EUR/anno
+ROI per l'hotel:                 10x
+
+Pitch: "Risparmia 6.750 EUR/anno. Noi costiamo 1/10."
+```
+
+---
 
 *"Lavoriamo in pace! Senza casino! Dipende da noi!" - Cervella & Rafa, 12 Mar 2026*
-<!-- AUTO-CHECKPOINT-START -->
-## AUTO-CHECKPOINT: 2026-03-12 07:28 (auto)
-- **Branch**: master
-- **Ultimo commit**: 66dfeb3 - test: Quality Sprint - +150 test per moduli finanziari critici
-- **File modificati** (5):
-  - ackend/routers/charges.py
-  - backend/routers/routing_rules.py
-  - backend/services/folio_routing.py
-  - backend/services/night_audit_service.py
-  - backend/database/migrations/053_folio_routing_amount_limit.sql
-<!-- AUTO-CHECKPOINT-END -->

@@ -54,7 +54,8 @@ The NL layer is where humans speak. The micro-language layer is where machines v
 
 ## The Demo
 
-![La Nonna Demo](demo/demo_la_nonna.gif)
+![La Nonna Demo -- guided mode](../demo/demo_la_nonna.gif)
+*The GIF shows guided mode (`lu demo`). The narrative below demonstrates NL mode (`lu chat --lang it`), where Maria types freely in Italian.*
 
 Maria starts by typing:
 

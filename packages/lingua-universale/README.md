@@ -94,7 +94,7 @@ lu repl               # interactive REPL
 
 ## CLI Reference
 
-The `lu` command ships with 7 subcommands:
+The `lu` command ships with 8 subcommands:
 
 | Command | Description |
 |---------|-------------|
@@ -104,7 +104,8 @@ The `lu` command ships with 7 subcommands:
 | `lu compile <file.lu>` | Show (or save with `-o`) the generated Python source |
 | `lu repl` | Start the interactive REPL with history |
 | `lu lsp` | Start the LSP server over STDIO (requires `pygls`) |
-| `lu version` | Show version and build information |
+| `lu chat` | Build protocols conversationally in natural language (3 languages) |
+| `lu demo` | Run the autonomous "La Nonna" demo with typewriter effect |
 
 ```bash
 # Check a file and see what was declared
@@ -114,6 +115,13 @@ lu check hello.lu
 
 # Compile to Python and save
 lu compile hello.lu -o hello.py
+
+# Chat: build protocols conversationally
+lu chat --lang it          # Italian (also: en, pt)
+lu chat --lang en --voice  # with voice input (requires [voice] extra)
+
+# Demo: see the full "La Nonna" demo
+lu demo --lang it --speed normal
 
 # LSP (install optional dep first)
 pip install "cervellaswarm-lingua-universale[lsp]"
@@ -160,7 +168,7 @@ Each step has editable, runnable code. No install required.
 
 ## Features
 
-- **25 modules**, 131 public API symbols
+- **28 modules**, 131+ public API symbols
 - **3312 tests**, 98% coverage, runs in under 1 second
 - **Zero dependencies** -- pure Python standard library
 - **Python 3.10+** including 3.13 free-threaded (thread-safe internals)
@@ -172,7 +180,7 @@ Each step has editable, runnable code. No install required.
 ## Architecture
 
 ```
-Lingua Universale v0.3.0 -- 25 modules, zero dependencies
+Lingua Universale v0.3.0 -- 28 modules, zero dependencies
 
 FASE A: Session Types
   types.py           14 MessageKind, 14 message dataclasses, 17 AgentRole
@@ -200,12 +208,17 @@ FASE C: Il Linguaggio (compiler pipeline)
   _grammar_export.py GBNF + Lark grammar export (constrained decoding)
   _eval.py           check_source / run_source / verify_source
   _repl.py           Interactive REPL with history and error recovery
-  _cli.py            lu command: 7 subcommands
+  _cli.py            lu command: 8 subcommands (incl. chat, demo)
   errors.py          74 error codes, 3 locales (en/it/pt), rich snippets
   _colors.py         ANSI colors respecting NO_COLOR / FORCE_COLOR
 
 FASE D: Ecosistema
   _lsp.py            Language Server Protocol (STDIO, requires pygls)
+
+FASE E: Per Tutti (IntentBridge)
+  _intent_bridge.py  NL/guided -> IntentDraft -> verified protocol (3 languages)
+  _nl_processor.py   Claude-powered NL intent extraction (optional: anthropic)
+  _voice.py          Voice input via faster-whisper STT (optional: sounddevice)
 ```
 
 ---
@@ -379,6 +392,8 @@ print(report.all_proved)  # True -- mathematically proven
 | Confidence types | No | No | No | **Yes** (`Confident[T]`) |
 | Trust composition | No | No | No | **Yes** (transitive) |
 | REPL + LSP (hover, completion, goto-def) | No | No | No | **Yes** |
+| NL protocol building (chat) | No | No | No | **Yes** (3 languages) |
+| Voice input | No | No | No | **Yes** (local STT) |
 | Browser playground | No | No | No | **Yes** (Pyodide, $0) |
 | Interactive tutorial | No | No | No | **Yes** (24 steps) |
 | Constrained decoding export | No | No | No | **Yes** (GBNF + Lark) |

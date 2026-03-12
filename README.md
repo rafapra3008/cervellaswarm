@@ -6,7 +6,7 @@
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![PyPI Packages](https://img.shields.io/badge/PyPI-9_packages-orange.svg)](https://pypi.org/search/?q=cervellaswarm)
-[![Tests: 5221 passing](https://img.shields.io/badge/tests-5221_passing-brightgreen.svg)](packages/)
+[![Tests: 6612 passing](https://img.shields.io/badge/tests-6612_passing-brightgreen.svg)](packages/)
 [![Coverage: 95%](https://img.shields.io/badge/coverage-95%25-brightgreen.svg)](packages/)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-native-blueviolet.svg)](https://claude.ai/code)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rafapra3008/cervellaswarm/blob/main/docs/blog/from-vibecoding-to-vericoding-demo.ipynb)
@@ -55,7 +55,7 @@ Three things no other framework does:
 |---|---|
 | **Session Continuity** (SNCP) | Your team remembers project state, decisions, and context across sessions. Plain text, git-native, auditable. |
 | **Hierarchical Orchestration** | Queen coordinates Guardians who oversee Workers. 3+ levels, not flat. |
-| **Hook System** | 15+ lifecycle hooks (pre-session, post-commit, file guards). Quality gates are automatic, not optional. |
+| **Hook System** | 16 lifecycle hooks (pre-session, post-commit, file guards, observability). Quality gates are automatic, not optional. |
 
 ## Quick Start
 
@@ -122,7 +122,7 @@ All packages are on [PyPI](https://pypi.org/search/?q=cervellaswarm) -- install 
 
 Every package: Apache 2.0, Python 3.10+, tested, documented, zero or minimal dependencies.
 
-> **The crown jewel:** To our knowledge, `lingua-universale` is the first session type system for AI agent communication in Python. 25 modules, 2909 tests, ZERO external dependencies. [Try it in your browser](https://rafapra3008.github.io/cervellaswarm/) or [read the vision](packages/lingua-universale/NORD.md).
+> **The crown jewel:** To our knowledge, `lingua-universale` is the first session type system for AI agent communication in Python. 28 modules, 3312 tests, ZERO external dependencies. [Try it in your browser](https://rafapra3008.github.io/cervellaswarm/) or [read the vision](packages/lingua-universale/NORD.md).
 
 ## Try It Now
 
@@ -211,7 +211,7 @@ Built-in tree-sitter powered code understanding:
 |---|:---:|:---:|:---:|:---:|
 | Session memory (native) | **SNCP 4.0** | -- | -- | -- |
 | Agent hierarchy (3+ levels) | **Queen/Guardian/Worker** | Basic | Basic | Manual |
-| Hook system (lifecycle events) | **15+ hooks** | -- | -- | -- |
+| Hook system (lifecycle events) | **16 hooks** | -- | -- | -- |
 | Quality gates (built-in review) | **3 Guardians** | -- | -- | -- |
 | Claude Code native | **Yes** | -- | -- | -- |
 | Code intelligence (AST) | **Tree-sitter** | -- | -- | -- |
@@ -237,8 +237,8 @@ Built-in tree-sitter powered code understanding:
 ## Battle-Tested
 
 ```
-437+ sessions of daily use since December 2025
-5,221 tests passing across 13 packages (95% coverage)
+442+ sessions of daily use since December 2025
+6,612 tests passing across 9 packages (95%+ coverage)
 17 agents used daily across real production codebases
 9 packages published on PyPI, all Apache 2.0
 Built before multi-agent was a buzzword

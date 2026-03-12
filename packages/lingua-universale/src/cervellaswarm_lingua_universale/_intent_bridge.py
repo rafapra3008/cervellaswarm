@@ -1093,8 +1093,15 @@ class ChatSession:
         try:
             spec = parse_spec(spec_source)
             report = check_properties(protocol, spec)
-        except Exception:
-            # If spec parsing fails (e.g. unknown property), skip verification
+        except Exception as exc:
+            # Log but don't crash -- formal verification is critical pipeline
+            # Lesson: S442 BUG 1 hid spec format mismatch for 4 sessions
+            import warnings
+            warnings.warn(
+                f"Formal verification failed: {exc}. "
+                "This may indicate a spec format issue.",
+                stacklevel=2,
+            )
             report = None
 
         verify_output = self._render_verification(report, draft)

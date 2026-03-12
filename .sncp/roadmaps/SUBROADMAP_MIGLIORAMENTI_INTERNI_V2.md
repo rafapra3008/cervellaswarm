@@ -12,7 +12,7 @@
 +================================================================+
 |   PUNTO DI PARTENZA (S442):                                     |
 |                                                                  |
-|   17 agenti, 14+ hooks, 6514 test (0 collection errors!)       |
+|   17 agenti, 16 hooks, 6612 test (0 collection errors!)        |
 |   CLAUDE.md: ~151 righe (ottimizzato V1)                       |
 |   _SHARED_DNA: 131 righe (ottimizzato S442)                    |
 |   Context per subagent: ~13KB (era ~22KB, -40%)                 |
@@ -177,7 +177,7 @@ IMPATTO TOTALE S442:
   SNCP root: -61% (18 -> 7 entries)
   _SHARED_DNA: -18% (159 -> 131 righe)
   Hooks DRY: 8 hook su modulo comune + observability hook
-  Test: +605 recuperati + 58 nuovi observability (6604+ totali)
+  Test: +605 recuperati + 58 nuovi observability (6612 totali)
   Dead code: -42KB (hook .DISABLED archiviati)
   Observability: token tracking automatico per sessione
 ```

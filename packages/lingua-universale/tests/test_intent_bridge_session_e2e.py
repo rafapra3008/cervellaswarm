@@ -1335,11 +1335,7 @@ class TestPipelineSmokeWithProperties:
 
     def test_violation_demo_appears(self) -> None:
         """Protocol with no_deletion should trigger violation demo."""
-        _, output = _session(self.INPUTS)
-        session = _session(self.INPUTS)[0]
+        session, output = _session(self.INPUTS)
         session.run()
-        # Re-run to check output
-        session2, output2 = _session(self.INPUTS)
-        session2.run()
-        combined = " ".join(output2)
+        combined = " ".join(output)
         assert "VIOLATION" in combined or "VIOLAT" in combined
