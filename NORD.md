@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 12 Marzo 2026 - S443 (E.1-E.5 DONE, CI fix + publish consolidation)
+> Aggiornato: 12 Marzo 2026 - S444 (E.6 T3.1+T3.3+T3.4 DONE, 3355 test, CLI 10 cmd)
 
 ```
 +==================================================================+
@@ -147,9 +147,10 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |   FASE D: L'ECOSISTEMA -- COMPLETA! (S426-S435)                  |
 |     D1-D6 DONE! Media 9.5/10                                    |
 |   FASE E: PER TUTTI -- IN PROGRESS (S438+)                      |
-|     E.1-E.4 DONE! E.5 La Nonna Demo DONE (9.5/10, S443)        |
+|     E.1-E.5 DONE! (9.5/10)                                     |
+|     E.6 CervellaLang 1.0: T3.1+T3.3+T3.4 DONE (S444)          |
 |   PyPI: v0.3.0 LIVE! pip install cervellaswarm-lingua-universale|
-|   28 moduli, 3312 test, 9 PropertyKind, ZERO deps core         |
+|   29 moduli, 3355 test, 10 CLI cmd, 9 PropertyKind, ZERO deps  |
 |                                                                  |
 |   VISIONE (S442 - Rafa):                                        |
 |   "Un giorno le AI sviluppano CON Lingua Universale."           |
