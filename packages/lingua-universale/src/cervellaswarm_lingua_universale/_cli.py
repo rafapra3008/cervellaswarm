@@ -91,9 +91,19 @@ def _cmd_verify(args: argparse.Namespace) -> int:
     """Handle ``lu verify <file>``."""
     result = verify_file(args.file)
     _print_result(result)
-    if result.ok:
-        for line in result.verification:
+    for line in result.verification:
+        if line.startswith("  All") and "PASSED" in line:
+            print(f"  {_c.GREEN}{_c.BOLD}{line}{_c.RESET}")
+        elif "VIOLATED." in line:
+            print(f"  {_c.RED}{_c.BOLD}{line}{_c.RESET}")
+        elif "PROVED" in line or "SATISFIED" in line:
+            print(f"  {_c.GREEN}{line}{_c.RESET}")
+        elif "VIOLATED" in line:
+            print(f"  {_c.RED}{line}{_c.RESET}")
+        elif "SKIPPED" in line:
             print(f"  {_c.YELLOW}{line}{_c.RESET}")
+        else:
+            print(f"  {_c.CYAN}{line}{_c.RESET}")
     return 0 if result.ok else 1
 
 

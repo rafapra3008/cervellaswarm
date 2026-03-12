@@ -51,10 +51,17 @@ class TestLuFilesParse:
         assert result.ok, f"{name} run failed: {result.errors}"
         assert result.module is not None
 
-    @pytest.mark.parametrize("name", ["hello.lu", "confidence.lu", "multiagent.lu", "ricette.lu"])
+    @pytest.mark.parametrize("name", ["hello.lu", "confidence.lu", "ricette.lu"])
     def test_verify_file_ok(self, name: str) -> None:
         result = verify_file(EXAMPLES / name)
         assert result.ok, f"{name} verify failed: {result.errors}"
+
+    def test_verify_multiagent_has_property_reports(self) -> None:
+        """multiagent.lu has property violations (all_roles_participate)."""
+        result = verify_file(EXAMPLES / "multiagent.lu")
+        assert result.compiled is not None
+        assert len(result.verification) > 0
+        assert result.property_reports
 
     def test_errors_lu_fails(self) -> None:
         """errors.lu must fail compilation with a meaningful error."""

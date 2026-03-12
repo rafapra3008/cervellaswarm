@@ -278,3 +278,255 @@ class TestRunFile:
     def test_invalid_file(self, bad_lu: Path) -> None:
         r = run_file(bad_lu)
         assert r.ok is False
+
+
+# ============================================================
+# T3.4: Property verification in verify_source (S444)
+# ============================================================
+
+
+class TestVerifyProperties:
+    """Tests for static property checking in verify_source."""
+
+    def test_verify_proves_basic_properties(self) -> None:
+        """Protocol with basic properties should show PROVED."""
+        src = """\
+protocol Safe:
+    roles: user, system
+
+    user asks system to do task
+    system returns result to user
+
+    properties:
+        always terminates
+        no deadlock
+        no deletion
+        all roles participate
+"""
+        r = verify_source(src)
+        assert r.ok is True
+        assert r.property_reports
+        report = r.property_reports[0]
+        assert report.protocol_name == "Safe"
+        assert len(report.results) == 4
+        for result in report.results:
+            assert result.verdict.name == "PROVED"
+
+    def test_verify_no_properties(self) -> None:
+        """Protocol without properties should still verify OK."""
+        src = """\
+protocol NoProps:
+    roles: a, b
+
+    a asks b to do task
+"""
+        r = verify_source(src)
+        assert r.ok is True
+        assert any("No properties" in line for line in r.verification)
+
+    def test_verify_violated_all_roles_participate(self) -> None:
+        """Protocol with unused roles should VIOLATE all_roles_participate."""
+        src = """\
+protocol Broken:
+    roles: alice, bob, charlie
+
+    alice asks bob to do task
+    bob returns result to alice
+
+    properties:
+        all roles participate
+"""
+        r = verify_source(src)
+        assert r.ok is False
+        report = r.property_reports[0]
+        assert report.results[0].verdict.name == "VIOLATED"
+        assert "charlie" in report.results[0].evidence
+
+    def test_verify_ordering_skipped_for_role_names(self) -> None:
+        """ORDERING with role names (not MessageKind) is SKIPPED."""
+        src = """\
+protocol Order:
+    roles: a, b
+
+    a asks b to do task
+
+    properties:
+        a before b
+"""
+        r = verify_source(src)
+        assert r.ok is True
+        report = r.property_reports[0]
+        assert report.results[0].verdict.name == "SKIPPED"
+
+    def test_verify_confidence_skipped(self) -> None:
+        """CONFIDENCE_MIN is runtime-only, should be SKIPPED."""
+        src = """\
+protocol Conf:
+    roles: a, b
+
+    a asks b to do task
+
+    properties:
+        confidence >= high
+"""
+        r = verify_source(src)
+        assert r.ok is True
+        report = r.property_reports[0]
+        assert report.results[0].verdict.name == "SKIPPED"
+
+    def test_verify_mixed_results(self) -> None:
+        """Mix of PROVED and VIOLATED properties."""
+        src = """\
+protocol Mixed:
+    roles: a, b, c
+
+    a asks b to do task
+
+    properties:
+        always terminates
+        all roles participate
+"""
+        r = verify_source(src)
+        assert r.ok is False
+        report = r.property_reports[0]
+        assert report.results[0].verdict.name == "PROVED"
+        assert report.results[1].verdict.name == "VIOLATED"
+
+    def test_verify_no_deletion_proved(self) -> None:
+        """no_deletion property should be PROVED for safe protocol."""
+        src = """\
+protocol DataSafe:
+    roles: user, db
+
+    user asks db to do task
+    db returns result to user
+
+    properties:
+        no deletion
+"""
+        r = verify_source(src)
+        assert r.ok is True
+        report = r.property_reports[0]
+        assert report.results[0].verdict.name == "PROVED"
+        assert report.results[0].spec.kind.value == "no_deletion"
+
+    def test_verify_role_exclusive_skipped(self) -> None:
+        """ROLE_EXCLUSIVE with identifier names is SKIPPED."""
+        src = """\
+protocol Audit:
+    roles: auditor, system
+
+    auditor tells system verdict
+
+    properties:
+        auditor exclusive verdict
+"""
+        r = verify_source(src)
+        assert r.ok is True
+        report = r.property_reports[0]
+        assert report.results[0].verdict.name == "SKIPPED"
+
+    def test_verify_all_nine_properties(self) -> None:
+        """Verify protocol with all 9 property kinds and expected verdicts."""
+        src = """\
+protocol Full:
+    roles: a, b
+
+    a asks b to do task
+    b returns result to a
+
+    properties:
+        always terminates
+        no deadlock
+        no deletion
+        all roles participate
+        confidence >= medium
+        trust >= standard
+        a before b
+        b cannot send audit
+        a exclusive review
+"""
+        r = verify_source(src)
+        assert r.property_reports
+        report = r.property_reports[0]
+        assert len(report.results) == 9
+        # Build kind→verdict map for precise assertions
+        kind_verdict = {
+            res.spec.kind.value: res.verdict.name for res in report.results
+        }
+        # Structural properties: PROVED for well-formed 2-role protocol
+        assert kind_verdict["always_terminates"] == "PROVED"
+        assert kind_verdict["no_deadlock"] == "PROVED"
+        assert kind_verdict["no_deletion"] == "PROVED"
+        assert kind_verdict["all_roles_participate"] == "PROVED"
+        # Runtime-only: confidence is SKIPPED, trust is statically checkable
+        assert kind_verdict["confidence_min"] == "SKIPPED"
+        assert kind_verdict["trust_min"] == "PROVED"
+        # Identifier-name params: SKIPPED (not resolvable to MessageKind)
+        assert kind_verdict["ordering"] == "SKIPPED"
+        assert kind_verdict["exclusion"] == "SKIPPED"
+        assert kind_verdict["role_exclusive"] == "SKIPPED"
+
+    def test_verify_choice_node_protocol(self) -> None:
+        """Protocol with choice branches should include branch steps in checking."""
+        src = """\
+protocol WithChoice:
+    roles: manager, worker, auditor
+
+    manager asks worker to do task
+    when manager decides:
+        approve:
+            worker returns result to manager
+            manager asks auditor to verify
+        reject:
+            manager tells worker rejection
+
+    properties:
+        all roles participate
+"""
+        r = verify_source(src)
+        assert r.property_reports
+        report = r.property_reports[0]
+        assert report.protocol_name == "WithChoice"
+        # All 3 roles appear across branches, so should PROVE
+        assert report.results[0].verdict.name == "PROVED"
+
+    def test_verify_output_format(self) -> None:
+        """Verification output contains expected format."""
+        src = """\
+protocol Fmt:
+    roles: a, b
+
+    a asks b to do task
+
+    properties:
+        always terminates
+"""
+        r = verify_source(src)
+        assert any("[1/1]" in line for line in r.verification)
+        assert any("PROVED" in line for line in r.verification)
+        assert any("PASSED" in line for line in r.verification)
+
+    def test_verify_multiple_protocols(self) -> None:
+        """File with 2 protocols gets 2 property reports."""
+        src = """\
+protocol First:
+    roles: a, b
+
+    a asks b to do task
+
+    properties:
+        always terminates
+
+protocol Second:
+    roles: x, y
+
+    x asks y to do task
+
+    properties:
+        no deadlock
+"""
+        r = verify_source(src)
+        assert len(r.property_reports) == 2
+        assert r.property_reports[0].protocol_name == "First"
+        assert r.property_reports[1].protocol_name == "Second"
