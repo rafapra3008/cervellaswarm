@@ -1,0 +1,57 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: Data - CRUD Safe
+# Safe data operations protocol with the no_deletion property.
+# Supports create, read, and update operations but mathematically
+# guarantees that no destructive delete can occur. Essential for
+# audit logs, financial records, and compliance-critical systems.
+
+type Operation = Create | Read | Update
+
+type Record =
+    id: String
+    data: String
+    version: Number
+    created_at: Number
+
+type OperationResult =
+    success: Boolean
+    record: String
+    message: String
+
+agent DataClient:
+    role: client
+    trust: standard
+    accepts: OperationResult
+    produces: Record
+    requires: operation.valid
+    ensures: request.sent
+
+agent DataStore:
+    role: store
+    trust: trusted
+    accepts: Record
+    produces: OperationResult
+    requires: record.received
+    ensures: operation.applied
+
+agent AuditLogger:
+    role: auditor
+    trust: verified
+    accepts: OperationResult
+    produces: OperationResult
+    requires: operation.logged
+    ensures: audit.complete
+
+protocol CrudSafe:
+    roles: client, store, auditor
+
+    client asks store to process operation
+    store returns result to client
+    store sends audit entry to auditor
+    auditor returns confirmation to store
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+        no deletion

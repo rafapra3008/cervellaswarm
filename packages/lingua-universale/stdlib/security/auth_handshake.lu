@@ -1,0 +1,66 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: Security - Authentication Handshake
+# OAuth 2.0-inspired authentication protocol with three roles. A client
+# authenticates with an auth server, receives a token, then accesses a
+# resource server. Based on Scribble project's OAuth example. Ordering
+# guarantees the client MUST authenticate before accessing resources.
+# Demonstrates exclusion: the client cannot issue tokens (only auth can).
+
+type AuthMethod = Password | OAuth | ApiKey | Certificate
+
+type AuthRequest =
+    client_id: String
+    method: AuthMethod
+    credentials: String
+
+type AuthToken =
+    token: String
+    expires_in: Number
+    scope: String
+
+type ResourceResponse =
+    data: String
+    status: String
+    request_id: String
+
+agent AuthClient:
+    role: client
+    trust: standard
+    accepts: ResourceResponse
+    produces: AuthRequest
+    requires: credentials.valid
+    ensures: token.received
+
+agent AuthenticationServer:
+    role: auth
+    trust: verified
+    accepts: AuthRequest
+    produces: AuthToken
+    requires: credentials.verified
+    ensures: token.signed
+
+agent ProtectedResource:
+    role: resource
+    trust: trusted
+    accepts: AuthToken
+    produces: ResourceResponse
+    requires: token.valid
+    ensures: response.authorized
+
+protocol AuthHandshake:
+    roles: client, auth, resource
+
+    client asks auth to authenticate
+    when auth decides:
+        granted:
+            auth returns token to client
+            client asks resource to access protected data
+            resource returns response to client
+        denied:
+            auth returns rejection to client
+
+    properties:
+        always terminates
+        no deadlock
+        auth before resource
+        client cannot send token

@@ -20,6 +20,37 @@ from textwrap import dedent
 
 
 # ============================================================
+# Standard Library template support
+# ============================================================
+
+_STDLIB_DIR = Path(__file__).resolve().parent.parent.parent / "stdlib"
+
+
+def list_templates() -> list[str]:
+    """Return available stdlib template names (e.g. 'rag_pipeline')."""
+    templates: list[str] = []
+    if not _STDLIB_DIR.is_dir():
+        return templates
+    for category_dir in sorted(_STDLIB_DIR.iterdir()):
+        if category_dir.is_dir() and not category_dir.name.startswith("."):
+            for lu_file in sorted(category_dir.glob("*.lu")):
+                templates.append(lu_file.stem)
+    return templates
+
+
+def _find_template(template_name: str) -> Path | None:
+    """Find a stdlib template .lu file by name."""
+    if not _STDLIB_DIR.is_dir():
+        return None
+    for category_dir in _STDLIB_DIR.iterdir():
+        if category_dir.is_dir():
+            candidate = category_dir / f"{template_name}.lu"
+            if candidate.exists():
+                return candidate
+    return None
+
+
+# ============================================================
 # Templates
 # ============================================================
 
@@ -100,6 +131,7 @@ def init_project(
     target_dir: Path | None = None,
     minimal: bool = False,
     force: bool = False,
+    template: str | None = None,
 ) -> list[Path]:
     """Create a new LU project directory with scaffolding files.
 
@@ -108,13 +140,16 @@ def init_project(
         target_dir: Parent directory. Defaults to current working directory.
         minimal: If True, only create the .lu file (no README/test).
         force: If True, overwrite existing files.
+        template: If provided, copy a stdlib template instead of generating
+            a default skeleton. Use :func:`list_templates` to see options.
 
     Returns:
         List of created file paths.
 
     Raises:
         FileExistsError: If the project directory is non-empty and force=False.
-        ValueError: If name is empty or contains invalid characters.
+        ValueError: If name is empty, contains invalid characters,
+            or template not found.
     """
     stripped = name.replace("-", "").replace("_", "")
     if not name or not stripped.isalnum() or not stripped[0].isalpha():
@@ -123,6 +158,18 @@ def init_project(
             "Must start with a letter and contain only "
             "alphanumeric characters, hyphens, or underscores."
         )
+
+    # Resolve stdlib template if requested
+    template_content: str | None = None
+    if template is not None:
+        template_path = _find_template(template)
+        if template_path is None:
+            available = ", ".join(list_templates()) or "(none found)"
+            raise ValueError(
+                f"Template {template!r} not found. "
+                f"Available: {available}"
+            )
+        template_content = template_path.read_text(encoding="utf-8")
 
     base = (target_dir or Path.cwd()) / name
     created: list[Path] = []
@@ -138,11 +185,14 @@ def init_project(
 
     # Main protocol file
     lu_file = base / f"{name}.lu"
-    lu_file.write_text(_template_protocol(name), encoding="utf-8")
+    lu_file.write_text(
+        template_content if template_content else _template_protocol(name),
+        encoding="utf-8",
+    )
     created.append(lu_file)
 
     if not minimal:
-        # Test file
+        # Test file (always generated, not from template)
         test_file = base / f"{name}_test.lu"
         test_file.write_text(_template_test(name), encoding="utf-8")
         created.append(test_file)

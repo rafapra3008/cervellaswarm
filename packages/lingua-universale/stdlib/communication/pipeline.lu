@@ -1,0 +1,62 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: Communication - Pipeline
+# Sequential processing chain. Data flows through ordered stages,
+# each transforming it before passing to the next. Used in ETL,
+# build systems, and data processing. Demonstrates ordering properties:
+# each stage MUST complete before the next begins.
+
+type DataFormat = Raw | Cleaned | Transformed | Final
+
+type DataPacket =
+    id: String
+    content: String
+    format: DataFormat
+    size: Number
+
+agent DataSource:
+    role: source
+    trust: standard
+    accepts: DataPacket
+    produces: DataPacket
+    requires: data.available
+    ensures: data.emitted
+
+agent DataProcessor:
+    role: processor
+    trust: standard
+    accepts: DataPacket
+    produces: DataPacket
+    requires: data.received
+    ensures: data.cleaned
+
+agent DataTransformer:
+    role: transformer
+    trust: standard
+    accepts: DataPacket
+    produces: DataPacket
+    requires: data.cleaned
+    ensures: data.transformed
+
+agent DataSink:
+    role: sink
+    trust: trusted
+    accepts: DataPacket
+    produces: DataPacket
+    requires: data.transformed
+    ensures: data.stored
+
+protocol Pipeline:
+    roles: source, processor, transformer, sink
+
+    source sends raw data to processor
+    processor sends cleaned data to transformer
+    transformer sends final result to sink
+    sink returns confirmation to source
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+        source before processor
+        processor before transformer
+        transformer before sink

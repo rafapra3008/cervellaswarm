@@ -1,0 +1,57 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: Data - Data Synchronization
+# Database replication protocol with three roles. A primary writes data,
+# replicates to a secondary, and a monitor verifies consistency.
+# Demonstrates ordering: write must complete before replication begins.
+
+type SyncStatus = Synced | Pending | Conflict | Failed
+
+type WriteOperation =
+    key: String
+    value: String
+    version: Number
+    timestamp: Number
+
+type SyncAck =
+    key: String
+    version: Number
+    status: SyncStatus
+
+agent PrimaryNode:
+    role: primary
+    trust: trusted
+    accepts: SyncAck
+    produces: WriteOperation
+    requires: write.valid
+    ensures: data.written
+
+agent SecondaryNode:
+    role: replica
+    trust: standard
+    accepts: WriteOperation
+    produces: SyncAck
+    requires: replication.received
+    ensures: data.applied
+
+agent ConsistencyMonitor:
+    role: monitor
+    trust: verified
+    accepts: WriteOperation
+    produces: SyncAck
+    requires: sync.complete
+    ensures: consistency.verified
+
+protocol DataSync:
+    roles: primary, replica, monitor
+
+    primary sends write operation to replica
+    replica returns sync acknowledgment to primary
+    primary asks monitor to verify consistency
+    monitor returns verification result to primary
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+        primary before replica
+        replica before monitor

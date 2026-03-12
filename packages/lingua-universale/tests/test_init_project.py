@@ -156,6 +156,32 @@ class TestInitProject:
         created = init_project("empty", target_dir=tmp_path)
         assert len(created) == 3
 
+    def test_template_creates_stdlib_content(self, tmp_path: Path) -> None:
+        created = init_project("my-rag", target_dir=tmp_path, template="rag_pipeline")
+        lu_file = tmp_path / "my-rag" / "my-rag.lu"
+        assert lu_file.exists()
+        content = lu_file.read_text()
+        assert "RagPipeline" in content
+        assert "retriever" in content
+
+    def test_template_verifies(self, tmp_path: Path) -> None:
+        from cervellaswarm_lingua_universale._eval import verify_source
+        init_project("my-tpl", target_dir=tmp_path, template="crud_safe")
+        src = (tmp_path / "my-tpl" / "my-tpl.lu").read_text()
+        r = verify_source(src)
+        assert r.ok
+
+    def test_template_not_found_raises(self, tmp_path: Path) -> None:
+        with pytest.raises(ValueError, match="not found"):
+            init_project("bad", target_dir=tmp_path, template="nonexistent_proto")
+
+    def test_list_templates_returns_twenty(self) -> None:
+        from cervellaswarm_lingua_universale._init_project import list_templates
+        templates = list_templates()
+        assert len(templates) == 20
+        assert "rag_pipeline" in templates
+        assert "two_buyer" in templates
+
 
 # ============================================================
 # CLI integration
@@ -209,3 +235,43 @@ class TestInitCli:
         assert result == 1
         captured = capsys.readouterr()
         assert "not empty" in captured.err
+
+    def test_cli_init_template(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture) -> None:
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.setenv("NO_COLOR", "1")
+        from cervellaswarm_lingua_universale._cli import main
+        result = main(["init", "my-rag", "--template", "rag_pipeline"])
+        assert result == 0
+        lu_file = tmp_path / "my-rag" / "my-rag.lu"
+        assert lu_file.exists()
+        content = lu_file.read_text()
+        assert "RagPipeline" in content
+        captured = capsys.readouterr()
+        assert "template" in captured.out
+
+    def test_cli_init_template_not_found(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture) -> None:
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.setenv("NO_COLOR", "1")
+        from cervellaswarm_lingua_universale._cli import main
+        result = main(["init", "my-fake", "--template", "nonexistent"])
+        assert result == 1
+        captured = capsys.readouterr()
+        assert "not found" in captured.err
+
+    def test_cli_list_templates(self, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture) -> None:
+        monkeypatch.setenv("NO_COLOR", "1")
+        from cervellaswarm_lingua_universale._cli import main
+        result = main(["init", "--list-templates"])
+        assert result == 0
+        captured = capsys.readouterr()
+        assert "rag_pipeline" in captured.out
+        assert "two_buyer" in captured.out
+        assert "20" in captured.out
+
+    def test_cli_init_no_name(self, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture) -> None:
+        monkeypatch.setenv("NO_COLOR", "1")
+        from cervellaswarm_lingua_universale._cli import main
+        result = main(["init"])
+        assert result == 1
+        captured = capsys.readouterr()
+        assert "required" in captured.err

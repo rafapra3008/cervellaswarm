@@ -6,6 +6,7 @@ build/
 
 # Data directory (operational data, logs, database, retro reports)
 data/
+!packages/lingua-universale/stdlib/data/
 *.db
 *.sqlite
 

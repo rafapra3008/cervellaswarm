@@ -1,0 +1,70 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: AI/ML - Agent Delegation
+# Supervisor-worker pattern with trust verification. A supervisor
+# assigns tasks, a worker executes them, and a validator verifies
+# the results. Inspired by CrewAI/AutoGen patterns, but with formal
+# guarantees. Demonstrates ordering and trust properties.
+
+type TaskComplexity = Simple | Moderate | Complex | Critical
+
+type AgentTask =
+    id: String
+    description: String
+    complexity: TaskComplexity
+    deadline: String
+
+type AgentResult =
+    task_id: String
+    output: String
+    confidence: Number
+    steps_taken: Number
+
+type ValidationVerdict =
+    task_id: String
+    passed: Boolean
+    score: Number
+    feedback: String
+
+agent TaskSupervisor:
+    role: supervisor
+    trust: trusted
+    accepts: ValidationVerdict
+    produces: AgentTask
+    requires: task.defined
+    ensures: delegation.tracked
+
+agent TaskWorker:
+    role: worker
+    trust: standard
+    accepts: AgentTask
+    produces: AgentResult
+    requires: task.received
+    ensures: result.produced
+
+agent ResultValidator:
+    role: validator
+    trust: verified
+    accepts: AgentResult
+    produces: ValidationVerdict
+    requires: result.received
+    ensures: verdict.justified
+
+protocol AgentDelegation:
+    roles: supervisor, worker, validator
+
+    supervisor asks worker to execute task
+    worker returns result to supervisor
+    supervisor asks validator to verify result
+    when validator decides:
+        pass:
+            validator returns approval to supervisor
+        fail:
+            validator returns feedback to supervisor
+            supervisor tells worker revise task
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+        worker before validator
+        trust >= standard

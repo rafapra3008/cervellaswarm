@@ -1,0 +1,61 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: AI/ML - RAG Pipeline
+# Retrieval-Augmented Generation protocol. A user sends a query, a
+# retriever searches relevant documents, and a generator produces an
+# answer grounded in the retrieved context. The most widely used AI
+# pattern today, verified as a session type for the first time.
+
+type RelevanceScore = High | Medium | Low
+
+type Query =
+    text: String
+    max_results: Number
+    language: String
+
+type RetrievedDocument =
+    content: String
+    source: String
+    relevance: RelevanceScore
+    score: Number
+
+type GeneratedAnswer =
+    text: String
+    sources: List[String]
+    confidence: Number
+
+agent QueryUser:
+    role: user
+    trust: standard
+    accepts: GeneratedAnswer
+    produces: Query
+    requires: query.valid
+    ensures: answer.received
+
+agent DocumentRetriever:
+    role: retriever
+    trust: trusted
+    accepts: Query
+    produces: RetrievedDocument
+    requires: index.available
+    ensures: documents.relevant
+
+agent AnswerGenerator:
+    role: generator
+    trust: trusted
+    accepts: RetrievedDocument
+    produces: GeneratedAnswer
+    requires: context.provided
+    ensures: answer.grounded
+
+protocol RagPipeline:
+    roles: user, retriever, generator
+
+    user asks retriever to search documents
+    retriever sends context to generator
+    generator returns answer to user
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+        retriever before generator

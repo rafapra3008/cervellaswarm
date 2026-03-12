@@ -1,0 +1,64 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: Business - Approval Workflow
+# Multi-level approval protocol with role-exclusive decision making.
+# A requester submits a request, an approver makes the decision, and
+# a notifier records the outcome. The role_exclusive property guarantees
+# that ONLY the approver can make the approval decision.
+
+type ApprovalStatus = Pending | Approved | Rejected | Escalated
+
+type ApprovalRequest =
+    id: String
+    description: String
+    amount: Number
+    requester_name: String
+
+type ApprovalDecision =
+    id: String
+    status: ApprovalStatus
+    reason: String
+    approver_name: String
+
+agent RequestSubmitter:
+    role: requester
+    trust: standard
+    accepts: ApprovalDecision
+    produces: ApprovalRequest
+    requires: request.valid
+    ensures: request.submitted
+
+agent DecisionMaker:
+    role: approver
+    trust: verified
+    accepts: ApprovalRequest
+    produces: ApprovalDecision
+    requires: request.reviewed
+    ensures: decision.justified
+
+agent OutcomeNotifier:
+    role: notifier
+    trust: standard
+    accepts: ApprovalDecision
+    produces: ApprovalDecision
+    requires: decision.made
+    ensures: notification.sent
+
+protocol ApprovalWorkflow:
+    roles: requester, approver, notifier
+
+    requester asks approver to review request
+    when approver decides:
+        approve:
+            approver returns approval to requester
+            approver sends approval notice to notifier
+            notifier returns confirmation to approver
+        reject:
+            approver returns rejection to requester
+            approver sends rejection notice to notifier
+            notifier returns confirmation to approver
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+        approver exclusive decision

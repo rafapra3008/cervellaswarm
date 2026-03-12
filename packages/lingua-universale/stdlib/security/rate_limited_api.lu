@@ -1,0 +1,67 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: Security - Rate Limited API
+# API protection protocol with rate limiting. A client sends a request,
+# a rate limiter checks the quota, and decides whether to allow or
+# throttle the request. The role_exclusive property guarantees that
+# ONLY the rate limiter can make throttling decisions.
+
+type ThrottleAction = Allow | Throttle | Block
+
+type ApiRequest =
+    endpoint: String
+    method: String
+    client_id: String
+    timestamp: Number
+
+type RateLimitInfo =
+    remaining: Number
+    limit: Number
+    reset_at: Number
+    action: ThrottleAction
+
+type ApiResponse =
+    status: Number
+    body: String
+    rate_limit: String
+
+agent ApiClient:
+    role: client
+    trust: standard
+    accepts: ApiResponse
+    produces: ApiRequest
+    requires: request.formed
+    ensures: response.handled
+
+agent RateLimiterGate:
+    role: limiter
+    trust: verified
+    accepts: ApiRequest
+    produces: RateLimitInfo
+    requires: quota.checked
+    ensures: decision.enforced
+
+agent ApiBackend:
+    role: backend
+    trust: trusted
+    accepts: ApiRequest
+    produces: ApiResponse
+    requires: request.authorized
+    ensures: response.sent
+
+protocol RateLimitedApi:
+    roles: client, limiter, backend
+
+    client asks limiter to check rate limit
+    when limiter decides:
+        allow:
+            limiter sends request to backend
+            backend returns response to client
+            backend sends usage update to limiter
+            limiter returns rate info to client
+        throttle:
+            limiter returns rate limit exceeded to client
+
+    properties:
+        always terminates
+        no deadlock
+        limiter exclusive decision

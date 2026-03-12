@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: Communication - Request/Response
+# The most fundamental communication pattern. A client sends a request
+# and a server returns a response. Foundation of HTTP, RPC, and most APIs.
+
+type RequestStatus = Pending | Processing | Complete | Failed
+
+type Request =
+    id: String
+    payload: String
+    priority: String
+
+type Response =
+    id: String
+    result: String
+    status: RequestStatus
+
+agent ClientAgent:
+    role: client
+    trust: standard
+    accepts: Response
+    produces: Request
+    requires: request.valid
+    ensures: request.sent
+
+agent ServerAgent:
+    role: server
+    trust: trusted
+    accepts: Request
+    produces: Response
+    requires: request.received
+    ensures: response.complete
+
+protocol RequestResponse:
+    roles: client, server
+
+    client asks server to process request
+    server returns response to client
+
+    properties:
+        always terminates
+        no deadlock

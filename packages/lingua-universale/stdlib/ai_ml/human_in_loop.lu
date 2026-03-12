@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: AI/ML - Human in the Loop
+# AI safety protocol with role-exclusive human decision making.
+# An agent proposes an action, a human reviews and decides, and a
+# logger records the outcome. The role_exclusive property MATHEMATICALLY
+# guarantees that only the human can make approval decisions.
+
+type RiskLevel = Critical | High | Medium | Low
+
+type Proposal =
+    action: String
+    description: String
+    risk: RiskLevel
+    rationale: String
+
+type HumanDecision =
+    approved: Boolean
+    modifications: String
+    reason: String
+
+type AuditEntry =
+    action: String
+    decision: String
+    reviewer: String
+    timestamp: Number
+
+agent AIAgent:
+    role: agent
+    trust: standard
+    accepts: HumanDecision
+    produces: Proposal
+    requires: action.planned
+    ensures: proposal.clear
+
+agent HumanReviewer:
+    role: human
+    trust: verified
+    accepts: Proposal
+    produces: HumanDecision
+    requires: proposal.received
+    ensures: decision.informed
+
+agent DecisionLogger:
+    role: logger
+    trust: trusted
+    accepts: AuditEntry
+    produces: AuditEntry
+    requires: decision.made
+    ensures: record.immutable
+
+protocol HumanInLoop:
+    roles: agent, human, logger
+
+    agent proposes action to human
+    when human decides:
+        approve:
+            human returns approval to agent
+            human sends audit record to logger
+            logger returns confirmation to human
+        modify:
+            human tells agent apply modifications
+            agent proposes revised action to human
+            human returns approval to agent
+            human sends audit record to logger
+            logger returns confirmation to human
+        reject:
+            human returns rejection to agent
+            human sends audit record to logger
+            logger returns confirmation to human
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+        human exclusive decision

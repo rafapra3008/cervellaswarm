@@ -1,0 +1,69 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: Business - Saga Order Protocol
+# Distributed transaction pattern for microservices. An order flows
+# through payment and inventory services with compensation on failure.
+# Demonstrates session types for distributed transactions: deadlock-freedom
+# and correct ordering are GUARANTEED BY CONSTRUCTION.
+# Note: LU 1.0 supports single-level choice; the saga forward path
+# is modeled as a sequential flow with a single decision point.
+
+type OrderStatus = Created | Paid | Fulfilled | Compensated | Failed
+
+type OrderRequest =
+    order_id: String
+    customer: String
+    total: Number
+    items: List[String]
+
+type PaymentResult =
+    order_id: String
+    transaction_id: String
+    status: String
+    amount: Number
+
+type InventoryResult =
+    order_id: String
+    reserved: Boolean
+    items: List[String]
+
+agent OrderCoordinator:
+    role: coordinator
+    trust: trusted
+    accepts: PaymentResult
+    produces: OrderRequest
+    requires: order.valid
+    ensures: saga.complete
+
+agent PaymentProcessor:
+    role: payment
+    trust: verified
+    accepts: OrderRequest
+    produces: PaymentResult
+    requires: amount.positive
+    ensures: transaction.recorded
+
+agent InventoryManager:
+    role: inventory
+    trust: standard
+    accepts: OrderRequest
+    produces: InventoryResult
+    requires: items.available
+    ensures: stock.updated
+
+protocol SagaOrder:
+    roles: coordinator, payment, inventory
+
+    coordinator asks payment to charge order
+    when payment decides:
+        success:
+            payment returns confirmation to coordinator
+            coordinator asks inventory to reserve items
+            inventory returns reservation to coordinator
+        failure:
+            payment returns error to coordinator
+            coordinator tells inventory cancel reservation
+
+    properties:
+        always terminates
+        no deadlock
+        coordinator before payment

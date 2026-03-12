@@ -143,19 +143,45 @@ def _cmd_repl(args: argparse.Namespace) -> int:
 
 def _cmd_init(args: argparse.Namespace) -> int:
     """Handle ``lu init <name>``."""
-    from ._init_project import init_project
+    from ._init_project import init_project, list_templates
+
+    # --list-templates: show available and exit
+    if getattr(args, "list_templates", False):
+        templates = list_templates()
+        if not templates:
+            print("No stdlib templates found.")
+            return 0
+        print(f"{_c.BOLD}Available templates ({len(templates)}):{_c.RESET}")
+        for t in templates:
+            print(f"  {_c.CYAN}{t}{_c.RESET}")
+        return 0
+
+    if not args.name:
+        print(
+            f"{_c.RED}{_c.BOLD}ERROR{_c.RESET} "
+            "project name is required (e.g. lu init my-protocol)",
+            file=sys.stderr,
+        )
+        return 1
 
     try:
         created = init_project(
-            args.name, minimal=args.minimal, force=args.force,
+            args.name,
+            minimal=args.minimal,
+            force=args.force,
+            template=getattr(args, "template", None),
         )
     except (ValueError, OSError) as exc:
         print(f"{_c.RED}{_c.BOLD}ERROR{_c.RESET} {exc}", file=sys.stderr)
         return 1
 
+    tmpl_info = ""
+    if getattr(args, "template", None):
+        tmpl_info = f" (from template {_c.CYAN}{args.template}{_c.RESET})"
+
     print(
         f"{_c.GREEN}{_c.BOLD}Created{_c.RESET} "
-        f"LU project {_c.BOLD}{args.name}{_c.RESET}"
+        f"LU project {_c.BOLD}{args.name}{_c.RESET}{tmpl_info}"
     )
     for path in created:
         print(f"  {_c.CYAN}{path}{_c.RESET}")
@@ -384,7 +410,7 @@ def _build_parser() -> argparse.ArgumentParser:
         "init",
         help="Create a new LU project with scaffolding",
     )
-    p_init.add_argument("name", help="Project name (e.g. my-protocol)")
+    p_init.add_argument("name", nargs="?", default=None, help="Project name (e.g. my-protocol)")
     p_init.add_argument(
         "--minimal",
         action="store_true",
@@ -394,6 +420,15 @@ def _build_parser() -> argparse.ArgumentParser:
         "--force",
         action="store_true",
         help="Overwrite existing non-empty directory",
+    )
+    p_init.add_argument(
+        "--template",
+        help="Use a stdlib template (e.g. rag_pipeline, two_buyer)",
+    )
+    p_init.add_argument(
+        "--list-templates",
+        action="store_true",
+        help="List available stdlib templates and exit",
     )
 
     # lu repl

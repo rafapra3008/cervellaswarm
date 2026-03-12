@@ -21,9 +21,9 @@
 |     T3.1 Grammar 1.0 RFC          DONE (S444)                   |
 |     T3.3 lu init                   DONE (S444)                   |
 |     T3.4 lu verify standalone      DONE (S444)                   |
-|     T3.2 Standard Library          PROSSIMO                     |
+|     T3.2 Standard Library          DONE (S445)                   |
 |                                                                |
-|   Asset: 29 moduli, 3355 test, ~14000+ LOC, ZERO deps core    |
+|   Asset: 29 moduli, 3435 test, ~14000+ LOC, ZERO deps core    |
 +================================================================+
 ```
 
@@ -345,13 +345,15 @@ AI/ML:
 ```
 
 **Criterio completamento:**
-- [ ] 20+ protocolli scritti in .lu
-- [ ] TUTTI verificati formalmente (PROVED)
-- [ ] Documentazione per ogni protocollo
-- [ ] Test per ogni protocollo
-- [ ] Navigabili nel playground
+- [x] 20 protocolli scritti in .lu (5 categorie)
+- [x] TUTTI verificati formalmente (PROVED)
+- [x] Documentazione per ogni protocollo (SPDX header + README)
+- [x] Test per ogni protocollo (72 test in 5 file)
+- [x] Tutte 9 PropertyKind coperte
+- [x] `lu init --template` per usare stdlib come base
+- [ ] Navigabili nel playground (futuro T2.3)
 
-**Effort:** 2-3 sessioni
+**Effort:** DONE S445 (1 sessione!)
 
 ---
 
@@ -574,10 +576,10 @@ TOTALE fino a E.6 base: 7-11 sessioni
 
 | Metrica | Attuale | Target E.5 | Target E.6 |
 |---------|---------|------------|------------|
-| Test LU | 3312 | 3400+ | 3600+ |
+| Test LU | 3435 | 3400+ | 3600+ |
 | Moduli LU | 28 | 29 (+ demo runner) | 32+ |
 | PropertyKind | 9 | 9 | 9+ |
-| Protocolli standard lib | 0 | 0 | 20+ |
+| Protocolli standard lib | 20 | 0 | 20+ |
 | CLI commands | 10 (check, run, verify, compile, init, repl, lsp, chat, demo, version) | 10 (attuale) | 12+ (+lint, +fmt) |
 | GitHub stars | ~10 | ~10 | 100+ |
 | pip installs/settimana | ~5 | ~10 | 50+ |
@@ -595,9 +597,11 @@ FASE 1-2: SOSTANZIALMENTE DONE
 
 FASE 3 (E.6): IN PROGRESS
   T3.1 Grammar 1.0 RFC           ← DONE S444
-  T3.2 Standard Library 20 prot  ← PROSSIMO STEP (ricerca PRIMA!)
-  T3.3 lu init                   ← DONE S444
+  T3.2 Standard Library 20 prot  ← DONE S445 (20 protocolli, 72 test)
+  T3.3 lu init (+--template)     ← DONE S444+S445
   T3.4 lu verify                 ← DONE S444
+  T3.5 VS Code Marketplace       ← PROSSIMO (blocco: Rafa publisher)
+  T3.6 Community Seeding          ← PROSSIMO (aggiornare con stdlib)
 ```
 
 ---

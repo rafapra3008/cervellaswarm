@@ -1,0 +1,48 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: Security - Mutual TLS Handshake
+# Bidirectional certificate verification protocol. Both client and server
+# present and verify certificates before establishing a secure channel.
+# Demonstrates that security handshakes can be modeled as session types
+# with guaranteed completion.
+
+type CertificateStatus = Valid | Expired | Revoked | Unknown
+
+type Certificate =
+    subject: String
+    issuer: String
+    fingerprint: String
+    status: CertificateStatus
+
+type HandshakeResult =
+    session_id: String
+    cipher_suite: String
+    protocol_version: String
+    established: Boolean
+
+agent TlsClient:
+    role: client
+    trust: standard
+    accepts: HandshakeResult
+    produces: Certificate
+    requires: certificate.loaded
+    ensures: handshake.initiated
+
+agent TlsServer:
+    role: server
+    trust: trusted
+    accepts: Certificate
+    produces: HandshakeResult
+    requires: certificate.valid
+    ensures: channel.secure
+
+protocol MutualTls:
+    roles: client, server
+
+    client sends client certificate to server
+    server sends server certificate to client
+    client returns verification to server
+    server returns session established to client
+
+    properties:
+        always terminates
+        no deadlock
