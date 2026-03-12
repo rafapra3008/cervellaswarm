@@ -434,3 +434,15 @@ class TestMainUsage:
         main_usage([f"--db-path={db}", "--project=cervellaswarm", "--json"])
         data = json.loads(capsys.readouterr().out)
         assert data["total_sessions"] == 0
+
+    def test_usage_model_filter(self, tmp_path, capsys):
+        db = tmp_path / "test.db"
+        main_usage([f"--db-path={db}", "--model=claude-opus-4-6", "--json"])
+        data = json.loads(capsys.readouterr().out)
+        assert data["total_sessions"] == 0
+
+    def test_usage_days_filter(self, tmp_path, capsys):
+        db = tmp_path / "test.db"
+        main_usage([f"--db-path={db}", "--days=7", "--json"])
+        data = json.loads(capsys.readouterr().out)
+        assert data["total_sessions"] == 0

@@ -9,10 +9,8 @@ from pathlib import Path
 
 import pytest
 
-# Import hook functions directly
+# Import hook functions -- hooks live in ~/.claude/hooks/
 import sys
-sys.path.insert(0, str(Path(__file__).parents[3] / ".claude" / "hooks"))
-# We need cervella_hooks_common on the path for the import to work
 sys.path.insert(0, str(Path.home() / ".claude" / "hooks"))
 
 from observability_hook import parse_transcript, find_transcript, store_usage

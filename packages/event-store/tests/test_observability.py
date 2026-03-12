@@ -302,6 +302,19 @@ class TestTokenUsageDatabase:
         assert summary.by_model == {}
         assert summary.by_project == {}
 
+    def test_duplicate_session_id_replaces(self, store):
+        """F1 P2: INSERT OR REPLACE prevents duplicate session costs."""
+        store.log_token_usage(
+            TokenUsage(session_id="sess-dup", input_tokens=100, cost_usd=0.50)
+        )
+        store.log_token_usage(
+            TokenUsage(session_id="sess-dup", input_tokens=200, cost_usd=1.00)
+        )
+        summary = store.query_usage()
+        assert summary.total_sessions == 1  # Not 2!
+        assert summary.total_input_tokens == 200  # Latest value
+        assert summary.total_cost_usd == 1.00  # Not 1.50!
+
     def test_token_usage_table_created(self, store):
         """Verify token_usage table exists in schema."""
         conn = store._require_conn()

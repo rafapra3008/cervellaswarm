@@ -162,7 +162,7 @@ def _insert_token_usage(conn: sqlite3.Connection, usage: TokenUsage) -> str:
     """Insert a TokenUsage record. Returns the id."""
     conn.execute(
         """
-        INSERT INTO token_usage (
+        INSERT OR REPLACE INTO token_usage (
             id, timestamp, session_id, project, model,
             input_tokens, output_tokens,
             cache_read_tokens, cache_creation_tokens,

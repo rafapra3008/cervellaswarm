@@ -88,7 +88,7 @@ _CREATE_TOKEN_USAGE = """
 CREATE TABLE IF NOT EXISTS token_usage (
     id TEXT PRIMARY KEY,
     timestamp TEXT NOT NULL,
-    session_id TEXT NOT NULL,
+    session_id TEXT NOT NULL UNIQUE,
     project TEXT,
     model TEXT,
     input_tokens INTEGER DEFAULT 0,
