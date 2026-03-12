@@ -25,15 +25,18 @@ Versione: 1.0.0
 Data: 14 Gennaio 2026
 """
 
-import sqlite3
+import hashlib
 import json
+import logging
+import os
+import sqlite3
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import List, Dict, Optional, Any
 from dataclasses import dataclass, field
 from enum import Enum
-import hashlib
-import os
+
+logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
@@ -322,7 +325,7 @@ class AlertSystem:
                 notifier.send(alert)
             except Exception as e:
                 success = False
-                print(f"[ALERT ERROR] Notifier {notifier.__class__.__name__} failed: {e}")
+                logger.error("Notifier %s failed: %s", notifier.__class__.__name__, e)
 
         return success
 
@@ -360,30 +363,30 @@ class AlertSystem:
 
         interval = interval_seconds or self.config["check_interval_seconds"]
 
-        print(f"[ALERT SYSTEM] Starting monitoring (interval: {interval}s)")
-        print(f"[ALERT SYSTEM] Database: {self.db_path}")
-        print(f"[ALERT SYSTEM] Notifiers: {[n.__class__.__name__ for n in self.notifiers]}")
-        print("")
+        logger.info("Starting monitoring (interval: %ds)", interval)
+        logger.info("Database: %s", self.db_path)
+        logger.info("Notifiers: %s", [n.__class__.__name__ for n in self.notifiers])
 
         try:
             while True:
                 alerts = self.run_checks()
 
                 if alerts:
-                    print(f"[ALERT SYSTEM] {len(alerts)} alert(s) at {datetime.now().isoformat()}")
+                    logger.info("%d alert(s) at %s", len(alerts), datetime.now().isoformat())
                 else:
-                    print(f"[ALERT SYSTEM] No alerts at {datetime.now().isoformat()}")
+                    logger.debug("No alerts at %s", datetime.now().isoformat())
 
                 time.sleep(interval)
 
         except KeyboardInterrupt:
-            print("\n[ALERT SYSTEM] Monitoring stopped")
+            logger.info("Monitoring stopped")
 
 
 # CLI Entry Point
 if __name__ == "__main__":
     import sys
 
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
     system = AlertSystem()
 
     if len(sys.argv) > 1 and sys.argv[1] == "monitor":
@@ -391,4 +394,5 @@ if __name__ == "__main__":
     else:
         # Single check
         alerts = system.run_checks()
-        print(f"Found {len(alerts)} alert(s)")
+        logger.info("Found %d alert(s)", len(alerts))
+        logger.info("Found %d alert(s)", len(alerts))

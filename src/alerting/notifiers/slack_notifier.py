@@ -15,9 +15,12 @@ Uso:
 """
 
 import json
+import logging
 import urllib.request
 import urllib.error
 from typing import TYPE_CHECKING, Optional
+
+logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
     from ..alert_system import Alert
@@ -65,7 +68,7 @@ class SlackNotifier:
             True se inviato con successo
         """
         if not self.webhook_url:
-            print("[SLACK NOTIFIER] Webhook URL not configured - skipping")
+            logger.warning("Slack webhook URL not configured - skipping")
             return False
 
         try:
@@ -121,8 +124,8 @@ class SlackNotifier:
                 return response.status == 200
 
         except urllib.error.URLError as e:
-            print(f"[SLACK NOTIFIER ERROR] Network error: {e}")
+            logger.error("Slack network error: %s", e)
             return False
         except Exception as e:
-            print(f"[SLACK NOTIFIER ERROR] {e}")
+            logger.error("Slack notifier failed: %s", e)
             return False

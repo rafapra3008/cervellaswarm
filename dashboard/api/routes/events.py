@@ -4,9 +4,12 @@ Route /api/events - Server-Sent Events per real-time updates
 
 import asyncio
 import json
+import logging
 from pathlib import Path
 from datetime import datetime
 from typing import AsyncGenerator
+
+logger = logging.getLogger(__name__)
 
 from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
@@ -82,7 +85,8 @@ async def check_for_changes() -> dict | None:
                     "file_path": file_key,
                     "timestamp": datetime.utcnow().isoformat()
                 })
-        except Exception:
+        except Exception as e:
+            logger.debug("Event parsing error for %s: %s", file_key, e)
             continue
 
     if changes:

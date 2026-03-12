@@ -3,9 +3,12 @@ File Notifier - Scrive alert su file log
 """
 
 import json
+import logging
 from datetime import datetime
 from pathlib import Path
 from typing import TYPE_CHECKING, Union
+
+logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
     from ..alert_system import Alert
@@ -53,5 +56,5 @@ class FileNotifier:
             return True
 
         except Exception as e:
-            print(f"[FILE NOTIFIER ERROR] {e}")
+            logger.error("File notifier write failed: %s", e)
             return False
