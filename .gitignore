@@ -2,6 +2,7 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+.DS_Store
 
 # Data directory (operational data, logs, database, retro reports)
 data/

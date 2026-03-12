@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 6 Marzo 2026 - S438 (FASE E avviata! IntentBridge Core, La Nonna Script)
+> Aggiornato: 12 Marzo 2026 - S442 (E.1-E.4 DONE, E.5 in progress, Infra V2 complete)
 
 ```
 +==================================================================+
@@ -147,9 +147,9 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |   FASE D: L'ECOSISTEMA -- COMPLETA! (S426-S435)                  |
 |     D1-D6 DONE! Media 9.5/10                                    |
 |   FASE E: PER TUTTI -- IN PROGRESS (S438+)                      |
-|     E.1 La Nonna Script DONE, E.2 IntentBridge Core IN PROGRESS |
+|     E.1-E.4 DONE! E.5 La Nonna Demo IN PROGRESS (S442)         |
 |   PyPI: v0.3.0 LIVE! pip install cervellaswarm-lingua-universale|
-|   26 moduli, 3062 test, 74 error codes, 131 symbols, 5374 total |
+|   28 moduli, 3274 test, 9 PropertyKind, ZERO deps core         |
 |   Playground LIVE: https://rafapra3008.github.io/cervellaswarm/ |
 |   Tour: 24 step interattivi in 4 capitoli + 4 esercizi          |
 |   NORD completo: packages/lingua-universale/NORD.md              |
@@ -181,7 +181,7 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 ```
 STATO ATTUALE:
   ✓ CLI + MCP su npm              cervellaswarm@2.0.0-beta.1
-  ✓ FAMIGLIA COMPLETA             17 agenti (1 Regina + 3 Guardiane + 1 Architect + 12 Worker)
+  ✓ FAMIGLIA COMPLETA             17 agenti (1 Regina + 3 Guardiane + 1 Architect + 2 Analiste + 10 Worker)
   ✓ API Fly.io                    ONLINE
   ✓ cervellaswarm.com             LIVE
   ✓ PyPI (9/9 LIVE!)               code-intelligence, lingua-universale,
@@ -190,7 +190,7 @@ STATO ATTUALE:
                                    quality-gates = TUTTI LIVE su pypi.org!
   ✓ Repo Pubblico                 github.com/rafapra3008/cervellaswarm
   ✓ Scripts                       135+ file, ~20,000+ righe
-  ✓ Hooks                         14+ hooks su 6 trigger points
+  ✓ Hooks                         14 hooks su cervella_hooks_common.py (DRY!)
   ✓ Memoria                       SQLite DB + analytics + retrospective
   ✓ Cron                          5 job automatici
 ```
@@ -212,6 +212,7 @@ STATO ATTUALE:
 |------|------|
 | **MAPPA LINGUAGGIO (LA MISSIONE!)** | `.sncp/roadmaps/MAPPA_LINGUAGGIO_CERVELLASWARM.md` |
 | **FASE E: INTENTBRIDGE (ATTIVA!)** | `.sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md` |
+| **E.5+E.6+FUTURO (TASK LIST!)** | `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md` |
 | **FASE D: ECOSISTEMA (COMPLETA!)** | `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md` |
 | **MAPPA COMPLETA (BIBBIA!)** | `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_COMPLETA_STEP_BY_STEP.md` |
 | **MAPPA MIGLIORAMENTI V1 (100%!)** | `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_MIGLIORAMENTI_INTERNI.md` |
