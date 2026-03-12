@@ -266,3 +266,4 @@ CervellaLang agents
 
 *Cervella Scienziata -- "I dati guidano le decisioni."*
 *Sessione 442 -- 12 Marzo 2026*
+<!-- COSTITUZIONE-APPLIED: SI -->

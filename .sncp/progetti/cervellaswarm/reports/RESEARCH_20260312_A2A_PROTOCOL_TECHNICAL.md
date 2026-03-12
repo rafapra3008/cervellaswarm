@@ -309,3 +309,4 @@ di CervellaLang 1.0 (ogni agente CervellaLang espone automaticamente Agent Card)
 ---
 
 *Cervella Researcher - CervellaSwarm S442*
+<!-- COSTITUZIONE-APPLIED: SI -->
