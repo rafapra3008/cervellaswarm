@@ -572,7 +572,7 @@ class TestDiverseProtocolTaskDelegation:
         "Reviewer", "Manager", "4",         # Reviewer return_verdict Manager
         "fatto",                            # finish messages (Italian)
         "no",                               # no choices
-        "3",                                # add all_roles_participate
+        "4",                                # add all_roles_participate
         "fatto",                            # finish properties (Italian)
         "si",                               # confirm (Italian)
     ]
@@ -836,3 +836,88 @@ class TestNarrativeOutputQuality:
         session.run()
         combined = " ".join(output)
         assert "If left" in combined or "if left" in combined.lower()
+
+
+# ============================================================
+# 11. La Nonna Demo E2E (E.5 verification)
+# ============================================================
+
+
+class TestLaNonnaDemoVerification:
+    """E.5: Verify that the verification pipeline produces REAL output.
+
+    This test proves BUG 1 (spec format mismatch) is truly fixed:
+    the pipeline must produce verification results (PROVED), not
+    silently skip them.  Also tests no_deletion property integration.
+    """
+
+    INPUTS = [
+        "GestioneRicette",                  # protocol name
+        "Cuoco, Dispensa",                  # 2 roles
+        "Cuoco", "Dispensa", "1",           # Cuoco asks_task Dispensa
+        "Dispensa", "Cuoco", "2",           # Dispensa return_result Cuoco
+        "fatto",                            # finish messages (Italian)
+        "no",                               # no choices
+        "3",                                # add no_deletion
+        "fatto",                            # finish properties
+        "si",                               # confirm (Italian)
+    ]
+
+    def _run(self) -> tuple:
+        session, output = _session(self.INPUTS, lang="it")
+        result = session.run()
+        return result, output
+
+    def test_result_not_none(self) -> None:
+        result, _ = self._run()
+        assert result is not None
+
+    def test_has_no_deletion_property(self) -> None:
+        result, _ = self._run()
+        assert "no_deletion" in result.draft.properties
+
+    def test_has_3_properties_total(self) -> None:
+        """Default 2 (always_terminates, no_deadlock) + no_deletion = 3."""
+        result, _ = self._run()
+        assert len(result.draft.properties) == 3
+
+    def test_property_report_not_empty(self) -> None:
+        """BUG 1 fix: property_report must have real results, not empty."""
+        result, _ = self._run()
+        assert len(result.property_report.results) > 0
+
+    def test_all_properties_proved(self) -> None:
+        """All 3 properties must be PROVED (not SKIPPED, not VIOLATED)."""
+        from cervellaswarm_lingua_universale.spec import PropertyVerdict
+        result, _ = self._run()
+        for r in result.property_report.results:
+            assert r.verdict == PropertyVerdict.PROVED, (
+                f"{r.spec.kind.value} is {r.verdict.value}, expected PROVED"
+            )
+
+    def test_verification_output_contains_proved(self) -> None:
+        """Output must contain 'PROVED' strings (visible to user)."""
+        _, output = self._run()
+        combined = " ".join(output)
+        assert "PROVED" in combined
+
+    def test_verification_shows_no_deletion(self) -> None:
+        """Output must mention no_deletion in verification results."""
+        _, output = self._run()
+        combined = " ".join(output)
+        assert "no_deletion" in combined
+
+    def test_property_explanation_shown_in_confirmation(self) -> None:
+        """R7: property explanations must appear in confirmation output."""
+        _, output = self._run()
+        combined = " ".join(output)
+        assert "cancellato" in combined or "protetti" in combined
+
+    def test_generated_code_has_cuoco(self) -> None:
+        result, _ = self._run()
+        assert "Cuoco" in result.generated_code
+
+    def test_simulation_has_italian_narrative(self) -> None:
+        _, output = self._run()
+        combined = " ".join(output)
+        assert "chiede" in combined or "restituisce" in combined

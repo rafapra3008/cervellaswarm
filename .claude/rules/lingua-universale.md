@@ -21,6 +21,7 @@ paths:
 - `_nl_processor.py` - ClaudeNLProcessor: NL -> IntentDraft via tool_use (E.3, optional dep)
 - `_voice.py` - VoiceProcessor: mic capture + STT via faster-whisper (E.4, optional dep)
 - `_errors.py` - 74 error codes (LU-E001 a LU-E074)
+- `spec.py` - 9 PropertyKind (E.5: +NO_DELETION, +ROLE_EXCLUSIVE), static+runtime checkers
 
 ## LSP Architecture (D2 + D5)
 - Pure functions separated from server handlers (testable without LSP client)
@@ -58,7 +59,8 @@ paths:
 - Stream cleanup in try/finally after start()
 
 ## Fase Corrente
-- FASE E: Per Tutti (IntentBridge) -- IN PROGRESS (E.1-E.4 DONE, E.5 TODO)
+- FASE E: Per Tutti (IntentBridge) -- IN PROGRESS (E.1-E.4 DONE, E.5 IN PROGRESS)
+- E.5 S442: 2 bug critici fixati, +NO_DELETION, +ROLE_EXCLUSIVE, property explanations i18n
 - Subroadmap: `.sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md`
 - FASE D: L'Ecosistema -- COMPLETA! D1-D6 DONE (media 9.5/10)
-- Test: 3249 (LU), ~5561 (totale)
+- Test: 3274 (LU), ~5586 (totale)

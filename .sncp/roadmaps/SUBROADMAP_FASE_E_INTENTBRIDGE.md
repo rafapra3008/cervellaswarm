@@ -238,16 +238,28 @@ pyproject.toml: voice = ["faster-whisper>=1.0.0", "sounddevice>=0.5.0"]
 
 ---
 
-### E.5: "La Nonna" Demo Finale
+### E.5: "La Nonna" Demo Finale -- IN PROGRESS (S442)
 
 **Prerequisiti:** E.2 + E.3 minimo. E.4 per versione completa.
 
+**Lavoro fatto (S442):**
+- [x] BUG 1 fix: spec format mismatch (verifica era rotta da S438!)
+- [x] BUG 2 fix: PropertyResult.property_name -> spec.kind.value
+- [x] R22 NO_DELETION: PropertyKind + parser + static/runtime checker
+- [x] R23 ROLE_EXCLUSIVE: PropertyKind + parser + static/runtime checker
+- [x] R7 Property explanations: _PROPERTY_EXPLANATIONS i18n (en/it/pt)
+- [x] F10 SKIPPED verdict: giallo invece di rosso
+- [x] 10 P3 Guardiana fixati
+- [x] 25 test nuovi (15 spec + 10 La Nonna E2E)
+
 **Criterio completamento:**
-- [ ] Demo end-to-end come da script (3 minuti)
+- [x] Pipeline verifica funzionante (era rotta, ora PROVED!)
+- [x] Proprieta demo (no_deletion, role_exclusive)
+- [ ] R20 Demo violazione interattiva (Atto 5 Scena 5.3)
 - [ ] Video registrato (screen recording + narrazione)
 - [ ] Blog post "From Vibe Coding to Vericoding: La Nonna Edition"
 - [ ] Test persona non-tecnica reale (feedback)
-- [ ] Guardiana verifica 9.5/10
+- [ ] Guardiana verifica finale 9.5/10
 
 ---
 

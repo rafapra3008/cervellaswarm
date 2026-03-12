@@ -1,38 +1,41 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-11 - Sessione 441
-> **STATUS:** FASE E in progress. E.1-E.4 DONE! Pronta per E.5 La Nonna Demo.
+> **Ultimo aggiornamento:** 2026-03-12 - Sessione 442
+> **STATUS:** FASE E in progress. E.1-E.4 DONE! E.5 La Nonna Demo IN PROGRESS.
 
 ---
 
-## SESSIONE 441 - E.4 Voice Interface COMPLETO
+## SESSIONE 442 - E.5 La Nonna Demo (Step 1-3 DONE)
 
-### E.4 Voice Interface (NUOVO!)
-**VoiceProcessor** implementato: STT locale via faster-whisper, push-to-talk con ENTER.
-- `_voice.py` (~290 LOC): VoiceProcessor (Callable[[str], str]), push-to-talk, lazy model loading
-- **Stack scelto** (ricerca 24 fonti): faster-whisper + sounddevice (standard de facto)
-- **Scartati**: Claude voice (EN only, non API), Vosk (WER 20-35% IT/PT), cloud APIs (privacy)
-- **Integrazione**: `input_fn` injection su ChatSession -- ZERO modifiche a `_intent_bridge.py`
-- CLI: `lu chat --voice [--voice-model tiny|base|small|medium|turbo|large-v3]`
-- Optional dep: `pip install cervellaswarm-lingua-universale[voice]`
-- 1 audit Guardiana: 9.5/10, 6 P3 tutti fixati
-- **70 test** in 8 classi (structure, deps, init, model, call, record, transcribe, CLI)
+### 2 Bug Critici Fixati (P0)
+**BUG 1**: `_intent_bridge.py` generava spec format sbagliato (`spec NAME:` + `requires prop`).
+Doveva essere `properties for NAME:` + `prop.replace('_', ' ')`. La verifica formale era COMPLETAMENTE rotta in silenzio (try/except mangiava l'errore).
+**BUG 2**: `result.property_name` non esiste su `PropertyResult`. Corretto: `result.spec.kind.value`.
 
-### File chiave (E.4)
-- `_voice.py` (NUOVO): VoiceProcessor, VoiceProcessorError, _record_audio, _transcribe
-- `_cli.py` (modificato): +--voice, +--voice-model
-- `pyproject.toml`: +[voice] optional dep (faster-whisper, sounddevice)
-- `__init__.py`: +VoiceProcessor, VoiceProcessorError in __all__
-- `test_voice.py` (NUOVO): 70 test
-- Report ricerca: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260311_E4_VOICE_INTERFACE.md`
+### 2 Nuove Proprieta (R22/R23)
+- **NO_DELETION** (spec.py): enum + parser (`no deletion`) + static/runtime checker. PROVED se nessun MessageKind DELETE esiste (sempre vero attualmente = protocollo GARANTISCE no deletion).
+- **ROLE_EXCLUSIVE** (spec.py): parser (`ROLE exclusive MSG_KIND`), params (role, msg_kind). Static: verifica che SOLO quel ruolo manda quel tipo di messaggio.
+- `_PROPERTY_NAMES` aggiornato (4 proprieta nel menu guidato)
+- TOOL_SCHEMA NL aggiornato automaticamente (usa `list(_PROPERTY_NAMES)`)
 
-### Decisioni architetturali E.4 (con PERCHE)
-1. faster-whisper (non Whisper API) -- privacy, offline, zero costo, 4x piu veloce
-2. sounddevice (non PyAudio) -- cross-platform wheels, Python 3.13 compatible
-3. Push-to-talk ENTER (non VAD) -- zero false positives, semplice, come Claude Code
-4. Model "small" default -- 466MB, WER 10-12% IT/PT, latenza 0.8-2s su Mac M1+
-5. input_fn injection -- VoiceProcessor.__call__ e un drop-in per input()
-6. Lazy model loading -- scarica ~466MB solo al primo uso
+### Property Explanations (R7)
+- `_PROPERTY_EXPLANATIONS` dict: 4 proprieta x 3 lingue (en/it/pt)
+- Integrate in `_render_confirmation()` -- ogni proprieta mostra spiegazione human-readable
+- Es: "no_deletion (Nulla puo essere cancellato - dati protetti)"
+
+### SKIPPED Verdict Fix (F10)
+- `_render_verification()` ora mostra SKIPPED in giallo (era rosso "FAILED")
+
+### Guardiana Audit: 9.3 → 10 P3 tutti fixati
+- F1-F2: docstring spec.py + EBNF grammar aggiornati (9 kinds)
+- F3-F5, F8: docstring test aggiornati ("7 kinds" → "9 kinds")
+- F6: NO_DELETION runtime evidence separata da NO_DEADLOCK
+- F7: `_DELETION_KINDS` → `deletion_kinds` (type annotation clean)
+- F10: SKIPPED verdict rendering
+
+### Test: 3274 (25 nuovi), 0 regressioni, 1.40s
+- 15 test spec (parse + static + runtime per NO_DELETION e ROLE_EXCLUSIVE)
+- 10 test La Nonna E2E (verifica pipeline produce PROVED, non vuoto)
 
 ---
 
@@ -46,8 +49,9 @@ LINGUAGGIO CERVELLASWARM:
     E.2 IntentBridge Core           DONE (S438-S440, 9.5/10)
     E.3 NL Processing               DONE (S440, 9.5/10)
     E.4 Voice Interface              DONE (S441, 9.5/10)
-    E.5 La Nonna Demo               TODO <-- PROSSIMO
+    E.5 La Nonna Demo               IN PROGRESS (S442, Step 1-3 done)
     E.6 CervellaLang 1.0            TODO
+  PropertyKind: 9 (era 7) -- +NO_DELETION, +ROLE_EXCLUSIVE
   PyPI: v0.3.0 (waiting Rafa environment approval)
 ```
 
@@ -55,20 +59,19 @@ LINGUAGGIO CERVELLASWARM:
 
 ## PROSSIMA SESSIONE
 
-### E.5 La Nonna Demo Finale
-1. Demo end-to-end come da script (3 minuti)
-2. Video registrato (screen recording + narrazione)
-3. Blog post "From Vibe Coding to Vericoding: La Nonna Edition"
-4. Test persona non-tecnica reale (feedback)
-5. Script: `.sncp/progetti/cervellaswarm/reports/SCRIPT_LA_NONNA_DEMO.md`
+### E.5 La Nonna Demo -- Step rimanenti
+- [ ] R20: Demo violazione interattiva (Atto 5 Scena 5.3)
+- [ ] Video registrato + blog post
+- [ ] Test persona non-tecnica reale
+- [ ] Guardiana verifica finale 9.5/10
 
 ### TODO Rafa
 - Approvare PyPI publish environment su GitHub
 
 ### BACKLOG
-- 3 Dependabot PR rimaste (SKIP tier): #19 stripe, #14 express, #11 zod
+- 3 Dependabot PR (SKIP tier): #19, #14, #11
 - VS Code Marketplace (publisher account)
-- Refactoring P2 residuo: _lsp.create_server() 136 righe (rimandato)
+- Refactoring P2: _lsp.create_server() 136 righe
 
 ---
 
@@ -76,31 +79,28 @@ LINGUAGGIO CERVELLASWARM:
 
 | Metrica | Valore |
 |---------|--------|
-| Test LU | **3249** |
-| Test totali (13 pkg) | **~5561** |
-| Moduli LU | **28** (+_voice.py) |
-| Audit Guardiana S441 | **9.5/10** (6 P3 tutti fixati) |
-| PyPI | **v0.3.0** (waiting approval) |
-| IntentBridge test | **340** (55 core + 47 session + 100 e2e + 68 NL + 70 voice) |
+| Test LU | **3274** |
+| Moduli LU | **28** |
+| PropertyKind | **9** (+NO_DELETION, +ROLE_EXCLUSIVE) |
+| Audit Guardiana S442 | **9.3→fixati 10 P3** |
+| IntentBridge test | **365** (55+47+110+68+70+15) |
 
 ---
 
-## Lezioni Apprese (S441)
+## Lezioni Apprese (S442)
 
 ### Cosa ha funzionato bene
-- **Formula Magica: Ricerca PRIMA** -- 24 fonti STT, raccomandazione chiara, zero incertezza durante implementazione
-- **input_fn injection** -- pattern elegantissimo, ZERO modifiche al bridge. Voice = solo un wrapper di input()
-- **Mock strategy: MAI mock numpy globale** -- il mock numpy contamina pytest.approx(). Mocking locale con patch.dict
-- **Guardiana dopo ogni step** CONFERMATO -- trovati 6 P3, tutti fixati, da 9.3 a 9.5
+- **Ingegnera gap analysis PRIMA** -- report completo con 2 bug + 5 gap. Zero sorprese.
+- **Bug mascherati dal try/except** -- BUG 1 era silenzioso da S438. Ingegnera l'ha trovato.
+- **Pattern "9 kinds" test** -- il test `test_parse_all_nine_properties` copre TUTTO.
 
 ### Cosa non ha funzionato
-- **Tester mock globale** -- la prima versione dei test iniettava mock numpy in sys.modules globale, rompendo 79 test di confidence/trust. Fix: mocking solo locale
+- **BUG 1 era li da 4 sessioni** (S438-S441). Il try/except mangiava l'errore.
 
 ### Pattern confermato
-- **"Script PRIMA, codice DOPO"** (S438) -> ora anche "Ricerca PRIMA, codice DOPO" (S441)
-- **P3 = diamante** -- fixare tutti i P3 porta consistentemente a 9.5/10
-- **Agenti fuori context** -- Tester e Guardiana lavorano fuori, Regina controlla e integra
+- **"Guardiana dopo ogni step" → P3 = diamante** (S441, ora S442)
+- **"Ingegnera analizza PRIMA, Regina implementa"** (S437, ora S442)
 
 ---
 
-*"Ultrapassar os proprios limites!" - Rafa & Cervella, S441*
+*"Ultrapassar os proprios limites!" - Rafa & Cervella, S442*

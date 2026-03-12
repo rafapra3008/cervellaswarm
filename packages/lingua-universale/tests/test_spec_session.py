@@ -3,8 +3,9 @@
 
 """Tests for spec.py runtime checker: check_session() against completed sessions.
 
-Covers: ORDERING, EXCLUSION, ALWAYS_TERMINATES, NO_DEADLOCK, TRUST_MIN,
-CONFIDENCE_MIN, and ALL_ROLES_PARTICIPATE in runtime mode (SATISFIED/VIOLATED/SKIPPED).
+Covers: ORDERING, EXCLUSION, ALWAYS_TERMINATES, NO_DEADLOCK, NO_DELETION,
+ROLE_EXCLUSIVE, TRUST_MIN, CONFIDENCE_MIN, and ALL_ROLES_PARTICIPATE in runtime
+mode (SATISFIED/VIOLATED/SKIPPED).
 """
 
 import pytest
@@ -405,4 +406,88 @@ class TestCheckSessionReportMetadata:
             ),
         )
         report = check_session([], spec)
+        assert report.results[0].verdict == PropertyVerdict.SATISFIED
+
+
+# ============================================================
+# NO_DELETION and ROLE_EXCLUSIVE runtime tests
+# ============================================================
+
+
+class TestCheckSessionNoDeletion:
+    """NO_DELETION runtime checks."""
+
+    def test_no_deletion_satisfied_runtime(self):
+        """check_session with NO_DELETION on a completed session -> SATISFIED."""
+        log = run_delegate_task_session()
+        spec = ProtocolSpec(
+            protocol_name="DelegateTask",
+            properties=(PropertySpec(kind=PropertyKind.NO_DELETION),),
+        )
+        report = check_session(log, spec)
+        assert report.results[0].verdict == PropertyVerdict.SATISFIED
+
+    def test_no_deletion_satisfied_empty_log(self):
+        """check_session with NO_DELETION on empty log -> SATISFIED."""
+        spec = ProtocolSpec(
+            protocol_name="DelegateTask",
+            properties=(PropertySpec(kind=PropertyKind.NO_DELETION),),
+        )
+        report = check_session([], spec)
+        assert report.results[0].verdict == PropertyVerdict.SATISFIED
+
+
+class TestCheckSessionRoleExclusive:
+    """ROLE_EXCLUSIVE runtime checks."""
+
+    def test_role_exclusive_satisfied_runtime(self):
+        """Session where only the correct role sends dm -> SATISFIED."""
+        records = [
+            make_record("Cuoco", "Pantry", MessageKind.DM, step_index=0),
+            make_record("Pantry", "Cuoco", MessageKind.TASK_RESULT, step_index=1, timestamp=2.0),
+        ]
+        spec = ProtocolSpec(
+            protocol_name="CookerProto",
+            properties=(
+                PropertySpec(
+                    kind=PropertyKind.ROLE_EXCLUSIVE,
+                    params=("Cuoco", "dm"),
+                ),
+            ),
+        )
+        report = check_session(records, spec)
+        assert report.results[0].verdict == PropertyVerdict.SATISFIED
+
+    def test_role_exclusive_violated_runtime(self):
+        """Session where a wrong role sends dm -> VIOLATED."""
+        records = [
+            make_record("Cuoco", "Pantry", MessageKind.DM, step_index=0),
+            make_record("Pantry", "Cuoco", MessageKind.DM, step_index=1, timestamp=2.0),
+        ]
+        spec = ProtocolSpec(
+            protocol_name="CookerProto",
+            properties=(
+                PropertySpec(
+                    kind=PropertyKind.ROLE_EXCLUSIVE,
+                    params=("Cuoco", "dm"),
+                ),
+            ),
+        )
+        report = check_session(records, spec)
+        assert report.results[0].verdict == PropertyVerdict.VIOLATED
+        assert "Pantry" in report.results[0].evidence
+
+    def test_role_exclusive_satisfied_no_dm_in_session(self):
+        """Session with no dm messages -> SATISFIED (vacuously)."""
+        log = run_delegate_task_session()
+        spec = ProtocolSpec(
+            protocol_name="DelegateTask",
+            properties=(
+                PropertySpec(
+                    kind=PropertyKind.ROLE_EXCLUSIVE,
+                    params=("regina", "dm"),
+                ),
+            ),
+        )
+        report = check_session(log, spec)
         assert report.results[0].verdict == PropertyVerdict.SATISFIED

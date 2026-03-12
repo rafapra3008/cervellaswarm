@@ -234,8 +234,33 @@ _ACTION_MENU: MappingProxyType[str, MappingProxyType[str, str]] = MappingProxyTy
 _PROPERTY_NAMES: tuple[str, ...] = (
     "always_terminates",
     "no_deadlock",
+    "no_deletion",
     "all_roles_participate",
 )
+
+# Human-readable explanations for properties (R7 - La Nonna demo).
+_PROPERTY_EXPLANATIONS: MappingProxyType[str, MappingProxyType[str, str]] = MappingProxyType({
+    "always_terminates": MappingProxyType({
+        "en": "The system always finishes (never gets stuck)",
+        "it": "Il sistema finisce SEMPRE (non si blocca mai)",
+        "pt": "O sistema sempre termina (nunca trava)",
+    }),
+    "no_deadlock": MappingProxyType({
+        "en": "No role waits forever (no deadlock)",
+        "it": "Nessun ruolo resta in attesa per sempre",
+        "pt": "Nenhum papel fica esperando para sempre",
+    }),
+    "no_deletion": MappingProxyType({
+        "en": "Nothing can be deleted (data is protected)",
+        "it": "Nulla puo essere cancellato (dati protetti)",
+        "pt": "Nada pode ser apagado (dados protegidos)",
+    }),
+    "all_roles_participate": MappingProxyType({
+        "en": "All roles participate in the protocol",
+        "it": "Tutti i ruoli partecipano al protocollo",
+        "pt": "Todos os papeis participam do protocolo",
+    }),
+})
 
 # Narrative descriptions for simulation output per language.
 # Maps MessageKind.name -> human-readable sentence template.
@@ -1014,9 +1039,10 @@ class ChatSession:
 
         # 3. Build spec and verify with B.5
         self._phase = ChatPhase.VERIFY
-        spec_lines = [f"spec {draft.protocol_name}:"]
+        spec_lines = [f"properties for {draft.protocol_name}:"]
         for prop in draft.properties:
-            spec_lines.append(f"    requires {prop}")
+            # Convert underscore names to spec notation (spaces)
+            spec_lines.append(f"    {prop.replace('_', ' ')}")
         spec_source = "\n".join(spec_lines) + "\n"
 
         try:
@@ -1125,7 +1151,11 @@ class ChatSession:
         lines.append("")
         lines.append(_t("confirm_properties", self._lang))
         for prop in self._properties:
-            lines.append(f"  - {prop}")
+            explanation = _PROPERTY_EXPLANATIONS.get(prop, {}).get(self._lang, "")
+            if explanation:
+                lines.append(f"  - {prop}  ({explanation})")
+            else:
+                lines.append(f"  - {prop}")
         lines.append("")
         lines.append(_t("confirm_ask", self._lang))
         return "\n".join(lines)
@@ -1142,18 +1172,19 @@ class ChatSession:
         lines: list[str] = []
         total = len(report.results)
         for i, result in enumerate(report.results, 1):
-            verdict_str = (
-                f"{_c.GREEN}PROVED{_c.RESET}"
-                if result.verdict == PropertyVerdict.PROVED
-                else f"{_c.RED}FAILED{_c.RESET}"
-            )
+            if result.verdict == PropertyVerdict.PROVED:
+                verdict_str = f"{_c.GREEN}PROVED{_c.RESET}"
+            elif result.verdict == PropertyVerdict.SKIPPED:
+                verdict_str = f"{_c.YELLOW}SKIPPED{_c.RESET}"
+            else:
+                verdict_str = f"{_c.RED}FAILED{_c.RESET}"
             lines.append(
                 _t(
                     "verify_progress",
                     self._lang,
                     n=str(i),
                     total=str(total),
-                    prop=result.property_name,
+                    prop=result.spec.kind.value,
                     result=verdict_str,
                 )
             )

@@ -495,3 +495,18 @@ class TestI18n:
         en_keys = set(_SIM_NARRATIVES["en"].keys())
         missing = reachable_kinds - en_keys
         assert not missing, f"Missing narratives for: {missing}"
+
+
+class TestPropertyExplanationsCoverage:
+    """_PROPERTY_EXPLANATIONS covers all entries in _PROPERTY_NAMES."""
+
+    def test_property_explanations_has_entry_for_all_property_names(self) -> None:
+        """Every name in _PROPERTY_NAMES must have an entry in _PROPERTY_EXPLANATIONS."""
+        from cervellaswarm_lingua_universale._intent_bridge import (
+            _PROPERTY_NAMES,
+            _PROPERTY_EXPLANATIONS,
+        )
+        for name in _PROPERTY_NAMES:
+            assert name in _PROPERTY_EXPLANATIONS, (
+                f"_PROPERTY_EXPLANATIONS missing entry for '{name}'"
+            )

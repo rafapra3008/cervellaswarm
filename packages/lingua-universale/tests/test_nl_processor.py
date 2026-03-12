@@ -74,10 +74,10 @@ class TestToolSchema:
         code_keys = set(_ACTION_VERBS.keys())
         assert schema_keys == code_keys
 
-    def test_properties_enum_has_3_entries(self) -> None:
+    def test_properties_enum_has_4_entries(self) -> None:
         props = TOOL_SCHEMA["input_schema"]["properties"]
         prop_enum = props["properties"]["items"]["enum"]
-        assert len(prop_enum) == 3
+        assert len(prop_enum) == 4
 
 
 # ============================================================
