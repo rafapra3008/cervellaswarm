@@ -103,19 +103,19 @@
 
 ---
 
-# FASE E: NEXT (FUTURE) -- DA FARE
+# FASE E: NEXT -- COMPLETATA!
 
 ## E.1: F3.6 Observability Layer (custom SQLite)
-**Stato:** [IN PROGRESS] - S442
+**Stato:** [FATTO] - S442, Score 9.5/10
 **Dipende da:** C.2 (ricerca completa)
 **Implementazione:**
 - Modulo `observability.py`: TokenUsage dataclass, estimate_cost(), query con filtri
-- Tabella `token_usage` nello schema (4 indici: session, project, timestamp, model)
+- Tabella `token_usage` nello schema (4 indici + session_id UNIQUE, INSERT OR REPLACE)
 - Hook `observability_hook.py`: parsa JSONL transcript, estrae usage metadata, fail-open
 - CLI `cervella-events usage --today --by-project --by-model --json`
-- **46 test nuovi** (35 observability + 11 hook transcript parser), 301 totali event-store
+- **58 test nuovi** (37 observability + 15 hook + 6 CLI usage), 309 totali event-store
 - Pricing: Opus $15/$75, Sonnet $3/$15, Haiku $0.80/$4 (per MTok in/out)
-**Guardiana audit:** in corso
+**Guardiana audit:** 9.3 -> 9.5+ (7 finding, tutti fixati: dedup P2, test coverage, cleanup)
 
 ## E.2: Researcher/Scienziata confini definiti
 **Stato:** [FATTO] - S442
@@ -166,8 +166,8 @@ FASE D: P3 Fixati              [####################] 100%
   D.1 Hook .DISABLED            FATTO (S442)
   D.2 Test collection errors    FATTO (S442)
 
-FASE E: Next                   [#################...] 87%
-  E.1 F3.6 Observability        DA FARE (ultimo task operativo)
+FASE E: Next                   [####################] 100%
+  E.1 F3.6 Observability        FATTO (S442, 9.5/10, 309 test)
   E.2 Agent confini definiti    FATTO (S442)
   E.3 A2A Protocol              FATTO (S442, 32 fonti, decisione: MCP prima)
   E.4 Report rotation           FATTO (S442)
@@ -176,9 +176,10 @@ IMPATTO TOTALE S442:
   Context/subagent: -40% (22KB -> 13KB)
   SNCP root: -61% (18 -> 7 entries)
   _SHARED_DNA: -18% (159 -> 131 righe)
-  Hooks DRY: 8 hook su modulo comune
-  Test: +605 recuperati (6514 totali, 0 errors)
+  Hooks DRY: 8 hook su modulo comune + observability hook
+  Test: +605 recuperati + 58 nuovi observability (6604+ totali)
   Dead code: -42KB (hook .DISABLED archiviati)
+  Observability: token tracking automatico per sessione
 ```
 
 ---

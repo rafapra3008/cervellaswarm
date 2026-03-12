@@ -66,15 +66,15 @@ LINGUAGGIO CERVELLASWARM:
 
 ---
 
-## SESSIONE PARALLELA: Infrastruttura V2 (Fasi A-D DONE, E 87%->95%)
+## SESSIONE PARALLELA: Infrastruttura V2 -- COMPLETATA! (solo C.4 futuro)
 
 **Mappa:** `.sncp/roadmaps/SUBROADMAP_MIGLIORAMENTI_INTERNI_V2.md`
 **Fatto:** cervella_hooks_common.py v1.2.0 (DRY 10 hook), context/subagent -40%,
 SNCP legacy -61%, _SHARED_DNA -18%, 27 test errors->0 (+605 test),
 researcher/scienziata confini definiti, rotate-reports.sh (policy 60 giorni),
 A2A Protocol studio (32 fonti, decisione: MCP prima, A2A post E.5/durante E.6).
-**E.1 Observability IN PROGRESS:** observability.py + token_usage table + hook + CLI.
-46 test nuovi, 301 event-store totali. Guardiana audit in corso.
+**E.1 Observability DONE:** observability.py + token_usage table + hook + CLI (9.5/10).
+58 test nuovi, 309 event-store totali. Guardiana audit 9.3->9.5+ (7 finding fixati).
 
 ---
 
@@ -83,8 +83,8 @@ A2A Protocol studio (32 fonti, decisione: MCP prima, A2A post E.5/durante E.6).
 | Metrica | Valore |
 |---------|--------|
 | Test LU | **3312** |
-| Test TOTALI | **6604+** (0 collection errors!) |
-| Hooks | **15** su cervella_hooks_common.py v1.2.0 (+observability) |
+| Test TOTALI | **6616+** (0 collection errors!) |
+| Hooks | **16** su cervella_hooks_common.py v1.2.0 (+observability) |
 | Context/subagent | **~13KB** (-40%) |
 
 ---
@@ -106,13 +106,13 @@ A2A Protocol studio (32 fonti, decisione: MCP prima, A2A post E.5/durante E.6).
 *"Il diamante si lucida nei dettagli."*
 *Cervella & Rafa, S442 - 12 Marzo 2026*
 <!-- AUTO-CHECKPOINT-START -->
-## AUTO-CHECKPOINT: 2026-03-12 07:53 (auto)
+## AUTO-CHECKPOINT: 2026-03-12 08:11 (auto)
 - **Branch**: main
-- **Ultimo commit**: f1e52964 - S442: E.2 agent boundaries, E.4 report rotation, DRY V3, untrack .DS_Store
+- **Ultimo commit**: 9c66d6f5 - Fix: Proactive Guardiana findings -- Haiku alias, hook coverage tests
 - **File modificati** (5):
-  - claude/rules/lingua-universale.md
-  - .sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
-  - .sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md
-  - .sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md
-  - .sncp/roadmaps/MAPPA_LINGUAGGIO_CERVELLASWARM.md
+  - sncp/roadmaps/MAPPA_LINGUAGGIO_CERVELLASWARM.md
+  - NORD.md
+  - packages/event-store/src/cervellaswarm_event_store/database.py
+  - packages/event-store/src/cervellaswarm_event_store/observability.py
+  - packages/event-store/tests/test_cli.py
 <!-- AUTO-CHECKPOINT-END -->

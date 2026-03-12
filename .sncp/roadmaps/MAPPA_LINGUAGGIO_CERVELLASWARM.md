@@ -25,7 +25,7 @@ LAYER 3: Code Generation certificata                      OPERATIVO (S395!)
 LAYER 2: Agent Hooks + Quality Gates                      OPERATIVO
 LAYER 1: CI/CD + PyPI + Fly.io                            OPERATIVO
 
-Asset: 28 moduli, 3274 test, ~13500+ LOC, ZERO deps esterne (anthropic [nl], faster-whisper+sounddevice [voice] optional)
+Asset: 28 moduli, 3312 test, ~14000+ LOC, ZERO deps esterne (anthropic [nl], faster-whisper+sounddevice [voice] optional)
 Campo vergine confermato da 242+ fonti (session types per AI in Python)
 ```
 
@@ -243,7 +243,8 @@ D6 Guardiana Finale + Launch                   DONE (S435, 9.5/10)
 
 - La demo definitiva. Persona non-tecnica descrive, sistema crea, con PROVA matematica.
 - S442: 2 bug critici fixati (verifica formale era ROTTA), 2 nuove proprieta (NO_DELETION, ROLE_EXCLUSIVE), property explanations i18n
-- Prossimi: R20 violation demo, `lu demo` command, video, blog post
+- S442: R20 violation demo DONE (Guardiana 9.5+), `lu demo` command DONE (Guardiana 9.5/10, 5 P3 fixati)
+- Prossimi: video VHS, blog post, test persona non-tecnica
 - **Piano dettagliato:** `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md`
 - **Output:** demo funzionante, video, blog post
 
@@ -288,7 +289,7 @@ FASE A (DONE) --> B.1-B.7 (DONE) --> C (DONE) --> D (DONE, Ecosistema)
 | E.2 | `lu chat` funziona end-to-end | 3 lingue, 100+ test | DONE (S440: 3 protocolli, narrativa, 202 test, 9.5/10) |
 | E.3 | NL -> codice verificato | 80%+ accuracy | DONE (S440: ClaudeNLProcessor + disambiguation, 68 test, 9.5/10) |
 | E.4 | `lu chat --voice` | 3 lingue, < 3s | DONE (S441: faster-whisper + sounddevice, 70 test, 9.5/10) |
-| E.5 | Demo "la nonna" | Video 3 minuti | IN PROGRESS (S442: bug fix + 2 proprieta + R7) |
+| E.5 | Demo "la nonna" | Video 3 minuti | IN PROGRESS (S442: T1.1+T1.2 DONE, T1.3 video in progress) |
 | E.6 | Community | 1000+ developer | TODO |
 
 ---

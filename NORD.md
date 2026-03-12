@@ -149,7 +149,7 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |   FASE E: PER TUTTI -- IN PROGRESS (S438+)                      |
 |     E.1-E.4 DONE! E.5 La Nonna Demo IN PROGRESS (S442)         |
 |   PyPI: v0.3.0 LIVE! pip install cervellaswarm-lingua-universale|
-|   28 moduli, 3295 test, 9 PropertyKind, ZERO deps core         |
+|   28 moduli, 3312 test, 9 PropertyKind, ZERO deps core         |
 |                                                                  |
 |   VISIONE (S442 - Rafa):                                        |
 |   "Un giorno le AI sviluppano CON Lingua Universale."           |
