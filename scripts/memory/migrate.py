@@ -334,7 +334,7 @@ def cmd_status() -> int:
                 try:
                     dt = datetime.fromisoformat(applied_at)
                     date_str = dt.strftime("%Y-%m-%d %H:%M")
-                except:
+                except Exception:
                     date_str = applied_at[:16]
 
                 print(f"  v{version}: {migration_file} ({date_str})")

@@ -112,7 +112,7 @@ def extract_dependencies(file_path: str, content: Optional[str] = None) -> List[
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
-        except:
+        except Exception:
             return []
 
     dependencies = []

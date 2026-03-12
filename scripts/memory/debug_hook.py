@@ -24,7 +24,7 @@ def main():
         try:
             payload = json.loads(raw_input)
             formatted = json.dumps(payload, indent=2)
-        except:
+        except Exception:
             formatted = raw_input
 
         # Scrivi nel log

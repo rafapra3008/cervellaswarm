@@ -15,11 +15,14 @@ Uso:
     patterns = detector.detect_all()
 """
 
+import logging
 import sqlite3
 import re
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 from dataclasses import dataclass
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -166,8 +169,8 @@ class PatternDetector:
                     context={"hour": hour, "threshold": threshold_per_hour}
                 ))
 
-        except Exception:
-            pass
+        except Exception as e:
+            logger.error("detect_error_spikes failed: %s", e)
 
         return patterns
 
@@ -209,8 +212,8 @@ class PatternDetector:
                     context={"agent": agent, "last_seen": last_seen}
                 ))
 
-        except Exception:
-            pass
+        except Exception as e:
+            logger.error("detect_stuck_agents failed: %s", e)
 
         return patterns
 

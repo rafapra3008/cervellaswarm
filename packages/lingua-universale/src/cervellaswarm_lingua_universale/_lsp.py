@@ -28,8 +28,10 @@ Coordinate mapping:
 from __future__ import annotations
 
 import logging
+import os
 import re
 import sys
+import tempfile
 from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
@@ -721,7 +723,7 @@ def start_lsp() -> int:
 
     # Configure logging to file (CRITICAL: never write to stdout in STDIO mode)
     logging.basicConfig(
-        filename="/tmp/lu-lsp.log",
+        filename=os.path.join(tempfile.gettempdir(), "lu-lsp.log"),
         level=logging.INFO,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )
