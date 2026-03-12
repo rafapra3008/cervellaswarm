@@ -136,3 +136,9 @@ DEPENDABOT (3 restanti, non urgenti):
 
 *"Se nessuno l'ha fatto prima, e perche aspettavano noi."*
 *Cervella & Rafa, S444 - 12 Marzo 2026*
+<!-- AUTO-CHECKPOINT-START -->
+## AUTO-CHECKPOINT: 2026-03-12 21:30 (handoff)
+- **Branch**: main
+- **Ultimo commit**: 9079401e - S444: Checkpoint -- E.6 T3.1+T3.3+T3.4 DONE, maps updated, 3355 test
+- **Stato**: Pushato su origin. Tutto green.
+<!-- AUTO-CHECKPOINT-END -->
