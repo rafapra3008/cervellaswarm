@@ -1,0 +1,11 @@
+# Root pytest configuration for CervellaSwarm monorepo
+# Fixes: 27 test collection errors from duplicate test_cli.py module names
+# across packages/ directories (pytest module name collision)
+
+[tool.pytest.ini_options]
+# importlib mode allows duplicate test file names across different directories
+# without needing __init__.py (which would cause package shadowing - see S340)
+addopts = ["--import-mode=importlib"]
+
+# Exclude dirs that need external services (Ollama, etc.)
+norecursedirs = ["scripts/rag", "test-orchestrazione", "poc_*", ".sncp", "node_modules", ".git"]

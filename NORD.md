@@ -63,9 +63,9 @@ SNCP 3.0:
   ✓ checkpoint.sh                 Automazione completa
 
 COVERAGE PUSH (S337-S348):
-  ✓ Test Suite                    1032 test (era 177!)
+  ✓ Test Suite                    6514 test (0 collection errors!)
   ✓ Coverage                      95% (practical ceiling)
-  ✓ Tempo suite                   5.4s
+  ✓ Tempo suite                   ~2s
   ✓ Technical debt                ZERO
 ```
 
@@ -214,7 +214,8 @@ STATO ATTUALE:
 | **FASE E: INTENTBRIDGE (ATTIVA!)** | `.sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md` |
 | **FASE D: ECOSISTEMA (COMPLETA!)** | `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md` |
 | **MAPPA COMPLETA (BIBBIA!)** | `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_COMPLETA_STEP_BY_STEP.md` |
-| **MAPPA MIGLIORAMENTI (ATTIVA!)** | `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_MIGLIORAMENTI_INTERNI.md` |
+| **MAPPA MIGLIORAMENTI V1 (100%!)** | `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_MIGLIORAMENTI_INTERNI.md` |
+| **MAPPA MIGLIORAMENTI V2 (ATTIVA!)** | `.sncp/roadmaps/SUBROADMAP_MIGLIORAMENTI_INTERNI_V2.md` |
 | **MARKETING DIAMANTE** | `.sncp/progetti/cervellaswarm/roadmaps/SUBROADMAP_DIAMANTE_MARKETING_LANCIO.md` |
 | **MAPPA STUDI ORO** | `.sncp/progetti/cervellaswarm/MAPPA_STUDI_ORO.md` |
 | **MANIFESTO** | `.sncp/progetti/cervellaswarm/MANIFESTO.md` |
