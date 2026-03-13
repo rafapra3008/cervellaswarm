@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 13 Marzo 2026 - S452 (Opus 4.6 + 1M Context Adaptation DONE! Guardiana 9.5/10)
+> Aggiornato: 13 Marzo 2026 - S453 (T3.5 VS Code Marketplace PUBLISHED! + Opus 4.6 + 1M)
 
 ```
 +==================================================================+
@@ -148,7 +148,8 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |     D1-D6 DONE! Media 9.5/10                                    |
 |   FASE E: PER TUTTI -- IN PROGRESS (S438+)                      |
 |     E.1-E.5 DONE! (9.5/10)                                     |
-|     E.6 CervellaLang 1.0: T3.1-T3.4 DONE (S444-S445)          |
+|     E.6 CervellaLang 1.0: T3.1-T3.5 DONE (S444-S453)          |
+|     T3.5 VS Code Marketplace: LIVE! cervellaswarm v0.2.0      |
 |     T3.2 Standard Library: 20 protocolli, 5 categorie (S445)  |
 |     LU 1.1 Nested Choice: DONE! 28 test, 8 file (S447)        |
 |     LU 1.2 Nested Runtime: DONE! stack-based ChoiceFrame (S447)|
@@ -207,6 +208,7 @@ STATO ATTUALE:
   ✓ Scripts                       135+ file, ~20,000+ righe
   ✓ Hooks                         16 hooks su cervella_hooks_common.py v1.2.0 (DRY!)
   ✓ Opus 4.6 + 1M Context         ADATTATO (S452, Guardiana 9.5/10)
+  ✓ VS Code Marketplace           LIVE! cervellaswarm.lingua-universale v0.2.0
   ✓ Memoria                       SQLite DB + analytics + retrospective
   ✓ Cron                          5 job automatici
 ```

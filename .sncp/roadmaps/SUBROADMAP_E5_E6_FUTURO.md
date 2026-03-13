@@ -439,13 +439,23 @@ lu verify protocol.lu
 
 ---
 
-### T3.5: VS Code Marketplace Publish (P2)
+### T3.5: VS Code Marketplace Publish (P2) -- DONE!
 
-**Cosa:** Pubblicare l'estensione VS Code su Marketplace.
+**LIVE:** `https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale`
 
-**Blocco:** Publisher account (serve Rafa).
+**Cosa fatto (S453):**
+- Publisher `cervellaswarm` su Azure DevOps (org creata, PAT token in .env)
+- Extension v0.2.0: LSP, diagnostics, hover, completion, goto-def, formatting, lint
+- Grammar fix: +no_deletion, +exclusive, ROLE_EXCLUSIVE snake_case (Guardiana P2)
+- Pubblicata con `vsce publish -p TOKEN`
 
-**Effort:** 0.5 sessione (dopo account creato)
+**Criterio completamento:**
+- [x] Publisher account creato
+- [x] PAT token creato e salvato sicuro (.env)
+- [x] Extension v0.2.0 pubblicata
+- [x] Guardiana audit 9.3 → fix → 9.5+
+
+**Effort:** 0.5 sessione (DONE S453)
 
 ---
 
@@ -616,8 +626,8 @@ FASE 3 (E.6): T3.1-T3.4 DONE
   T3.2 Standard Library 20 prot  ← DONE S445 (20 protocolli, 72 test)
   T3.3 lu init (+--template)     ← DONE S444+S445
   T3.4 lu verify                 ← DONE S444
-  T3.5 VS Code Marketplace       ← PROSSIMO (blocco: Rafa publisher)
-  T3.6 Community Seeding          ← PROSSIMO (aggiornare con stdlib + nested choice)
+  T3.5 VS Code Marketplace       ← DONE! S453 (cervellaswarm.lingua-universale v0.2.0)
+  T3.6 Community Seeding          ← PROSSIMO (aggiornare con stdlib + nested choice + VS Code)
 
 LU 1.1 NESTED CHOICE: DONE (S447)
   8 core files modified, 28 new tests
