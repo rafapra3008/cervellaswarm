@@ -67,7 +67,7 @@ def _source_diagnostics(source: str) -> list:
         try:
             herr = humanize(exc)
         except Exception:
-            # Fallback if humanize fails
+            logger.debug("humanize failed, using raw message", exc_info=True)
             herr = None
 
         # Extract location (1-indexed line, 0-indexed col)
@@ -148,7 +148,7 @@ def _source_diagnostics(source: str) -> list:
                     )
                 )
         except Exception:
-            pass  # lint failures should not block diagnostics
+            logger.debug("lint integration failed, skipping", exc_info=True)
 
     return diagnostics
 
