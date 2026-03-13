@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Command-line interface for Lingua Universale (C3.2 + C3.4 + C3.6 + D2 + E.3 + E.4 + T3.3).
+"""Command-line interface for Lingua Universale (C3.2 + C3.4 + C3.6 + D2 + E.3 + E.4 + T3.3 + B5).
 
 Subcommands::
 
@@ -9,6 +9,7 @@ Subcommands::
     lu check <file.lu>    Parse and compile without executing (fast).
     lu verify <file.lu>   Parse, compile, and formally verify with Lean 4.
     lu compile <file.lu>  Show the generated Python source.
+    lu lint <file.lu>     Check style, correctness, and best practices (B5).
     lu init <name>        Create a new LU project with scaffolding (T3.3).
     lu repl               Start the interactive REPL.
     lu chat               Interactive guided protocol builder (E.2+E.4).
@@ -350,6 +351,52 @@ def _cmd_demo(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_lint(args: argparse.Namespace) -> int:
+    """Handle ``lu lint <file>``."""
+    from ._lint import lint_file, LintSeverity
+
+    ignore = frozenset(c.strip() for c in args.ignore.split(",") if c.strip()) if args.ignore else frozenset()
+
+    try:
+        findings = lint_file(args.file, ignore=ignore)
+    except FileNotFoundError:
+        print(
+            f"{_c.RED}Error: file not found: {args.file}{_c.RESET}",
+            file=sys.stderr,
+        )
+        return 1
+    except Exception as exc:
+        print(
+            f"{_c.RED}Error: {exc}{_c.RESET}",
+            file=sys.stderr,
+        )
+        return 1
+
+    if not findings:
+        print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {args.file} -- no lint findings")
+        return 0
+
+    has_errors = False
+    for f in findings:
+        if f.severity == LintSeverity.ERROR:
+            prefix = f"{_c.RED}{f.severity.value}{_c.RESET}"
+            has_errors = True
+        else:
+            prefix = f"{_c.YELLOW}{f.severity.value}{_c.RESET}"
+        print(f"  {prefix} {f.code} [{f.category.value}] line {f.line}: {f.message}")
+
+    errors = sum(1 for f in findings if f.severity == LintSeverity.ERROR)
+    warnings = sum(1 for f in findings if f.severity == LintSeverity.WARNING)
+    summary_parts = []
+    if errors:
+        summary_parts.append(f"{_c.RED}{errors} error(s){_c.RESET}")
+    if warnings:
+        summary_parts.append(f"{_c.YELLOW}{warnings} warning(s){_c.RESET}")
+    print(f"\n  {args.file}: {', '.join(summary_parts)}")
+
+    return 1 if has_errors else 0
+
+
 def _cmd_version(args: argparse.Namespace) -> int:
     """Handle ``lu version``."""
     from . import __version__
@@ -491,6 +538,17 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Typing speed (default: normal)",
     )
 
+    # lu lint
+    p_lint = subparsers.add_parser(
+        "lint", help="Check style, correctness, and best practices",
+    )
+    p_lint.add_argument("file", help="Path to a .lu file")
+    p_lint.add_argument(
+        "--ignore",
+        default="",
+        help="Comma-separated rule codes to ignore (e.g. LU-W002,LU-W020)",
+    )
+
     # lu version
     subparsers.add_parser("version", help="Show version information")
 
@@ -512,6 +570,7 @@ _COMMAND_HANDLERS = {
     "lsp": _cmd_lsp,
     "chat": _cmd_chat,
     "demo": _cmd_demo,
+    "lint": _cmd_lint,
     "version": _cmd_version,
 }
 
