@@ -70,4 +70,5 @@ paths:
 - Subroadmap: `.sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md`
 - Task list dettagliata: `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md`
 - FASE D: L'Ecosistema -- COMPLETA! D1-D6 DONE (media 9.5/10)
-- Test: 3494 (LU), 6764 totali repo (stima)
+- B5 `lu lint`: 10 rules, 53 tests, single-pass AST walk (Ruff/Clippy pattern)
+- Test: 3547 (LU), 6817 totali repo (stima)

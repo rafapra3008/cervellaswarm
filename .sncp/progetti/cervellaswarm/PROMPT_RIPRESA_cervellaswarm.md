@@ -1,30 +1,34 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-13 - Sessione 447
-> **STATUS:** LU 1.1+1.2 Nested Choice END-TO-END. **3494 test.** PyPI v0.3.2 LIVE.
+> **Ultimo aggiornamento:** 2026-03-13 - Sessione 448
+> **STATUS:** lu lint DONE. **3547 test.** PyPI v0.3.2 LIVE. 11 CLI commands.
 
 ---
 
-## S447 -- COSA ABBIAMO FATTO
+## S448 -- COSA ABBIAMO FATTO
 
-### 1. LU 1.1 Nested Choice (parser/compiler/spec -- 8 file + 28 test)
-- `when X decides:` dentro branch di un altro `when Y decides:`
-- Standard MPST/Scribble (Honda/Yoshida POPL 2008). Additive, zero breaking.
-- Parser `_parse_choice()` ricorsivo, `MAX_CHOICE_DEPTH = 32`
-- Spec: `_collect_all_steps`, `_find_violating_steps`, `_collect_all_paths` ricorsivi
-- Guardiana S447: 9.0 -> 8 findings fixati -> 9.5+
+### 1. PyPI v0.3.2 PUBLISHED (nested choice end-to-end)
+- Tag `lingua-universale-v0.3.2` pushed to public repo
+- Trusted Publisher workflow triggered, environment approved via `gh api`
+- LIVE on pypi.org! Nested choice (parser+compiler+spec+runtime) for the world
 
-### 2. LU 1.2 SessionChecker nested runtime (3 file + 28 test)
-- **Stack-based ChoiceFrame**: `choice_stack` sostituisce flat `branch` + `branch_step_index`
-- `_current_elements()`, `_peek_at()` ricorsivo, `_pop_exhausted_frames()` cascading
-- Backward compat: flat protocols = stack vuoto = comportamento identico
-- `summary()` espone `choice_depth` e `branch_path`
-- **Bug fix**: `_eval.py:_protocol_node_to_runtime()` crashava su nested .lu (ChoiceNode.sender)
-- **saga_order.lu**: ora usa vera nested choice (payment -> inventory decision)
-- Guardiana: 9.5/10, 3 P3 tutti fixati
+### 2. Dependabot Security Cleanup (6 PR merged)
+- 3 HIGH: ajv 8.18.0, express-rate-limit 7.5.0, hono 4.12.7
+- 1 MEDIUM: send 1.2.0
+- 2 devDep: flatted 3.4.1 (cli + dashboard)
+- HOLD: stripe 17→20 (major), express 4→5 (major), zod 3→4 (MCP SDK peer dep blocks)
 
-### 3. S446 recap
-- PyPI v0.3.1 LIVE, README sweep, 3 CI JS, Dependabot cleanup
+### 3. `lu lint` -- B5 Backlog (1 file + 1 test file + CLI)
+- **`_lint.py`** (~430 LOC): single-pass AST walk (Ruff/Clippy pattern)
+- 10 rules in 3 categories:
+  - CORRECTNESS (5, exit=1): duplicate_role, empty_branch, self_message, duplicate_branch_label, undefined_role_in_step
+  - STYLE (2, warning): protocol_name_convention, single_step_protocol
+  - BEST PRACTICES (3, warning): no_properties, deep_nesting, agent_no_trust
+- `--ignore LU-W002,LU-W020` flag with whitespace-tolerant parsing
+- Public API: `lint_program()`, `lint_source()`, `lint_file()`
+- Research report: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260313_LU_LINT_DESIGN.md`
+- Guardiana audit: 9.5/10, all P3 findings fixed (dead import, dead regex, comma-space)
+- **53 new tests** (3547 total)
 
 ---
 
@@ -32,10 +36,10 @@
 
 | Decisione | Perche |
 |-----------|--------|
-| Stack-based (non CFSM-flatten) | Struttura gia ricorsiva. Zero preprocessing. Backward compat. |
-| ChoiceFrame frozen + _frame_positions | Separa metadata immutabile da contatore mutabile. |
-| `_pop_exhausted_frames` idempotente | Chiamato 3x per send ma corretto per design (Guardiana F2: accept). |
-| _eval.py recursive fix | verify_source crashava su nested .lu. Stesso pattern del compiler fix. |
+| LU-W prefix (not LU-E) | LU-E already used for errors (74 codes). W = warning/lint. Zero collision. |
+| Single-pass walk (not multi-pass) | Ruff pattern: one walk, multiple rules. Simple, fast, extensible. |
+| Rule = plain function `(node, ctx)` | Clippy pattern. Easy to add rules. No registration boilerplate. |
+| `ignore` as frozenset | Immutable, hashable, fast lookup. Matches `frozenset` pattern in stdlib. |
 
 ---
 
@@ -55,10 +59,11 @@ LINGUA UNIVERSALE (LA MISSIONE):
   T2.1 PyPI v0.3.2:              LIVE!
   LU 1.1 Nested Choice:          DONE!       <- parser/compiler/spec
   LU 1.2 Nested Runtime:          DONE!       <- SessionChecker stack-based
-  Moduli: 29 | Test: 3494 | EBNF: 64 | Stdlib: 20
+  B5 lu lint:                     DONE!       <- 10 rules, 53 tests
+  Moduli: 29 | Test: 3547 | CLI: 11 | EBNF: 64 | Stdlib: 20
 
 CI/CD: TUTTO GREEN (local)
-DEPENDABOT: 1 PR (#18 express 4->5)
+DEPENDABOT: 3 HOLD (major: stripe, express, zod)
 ```
 
 ---
@@ -70,13 +75,13 @@ DEPENDABOT: 1 PR (#18 express 4->5)
 - [ ] Blog post: revisione "From Vibe Coding to Vericoding"
 
 ### 2. OBIETTIVI (priorita)
-- ~~**PyPI v0.3.2**~~ DONE! (S448, LIVE su PyPI)
-- **Dependabot security cleanup** (9 PR aperte, 5 high severity)
 - **T3.5 VS Code Marketplace** (blocco: Rafa publisher)
-- **T3.6 Community Seeding** (blog + nested choice showcase)
+- **T3.6 Community Seeding** (blog + nested choice + lu lint showcase)
+- **`lu fmt`** (backlog B6 -- auto-formatter companion to lu lint)
 
 ### 3. Quick wins
-- `lu lint` / `lu fmt` (backlog B5/B6)
+- `lu lint` integration in `lu check` pipeline (--lint flag?)
+- Stdlib protocols lint-clean verification
 
 ---
 
@@ -84,35 +89,27 @@ DEPENDABOT: 1 PR (#18 express 4->5)
 
 | Metrica | Valore |
 |---------|--------|
-| Test LU | **3494** |
+| Test LU | **3547** |
 | Moduli LU | **29** |
 | Stdlib | **20** (5 categorie) |
-| CLI | **10** |
+| CLI | **11** |
+| Lint rules | **10** (3 categorie) |
 | PropertyKind | **9** |
 | EBNF | **64** (frozen) |
-| Guardiana S447 | LU 1.1: 9.5+, LU 1.2: 9.5/10 |
+| Guardiana S448 | lu lint: 9.5/10 |
 
 ---
 
-## Lezioni Apprese (S447)
+## Lezioni Apprese (S448)
 
 ### Cosa ha funzionato bene
-- **Ricerca PRIMA x2**: LU 1.1 report + LU 1.2 report = implementazione precisa
-- **Bug trovato dal quick win**: saga_order.lu con nested -> scoperto _eval.py crash
-- **Stack-based design**: researcher propose, Regina implementa, Guardiana valida
+- **Formula Magica confermata**: Research report (14 sources) → design → implement → audit
+- **Guardiana anche su P3**: comma-space bug in `--ignore` parsing trovato prima del commit
+- **Dependabot triage strategy**: patch/minor merge safe, major HOLD = zero risk
 
 ### Pattern confermato
-- **`_convert_elements` recursive**: stesso pattern in _compiler.py, _eval.py, codegen.py
-- **Test-driven bug discovery**: test reali trovano bug che la theory non prevede
+- **Rule = plain function**: facile aggiungere regole senza boilerplate (Clippy/Ruff)
+- **Single commit per feature**: lint = 1 commit con tutto (code + test + CLI)
 
 ---
-*"Ultrapassar os proprios limites!" -- S447*
-<!-- AUTO-CHECKPOINT-START -->
-## AUTO-CHECKPOINT: 2026-03-13 17:03 (auto)
-- **Branch**: main
-- **Ultimo commit**: f72e1739 - S447: LU 1.2 SessionChecker nested runtime -- stack-based ChoiceFrame, 28 new tests, Guardiana 9.5/10
-- **File modificati** (3):
-  - sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
-  - .sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md
-  - .sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md
-<!-- AUTO-CHECKPOINT-END -->
+*"Ultrapassar os proprios limites!" -- S448*

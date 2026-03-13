@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 13 Marzo 2026 - S447 (LU 1.1+1.2 Nested Choice END-TO-END! 3494 test, v0.3.1 LIVE)
+> Aggiornato: 13 Marzo 2026 - S447 (LU 1.1+1.2 Nested Choice END-TO-END! 3547 test, v0.3.2 LIVE)
 
 ```
 +==================================================================+
@@ -153,8 +153,9 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |     LU 1.1 Nested Choice: DONE! 28 test, 8 file (S447)        |
 |     LU 1.2 Nested Runtime: DONE! stack-based ChoiceFrame (S447)|
 |     T2.1 PyPI v0.3.2: LIVE! (nested choice end-to-end)         |
+|     B5 lu lint: DONE! 10 rules, 53 tests (S448)               |
 |   PyPI: v0.3.2 LIVE! (LU 1.1+1.2 nested choice + stdlib)     |
-|   29 moduli, 3494 test, 10 CLI cmd, 9 PropertyKind, ZERO deps  |
+|   29 moduli, 3547 test, 11 CLI cmd, 9 PropertyKind, ZERO deps|
 |                                                                  |
 |   VISIONE (S442 - Rafa):                                        |
 |   "Un giorno le AI sviluppano CON Lingua Universale."           |
