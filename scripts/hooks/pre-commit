@@ -140,6 +140,56 @@ for file in $STAGED_FILES; do
 done
 
 # =================================================================
+# 5. LU FORMAT + LINT CHECK (S449 - Sprint 2)
+# =================================================================
+
+echo ""
+echo ">> Verificando .lu files..."
+
+LU_STAGED=$(echo "$STAGED_FILES" | grep '\.lu$' || true)
+
+if [ -n "$LU_STAGED" ]; then
+    # Check if lu CLI is available
+    if command -v lu &>/dev/null; then
+        # Format check (exit 1 = files need reformatting)
+        LU_FMT_FAILED=0
+        for lufile in $LU_STAGED; do
+            if [ -f "$lufile" ]; then
+                if ! lu fmt --check "$lufile" &>/dev/null; then
+                    echo -e "${RED}ERRORE:${NC} $lufile non formattato (esegui: lu fmt $lufile)"
+                    LU_FMT_FAILED=1
+                fi
+            fi
+        done
+        if [ "$LU_FMT_FAILED" -eq 1 ]; then
+            ((ERRORS++))
+        fi
+
+        # Lint check (exit 1 = findings)
+        LU_LINT_FAILED=0
+        for lufile in $LU_STAGED; do
+            if [ -f "$lufile" ]; then
+                LINT_OUTPUT=$(lu lint "$lufile" 2>&1)
+                LINT_RC=$?
+                if [ "$LINT_RC" -ne 0 ]; then
+                    echo -e "${YELLOW}WARNING:${NC} lu lint findings in $lufile"
+                    echo "$LINT_OUTPUT" | head -5
+                    LU_LINT_FAILED=1
+                fi
+            fi
+        done
+        if [ "$LU_LINT_FAILED" -eq 1 ]; then
+            ((WARNINGS++))
+        fi
+    else
+        echo -e "${YELLOW}HINT:${NC} lu CLI non trovato, skip format/lint check"
+        echo "        Installa: pip install cervellaswarm-lingua-universale"
+    fi
+else
+    echo -e "${GREEN}OK:${NC} Nessun file .lu staged"
+fi
+
+# =================================================================
 # RISULTATO
 # =================================================================
 
