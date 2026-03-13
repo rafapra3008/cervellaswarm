@@ -508,18 +508,9 @@ class ASTCompiler:
                     description=item.payload,
                 ))
             elif isinstance(item, ChoiceNode):
-                branches: dict[str, tuple[ProtocolStep, ...]] = {}
+                branches: dict[str, tuple[ProtocolStep | ProtocolChoice, ...]] = {}
                 for branch in item.branches:
-                    branch_steps = tuple(
-                        ProtocolStep(
-                            sender=s.sender,
-                            receiver=s.receiver,
-                            message_kind=self._step_to_message_kind(s),
-                            description=s.payload,
-                        )
-                        for s in branch.steps
-                    )
-                    branches[branch.label] = branch_steps
+                    branches[branch.label] = self._transform_steps(branch.steps)
                 result.append(ProtocolChoice(
                     decider=item.decider,
                     branches=branches,

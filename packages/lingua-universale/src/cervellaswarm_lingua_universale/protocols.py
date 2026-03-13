@@ -44,14 +44,14 @@ class ProtocolChoice:
     """A branching point in the protocol.
 
     The decider role chooses which branch to take.
-    Each branch is a list of ProtocolSteps.
+    Each branch is a sequence of ProtocolElements (steps and/or nested choices).
 
     Branches are made immutable via MappingProxyType in __post_init__
     to guarantee protocol definitions cannot be mutated after creation.
     """
 
     decider: str
-    branches: Mapping[str, tuple[ProtocolStep, ...]]
+    branches: Mapping[str, tuple[ProtocolElement, ...]]
     description: str = ""
 
     def __post_init__(self) -> None:
@@ -98,7 +98,11 @@ class Protocol:
                 f"max_repetitions must be at least 1, got {self.max_repetitions}"
             )
         # Validate all senders/receivers and deciders are declared roles
-        for elem in self.elements:
+        self._validate_elements(self.elements)
+
+    def _validate_elements(self, elements: tuple[ProtocolElement, ...]) -> None:
+        """Recursively validate roles in protocol elements (supports nested choices)."""
+        for elem in elements:
             if isinstance(elem, ProtocolStep):
                 self._validate_step_roles(elem)
             elif isinstance(elem, ProtocolChoice):
@@ -107,9 +111,8 @@ class Protocol:
                         f"decider '{elem.decider}' not in protocol roles "
                         f"{self.roles}"
                     )
-                for branch_steps in elem.branches.values():
-                    for step in branch_steps:
-                        self._validate_step_roles(step)
+                for branch_elems in elem.branches.values():
+                    self._validate_elements(branch_elems)
 
     def _validate_step_roles(self, step: ProtocolStep) -> None:
         if step.sender not in self.roles:

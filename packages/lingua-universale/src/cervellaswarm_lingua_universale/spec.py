@@ -699,6 +699,39 @@ def _parse_message_kind(name: str, line: int = 0) -> MessageKind:
 # ============================================================
 
 
+def _collect_all_steps(
+    elements: tuple[ProtocolElement, ...],
+) -> list[ProtocolStep]:
+    """Recursively collect all ProtocolStep objects from elements (including nested choices)."""
+    result: list[ProtocolStep] = []
+    for elem in elements:
+        if isinstance(elem, ProtocolStep):
+            result.append(elem)
+        elif isinstance(elem, ProtocolChoice):
+            for branch_elems in elem.branches.values():
+                result.extend(_collect_all_steps(branch_elems))
+    return result
+
+
+def _find_violating_steps(
+    elements: tuple[ProtocolElement, ...],
+    predicate: object,
+    context: str = "",
+) -> list[str]:
+    """Recursively find steps matching predicate, preserving branch context in descriptions."""
+    violations: list[str] = []
+    for elem in elements:
+        if isinstance(elem, ProtocolStep):
+            if predicate(elem):  # type: ignore[operator]
+                desc = f"{elem.sender} -> {elem.receiver} : {elem.message_kind.value}"
+                violations.append(f"branch '{context}': {desc}" if context else f"top-level step: {desc}")
+        elif isinstance(elem, ProtocolChoice):
+            for branch_name, branch_elems in elem.branches.items():
+                sub_ctx = f"{context} > {branch_name}" if context else branch_name
+                violations.extend(_find_violating_steps(branch_elems, predicate, sub_ctx))
+    return violations
+
+
 def _collect_all_paths(
     elements: tuple[ProtocolElement, ...],
 ) -> list[list[ProtocolStep]]:
@@ -708,9 +741,8 @@ def _collect_all_paths(
     possible execution trace through the protocol.
 
     For a linear protocol with no choices, returns a single path.
-    For a protocol with a ProtocolChoice, returns one path per branch,
-    each containing the steps before the choice, the branch steps, and
-    the steps after the choice.
+    For a protocol with a ProtocolChoice (including nested choices),
+    returns one path per branch combination.
     """
     # Start with one empty path
     paths: list[list[ProtocolStep]] = [[]]
@@ -724,10 +756,13 @@ def _collect_all_paths(
             # Fan out: for each current path, create one path per branch
             new_paths: list[list[ProtocolStep]] = []
             for path in paths:
-                for branch_steps in elem.branches.values():
-                    new_path = list(path)
-                    new_path.extend(branch_steps)
-                    new_paths.append(new_path)
+                for branch_elems in elem.branches.values():
+                    # Recursively expand nested choices within branches
+                    branch_paths = _collect_all_paths(branch_elems)
+                    for bp in branch_paths:
+                        new_path = list(path)
+                        new_path.extend(bp)
+                        new_paths.append(new_path)
             paths = new_paths if new_paths else paths
 
     return paths
@@ -759,13 +794,17 @@ def _check_no_deadlock_static(protocol: Protocol) -> PropertyResult:
     # ProtocolChoice branches are validated non-empty by ProtocolChoice.__post_init__.
     # The SessionChecker enforces strict sequentiality - there are no blocking waits.
     # Therefore, deadlock-free by construction for all current protocol definitions.
-    all_branches_non_empty = True
-    for elem in protocol.elements:
-        if isinstance(elem, ProtocolChoice):
-            for branch_steps in elem.branches.values():
-                if not branch_steps:
-                    all_branches_non_empty = False
-                    break
+    def _check_branches_non_empty(elements: tuple[ProtocolElement, ...]) -> bool:
+        for elem in elements:
+            if isinstance(elem, ProtocolChoice):
+                for branch_elems in elem.branches.values():
+                    if not branch_elems:
+                        return False
+                    if not _check_branches_non_empty(branch_elems):
+                        return False
+        return True
+
+    all_branches_non_empty = _check_branches_non_empty(protocol.elements)
 
     if not all_branches_non_empty:
         return PropertyResult(
@@ -797,33 +836,21 @@ def _check_no_deletion_static(protocol: Protocol) -> PropertyResult:
     # Deletion-related kinds (currently none in MessageKind; future-proofing)
     deletion_kinds: frozenset[MessageKind] = frozenset()
 
-    for elem in protocol.elements:
-        if isinstance(elem, ProtocolStep):
-            if elem.message_kind in deletion_kinds:
-                return PropertyResult(
-                    spec=spec,
-                    verdict=PropertyVerdict.VIOLATED,
-                    evidence=f"step {elem.sender} -> {elem.receiver} uses deletion kind {elem.message_kind.value}",
-                )
-        elif isinstance(elem, ProtocolChoice):
-            for branch_name, branch_steps in elem.branches.items():
-                for step in branch_steps:
-                    if step.message_kind in deletion_kinds:
-                        return PropertyResult(
-                            spec=spec,
-                            verdict=PropertyVerdict.VIOLATED,
-                            evidence=(
-                                f"branch '{branch_name}': {step.sender} -> {step.receiver} "
-                                f"uses deletion kind {step.message_kind.value}"
-                            ),
-                        )
+    all_steps = _collect_all_steps(protocol.elements)
+    for step in all_steps:
+        if step.message_kind in deletion_kinds:
+            return PropertyResult(
+                spec=spec,
+                verdict=PropertyVerdict.VIOLATED,
+                evidence=f"step {step.sender} -> {step.receiver} uses deletion kind {step.message_kind.value}",
+            )
 
     return PropertyResult(
         spec=spec,
         verdict=PropertyVerdict.PROVED,
         evidence=(
             f"protocol '{protocol.name}' uses no destructive message kinds "
-            f"({len(protocol.elements)} elements checked)"
+            f"({len(all_steps)} steps checked)"
         ),
     )
 
@@ -877,22 +904,10 @@ def _check_exclusion_static(protocol: Protocol, spec: PropertySpec) -> PropertyR
     role, msg_str = spec.params
     msg_kind = _VALUE_TO_KIND[msg_str]
 
-    violations: list[str] = []
-
-    for elem in protocol.elements:
-        if isinstance(elem, ProtocolStep):
-            if elem.sender == role and elem.message_kind == msg_kind:
-                violations.append(
-                    f"top-level step: {elem.sender} -> {elem.receiver} : {msg_str}"
-                )
-        elif isinstance(elem, ProtocolChoice):
-            for branch_name, branch_steps in elem.branches.items():
-                for step in branch_steps:
-                    if step.sender == role and step.message_kind == msg_kind:
-                        violations.append(
-                            f"branch '{branch_name}': "
-                            f"{step.sender} -> {step.receiver} : {msg_str}"
-                        )
+    violations = _find_violating_steps(
+        protocol.elements,
+        lambda step: step.sender == role and step.message_kind == msg_kind,
+    )
 
     if violations:
         return PropertyResult(
@@ -917,28 +932,17 @@ def _check_exclusion_static(protocol: Protocol, spec: PropertySpec) -> PropertyR
 def _check_role_exclusive_static(protocol: Protocol, spec: PropertySpec) -> PropertyResult:
     """Check that only the exclusive role sends the specified message kind.
 
-    VIOLATED if any step (top-level or inside a choice branch) has the
-    given message kind sent by a role other than ``spec.params[0]``.
+    VIOLATED if any step (top-level or inside a choice branch, including
+    nested choices) has the given message kind sent by a role other than
+    ``spec.params[0]``.
     """
     exclusive_role, msg_str = spec.params
     msg_kind = _VALUE_TO_KIND[msg_str]
 
-    violations: list[str] = []
-
-    for elem in protocol.elements:
-        if isinstance(elem, ProtocolStep):
-            if elem.message_kind == msg_kind and elem.sender != exclusive_role:
-                violations.append(
-                    f"top-level step: {elem.sender} -> {elem.receiver} : {msg_str}"
-                )
-        elif isinstance(elem, ProtocolChoice):
-            for branch_name, branch_steps in elem.branches.items():
-                for step in branch_steps:
-                    if step.message_kind == msg_kind and step.sender != exclusive_role:
-                        violations.append(
-                            f"branch '{branch_name}': "
-                            f"{step.sender} -> {step.receiver} : {msg_str}"
-                        )
+    violations = _find_violating_steps(
+        protocol.elements,
+        lambda step: step.message_kind == msg_kind and step.sender != exclusive_role,
+    )
 
     if violations:
         return PropertyResult(
@@ -970,15 +974,9 @@ def _check_trust_min_static(protocol: Protocol, spec: PropertySpec) -> PropertyR
     required_tier = _TRUST_TIER_MAP[tier_str]
     required_order = _TRUST_TIER_ORDER[required_tier]
 
-    # Collect all sender roles across all steps
-    sender_roles: set[str] = set()
-    for elem in protocol.elements:
-        if isinstance(elem, ProtocolStep):
-            sender_roles.add(elem.sender)
-        elif isinstance(elem, ProtocolChoice):
-            for branch_steps in elem.branches.values():
-                for step in branch_steps:
-                    sender_roles.add(step.sender)
+    # Collect all sender roles across all steps (including nested choices)
+    all_steps = _collect_all_steps(protocol.elements)
+    sender_roles: set[str] = {step.sender for step in all_steps}
 
     violations: list[str] = []
 
@@ -1018,17 +1016,12 @@ def _check_trust_min_static(protocol: Protocol, spec: PropertySpec) -> PropertyR
 
 def _check_all_roles_participate_static(protocol: Protocol, spec: PropertySpec) -> PropertyResult:
     """Check every role appears as sender or receiver in at least one step."""
-    # Collect all roles that appear in steps
+    # Collect all roles that appear in steps (including nested choices)
+    all_steps = _collect_all_steps(protocol.elements)
     active_roles: set[str] = set()
-    for elem in protocol.elements:
-        if isinstance(elem, ProtocolStep):
-            active_roles.add(elem.sender)
-            active_roles.add(elem.receiver)
-        elif isinstance(elem, ProtocolChoice):
-            for branch_steps in elem.branches.values():
-                for step in branch_steps:
-                    active_roles.add(step.sender)
-                    active_roles.add(step.receiver)
+    for step in all_steps:
+        active_roles.add(step.sender)
+        active_roles.add(step.receiver)
 
     declared = set(protocol.roles)
     missing = declared - active_roles

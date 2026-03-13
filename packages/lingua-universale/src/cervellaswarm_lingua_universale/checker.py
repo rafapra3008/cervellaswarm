@@ -173,6 +173,15 @@ class SessionChecker:
 
     Tracks state and validates each message against the protocol.
 
+    .. note::
+
+       **LU 1.1 limitation**: The current runtime checker uses flat
+       branch tracking (single ``branch`` + ``branch_step_index``).
+       It correctly handles single-level ``ProtocolChoice`` but does NOT
+       support nested choices at runtime.  Nested choice is fully
+       supported in the parser, compiler, and static spec checkers.
+       Stack-based runtime tracking is planned for LU 1.2.
+
     Usage:
         checker = SessionChecker(DelegateTask, session_id="S001")
         checker.send("regina", "worker", task_request)

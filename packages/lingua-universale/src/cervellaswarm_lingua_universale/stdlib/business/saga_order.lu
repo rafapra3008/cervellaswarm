@@ -4,8 +4,8 @@
 # through payment and inventory services with compensation on failure.
 # Demonstrates session types for distributed transactions: deadlock-freedom
 # and correct ordering are GUARANTEED BY CONSTRUCTION.
-# Note: LU 1.0 supports single-level choice; the saga forward path
-# is modeled as a sequential flow with a single decision point.
+# Note: LU 1.1 supports nested choice; this protocol uses flat choice
+# for simplicity. See test_nested_choice.py for a nested saga variant.
 # `all roles participate` is intentionally absent -- in the failure branch,
 # inventory receives a cancellation but does not return (fire-and-forget).
 
