@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 13 Marzo 2026 - S451 (Sprint 1+2+3 DONE! 3684 test, v0.3.3 LIVE, Playground Lint)
+> Aggiornato: 13 Marzo 2026 - S452 (Opus 4.6 + 1M Context Adaptation DONE! Guardiana 9.5/10)
 
 ```
 +==================================================================+
@@ -206,6 +206,7 @@ STATO ATTUALE:
   ✓ Repo Pubblico                 github.com/rafapra3008/cervellaswarm
   ✓ Scripts                       135+ file, ~20,000+ righe
   ✓ Hooks                         16 hooks su cervella_hooks_common.py v1.2.0 (DRY!)
+  ✓ Opus 4.6 + 1M Context         ADATTATO (S452, Guardiana 9.5/10)
   ✓ Memoria                       SQLite DB + analytics + retrospective
   ✓ Cron                          5 job automatici
 ```
@@ -227,6 +228,7 @@ STATO ATTUALE:
 |------|------|
 | **MAPPA LINGUAGGIO (LA MISSIONE!)** | `.sncp/roadmaps/MAPPA_LINGUAGGIO_CERVELLASWARM.md` |
 | **FASE E: INTENTBRIDGE (ATTIVA!)** | `.sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md` |
+| **S452: OPUS 4.6 + 1M (COMPLETA!)** | `.sncp/roadmaps/SUBROADMAP_S452_OPUS_4_6_1M.md` |
 | **E.5+E.6+FUTURO (TASK LIST!)** | `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md` |
 | **FASE D: ECOSISTEMA (COMPLETA!)** | `.sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md` |
 | **MAPPA COMPLETA (BIBBIA!)** | `.sncp/progetti/cervellaswarm/roadmaps/MAPPA_COMPLETA_STEP_BY_STEP.md` |
