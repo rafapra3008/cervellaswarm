@@ -3,7 +3,7 @@
 
 /**
  * Lingua Universale Playground - Preloaded Examples
- * Four canonical examples showcasing the LU language features.
+ * Preloaded examples: 4 tutorials + 3 standard library protocols.
  */
 
 const LU_EXAMPLES = [
@@ -200,6 +200,204 @@ protocol AddRecipe:
         always terminates
         no deadlock
         manager before checker
+`,
+  },
+
+  // ============================================================
+  // Standard Library Examples
+  // ============================================================
+
+  {
+    id: "rag_pipeline",
+    label: "RAG Pipeline",
+    description: "Stdlib: Retrieval-Augmented Generation (AI/ML)",
+    code: `type RelevanceScore = High | Medium | Low
+
+type Query =
+    text: String
+    max_results: Number
+    language: String
+
+type RetrievedDocument =
+    content: String
+    source: String
+    relevance: RelevanceScore
+    score: Number
+
+type GeneratedAnswer =
+    text: String
+    sources: List[String]
+    confidence: Number
+
+agent QueryUser:
+    role: user
+    trust: standard
+    accepts: GeneratedAnswer
+    produces: Query
+    requires: query.valid
+    ensures: answer.received
+
+agent DocumentRetriever:
+    role: retriever
+    trust: trusted
+    accepts: Query
+    produces: RetrievedDocument
+    requires: index.available
+    ensures: documents.relevant
+
+agent AnswerGenerator:
+    role: generator
+    trust: trusted
+    accepts: RetrievedDocument
+    produces: GeneratedAnswer
+    requires: context.provided
+    ensures: answer.grounded
+
+protocol RagPipeline:
+    roles: user, retriever, generator
+
+    user asks retriever to search documents
+    retriever sends context to generator
+    generator returns answer to user
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+        retriever before generator
+`,
+  },
+
+  {
+    id: "auth_handshake",
+    label: "Auth Handshake",
+    description: "Stdlib: OAuth-inspired authentication (Security)",
+    code: `type AuthMethod = Password | OAuth | ApiKey | Certificate
+
+type AuthRequest =
+    client_id: String
+    method: AuthMethod
+    credentials: String
+
+type AuthToken =
+    token: String
+    expires_in: Number
+    scope: String
+
+type ResourceResponse =
+    data: String
+    status: String
+    request_id: String
+
+agent AuthClient:
+    role: client
+    trust: standard
+    accepts: ResourceResponse
+    produces: AuthRequest
+    requires: credentials.valid
+    ensures: token.received
+
+agent AuthenticationServer:
+    role: auth
+    trust: verified
+    accepts: AuthRequest
+    produces: AuthToken
+    requires: credentials.verified
+    ensures: token.signed
+
+agent ProtectedResource:
+    role: resource
+    trust: trusted
+    accepts: AuthToken
+    produces: ResourceResponse
+    requires: token.valid
+    ensures: response.authorized
+
+protocol AuthHandshake:
+    roles: client, auth, resource
+
+    client asks auth to authenticate
+
+    when auth decides:
+        granted:
+            auth returns token to client
+            client asks resource to access protected data
+            resource returns response to client
+
+        denied:
+            auth returns rejection to client
+
+    properties:
+        always terminates
+        no deadlock
+        auth before resource
+        client cannot send token
+`,
+  },
+
+  {
+    id: "consensus",
+    label: "Consensus",
+    description: "Stdlib: Multi-agent voting protocol (AI/ML)",
+    code: `type VoteValue = Agree | Disagree | Abstain
+
+type Proposal =
+    id: String
+    description: String
+    category: String
+    deadline: String
+
+type Vote =
+    proposal_id: String
+    value: VoteValue
+    confidence: Number
+    rationale: String
+
+type ConsensusResult =
+    proposal_id: String
+    outcome: String
+    votes_for: Number
+    votes_against: Number
+    quorum_reached: Boolean
+
+agent ProposerAgent:
+    role: proposer
+    trust: standard
+    accepts: ConsensusResult
+    produces: Proposal
+    requires: proposal.valid
+    ensures: proposal.submitted
+
+agent ValidatorAgent:
+    role: validator
+    trust: trusted
+    accepts: Proposal
+    produces: Vote
+    requires: proposal.reviewed
+    ensures: vote.cast
+
+agent VoteAggregator:
+    role: aggregator
+    trust: verified
+    accepts: Vote
+    produces: ConsensusResult
+    requires: votes.collected
+    ensures: result.final
+
+protocol Consensus:
+    roles: proposer, validator, aggregator
+
+    proposer sends proposal to validator
+    validator returns vote to aggregator
+    aggregator returns decision to proposer
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+        confidence >= medium
+        proposer before validator
+        validator before aggregator
 `,
   },
 ];
