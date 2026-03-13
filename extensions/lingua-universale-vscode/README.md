@@ -5,7 +5,8 @@ Full language support for [Lingua Universale](https://github.com/rafapra3008/cer
 ## Features
 
 - **Syntax highlighting** -- full TextMate grammar for `.lu` files
-- **Real-time diagnostics** -- errors shown inline as you type (74 error codes, 3 languages)
+- **Real-time diagnostics** -- errors and lint warnings shown inline as you type (74 error codes, 10 lint rules, 3 languages)
+- **Formatting** -- zero-config document formatting via Format Document (Shift+Alt+F)
 - **Hover information** -- type signatures and Markdown documentation on mouse hover
 - **Code completion** -- context-aware suggestions across 7 contexts (top-level keywords, agent body, trust tiers, confidence levels, protocol body, properties, type references)
 - **Go-to-definition** -- click any type or agent name to jump to its definition
@@ -51,7 +52,7 @@ protocol DelegateTask:
 | Trust tiers | `verified`, `trusted`, `standard`, `untrusted` |
 | Confidence | `Confident`, `Certain`, `High`, `Medium`, `Low`, `Speculative` |
 | Actions | `asks`, `returns`, `tells`, `proposes`, `sends` |
-| Properties | `always terminates`, `no deadlock`, `before`, `cannot send` |
+| Properties | `always terminates`, `no deadlock`, `no deletion`, `before`, `cannot send`, `exclusive` |
 | Clauses | `role`, `trust`, `accepts`, `produces`, `requires`, `ensures` |
 | Built-in types | `String`, `Number`, `Boolean`, `List` |
 | Control | `when...decides`, `use python` |
@@ -67,6 +68,13 @@ pip install "cervellaswarm-lingua-universale[lsp]"
 Syntax highlighting works without any additional installation.
 
 ## Installation
+
+### From VS Code Marketplace (recommended)
+
+1. Open VS Code
+2. Go to Extensions (Ctrl+Shift+X / Cmd+Shift+X)
+3. Search for **"Lingua Universale"**
+4. Click **Install**
 
 ### From VSIX
 

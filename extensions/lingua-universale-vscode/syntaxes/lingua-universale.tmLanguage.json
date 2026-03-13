@@ -239,6 +239,23 @@
           }
         },
         {
+          "comment": "no deletion (NO_DELETION property, E.5)",
+          "match": "\\b(no)\\s+(deletion)\\b",
+          "captures": {
+            "1": { "name": "keyword.other.property.lu" },
+            "2": { "name": "keyword.other.property.lu" }
+          }
+        },
+        {
+          "comment": "role exclusive: X exclusive Y (ROLE_EXCLUSIVE property, E.5)",
+          "match": "\\b([a-z_][a-z0-9_]*)\\s+(exclusive)\\s+([a-z_][a-z0-9_]*)\\b",
+          "captures": {
+            "1": { "name": "variable.other.role.lu" },
+            "2": { "name": "keyword.other.property.lu" },
+            "3": { "name": "variable.other.identifier.lu" }
+          }
+        },
+        {
           "comment": "confidence >= LEVEL",
           "match": "\\b(confidence)\\s*(>=)\\s*(certain|high|medium|low|speculative)\\b",
           "captures": {
