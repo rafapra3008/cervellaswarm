@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 2026-03-13 - Sessione 447
-> **STATUS:** LU 1.1+1.2 Nested Choice END-TO-END. **3494 test.** PyPI v0.3.1 LIVE.
+> **STATUS:** LU 1.1+1.2 Nested Choice END-TO-END. **3494 test.** PyPI v0.3.2 LIVE.
 
 ---
 
@@ -52,7 +52,7 @@ LINGUA UNIVERSALE (LA MISSIONE):
       T3.3 lu init:              DONE (S444)
       T3.4 lu verify:            DONE (S444)
       T3.5 VS Code Marketplace:  TODO         <- blocco: Rafa publisher
-  T2.1 PyPI v0.3.1:              LIVE!
+  T2.1 PyPI v0.3.2:              LIVE!
   LU 1.1 Nested Choice:          DONE!       <- parser/compiler/spec
   LU 1.2 Nested Runtime:          DONE!       <- SessionChecker stack-based
   Moduli: 29 | Test: 3494 | EBNF: 64 | Stdlib: 20
@@ -70,10 +70,10 @@ DEPENDABOT: 1 PR (#18 express 4->5)
 - [ ] Blog post: revisione "From Vibe Coding to Vericoding"
 
 ### 2. OBIETTIVI (priorita)
-- **PyPI v0.3.2** (nested choice + SessionChecker runtime)
+- ~~**PyPI v0.3.2**~~ DONE! (S448, LIVE su PyPI)
+- **Dependabot security cleanup** (9 PR aperte, 5 high severity)
 - **T3.5 VS Code Marketplace** (blocco: Rafa publisher)
 - **T3.6 Community Seeding** (blog + nested choice showcase)
-- **Express 4->5 review** (PR #18)
 
 ### 3. Quick wins
 - `lu lint` / `lu fmt` (backlog B5/B6)

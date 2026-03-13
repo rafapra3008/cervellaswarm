@@ -193,7 +193,7 @@ describe their own verified behavior in natural language."
 
 ### T2.1: PyPI v0.3.1 Publish (P1) -- DONE!
 
-**LIVE su PyPI dal 13 Marzo 2026!** `pip install cervellaswarm-lingua-universale==0.3.1`
+**LIVE su PyPI dal 13 Marzo 2026!** `pip install cervellaswarm-lingua-universale==0.3.2`
 
 **Cosa include (v0.3.1):**
 - E.5 complete: IntentBridge, NL mode, Voice, violation demo, lu demo
@@ -604,7 +604,7 @@ TOTALE fino a E.6 base: 7-11 sessioni
 ```
 FASE 1-2: SOSTANZIALMENTE DONE
   T1.5 Test persona non-tecnica  ← dipende da tester reale
-  T2.1 PyPI v0.3.1               ← DONE! LIVE su PyPI (13 Mar 2026)
+  T2.1 PyPI v0.3.2               ← DONE! LIVE su PyPI (13 Mar 2026, nested choice e2e)
   T2.5 Dependabot PR Cleanup     ← 1 PR rimasta (#18 express 4->5)
 
 FASE 3 (E.6): T3.1-T3.4 DONE

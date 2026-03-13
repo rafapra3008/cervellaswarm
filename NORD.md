@@ -152,8 +152,8 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |     T3.2 Standard Library: 20 protocolli, 5 categorie (S445)  |
 |     LU 1.1 Nested Choice: DONE! 28 test, 8 file (S447)        |
 |     LU 1.2 Nested Runtime: DONE! stack-based ChoiceFrame (S447)|
-|     T2.1 PyPI v0.3.1: LIVE! (published 13 Mar 2026)            |
-|   PyPI: v0.3.1 LIVE! (stdlib + templates + E.5/E.6 features)  |
+|     T2.1 PyPI v0.3.2: LIVE! (nested choice end-to-end)         |
+|   PyPI: v0.3.2 LIVE! (LU 1.1+1.2 nested choice + stdlib)     |
 |   29 moduli, 3494 test, 10 CLI cmd, 9 PropertyKind, ZERO deps  |
 |                                                                  |
 |   VISIONE (S442 - Rafa):                                        |
