@@ -712,3 +712,56 @@ class TestMultiFile:
         captured = capsys.readouterr()
         assert "protocol" in captured.out
         assert "roles:" in captured.out
+
+    # ----------------------------------------------------------
+    # Multi-path support (S449: T2.3 CI)
+    # ----------------------------------------------------------
+
+    def test_lint_multiple_paths_combined(self, tmp_path: Path) -> None:
+        """lu lint path1 path2 collects files from both paths."""
+        dir_a = tmp_path / "a"
+        dir_a.mkdir()
+        (dir_a / "x.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        f_b = tmp_path / "y.lu"
+        f_b.write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        exit_code = main(["lint", str(dir_a), str(f_b)])
+        assert exit_code == 0
+
+    def test_lint_multiple_paths_summary_count(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture
+    ) -> None:
+        """lu lint with multiple paths reports total file count."""
+        dir_a = tmp_path / "a"
+        dir_a.mkdir()
+        (dir_a / "x.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        f_b = tmp_path / "y.lu"
+        f_b.write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        main(["lint", str(dir_a), str(f_b)])
+        captured = capsys.readouterr()
+        assert "2 files" in captured.out
+
+    def test_fmt_check_multiple_paths(self, tmp_path: Path) -> None:
+        """lu fmt --check path1 path2 checks files from all paths."""
+        dir_a = tmp_path / "a"
+        dir_a.mkdir()
+        (dir_a / "x.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        f_b = tmp_path / "y.lu"
+        f_b.write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        exit_code = main(["fmt", "--check", str(dir_a), str(f_b)])
+        assert exit_code == 0
+
+    def test_fmt_check_multiple_paths_mixed_finds_unformatted(self, tmp_path: Path) -> None:
+        """lu fmt --check with a mix of formatted and unformatted files exits 1."""
+        f_clean = tmp_path / "clean.lu"
+        f_clean.write_text(_CLEAN_SOURCE, encoding="utf-8")
+        f_messy = tmp_path / "messy.lu"
+        f_messy.write_text(_MESSY_SOURCE, encoding="utf-8")
+
+        exit_code = main(["fmt", "--check", str(f_clean), str(f_messy)])
+        assert exit_code == 1

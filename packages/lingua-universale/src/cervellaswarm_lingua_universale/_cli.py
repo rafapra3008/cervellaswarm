@@ -381,13 +381,16 @@ def _cmd_lint(args: argparse.Namespace) -> int:
 
     ignore = frozenset(c.strip() for c in args.ignore.split(",") if c.strip()) if args.ignore else frozenset()
 
-    files = _discover_lu_files(args.path)
-    if not files:
-        print(
-            f"{_c.RED}Error: no .lu files found at: {args.path}{_c.RESET}",
-            file=sys.stderr,
-        )
-        return 1
+    files: list[Path] = []
+    for p in args.path:
+        found = _discover_lu_files(p)
+        if not found:
+            print(
+                f"{_c.RED}Error: no .lu files found at: {p}{_c.RESET}",
+                file=sys.stderr,
+            )
+            return 1
+        files.extend(found)
 
     total_errors = 0
     total_warnings = 0
@@ -441,13 +444,16 @@ def _cmd_fmt(args: argparse.Namespace) -> int:
 
     from ._fmt import format_file
 
-    files = _discover_lu_files(args.path)
-    if not files:
-        print(
-            f"{_c.RED}Error: no .lu files found at: {args.path}{_c.RESET}",
-            file=sys.stderr,
-        )
-        return 1
+    files: list[Path] = []
+    for p in args.path:
+        found = _discover_lu_files(p)
+        if not found:
+            print(
+                f"{_c.RED}Error: no .lu files found at: {p}{_c.RESET}",
+                file=sys.stderr,
+            )
+            return 1
+        files.extend(found)
 
     # --stdout only makes sense for a single file
     if args.stdout and len(files) > 1:
@@ -674,7 +680,7 @@ def _build_parser() -> argparse.ArgumentParser:
     p_lint = subparsers.add_parser(
         "lint", help="Check style, correctness, and best practices",
     )
-    p_lint.add_argument("path", help="Path to a .lu file or directory")
+    p_lint.add_argument("path", nargs="+", help="Path(s) to .lu file(s) or director(ies)")
     p_lint.add_argument(
         "--ignore",
         default="",
@@ -685,7 +691,7 @@ def _build_parser() -> argparse.ArgumentParser:
     p_fmt = subparsers.add_parser(
         "fmt", help="Format .lu files to canonical style (zero-config)",
     )
-    p_fmt.add_argument("path", help="Path to a .lu file or directory")
+    p_fmt.add_argument("path", nargs="+", help="Path(s) to .lu file(s) or director(ies)")
     fmt_mode = p_fmt.add_mutually_exclusive_group()
     fmt_mode.add_argument(
         "--check",

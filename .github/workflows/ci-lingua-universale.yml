@@ -24,8 +24,35 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  lint-format:
+    name: Lint & Format Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install package
+        run: pip install -e .
+        working-directory: packages/lingua-universale
+
+      - name: Check formatting (lu fmt --check)
+        run: lu fmt --check src/cervellaswarm_lingua_universale/stdlib/ examples/hello.lu examples/confidence.lu examples/multiagent.lu
+        working-directory: packages/lingua-universale
+
+      - name: Lint (lu lint)
+        run: lu lint src/cervellaswarm_lingua_universale/stdlib/ examples/hello.lu examples/confidence.lu examples/multiagent.lu
+        working-directory: packages/lingua-universale
+
   test:
     name: Test (Python ${{ matrix.python-version }})
+    needs: [lint-format]
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
