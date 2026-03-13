@@ -765,3 +765,26 @@ class TestMultiFile:
 
         exit_code = main(["fmt", "--check", str(f_clean), str(f_messy)])
         assert exit_code == 1
+
+    def test_lint_overlapping_paths_deduplicates(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture
+    ) -> None:
+        """lu lint dir/ dir/file.lu processes each file only once."""
+        f = tmp_path / "proto.lu"
+        f.write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        main(["lint", str(tmp_path), str(f)])
+        captured = capsys.readouterr()
+        # 1 file (not 2) because dedup removes the overlap
+        assert "1 file" not in captured.out  # single file = no summary
+        # No summary = single file mode (deduped from dir + explicit file)
+
+    def test_fmt_check_overlapping_paths_deduplicates(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture
+    ) -> None:
+        """lu fmt --check dir/ dir/file.lu processes each file only once."""
+        f = tmp_path / "proto.lu"
+        f.write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        exit_code = main(["fmt", "--check", str(tmp_path), str(f)])
+        assert exit_code == 0

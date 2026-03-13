@@ -43,11 +43,11 @@ jobs:
         working-directory: packages/lingua-universale
 
       - name: Check formatting (lu fmt --check)
-        run: lu fmt --check src/cervellaswarm_lingua_universale/stdlib/ examples/hello.lu examples/confidence.lu examples/multiagent.lu
+        run: lu fmt --check src/cervellaswarm_lingua_universale/stdlib/ examples/hello.lu examples/confidence.lu examples/multiagent.lu examples/ricette.lu
         working-directory: packages/lingua-universale
 
       - name: Lint (lu lint)
-        run: lu lint src/cervellaswarm_lingua_universale/stdlib/ examples/hello.lu examples/confidence.lu examples/multiagent.lu
+        run: lu lint src/cervellaswarm_lingua_universale/stdlib/ examples/hello.lu examples/confidence.lu examples/multiagent.lu examples/ricette.lu
         working-directory: packages/lingua-universale
 
   test:

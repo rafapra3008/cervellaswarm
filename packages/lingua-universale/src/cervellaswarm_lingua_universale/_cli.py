@@ -391,6 +391,7 @@ def _cmd_lint(args: argparse.Namespace) -> int:
             )
             return 1
         files.extend(found)
+    files = list(dict.fromkeys(files))  # deduplicate preserving order
 
     total_errors = 0
     total_warnings = 0
@@ -454,6 +455,7 @@ def _cmd_fmt(args: argparse.Namespace) -> int:
             )
             return 1
         files.extend(found)
+    files = list(dict.fromkeys(files))  # deduplicate preserving order
 
     # --stdout only makes sense for a single file
     if args.stdout and len(files) > 1:
