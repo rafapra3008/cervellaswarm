@@ -59,9 +59,10 @@ def _source_diagnostics(source: str) -> list:
     from .errors import humanize, ErrorSeverity
 
     diagnostics: list[types.Diagnostic] = []
+    program = None  # keep parsed AST for lint (avoid double parse)
 
     try:
-        parse(source)
+        program = parse(source)
     except (TokenizeError, ParseError) as exc:
         # Humanize for rich error info (code, message, suggestion)
         try:
@@ -121,12 +122,12 @@ def _source_diagnostics(source: str) -> list:
             )
         )
 
-    # If parse succeeded, run lint for additional diagnostics
-    if not diagnostics:
+    # If parse succeeded, run lint on the already-parsed AST (no double parse)
+    if not diagnostics and program is not None:
         try:
-            from ._lint import lint_source, LintSeverity
+            from ._lint import lint_program, LintSeverity
 
-            findings = lint_source(source)
+            findings = lint_program(program)
             for f in findings:
                 lsp_line = max(0, f.line - 1)
                 lsp_char = max(0, f.col)
