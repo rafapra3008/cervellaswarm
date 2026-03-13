@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 2026-03-13 - Sessione 449
-> **STATUS:** Sprint 1 quasi completo. **3654 test.** PyPI v0.3.3 ready (pre-publish). 12 CLI.
+> **STATUS:** Sprint 1+2 COMPLETE. **3684 test.** PyPI v0.3.3 LIVE. 12 CLI. CI lint+fmt gate.
 
 ---
 
@@ -20,13 +20,19 @@
 - CHANGELOG documents lu lint, lu fmt, LSP integration
 - Version 0.3.3 in pyproject.toml + __init__.py
 
-### 4. Guardiana fixes (ALL findings)
-- F1+F8: silent except→logger.debug (S442 lesson)
-- F2: weak assertion→exact ==2 coordinate test
-- F3+F6: tautological test→verify protocol.fm.features
-- F4: WARNING severity lint finding test
-- F5: double parse eliminated (lint_program reuses AST)
-- F7: lint exception resilience test
+### 4. Guardiana fixes (ALL findings, Sprint 1+2)
+- Sprint 1 (LSP): logger.debug, coordinate ==2, feature test, WARNING coverage, double parse, resilience
+- Sprint 2 (CLI): non-.lu guard, symlink protection, --diff exit code, dedup --check, test fixes
+
+### 5. Sprint 2: Quality & Testing (COMPLETE)
+- T2.1: lu fmt examples (3 files) -- DONE
+- T2.2: Pre-commit hook section 5 (lu fmt --check + lu lint on staged .lu) -- DONE
+- T2.3: CI lint-format job (before test matrix) + multi-path nargs="+" -- DONE
+- T2.4+T2.5: Multi-file lu lint/fmt with _discover_lu_files -- DONE
+- T2.6: Guardiana 9.5/10 all P2+P3 fixed -- DONE
+
+### 6. PyPI v0.3.3 LIVE
+- Published via Trusted Publisher on public repo
 
 ---
 
@@ -54,22 +60,22 @@ LINGUA UNIVERSALE (LA MISSIONE):
       T3.3 lu init:              DONE (S444)
       T3.4 lu verify:            DONE (S444)
       T3.5 VS Code Marketplace:  TODO         <- blocco: Rafa
-  T2.1 PyPI v0.3.2:              LIVE!
+  T2.1 PyPI v0.3.3:              LIVE!
   LU 1.1+1.2:                    DONE!
-  B5 lu lint:                     DONE!       <- 10 rules, LSP integrated
-  B6 lu fmt:                      DONE!       <- zero-config, LSP integrated
-  Moduli: 29 | Test: 3654 | CLI: 12 | Stdlib: 20
+  B5 lu lint:                     DONE!       <- 10 rules, LSP+CI integrated
+  B6 lu fmt:                      DONE!       <- zero-config, LSP+CI integrated
+  Moduli: 29 | Test: 3684 | CLI: 12 | Stdlib: 20
 
-SPRINT 1 (Dogfood & Polish):
-  1.1 lu fmt stdlib:    DONE
-  1.2 LSP format:       DONE
-  1.3 LSP lint:         DONE
-  1.4 Guardiana audit:  DONE (9.5/10)
-  1.5 CHANGELOG:        DONE
-  1.6 Version bump:     DONE
-  1.7 PyPI v0.3.3:      TODO <- sync + tag + push public
+SPRINT 1 (Dogfood & Polish): COMPLETE (9.5/10)
+SPRINT 2 (Quality & Testing): COMPLETE
+  2.1 lu fmt examples:  DONE
+  2.2 Pre-commit hook:  DONE (section 5)
+  2.3 CI integration:   DONE (lint-format job + multi-path)
+  2.4 Multi-file fmt:   DONE
+  2.5 Multi-file lint:  DONE
+  2.6 Guardiana audit:  DONE (9.5/10)
 
-CI/CD: TUTTO GREEN
+CI/CD: TUTTO GREEN + lint-format gate
 DEPENDABOT: 2 HOLD (stripe, express)
 ```
 
@@ -82,8 +88,6 @@ DEPENDABOT: 2 HOLD (stripe, express)
 - [ ] Blog post: revisione "From Vibe Coding to Vericoding"
 
 ### 2. OBIETTIVI (priorita)
-- **T1.7 PyPI v0.3.3 publish** (sync-to-public + tag)
-- **Sprint 2** (pre-commit, CI, multi-file lu fmt/lint)
 - **Sprint 3** (README, blog, playground, Show HN v2)
 - Subroadmap: `.sncp/roadmaps/SUBROADMAP_S449_POLISH.md`
 
@@ -93,14 +97,14 @@ DEPENDABOT: 2 HOLD (stripe, express)
 
 | Metrica | Valore |
 |---------|--------|
-| Test LU | **3654** |
+| Test LU | **3684** |
 | Moduli LU | **29** |
 | Stdlib | **20** (5 categorie) |
 | CLI | **12** |
 | Lint rules | **10** (3 categorie) |
 | LSP tests | **79** |
 | PropertyKind | **9** |
-| Guardiana S449 | LSP 9.5/10 |
+| Guardiana S449 | Sprint 1: 9.5/10, Sprint 2: 9.5/10 |
 
 ---
 
@@ -117,3 +121,11 @@ DEPENDABOT: 2 HOLD (stripe, express)
 
 ---
 *"Ultrapassar os proprios limites!" -- S449*
+<!-- AUTO-CHECKPOINT-START -->
+## AUTO-CHECKPOINT: 2026-03-13 (continued)
+- **Branch**: main
+- **Ultimo commit**: 80bf028c - S449: Sprint 2 T2.3 -- CI lint+format gate, multi-path support
+- **Sprint 1**: COMPLETE (T1.1-T1.7, PyPI v0.3.3 LIVE)
+- **Sprint 2**: COMPLETE (T2.1-T2.6, pre-commit + CI + multi-path + Guardiana 9.5)
+- **Test**: 3684 passing
+<!-- AUTO-CHECKPOINT-END -->
