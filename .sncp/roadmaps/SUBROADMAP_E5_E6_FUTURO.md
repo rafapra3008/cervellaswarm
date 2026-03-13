@@ -23,7 +23,7 @@
 |     T3.4 lu verify standalone      DONE (S444)                   |
 |     T3.2 Standard Library          DONE (S445)                   |
 |                                                                |
-|   Asset: 29 moduli, 3436 test, ~14000+ LOC, ZERO deps core    |
+|   Asset: 29 moduli, 3438 test, ~14000+ LOC, ZERO deps core    |
 +================================================================+
 ```
 
@@ -198,8 +198,8 @@ describe their own verified behavior in natural language."
 - E.6 T3.1-T3.4: Grammar RFC, stdlib 20 protocols, lu init --template, lu verify
 - 2 new PropertyKind: NO_DELETION, ROLE_EXCLUSIVE (9 total)
 - P1 FIX: stdlib moved inside package for wheel inclusion
-- CHANGELOG completo, README aggiornato (3436 test, 29 moduli, 10 CLI)
-- 3436 test
+- CHANGELOG completo, README aggiornato (3438 test, 29 moduli, 10 CLI)
+- 3438 test
 
 **Criterio completamento:**
 - [x] Rafa approva GitHub environment (auto-approved via API S446)
@@ -585,7 +585,7 @@ TOTALE fino a E.6 base: 7-11 sessioni
 
 | Metrica | Attuale | Target E.5 | Target E.6 |
 |---------|---------|------------|------------|
-| Test LU | 3436 | 3400+ | 3600+ |
+| Test LU | 3438 | 3400+ | 3600+ |
 | Moduli LU | 29 | 29 | 32+ |
 | PropertyKind | 9 | 9 | 9+ |
 | Protocolli standard lib | 20 | 0 | 20+ |
