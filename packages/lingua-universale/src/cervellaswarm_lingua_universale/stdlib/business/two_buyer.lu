@@ -1,0 +1,69 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: Business - Two-Buyer Protocol
+# The canonical multiparty session type example from Honda, Yoshida,
+# and Carbone (POPL 2008). Two buyers coordinate to purchase an item:
+# Buyer1 requests a price, Buyer2 decides whether to split the cost.
+# THE most cited protocol in MPST literature.
+
+type ItemCategory = Electronics | Books | Clothing | Food
+
+type PriceQuote =
+    item: String
+    price: Number
+    currency: String
+    category: ItemCategory
+
+type SplitProposal =
+    item: String
+    total: Number
+    share: Number
+
+type OrderConfirmation =
+    order_id: String
+    item: String
+    total: Number
+    status: String
+
+agent FirstBuyer:
+    role: buyer1
+    trust: standard
+    accepts: PriceQuote
+    produces: SplitProposal
+    requires: item.selected
+    ensures: price.received
+
+agent SecondBuyer:
+    role: buyer2
+    trust: standard
+    accepts: SplitProposal
+    produces: OrderConfirmation
+    requires: proposal.received
+    ensures: decision.made
+
+agent ItemSeller:
+    role: seller
+    trust: trusted
+    accepts: SplitProposal
+    produces: PriceQuote
+    requires: item.available
+    ensures: quote.sent
+
+protocol TwoBuyer:
+    roles: buyer1, buyer2, seller
+
+    buyer1 asks seller to quote item price
+    seller returns price quote to buyer1
+    buyer1 proposes cost split to buyer2
+    when buyer2 decides:
+        accept:
+            buyer2 tells buyer1 accept split
+            buyer1 asks seller to place order
+            seller returns order confirmation to buyer1
+        reject:
+            buyer2 tells buyer1 reject split
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+        seller before buyer2

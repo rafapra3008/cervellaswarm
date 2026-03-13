@@ -1,0 +1,69 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: Business - Auction Protocol
+# Bidding protocol from MPST literature (Honda/Yoshida). An auctioneer
+# presents an item, a bidder places a bid, and the auctioneer decides
+# whether to accept or continue. Demonstrates choice branches with
+# guaranteed termination - no infinite bidding loops.
+
+type AuctionStatus = Open | Closing | Sold | Unsold
+
+type AuctionItem =
+    id: String
+    name: String
+    starting_price: Number
+    description: String
+
+type Bid =
+    bidder_id: String
+    amount: Number
+    item_id: String
+
+type AuctionResult =
+    item_id: String
+    final_price: Number
+    winner: String
+    status: AuctionStatus
+
+agent AuctionHost:
+    role: auctioneer
+    trust: trusted
+    accepts: Bid
+    produces: AuctionItem
+    requires: item.listed
+    ensures: auction.conducted
+
+agent AuctionBidder:
+    role: bidder
+    trust: standard
+    accepts: AuctionItem
+    produces: Bid
+    requires: auction.open
+    ensures: bid.placed
+
+agent AuctionRecorder:
+    role: recorder
+    trust: verified
+    accepts: AuctionResult
+    produces: AuctionResult
+    requires: auction.complete
+    ensures: record.saved
+
+protocol Auction:
+    roles: auctioneer, bidder, recorder
+
+    auctioneer sends item listing to bidder
+    bidder returns bid to auctioneer
+    when auctioneer decides:
+        sold:
+            auctioneer tells bidder auction won
+            auctioneer sends auction result to recorder
+            recorder returns confirmation to auctioneer
+        unsold:
+            auctioneer tells bidder auction closed
+            auctioneer sends auction result to recorder
+            recorder returns confirmation to auctioneer
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate

@@ -3,7 +3,7 @@
 
 """Tests for spec.py parser: parse_spec() happy paths and error cases.
 
-Covers: all 7 property kinds, confidence levels, trust tiers, comments,
+Covers: all 9 property kinds, confidence levels, trust tiers, comments,
 blank lines, triple-quoted strings with indentation, and all error paths.
 """
 
@@ -66,24 +66,28 @@ class TestParseSpecHappyPath:
         """)
         assert spec.properties[0].kind == PropertyKind.ALL_ROLES_PARTICIPATE
 
-    def test_parse_all_seven_properties(self):
+    def test_parse_all_nine_properties(self):
         spec = parse_spec("""
             properties for DelegateTask:
                 always terminates
                 no deadlock
+                no deletion
                 task_request before task_result
                 worker cannot send audit_request
+                regina exclusive dm
                 confidence >= high
                 trust >= standard
                 all roles participate
         """)
         assert spec.protocol_name == "DelegateTask"
-        assert len(spec.properties) == 7
+        assert len(spec.properties) == 9
         kinds = [p.kind for p in spec.properties]
         assert PropertyKind.ALWAYS_TERMINATES in kinds
         assert PropertyKind.NO_DEADLOCK in kinds
+        assert PropertyKind.NO_DELETION in kinds
         assert PropertyKind.ORDERING in kinds
         assert PropertyKind.EXCLUSION in kinds
+        assert PropertyKind.ROLE_EXCLUSIVE in kinds
         assert PropertyKind.CONFIDENCE_MIN in kinds
         assert PropertyKind.TRUST_MIN in kinds
         assert PropertyKind.ALL_ROLES_PARTICIPATE in kinds
@@ -364,3 +368,69 @@ class TestParseSpecEdgeCases:
                 no deadlock
         """)
         assert isinstance(spec.properties, tuple)
+
+
+# ============================================================
+# NO_DELETION and ROLE_EXCLUSIVE parsing tests
+# ============================================================
+
+
+class TestParseNoDeletionAndRoleExclusive:
+    """Parser tests for new PropertyKind.NO_DELETION and PropertyKind.ROLE_EXCLUSIVE."""
+
+    def test_parse_no_deletion(self):
+        """'no deletion' parses to PropertyKind.NO_DELETION."""
+        spec = parse_spec("""
+            properties for X:
+                no deletion
+        """)
+        assert len(spec.properties) == 1
+        assert spec.properties[0].kind == PropertyKind.NO_DELETION
+
+    def test_parse_role_exclusive(self):
+        """'ROLE exclusive MSG_KIND' parses to PropertyKind.ROLE_EXCLUSIVE with correct params."""
+        spec = parse_spec("""
+            properties for CookerProto:
+                Cuoco exclusive dm
+        """)
+        assert len(spec.properties) == 1
+        prop = spec.properties[0]
+        assert prop.kind == PropertyKind.ROLE_EXCLUSIVE
+        assert prop.params == ("Cuoco", "dm")
+
+    def test_parse_no_deletion_with_other_props(self):
+        """'no deletion' parses correctly alongside other properties."""
+        spec = parse_spec("""
+            properties for ComboProto:
+                no deletion
+                always terminates
+        """)
+        assert len(spec.properties) == 2
+        kinds = [p.kind for p in spec.properties]
+        assert PropertyKind.NO_DELETION in kinds
+        assert PropertyKind.ALWAYS_TERMINATES in kinds
+
+    def test_parse_no_deadlock_still_works(self):
+        """Regression: 'no deadlock' still parses correctly (disambiguation with 'no deletion')."""
+        spec = parse_spec("""
+            properties for RegressionProto:
+                no deadlock
+        """)
+        assert len(spec.properties) == 1
+        assert spec.properties[0].kind == PropertyKind.NO_DEADLOCK
+
+
+class TestParseE2ENewProperties:
+    """E2E spec verification for NO_DELETION and ROLE_EXCLUSIVE together."""
+
+    def test_e2e_no_deletion_and_role_exclusive(self):
+        """parse_spec with both new properties returns correct kinds and params."""
+        spec = parse_spec("""
+            properties for TestProto:
+                no deletion
+                Cuoco exclusive dm
+        """)
+        assert len(spec.properties) == 2
+        assert spec.properties[0].kind == PropertyKind.NO_DELETION
+        assert spec.properties[1].kind == PropertyKind.ROLE_EXCLUSIVE
+        assert spec.properties[1].params == ("Cuoco", "dm")

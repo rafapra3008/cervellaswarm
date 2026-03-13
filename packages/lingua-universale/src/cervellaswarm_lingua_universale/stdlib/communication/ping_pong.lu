@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: Communication - Ping/Pong
+# Health check and liveness protocol. An initiator sends a ping
+# and a responder sends back a pong. Classic session type example
+# for demonstrating bidirectional message exchange.
+
+type HealthStatus = Alive | Degraded | Unreachable
+
+type PingMessage =
+    timestamp: Number
+    sequence: Number
+
+type PongMessage =
+    timestamp: Number
+    sequence: Number
+    status: HealthStatus
+    latency: Number
+
+agent Initiator:
+    role: checker
+    trust: standard
+    accepts: PongMessage
+    produces: PingMessage
+    requires: target.reachable
+    ensures: health.checked
+
+agent Responder:
+    role: service
+    trust: standard
+    accepts: PingMessage
+    produces: PongMessage
+    requires: ping.received
+    ensures: pong.sent
+
+protocol PingPong:
+    roles: checker, service
+
+    checker sends ping to service
+    service sends pong to checker
+    checker sends ping to service
+    service sends pong to checker
+
+    properties:
+        always terminates
+        no deadlock

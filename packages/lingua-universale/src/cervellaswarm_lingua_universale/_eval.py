@@ -18,11 +18,28 @@ from __future__ import annotations
 import types
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-from ._ast import ProgramNode, ProtocolNode
+from ._ast import (
+    AlwaysTerminates,
+    AllParticipate,
+    ChoiceNode,
+    ConfidenceProp,
+    ExclusionProp,
+    NoDeletionProp,
+    NoDeadlock,
+    OrderingProp,
+    ProgramNode,
+    ProtocolNode,
+    RoleExclusiveProp,
+    TrustProp,
+)
 from ._compiler import ASTCompiler, CompiledModule
 from ._interop import load_module, InteropError
 from ._parser import parse
+
+if TYPE_CHECKING:
+    from .spec import PropertyReport
 
 
 @dataclass(frozen=True)
@@ -37,6 +54,7 @@ class EvalResult:
         module: The live Python module (None unless ``run`` was used).
         python_source: The generated Python code (None if compile failed).
         verification: Lean 4 verification lines (empty unless ``verify``).
+        property_reports: Static property check reports (empty unless ``verify``).
     """
 
     ok: bool
@@ -46,6 +64,7 @@ class EvalResult:
     module: types.ModuleType | None = None
     python_source: str | None = None
     verification: list[str] = field(default_factory=list)
+    property_reports: list[PropertyReport] = field(default_factory=list)
 
 
 # ============================================================
@@ -123,53 +142,91 @@ def check_file(path: str | Path) -> EvalResult:
 
 
 def verify_source(source: str, *, source_file: str = "<input>") -> EvalResult:
-    """Parse, compile, and formally verify LU source with Lean 4.
+    """Parse, compile, and verify LU source.
 
-    Extracts protocol declarations from the AST and generates Lean 4
-    verification for each.  If Lean 4 is not installed, reports a
-    graceful error instead of crashing.
+    Two verification layers:
+      1. **Static property checking** (spec.py) -- always runs, no external deps.
+      2. **Lean 4 formal verification** -- runs if Lean 4 is installed.
+
+    Returns an EvalResult with property_reports populated.
     """
-    # Parse + compile (single pass)
     program, compiled, errors = _parse_and_compile(source, source_file)
     if errors:
         return EvalResult(ok=False, source_file=source_file, errors=errors)
 
-    # Import lean4 bridge lazily (it's in the same package)
     from .lean4_bridge import lean4_available
+    from .spec import check_properties
 
     verification_lines: list[str] = []
+    property_reports = []
     has_protocols = False
+    all_passed = True
 
     for decl in program.declarations:
-        if isinstance(decl, ProtocolNode):
-            has_protocols = True
-            verification_lines.append(f"Protocol: {decl.name}")
+        if not isinstance(decl, ProtocolNode):
+            continue
+        has_protocols = True
+        verification_lines.append(f"Protocol: {decl.name}")
 
-            # Convert AST ProtocolNode to runtime Protocol for Lean4
-            # We use the compiled module's bridge capabilities
-            try:
-                lean4_source = _protocol_node_to_lean4(decl)
-                verification_lines.append(f"  Lean 4 source generated ({len(lean4_source)} chars)")
+        # --- Layer 1: Static property checking ---
+        spec = _ast_properties_to_spec(decl)
+        if spec is not None:
+            protocol_obj = _protocol_node_to_runtime(decl)
+            report = _safe_check_properties(protocol_obj, spec)
+            property_reports.append(report)
 
-                if lean4_available():
-                    verification_lines.append("  Lean 4: available (formal verification ready)")
-                else:
-                    verification_lines.append(
-                        "  Lean 4: not installed "
-                        "(install with: elan toolchain install leanprover-lean4-v4.14.0)"
-                    )
-            except Exception as exc:
-                verification_lines.append(f"  Lean 4 generation: {exc}")
+            for i, result in enumerate(report.results, 1):
+                kind_label = result.spec.kind.value
+                verdict = result.verdict.name
+                verification_lines.append(
+                    f"  [{i}/{len(report.results)}] {kind_label} ... {verdict}"
+                )
+                if result.evidence:
+                    verification_lines.append(f"         {result.evidence}")
+
+            passed = sum(
+                1 for r in report.results if r.verdict.name != "VIOLATED"
+            )
+            total = len(report.results)
+            if passed == total:
+                verification_lines.append(f"  All {total} properties PASSED.")
+            else:
+                verification_lines.append(
+                    f"  {passed}/{total} passed, "
+                    f"{total - passed} VIOLATED."
+                )
+                all_passed = False
+        else:
+            verification_lines.append("  No properties declared.")
+
+        # --- Layer 2: Lean 4 formal verification ---
+        try:
+            lean4_source = _protocol_node_to_lean4(decl)
+            verification_lines.append(
+                f"  Lean 4 source generated ({len(lean4_source)} chars)"
+            )
+            if lean4_available():
+                verification_lines.append(
+                    "  Lean 4: available (formal verification ready)"
+                )
+            else:
+                verification_lines.append(
+                    "  Lean 4: not installed "
+                    "(install with: elan toolchain install leanprover-lean4-v4.14.0)"
+                )
+        except Exception as exc:
+            verification_lines.append(f"  Lean 4 generation: {exc}")
 
     if not has_protocols:
         verification_lines.append("No protocol declarations found to verify.")
 
     return EvalResult(
-        ok=True,
+        ok=all_passed,
         source_file=source_file,
         compiled=compiled,
         python_source=compiled.python_source,
         verification=verification_lines,
+        property_reports=property_reports,
     )
 
 
@@ -243,17 +300,150 @@ def run_file(path: str | Path) -> EvalResult:
 # ============================================================
 
 
-def _protocol_node_to_lean4(node: ProtocolNode) -> str:
-    """Convert an AST ProtocolNode to Lean 4 source via the bridge.
+def _safe_check_properties(protocol, spec):
+    """Check properties one by one, skipping those that fail mapping.
 
-    This bridges the C1 AST representation to the Phase A/B Protocol
-    objects needed by ``lean4_bridge.generate_lean4()``.
+    ORDERING and EXCLUSION in .lu files use identifier names that may not
+    map to MessageKind values.  Those properties are SKIPPED with evidence.
     """
-    from .protocols import Protocol, ProtocolStep
-    from .types import MessageKind
-    from .lean4_bridge import generate_lean4
+    from .spec import (
+        PropertyReport, PropertyResult, PropertySpec, PropertyVerdict,
+        check_properties,
+    )
 
-    _ACTION_TO_KIND: dict[str, MessageKind] = {
+    # Try full batch first (fast path)
+    try:
+        return check_properties(protocol, spec)
+    except (KeyError, ValueError):
+        pass
+
+    # Slow path: check one property at a time
+    results: list[PropertyResult] = []
+    for prop_spec in spec.properties:
+        single_spec = type(spec)(
+            protocol_name=spec.protocol_name,
+            properties=(prop_spec,),
+        )
+        try:
+            single_report = check_properties(protocol, single_spec)
+            results.extend(single_report.results)
+        except (KeyError, ValueError) as exc:
+            results.append(PropertyResult(
+                spec=prop_spec,
+                verdict=PropertyVerdict.SKIPPED,
+                evidence=f"params not resolvable: {exc}",
+            ))
+
+    return PropertyReport(
+        protocol_name=spec.protocol_name,
+        results=tuple(results),
+    )
+
+
+def _protocol_node_to_runtime(node: ProtocolNode):
+    """Convert an AST ProtocolNode to a runtime Protocol object.
+
+    Handles both ``StepNode`` (flat steps) and ``ChoiceNode`` (branches)
+    so property checkers see the complete protocol structure.
+    """
+    from .protocols import Protocol, ProtocolChoice, ProtocolStep
+    from .types import MessageKind
+
+    action_to_kind = _action_to_kind_map()
+
+    elements: list[ProtocolStep | ProtocolChoice] = []
+    for step_node in node.steps:
+        if isinstance(step_node, ChoiceNode):
+            branches: dict[str, tuple[ProtocolStep, ...]] = {}
+            for branch in step_node.branches:
+                branches[branch.label] = tuple(
+                    ProtocolStep(
+                        sender=s.sender,
+                        receiver=s.receiver,
+                        message_kind=action_to_kind.get(
+                            s.action, MessageKind.TASK_REQUEST,
+                        ),
+                        description=s.payload,
+                    )
+                    for s in branch.steps
+                )
+            elements.append(
+                ProtocolChoice(decider=step_node.decider, branches=branches),
+            )
+        elif hasattr(step_node, "sender"):
+            kind = action_to_kind.get(step_node.action, MessageKind.TASK_REQUEST)
+            elements.append(ProtocolStep(
+                sender=step_node.sender,
+                receiver=step_node.receiver,
+                message_kind=kind,
+                description=step_node.payload,
+            ))
+
+    return Protocol(
+        name=node.name,
+        roles=node.roles,
+        elements=tuple(elements),
+    )
+
+
+def _ast_properties_to_spec(node: ProtocolNode):
+    """Convert AST property nodes to a ProtocolSpec for static checking.
+
+    Returns None if the protocol has no properties declared.
+    """
+    from .spec import PropertyKind, PropertySpec, ProtocolSpec
+
+    _CONFIDENCE_THRESHOLDS = {
+        "certain": 1.0, "high": 0.8, "medium": 0.5,
+        "low": 0.2, "speculative": 0.1,
+    }
+
+    if not node.properties:
+        return None
+
+    specs: list[PropertySpec] = []
+    for prop in node.properties:
+        if isinstance(prop, AlwaysTerminates):
+            specs.append(PropertySpec(kind=PropertyKind.ALWAYS_TERMINATES))
+        elif isinstance(prop, NoDeadlock):
+            specs.append(PropertySpec(kind=PropertyKind.NO_DEADLOCK))
+        elif isinstance(prop, NoDeletionProp):
+            specs.append(PropertySpec(kind=PropertyKind.NO_DELETION))
+        elif isinstance(prop, AllParticipate):
+            specs.append(PropertySpec(kind=PropertyKind.ALL_ROLES_PARTICIPATE))
+        elif isinstance(prop, ConfidenceProp):
+            threshold = _CONFIDENCE_THRESHOLDS.get(prop.level, 0.5)
+            specs.append(PropertySpec(
+                kind=PropertyKind.CONFIDENCE_MIN, threshold=threshold,
+            ))
+        elif isinstance(prop, TrustProp):
+            specs.append(PropertySpec(
+                kind=PropertyKind.TRUST_MIN, params=(prop.tier,),
+            ))
+        elif isinstance(prop, OrderingProp):
+            specs.append(PropertySpec(
+                kind=PropertyKind.ORDERING, params=(prop.before, prop.after),
+            ))
+        elif isinstance(prop, ExclusionProp):
+            specs.append(PropertySpec(
+                kind=PropertyKind.EXCLUSION, params=(prop.role, prop.message),
+            ))
+        elif isinstance(prop, RoleExclusiveProp):
+            specs.append(PropertySpec(
+                kind=PropertyKind.ROLE_EXCLUSIVE, params=(prop.role, prop.message),
+            ))
+
+    return ProtocolSpec(
+        protocol_name=node.name,
+        properties=tuple(specs),
+    )
+
+
+def _action_to_kind_map() -> dict[str, object]:
+    """Return the shared action-verb → MessageKind mapping (lazy import)."""
+    from .types import MessageKind
+
+    return {
         "asks": MessageKind.TASK_REQUEST,
         "returns": MessageKind.TASK_RESULT,
         "sends": MessageKind.DM,
@@ -261,27 +451,15 @@ def _protocol_node_to_lean4(node: ProtocolNode) -> str:
         "proposes": MessageKind.PLAN_PROPOSAL,
     }
 
-    steps: list[ProtocolStep] = []
-    for step_node in node.steps:
-        # ChoiceNode has branches, not sender/receiver -- skip for now
-        if not hasattr(step_node, "sender"):
-            continue
-        kind = _ACTION_TO_KIND.get(
-            step_node.action, MessageKind.TASK_REQUEST,
-        )
-        steps.append(
-            ProtocolStep(
-                sender=step_node.sender,
-                receiver=step_node.receiver,
-                message_kind=kind,
-                description=step_node.payload,
-            )
-        )
 
-    protocol = Protocol(
-        name=node.name,
-        roles=node.roles,
-        elements=tuple(steps),
-    )
+def _protocol_node_to_lean4(node: ProtocolNode) -> str:
+    """Convert an AST ProtocolNode to Lean 4 source via the bridge.
+
+    Reuses ``_protocol_node_to_runtime()`` for the AST → Protocol
+    conversion, then passes the Protocol to ``generate_lean4()``.
+    """
+    from .lean4_bridge import generate_lean4
+
+    protocol = _protocol_node_to_runtime(node)
 
     return generate_lean4(protocol)

@@ -1,0 +1,62 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: Data - Cache Invalidation
+# Cache consistency protocol with choice branches. A writer updates
+# the source of truth, the cache handles read requests with hit/miss
+# logic. "Cache invalidation is one of the hardest problems in CS" -
+# this protocol solves it by construction with verified properties.
+
+type CacheStatus = Hit | Miss | Stale | Expired
+
+type CacheEntry =
+    key: String
+    value: String
+    ttl: Number
+    version: Number
+
+type WriteResult =
+    key: String
+    version: Number
+    invalidated: Boolean
+
+agent DataWriter:
+    role: writer
+    trust: trusted
+    accepts: CacheEntry
+    produces: WriteResult
+    requires: data.valid
+    ensures: source.updated
+
+agent CacheNode:
+    role: cache
+    trust: standard
+    accepts: CacheEntry
+    produces: CacheEntry
+    requires: request.received
+    ensures: response.sent
+
+agent DataReader:
+    role: reader
+    trust: standard
+    accepts: CacheEntry
+    produces: CacheEntry
+    requires: query.valid
+    ensures: data.received
+
+protocol CacheInvalidation:
+    roles: writer, cache, reader
+
+    writer asks cache to invalidate entry
+    cache returns acknowledgment to writer
+    reader asks cache to lookup entry
+    when cache decides:
+        hit:
+            cache returns cached value to reader
+        miss:
+            cache asks writer to fetch fresh data
+            writer returns fresh value to cache
+            cache returns fresh value to reader
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate

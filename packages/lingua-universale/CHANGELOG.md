@@ -4,6 +4,53 @@ All notable changes to `cervellaswarm-lingua-universale` will be documented in t
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.3.1] - 2026-03-13
+
+### Added
+
+**IntentBridge - Phase E.5: "Per Tutti" (S438-S443)**
+- `_intent_bridge.py`: ChatSession with 11-phase guided protocol builder. IntentDraft frozen IR. 3 locales (en/it/pt).
+- `_nl_processor.py`: ClaudeNLProcessor -- NL to IntentDraft via Claude tool_use. TOOL_SCHEMA constrains output. Optional dep: `pip install ...[nl]`.
+- `_voice.py`: VoiceProcessor -- push-to-talk mic capture + STT via faster-whisper. Optional dep: `pip install ...[voice]`.
+- `lu chat` command: `--lang it|pt|en`, `--mode guided|nl`, `--voice`, `--voice-model`.
+- `lu demo` command: autonomous scripted demo with typewriter effect, 3 speeds, 3 languages.
+- Violation demo (R20): `_render_violation_demo()` shows blocked NO_DELETION and ROLE_EXCLUSIVE attempts.
+- 2 new PropertyKind: `NO_DELETION` (no destructive operations), `ROLE_EXCLUSIVE` (only role X can send Y).
+- Property explanation i18n: human-readable descriptions in 3 languages.
+- Pipeline smoke tests: 3 classes, 6 tests covering flat/branched/4-property scenarios.
+
+**CervellaLang 1.0 - Phase E.6 (S444-S445)**
+- Grammar 1.0 RFC: 64 EBNF productions frozen. 32 hard + 10 soft keywords.
+- Parser aligned to 9/9 PropertyKind (`NoDeletionProp`, `RoleExclusiveProp` AST nodes).
+- Grammar export (GBNF + Lark) updated for 9 PropertyKind.
+- `lu verify`: standalone CLI verification with colored per-property output (GREEN/RED/YELLOW).
+- `lu init --template <name>`: scaffold project from stdlib template.
+- `lu init --list-templates`: show 20 available stdlib templates.
+- **Standard Library**: 20 verified protocols in 5 categories:
+  - Communication (5): request_response, ping_pong, pub_sub, scatter_gather, pipeline
+  - Data (3): crud_safe, data_sync, cache_invalidation
+  - Business (4): two_buyer (MPST canonical), approval_workflow, auction, saga_order
+  - AI/ML (5): rag_pipeline, agent_delegation, tool_calling, human_in_loop, consensus
+  - Security (3): auth_handshake, mutual_tls, rate_limited_api
+- All 9 PropertyKind covered across stdlib protocols.
+
+### Changed
+
+- **Module count**: 25 -> 29 modules
+- **CLI commands**: 7 -> 10 (+ `chat`, `demo`, `verify` as standalone)
+- **Test count**: 2909 -> 3436 tests
+- **stdlib moved inside package**: `stdlib/` relocated from package root to `src/cervellaswarm_lingua_universale/stdlib/` for correct wheel distribution. Templates now work after `pip install`.
+- Test stdlib files use `_STDLIB_DIR` import instead of fragile relative paths (DRY).
+
+### Fixed
+
+- **P1**: spec format was `spec NAME:` (wrong) instead of `properties for NAME:` (correct). Broken since S438, masked by silent try/except.
+- **P1**: `result.property_name` attribute did not exist -- fixed to `result.spec.kind.value`.
+- **P1**: stdlib `.lu` files were NOT included in PyPI wheel (path was outside `src/`).
+- **P1**: `.gitignore` `data/` pattern blocked `stdlib/data/*.lu` files (negation pattern updated).
+- Parser: `NoDeletionProp` and `RoleExclusiveProp` AST nodes added for 9/9 PropertyKind alignment.
+- `_init_project.py`: `_find_template()` and `list_templates()` path resolution fixed for installed packages.
+
 ## [0.3.0] - 2026-03-06
 
 ### Added
@@ -19,7 +66,7 @@ This project follows [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
-- **Refactoring**: `checker.send()` split from 168 lines into 4 private helpers (17-line orchestrator)
+- **Refactoring**: `checker.send()` split from 168 lines into 4 private helpers (16-line orchestrator)
 - **Refactoring**: `codegen.generate_python_multi()` split from 171 lines into 3 private helpers (43-line orchestrator)
 - **Test count**: 2828 -> 2909 tests
 
@@ -35,8 +82,8 @@ This project follows [Semantic Versioning](https://semver.org/).
 ### Added
 
 **The Language - Phase C: Parsing Pipeline (C1)**
-- `_tokenizer.py`: Unified lexer for Lingua Universale v0.2. Replaces the two inline tokenizers in `intent.py` and `spec.py`. 62-production EBNF grammar support, explicit INDENT/DEDENT tokens, paren-depth tracking for line continuation, 4-space indent enforcement, `textwrap.dedent` pre-processing. Zero external dependencies.
-- `_ast.py`: Immutable frozen-dataclass AST node hierarchy for the 62-production grammar. Node families: `Expr` (8 types), `Property` (7 types), `Step/Choice` (3 types), `Protocol`, `Agent`, `Type` (5 types), `Use`, `Program`. All collections use `tuple` for hashability.
+- `_tokenizer.py`: Unified lexer for Lingua Universale v0.2. Replaces the two inline tokenizers in `intent.py` and `spec.py`. 64-production EBNF grammar support, explicit INDENT/DEDENT tokens, paren-depth tracking for line continuation, 4-space indent enforcement, `textwrap.dedent` pre-processing. Zero external dependencies.
+- `_ast.py`: Immutable frozen-dataclass AST node hierarchy for the 64-production grammar. Node families: `Expr` (8 types), `Property` (9 types), `Step/Choice` (3 types), `Protocol`, `Agent`, `Type` (5 types), `Use`, `Program`. All collections use `tuple` for hashability.
 - `_parser.py`: Recursive descent parser. Converts token list from `_tokenizer` into `ProgramNode` AST. LL(1) with targeted LL(3) lookahead for method-call disambiguation. Public API: `parse(source) -> ProgramNode`, `ParseError`.
 
 **The Language - Phase C: Compiler Pipeline (C2)**
@@ -166,6 +213,7 @@ This project follows [Semantic Versioning](https://semver.org/).
 - Frozen dataclasses with `__post_init__` validation throughout
 - Pre-computed O(1) lookup tables for MessageKind <-> PascalCase conversion
 
+[0.3.1]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.3.1
 [0.3.0]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.3.0
 [0.2.0]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.2.0
 [0.1.1]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.1.1

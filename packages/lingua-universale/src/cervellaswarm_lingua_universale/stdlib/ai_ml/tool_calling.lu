@@ -1,0 +1,63 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: AI/ML - Tool Calling
+# MCP-style tool invocation protocol. An agent looks up available tools
+# from a registry, then invokes a specific tool on a server. Inspired
+# by Anthropic's Model Context Protocol, but with session type guarantees:
+# the agent MUST look up the tool before invoking it.
+
+type ToolCategory = Search | Compute | Storage | Communication
+
+type ToolSchema =
+    name: String
+    description: String
+    category: ToolCategory
+    parameters: List[String]
+
+type ToolInvocation =
+    tool_name: String
+    arguments: List[String]
+    request_id: String
+
+type ToolResult =
+    request_id: String
+    output: String
+    success: Boolean
+    duration: Number
+
+agent CallingAgent:
+    role: agent
+    trust: standard
+    accepts: ToolResult
+    produces: ToolInvocation
+    requires: tool.identified
+    ensures: result.processed
+
+agent ToolRegistryAgent:
+    role: registry
+    trust: trusted
+    accepts: ToolInvocation
+    produces: ToolSchema
+    requires: query.valid
+    ensures: schema.returned
+
+agent ToolExecutor:
+    role: executor
+    trust: trusted
+    accepts: ToolInvocation
+    produces: ToolResult
+    requires: tool.available
+    ensures: execution.complete
+
+protocol ToolCalling:
+    roles: agent, registry, executor
+
+    agent asks registry to lookup available tool
+    registry returns tool schema to agent
+    agent asks executor to invoke tool
+    executor returns execution result to agent
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+        registry before executor

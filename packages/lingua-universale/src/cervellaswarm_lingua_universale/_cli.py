@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Command-line interface for Lingua Universale (C3.2 + C3.4 + C3.6 + D2).
+"""Command-line interface for Lingua Universale (C3.2 + C3.4 + C3.6 + D2 + E.3 + E.4 + T3.3).
 
 Subcommands::
 
@@ -9,7 +9,10 @@ Subcommands::
     lu check <file.lu>    Parse and compile without executing (fast).
     lu verify <file.lu>   Parse, compile, and formally verify with Lean 4.
     lu compile <file.lu>  Show the generated Python source.
+    lu init <name>        Create a new LU project with scaffolding (T3.3).
     lu repl               Start the interactive REPL.
+    lu chat               Interactive guided protocol builder (E.2+E.4).
+    lu demo               Run the La Nonna demo autonomously (E.5).
     lu lsp                Start the Language Server Protocol server (STDIO).
     lu version            Show version information.
 
@@ -89,9 +92,19 @@ def _cmd_verify(args: argparse.Namespace) -> int:
     """Handle ``lu verify <file>``."""
     result = verify_file(args.file)
     _print_result(result)
-    if result.ok:
-        for line in result.verification:
+    for line in result.verification:
+        if line.startswith("  All") and "PASSED" in line:
+            print(f"  {_c.GREEN}{_c.BOLD}{line}{_c.RESET}")
+        elif "VIOLATED." in line:
+            print(f"  {_c.RED}{_c.BOLD}{line}{_c.RESET}")
+        elif "PROVED" in line or "SATISFIED" in line:
+            print(f"  {_c.GREEN}{line}{_c.RESET}")
+        elif "VIOLATED" in line:
+            print(f"  {_c.RED}{line}{_c.RESET}")
+        elif "SKIPPED" in line:
             print(f"  {_c.YELLOW}{line}{_c.RESET}")
+        else:
+            print(f"  {_c.CYAN}{line}{_c.RESET}")
     return 0 if result.ok else 1
 
 
@@ -128,11 +141,213 @@ def _cmd_repl(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_init(args: argparse.Namespace) -> int:
+    """Handle ``lu init <name>``."""
+    from ._init_project import init_project, list_templates
+
+    # --list-templates: show available and exit
+    if getattr(args, "list_templates", False):
+        templates = list_templates()
+        if not templates:
+            print("No stdlib templates found.")
+            return 0
+        print(f"{_c.BOLD}Available templates ({len(templates)}):{_c.RESET}")
+        for t in templates:
+            print(f"  {_c.CYAN}{t}{_c.RESET}")
+        return 0
+
+    if not args.name:
+        print(
+            f"{_c.RED}{_c.BOLD}ERROR{_c.RESET} "
+            "project name is required (e.g. lu init my-protocol)",
+            file=sys.stderr,
+        )
+        return 1
+
+    try:
+        created = init_project(
+            args.name,
+            minimal=args.minimal,
+            force=args.force,
+            template=getattr(args, "template", None),
+        )
+    except (ValueError, OSError) as exc:
+        print(f"{_c.RED}{_c.BOLD}ERROR{_c.RESET} {exc}", file=sys.stderr)
+        return 1
+
+    tmpl_info = ""
+    if getattr(args, "template", None):
+        tmpl_info = f" (from template {_c.CYAN}{args.template}{_c.RESET})"
+
+    print(
+        f"{_c.GREEN}{_c.BOLD}Created{_c.RESET} "
+        f"LU project {_c.BOLD}{args.name}{_c.RESET}{tmpl_info}"
+    )
+    for path in created:
+        print(f"  {_c.CYAN}{path}{_c.RESET}")
+    print()
+    print(f"  Next: {_c.BOLD}lu check {args.name}/{args.name}.lu{_c.RESET}")
+    return 0
+
+
 def _cmd_lsp(args: argparse.Namespace) -> int:
     """Handle ``lu lsp``."""
     from ._lsp import start_lsp
 
     return start_lsp()
+
+
+def _cmd_chat(args: argparse.Namespace) -> int:
+    """Handle ``lu chat``."""
+    from ._intent_bridge import ChatSession
+
+    nl_processor = None
+    if getattr(args, "mode", "guided") == "nl":
+        try:
+            from ._nl_processor import ClaudeNLProcessor
+            nl_processor = ClaudeNLProcessor()
+        except ImportError as exc:
+            print(
+                f"{_c.RED}{_c.BOLD}ERROR{_c.RESET} {exc}",
+                file=sys.stderr,
+            )
+            return 1
+
+    input_fn = None
+    if getattr(args, "voice", False):
+        try:
+            from ._voice import VoiceProcessor
+            input_fn = VoiceProcessor(
+                lang=args.lang,
+                model_size=getattr(args, "voice_model", None),
+            )
+        except ImportError as exc:
+            print(
+                f"{_c.RED}{_c.BOLD}ERROR{_c.RESET} {exc}",
+                file=sys.stderr,
+            )
+            return 1
+
+    kwargs: dict[str, object] = {
+        "lang": args.lang,
+        "nl_processor": nl_processor,
+    }
+    if input_fn is not None:
+        kwargs["input_fn"] = input_fn
+
+    session = ChatSession(**kwargs)  # type: ignore[arg-type]
+    result = session.run()
+    if result and args.output:
+        out_path = Path(args.output)
+        try:
+            out_path.write_text(result.generated_code, encoding="utf-8")
+            print(
+                f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} "
+                f"Saved generated code to {out_path}"
+            )
+        except (PermissionError, OSError) as exc:
+            print(f"{_c.RED}{_c.BOLD}ERROR{_c.RESET} {exc}", file=sys.stderr)
+            return 1
+    return 0
+
+
+def _cmd_demo(args: argparse.Namespace) -> int:
+    """Handle ``lu demo``: run a scripted La Nonna demo autonomously."""
+    import time
+    from ._intent_bridge import ChatSession
+
+    lang = args.lang
+    speed = getattr(args, "speed", "normal")
+    delay_map = {"slow": 0.06, "normal": 0.03, "fast": 0.01}
+    char_delay = delay_map.get(speed, 0.03)
+
+    # Scripted inputs for the La Nonna demo
+    demo_inputs = {
+        "it": [
+            "GestioneRicette",
+            "Cuoco, Dispensa",
+            "Cuoco", "Dispensa", "1",        # asks_task
+            "Dispensa", "Cuoco", "2",        # return_result
+            "fatto",
+            "si",                            # has choices
+            "Cuoco",                         # decider
+            "cucinare, aggiungere",          # branches
+            "3",                             # add no_deletion
+            "4",                             # add all_roles_participate
+            "fatto",
+            "si",                            # confirm
+        ],
+        "en": [
+            "RecipeManager",
+            "Cook, Pantry",
+            "Cook", "Pantry", "1",
+            "Pantry", "Cook", "2",
+            "done",
+            "yes",
+            "Cook",
+            "cook, add_recipe",
+            "3",                             # no_deletion
+            "4",                             # all_roles_participate
+            "done",
+            "yes",
+        ],
+        "pt": [
+            "GerenciamentoReceitas",
+            "Cozinheiro, Despensa",
+            "Cozinheiro", "Despensa", "1",
+            "Despensa", "Cozinheiro", "2",
+            "pronto",
+            "sim",
+            "Cozinheiro",
+            "cozinhar, adicionar",
+            "3",
+            "4",
+            "pronto",
+            "sim",
+        ],
+    }
+
+    inputs = demo_inputs.get(lang, demo_inputs["en"])
+    input_idx = 0
+
+    def _typewrite(text: str) -> None:
+        """Print text with typewriter effect."""
+        for ch in text:
+            sys.stdout.write(ch)
+            sys.stdout.flush()
+            if ch not in ("\n", " "):
+                time.sleep(char_delay)
+        sys.stdout.write("\n")
+        sys.stdout.flush()
+
+    def _demo_input(prompt: str) -> str:
+        nonlocal input_idx
+        if input_idx >= len(inputs):
+            raise EOFError
+        val = inputs[input_idx]
+        input_idx += 1
+        # Show the prompt + typed response with delay
+        sys.stdout.write(prompt)
+        sys.stdout.flush()
+        time.sleep(0.3)
+        _typewrite(val)
+        time.sleep(0.5)
+        return val
+
+    def _demo_output(*args: object) -> None:
+        text = " ".join(str(a) for a in args)
+        for line in text.split("\n"):
+            time.sleep(0.15)
+            print(line)
+        time.sleep(0.3)
+
+    session = ChatSession(
+        lang=lang,
+        input_fn=_demo_input,
+        output_fn=_demo_output,
+    )
+    session.run()
+    return 0
 
 
 def _cmd_version(args: argparse.Namespace) -> int:
@@ -190,6 +405,32 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Write Python output to file instead of stdout",
     )
 
+    # lu init
+    p_init = subparsers.add_parser(
+        "init",
+        help="Create a new LU project with scaffolding",
+    )
+    p_init.add_argument("name", nargs="?", default=None, help="Project name (e.g. my-protocol)")
+    p_init.add_argument(
+        "--minimal",
+        action="store_true",
+        help="Only create the .lu file (no README/test)",
+    )
+    p_init.add_argument(
+        "--force",
+        action="store_true",
+        help="Overwrite existing non-empty directory",
+    )
+    p_init.add_argument(
+        "--template",
+        help="Use a stdlib template (e.g. rag_pipeline, two_buyer)",
+    )
+    p_init.add_argument(
+        "--list-templates",
+        action="store_true",
+        help="List available stdlib templates and exit",
+    )
+
     # lu repl
     subparsers.add_parser("repl", help="Start the interactive REPL")
 
@@ -197,6 +438,57 @@ def _build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser(
         "lsp",
         help="Start the Language Server Protocol server (requires pygls)",
+    )
+
+    # lu chat
+    p_chat = subparsers.add_parser(
+        "chat",
+        help="Interactive guided protocol builder",
+    )
+    p_chat.add_argument(
+        "--lang",
+        choices=["en", "it", "pt"],
+        default="en",
+        help="Interface language (default: en)",
+    )
+    p_chat.add_argument(
+        "--mode",
+        choices=["guided", "nl"],
+        default="guided",
+        help="Chat mode: guided (step-by-step) or nl (natural language, requires anthropic)",
+    )
+    p_chat.add_argument(
+        "--voice",
+        action="store_true",
+        help="Use voice input via microphone (requires [voice] extra)",
+    )
+    p_chat.add_argument(
+        "--voice-model",
+        choices=["tiny", "base", "small", "medium", "turbo", "large-v3"],
+        default=None,
+        help="Whisper model size for voice (default: small)",
+    )
+    p_chat.add_argument(
+        "-o", "--output",
+        help="Save generated Python to file",
+    )
+
+    # lu demo
+    p_demo = subparsers.add_parser(
+        "demo",
+        help="Run the La Nonna demo autonomously (scripted)",
+    )
+    p_demo.add_argument(
+        "--lang",
+        choices=["en", "it", "pt"],
+        default="it",
+        help="Demo language (default: it)",
+    )
+    p_demo.add_argument(
+        "--speed",
+        choices=["slow", "normal", "fast"],
+        default="normal",
+        help="Typing speed (default: normal)",
     )
 
     # lu version
@@ -215,8 +507,11 @@ _COMMAND_HANDLERS = {
     "run": _cmd_run,
     "verify": _cmd_verify,
     "compile": _cmd_compile,
+    "init": _cmd_init,
     "repl": _cmd_repl,
     "lsp": _cmd_lsp,
+    "chat": _cmd_chat,
+    "demo": _cmd_demo,
     "version": _cmd_version,
 }
 

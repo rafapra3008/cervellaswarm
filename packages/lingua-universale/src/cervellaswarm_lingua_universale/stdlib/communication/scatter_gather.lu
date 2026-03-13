@@ -1,0 +1,59 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: Communication - Scatter/Gather
+# Fan-out and collect pattern. An orchestrator distributes work to multiple
+# workers, an aggregator collects all results. Used in MapReduce, parallel
+# queries, and distributed computing. Demonstrates all_roles_participate:
+# every worker MUST respond, guaranteed by the protocol.
+
+type TaskPriority = Critical | High | Normal
+
+type WorkItem =
+    id: String
+    data: String
+    priority: TaskPriority
+
+type WorkResult =
+    id: String
+    output: String
+    duration: Number
+
+type AggregatedResult =
+    total: Number
+    results: List[String]
+    status: String
+
+agent Orchestrator:
+    role: coordinator
+    trust: trusted
+    accepts: AggregatedResult
+    produces: WorkItem
+    requires: work.defined
+    ensures: work.distributed
+
+agent WorkerAgent:
+    role: worker
+    trust: standard
+    accepts: WorkItem
+    produces: WorkResult
+    requires: item.received
+    ensures: result.computed
+
+agent ResultAggregator:
+    role: aggregator
+    trust: trusted
+    accepts: WorkResult
+    produces: AggregatedResult
+    requires: results.collected
+    ensures: summary.complete
+
+protocol ScatterGather:
+    roles: coordinator, worker, aggregator
+
+    coordinator asks worker to process work item
+    worker returns result to aggregator
+    aggregator returns summary to coordinator
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate

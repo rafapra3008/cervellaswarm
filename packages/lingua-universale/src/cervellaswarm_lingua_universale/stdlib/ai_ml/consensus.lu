@@ -1,0 +1,69 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: AI/ML - Consensus Protocol
+# Multi-agent voting and agreement protocol. A proposer submits a
+# proposal, validators cast votes, and an aggregator tallies the
+# result. Ensures all validators participate in the decision.
+# Foundation for multi-agent trust and distributed AI governance.
+# Demonstrates confidence_min: votes must meet a minimum confidence level.
+# Design: validators send votes directly to aggregator (not back to proposer)
+# so the aggregator can tally independently; proposer receives only the final result.
+
+type VoteValue = Agree | Disagree | Abstain
+
+type Proposal =
+    id: String
+    description: String
+    category: String
+    deadline: String
+
+type Vote =
+    proposal_id: String
+    value: VoteValue
+    confidence: Number
+    rationale: String
+
+type ConsensusResult =
+    proposal_id: String
+    outcome: String
+    votes_for: Number
+    votes_against: Number
+    quorum_reached: Boolean
+
+agent ProposerAgent:
+    role: proposer
+    trust: standard
+    accepts: ConsensusResult
+    produces: Proposal
+    requires: proposal.valid
+    ensures: proposal.submitted
+
+agent ValidatorAgent:
+    role: validator
+    trust: trusted
+    accepts: Proposal
+    produces: Vote
+    requires: proposal.reviewed
+    ensures: vote.cast
+
+agent VoteAggregator:
+    role: aggregator
+    trust: verified
+    accepts: Vote
+    produces: ConsensusResult
+    requires: votes.collected
+    ensures: result.final
+
+protocol Consensus:
+    roles: proposer, validator, aggregator
+
+    proposer sends proposal to validator
+    validator returns vote to aggregator
+    aggregator returns decision to proposer
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+        confidence >= medium
+        proposer before validator
+        validator before aggregator

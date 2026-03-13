@@ -28,8 +28,10 @@ Coordinate mapping:
 from __future__ import annotations
 
 import logging
+import os
 import re
 import sys
+import tempfile
 from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
@@ -202,6 +204,99 @@ def _regex_extract_symbols(source: str) -> dict[str, SymbolEntry]:
     return table
 
 
+def _symbol_from_variant(decl, loc: tuple[int, int]) -> dict[str, SymbolEntry]:
+    """Build symbol entries for a VariantTypeDecl (type + variant members)."""
+    entries: dict[str, SymbolEntry] = {}
+    variants_str = " | ".join(decl.variants)
+    entries[decl.name] = SymbolEntry(
+        name=decl.name,
+        kind="variant_type",
+        loc=loc,
+        detail=f"type {decl.name} = {variants_str}",
+        doc=f"**type {decl.name}** (variant)\n\n{variants_str}",
+    )
+    for v in decl.variants:
+        entries[v] = SymbolEntry(
+            name=v,
+            kind="variant_member",
+            loc=loc,
+            detail=f"variant of {decl.name}",
+            doc=f"Variant `{v}` of type `{decl.name}`",
+        )
+    return entries
+
+
+def _symbol_from_record(decl, loc: tuple[int, int]) -> dict[str, SymbolEntry]:
+    """Build symbol entry for a RecordTypeDecl."""
+    fields = [(f.name, _type_expr_str(f.type_expr)) for f in decl.fields]
+    fields_inline = ", ".join(f"{n}: {t}" for n, t in fields)
+    fields_doc = "\n".join(f"- `{n}`: {t}" for n, t in fields)
+    return {
+        decl.name: SymbolEntry(
+            name=decl.name,
+            kind="record_type",
+            loc=loc,
+            detail=f"type {decl.name} = {{ {fields_inline} }}",
+            doc=f"**type {decl.name}** (record)\n\n{fields_doc}",
+        )
+    }
+
+
+def _symbol_from_agent(decl, loc: tuple[int, int]) -> dict[str, SymbolEntry]:
+    """Build symbol entry for an AgentNode."""
+    role = decl.role or "?"
+    trust = decl.trust or "?"
+    parts = [f"**agent {decl.name}**\n", f"role: {role} | trust: {trust}"]
+    if decl.accepts:
+        parts.append(f"accepts: {', '.join(decl.accepts)}")
+    if decl.produces:
+        parts.append(f"produces: {', '.join(decl.produces)}")
+    return {
+        decl.name: SymbolEntry(
+            name=decl.name,
+            kind="agent",
+            loc=loc,
+            detail=f"agent {decl.name} (role: {role}, trust: {trust})",
+            doc="\n".join(parts),
+        )
+    }
+
+
+def _symbol_from_protocol(decl, loc: tuple[int, int]) -> dict[str, SymbolEntry]:
+    """Build symbol entries for a ProtocolNode (protocol + roles)."""
+    from ._ast import AlwaysTerminates, NoDeadlock, AllParticipate
+
+    entries: dict[str, SymbolEntry] = {}
+    roles_str = ", ".join(decl.roles)
+    props = []
+    for p in decl.properties:
+        if isinstance(p, AlwaysTerminates):
+            props.append("always terminates")
+        elif isinstance(p, NoDeadlock):
+            props.append("no deadlock")
+        elif isinstance(p, AllParticipate):
+            props.append("all roles participate")
+    parts = [f"**protocol {decl.name}**\n", f"roles: {roles_str}", f"steps: {len(decl.steps)}"]
+    if props:
+        parts.append(f"properties: {', '.join(props)}")
+    entries[decl.name] = SymbolEntry(
+        name=decl.name,
+        kind="protocol",
+        loc=loc,
+        detail=f"protocol {decl.name} (roles: {roles_str})",
+        doc="\n".join(parts),
+    )
+    for role_name in decl.roles:
+        entries[role_name] = SymbolEntry(
+            name=role_name,
+            kind="role",
+            loc=loc,
+            detail=f"role in {decl.name}",
+            doc=f"Role `{role_name}` in protocol `{decl.name}`",
+        )
+    return entries
+
+
 def build_symbol_table(source: str) -> dict[str, SymbolEntry]:
     """Parse LU source and build a symbol table from all declarations.
 
@@ -210,15 +305,11 @@ def build_symbol_table(source: str) -> dict[str, SymbolEntry]:
     """
     from ._parser import parse, ParseError
     from ._tokenizer import TokenizeError
-    from ._ast import (
-        VariantTypeDecl, RecordTypeDecl, AgentNode, ProtocolNode, UseNode,
-        AlwaysTerminates, NoDeadlock, AllParticipate,
-    )
+    from ._ast import VariantTypeDecl, RecordTypeDecl, AgentNode, ProtocolNode, UseNode
 
     try:
         program = parse(source)
     except (TokenizeError, ParseError, Exception):
-        # Fallback: regex extraction for incomplete source (e.g. during typing)
         return _regex_extract_symbols(source)
 
     table: dict[str, SymbolEntry] = {}
@@ -227,86 +318,17 @@ def build_symbol_table(source: str) -> dict[str, SymbolEntry]:
         loc = (decl.loc.line, decl.loc.col)
 
         if isinstance(decl, VariantTypeDecl):
-            variants_str = " | ".join(decl.variants)
-            table[decl.name] = SymbolEntry(
-                name=decl.name,
-                kind="variant_type",
-                loc=loc,
-                detail=f"type {decl.name} = {variants_str}",
-                doc=f"**type {decl.name}** (variant)\n\n{variants_str}",
-            )
-            # Each variant is also a symbol
-            for v in decl.variants:
-                table[v] = SymbolEntry(
-                    name=v,
-                    kind="variant_member",
-                    loc=loc,
-                    detail=f"variant of {decl.name}",
-                    doc=f"Variant `{v}` of type `{decl.name}`",
-                )
-
+            table.update(_symbol_from_variant(decl, loc))
         elif isinstance(decl, RecordTypeDecl):
-            fields = [(f.name, _type_expr_str(f.type_expr)) for f in decl.fields]
-            fields_inline = ", ".join(f"{n}: {t}" for n, t in fields)
-            fields_doc = "\n".join(f"- `{n}`: {t}" for n, t in fields)
-            table[decl.name] = SymbolEntry(
-                name=decl.name,
-                kind="record_type",
-                loc=loc,
-                detail=f"type {decl.name} = {{ {fields_inline} }}",
-                doc=f"**type {decl.name}** (record)\n\n{fields_doc}",
-            )
-
+            table.update(_symbol_from_record(decl, loc))
         elif isinstance(decl, AgentNode):
-            role = decl.role or "?"
-            trust = decl.trust or "?"
-            parts = [f"**agent {decl.name}**\n"]
-            parts.append(f"role: {role} | trust: {trust}")
-            if decl.accepts:
-                parts.append(f"accepts: {', '.join(decl.accepts)}")
-            if decl.produces:
-                parts.append(f"produces: {', '.join(decl.produces)}")
-            table[decl.name] = SymbolEntry(
-                name=decl.name,
-                kind="agent",
-                loc=loc,
-                detail=f"agent {decl.name} (role: {role}, trust: {trust})",
-                doc="\n".join(parts),
-            )
-
+            table.update(_symbol_from_agent(decl, loc))
         elif isinstance(decl, ProtocolNode):
-            roles_str = ", ".join(decl.roles)
-            props = []
-            for p in decl.properties:
-                if isinstance(p, AlwaysTerminates):
-                    props.append("always terminates")
-                elif isinstance(p, NoDeadlock):
-                    props.append("no deadlock")
-                elif isinstance(p, AllParticipate):
-                    props.append("all roles participate")
-            parts = [f"**protocol {decl.name}**\n"]
-            parts.append(f"roles: {roles_str}")
-            parts.append(f"steps: {len(decl.steps)}")
-            if props:
-                parts.append(f"properties: {', '.join(props)}")
-            table[decl.name] = SymbolEntry(
-                name=decl.name,
-                kind="protocol",
-                loc=loc,
-                detail=f"protocol {decl.name} (roles: {roles_str})",
-                doc="\n".join(parts),
-            )
-            # Roles are also symbols (don't overwrite types/agents)
-            for role_name in decl.roles:
-                if role_name not in table:
-                    table[role_name] = SymbolEntry(
-                        name=role_name,
-                        kind="role",
-                        loc=loc,
-                        detail=f"role in {decl.name}",
-                        doc=f"Role `{role_name}` in protocol `{decl.name}`",
-                    )
-
+            entries = _symbol_from_protocol(decl, loc)
+            for name, entry in entries.items():
+                if entry.kind == "role" and name in table:
+                    continue
+                table[name] = entry
         elif isinstance(decl, UseNode):
             alias = decl.alias or decl.module.split(".")[-1]
             table[alias] = SymbolEntry(
@@ -701,7 +723,7 @@ def start_lsp() -> int:
 
     # Configure logging to file (CRITICAL: never write to stdout in STDIO mode)
     logging.basicConfig(
-        filename="/tmp/lu-lsp.log",
+        filename=os.path.join(tempfile.gettempdir(), "lu-lsp.log"),
         level=logging.INFO,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )

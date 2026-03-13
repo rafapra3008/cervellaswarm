@@ -7,7 +7,7 @@ Groups:
     1. TestParseProtocol        - protocol structure, roles, name, loc
     2. TestParseStep            - all 5 actions, sender/receiver/payload
     3. TestParseChoice          - choice block, branches, labels
-    4. TestParseProperties      - all 7 property variants, invalid values
+    4. TestParseProperties      - all 9 property variants, invalid values
     5. TestParseProgram         - empty, single, multiple protocols
     6. TestParseErrors          - error messages and line/col accuracy
     7. TestCanonicalProtocols   - Examples 1, 2, 7, 10 from DESIGN_C1_2
@@ -803,7 +803,7 @@ class TestCanonicalProtocols:
         assert len(proto.steps) == 6
         assert len(proto.properties) == 7
 
-        # Verify all 7 property types present
+        # Verify property types present (7 of 9; no_deletion + exclusive tested in test_parser_constructs)
         prop_types = {type(p) for p in proto.properties}
         assert AlwaysTerminates in prop_types
         assert NoDeadlock in prop_types

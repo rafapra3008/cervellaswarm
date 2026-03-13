@@ -22,9 +22,12 @@ import pytest
 from cervellaswarm_lingua_universale._parser import ParseError, parse
 from cervellaswarm_lingua_universale._ast import (
     AgentNode,
+    AllParticipate,
     AlwaysTerminates,
     AttrExpr,
     BinOpExpr,
+    ConfidenceProp,
+    ExclusionProp,
     FieldNode,
     GenericType,
     GroupExpr,
@@ -32,13 +35,17 @@ from cervellaswarm_lingua_universale._ast import (
     Loc,
     MethodCallExpr,
     NoDeadlock,
+    NoDeletionProp,
     NotExpr,
     NumberExpr,
+    OrderingProp,
     ProgramNode,
     ProtocolNode,
     RecordTypeDecl,
+    RoleExclusiveProp,
     SimpleType,
     StringExpr,
+    TrustProp,
     UseNode,
     VariantTypeDecl,
 )
@@ -747,3 +754,170 @@ class TestCanonicalExamples:
         assert agent.name == "Processor"
         assert agent.trust == "trusted"
         assert len(agent.requires) == 1
+
+
+class TestE5Properties:
+    """Tests for E.5 property kinds: no_deletion and role_exclusive (S444)."""
+
+    def test_no_deletion_property(self) -> None:
+        """Parse 'no deletion' property in a protocol."""
+        src = textwrap.dedent("""\
+            protocol SafeData:
+                roles: user, system
+
+                user asks system to do task
+
+                properties:
+                    no deletion
+        """)
+        tree = parse(src)
+        protocol = tree.declarations[0]
+        assert isinstance(protocol, ProtocolNode)
+        assert len(protocol.properties) == 1
+        assert isinstance(protocol.properties[0], NoDeletionProp)
+
+    def test_role_exclusive_property(self) -> None:
+        """Parse 'ROLE exclusive MESSAGE' property."""
+        src = textwrap.dedent("""\
+            protocol AuditTrail:
+                roles: auditor, system
+
+                auditor tells system verdict
+
+                properties:
+                    auditor exclusive verdict
+        """)
+        tree = parse(src)
+        protocol = tree.declarations[0]
+        assert len(protocol.properties) == 1
+        prop = protocol.properties[0]
+        assert isinstance(prop, RoleExclusiveProp)
+        assert prop.role == "auditor"
+        assert prop.message == "verdict"
+
+    def test_no_deletion_with_no_deadlock(self) -> None:
+        """Both 'no' prefix properties parse correctly together."""
+        src = textwrap.dedent("""\
+            protocol Combo:
+                roles: a, b
+
+                a asks b to do task
+
+                properties:
+                    no deadlock
+                    no deletion
+        """)
+        tree = parse(src)
+        protocol = tree.declarations[0]
+        assert len(protocol.properties) == 2
+        assert isinstance(protocol.properties[0], NoDeadlock)
+        assert isinstance(protocol.properties[1], NoDeletionProp)
+
+    def test_all_nine_properties(self) -> None:
+        """Parse all 9 PropertyKind in a single protocol."""
+        src = textwrap.dedent("""\
+            protocol FullSpec:
+                roles: alice, bob
+
+                alice asks bob to do task
+                bob returns result to alice
+
+                properties:
+                    always terminates
+                    no deadlock
+                    no deletion
+                    all roles participate
+                    confidence >= high
+                    trust >= verified
+                    alice before bob
+                    bob cannot send audit
+                    alice exclusive review
+        """)
+        tree = parse(src)
+        protocol = tree.declarations[0]
+        assert len(protocol.properties) == 9
+        assert isinstance(protocol.properties[0], AlwaysTerminates)
+        assert isinstance(protocol.properties[1], NoDeadlock)
+        assert isinstance(protocol.properties[2], NoDeletionProp)
+        assert isinstance(protocol.properties[3], AllParticipate)
+        assert isinstance(protocol.properties[4], ConfidenceProp)
+        assert protocol.properties[4].level == "high"
+        assert isinstance(protocol.properties[5], TrustProp)
+        assert protocol.properties[5].tier == "verified"
+        assert isinstance(protocol.properties[6], OrderingProp)
+        assert protocol.properties[6].before == "alice"
+        assert protocol.properties[6].after == "bob"
+        assert isinstance(protocol.properties[7], ExclusionProp)
+        assert protocol.properties[7].role == "bob"
+        assert protocol.properties[7].message == "audit"
+        assert isinstance(protocol.properties[8], RoleExclusiveProp)
+        assert protocol.properties[8].role == "alice"
+        assert protocol.properties[8].message == "review"
+
+    def test_exclusive_error_message(self) -> None:
+        """Unknown property gives helpful error listing all 9 variants."""
+        src = textwrap.dedent("""\
+            protocol Bad:
+                roles: a, b
+
+                a asks b to do task
+
+                properties:
+                    unknown property
+        """)
+        with pytest.raises(ParseError) as exc_info:
+            parse(src)
+        msg = str(exc_info.value)
+        assert "no deletion" in msg
+        assert "X exclusive Y" in msg
+
+    def test_no_deletion_location(self) -> None:
+        """NoDeletionProp has correct source location."""
+        src = textwrap.dedent("""\
+            protocol Loc:
+                roles: a, b
+
+                a asks b to do task
+
+                properties:
+                    no deletion
+        """)
+        tree = parse(src)
+        prop = tree.declarations[0].properties[0]
+        assert isinstance(prop, NoDeletionProp)
+        assert prop.loc.line == 7
+
+    def test_role_exclusive_location(self) -> None:
+        """RoleExclusiveProp has correct source location."""
+        src = textwrap.dedent("""\
+            protocol Loc:
+                roles: a, b
+
+                a asks b to do task
+
+                properties:
+                    a exclusive secret
+        """)
+        tree = parse(src)
+        prop = tree.declarations[0].properties[0]
+        assert isinstance(prop, RoleExclusiveProp)
+        assert prop.loc.line == 7
+        assert prop.role == "a"
+        assert prop.message == "secret"
+
+    def test_no_invalid_word_error(self) -> None:
+        """'no foobar' gives error mentioning both 'deadlock' and 'deletion'."""
+        src = textwrap.dedent("""\
+            protocol Bad:
+                roles: a, b
+
+                a asks b to do task
+
+                properties:
+                    no foobar
+        """)
+        with pytest.raises(ParseError) as exc_info:
+            parse(src)
+        msg = str(exc_info.value)
+        assert "deadlock" in msg
+        assert "deletion" in msg

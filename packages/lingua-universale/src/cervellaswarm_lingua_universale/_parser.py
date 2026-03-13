@@ -47,6 +47,7 @@ from ._ast import (
     Loc,
     MethodCallExpr,
     NoDeadlock,
+    NoDeletionProp,
     NotExpr,
     NumberExpr,
     OrderingProp,
@@ -54,6 +55,7 @@ from ._ast import (
     Property,
     ProtocolNode,
     RecordTypeDecl,
+    RoleExclusiveProp,
     SimpleType,
     StepNode,
     StepOrChoice,
@@ -486,17 +488,19 @@ class Parser:
         return props
 
     def _parse_property(self) -> Property:
-        """Parse one property line from the grammar's 7 variants.
+        """Parse one property line from the grammar's 9 variants.
 
         Variants::
 
             'always' 'terminates' NEWLINE
             'no' 'deadlock' NEWLINE
+            'no' 'deletion' NEWLINE
             'all' 'roles' 'participate' NEWLINE
             'confidence' '>=' confidence_level NEWLINE
             'trust' '>=' trust_tier NEWLINE
             IDENT 'before' IDENT NEWLINE
             IDENT 'cannot' 'send' IDENT NEWLINE
+            IDENT 'exclusive' IDENT NEWLINE
         """
         tok = self._peek()
         loc = self._loc()
@@ -515,12 +519,24 @@ class Parser:
             self._expect(TokKind.NEWLINE)
             return AlwaysTerminates(loc=loc)
 
-        # 'no' 'deadlock'
+        # 'no' 'deadlock' | 'no' 'deletion'
         if tok.value == "no":
             self._advance()
-            self._expect_ident("deadlock")
-            self._expect(TokKind.NEWLINE)
-            return NoDeadlock(loc=loc)
+            next_word = self._peek()
+            if next_word.kind == TokKind.IDENT and next_word.value == "deletion":
+                self._advance()
+                self._expect(TokKind.NEWLINE)
+                return NoDeletionProp(loc=loc)
+            if next_word.kind == TokKind.IDENT and next_word.value == "deadlock":
+                self._advance()
+                self._expect(TokKind.NEWLINE)
+                return NoDeadlock(loc=loc)
+            raise ParseError(
+                f"expected 'deadlock' or 'deletion' after 'no', "
+                f"got {next_word.value!r}",
+                line=next_word.line,
+                col=next_word.col,
+            )
 
         # 'all' 'roles' 'participate'
         if tok.value == "all":
@@ -583,10 +599,19 @@ class Parser:
                 role=role_tok.value, message=msg_tok.value, loc=loc,
             )
 
+        if next_tok.kind == TokKind.IDENT and next_tok.value == "exclusive":
+            role_tok = self._advance()  # IDENT (role)
+            self._advance()             # 'exclusive'
+            msg_tok = self._expect_ident()
+            self._expect(TokKind.NEWLINE)
+            return RoleExclusiveProp(
+                role=role_tok.value, message=msg_tok.value, loc=loc,
+            )
+
         raise ParseError(
             f"unknown property starting with '{tok.value}'. "
-            f"Expected: 'always terminates', 'no deadlock', "
-            f"'X before Y', 'X cannot send Y', "
+            f"Expected: 'always terminates', 'no deadlock', 'no deletion', "
+            f"'X before Y', 'X cannot send Y', 'X exclusive Y', "
             f"'confidence >= level', 'trust >= tier', 'all roles participate'",
             line=tok.line,
             col=tok.col,
@@ -888,24 +913,10 @@ class Parser:
                 self._expect(TokKind.NEWLINE)
 
             elif tok.value == "accepts":
-                self._advance()
-                self._expect(TokKind.COLON)
-                msgs = [self._expect_ident().value]
-                while self._at(TokKind.COMMA):
-                    self._advance()
-                    msgs.append(self._expect_ident().value)
-                accepts = tuple(msgs)
-                self._expect(TokKind.NEWLINE)
+                accepts = self._parse_message_list()
 
             elif tok.value == "produces":
-                self._advance()
-                self._expect(TokKind.COLON)
-                msgs = [self._expect_ident().value]
-                while self._at(TokKind.COMMA):
-                    self._advance()
-                    msgs.append(self._expect_ident().value)
-                produces = tuple(msgs)
-                self._expect(TokKind.NEWLINE)
+                produces = self._parse_message_list()
 
             elif tok.value == "requires":
                 requires = self._parse_condition_list("requires")
@@ -932,6 +943,17 @@ class Parser:
             ensures=ensures,
             loc=loc,
         )
+
+    def _parse_message_list(self) -> tuple[str, ...]:
+        """Parse: ``keyword ':' IDENT (',' IDENT)* NEWLINE`` for accepts/produces."""
+        self._advance()
+        self._expect(TokKind.COLON)
+        msgs = [self._expect_ident().value]
+        while self._at(TokKind.COMMA):
+            self._advance()
+            msgs.append(self._expect_ident().value)
+        self._expect(TokKind.NEWLINE)
+        return tuple(msgs)
 
     def _parse_condition_list(self, keyword: str) -> tuple[Expr, ...]:
         """Parse: requires/ensures clause, block or inline.

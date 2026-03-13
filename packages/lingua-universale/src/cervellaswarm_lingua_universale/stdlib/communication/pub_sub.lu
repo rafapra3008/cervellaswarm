@@ -1,0 +1,54 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Standard Library: Communication - Publish/Subscribe
+# Event-driven messaging pattern with three roles. A publisher sends
+# events to a broker, the broker distributes notifications to subscribers.
+# Foundation of event-driven architectures, IoT, and real-time systems.
+
+type EventPriority = Critical | High | Normal | Low
+
+type Event =
+    topic: String
+    payload: String
+    priority: EventPriority
+    timestamp: Number
+
+type Notification =
+    topic: String
+    payload: String
+    source: String
+
+agent EventPublisher:
+    role: publisher
+    trust: standard
+    accepts: Notification
+    produces: Event
+    requires: event.valid
+    ensures: event.published
+
+agent MessageBroker:
+    role: broker
+    trust: trusted
+    accepts: Event
+    produces: Notification
+    requires: event.received
+    ensures: notification.delivered
+
+agent EventSubscriber:
+    role: subscriber
+    trust: standard
+    accepts: Notification
+    produces: Event
+    requires: subscription.active
+    ensures: notification.processed
+
+protocol PubSub:
+    roles: publisher, broker, subscriber
+
+    publisher sends event to broker
+    broker sends notification to subscriber
+    subscriber returns acknowledgment to broker
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate

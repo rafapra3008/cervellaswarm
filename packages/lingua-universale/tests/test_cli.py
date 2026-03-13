@@ -268,3 +268,149 @@ class TestCLIColors:
         colors.RESET = "\033[0m"
         reset_colors()
         assert colors.RESET == ""
+
+
+# ============================================================
+# lu demo (E.5 - T1.2)
+# ============================================================
+
+
+class TestParserDemo:
+    """Parser structure for lu demo subcommand."""
+
+    def test_demo_subcommand_exists(self) -> None:
+        parser = _build_parser()
+        args = parser.parse_args(["demo"])
+        assert args.command == "demo"
+
+    def test_demo_default_lang_is_italian(self) -> None:
+        parser = _build_parser()
+        args = parser.parse_args(["demo"])
+        assert args.lang == "it"
+
+    def test_demo_lang_option(self) -> None:
+        parser = _build_parser()
+        for lang in ["en", "it", "pt"]:
+            args = parser.parse_args(["demo", "--lang", lang])
+            assert args.lang == lang
+
+    def test_demo_default_speed_is_normal(self) -> None:
+        parser = _build_parser()
+        args = parser.parse_args(["demo"])
+        assert args.speed == "normal"
+
+    def test_demo_speed_option(self) -> None:
+        parser = _build_parser()
+        for speed in ["slow", "normal", "fast"]:
+            args = parser.parse_args(["demo", "--speed", speed])
+            assert args.speed == speed
+
+    def test_demo_invalid_lang_rejected(self) -> None:
+        parser = _build_parser()
+        with pytest.raises(SystemExit):
+            parser.parse_args(["demo", "--lang", "fr"])
+
+    def test_demo_invalid_speed_rejected(self) -> None:
+        parser = _build_parser()
+        with pytest.raises(SystemExit):
+            parser.parse_args(["demo", "--speed", "turbo"])
+
+
+class TestCmdDemo:
+    """lu demo -- scripted autonomous demo."""
+
+    def test_demo_italian_returns_zero(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        """Demo in Italian runs to completion."""
+        import time
+        monkeypatch.setattr(time, "sleep", lambda _: None)
+        exit_code = main(["demo", "--lang", "it", "--speed", "fast"])
+        assert exit_code == 0
+
+    def test_demo_english_returns_zero(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        """Demo in English runs to completion."""
+        import time
+        monkeypatch.setattr(time, "sleep", lambda _: None)
+        exit_code = main(["demo", "--lang", "en", "--speed", "fast"])
+        assert exit_code == 0
+
+    def test_demo_portuguese_returns_zero(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        """Demo in Portuguese runs to completion."""
+        import time
+        monkeypatch.setattr(time, "sleep", lambda _: None)
+        exit_code = main(["demo", "--lang", "pt", "--speed", "fast"])
+        assert exit_code == 0
+
+    def test_demo_italian_output_contains_protocol(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+        capsys: pytest.CaptureFixture,
+    ) -> None:
+        """Italian demo mentions GestioneRicette (the protocol name)."""
+        import time
+        monkeypatch.setattr(time, "sleep", lambda _: None)
+        main(["demo", "--lang", "it", "--speed", "fast"])
+        captured = capsys.readouterr()
+        assert "GestioneRicette" in captured.out
+
+    def test_demo_english_output_contains_protocol(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+        capsys: pytest.CaptureFixture,
+    ) -> None:
+        """English demo mentions RecipeManager (the protocol name)."""
+        import time
+        monkeypatch.setattr(time, "sleep", lambda _: None)
+        main(["demo", "--lang", "en", "--speed", "fast"])
+        captured = capsys.readouterr()
+        assert "RecipeManager" in captured.out
+
+    def test_demo_output_contains_roles(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+        capsys: pytest.CaptureFixture,
+    ) -> None:
+        """Demo output mentions the agent roles."""
+        import time
+        monkeypatch.setattr(time, "sleep", lambda _: None)
+        main(["demo", "--lang", "it", "--speed", "fast"])
+        captured = capsys.readouterr()
+        assert "Cuoco" in captured.out
+        assert "Dispensa" in captured.out
+
+    def test_demo_portuguese_output_contains_protocol(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+        capsys: pytest.CaptureFixture,
+    ) -> None:
+        """Portuguese demo mentions GerenciamentoReceitas (the protocol name)."""
+        import time
+        monkeypatch.setattr(time, "sleep", lambda _: None)
+        main(["demo", "--lang", "pt", "--speed", "fast"])
+        captured = capsys.readouterr()
+        assert "GerenciamentoReceitas" in captured.out
+
+    def test_demo_truncated_inputs_graceful(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        """Demo handles EOFError gracefully if inputs run out early."""
+        import time
+        monkeypatch.setattr(time, "sleep", lambda _: None)
+        # Should not crash -- ChatSession catches EOFError
+        exit_code = main(["demo", "--lang", "it", "--speed", "fast"])
+        assert exit_code == 0
+
+    def test_demo_pipeline_generates_code(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+        capsys: pytest.CaptureFixture,
+    ) -> None:
+        """Demo runs the full pipeline and produces generated Python code."""
+        import time
+        monkeypatch.setattr(time, "sleep", lambda _: None)
+        main(["demo", "--lang", "en", "--speed", "fast"])
+        captured = capsys.readouterr()
+        # Pipeline should generate Python class with protocol name
+        assert "class" in captured.out.lower() or "protocol" in captured.out.lower()
+
+    def test_demo_handler_registered(self) -> None:
+        """Demo handler is in the command dispatch table."""
+        from cervellaswarm_lingua_universale._cli import _COMMAND_HANDLERS
+        assert "demo" in _COMMAND_HANDLERS

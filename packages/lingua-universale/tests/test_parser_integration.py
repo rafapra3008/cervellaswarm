@@ -960,7 +960,7 @@ class TestExample10CompleteProgram:
         assert len(proto.properties) == 7
 
     def test_protocol_seven_property_types(self) -> None:
-        """Esempio 10: 7 property instances (6 unique types, ExclusionProp x2)."""
+        """Esempio 10: 7 property instances (6 of 9 types, ExclusionProp x2)."""
         proto = self._program().declarations[3]
         assert isinstance(proto, ProtocolNode)
         prop_types = {type(p) for p in proto.properties}

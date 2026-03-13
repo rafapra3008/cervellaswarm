@@ -8,7 +8,7 @@ from importlib.metadata import version, PackageNotFoundError
 try:
     __version__ = version("cervellaswarm-lingua-universale")
 except PackageNotFoundError:
-    __version__ = "0.3.0"
+    __version__ = "0.3.1"
 
 # Public API re-exports for convenience.
 # Users can also import directly from submodules.
@@ -165,6 +165,27 @@ from ._eval import (
     run_file,
 )
 from ._repl import REPLSession
+from ._intent_bridge import (
+    ChatPhase,
+    ChatResult,
+    ChatSession,
+    DraftChoice,
+    DraftMessage,
+    IntentDraft,
+    NLClarificationNeeded,
+    NLProcessor,
+    Turn,
+    render_intent_source,
+)
+from ._nl_processor import (  # anthropic imported lazily at instantiation
+    ClaudeNLProcessor as ClaudeNLProcessor,
+    NLProcessorError as NLProcessorError,
+    TOOL_SCHEMA as _NL_TOOL_SCHEMA,
+)
+from ._voice import (  # faster-whisper+sounddevice imported lazily at instantiation
+    VoiceProcessor as VoiceProcessor,
+    VoiceProcessorError as VoiceProcessorError,
+)
 from ._cli import main as cli_main
 from .errors import (
     ErrorCategory,
@@ -319,6 +340,17 @@ __all__ = [
     "run_source",
     "run_file",
     "cli_main",
+    # IntentBridge (E.2+E.3)
+    "ChatPhase",
+    "ChatResult",
+    "ChatSession",
+    "DraftChoice",
+    "DraftMessage",
+    "IntentDraft",
+    "NLClarificationNeeded",
+    "NLProcessor",
+    "Turn",
+    "render_intent_source",
     # REPL (C3.4)
     "REPLSession",
     # Errors
@@ -332,4 +364,10 @@ __all__ = [
     "suggest_similar",
     "DEFAULT_LOCALE",
     "SUPPORTED_LOCALES",
+    # NL Processor (E.3, optional dep -- `pip install ...[nl]`)
+    "ClaudeNLProcessor",
+    "NLProcessorError",
+    # Voice Processor (E.4, optional dep -- `pip install ...[voice]`)
+    "VoiceProcessor",
+    "VoiceProcessorError",
 ]

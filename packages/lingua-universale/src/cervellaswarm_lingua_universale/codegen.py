@@ -602,7 +602,7 @@ def _generate_multi_imports(
 def _generate_multi_role_class(
     protocol: Protocol,
     role: str,
-    steps: list[tuple[ProtocolStep, "str | None"]],
+    steps: list[tuple[ProtocolStep, str | None]],
     kind_to_class: dict[MessageKind, str],
 ) -> str:
     """Generate a single Role class for a multi-protocol module."""

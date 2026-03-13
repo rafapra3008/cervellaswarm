@@ -382,7 +382,7 @@ class SessionChecker:
 
     def _record_and_advance(
         self, sender: str, receiver: str, kind: MessageKind,
-    ) -> tuple[MessageRecord, "str | None"]:
+    ) -> tuple[MessageRecord, str | None]:
         """Record the message and advance protocol state."""
         record = MessageRecord(
             timestamp=time.time(),
@@ -412,7 +412,7 @@ class SessionChecker:
     def _emit_post_send_events(
         self,
         record: MessageRecord,
-        current_branch: "str | None",
+        current_branch: str | None,
         t0: float,
     ) -> None:
         """Emit MessageSent event and check completion/repetition."""

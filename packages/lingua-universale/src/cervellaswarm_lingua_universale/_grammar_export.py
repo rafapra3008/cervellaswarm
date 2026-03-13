@@ -10,7 +10,7 @@ decoding by LLMs.  Two formats are supported:
   - **Lark EBNF** -- target: Outlines, llguidance
 
 The exported grammars are *whitespace-lenient* versions of the strict EBNF
-grammar used by the parser (62 productions).  INDENT/DEDENT tokens are
+grammar used by the parser (64 productions).  INDENT/DEDENT tokens are
 replaced by free whitespace (``ws`` / ``%ignore``), so an LLM can generate
 syntactically valid ``.lu`` code without tracking indentation depth.
 
@@ -46,7 +46,7 @@ _GBNF_GRAMMAR = """\
 # Lingua Universale - LLM Grammar (GBNF)
 # Target: XGrammar, vLLM, llama.cpp
 # Version: {version}
-# Rules: 47 (from 62 EBNF productions, whitespace-lenient)
+# Rules: 47 (from 64 EBNF productions, whitespace-lenient)
 # ============================================================
 
 # ---- 1. TOP LEVEL ----
@@ -105,8 +105,10 @@ properties-block ::= "properties" ws ":" ws property+
 
 property       ::= "always" ws1 "terminates"
                  | "no" ws1 "deadlock"
+                 | "no" ws1 "deletion"
                  | ident ws1 "before" ws1 ident
                  | ident ws1 "cannot" ws1 "send" ws1 ident
+                 | ident ws1 "exclusive" ws1 ident
                  | "confidence" ws ">=" ws confidence-level
                  | "trust" ws ">=" ws trust-tier
                  | "all" ws1 "roles" ws1 "participate"
@@ -278,8 +280,10 @@ properties_block: "properties" ":" property+
 
 property: "always" "terminates"
         | "no" "deadlock"
+        | "no" "deletion"
         | IDENT "before" IDENT
         | IDENT "cannot" "send" IDENT
+        | IDENT "exclusive" IDENT
         | "confidence" ">=" confidence_level
         | "trust" ">=" trust_tier
         | "all" "roles" "participate"
@@ -383,7 +387,7 @@ class GrammarExporter:
     """Export Lingua Universale grammar for LLM constrained decoding.
 
     The grammars are statically encoded (not derived from ``_parser.py``).
-    They are whitespace-lenient versions of the strict 62-production EBNF
+    They are whitespace-lenient versions of the strict 64-production EBNF
     grammar, designed so an LLM can generate valid ``.lu`` code without
     tracking indentation depth.
 

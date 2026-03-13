@@ -10,7 +10,7 @@ build-backend = "hatchling.build"
 # ---------------------------------------------------------------------------
 [project]
 name = "cervellaswarm-lingua-universale"
-version = "0.3.0"
+version = "0.3.1"
 description = "The first programming language designed for AI — session types, compiler, REPL, and formal verification"
 readme = "README.md"
 license = "Apache-2.0"
@@ -78,6 +78,13 @@ dev = [
 test = [
     "pytest>=8.0",
     "pytest-cov>=5.0",
+]
+nl = [
+    "anthropic>=0.40.0",
+]
+voice = [
+    "faster-whisper>=1.0.0",
+    "sounddevice>=0.5.0",
 ]
 lsp = [
     "pygls>=2.0",

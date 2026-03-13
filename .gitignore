@@ -2,9 +2,11 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+.DS_Store
 
 # Data directory (operational data, logs, database, retro reports)
 data/
+!packages/lingua-universale/src/cervellaswarm_lingua_universale/stdlib/data/
 *.db
 *.sqlite
 
@@ -54,3 +56,7 @@ config/claude-hooks/
 
 # VS Code extension with personal config
 cervellaswarm-extension/
+
+# VHS generated video files (regenerate from .tape source files)
+packages/lingua-universale/demo/*.gif
+packages/lingua-universale/demo/*.mp4

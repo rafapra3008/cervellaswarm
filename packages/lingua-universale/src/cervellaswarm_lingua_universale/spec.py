@@ -12,8 +12,10 @@ Syntax overview::
     properties for DelegateTask:
         always terminates
         no deadlock
+        no deletion
         task_request before task_result
         worker cannot send audit_request
+        Cuoco exclusive dm
         trust >= trusted
         all roles participate
 
@@ -23,14 +25,16 @@ Grammar (EBNF)::
     property       ::= INDENT prop_body NEWLINE
     prop_body      ::= 'always' 'terminates'
                      | 'no' 'deadlock'
+                     | 'no' 'deletion'
                      | IDENT 'before' IDENT
                      | IDENT 'cannot' 'send' IDENT
+                     | IDENT 'exclusive' IDENT
                      | 'confidence' '>=' IDENT
                      | 'trust' '>=' IDENT
                      | 'all' 'roles' 'participate'
 
-IDENT in 'before' and 'cannot send' must be snake_case MessageKind values
-(e.g., ``task_request``) or role names respectively.
+IDENT in 'before', 'cannot send', and 'exclusive' must be snake_case
+MessageKind values (e.g., ``task_request``) or role names respectively.
 
 Confidence levels: certain=1.0, high=0.8, medium=0.5, low=0.2,
 speculative=0.1
@@ -73,12 +77,29 @@ class SpecParseError(Exception):
 
 
 class PropertyKind(Enum):
-    """Kinds of formal properties about protocols."""
+    """Kinds of formal properties about protocols.
+
+    Each kind represents a verifiable guarantee:
+
+    - ALWAYS_TERMINATES: protocol reaches an end state on every path.
+    - NO_DEADLOCK: no role waits indefinitely for a message.
+    - NO_DELETION: no step uses a destructive MessageKind (e.g. delete ops).
+    - ORDERING: message A must precede message B in every execution.
+    - EXCLUSION: a specific role is forbidden from sending a message kind.
+    - ROLE_EXCLUSIVE: only the named role may send the specified message kind;
+      any other sender is a violation.  Syntax: ``Cuoco exclusive dm``.
+    - CONFIDENCE_MIN: all messages must carry confidence >= threshold.
+    - TRUST_MIN: all senders must have trust tier >= the specified tier.
+    - ALL_ROLES_PARTICIPATE: every role defined in the protocol sends at least
+      one message.
+    """
 
     ALWAYS_TERMINATES = "always_terminates"
     NO_DEADLOCK = "no_deadlock"
+    NO_DELETION = "no_deletion"              # no destructive operations
     ORDERING = "ordering"                    # A before B
     EXCLUSION = "exclusion"                  # role cannot send message
+    ROLE_EXCLUSIVE = "role_exclusive"        # only role can send action
     CONFIDENCE_MIN = "confidence_min"        # confidence >= threshold
     TRUST_MIN = "trust_min"                  # trust >= tier
     ALL_ROLES_PARTICIPATE = "all_roles_participate"
@@ -110,8 +131,10 @@ class PropertySpec:
     Parameter conventions by kind:
         ALWAYS_TERMINATES:    params=()
         NO_DEADLOCK:          params=()
+        NO_DELETION:          params=()
         ORDERING:             params=(a_kind_value, b_kind_value)
         EXCLUSION:            params=(role_name, msg_kind_value)
+        ROLE_EXCLUSIVE:       params=(role_name, msg_kind_value)
         CONFIDENCE_MIN:       params=(), threshold set
         TRUST_MIN:            params=(tier_value,)
         ALL_ROLES_PARTICIPATE: params=()
@@ -129,6 +152,10 @@ class PropertySpec:
         if self.kind == PropertyKind.EXCLUSION and len(self.params) != 2:
             raise ValueError(
                 f"EXCLUSION requires exactly 2 params (role, msg_kind), got {len(self.params)}"
+            )
+        if self.kind == PropertyKind.ROLE_EXCLUSIVE and len(self.params) != 2:
+            raise ValueError(
+                f"ROLE_EXCLUSIVE requires exactly 2 params (role, msg_kind), got {len(self.params)}"
             )
         if self.kind == PropertyKind.TRUST_MIN and len(self.params) != 1:
             raise ValueError(
@@ -482,6 +509,10 @@ class _SpecParser:
         if first == "always":
             return self._parse_always_terminates()
         if first == "no":
+            # Disambiguate: "no deadlock" vs "no deletion"
+            next_idx = self._pos + 1
+            if next_idx < len(self._tokens) and self._tokens[next_idx].value == "deletion":
+                return self._parse_no_deletion()
             return self._parse_no_deadlock()
         if first == "all":
             return self._parse_all_roles_participate()
@@ -506,6 +537,13 @@ class _SpecParser:
         self._expect_word("deadlock")
         self._expect(_TokKind.NEWLINE)
         return PropertySpec(kind=PropertyKind.NO_DEADLOCK)
+
+    def _parse_no_deletion(self) -> PropertySpec:
+        """Parse: 'no' 'deletion'"""
+        self._expect_word("no")
+        self._expect_word("deletion")
+        self._expect(_TokKind.NEWLINE)
+        return PropertySpec(kind=PropertyKind.NO_DELETION)
 
     def _parse_all_roles_participate(self) -> PropertySpec:
         """Parse: 'all' 'roles' 'participate'"""
@@ -552,17 +590,18 @@ class _SpecParser:
         )
 
     def _parse_ident_property(self) -> PropertySpec:
-        """Parse ORDERING or EXCLUSION starting with an IDENT.
+        """Parse ORDERING, EXCLUSION, or ROLE_EXCLUSIVE starting with an IDENT.
 
-        ORDERING:  IDENT 'before' IDENT
-        EXCLUSION: IDENT 'cannot' 'send' IDENT
+        ORDERING:       IDENT 'before' IDENT
+        EXCLUSION:      IDENT 'cannot' 'send' IDENT
+        ROLE_EXCLUSIVE: IDENT 'exclusive' IDENT
         """
         first_tok = self._expect_word()
         keyword_tok = self._peek()
 
         if keyword_tok.kind != _TokKind.WORD:
             raise SpecParseError(
-                f"expected 'before' or 'cannot', got {keyword_tok.kind.name}",
+                f"expected 'before', 'cannot', or 'exclusive', got {keyword_tok.kind.name}",
                 line=keyword_tok.line,
             )
 
@@ -570,9 +609,11 @@ class _SpecParser:
             return self._parse_ordering(first_tok)
         if keyword_tok.value == "cannot":
             return self._parse_exclusion(first_tok)
+        if keyword_tok.value == "exclusive":
+            return self._parse_role_exclusive(first_tok)
 
         raise SpecParseError(
-            f"expected 'before' or 'cannot', got '{keyword_tok.value}'",
+            f"expected 'before', 'cannot', or 'exclusive', got '{keyword_tok.value}'",
             line=keyword_tok.line,
         )
 
@@ -612,6 +653,20 @@ class _SpecParser:
 
         return PropertySpec(
             kind=PropertyKind.EXCLUSION,
+            params=(role_tok.value, msg),
+        )
+
+    def _parse_role_exclusive(self, role_tok: _Tok) -> PropertySpec:
+        """Parse: IDENT 'exclusive' IDENT  (only role can send MessageKind)"""
+        self._expect_word("exclusive")
+        msg_tok = self._expect_word()
+        self._expect(_TokKind.NEWLINE)
+
+        msg = msg_tok.value.lower()
+        _parse_message_kind(msg, msg_tok.line)  # validate
+
+        return PropertySpec(
+            kind=PropertyKind.ROLE_EXCLUSIVE,
             params=(role_tok.value, msg),
         )
 
@@ -730,6 +785,49 @@ def _check_no_deadlock_static(protocol: Protocol) -> PropertyResult:
     )
 
 
+def _check_no_deletion_static(protocol: Protocol) -> PropertyResult:
+    """PROVED if protocol has no destructive (delete) message kinds.
+
+    The current MessageKind enum has no DELETE-related variants.
+    Protocols that only use the standard message kinds (TASK_REQUEST,
+    TASK_RESULT, etc.) are deletion-free by construction.
+    """
+    spec = PropertySpec(kind=PropertyKind.NO_DELETION)
+
+    # Deletion-related kinds (currently none in MessageKind; future-proofing)
+    deletion_kinds: frozenset[MessageKind] = frozenset()
+
+    for elem in protocol.elements:
+        if isinstance(elem, ProtocolStep):
+            if elem.message_kind in deletion_kinds:
+                return PropertyResult(
+                    spec=spec,
+                    verdict=PropertyVerdict.VIOLATED,
+                    evidence=f"step {elem.sender} -> {elem.receiver} uses deletion kind {elem.message_kind.value}",
+                )
+        elif isinstance(elem, ProtocolChoice):
+            for branch_name, branch_steps in elem.branches.items():
+                for step in branch_steps:
+                    if step.message_kind in deletion_kinds:
+                        return PropertyResult(
+                            spec=spec,
+                            verdict=PropertyVerdict.VIOLATED,
+                            evidence=(
+                                f"branch '{branch_name}': {step.sender} -> {step.receiver} "
+                                f"uses deletion kind {step.message_kind.value}"
+                            ),
+                        )
+
+    return PropertyResult(
+        spec=spec,
+        verdict=PropertyVerdict.PROVED,
+        evidence=(
+            f"protocol '{protocol.name}' uses no destructive message kinds "
+            f"({len(protocol.elements)} elements checked)"
+        ),
+    )
+
+
 def _check_ordering_static(protocol: Protocol, spec: PropertySpec) -> PropertyResult:
     """VIOLATED if any execution path has B before A.
 
@@ -812,6 +910,52 @@ def _check_exclusion_static(protocol: Protocol, spec: PropertySpec) -> PropertyR
         evidence=(
             f"role '{role}' never sends '{msg_str}' "
             f"in any step of protocol '{protocol.name}'"
+        ),
+    )
+
+
+def _check_role_exclusive_static(protocol: Protocol, spec: PropertySpec) -> PropertyResult:
+    """Check that only the exclusive role sends the specified message kind.
+
+    VIOLATED if any step (top-level or inside a choice branch) has the
+    given message kind sent by a role other than ``spec.params[0]``.
+    """
+    exclusive_role, msg_str = spec.params
+    msg_kind = _VALUE_TO_KIND[msg_str]
+
+    violations: list[str] = []
+
+    for elem in protocol.elements:
+        if isinstance(elem, ProtocolStep):
+            if elem.message_kind == msg_kind and elem.sender != exclusive_role:
+                violations.append(
+                    f"top-level step: {elem.sender} -> {elem.receiver} : {msg_str}"
+                )
+        elif isinstance(elem, ProtocolChoice):
+            for branch_name, branch_steps in elem.branches.items():
+                for step in branch_steps:
+                    if step.message_kind == msg_kind and step.sender != exclusive_role:
+                        violations.append(
+                            f"branch '{branch_name}': "
+                            f"{step.sender} -> {step.receiver} : {msg_str}"
+                        )
+
+    if violations:
+        return PropertyResult(
+            spec=spec,
+            verdict=PropertyVerdict.VIOLATED,
+            evidence=(
+                f"role other than '{exclusive_role}' sends '{msg_str}' in: "
+                + "; ".join(violations)
+            ),
+        )
+
+    return PropertyResult(
+        spec=spec,
+        verdict=PropertyVerdict.PROVED,
+        evidence=(
+            f"only '{exclusive_role}' sends '{msg_str}' "
+            f"in protocol '{protocol.name}'"
         ),
     )
 
@@ -988,6 +1132,34 @@ def _check_exclusion_runtime(
     )
 
 
+def _check_role_exclusive_runtime(
+    log: Sequence[MessageRecord], spec: PropertySpec
+) -> PropertyResult:
+    """Verify only the exclusive role sent the specified message kind in the session."""
+    exclusive_role, msg_str = spec.params
+    msg_kind = _VALUE_TO_KIND[msg_str]
+
+    for i, record in enumerate(log):
+        if record.kind == msg_kind and record.sender != exclusive_role:
+            return PropertyResult(
+                spec=spec,
+                verdict=PropertyVerdict.VIOLATED,
+                evidence=(
+                    f"role '{record.sender}' (not '{exclusive_role}') "
+                    f"sent '{msg_str}' at message {i} in session log"
+                ),
+            )
+
+    return PropertyResult(
+        spec=spec,
+        verdict=PropertyVerdict.SATISFIED,
+        evidence=(
+            f"only '{exclusive_role}' sent '{msg_str}' "
+            f"in {len(log)} session messages"
+        ),
+    )
+
+
 def _check_all_roles_participate_runtime(
     log: Sequence[MessageRecord], spec: PropertySpec, protocol_roles: tuple[str, ...]
 ) -> PropertyResult:
@@ -1062,11 +1234,17 @@ def check_properties(protocol: Protocol, spec: ProtocolSpec) -> PropertyReport:
         elif prop.kind == PropertyKind.NO_DEADLOCK:
             results.append(_check_no_deadlock_static(protocol))
 
+        elif prop.kind == PropertyKind.NO_DELETION:
+            results.append(_check_no_deletion_static(protocol))
+
         elif prop.kind == PropertyKind.ORDERING:
             results.append(_check_ordering_static(protocol, prop))
 
         elif prop.kind == PropertyKind.EXCLUSION:
             results.append(_check_exclusion_static(protocol, prop))
+
+        elif prop.kind == PropertyKind.ROLE_EXCLUSIVE:
+            results.append(_check_role_exclusive_static(protocol, prop))
 
         elif prop.kind == PropertyKind.CONFIDENCE_MIN:
             results.append(PropertyResult(
@@ -1151,7 +1329,6 @@ def check_session(
 
     for prop in spec.properties:
         if prop.kind in (PropertyKind.ALWAYS_TERMINATES, PropertyKind.NO_DEADLOCK):
-            # If we have a completed session log, the session terminated -> satisfied
             results.append(PropertyResult(
                 spec=prop,
                 verdict=PropertyVerdict.SATISFIED,
@@ -1161,11 +1338,25 @@ def check_session(
                 ),
             ))
 
+        elif prop.kind == PropertyKind.NO_DELETION:
+            # Satisfied: SessionChecker only allows protocol-defined messages
+            results.append(PropertyResult(
+                spec=prop,
+                verdict=PropertyVerdict.SATISFIED,
+                evidence=(
+                    f"session completed with {len(log)} messages "
+                    f"(no deletion operations in session)"
+                ),
+            ))
+
         elif prop.kind == PropertyKind.ORDERING:
             results.append(_check_ordering_runtime(log, prop))
 
         elif prop.kind == PropertyKind.EXCLUSION:
             results.append(_check_exclusion_runtime(log, prop))
+
+        elif prop.kind == PropertyKind.ROLE_EXCLUSIVE:
+            results.append(_check_role_exclusive_runtime(log, prop))
 
         elif prop.kind == PropertyKind.CONFIDENCE_MIN:
             results.append(PropertyResult(

@@ -14,6 +14,7 @@ Usage:
     cervella-events stats [--project X] [--json]
     cervella-events lessons [--agent X] [--project X] [--limit N] [--json]
     cervella-events patterns [--days N] [--min-occurrences N] [--json]
+    cervella-events usage [--today] [--days N] [--project X] [--model X] [--json]
 """
 
 import argparse
@@ -423,6 +424,89 @@ def main_patterns(argv: "list[str] | None" = None) -> None:
 
 
 # ------------------------------------------------------------------
+# usage
+# ------------------------------------------------------------------
+
+
+def main_usage(argv: "list[str] | None" = None) -> None:
+    """Show token usage and cost statistics."""
+    parser = argparse.ArgumentParser(
+        prog="cervella-events usage",
+        description="Show token usage and cost statistics",
+    )
+    parser.add_argument("--project", default="", help="Filter by project")
+    parser.add_argument("--model", default="", help="Filter by model")
+    parser.add_argument("--today", action="store_true", help="Show only today's usage")
+    parser.add_argument("--days", type=int, default=0, help="Limit to last N days")
+    parser.add_argument("--db-path", default=None, help="Explicit database path")
+    parser.add_argument("--json", action="store_true", help="Output as JSON")
+    args = parser.parse_args(argv)
+
+    from cervellaswarm_event_store.database import EventStore
+
+    days = 1 if args.today else args.days
+
+    try:
+        with EventStore(db_path=args.db_path) as store:
+            summary = store.query_usage(
+                project=args.project,
+                model=args.model,
+                days=days,
+            )
+
+        if args.json:
+            _print_json(
+                {
+                    "total_sessions": summary.total_sessions,
+                    "total_input_tokens": summary.total_input_tokens,
+                    "total_output_tokens": summary.total_output_tokens,
+                    "total_cache_read_tokens": summary.total_cache_read_tokens,
+                    "total_cache_creation_tokens": summary.total_cache_creation_tokens,
+                    "total_cost_usd": summary.total_cost_usd,
+                    "by_model": summary.by_model,
+                    "by_project": summary.by_project,
+                }
+            )
+        else:
+            period = "today" if args.today else f"last {days} days" if days else "all time"
+            print(f"\nToken Usage ({period})")
+            print("=" * 60)
+            print(f"  Sessions:       {summary.total_sessions}")
+
+            total_all = (
+                summary.total_input_tokens
+                + summary.total_output_tokens
+                + summary.total_cache_read_tokens
+                + summary.total_cache_creation_tokens
+            )
+            print(f"  Total tokens:   {total_all:,}")
+            print(f"  Input tokens:   {summary.total_input_tokens:,}")
+            print(f"  Output tokens:  {summary.total_output_tokens:,}")
+            print(f"  Cache read:     {summary.total_cache_read_tokens:,}")
+            print(f"  Cache write:    {summary.total_cache_creation_tokens:,}")
+            print(f"  Cost (est.):    ${summary.total_cost_usd:.4f}")
+
+            if summary.by_model:
+                print()
+                print("  By Model:")
+                for m, data in summary.by_model.items():
+                    print(f"    {m:30}  {data['tokens']:>12,} tok  ${data['cost']:.4f}")
+
+            if summary.by_project:
+                print()
+                print("  By Project:")
+                for p, data in summary.by_project.items():
+                    print(f"    {p:30}  {data['tokens']:>12,} tok  ${data['cost']:.4f}")
+            print()
+    except Exception as e:
+        if args.json:
+            _print_json({"status": "error", "error": str(e)})
+        else:
+            print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+# ------------------------------------------------------------------
 # Main dispatcher
 # ------------------------------------------------------------------
 
@@ -446,6 +530,7 @@ def main(argv: "list[str] | None" = None) -> None:
     subparsers.add_parser("stats", help="Show statistics")
     subparsers.add_parser("lessons", help="Show relevant lessons")
     subparsers.add_parser("patterns", help="Detect error patterns")
+    subparsers.add_parser("usage", help="Show token usage and cost")
 
     args, remaining = parser.parse_known_args(argv)
 
@@ -456,6 +541,7 @@ def main(argv: "list[str] | None" = None) -> None:
         "stats": main_stats,
         "lessons": main_lessons,
         "patterns": main_patterns,
+        "usage": main_usage,
     }
 
     if args.command is None:

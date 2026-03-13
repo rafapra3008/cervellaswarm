@@ -3,7 +3,7 @@
 
 """Tests for spec.py core: dataclasses, PropertyReport, static checker.
 
-Covers: PropertySpec validation for all 7 kinds, ProtocolSpec validation,
+Covers: PropertySpec validation for all 9 kinds, ProtocolSpec validation,
 PropertyReport computed properties (all_passed/passed_count/violated_count),
 and check_properties() static checker against DelegateTask and ArchitectFlow.
 """
@@ -454,7 +454,7 @@ class TestStaticAllRolesParticipate:
 
 
 class TestStaticFullSpec:
-    """Full spec with all 7 property types -> PropertyReport correctness."""
+    """Full spec with all 9 property types -> PropertyReport correctness."""
 
     def test_full_spec_delegate_task_report(self):
         spec = ProtocolSpec(
@@ -566,3 +566,102 @@ class TestGuardianaFixes:
         report = check_properties(DelegateTask, spec)
         assert report.results[0].verdict == PropertyVerdict.VIOLATED
         assert "worker" in report.results[0].evidence or "guardiana" in report.results[0].evidence
+
+
+# ============================================================
+# NO_DELETION static checker tests
+# ============================================================
+
+
+class TestStaticNoDeletion:
+    """NO_DELETION static checks."""
+
+    def test_no_deletion_proved_on_standard_protocol(self):
+        """check_properties with NO_DELETION on a standard Protocol -> PROVED.
+
+        DelegateTask uses no DELETE-related MessageKind (none exist currently).
+        """
+        spec = ProtocolSpec(
+            protocol_name="DelegateTask",
+            properties=(PropertySpec(kind=PropertyKind.NO_DELETION),),
+        )
+        report = check_properties(DelegateTask, spec)
+        assert report.results[0].verdict == PropertyVerdict.PROVED
+
+    def test_no_deletion_proved_on_architect_flow(self):
+        """ArchitectFlow also has no deletion kinds -> PROVED."""
+        spec = ProtocolSpec(
+            protocol_name="ArchitectFlow",
+            properties=(PropertySpec(kind=PropertyKind.NO_DELETION),),
+        )
+        report = check_properties(ArchitectFlow, spec)
+        assert report.results[0].verdict == PropertyVerdict.PROVED
+
+
+# ============================================================
+# ROLE_EXCLUSIVE static checker tests
+# ============================================================
+
+
+class TestStaticRoleExclusive:
+    """ROLE_EXCLUSIVE static checks."""
+
+    def test_role_exclusive_proved(self):
+        """Protocol where only role X sends dm -> PROVED."""
+        proto = Protocol(
+            name="ExclusiveProto",
+            roles=("Cuoco", "Pantry"),
+            elements=(
+                ProtocolStep(
+                    sender="Cuoco",
+                    receiver="Pantry",
+                    message_kind=MessageKind.DM,
+                ),
+                ProtocolStep(
+                    sender="Pantry",
+                    receiver="Cuoco",
+                    message_kind=MessageKind.TASK_RESULT,
+                ),
+            ),
+        )
+        spec = ProtocolSpec(
+            protocol_name="ExclusiveProto",
+            properties=(
+                PropertySpec(
+                    kind=PropertyKind.ROLE_EXCLUSIVE,
+                    params=("Cuoco", "dm"),
+                ),
+            ),
+        )
+        report = check_properties(proto, spec)
+        assert report.results[0].verdict == PropertyVerdict.PROVED
+
+    def test_role_exclusive_violated(self):
+        """Protocol where role Y also sends dm -> VIOLATED."""
+        proto = Protocol(
+            name="ViolationProto",
+            roles=("Cuoco", "Pantry"),
+            elements=(
+                ProtocolStep(
+                    sender="Cuoco",
+                    receiver="Pantry",
+                    message_kind=MessageKind.DM,
+                ),
+                ProtocolStep(
+                    sender="Pantry",
+                    receiver="Cuoco",
+                    message_kind=MessageKind.DM,
+                ),
+            ),
+        )
+        spec = ProtocolSpec(
+            protocol_name="ViolationProto",
+            properties=(
+                PropertySpec(
+                    kind=PropertyKind.ROLE_EXCLUSIVE,
+                    params=("Cuoco", "dm"),
+                ),
+            ),
+        )
+        report = check_properties(proto, spec)
+        assert report.results[0].verdict == PropertyVerdict.VIOLATED

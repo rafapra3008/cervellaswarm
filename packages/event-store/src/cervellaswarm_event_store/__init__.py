@@ -29,6 +29,11 @@ from cervellaswarm_event_store.analytics import (
     ScoredLesson,
     get_relevant_lessons,
 )
+from cervellaswarm_event_store.observability import (
+    TokenUsage,
+    UsageSummary,
+    estimate_cost,
+)
 
 __all__ = [
     # Config
@@ -50,4 +55,8 @@ __all__ = [
     "DetectedPattern",
     "ScoredLesson",
     "get_relevant_lessons",
+    # Observability types
+    "TokenUsage",
+    "UsageSummary",
+    "estimate_cost",
 ]
