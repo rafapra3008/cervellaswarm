@@ -14,7 +14,7 @@ This project follows [Semantic Versioning](https://semver.org/).
 - Parser: `_parse_choice()` recursive, `MAX_CHOICE_DEPTH = 32`.
 - Compiler: `_convert_elements()` recursive for ChoiceNode in codegen and _eval.
 - Spec: `_collect_all_steps`, `_find_violating_steps`, `_collect_all_paths` all recursive.
-- 28 new parser/compiler/spec tests.
+- 29 new parser/compiler/spec tests.
 
 **LU 1.2 - Nested Runtime (SessionChecker) (S447)**
 - Stack-based `ChoiceFrame` in `SessionChecker` replaces flat `branch` + `branch_step_index`.
@@ -23,7 +23,7 @@ This project follows [Semantic Versioning](https://semver.org/).
 - `_pop_exhausted_frames()` cascading frame pop with `while` loop.
 - `summary()` exposes `choice_depth` and `branch_path`.
 - Backward compatible: flat protocols = empty stack = identical behavior.
-- 28 new runtime tests (2-level, 3-level, stack pop, violations, edge cases).
+- 27 new runtime tests (2-level, 3-level, stack pop, violations, edge cases).
 
 ### Changed
 

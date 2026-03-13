@@ -182,7 +182,7 @@ Each step has editable, runnable code. No install required.
 ## Architecture
 
 ```
-Lingua Universale v0.3.1 -- 29 modules, zero dependencies
+Lingua Universale v0.3.2 -- 29 modules, zero dependencies
 
 FASE A: Session Types
   types.py           14 MessageKind, 14 message dataclasses, 17 AgentRole
