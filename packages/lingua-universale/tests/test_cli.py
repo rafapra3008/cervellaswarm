@@ -484,7 +484,17 @@ class TestMultiFile:
         result = _discover_lu_files(str(tmp_path))
         names = {p.name for p in result}
         assert names == {"a.lu", "b.lu"}
-        assert (tmp_path / "notes.txt") not in result
+        assert (tmp_path / "sub" / "notes.txt") not in result
+
+    def test_discover_non_lu_file_returns_empty(self, tmp_path: Path) -> None:
+        """_discover_lu_files on a non-.lu file returns [] (F1+F9 fix)."""
+        from cervellaswarm_lingua_universale._cli import _discover_lu_files
+
+        f = tmp_path / "readme.txt"
+        f.write_text("not a lu file", encoding="utf-8")
+
+        result = _discover_lu_files(str(f))
+        assert result == []
 
     def test_discover_directory_returns_sorted_paths(self, tmp_path: Path) -> None:
         """_discover_lu_files returns paths in sorted order."""

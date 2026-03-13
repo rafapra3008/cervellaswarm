@@ -355,14 +355,22 @@ def _cmd_demo(args: argparse.Namespace) -> int:
 def _discover_lu_files(path: str) -> list[Path]:
     """Discover .lu files from a path (file or directory).
 
-    If path is a file, return [path].
+    If path is a .lu file, return [path].
     If path is a directory, return all .lu files recursively, sorted.
+    Non-.lu files and nonexistent paths return [].
     """
     p = Path(path)
     if p.is_file():
+        if p.suffix != ".lu":
+            return []
         return [p]
     if p.is_dir():
-        return sorted(p.rglob("*.lu"))
+        # Collect without following symlinks to avoid loops
+        result = []
+        for f in sorted(p.rglob("*.lu")):
+            if not f.is_symlink():
+                result.append(f)
+        return result
     # Not found -- let caller handle the error
     return []
 
@@ -394,6 +402,7 @@ def _cmd_lint(args: argparse.Namespace) -> int:
                 file=sys.stderr,
             )
             total_errors += 1
+            files_with_findings += 1
             continue
 
         if not findings:
@@ -476,7 +485,7 @@ def _cmd_fmt(args: argparse.Namespace) -> int:
                 if len(files) == 1:
                     print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {lu_file} -- already formatted")
                 continue
-            original = Path(str(lu_file)).read_text(encoding="utf-8")
+            original = lu_file.read_text(encoding="utf-8")
             diff = difflib.unified_diff(
                 original.splitlines(keepends=True),
                 formatted.splitlines(keepends=True),
@@ -484,7 +493,7 @@ def _cmd_fmt(args: argparse.Namespace) -> int:
                 tofile=f"b/{lu_file}",
             )
             sys.stdout.writelines(diff)
-            reformatted += 1
+            would_reformat += 1
             continue
 
         if args.stdout:
@@ -497,28 +506,25 @@ def _cmd_fmt(args: argparse.Namespace) -> int:
                 print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {lu_file} -- already formatted")
             continue
 
-        Path(str(lu_file)).write_text(formatted, encoding="utf-8")
+        lu_file.write_text(formatted, encoding="utf-8")
         print(f"{_c.GREEN}Formatted{_c.RESET} {lu_file}")
         reformatted += 1
 
     # Summary for multi-file
     if len(files) > 1:
-        if args.check:
+        if args.check or args.diff:
             if would_reformat == 0 and error_count == 0:
                 print(f"\n{_c.GREEN}{_c.BOLD}OK{_c.RESET} {len(files)} files checked, all formatted")
             else:
                 print(f"\n{len(files)} files checked, {would_reformat} would be reformatted")
-            return 1 if (would_reformat > 0 or error_count > 0) else 0
-        elif args.diff:
-            if reformatted == 0:
-                print(f"\n{_c.GREEN}{_c.BOLD}OK{_c.RESET} {len(files)} files checked, all formatted")
         else:
             if reformatted == 0 and error_count == 0:
                 print(f"\n{_c.GREEN}{_c.BOLD}OK{_c.RESET} {len(files)} files checked, all formatted")
             elif reformatted > 0:
                 print(f"\n{len(files)} files checked, {reformatted} reformatted")
 
-    if args.check:
+    # Exit code: 1 if any files need reformatting or had errors
+    if args.check or args.diff:
         return 1 if (would_reformat > 0 or error_count > 0) else 0
     return 1 if error_count > 0 else 0
 

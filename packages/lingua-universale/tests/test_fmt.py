@@ -891,10 +891,10 @@ class TestCLI:
         assert lu_file.read_text(encoding="utf-8") == original
 
     def test_fmt_diff_shows_diff_output(self, tmp_path):
-        """lu fmt --diff prints unified diff to stdout when file would change."""
+        """lu fmt --diff prints unified diff and exits 1 when file would change."""
         lu_file = self._unformatted_file(tmp_path)
         result = self._run_lu("fmt", "--diff", str(lu_file))
-        assert result.returncode == 0
+        assert result.returncode == 1  # CI-friendly: exit 1 when files need reformatting
         # unified diff markers
         assert "---" in result.stdout or "+++" in result.stdout
 
