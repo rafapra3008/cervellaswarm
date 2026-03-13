@@ -1,34 +1,35 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 2026-03-13 - Sessione 448
-> **STATUS:** lu lint DONE. **3547 test.** PyPI v0.3.2 LIVE. 11 CLI commands.
+> **STATUS:** lu lint + lu fmt DONE. **3641 test.** PyPI v0.3.2 LIVE. 12 CLI commands.
 
 ---
 
 ## S448 -- COSA ABBIAMO FATTO
 
 ### 1. PyPI v0.3.2 PUBLISHED (nested choice end-to-end)
-- Tag `lingua-universale-v0.3.2` pushed to public repo
-- Trusted Publisher workflow triggered, environment approved via `gh api`
-- LIVE on pypi.org! Nested choice (parser+compiler+spec+runtime) for the world
+- Tag pushed to public, Trusted Publisher, LIVE on pypi.org
 
-### 2. Dependabot Security Cleanup (6 PR merged)
-- 3 HIGH: ajv 8.18.0, express-rate-limit 7.5.0, hono 4.12.7
-- 1 MEDIUM: send 1.2.0
-- 2 devDep: flatted 3.4.1 (cli + dashboard)
-- HOLD: stripe 17→20 (major), express 4→5 (major), zod 3→4 (MCP SDK peer dep blocks)
+### 2. Dependabot Security Cleanup
+- 6 PR merged + zod 3→4 merged (MCP SDK supports it now)
+- npm audit fix: 0 vulns across all 5 JS packages
+- HOLD: stripe 17→20, express 4→5 (major, need dedicated session)
 
-### 3. `lu lint` -- B5 Backlog (1 file + 1 test file + CLI)
-- **`_lint.py`** (~430 LOC): single-pass AST walk (Ruff/Clippy pattern)
-- 10 rules in 3 categories:
-  - CORRECTNESS (5, exit=1): duplicate_role, empty_branch, self_message, duplicate_branch_label, undefined_role_in_step
-  - STYLE (2, warning): protocol_name_convention, single_step_protocol
-  - BEST PRACTICES (3, warning): no_properties, deep_nesting, agent_no_trust
-- `--ignore LU-W002,LU-W020` flag with whitespace-tolerant parsing
-- Public API: `lint_program()`, `lint_source()`, `lint_file()`
-- Research report: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260313_LU_LINT_DESIGN.md`
-- Guardiana audit: 9.5/10, all P3 findings fixed (dead import, dead regex, comma-space)
-- **53 new tests** (3547 total)
+### 3. `lu lint` -- B5 (10 rules, 53+20 tests)
+- `_lint.py`: single-pass AST walk (Ruff/Clippy pattern)
+- 10 rules: 5 CORRECTNESS (exit=1) + 2 STYLE + 3 BEST PRACTICES
+- 20 stdlib regression tests (parametrized)
+- Guardiana: 9.5/10
+
+### 4. `lu fmt` -- B6 (74 tests)
+- `_fmt.py` (~450 LOC): zero-config auto-formatter (gofmt/buf pattern)
+- AST + pre-scan comments + single-pass formatter
+- Canonical property ordering, agent clause ordering, use sorting
+- All 5 action types with correct word order
+- Flags: --check (CI), --diff, --stdout (mutually exclusive)
+- Idempotent: tested on ALL 20 stdlib protocols
+- Research: `.sncp/.../RESEARCH_20260313_LU_FMT_DESIGN.md` (18 sources)
+- Guardiana: 9.5/10, P3 findings fixed (dead import, mutex flags, +3 tests)
 
 ---
 
@@ -36,10 +37,10 @@
 
 | Decisione | Perche |
 |-----------|--------|
-| LU-W prefix (not LU-E) | LU-E already used for errors (74 codes). W = warning/lint. Zero collision. |
-| Single-pass walk (not multi-pass) | Ruff pattern: one walk, multiple rules. Simple, fast, extensible. |
-| Rule = plain function `(node, ctx)` | Clippy pattern. Easy to add rules. No registration boilerplate. |
-| `ignore` as frozenset | Immutable, hashable, fast lookup. Matches `frozenset` pattern in stdlib. |
+| Zero-config fmt (not configurable) | gofmt/elm-format: "one true style" elimina debates. LU e giovane. |
+| AST + pre-scan (not CST) | Tokenizer ignora commenti. Pre-scan = semplice, funziona. |
+| 1 blank line tra sezioni (not 2) | DSL concisa. Stdlib gia usa 1 blank. Research diceva 2 (Python). |
+| Mutually exclusive flags | Guardiana F5: --check/--diff/--stdout non devono combinarsi. |
 
 ---
 
@@ -52,18 +53,18 @@ LINGUA UNIVERSALE (LA MISSIONE):
     E.1-E.5: DONE (9.5/10)
     E.6 CervellaLang 1.0: IN PROGRESS
       T3.1 Grammar 1.0 RFC:    DONE (S444)
-      T3.2 Standard Library:    DONE (S445)  <- 20 protocolli
+      T3.2 Standard Library:    DONE (S445)
       T3.3 lu init:              DONE (S444)
       T3.4 lu verify:            DONE (S444)
-      T3.5 VS Code Marketplace:  TODO         <- blocco: Rafa publisher
+      T3.5 VS Code Marketplace:  TODO         <- blocco: Rafa
   T2.1 PyPI v0.3.2:              LIVE!
-  LU 1.1 Nested Choice:          DONE!       <- parser/compiler/spec
-  LU 1.2 Nested Runtime:          DONE!       <- SessionChecker stack-based
-  B5 lu lint:                     DONE!       <- 10 rules, 53 tests
-  Moduli: 29 | Test: 3547 | CLI: 11 | EBNF: 64 | Stdlib: 20
+  LU 1.1+1.2:                    DONE!
+  B5 lu lint:                     DONE!       <- 10 rules
+  B6 lu fmt:                      DONE!       <- zero-config
+  Moduli: 29 | Test: 3641 | CLI: 12 | Stdlib: 20
 
-CI/CD: TUTTO GREEN (local)
-DEPENDABOT: 3 HOLD (major: stripe, express, zod)
+CI/CD: TUTTO GREEN
+DEPENDABOT: 2 HOLD (stripe, express)
 ```
 
 ---
@@ -76,12 +77,9 @@ DEPENDABOT: 3 HOLD (major: stripe, express, zod)
 
 ### 2. OBIETTIVI (priorita)
 - **T3.5 VS Code Marketplace** (blocco: Rafa publisher)
-- **T3.6 Community Seeding** (blog + nested choice + lu lint showcase)
-- **`lu fmt`** (backlog B6 -- auto-formatter companion to lu lint)
-
-### 3. Quick wins
-- `lu lint` integration in `lu check` pipeline (--lint flag?)
-- Stdlib protocols lint-clean verification
+- **T3.6 Community Seeding** (blog + showcase)
+- **LSP fmt integration** (wire format_source in _lsp.py)
+- **lu fmt stdlib** (format all 20 stdlib to canonical style)
 
 ---
 
@@ -89,27 +87,27 @@ DEPENDABOT: 3 HOLD (major: stripe, express, zod)
 
 | Metrica | Valore |
 |---------|--------|
-| Test LU | **3547** |
+| Test LU | **3641** |
 | Moduli LU | **29** |
 | Stdlib | **20** (5 categorie) |
-| CLI | **11** |
+| CLI | **12** |
 | Lint rules | **10** (3 categorie) |
 | PropertyKind | **9** |
 | EBNF | **64** (frozen) |
-| Guardiana S448 | lu lint: 9.5/10 |
+| Guardiana S448 | lu lint 9.5, lu fmt 9.5 |
 
 ---
 
 ## Lezioni Apprese (S448)
 
 ### Cosa ha funzionato bene
-- **Formula Magica confermata**: Research report (14 sources) → design → implement → audit
-- **Guardiana anche su P3**: comma-space bug in `--ignore` parsing trovato prima del commit
-- **Dependabot triage strategy**: patch/minor merge safe, major HOLD = zero risk
+- **Formula Magica x2**: ricerca(14+18 fonti) -> design -> implement -> audit
+- **Guardiana P3 = diamante**: comma-space, dead import, mutex flags, +3 test
+- **Idempotency test = gold standard**: parametrized su tutti 20 stdlib
 
 ### Pattern confermato
-- **Rule = plain function**: facile aggiungere regole senza boilerplate (Clippy/Ruff)
-- **Single commit per feature**: lint = 1 commit con tutto (code + test + CLI)
+- **Rule = plain function**: lint e fmt usano stesso pattern (facile estendere)
+- **Research PRIMA**: il report del fmt ha evitato CST trap e config trap
 
 ---
 *"Ultrapassar os proprios limites!" -- S448*

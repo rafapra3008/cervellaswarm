@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - MASTER (Globale)
 
-> **Ultimo aggiornamento:** 13 Marzo 2026 - Sessione 447
+> **Ultimo aggiornamento:** 13 Marzo 2026 - Sessione 448
 > **Tabella ecosistema condivisa - SOLO link ai file specifici**
 
 ---
@@ -9,7 +9,7 @@
 
 | Progetto | PROMPT_RIPRESA | Aggiornato | TL;DR |
 |----------|----------------|------------|-------|
-| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-03-13 | S447: LU 1.1+1.2 Nested Choice END-TO-END, 3494 test, Guardiana 9.5+ |
+| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-03-13 | S448: lu lint+fmt DONE, 3641 test, PyPI v0.3.2, 12 CLI, 0 npm vulns |
 | **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-03-05 | S286: Deploy SPRING-025 completo. Script v4.5.0 batch. 1908 test |
 | **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-30 | In pausa (Cache Layer v2.1.0 completato) |
 | **CervellaBrasil** | `.sncp/progetti/cervellabrasil/PROMPT_RIPRESA_cervellabrasil.md` | 2026-02-12 | FASE 0-2.5 completas, pronto FASE 3 |
@@ -47,7 +47,7 @@ PROMPT_RIPRESA: max 150 righe
 
 - **15 Gen 2026:** Separazione PROMPT_RIPRESA completata (Context Mesh pattern)
 - **6 Mar 2026:** Migliora Casa S431 - settings, hooks, SNCP maintenance
-- **13 Mar 2026:** PyPI v0.3.1 LIVE, LU 1.1+1.2 Nested Choice END-TO-END (S447), 3494 test, Dependabot cleanup
+- **13 Mar 2026:** S448: lu lint+fmt, PyPI v0.3.2, 3641 test, 12 CLI, zod 4, 0 npm vulns
 
 ---
 

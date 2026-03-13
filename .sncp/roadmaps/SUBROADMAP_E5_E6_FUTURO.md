@@ -23,7 +23,7 @@
 |     T3.4 lu verify standalone      DONE (S444)                   |
 |     T3.2 Standard Library          DONE (S445)                   |
 |                                                                |
-|   Asset: 29 moduli, 3547 test, ~14000+ LOC, ZERO deps core    |
+|   Asset: 29 moduli, 3641 test, ~14000+ LOC, ZERO deps core    |
 |     LU 1.1 Nested Choice    DONE (S447)                       |
 |     LU 1.2 Nested Runtime   DONE (S447) stack-based           |
 +================================================================+
