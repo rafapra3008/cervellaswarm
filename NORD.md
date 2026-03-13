@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 13 Marzo 2026 - S446 (v0.3.1 LIVE su PyPI!, stdlib wheel fix, 3438 test)
+> Aggiornato: 13 Marzo 2026 - S447 (LU 1.1 Nested Choice! 3466 test, v0.3.1 LIVE)
 
 ```
 +==================================================================+
@@ -150,9 +150,10 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |     E.1-E.5 DONE! (9.5/10)                                     |
 |     E.6 CervellaLang 1.0: T3.1-T3.4 DONE (S444-S445)          |
 |     T3.2 Standard Library: 20 protocolli, 5 categorie (S445)  |
+|     LU 1.1 Nested Choice: DONE! 28 test, 8 file (S447)        |
 |     T2.1 PyPI v0.3.1: LIVE! (published 13 Mar 2026)            |
 |   PyPI: v0.3.1 LIVE! (stdlib + templates + E.5/E.6 features)  |
-|   29 moduli, 3438 test, 10 CLI cmd, 9 PropertyKind, ZERO deps  |
+|   29 moduli, 3466 test, 10 CLI cmd, 9 PropertyKind, ZERO deps  |
 |                                                                  |
 |   VISIONE (S442 - Rafa):                                        |
 |   "Un giorno le AI sviluppano CON Lingua Universale."           |

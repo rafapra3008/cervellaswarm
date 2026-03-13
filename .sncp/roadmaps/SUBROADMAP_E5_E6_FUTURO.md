@@ -23,7 +23,8 @@
 |     T3.4 lu verify standalone      DONE (S444)                   |
 |     T3.2 Standard Library          DONE (S445)                   |
 |                                                                |
-|   Asset: 29 moduli, 3438 test, ~14000+ LOC, ZERO deps core    |
+|   Asset: 29 moduli, 3466 test, ~14000+ LOC, ZERO deps core    |
+|     LU 1.1 Nested Choice    DONE (S447)                       |
 +================================================================+
 ```
 
@@ -585,7 +586,7 @@ TOTALE fino a E.6 base: 7-11 sessioni
 
 | Metrica | Attuale | Target E.5 | Target E.6 |
 |---------|---------|------------|------------|
-| Test LU | 3438 | 3400+ | 3600+ |
+| Test LU | 3466 | 3400+ | 3600+ |
 | Moduli LU | 29 | 29 | 32+ |
 | PropertyKind | 9 | 9 | 9+ |
 | Protocolli standard lib | 20 | 0 | 20+ |
@@ -597,13 +598,13 @@ TOTALE fino a E.6 base: 7-11 sessioni
 
 ---
 
-## PRIORITA SESSIONE CORRENTE (S446)
+## PRIORITA SESSIONE CORRENTE (S447+)
 
 ```
 FASE 1-2: SOSTANZIALMENTE DONE
   T1.5 Test persona non-tecnica  ← dipende da tester reale
   T2.1 PyPI v0.3.1               ← DONE! LIVE su PyPI (13 Mar 2026)
-  T2.5 Dependabot PR Cleanup     ← CI failures su tutte le PR, investigation needed
+  T2.5 Dependabot PR Cleanup     ← 1 PR rimasta (#18 express 4->5)
 
 FASE 3 (E.6): T3.1-T3.4 DONE
   T3.1 Grammar 1.0 RFC           ← DONE S444
@@ -611,13 +612,15 @@ FASE 3 (E.6): T3.1-T3.4 DONE
   T3.3 lu init (+--template)     ← DONE S444+S445
   T3.4 lu verify                 ← DONE S444
   T3.5 VS Code Marketplace       ← PROSSIMO (blocco: Rafa publisher)
-  T3.6 Community Seeding          ← PROSSIMO (aggiornare con stdlib)
+  T3.6 Community Seeding          ← PROSSIMO (aggiornare con stdlib + nested choice)
 
-S446 FINDINGS:
-  P1 FIX: stdlib was outside src/ → not in wheel! Moved + verified.
-  P3 FIX: README 12 stale references (test counts, module counts, grammar rules)
-  P3 FIX: .gitignore negation pattern for new stdlib path
-  RESEARCH: Nested choice support (Researcher in background)
+LU 1.1 NESTED CHOICE: DONE (S447)
+  8 core files modified, 28 new tests
+  Standard MPST/Scribble (Honda/Yoshida POPL 2008)
+  Parser: recursive _parse_choice(), MAX_CHOICE_DEPTH = 32
+  Spec checkers: _collect_all_steps, _find_violating_steps (recursive)
+  Guardiana: 9.0 → 8 findings fixed → 9.5+
+  SessionChecker runtime: TBD LU 1.2 (stack-based tracking needed)
 ```
 
 ---

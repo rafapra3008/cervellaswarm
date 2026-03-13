@@ -31,7 +31,7 @@ paths:
 
 ## Convenzioni
 - Error codes: `LU-EXXX` con severity (error/warning/info)
-- Test: `pytest packages/lingua-universale/tests/` (3438 test)
+- Test: `pytest packages/lingua-universale/tests/` (3466 test)
 - Ogni modifica -> test -> Guardiana audit
 - MAI rompere backward compatibility senza versione major
 
@@ -62,11 +62,11 @@ paths:
 - Stream cleanup in try/finally after start()
 
 ## Fase Corrente
-- FASE E: Per Tutti (IntentBridge) -- IN PROGRESS (E.1-E.4 DONE, E.5 IN PROGRESS)
-- E.5 S442: 2 bug critici fixati, +NO_DELETION, +ROLE_EXCLUSIVE, property explanations i18n, R20 violation demo, `lu demo` command
+- FASE E: Per Tutti (IntentBridge) -- IN PROGRESS (E.1-E.5 DONE, E.6 IN PROGRESS)
+- E.6 CervellaLang 1.0: T3.1-T3.4 DONE (S444-S445), LU 1.1 Nested Choice DONE (S447)
+- LU 1.1: `when X decides:` inside branches. Parser recursive, MAX_CHOICE_DEPTH=32
 - `lu demo`: autonomous scripted demo (3 lingue, 3 speed, typewriter effect, injected I/O)
 - Subroadmap: `.sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md`
 - Task list dettagliata: `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md`
-- Ricerca demo/blog: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260312_demo_launch_strategy.md`
 - FASE D: L'Ecosistema -- COMPLETA! D1-D6 DONE (media 9.5/10)
-- Test: 3438 (LU), 6736 totali repo (stima)
+- Test: 3466 (LU), 6764 totali repo (stima)
