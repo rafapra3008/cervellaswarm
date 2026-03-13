@@ -23,9 +23,13 @@
 |     T3.4 lu verify standalone      DONE (S444)                   |
 |     T3.2 Standard Library          DONE (S445)                   |
 |                                                                |
-|   Asset: 29 moduli, 3641 test, ~14000+ LOC, ZERO deps core    |
+|   Asset: 29 moduli, 3684 test, ~14000+ LOC, ZERO deps core    |
 |     LU 1.1 Nested Choice    DONE (S447)                       |
 |     LU 1.2 Nested Runtime   DONE (S447) stack-based           |
+|     B5 lu lint               DONE (S448, 10 rules)            |
+|     B6 lu fmt                DONE (S448, zero-config)          |
+|     Sprint 1+2+3            DONE (S449-S450, 9.5/10)          |
+|     PyPI v0.3.3             LIVE! (lint+fmt+playground)        |
 +================================================================+
 ```
 
@@ -587,11 +591,11 @@ TOTALE fino a E.6 base: 7-11 sessioni
 
 | Metrica | Attuale | Target E.5 | Target E.6 |
 |---------|---------|------------|------------|
-| Test LU | 3466 | 3400+ | 3600+ |
-| Moduli LU | 29 | 29 | 32+ |
-| PropertyKind | 9 | 9 | 9+ |
-| Protocolli standard lib | 20 | 0 | 20+ |
-| CLI commands | 10 (check, run, verify, compile, init, repl, lsp, chat, demo, version) | 10 (attuale) | 12+ (+lint, +fmt) |
+| Test LU | **3684** | 3400+ | 3600+ |
+| Moduli LU | **29** | 29 | 32+ |
+| PropertyKind | **9** | 9 | 9+ |
+| Protocolli standard lib | **20** | 20 | 20+ |
+| CLI commands | **12** (check, run, verify, compile, init, repl, lsp, chat, demo, lint, fmt, version) | 12 (attuale) | 12+ |
 | GitHub stars | ~10 | ~10 | 100+ |
 | pip installs/settimana | ~5 | ~10 | 50+ |
 | Lingue supportate | 3 | 3 | 3 |

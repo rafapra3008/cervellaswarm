@@ -1,6 +1,6 @@
 # PROMPT RIPRESA - MASTER (Globale)
 
-> **Ultimo aggiornamento:** 13 Marzo 2026 - Sessione 450
+> **Ultimo aggiornamento:** 13 Marzo 2026 - Sessione 451
 > **Tabella ecosistema condivisa - SOLO link ai file specifici**
 
 ---
@@ -9,7 +9,7 @@
 
 | Progetto | PROMPT_RIPRESA | Aggiornato | TL;DR |
 |----------|----------------|------------|-------|
-| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-03-13 | S450: Sprint 1+2+3 ALL DONE, 3684 test, v0.3.3 LIVE, playground lint |
+| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-03-13 | S451: Checkpoint+handoff, 3684 test, v0.3.3, next=T3.5 VS Code |
 | **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-03-05 | S286: Deploy SPRING-025 completo. Script v4.5.0 batch. 1908 test |
 | **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-30 | In pausa (Cache Layer v2.1.0 completato) |
 | **CervellaBrasil** | `.sncp/progetti/cervellabrasil/PROMPT_RIPRESA_cervellabrasil.md` | 2026-02-12 | FASE 0-2.5 completas, pronto FASE 3 |
@@ -47,7 +47,7 @@ PROMPT_RIPRESA: max 150 righe
 
 - **15 Gen 2026:** Separazione PROMPT_RIPRESA completata (Context Mesh pattern)
 - **6 Mar 2026:** Migliora Casa S431 - settings, hooks, SNCP maintenance
-- **13 Mar 2026:** S450: Sprint 1+2+3 ALL COMPLETE, playground lint button, lint_source/format_source public API
+- **13 Mar 2026:** S451: Checkpoint completo. Mappe aggiornate. Next: T3.5 VS Code Marketplace
 
 ---
 

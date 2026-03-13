@@ -1,45 +1,22 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-13 - Sessione 450
-> **STATUS:** Sprint 1+2+3 COMPLETE. **3684 test.** PyPI v0.3.3 LIVE. 12 CLI. CI lint+fmt gate. Playground lint.
+> **Ultimo aggiornamento:** 2026-03-13 - Sessione 451
+> **STATUS:** Sprint 1+2+3 COMPLETE. **3684 test.** PyPI v0.3.3 LIVE. 12 CLI. Playground lint. Public repo synced.
 
 ---
 
-## S449 -- COSA ABBIAMO FATTO
+## S451 -- COSA ABBIAMO FATTO
 
-### 1. lu fmt stdlib dogfood
-- All 20 stdlib formatted to canonical style (committed)
+### 1. Checkpoint & Housekeeping
+- NORD.md aggiornato: S447 → S451 (3684 test, v0.3.3, Sprint 1+2+3, playground lint)
+- SUBROADMAP_E5_E6_FUTURO.md: metriche aggiornate (3641→3684, B5/B6/Sprint info)
+- Verifica stato: public repo synced, CI green, 2 Dependabot HOLD
 
-### 2. LSP lint+format integration
-- `_source_diagnostics()`: lint findings as real-time diagnostics (`source: "lu-lint"`)
-- `textDocument/formatting`: Format Document via lu fmt
-- Performance: reuses parsed AST (no double parse) via `lint_program()`
-- Guardiana: 9.3→9.5 (8 findings fixed: logging, assertions, tests, perf)
-
-### 3. CHANGELOG v0.3.3 + version bump
-- CHANGELOG documents lu lint, lu fmt, LSP integration
-- Version 0.3.3 in pyproject.toml + __init__.py
-
-### 4. Guardiana fixes (ALL findings, Sprint 1+2)
-- Sprint 1 (LSP): logger.debug, coordinate ==2, feature test, WARNING coverage, double parse, resilience
-- Sprint 2 (CLI): non-.lu guard, symlink protection, --diff exit code, dedup --check, test fixes
-
-### 5. Sprint 2: Quality & Testing (COMPLETE)
-- T2.1: lu fmt examples (3 files) -- DONE
-- T2.2: Pre-commit hook section 5 (lu fmt --check + lu lint on staged .lu) -- DONE
-- T2.3: CI lint-format job (before test matrix) + multi-path nargs="+" -- DONE
-- T2.4+T2.5: Multi-file lu lint/fmt with _discover_lu_files -- DONE
-- T2.6: Guardiana 9.5/10 all P2+P3 fixed -- DONE
-
-### 6. PyPI v0.3.3 LIVE
-- Published via Trusted Publisher on public repo
-
-### 7. S450: Playground Lint Button (T3.3)
-- Lint button added to playground toolbar (Check | Lint | Run)
-- Public API: `lint_source`, `LintFinding`, `LintSeverity`, `LintCategory`, `format_source` exported
-- Keyboard shortcut: Ctrl+Shift+L
-- CSS: yellow accent, severity-colored findings (error/warning/info)
-- Guardiana: 9.5/10, 6 P3 all fixed (box-shadow, pseudo-selector, SVG icon, shortcuts, comments)
+### 2. Guida Azure DevOps per Rafa (IN PROGRESS)
+- Rafa ha creato account Azure (con carta per verifica)
+- **PROBLEMA:** Era su portal.azure.com (Azure Cloud) -- sito SBAGLIATO
+- **SERVE:** dev.azure.com (Azure DevOps) per creare PAT token
+- Guida dettagliata scritta (vedi sezione PROSSIMA SESSIONE)
 
 ---
 
@@ -49,8 +26,8 @@
 |-----------|--------|
 | Zero-config fmt | gofmt/elm-format: "one true style". LU e giovane. |
 | lint_program (no double parse) | LSP calls parse() once, passes AST to lint. Performance. |
-| logger.debug (not pass) on except | S442 lesson: silent except masked bugs for 4 sessions. |
-| 1 blank line tra sezioni (not 2) | DSL concisa. Stdlib usa 1. Research diceva 2 (Python). |
+| Public API exports (`X as X`) | Type-checker-visible re-exports. Pyodide usa public API, non `._lint`. |
+| 1 blank line tra sezioni (not 2) | DSL concisa. Stdlib usa 1. |
 
 ---
 
@@ -63,10 +40,10 @@ LINGUA UNIVERSALE (LA MISSIONE):
     E.1-E.5: DONE (9.5/10)
     E.6 CervellaLang 1.0: IN PROGRESS
       T3.1 Grammar 1.0 RFC:    DONE (S444)
-      T3.2 Standard Library:    DONE (S445)
+      T3.2 Standard Library:    DONE (S445, 20 protocolli)
       T3.3 lu init:              DONE (S444)
       T3.4 lu verify:            DONE (S444)
-      T3.5 VS Code Marketplace:  TODO         <- blocco: Rafa
+      T3.5 VS Code Marketplace:  TODO         <- blocco: Rafa (Azure DevOps PAT)
   T2.1 PyPI v0.3.3:              LIVE!
   LU 1.1+1.2:                    DONE!
   B5 lu lint:                     DONE!       <- 10 rules, LSP+CI integrated
@@ -75,7 +52,7 @@ LINGUA UNIVERSALE (LA MISSIONE):
 
 SPRINT 1 (Dogfood & Polish): COMPLETE (9.5/10)
 SPRINT 2 (Quality & Testing): COMPLETE (9.5/10)
-SPRINT 3 (Community Prep): COMPLETE
+SPRINT 3 (Community Prep): COMPLETE (9.5/10)
   3.1 README update:    DONE
   3.2 Blog post:        DONE
   3.3 Playground lint:  DONE (S450, 9.5/10)
@@ -83,22 +60,45 @@ SPRINT 3 (Community Prep): COMPLETE
 
 PUBLIC API: lint_source, format_source exported (S450)
 CI/CD: TUTTO GREEN + lint-format gate
-DEPENDABOT: 2 HOLD (stripe, express)
+PUBLIC REPO: synced S450 (2 sync: lint button + stdlib examples)
+DEPENDABOT: 2 HOLD (stripe 17→20 #30, express 4→5 #14)
 ```
 
 ---
 
 ## PROSSIMA SESSIONE
 
-### 1. TODO Rafa
-- [ ] VS Code Publisher: creare account per T3.5
-- [ ] Blog post: revisione "From Vibe Coding to Vericoding"
+### 1. TODO Rafa (guidare passo passo!)
+
+**T3.5 - VS Code Publisher Account:**
+1. Andare su **https://dev.azure.com** (NON portal.azure.com!)
+2. Login con stesso account Azure
+3. Creare organizzazione se chiede (nome qualsiasi, es: "cervellaswarm")
+4. Icona utente top-right → **"Personal access tokens"**
+5. **New Token**: name=`vscode-marketplace`, All organizations, 90 days
+6. Scopes: "Show all scopes" → **Marketplace → Manage** (spunta)
+7. Create → **COPIARE IL TOKEN** (visibile solo una volta!)
+8. Poi: marketplace.visualstudio.com/manage → Create publisher
+   - Publisher name: `cervellaswarm`, Display name: `CervellaSwarm`
+
+**Altro Rafa:**
+- [ ] Blog post: revisione `packages/lingua-universale/docs/blog_vibe_to_vericoding.md`
 - [ ] Show HN v2: review `docs/SHOW_HN_V2_DRAFT.md` + decidere timing
 
 ### 2. OBIETTIVI (priorita)
-- **Sync to public repo** (sync-to-public.sh - playground + lint API)
-- **T3.5 VS Code Marketplace** (blocked on Rafa publisher account)
-- Subroadmap: `.sncp/roadmaps/SUBROADMAP_S449_POLISH.md`
+
+| # | Cosa | Blocco | Effort |
+|---|------|--------|--------|
+| 1 | **T3.5 VS Code Marketplace** | Rafa: PAT token | 0.5 sessione dopo PAT |
+| 2 | **Blog + Show HN review con Rafa** | Rafa review | 15 min insieme |
+| 3 | **T2.3 Playground Chat tab** | Nessuno | 1-2 sessioni |
+| 4 | **Dependabot: stripe 17→20, express 4→5** | Testing needed | 0.5 sessione |
+| 5 | **T3.6 Community Seeding** | Dopo blog/Show HN | Continuo |
+
+### 3. Idee proattive (non urgenti)
+- T2.4 Property Templates Library (quick wins per guided mode)
+- Documentation site (Sphinx/MkDocs) per la community
+- T4.1 AI Agent Framework Integration (il vero differenziatore)
 
 ---
 
@@ -113,28 +113,33 @@ DEPENDABOT: 2 HOLD (stripe, express)
 | Lint rules | **10** (3 categorie) |
 | LSP tests | **79** |
 | PropertyKind | **9** |
-| Guardiana | S449 Sprint 1+2: 9.5/10, S450 T3.3: 9.5/10 |
+| Guardiana | S449: 9.5/10, S450: 9.5/10 |
 
 ---
 
-## Lezioni Apprese (S450)
+## DOVE TROVARE LE COSE
+
+| Cosa | Path |
+|------|------|
+| Subroadmap Polish (COMPLETA) | `.sncp/roadmaps/SUBROADMAP_S449_POLISH.md` |
+| Subroadmap E5+E6+Futuro | `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md` |
+| Blog post | `packages/lingua-universale/docs/blog_vibe_to_vericoding.md` |
+| Show HN v2 draft | `docs/SHOW_HN_V2_DRAFT.md` |
+| Sync script | `scripts/git/sync-to-public.sh` |
+| Playground | `playground/index.html` + `playground/examples.js` |
+| Public API exports | `packages/lingua-universale/src/cervellaswarm_lingua_universale/__init__.py` |
+
+---
+
+## Lezioni Apprese (S451)
 
 ### Cosa ha funzionato bene
-- **Delegate + review + audit**: Frontend agent implementa, Regina corregge, Guardiana audita. 3 step, 6 P3 caught and fixed.
-- **Public API over private imports**: Pyodide import `from cervellaswarm_lingua_universale import lint_source` (not `._lint`). Cleaner, won't break.
-- **`X as X` pattern**: Re-export consistency matters for type checkers and IDE support.
+- **Checkpoint con calma**: Prendersi il tempo per aggiornare TUTTE le mappe (NORD, subroadmap, PROMPT_RIPRESA) = zero confusione per la prossima sessione.
+- **Guida passo-passo per Rafa**: Istruzioni dettagliate con URL esatti (dev.azure.com vs portal.azure.com) evitano perdita di tempo.
 
 ### Pattern confermato
-- **Guardiana ogni step**: 9.5/10 raggiunto ancora. 6 P3 = 6 dettagli curati.
-- **Fix ALL findings (P3 inclusi)**: box-shadow, SVG vs emoji, keyboard shortcuts -- i dettagli fanno la differenza.
+- **Mappe sempre aggiornate**: NORD era 3 sessioni indietro (S447). Aggiornarlo subito = chiarezza per tutti.
+- **S411 regola rispettata**: MAI toccare PROMPT_RIPRESA di altri progetti (contabilita/miracollo hanno modifiche uncommitted -- NON nostre).
 
 ---
-*"Ultrapassar os proprios limites!" -- S450*
-<!-- AUTO-CHECKPOINT-START -->
-## AUTO-CHECKPOINT: 2026-03-13 19:17 (auto)
-- **Branch**: main
-- **Ultimo commit**: 566d5a96 - S449: Final map updates + fix MASTER exception in pre-commit hook
-- **File modificati** (2):
-  - sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md
-  - .sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md
-<!-- AUTO-CHECKPOINT-END -->
+*"Ultrapassar os proprios limites!" -- S451*

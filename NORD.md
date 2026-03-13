@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 13 Marzo 2026 - S447 (LU 1.1+1.2 Nested Choice END-TO-END! 3641 test, v0.3.2 LIVE)
+> Aggiornato: 13 Marzo 2026 - S451 (Sprint 1+2+3 DONE! 3684 test, v0.3.3 LIVE, Playground Lint)
 
 ```
 +==================================================================+
@@ -152,18 +152,21 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |     T3.2 Standard Library: 20 protocolli, 5 categorie (S445)  |
 |     LU 1.1 Nested Choice: DONE! 28 test, 8 file (S447)        |
 |     LU 1.2 Nested Runtime: DONE! stack-based ChoiceFrame (S447)|
-|     T2.1 PyPI v0.3.2: LIVE! (nested choice end-to-end)         |
-|     B5 lu lint: DONE! 10 rules, 53 tests (S448)               |
-|     B6 lu fmt: DONE! zero-config, 74 tests (S448)             |
-|   PyPI: v0.3.2 LIVE! (LU 1.1+1.2 nested choice + stdlib)     |
-|   29 moduli, 3641 test, 12 CLI cmd, 9 PropertyKind, ZERO deps|
+|     B5 lu lint: DONE! 10 rules, LSP+CI integrated (S448-S449) |
+|     B6 lu fmt: DONE! zero-config, LSP+CI integrated (S448-S449)|
+|   Sprint 1 (Dogfood): DONE! LSP lint+fmt, PyPI v0.3.3 (S449) |
+|   Sprint 2 (Quality): DONE! pre-commit, CI gate, multi-path   |
+|   Sprint 3 (Community): DONE! Playground lint, Show HN v2     |
+|   PyPI: v0.3.3 LIVE! (lint+fmt+playground, 13 Mar 2026)       |
+|   Public API: lint_source, format_source exported (S450)       |
+|   29 moduli, 3684 test, 12 CLI cmd, 9 PropertyKind, ZERO deps|
 |                                                                  |
 |   VISIONE (S442 - Rafa):                                        |
 |   "Un giorno le AI sviluppano CON Lingua Universale."           |
 |   Come Python per ML, LU per AI verified communication.          |
 |                                                                  |
 |   Playground LIVE: https://rafapra3008.github.io/cervellaswarm/ |
-|   Tour: 24 step interattivi in 4 capitoli + 4 esercizi          |
+|   Playground: Check + Lint + Run, 7 examples, Monaco + Pyodide  |
 |   NORD completo: packages/lingua-universale/NORD.md              |
 |   SUBROADMAP E: .sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md|
 |   SUBROADMAP D: .sncp/roadmaps/SUBROADMAP_FASE_D_ECOSISTEMA.md  |
