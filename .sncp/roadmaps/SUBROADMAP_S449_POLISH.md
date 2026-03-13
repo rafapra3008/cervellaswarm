@@ -39,13 +39,13 @@
 | 1.4 | **Guardiana audit LSP** | 15 min | DONE (9.3→9.5, 8 findings fixed) |
 | 1.5 | **CHANGELOG v0.3.3** | 15 min | DONE (S449) |
 | 1.6 | **Version bump 0.3.3** | 5 min | DONE (S449) |
-| 1.7 | **PyPI v0.3.3 publish** | 15 min | TODO -- sync + tag + push public |
+| 1.7 | **PyPI v0.3.3 publish** | 15 min | DONE (S449) |
 
 **Criterio completamento Sprint 1:**
 - [x] 20/20 stdlib formatted canonically
 - [x] VS Code `lu` extension: Format Document works (textDocument/formatting)
 - [x] VS Code `lu` extension: diagnostics show lint findings (source: lu-lint)
-- [  ] PyPI v0.3.3 LIVE con lu lint + lu fmt
+- [x] PyPI v0.3.3 LIVE con lu lint + lu fmt
 
 ---
 
@@ -53,17 +53,17 @@
 
 | # | Task | Effort | Cosa |
 |---|------|--------|------|
-| 2.1 | **lu fmt examples** | 10 min | Format example .lu files. |
-| 2.2 | **Pre-commit hook** | 30 min | `lu fmt --check .` + `lu lint .` in pre-commit. |
-| 2.3 | **CI integration** | 30 min | Add `lu fmt --check` + `lu lint` to CI workflow. |
-| 2.4 | **Multi-file support** | 45 min | `lu fmt .` formats all .lu in directory (glob). |
-| 2.5 | **Multi-file lint** | 30 min | `lu lint .` lints all .lu in directory. |
-| 2.6 | **Guardiana audit** | 15 min | Full audit. |
+| 2.1 | **lu fmt examples** | 10 min | DONE (S449) |
+| 2.2 | **Pre-commit hook** | 30 min | DONE (S449) -- section 5 in scripts/hooks/pre-commit |
+| 2.3 | **CI integration** | 30 min | DONE (S449) -- lint-format job + multi-path nargs="+" |
+| 2.4 | **Multi-file support** | 45 min | DONE (S449) |
+| 2.5 | **Multi-file lint** | 30 min | DONE (S449) |
+| 2.6 | **Guardiana audit** | 15 min | DONE (9.3→9.5, all P2 fixed: dedup + ricette.lu, 3684 test) |
 
 **Criterio completamento Sprint 2:**
-- [  ] CI checks lu fmt + lu lint
-- [  ] `lu fmt .` and `lu lint .` work on directories
-- [  ] Pre-commit hook prevents unformatted commits
+- [x] CI checks lu fmt + lu lint (lint-format job before test matrix)
+- [x] `lu fmt .` and `lu lint .` work on directories (+ multi-path)
+- [x] Pre-commit hook prevents unformatted commits
 
 ---
 
@@ -71,15 +71,16 @@
 
 | # | Task | Effort | Cosa |
 |---|------|--------|------|
-| 3.1 | **README update** | 30 min | Add lu lint + lu fmt sections, update numbers. |
-| 3.2 | **Blog post update** | 30 min | Add lu lint/fmt to "From Vibe Coding to Vericoding". |
-| 3.3 | **Playground update** | 1h | Add lint tab to online playground. |
-| 3.4 | **Show HN v2 draft** | 30 min | New post with nested choice + lint + fmt. |
+| 3.1 | **README update** | 30 min | DONE (S449) -- 3684 test, 12 CLI, lu lint/fmt docs, .lu syntax |
+| 3.2 | **Blog post update** | 30 min | DONE (S449) -- 3684 test, lu lint/fmt story, v0.3.3 |
+| 3.3 | **Playground update** | 1h | TODO -- Add lint tab (requires Pyodide lint_source binding) |
+| 3.4 | **Show HN v2 draft** | 30 min | DONE (S449) -- docs/SHOW_HN_V2_DRAFT.md |
 
 **Criterio completamento Sprint 3:**
-- [  ] README reflects 3641+ test, 12 CLI
-- [  ] Blog post includes lu lint + lu fmt story
-- [  ] Playground has lint functionality
+- [x] README reflects 3684 test, 12 CLI
+- [x] Blog post includes lu lint + lu fmt story
+- [  ] Playground has lint functionality (deferred -- UI-heavy task)
+- [x] Show HN v2 draft ready for Rafa review
 
 ---
 
