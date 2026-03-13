@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Command-line interface for Lingua Universale (C3.2 + C3.4 + C3.6 + D2 + E.3 + E.4 + T3.3 + B5).
+"""Command-line interface for Lingua Universale (C3.2 + C3.4 + C3.6 + D2 + E.3 + E.4 + T3.3 + B5 + B6).
 
 Subcommands::
 
@@ -10,6 +10,7 @@ Subcommands::
     lu verify <file.lu>   Parse, compile, and formally verify with Lean 4.
     lu compile <file.lu>  Show the generated Python source.
     lu lint <file.lu>     Check style, correctness, and best practices (B5).
+    lu fmt <file.lu>      Format to canonical style, zero-config (B6).
     lu init <name>        Create a new LU project with scaffolding (T3.3).
     lu repl               Start the interactive REPL.
     lu chat               Interactive guided protocol builder (E.2+E.4).
@@ -397,6 +398,64 @@ def _cmd_lint(args: argparse.Namespace) -> int:
     return 1 if has_errors else 0
 
 
+def _cmd_fmt(args: argparse.Namespace) -> int:
+    """Handle ``lu fmt <file>``."""
+    import difflib
+
+    from ._fmt import format_file
+
+    try:
+        formatted, changed = format_file(args.file)
+    except FileNotFoundError:
+        print(
+            f"{_c.RED}Error: file not found: {args.file}{_c.RESET}",
+            file=sys.stderr,
+        )
+        return 1
+    except Exception as exc:
+        print(
+            f"{_c.RED}Error: {exc}{_c.RESET}",
+            file=sys.stderr,
+        )
+        return 1
+
+    if args.check:
+        if changed:
+            print(
+                f"{_c.YELLOW}Would reformat{_c.RESET} {args.file}",
+            )
+            return 1
+        print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {args.file}")
+        return 0
+
+    if args.diff:
+        if not changed:
+            print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {args.file} -- already formatted")
+            return 0
+        original = Path(args.file).read_text(encoding="utf-8")
+        diff = difflib.unified_diff(
+            original.splitlines(keepends=True),
+            formatted.splitlines(keepends=True),
+            fromfile=f"a/{args.file}",
+            tofile=f"b/{args.file}",
+        )
+        sys.stdout.writelines(diff)
+        return 0
+
+    if args.stdout:
+        sys.stdout.write(formatted)
+        return 0
+
+    # Default: in-place write
+    if not changed:
+        print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {args.file} -- already formatted")
+        return 0
+
+    Path(args.file).write_text(formatted, encoding="utf-8")
+    print(f"{_c.GREEN}Formatted{_c.RESET} {args.file}")
+    return 0
+
+
 def _cmd_version(args: argparse.Namespace) -> int:
     """Handle ``lu version``."""
     from . import __version__
@@ -549,6 +608,28 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Comma-separated rule codes to ignore (e.g. LU-W002,LU-W020)",
     )
 
+    # lu fmt
+    p_fmt = subparsers.add_parser(
+        "fmt", help="Format a .lu file to canonical style (zero-config)",
+    )
+    p_fmt.add_argument("file", help="Path to a .lu file")
+    fmt_mode = p_fmt.add_mutually_exclusive_group()
+    fmt_mode.add_argument(
+        "--check",
+        action="store_true",
+        help="Check if file is formatted; exit 1 if not (CI mode)",
+    )
+    fmt_mode.add_argument(
+        "--diff",
+        action="store_true",
+        help="Show diff without writing (preview mode)",
+    )
+    fmt_mode.add_argument(
+        "--stdout",
+        action="store_true",
+        help="Print formatted output to stdout instead of writing file",
+    )
+
     # lu version
     subparsers.add_parser("version", help="Show version information")
 
@@ -571,6 +652,7 @@ _COMMAND_HANDLERS = {
     "chat": _cmd_chat,
     "demo": _cmd_demo,
     "lint": _cmd_lint,
+    "fmt": _cmd_fmt,
     "version": _cmd_version,
 }
 
