@@ -1,35 +1,32 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-13 - Sessione 448
-> **STATUS:** lu lint + lu fmt DONE. **3641 test.** PyPI v0.3.2 LIVE. 12 CLI commands.
+> **Ultimo aggiornamento:** 2026-03-13 - Sessione 449
+> **STATUS:** Sprint 1 quasi completo. **3654 test.** PyPI v0.3.3 ready (pre-publish). 12 CLI.
 
 ---
 
-## S448 -- COSA ABBIAMO FATTO
+## S449 -- COSA ABBIAMO FATTO
 
-### 1. PyPI v0.3.2 PUBLISHED (nested choice end-to-end)
-- Tag pushed to public, Trusted Publisher, LIVE on pypi.org
+### 1. lu fmt stdlib dogfood
+- All 20 stdlib formatted to canonical style (committed)
 
-### 2. Dependabot Security Cleanup
-- 6 PR merged + zod 3→4 merged (MCP SDK supports it now)
-- npm audit fix: 0 vulns across all 5 JS packages
-- HOLD: stripe 17→20, express 4→5 (major, need dedicated session)
+### 2. LSP lint+format integration
+- `_source_diagnostics()`: lint findings as real-time diagnostics (`source: "lu-lint"`)
+- `textDocument/formatting`: Format Document via lu fmt
+- Performance: reuses parsed AST (no double parse) via `lint_program()`
+- Guardiana: 9.3→9.5 (8 findings fixed: logging, assertions, tests, perf)
 
-### 3. `lu lint` -- B5 (10 rules, 53+20 tests)
-- `_lint.py`: single-pass AST walk (Ruff/Clippy pattern)
-- 10 rules: 5 CORRECTNESS (exit=1) + 2 STYLE + 3 BEST PRACTICES
-- 20 stdlib regression tests (parametrized)
-- Guardiana: 9.5/10
+### 3. CHANGELOG v0.3.3 + version bump
+- CHANGELOG documents lu lint, lu fmt, LSP integration
+- Version 0.3.3 in pyproject.toml + __init__.py
 
-### 4. `lu fmt` -- B6 (74 tests)
-- `_fmt.py` (~450 LOC): zero-config auto-formatter (gofmt/buf pattern)
-- AST + pre-scan comments + single-pass formatter
-- Canonical property ordering, agent clause ordering, use sorting
-- All 5 action types with correct word order
-- Flags: --check (CI), --diff, --stdout (mutually exclusive)
-- Idempotent: tested on ALL 20 stdlib protocols
-- Research: `.sncp/.../RESEARCH_20260313_LU_FMT_DESIGN.md` (18 sources)
-- Guardiana: 9.5/10, P3 findings fixed (dead import, mutex flags, +3 tests)
+### 4. Guardiana fixes (ALL findings)
+- F1+F8: silent except→logger.debug (S442 lesson)
+- F2: weak assertion→exact ==2 coordinate test
+- F3+F6: tautological test→verify protocol.fm.features
+- F4: WARNING severity lint finding test
+- F5: double parse eliminated (lint_program reuses AST)
+- F7: lint exception resilience test
 
 ---
 
@@ -37,10 +34,10 @@
 
 | Decisione | Perche |
 |-----------|--------|
-| Zero-config fmt (not configurable) | gofmt/elm-format: "one true style" elimina debates. LU e giovane. |
-| AST + pre-scan (not CST) | Tokenizer ignora commenti. Pre-scan = semplice, funziona. |
-| 1 blank line tra sezioni (not 2) | DSL concisa. Stdlib gia usa 1 blank. Research diceva 2 (Python). |
-| Mutually exclusive flags | Guardiana F5: --check/--diff/--stdout non devono combinarsi. |
+| Zero-config fmt | gofmt/elm-format: "one true style". LU e giovane. |
+| lint_program (no double parse) | LSP calls parse() once, passes AST to lint. Performance. |
+| logger.debug (not pass) on except | S442 lesson: silent except masked bugs for 4 sessions. |
+| 1 blank line tra sezioni (not 2) | DSL concisa. Stdlib usa 1. Research diceva 2 (Python). |
 
 ---
 
@@ -59,9 +56,18 @@ LINGUA UNIVERSALE (LA MISSIONE):
       T3.5 VS Code Marketplace:  TODO         <- blocco: Rafa
   T2.1 PyPI v0.3.2:              LIVE!
   LU 1.1+1.2:                    DONE!
-  B5 lu lint:                     DONE!       <- 10 rules
-  B6 lu fmt:                      DONE!       <- zero-config
-  Moduli: 29 | Test: 3641 | CLI: 12 | Stdlib: 20
+  B5 lu lint:                     DONE!       <- 10 rules, LSP integrated
+  B6 lu fmt:                      DONE!       <- zero-config, LSP integrated
+  Moduli: 29 | Test: 3654 | CLI: 12 | Stdlib: 20
+
+SPRINT 1 (Dogfood & Polish):
+  1.1 lu fmt stdlib:    DONE
+  1.2 LSP format:       DONE
+  1.3 LSP lint:         DONE
+  1.4 Guardiana audit:  DONE (9.5/10)
+  1.5 CHANGELOG:        DONE
+  1.6 Version bump:     DONE
+  1.7 PyPI v0.3.3:      TODO <- sync + tag + push public
 
 CI/CD: TUTTO GREEN
 DEPENDABOT: 2 HOLD (stripe, express)
@@ -76,10 +82,10 @@ DEPENDABOT: 2 HOLD (stripe, express)
 - [ ] Blog post: revisione "From Vibe Coding to Vericoding"
 
 ### 2. OBIETTIVI (priorita)
-- **T3.5 VS Code Marketplace** (blocco: Rafa publisher)
-- **T3.6 Community Seeding** (blog + showcase)
-- **LSP fmt integration** (wire format_source in _lsp.py)
-- **lu fmt stdlib** (format all 20 stdlib to canonical style)
+- **T1.7 PyPI v0.3.3 publish** (sync-to-public + tag)
+- **Sprint 2** (pre-commit, CI, multi-file lu fmt/lint)
+- **Sprint 3** (README, blog, playground, Show HN v2)
+- Subroadmap: `.sncp/roadmaps/SUBROADMAP_S449_POLISH.md`
 
 ---
 
@@ -87,27 +93,27 @@ DEPENDABOT: 2 HOLD (stripe, express)
 
 | Metrica | Valore |
 |---------|--------|
-| Test LU | **3641** |
+| Test LU | **3654** |
 | Moduli LU | **29** |
 | Stdlib | **20** (5 categorie) |
 | CLI | **12** |
 | Lint rules | **10** (3 categorie) |
+| LSP tests | **79** |
 | PropertyKind | **9** |
-| EBNF | **64** (frozen) |
-| Guardiana S448 | lu lint 9.5, lu fmt 9.5 |
+| Guardiana S449 | LSP 9.5/10 |
 
 ---
 
-## Lezioni Apprese (S448)
+## Lezioni Apprese (S449)
 
 ### Cosa ha funzionato bene
-- **Formula Magica x2**: ricerca(14+18 fonti) -> design -> implement -> audit
-- **Guardiana P3 = diamante**: comma-space, dead import, mutex flags, +3 test
-- **Idempotency test = gold standard**: parametrized su tutti 20 stdlib
+- **Guardiana ogni step**: 8 findings caught, all fixed. Standard 9.5 raggiunto.
+- **Reuse parsed AST**: lint_program() elimina double parse in LSP. Simple win.
+- **Feature test reale**: `protocol.fm.features` > `assert server is not None` (tautological).
 
 ### Pattern confermato
-- **Rule = plain function**: lint e fmt usano stesso pattern (facile estendere)
-- **Research PRIMA**: il report del fmt ha evitato CST trap e config trap
+- **logger.debug su except critici**: S442 lesson applicata ancora. Mai silenzioso.
+- **Research PRIMA**: formatter design evitato CST trap e config trap (S448).
 
 ---
-*"Ultrapassar os proprios limites!" -- S448*
+*"Ultrapassar os proprios limites!" -- S449*
