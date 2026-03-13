@@ -75,4 +75,6 @@ paths:
 - `lu lint/fmt`: multi-path support (nargs="+"), dedup via dict.fromkeys()
 - Pre-commit: section 5 checks lu fmt --check + lu lint on staged .lu files
 - CI: lint-format job runs before test matrix (fast fail on style)
+- Public API (S450): `lint_source`, `LintFinding`, `LintSeverity`, `LintCategory`, `format_source` exported
+- Playground: Lint button + Ctrl+Shift+L, renders severity-colored findings
 - Test: 3684 (LU), PyPI v0.3.3 LIVE

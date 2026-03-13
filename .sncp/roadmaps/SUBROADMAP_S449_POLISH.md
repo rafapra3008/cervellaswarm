@@ -73,13 +73,13 @@
 |---|------|--------|------|
 | 3.1 | **README update** | 30 min | DONE (S449) -- 3684 test, 12 CLI, lu lint/fmt docs, .lu syntax |
 | 3.2 | **Blog post update** | 30 min | DONE (S449) -- 3684 test, lu lint/fmt story, v0.3.3 |
-| 3.3 | **Playground update** | 1h | TODO -- Add lint tab (requires Pyodide lint_source binding) |
+| 3.3 | **Playground update** | 1h | DONE (S450) -- Lint button + lint_source/format_source public API, Guardiana 9.5/10 |
 | 3.4 | **Show HN v2 draft** | 30 min | DONE (S449) -- docs/SHOW_HN_V2_DRAFT.md |
 
 **Criterio completamento Sprint 3:**
 - [x] README reflects 3684 test, 12 CLI
 - [x] Blog post includes lu lint + lu fmt story
-- [  ] Playground has lint functionality (deferred -- UI-heavy task)
+- [x] Playground has lint functionality (Lint button + Ctrl+Shift+L, Guardiana 9.5/10)
 - [x] Show HN v2 draft ready for Rafa review
 
 ---

@@ -186,6 +186,13 @@ from ._voice import (  # faster-whisper+sounddevice imported lazily at instantia
     VoiceProcessor as VoiceProcessor,
     VoiceProcessorError as VoiceProcessorError,
 )
+from ._lint import (
+    lint_source as lint_source,
+    LintFinding as LintFinding,
+    LintSeverity as LintSeverity,
+    LintCategory as LintCategory,
+)
+from ._fmt import format_source as format_source
 from ._cli import main as cli_main
 from .errors import (
     ErrorCategory,
@@ -340,6 +347,13 @@ __all__ = [
     "run_source",
     "run_file",
     "cli_main",
+    # Lint (B5)
+    "lint_source",
+    "LintFinding",
+    "LintSeverity",
+    "LintCategory",
+    # Format (B6)
+    "format_source",
     # IntentBridge (E.2+E.3)
     "ChatPhase",
     "ChatResult",

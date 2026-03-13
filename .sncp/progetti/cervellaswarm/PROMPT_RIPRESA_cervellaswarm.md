@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-13 - Sessione 449
-> **STATUS:** Sprint 1+2 COMPLETE. **3684 test.** PyPI v0.3.3 LIVE. 12 CLI. CI lint+fmt gate.
+> **Ultimo aggiornamento:** 2026-03-13 - Sessione 450
+> **STATUS:** Sprint 1+2+3 COMPLETE. **3684 test.** PyPI v0.3.3 LIVE. 12 CLI. CI lint+fmt gate. Playground lint.
 
 ---
 
@@ -33,6 +33,13 @@
 
 ### 6. PyPI v0.3.3 LIVE
 - Published via Trusted Publisher on public repo
+
+### 7. S450: Playground Lint Button (T3.3)
+- Lint button added to playground toolbar (Check | Lint | Run)
+- Public API: `lint_source`, `LintFinding`, `LintSeverity`, `LintCategory`, `format_source` exported
+- Keyboard shortcut: Ctrl+Shift+L
+- CSS: yellow accent, severity-colored findings (error/warning/info)
+- Guardiana: 9.5/10, 6 P3 all fixed (box-shadow, pseudo-selector, SVG icon, shortcuts, comments)
 
 ---
 
@@ -67,14 +74,14 @@ LINGUA UNIVERSALE (LA MISSIONE):
   Moduli: 29 | Test: 3684 | CLI: 12 | Stdlib: 20
 
 SPRINT 1 (Dogfood & Polish): COMPLETE (9.5/10)
-SPRINT 2 (Quality & Testing): COMPLETE
-  2.1 lu fmt examples:  DONE
-  2.2 Pre-commit hook:  DONE (section 5)
-  2.3 CI integration:   DONE (lint-format job + multi-path)
-  2.4 Multi-file fmt:   DONE
-  2.5 Multi-file lint:  DONE
-  2.6 Guardiana audit:  DONE (9.5/10)
+SPRINT 2 (Quality & Testing): COMPLETE (9.5/10)
+SPRINT 3 (Community Prep): COMPLETE
+  3.1 README update:    DONE
+  3.2 Blog post:        DONE
+  3.3 Playground lint:  DONE (S450, 9.5/10)
+  3.4 Show HN v2:       DONE
 
+PUBLIC API: lint_source, format_source exported (S450)
 CI/CD: TUTTO GREEN + lint-format gate
 DEPENDABOT: 2 HOLD (stripe, express)
 ```
@@ -86,9 +93,11 @@ DEPENDABOT: 2 HOLD (stripe, express)
 ### 1. TODO Rafa
 - [ ] VS Code Publisher: creare account per T3.5
 - [ ] Blog post: revisione "From Vibe Coding to Vericoding"
+- [ ] Show HN v2: review `docs/SHOW_HN_V2_DRAFT.md` + decidere timing
 
 ### 2. OBIETTIVI (priorita)
-- **Sprint 3** (README, blog, playground, Show HN v2)
+- **Sync to public repo** (sync-to-public.sh - playground + lint API)
+- **T3.5 VS Code Marketplace** (blocked on Rafa publisher account)
 - Subroadmap: `.sncp/roadmaps/SUBROADMAP_S449_POLISH.md`
 
 ---
@@ -104,28 +113,28 @@ DEPENDABOT: 2 HOLD (stripe, express)
 | Lint rules | **10** (3 categorie) |
 | LSP tests | **79** |
 | PropertyKind | **9** |
-| Guardiana S449 | Sprint 1: 9.5/10, Sprint 2: 9.5/10 |
+| Guardiana | S449 Sprint 1+2: 9.5/10, S450 T3.3: 9.5/10 |
 
 ---
 
-## Lezioni Apprese (S449)
+## Lezioni Apprese (S450)
 
 ### Cosa ha funzionato bene
-- **Guardiana ogni step**: 8 findings caught, all fixed. Standard 9.5 raggiunto.
-- **Reuse parsed AST**: lint_program() elimina double parse in LSP. Simple win.
-- **Feature test reale**: `protocol.fm.features` > `assert server is not None` (tautological).
+- **Delegate + review + audit**: Frontend agent implementa, Regina corregge, Guardiana audita. 3 step, 6 P3 caught and fixed.
+- **Public API over private imports**: Pyodide import `from cervellaswarm_lingua_universale import lint_source` (not `._lint`). Cleaner, won't break.
+- **`X as X` pattern**: Re-export consistency matters for type checkers and IDE support.
 
 ### Pattern confermato
-- **logger.debug su except critici**: S442 lesson applicata ancora. Mai silenzioso.
-- **Research PRIMA**: formatter design evitato CST trap e config trap (S448).
+- **Guardiana ogni step**: 9.5/10 raggiunto ancora. 6 P3 = 6 dettagli curati.
+- **Fix ALL findings (P3 inclusi)**: box-shadow, SVG vs emoji, keyboard shortcuts -- i dettagli fanno la differenza.
 
 ---
-*"Ultrapassar os proprios limites!" -- S449*
+*"Ultrapassar os proprios limites!" -- S450*
 <!-- AUTO-CHECKPOINT-START -->
-## AUTO-CHECKPOINT: 2026-03-13 (continued)
+## AUTO-CHECKPOINT: 2026-03-13 19:17 (auto)
 - **Branch**: main
-- **Ultimo commit**: 80bf028c - S449: Sprint 2 T2.3 -- CI lint+format gate, multi-path support
-- **Sprint 1**: COMPLETE (T1.1-T1.7, PyPI v0.3.3 LIVE)
-- **Sprint 2**: COMPLETE (T2.1-T2.6, pre-commit + CI + multi-path + Guardiana 9.5)
-- **Test**: 3684 passing
+- **Ultimo commit**: 566d5a96 - S449: Final map updates + fix MASTER exception in pre-commit hook
+- **File modificati** (2):
+  - sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md
+  - .sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md
 <!-- AUTO-CHECKPOINT-END -->
