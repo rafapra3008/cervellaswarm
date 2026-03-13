@@ -9,7 +9,7 @@
 
 | Progetto | PROMPT_RIPRESA | Aggiornato | TL;DR |
 |----------|----------------|------------|-------|
-| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-03-13 | S449: Sprint 1 done (LSP lint+fmt), 3654 test, v0.3.3 ready, 12 CLI |
+| **CervellaSwarm** | `.sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md` | 2026-03-13 | S449: Sprint 1+2+3 done, 3684 test, v0.3.3 LIVE, CI lint+fmt gate |
 | **Contabilita** | `.sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md` | 2026-03-05 | S286: Deploy SPRING-025 completo. Script v4.5.0 batch. 1908 test |
 | **Miracollo** | `.sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md` | 2026-01-30 | In pausa (Cache Layer v2.1.0 completato) |
 | **CervellaBrasil** | `.sncp/progetti/cervellabrasil/PROMPT_RIPRESA_cervellabrasil.md` | 2026-02-12 | FASE 0-2.5 completas, pronto FASE 3 |
@@ -47,7 +47,7 @@ PROMPT_RIPRESA: max 150 righe
 
 - **15 Gen 2026:** Separazione PROMPT_RIPRESA completata (Context Mesh pattern)
 - **6 Mar 2026:** Migliora Casa S431 - settings, hooks, SNCP maintenance
-- **13 Mar 2026:** S449: Sprint 1 done (LSP lint+fmt integration), 3654 test, v0.3.3 ready
+- **13 Mar 2026:** S449: Sprint 1+2+3 done, 3684 test, v0.3.3 LIVE on PyPI, CI lint+fmt, Show HN v2 draft
 
 ---
 

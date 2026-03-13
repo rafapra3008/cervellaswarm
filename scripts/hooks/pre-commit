@@ -72,8 +72,11 @@ for file in $STAGED_FILES; do
     if [[ "$file" == .sncp/* ]]; then
         # PROMPT_RIPRESA deve avere nome progetto o braccio
         if [[ "$filename" == PROMPT_RIPRESA_* ]]; then
+            # Eccezione: PROMPT_RIPRESA_MASTER.md è il file panoramica
+            if [[ "$filename" == "PROMPT_RIPRESA_MASTER.md" ]]; then
+                : # OK - file master
             # Accetta: PROMPT_RIPRESA_{nome}.md dove nome può avere trattini (es: pms-core)
-            if [[ ! "$filename" =~ ^PROMPT_RIPRESA_[a-z][a-z0-9_-]*\.md$ ]]; then
+            elif [[ ! "$filename" =~ ^PROMPT_RIPRESA_[a-z][a-z0-9_-]*\.md$ ]]; then
                 echo -e "${RED}ERRORE:${NC} PROMPT_RIPRESA naming errato: $filename"
                 echo "        Deve essere: PROMPT_RIPRESA_{progetto}.md o PROMPT_RIPRESA_{braccio}.md"
                 ((ERRORS++))

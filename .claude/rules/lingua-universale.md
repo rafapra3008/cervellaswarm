@@ -31,7 +31,7 @@ paths:
 
 ## Convenzioni
 - Error codes: `LU-EXXX` con severity (error/warning/info)
-- Test: `pytest packages/lingua-universale/tests/` (3494 test)
+- Test: `pytest packages/lingua-universale/tests/` (3684 test)
 - Ogni modifica -> test -> Guardiana audit
 - MAI rompere backward compatibility senza versione major
 
@@ -70,6 +70,9 @@ paths:
 - Subroadmap: `.sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md`
 - Task list dettagliata: `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md`
 - FASE D: L'Ecosistema -- COMPLETA! D1-D6 DONE (media 9.5/10)
-- B5 `lu lint`: 10 rules, 53+20 tests, single-pass AST walk (Ruff/Clippy pattern), LSP integrated
-- B6 `lu fmt`: zero-config auto-formatter, 74 tests, gofmt/buf pattern, LSP integrated
-- Test: 3654 (LU), 6924 totali repo (stima)
+- B5 `lu lint`: 10 rules, single-pass AST walk (Ruff/Clippy pattern), LSP+CI integrated
+- B6 `lu fmt`: zero-config auto-formatter, gofmt/buf pattern, LSP+CI integrated
+- `lu lint/fmt`: multi-path support (nargs="+"), dedup via dict.fromkeys()
+- Pre-commit: section 5 checks lu fmt --check + lu lint on staged .lu files
+- CI: lint-format job runs before test matrix (fast fail on style)
+- Test: 3684 (LU), PyPI v0.3.3 LIVE
