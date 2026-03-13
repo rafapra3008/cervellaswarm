@@ -32,9 +32,11 @@ protocol ConfidenceReview:
 
     analyst returns report to regina
     regina asks reviewer to verify report
+
     when reviewer decides:
         approve:
             reviewer returns verdict to regina
+
         needs_revision:
             reviewer tells analyst revise findings
             analyst returns revised report to regina

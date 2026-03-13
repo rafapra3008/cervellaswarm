@@ -3,7 +3,7 @@
 [![PyPI](https://img.shields.io/pypi/v/cervellaswarm-lingua-universale.svg)](https://pypi.org/project/cervellaswarm-lingua-universale/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org)
-[![Tests](https://img.shields.io/badge/tests-3494%20passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-3682%20passed-brightgreen.svg)](tests/)
 [![Coverage](https://img.shields.io/badge/coverage-98%25-brightgreen.svg)](tests/)
 [![Playground](https://img.shields.io/badge/playground-try%20it%20now-blueviolet.svg)](https://rafapra3008.github.io/cervellaswarm/)
 [![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)]()
@@ -74,27 +74,41 @@ Write protocols in the LU language and run them directly:
 
 ```
 # hello.lu
-agent Regina role=coordinator
-agent Worker role=executor
+type TaskStatus = Pending | Running | Done
 
-protocol Greet {
-    roles Regina, Worker;
-    Regina -> Worker : TaskRequest;
-    Worker -> Regina : TaskResult;
-}
+agent Worker:
+    role: backend
+    trust: standard
+    accepts: TaskRequest
+    produces: TaskResult
+
+protocol DelegateTask:
+    roles: regina, worker, guardiana
+
+    regina asks worker to do task
+    worker returns result to regina
+    regina asks guardiana to verify
+    guardiana returns verdict to regina
+
+    properties:
+        always terminates
+        no deadlock
 ```
 
 ```bash
-lu check hello.lu     # parse and compile, no execution
-lu run   hello.lu     # parse, compile, and execute
-lu repl               # interactive REPL
+lu check hello.lu      # parse and compile, no execution
+lu run   hello.lu      # parse, compile, and execute
+lu verify hello.lu     # formally verify properties
+lu lint  hello.lu      # check style and best practices
+lu fmt   hello.lu      # format to canonical style
+lu repl                # interactive REPL
 ```
 
 ---
 
 ## CLI Reference
 
-The `lu` command ships with 10 subcommands:
+The `lu` command ships with 12 subcommands:
 
 | Command | Description |
 |---------|-------------|
@@ -103,6 +117,8 @@ The `lu` command ships with 10 subcommands:
 | `lu verify <file.lu>` | Verify per-property with colored output (PROVED/VIOLATED/SKIPPED) |
 | `lu compile <file.lu>` | Show (or save with `-o`) the generated Python source |
 | `lu init <name>` | Scaffold a new LU project (`--template`, `--list-templates`) |
+| `lu lint <path...>` | Check style, correctness, and best practices (10 rules) |
+| `lu fmt <path...>` | Format .lu files to canonical style (zero-config) |
 | `lu repl` | Start the interactive REPL with history |
 | `lu lsp` | Start the LSP server over STDIO (requires `pygls`) |
 | `lu chat` | Build protocols conversationally in natural language (3 languages) |
@@ -121,6 +137,15 @@ lu compile hello.lu -o hello.py
 # Chat: build protocols conversationally
 lu chat --lang it          # Italian (also: en, pt)
 lu chat --lang en --voice  # with voice input (requires [voice] extra)
+
+# Lint: check style and correctness
+lu lint .                  # all .lu files in current directory
+lu lint stdlib/ hello.lu   # multiple paths
+
+# Format: zero-config auto-formatter
+lu fmt .                   # format all .lu in directory
+lu fmt --check .           # CI mode: exit 1 if any file needs reformatting
+lu fmt --diff hello.lu     # preview changes without writing
 
 # Demo: see the full "La Nonna" demo
 lu demo --lang it --speed normal
@@ -141,6 +166,8 @@ for a full editing experience:
 |---------|-------------|
 | Syntax highlighting | Full TextMate grammar for all LU constructs |
 | Diagnostics | Real-time error checking as you type (74 error codes) |
+| Lint diagnostics | Style and correctness warnings inline (10 rules, `source: lu-lint`) |
+| Format Document | Zero-config formatting via `textDocument/formatting` |
 | Hover | Type info and Markdown documentation on mouse hover |
 | Completion | Context-aware suggestions (7 contexts: top-level, agent body, trust, confidence, protocol body, properties, type references) |
 | Go-to-definition | Click any type or agent name to jump to its definition |
@@ -171,7 +198,7 @@ Each step has editable, runnable code. No install required.
 ## Features
 
 - **29 modules**, 137+ public API symbols
-- **3494 tests**, 98% coverage, runs in under 1 second
+- **3682 tests**, 98% coverage, runs in ~2 seconds
 - **Zero dependencies** -- pure Python standard library
 - **Python 3.10+** including 3.13 free-threaded (thread-safe internals)
 - **Grammar**: 64 production rules, GBNF + Lark export for constrained decoding
@@ -182,7 +209,7 @@ Each step has editable, runnable code. No install required.
 ## Architecture
 
 ```
-Lingua Universale v0.3.2 -- 29 modules, zero dependencies
+Lingua Universale v0.3.3 -- 29 modules, zero dependencies
 
 FASE A: Session Types
   types.py           14 MessageKind, 14 message dataclasses, 17 AgentRole
@@ -210,13 +237,15 @@ FASE C: Il Linguaggio (compiler pipeline)
   _grammar_export.py GBNF + Lark grammar export (constrained decoding)
   _eval.py           check_source / run_source / verify_source
   _repl.py           Interactive REPL with history and error recovery
-  _cli.py            lu command: 10 subcommands (incl. chat, demo, init, verify)
+  _cli.py            lu command: 12 subcommands (incl. chat, demo, lint, fmt)
   _init_project.py   Project scaffolding + stdlib templates (20 protocols)
+  _lint.py           10 lint rules (3 categories), single-pass AST walk
+  _fmt.py            Zero-config auto-formatter (canonical style)
   errors.py          74 error codes, 3 locales (en/it/pt), rich snippets
   _colors.py         ANSI colors respecting NO_COLOR / FORCE_COLOR
 
 FASE D: Ecosistema
-  _lsp.py            Language Server Protocol (STDIO, requires pygls)
+  _lsp.py            LSP server (diagnostics, lint, formatting, hover, completion, goto-def)
 
 FASE E: Per Tutti (IntentBridge)
   _intent_bridge.py  NL/guided -> IntentDraft -> verified protocol (3 languages)
@@ -421,6 +450,7 @@ and AI agent protocols. Every protocol parses and verifies to PROVED.
 | Lean 4 verification | No | No | No | **Yes** (9 properties) |
 | Confidence types | No | No | No | **Yes** (`Confident[T]`) |
 | Trust composition | No | No | No | **Yes** (transitive) |
+| Linter + Formatter | No | No | No | **Yes** (10 rules, zero-config fmt) |
 | REPL + LSP (hover, completion, goto-def) | No | No | No | **Yes** |
 | NL protocol building (chat) | No | No | No | **Yes** (3 languages) |
 | Voice input | No | No | No | **Yes** (local STT) |
@@ -480,7 +510,7 @@ git clone https://github.com/rafapra3008/cervellaswarm.git
 cd cervellaswarm/packages/lingua-universale
 pip install -e ".[dev]"
 
-# Run tests (3494 tests, < 2s)
+# Run tests (3682 tests, ~2s)
 pytest
 
 # Run with coverage

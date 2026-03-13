@@ -344,6 +344,18 @@
       box-shadow: 0 0 0 1px var(--accent-blue);
     }
 
+    /* Lint button - outlined yellow */
+    .btn-lint {
+      background: var(--bg-panel);
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
+    }
+
+    .btn-lint:not(:disabled):hover {
+      background: rgba(249, 226, 175, 0.15);
+      box-shadow: 0 0 0 1px var(--accent-yellow);
+    }
+
     /* Run button - filled */
     .btn-run {
       background: linear-gradient(135deg, var(--accent-violet), var(--accent-blue));
@@ -367,6 +379,83 @@
     .btn-clear:not(:disabled):hover {
       border-color: var(--accent-red);
       color: var(--accent-red);
+    }
+
+    /* ============================================================
+       LINT OUTPUT STYLES
+    ============================================================ */
+    .lint-findings {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .lint-finding {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .lint-finding.error {
+      background: rgba(243, 139, 168, 0.1);
+      border-left: 3px solid var(--accent-red);
+    }
+
+    .lint-finding.warning {
+      background: rgba(249, 226, 175, 0.1);
+      border-left: 3px solid var(--accent-yellow);
+    }
+
+    .lint-finding.info { /* future-proofing: info severity not yet in LintSeverity */
+      background: rgba(137, 180, 250, 0.1);
+      border-left: 3px solid var(--accent-blue);
+    }
+
+    .lint-code {
+      font-weight: 600;
+      white-space: nowrap;
+      min-width: 80px;
+    }
+
+    .lint-code.error { color: var(--accent-red); }
+    .lint-code.warning { color: var(--accent-yellow); }
+    .lint-code.info { color: var(--accent-blue); } /* future-proofing */
+
+    .lint-message {
+      flex: 1;
+      color: var(--text-primary);
+    }
+
+    .lint-location {
+      color: var(--text-muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .lint-clean {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      background: rgba(166, 227, 161, 0.08);
+      border: 1px solid rgba(166, 227, 161, 0.2);
+    }
+
+    .lint-clean-icon {
+      font-size: 20px;
+      color: var(--accent-green);
+    }
+
+    .lint-clean-text {
+      color: var(--accent-green);
+      font-weight: 600;
     }
 
     /* ============================================================
@@ -1117,6 +1206,14 @@
       Check
     </button>
 
+    <button class="btn btn-lint" id="btn-lint" disabled aria-label="Lint code (Ctrl+Shift+L)" title="Lint code (Ctrl+Shift+L)">
+      <!-- Lint / magnifier icon -->
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+      </svg>
+      Lint
+    </button>
+
     <button class="btn btn-run" id="btn-run" disabled aria-label="Run code (parse, compile and execute)">
       <!-- Play icon -->
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -1307,6 +1404,7 @@ const dom = {
   statusDot:      null,  // set after render
   exampleSelect:  $("example-select"),
   btnCheck:       $("btn-check"),
+  btnLint:        $("btn-lint"),
   btnRun:         $("btn-run"),
   btnClear:       $("btn-clear"),
   editorContainer:$("editor-container"),
@@ -1406,6 +1504,7 @@ async function initPyodide() {
     // Enable buttons
     state.ready = true;
     dom.btnCheck.disabled = false;
+    dom.btnLint.disabled = false;
     dom.btnRun.disabled = false;
 
     updateStatus("ready", "Ready  v" + version);
@@ -1743,6 +1842,12 @@ function initMonaco() {
         () => { if (state.ready && !state.running) handleCheck(); }
       );
 
+      // Ctrl+Shift+L -> Lint
+      state.editor.addCommand(
+        monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KeyL,
+        () => { if (state.ready && !state.running) handleLint(); }
+      );
+
       resolve();
     });
   });
@@ -2050,6 +2155,7 @@ async function handleRun() {
 async function execLU(mode) {
   state.running = true;
   dom.btnCheck.disabled = true;
+  dom.btnLint.disabled = true;
   dom.btnRun.disabled = true;
 
   const source = state.editor.getValue();
@@ -2094,6 +2200,7 @@ _r
   } finally {
     state.running = false;
     dom.btnCheck.disabled = false;
+    dom.btnLint.disabled = false;
     dom.btnRun.disabled = false;
   }
 }
@@ -2146,10 +2253,124 @@ function extractResult(proxy) {
 
 
 // ============================================================
+// LINT HANDLER
+// ============================================================
+
+async function handleLint() {
+  if (!state.ready || state.running) return;
+  state.running = true;
+  dom.btnCheck.disabled = true;
+  dom.btnRun.disabled = true;
+  dom.btnLint.disabled = true;
+
+  const source = state.editor.getValue();
+  const t0 = performance.now();
+
+  try {
+    const result = await state.pyodide.runPythonAsync(`
+from cervellaswarm_lingua_universale import lint_source as _ls
+_findings = _ls(${JSON.stringify(source)})
+[(f.code, f.message, f.severity.value, f.category.value, f.line, f.col) for f in _findings]
+`);
+
+    const elapsed = Math.round(performance.now() - t0);
+    const findings = result.toJs();
+    renderLintOutput(findings, elapsed);
+
+    if (result && result.destroy) result.destroy();
+
+  } catch (err) {
+    const elapsed = Math.round(performance.now() - t0);
+    console.error("lint error:", err);
+    renderOutput(
+      { ok: false, errors: [err.message || String(err)], compiled: null, python_source: null, module: null },
+      "lint",
+      elapsed
+    );
+  } finally {
+    state.running = false;
+    dom.btnCheck.disabled = false;
+    dom.btnRun.disabled = false;
+    dom.btnLint.disabled = false;
+  }
+}
+
+function renderLintOutput(findings, elapsed) {
+  var targetArea = (typeof getTourOutputTarget === "function" && getTourOutputTarget()) || dom.outputArea;
+  targetArea.innerHTML = "";
+
+  const container = document.createElement("div");
+  container.className = "result-block";
+
+  // Header
+  const header = document.createElement("div");
+  header.className = "result-header";
+
+  const icon = document.createElement("div");
+  const title = document.createElement("div");
+
+  if (findings.length === 0) {
+    icon.className = "result-icon ok";
+    icon.textContent = "\u2713";
+    title.className = "result-title ok";
+    title.textContent = "No lint findings!";
+    header.appendChild(icon);
+    header.appendChild(title);
+    container.appendChild(header);
+
+    // Clean badge
+    const clean = document.createElement("div");
+    clean.className = "lint-clean";
+    clean.innerHTML = '<svg class="lint-clean-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" fill="currentColor"/></svg><span class="lint-clean-text">Your code follows all 10 lint rules</span>';
+    container.appendChild(clean);
+  } else {
+    const errors = findings.filter(function(f) { return f[2] === "error"; }).length;
+    const warnings = findings.filter(function(f) { return f[2] === "warning"; }).length;
+    const infos = findings.filter(function(f) { return f[2] === "info"; }).length;
+
+    icon.className = errors > 0 ? "result-icon error" : "result-icon warning";
+    icon.textContent = errors > 0 ? "\u2717" : "\u26A0";
+    title.className = errors > 0 ? "result-title error" : "result-title warning";
+
+    const parts = [];
+    if (errors > 0) parts.push(errors + (errors === 1 ? " error" : " errors"));
+    if (warnings > 0) parts.push(warnings + (warnings === 1 ? " warning" : " warnings"));
+    if (infos > 0) parts.push(infos + (infos === 1 ? " info" : " infos"));
+    title.textContent = parts.join(", ");
+
+    header.appendChild(icon);
+    header.appendChild(title);
+    container.appendChild(header);
+
+    // Findings list
+    const list = document.createElement("div");
+    list.className = "lint-findings";
+
+    findings.forEach(function(f) {
+      const code = f[0], message = f[1], severity = f[2], line = f[4], col = f[5];
+      const item = document.createElement("div");
+      item.className = "lint-finding " + severity;
+      item.innerHTML =
+        '<span class="lint-code ' + severity + '">' + escHtml(code) + '</span>' +
+        '<span class="lint-message">' + escHtml(message) + '</span>' +
+        '<span class="lint-location">L' + line + ':' + col + '</span>';
+      list.appendChild(item);
+    });
+
+    container.appendChild(list);
+  }
+
+  targetArea.appendChild(container);
+  dom.outputTiming.textContent = elapsed + "ms";
+}
+
+
+// ============================================================
 // BUTTON HANDLERS
 // ============================================================
 
 dom.btnCheck.addEventListener("click", handleCheck);
+dom.btnLint.addEventListener("click", handleLint);
 dom.btnRun.addEventListener("click", handleRun);
 
 dom.btnClear.addEventListener("click", () => {
