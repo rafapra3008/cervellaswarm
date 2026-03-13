@@ -4,6 +4,37 @@ All notable changes to `cervellaswarm-lingua-universale` will be documented in t
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.3.2] - 2026-03-13
+
+### Added
+
+**LU 1.1 - Nested Choice (Parser/Compiler/Spec) (S447)**
+- `when X decides:` inside branches of another `when Y decides:` -- arbitrarily deep nesting.
+- Standard MPST/Scribble (Honda/Yoshida POPL 2008). Additive choice, zero breaking changes.
+- Parser: `_parse_choice()` recursive, `MAX_CHOICE_DEPTH = 32`.
+- Compiler: `_convert_elements()` recursive for ChoiceNode in codegen and _eval.
+- Spec: `_collect_all_steps`, `_find_violating_steps`, `_collect_all_paths` all recursive.
+- 28 new parser/compiler/spec tests.
+
+**LU 1.2 - Nested Runtime (SessionChecker) (S447)**
+- Stack-based `ChoiceFrame` in `SessionChecker` replaces flat `branch` + `branch_step_index`.
+- `_current_elements()` returns elements from top-of-stack frame.
+- `_peek_at()` recursive multi-level lookahead through choice stack.
+- `_pop_exhausted_frames()` cascading frame pop with `while` loop.
+- `summary()` exposes `choice_depth` and `branch_path`.
+- Backward compatible: flat protocols = empty stack = identical behavior.
+- 28 new runtime tests (2-level, 3-level, stack pop, violations, edge cases).
+
+### Changed
+
+- **Test count**: 3436 -> 3494 tests
+- `saga_order.lu` stdlib: uses real nested choice (payment -> inventory decision).
+
+### Fixed
+
+- **P1**: `_eval.py:_protocol_node_to_runtime()` crashed on nested `.lu` files (`ChoiceNode` has no `.sender`). Fixed with recursive `_convert_elements()`.
+- `_detect_branch()`: added `isinstance(steps[0], ProtocolStep)` check for nested-first branches.
+
 ## [0.3.1] - 2026-03-13
 
 ### Added
@@ -213,6 +244,7 @@ This project follows [Semantic Versioning](https://semver.org/).
 - Frozen dataclasses with `__post_init__` validation throughout
 - Pre-computed O(1) lookup tables for MessageKind <-> PascalCase conversion
 
+[0.3.2]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.3.2
 [0.3.1]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.3.1
 [0.3.0]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.3.0
 [0.2.0]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.2.0
