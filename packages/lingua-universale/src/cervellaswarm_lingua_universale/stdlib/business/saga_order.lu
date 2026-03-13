@@ -57,16 +57,20 @@ protocol SagaOrder:
     roles: coordinator, payment, inventory
 
     coordinator asks payment to charge order
+
     when payment decides:
         success:
             payment returns confirmation to coordinator
             coordinator asks inventory to reserve items
+
             when inventory decides:
                 reserved:
                     inventory returns reservation to coordinator
+
                 out_of_stock:
                     inventory returns error to coordinator
                     coordinator tells payment refund order
+
         failure:
             payment returns error to coordinator
 

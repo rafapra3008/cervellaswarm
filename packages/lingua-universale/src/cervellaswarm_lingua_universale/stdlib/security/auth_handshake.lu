@@ -53,11 +53,13 @@ protocol AuthHandshake:
     roles: client, auth, resource
 
     client asks auth to authenticate
+
     when auth decides:
         granted:
             auth returns token to client
             client asks resource to access protected data
             resource returns response to client
+
         denied:
             auth returns rejection to client
 

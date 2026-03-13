@@ -48,9 +48,11 @@ protocol CacheInvalidation:
     writer asks cache to invalidate entry
     cache returns acknowledgment to writer
     reader asks cache to lookup entry
+
     when cache decides:
         hit:
             cache returns cached value to reader
+
         miss:
             cache asks writer to fetch fresh data
             writer returns fresh value to cache

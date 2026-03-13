@@ -47,11 +47,13 @@ protocol ApprovalWorkflow:
     roles: requester, approver, notifier
 
     requester asks approver to review request
+
     when approver decides:
         approve:
             approver returns approval to requester
             approver sends approval notice to notifier
             notifier returns confirmation to approver
+
         reject:
             approver returns rejection to requester
             approver sends rejection notice to notifier
