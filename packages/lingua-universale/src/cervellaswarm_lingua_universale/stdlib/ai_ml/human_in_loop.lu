@@ -52,17 +52,20 @@ protocol HumanInLoop:
     roles: agent, human, logger
 
     agent proposes action to human
+
     when human decides:
         approve:
             human returns approval to agent
             human sends audit record to logger
             logger returns confirmation to human
+
         modify:
             human tells agent apply modifications
             agent proposes revised action to human
             human returns approval to agent
             human sends audit record to logger
             logger returns confirmation to human
+
         reject:
             human returns rejection to agent
             human sends audit record to logger

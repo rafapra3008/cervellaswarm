@@ -57,6 +57,6 @@ protocol Pipeline:
         always terminates
         no deadlock
         all roles participate
-        source before processor
         processor before transformer
+        source before processor
         transformer before sink

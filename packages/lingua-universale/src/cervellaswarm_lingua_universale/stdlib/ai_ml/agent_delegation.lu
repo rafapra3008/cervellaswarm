@@ -55,9 +55,11 @@ protocol AgentDelegation:
     supervisor asks worker to execute task
     worker returns result to supervisor
     supervisor asks validator to verify result
+
     when validator decides:
         pass:
             validator returns approval to supervisor
+
         fail:
             validator returns feedback to supervisor
             supervisor tells worker revise task
@@ -66,5 +68,5 @@ protocol AgentDelegation:
         always terminates
         no deadlock
         all roles participate
-        worker before validator
         trust >= standard
+        worker before validator

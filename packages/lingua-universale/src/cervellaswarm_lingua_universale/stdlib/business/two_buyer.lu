@@ -54,11 +54,13 @@ protocol TwoBuyer:
     buyer1 asks seller to quote item price
     seller returns price quote to buyer1
     buyer1 proposes cost split to buyer2
+
     when buyer2 decides:
         accept:
             buyer2 tells buyer1 accept split
             buyer1 asks seller to place order
             seller returns order confirmation to buyer1
+
         reject:
             buyer2 tells buyer1 reject split
 

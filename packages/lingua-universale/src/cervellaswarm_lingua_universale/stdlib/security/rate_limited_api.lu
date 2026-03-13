@@ -54,12 +54,14 @@ protocol RateLimitedApi:
     roles: client, limiter, backend
 
     client asks limiter to check rate limit
+
     when limiter decides:
         allow:
             limiter sends request to backend
             backend returns response to client
             backend sends usage update to limiter
             limiter returns rate info to client
+
         throttle:
             limiter returns rate limit exceeded to client
 

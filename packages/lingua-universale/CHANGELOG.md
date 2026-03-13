@@ -4,6 +4,42 @@ All notable changes to `cervellaswarm-lingua-universale` will be documented in t
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.3.3] - 2026-03-13
+
+### Added
+
+**`lu lint` -- Static Linter (B5, S448)**
+- `_lint.py`: Single-pass AST walk linter (Ruff/Clippy pattern).
+- 10 rules in 3 categories: CORRECTNESS (5, exit=1), STYLE (2), BEST_PRACTICES (3).
+- Rule = plain function `(node, ctx) -> list[Finding]`. Easy to extend.
+- `--ignore LU-W002,LU-W020` flag for selective suppression.
+- Public API: `lint_source()`, `lint_file()`, `lint_program()`.
+- 20 stdlib regression tests (all 20 protocols lint-clean).
+
+**`lu fmt` -- Auto-Formatter (B6, S448)**
+- `_fmt.py` (~450 LOC): Zero-config opinionated formatter (gofmt/buf/elm-format pattern).
+- AST + pre-scan comments + single-pass formatter.
+- Canonical property ordering, agent clause ordering, `use` sorting.
+- All 5 action types with correct word order.
+- Flags: `--check` (CI, exit=1), `--diff`, `--stdout` (mutually exclusive).
+- Idempotent: `format(format(source)) == format(source)` on all 20 stdlib.
+- 20 stdlib formatted to canonical style (dogfood).
+
+**LSP Integration (S449)**
+- Lint findings appear as real-time diagnostics in editors (`source: "lu-lint"`).
+- `textDocument/formatting` handler: Format Document via `lu fmt` in VS Code.
+- Severity mapping: CORRECTNESS → Error, STYLE/BEST_PRACTICES → Warning.
+
+### Changed
+
+- **CLI commands**: 10 -> 12 (+ `lint`, `fmt`)
+- **Test count**: 3494 -> 3654 tests
+- **LSP tests**: 66 -> 79 tests
+
+### Fixed
+
+- Silent `except Exception: pass` in LSP lint/humanize paths → `logger.debug()` with traceback.
+
 ## [0.3.2] - 2026-03-13
 
 ### Added
@@ -244,6 +280,7 @@ This project follows [Semantic Versioning](https://semver.org/).
 - Frozen dataclasses with `__post_init__` validation throughout
 - Pre-computed O(1) lookup tables for MessageKind <-> PascalCase conversion
 
+[0.3.3]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.3.3
 [0.3.2]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.3.2
 [0.3.1]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.3.1
 [0.3.0]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.3.0

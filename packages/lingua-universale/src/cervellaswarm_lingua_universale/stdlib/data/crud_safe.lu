@@ -53,5 +53,5 @@ protocol CrudSafe:
     properties:
         always terminates
         no deadlock
-        all roles participate
         no deletion
+        all roles participate

@@ -53,11 +53,13 @@ protocol Auction:
 
     auctioneer sends item listing to bidder
     bidder returns bid to auctioneer
+
     when auctioneer decides:
         sold:
             auctioneer tells bidder auction won
             auctioneer sends auction result to recorder
             recorder returns confirmation to auctioneer
+
         unsold:
             auctioneer tells bidder auction closed
             auctioneer sends auction result to recorder
