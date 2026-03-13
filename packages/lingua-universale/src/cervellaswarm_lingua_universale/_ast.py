@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""AST node definitions for the Lingua Universale v0.2 unified parser (C1.3).
+"""AST node definitions for the Lingua Universale parser.
 
 Every node is an immutable ``@dataclass(frozen=True)``.  Collections use
 ``tuple`` so that frozen dataclasses can hash their fields without issue.
@@ -198,7 +198,7 @@ class StepNode:
 @dataclass(frozen=True)
 class BranchNode:
     label: str                   # branch label  (e.g. "approve", "reject")
-    steps: tuple[StepNode, ...]
+    steps: tuple[StepOrChoice, ...]  # steps and/or nested choices (LU 1.1)
     loc: Loc
 
 

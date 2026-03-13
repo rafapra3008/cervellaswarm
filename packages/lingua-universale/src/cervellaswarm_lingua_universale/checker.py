@@ -25,7 +25,7 @@ from .monitor import (
     SessionStarted,
     ViolationOccurred,
 )
-from .protocols import Protocol, ProtocolChoice, ProtocolStep
+from .protocols import Protocol, ProtocolChoice, ProtocolElement, ProtocolStep
 from .types import MessageKind, SwarmMessage, message_kind
 
 
@@ -64,7 +64,12 @@ class SessionComplete(Exception):
 
 @dataclass(frozen=True)
 class MessageRecord:
-    """A recorded message in the session log."""
+    """A recorded message in the session log.
+
+    ``step_index`` refers to the top-level ``protocol.elements`` position.
+    Inside nested branches it stays at the outer ``ProtocolChoice`` index;
+    use ``SessionChecker.summary()['branch_path']`` for the full location.
+    """
 
     timestamp: float
     sender: str
@@ -73,15 +78,36 @@ class MessageRecord:
     step_index: int
 
 
+@dataclass(frozen=True)
+class ChoiceFrame:
+    """A single frame in the choice navigation stack (LU 1.2).
+
+    Each frame represents an active branch selection.  Nested choices
+    push additional frames; when a branch is exhausted the frame is
+    popped and the parent resumes from ``parent_index + 1``.
+    """
+
+    choice: ProtocolChoice
+    branch_name: str
+    parent_index: int  # index in parent element list where this choice sits
+
+    # Mutable step counter stored separately in SessionState._frame_positions
+
+
 @dataclass
 class SessionState:
-    """Current state of a protocol session."""
+    """Current state of a protocol session.
+
+    Uses a *choice stack* (LU 1.2) to support arbitrarily nested
+    ``ProtocolChoice`` blocks at runtime.  For flat protocols the
+    stack is always empty and behaviour is identical to LU 1.1.
+    """
 
     session_id: str
     protocol: Protocol
     step_index: int = 0
-    branch: Optional[str] = None
-    branch_step_index: int = 0
+    choice_stack: list[ChoiceFrame] = field(default_factory=list)
+    _frame_positions: list[int] = field(default_factory=list)
     completed: bool = False
     repetition_count: int = 0
     started_at: float = field(default_factory=time.time)
@@ -90,47 +116,103 @@ class SessionState:
     completed_at_mono: Optional[float] = None
     log: list[MessageRecord] = field(default_factory=list)
 
+    # -- backward-compat properties ------------------------------------------
+
+    @property
+    def branch(self) -> Optional[str]:
+        """Name of the current branch (top of the choice stack)."""
+        return self.choice_stack[-1].branch_name if self.choice_stack else None
+
+    @property
+    def branch_step_index(self) -> int:
+        """Step index within the current branch."""
+        return self._frame_positions[-1] if self._frame_positions else 0
+
+    # -- stack navigation helpers --------------------------------------------
+
+    def _current_elements(self) -> tuple[ProtocolElement, ...]:
+        """Elements of the current context (top-level or innermost branch)."""
+        if not self.choice_stack:
+            return self.protocol.elements
+        frame = self.choice_stack[-1]
+        return frame.choice.branches[frame.branch_name]
+
+    def _current_index(self) -> int:
+        """Position within ``_current_elements()``."""
+        if not self.choice_stack:
+            return self.step_index
+        return self._frame_positions[-1]
+
+    def _advance_current(self) -> None:
+        """Increment the position in the current context by one."""
+        if not self.choice_stack:
+            self.step_index += 1
+        else:
+            self._frame_positions[-1] += 1
+
+    # -- core state logic ----------------------------------------------------
+
     def peek_next_step(self) -> Optional[ProtocolStep]:
         """Return the expected next step WITHOUT mutating state.
 
-        Returns None if protocol is complete or at a choice point.
+        Returns ``None`` if the protocol is complete or at a choice point.
+        Handles multi-level backtrack: when the innermost branch is
+        exhausted it looks in the parent context, and so on.
         """
         if self.completed:
             return None
+        return self._peek_at(
+            self._current_elements(),
+            self._current_index(),
+            len(self.choice_stack),
+        )
 
-        elements = self.protocol.elements
-
-        # If we're in a branch, look up current branch step
-        # using step_index to find the CORRECT ProtocolChoice
-        if self.branch is not None:
-            if self.step_index >= len(elements):
-                return None
-            elem = elements[self.step_index]
-            if isinstance(elem, ProtocolChoice):
-                branch_steps = elem.branches.get(self.branch, ())
-                if self.branch_step_index < len(branch_steps):
-                    return branch_steps[self.branch_step_index]
-                # Branch exhausted - next element is after the choice
-                next_idx = self.step_index + 1
-                if next_idx >= len(elements):
-                    return None  # protocol will complete
-                next_elem = elements[next_idx]
-                if isinstance(next_elem, ProtocolStep):
-                    return next_elem
-                return None
+    def _peek_at(
+        self,
+        elements: tuple[ProtocolElement, ...],
+        idx: int,
+        depth: int,
+    ) -> Optional[ProtocolStep]:
+        """Recursively peek through stack levels."""
+        if idx < len(elements):
+            elem = elements[idx]
+            if isinstance(elem, ProtocolStep):
+                return elem
+            # ProtocolChoice -- caller must choose_branch
             return None
 
-        if self.step_index >= len(elements):
-            return None  # protocol complete
+        # Elements exhausted at this level -- try parent
+        if depth <= 0:
+            return None  # top-level exhausted
+        parent_depth = depth - 1
+        frame = self.choice_stack[parent_depth]
+        if parent_depth == 0:
+            parent_elements = self.protocol.elements
+        else:
+            pf = self.choice_stack[parent_depth - 1]
+            parent_elements = pf.choice.branches[pf.branch_name]
+        return self._peek_at(parent_elements, frame.parent_index + 1, parent_depth)
 
-        elem = elements[self.step_index]
-        if isinstance(elem, ProtocolStep):
-            return elem
-        # ProtocolChoice - return None to signal "choice needed"
-        return None
+    def _pop_exhausted_frames(self) -> None:
+        """Pop frames whose branch is fully consumed and advance parents."""
+        while self.choice_stack:
+            frame = self.choice_stack[-1]
+            branch_elems = frame.choice.branches[frame.branch_name]
+            if self._frame_positions[-1] < len(branch_elems):
+                break  # frame still active
+            # Frame exhausted -- pop and advance parent
+            self.choice_stack.pop()
+            self._frame_positions.pop()
+            if self.choice_stack:
+                self._frame_positions[-1] = frame.parent_index + 1
+            else:
+                self.step_index = frame.parent_index + 1
 
     def _check_completion_or_repeat(self) -> None:
         """Check if protocol is complete or should reset for next repetition."""
+        self._pop_exhausted_frames()
+        if self.choice_stack:
+            return  # still inside a branch
         if self.step_index >= len(self.protocol.elements):
             self.repetition_count += 1
             if self.repetition_count >= self.protocol.max_repetitions:
@@ -139,30 +221,24 @@ class SessionState:
                 self.completed_at_mono = time.monotonic()
             else:
                 self.step_index = 0
-                self.branch = None
-                self.branch_step_index = 0
+                self.choice_stack.clear()
+                self._frame_positions.clear()
 
     def advance_past_exhausted_branch(self) -> None:
         """Advance state when current branch is exhausted. Called by checker."""
-        if self.branch is not None:
-            if self.step_index < len(self.protocol.elements):
-                elem = self.protocol.elements[self.step_index]
-                if isinstance(elem, ProtocolChoice):
-                    branch_steps = elem.branches.get(self.branch, ())
-                    if self.branch_step_index >= len(branch_steps):
-                        self.branch = None
-                        self.branch_step_index = 0
-                        self.step_index += 1
+        self._pop_exhausted_frames()
         self._check_completion_or_repeat()
 
     @property
     def at_choice(self) -> Optional[ProtocolChoice]:
         """Return the ProtocolChoice if we're at a branching point."""
-        if self.completed or self.branch is not None:
+        if self.completed:
             return None
-        if self.step_index >= len(self.protocol.elements):
+        elements = self._current_elements()
+        idx = self._current_index()
+        if idx >= len(elements):
             return None
-        elem = self.protocol.elements[self.step_index]
+        elem = elements[idx]
         if isinstance(elem, ProtocolChoice):
             return elem
         return None
@@ -172,6 +248,11 @@ class SessionChecker:
     """Runtime checker for a single protocol session.
 
     Tracks state and validates each message against the protocol.
+
+    Supports arbitrarily nested ``ProtocolChoice`` blocks (LU 1.2)
+    via a stack-based approach: each ``choose_branch`` call pushes a
+    ``ChoiceFrame``; when the branch is exhausted the frame is popped
+    and the parent context resumes automatically.
 
     Usage:
         checker = SessionChecker(DelegateTask, session_id="S001")
@@ -271,8 +352,11 @@ class SessionChecker:
                 got=branch_name,
                 step=self._state.step_index,
             )
-        self._state.branch = branch_name
-        self._state.branch_step_index = 0
+        parent_idx = self._state._current_index()
+        self._state.choice_stack.append(
+            ChoiceFrame(choice=choice, branch_name=branch_name, parent_index=parent_idx),
+        )
+        self._state._frame_positions.append(0)
         if self._monitor is not None:
             self._monitor.emit(BranchChosen(
                 session_id=self.session_id,
@@ -305,11 +389,14 @@ class SessionChecker:
     ) -> None:
         """Auto-detect and select branch at choice points."""
         choice = self._state.at_choice
-        if choice is not None and self._state.branch is None:
+        if choice is not None:
             matched_branch = self._detect_branch(choice, sender, receiver, kind)
             if matched_branch is not None:
-                self._state.branch = matched_branch
-                self._state.branch_step_index = 0
+                parent_idx = self._state._current_index()
+                self._state.choice_stack.append(
+                    ChoiceFrame(choice=choice, branch_name=matched_branch, parent_index=parent_idx),
+                )
+                self._state._frame_positions.append(0)
                 if self._monitor is not None:
                     self._monitor.emit(BranchChosen(
                         session_id=self.session_id,
@@ -395,17 +482,8 @@ class SessionChecker:
 
         current_branch = self._state.branch
 
-        if self._state.branch is not None:
-            self._state.branch_step_index += 1
-            elem = self._state.protocol.elements[self._state.step_index]
-            if isinstance(elem, ProtocolChoice):
-                branch_steps = elem.branches.get(self._state.branch, ())
-                if self._state.branch_step_index >= len(branch_steps):
-                    self._state.branch = None
-                    self._state.branch_step_index = 0
-                    self._state.step_index += 1
-        else:
-            self._state.step_index += 1
+        self._state._advance_current()
+        self._state._pop_exhausted_frames()
 
         return record, current_branch
 
@@ -488,7 +566,7 @@ class SessionChecker:
 
         matches: list[str] = []
         for branch_name, steps in choice.branches.items():
-            if steps:
+            if steps and isinstance(steps[0], ProtocolStep):
                 first = steps[0]
                 if (
                     first.sender == resolved_sender
@@ -526,4 +604,6 @@ class SessionChecker:
             "messages": len(self._state.log),
             "started_at": self._state.started_at,
             "completed_at": self._state.completed_at,
+            "choice_depth": len(self._state.choice_stack),
+            "branch_path": [f.branch_name for f in self._state.choice_stack],
         }

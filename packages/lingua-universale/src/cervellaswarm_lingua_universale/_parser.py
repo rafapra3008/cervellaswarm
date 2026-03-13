@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Recursive descent parser for Lingua Universale v0.2.
+"""Recursive descent parser for Lingua Universale.
 
 Converts a flat token list (produced by :mod:`._tokenizer`) into an AST
 whose node types are defined in :mod:`._ast`.
@@ -108,15 +108,19 @@ class ParseError(Exception):
 
 
 class Parser:
-    """Recursive descent parser for Lingua Universale v0.2.
+    """Recursive descent parser for Lingua Universale.
 
     Instantiate with a token list from :func:`._tokenizer.tokenize`, then
     call :meth:`parse_program`.
     """
 
+    #: Maximum nesting depth for choices (guard against stack overflow).
+    MAX_CHOICE_DEPTH = 32
+
     def __init__(self, tokens: list[Tok]) -> None:
         self._tokens = tokens
         self._pos = 0
+        self._choice_depth = 0
 
     # ------------------------------------------------------------------
     # Core token utilities
@@ -411,6 +415,15 @@ class Parser:
     def _parse_choice(self) -> ChoiceNode:
         """Parse: choice_block ::= 'when' IDENT 'decides' ':' NEWLINE INDENT branch+ DEDENT"""
         loc = self._loc()
+        self._choice_depth += 1
+        if self._choice_depth > self.MAX_CHOICE_DEPTH:
+            tok = self._peek()
+            self._choice_depth -= 1
+            raise ParseError(
+                f"choice nesting depth exceeds {self.MAX_CHOICE_DEPTH}",
+                line=tok.line,
+                col=tok.col,
+            )
         self._expect_ident("when")
         decider_tok = self._expect_ident()
         self._expect_ident("decides")
@@ -434,6 +447,7 @@ class Parser:
                 col=decider_tok.col,
             )
 
+        self._choice_depth -= 1
         return ChoiceNode(
             decider=decider_tok.value,
             branches=tuple(branches),
@@ -441,30 +455,41 @@ class Parser:
         )
 
     def _parse_branch(self) -> BranchNode:
-        """Parse: branch ::= IDENT ':' NEWLINE INDENT step+ DEDENT"""
+        """Parse: branch ::= IDENT ':' NEWLINE INDENT step_or_choice+ DEDENT"""
         label_tok = self._expect_ident()
         loc = self._tok_loc(label_tok)
         self._expect(TokKind.COLON)
         self._expect(TokKind.NEWLINE)
         self._expect(TokKind.INDENT)
 
-        steps: list[StepNode] = []
+        items: list[StepOrChoice] = []
         while not self._at(TokKind.DEDENT) and not self._at(TokKind.EOF):
             self._skip_newlines()
             if self._at(TokKind.DEDENT) or self._at(TokKind.EOF):
                 break
-            steps.append(self._parse_step())
+            tok = self._peek()
+            if tok.kind == TokKind.IDENT and tok.value == "when":
+                items.append(self._parse_choice())
+            elif tok.kind == TokKind.IDENT:
+                items.append(self._parse_step())
+            else:
+                raise ParseError(
+                    f"expected step or 'when' in branch '{label_tok.value}', "
+                    f"got {tok.kind.name} ({tok.value!r})",
+                    line=tok.line,
+                    col=tok.col,
+                )
 
         self._expect(TokKind.DEDENT)
 
-        if not steps:
+        if not items:
             raise ParseError(
                 f"branch '{label_tok.value}' must have at least one step",
                 line=label_tok.line,
                 col=label_tok.col,
             )
 
-        return BranchNode(label=label_tok.value, steps=tuple(steps), loc=loc)
+        return BranchNode(label=label_tok.value, steps=tuple(items), loc=loc)
 
     # ------------------------------------------------------------------
     # properties_block

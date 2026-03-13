@@ -97,7 +97,7 @@ noun           ::= "result"
 
 choice-block   ::= "when" ws1 ident ws1 "decides" ws ":" ws branch+
 
-branch         ::= ident ws ":" ws step+
+branch         ::= ident ws ":" ws step-or-choice+
 
 # ---- 3. PROPERTIES ----
 
@@ -272,7 +272,7 @@ noun: "result"
 
 choice_block: "when" IDENT "decides" ":" branch+
 
-branch: IDENT ":" step+
+branch: IDENT ":" step_or_choice+
 
 # ---- 3. PROPERTIES ----
 

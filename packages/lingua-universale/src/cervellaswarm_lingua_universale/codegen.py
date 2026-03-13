@@ -150,33 +150,35 @@ def _collect_role_steps(
 
     Returns a dict mapping role -> list of (step, branch_name).
     branch_name is None for flat steps, or the branch name for choice steps.
+    Recursively handles nested ProtocolChoice elements.
     """
     role_steps: dict[str, list[tuple[ProtocolStep, Optional[str]]]] = {
         r: [] for r in protocol.roles
     }
 
-    for elem in protocol.elements:
-        if isinstance(elem, ProtocolStep):
-            role_steps[elem.sender].append((elem, None))
-        elif isinstance(elem, ProtocolChoice):
-            for branch_name, steps in elem.branches.items():
-                for step in steps:
-                    role_steps[step.sender].append((step, branch_name))
+    def _collect(elements: Sequence[ProtocolElement], branch: Optional[str]) -> None:
+        for elem in elements:
+            if isinstance(elem, ProtocolStep):
+                role_steps[elem.sender].append((elem, branch))
+            elif isinstance(elem, ProtocolChoice):
+                for branch_name, branch_elems in elem.branches.items():
+                    _collect(branch_elems, branch_name)
 
+    _collect(protocol.elements, None)
     return role_steps
 
 
 def _collect_all_steps(
     elements: Sequence[ProtocolElement],
 ) -> list[ProtocolStep]:
-    """Collect all ProtocolSteps from elements, including choice branches."""
+    """Collect all ProtocolSteps from elements, including nested choice branches."""
     steps: list[ProtocolStep] = []
     for elem in elements:
         if isinstance(elem, ProtocolStep):
             steps.append(elem)
         elif isinstance(elem, ProtocolChoice):
-            for branch_steps in elem.branches.values():
-                steps.extend(branch_steps)
+            for branch_elems in elem.branches.values():
+                steps.extend(_collect_all_steps(branch_elems))
     return steps
 
 
@@ -189,7 +191,12 @@ def _used_message_kinds(protocol: Protocol) -> list[MessageKind]:
 
 
 def _has_choices(protocol: Protocol) -> bool:
-    """Check if a protocol contains any ProtocolChoice elements."""
+    """Check if a protocol contains any ProtocolChoice elements.
+
+    Only checks top-level elements: nested choices are always inside a
+    top-level ProtocolChoice branch, so if any choice exists in the
+    protocol, at least one exists at the top level.
+    """
     return any(isinstance(e, ProtocolChoice) for e in protocol.elements)
 
 
@@ -319,19 +326,12 @@ class PythonGenerator:
                     desc = _escape_string(elem.description)
                     lines.append(f'{pad}    description="{desc}",')
                 lines.append(f"{pad}    branches={{")
-                for branch_name, branch_steps in elem.branches.items():
+                for branch_name, branch_elems in elem.branches.items():
                     lines.append(f'{pad}        "{branch_name}": (')
-                    for step in branch_steps:
-                        lines.append(f"{pad}            ProtocolStep(")
-                        lines.append(f'{pad}                sender="{step.sender}",')
-                        lines.append(f'{pad}                receiver="{step.receiver}",')
-                        lines.append(
-                            f"{pad}                message_kind=MessageKind.{step.message_kind.name},"
-                        )
-                        if step.description:
-                            sd = _escape_string(step.description)
-                            lines.append(f'{pad}                description="{sd}",')
-                        lines.append(f"{pad}            ),")
+                    # Recurse: branch elements may contain nested ProtocolChoice
+                    lines.extend(self._render_elements(
+                        branch_elems, indent=indent + 12,
+                    ))
                     lines.append(f"{pad}        ),")
                 lines.append(f"{pad}    }},")
                 lines.append(f"{pad}),")

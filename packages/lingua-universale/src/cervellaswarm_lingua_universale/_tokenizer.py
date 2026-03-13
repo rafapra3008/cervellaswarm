@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Unified tokenizer for the Lingua Universale v0.2.
+"""Unified tokenizer for the Lingua Universale.
 
 This module provides the lexical analysis layer for the unified parser
 (C1.3).  It replaces the two duplicate inline tokenizers in ``intent.py``
@@ -38,7 +38,7 @@ from enum import Enum, auto
 
 
 class TokKind(Enum):
-    """Exhaustive set of token kinds for Lingua Universale v0.2."""
+    """Exhaustive set of token kinds for Lingua Universale."""
 
     # Structural
     INDENT = auto()    # increase in indentation (one token per increase)
