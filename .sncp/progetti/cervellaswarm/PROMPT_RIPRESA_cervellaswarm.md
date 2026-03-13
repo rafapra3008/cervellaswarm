@@ -1,36 +1,30 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 2026-03-13 - Sessione 447
-> **STATUS:** Nested Choice LU 1.1 DONE. **3466 test.** PyPI v0.3.1 LIVE.
+> **STATUS:** LU 1.1+1.2 Nested Choice END-TO-END. **3494 test.** PyPI v0.3.1 LIVE.
 
 ---
 
-## S447 -- COSA ABBIAMO FATTO (Nested Choice LU 1.1)
+## S447 -- COSA ABBIAMO FATTO
 
-### 1. Nested Choice implementato (8 file core + 28 test)
-- **Feature**: `when X decides:` dentro branch di un altro `when Y decides:`
-- **Standard**: MPST/Scribble (Honda/Yoshida POPL 2008). Era un limite LU 1.0.
-- **Additive puro**: tutti 20 stdlib protocolli invariati. Zero breaking changes.
-- **File modificati**: `_ast.py`, `_parser.py`, `_compiler.py`, `codegen.py`, `protocols.py`, `spec.py`, `_grammar_export.py`, `checker.py` (doc), `_tokenizer.py` (doc), `saga_order.lu` (commento)
-- **Parser**: `_parse_branch` accetta `when` -> `_parse_choice()` ricorsivo
-- **Depth guard**: `MAX_CHOICE_DEPTH = 32` (anti stack overflow)
-- **Spec checkers**: `_collect_all_steps` + `_find_violating_steps` + `_collect_all_paths` tutti ricorsivi
-- **28 test**: parser 7, compiler 3, protocol 3, spec 10, grammar 2, depth 2, e2e 2
+### 1. LU 1.1 Nested Choice (parser/compiler/spec -- 8 file + 28 test)
+- `when X decides:` dentro branch di un altro `when Y decides:`
+- Standard MPST/Scribble (Honda/Yoshida POPL 2008). Additive, zero breaking.
+- Parser `_parse_choice()` ricorsivo, `MAX_CHOICE_DEPTH = 32`
+- Spec: `_collect_all_steps`, `_find_violating_steps`, `_collect_all_paths` ricorsivi
+- Guardiana S447: 9.0 -> 8 findings fixati -> 9.5+
 
-### 2. Guardiana Audit: 9.0/10 -> tutti 8 findings fixati
-- **F1 (P1)**: SessionChecker non supporta nested runtime -> documentato (LU 1.2)
-- **F2 (P2)**: `_check_no_deadlock_static` ricorsivo
-- **F3 (P2)**: `_has_choices` corretto per construction (commento)
-- **F4 (P2)**: saga_order.lu commento stale -> aggiornato
-- **F5 (P3)**: Depth guard `MAX_CHOICE_DEPTH = 32` + test
-- **F6 (P3)**: 5 docstring "v0.2" -> rimosse
-- **F7 (P3)**: Test multi-level context "outer > inner"
-- **F8 (P3)**: Test ALWAYS_TERMINATES + NO_DEADLOCK su nested
+### 2. LU 1.2 SessionChecker nested runtime (3 file + 28 test)
+- **Stack-based ChoiceFrame**: `choice_stack` sostituisce flat `branch` + `branch_step_index`
+- `_current_elements()`, `_peek_at()` ricorsivo, `_pop_exhausted_frames()` cascading
+- Backward compat: flat protocols = stack vuoto = comportamento identico
+- `summary()` espone `choice_depth` e `branch_path`
+- **Bug fix**: `_eval.py:_protocol_node_to_runtime()` crashava su nested .lu (ChoiceNode.sender)
+- **saga_order.lu**: ora usa vera nested choice (payment -> inventory decision)
+- Guardiana: 9.5/10, 3 P3 tutti fixati
 
-### 3. S446 recap (sessione precedente)
-- PyPI v0.3.1 PUBLISHED (stdlib nel wheel fix + publish flow)
-- README quality sweep (12 stale refs), 3 CI workflows JS, Dependabot cleanup
-- Research report nested choice: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260313_NESTED_CHOICE_PARSER.md`
+### 3. S446 recap
+- PyPI v0.3.1 LIVE, README sweep, 3 CI JS, Dependabot cleanup
 
 ---
 
@@ -38,10 +32,10 @@
 
 | Decisione | Perche |
 |-----------|--------|
-| Nested choice LU 1.1 (non 2.0) | Additive, non breaking. Standard MPST. |
-| SessionChecker runtime TBD LU 1.2 | Richiede stack-based tracking. Sessione dedicata. |
-| `MAX_CHOICE_DEPTH = 32` | Sufficiente per protocolli reali. Protegge da input malevolo. |
-| codegen.py `_render_elements` ricorsivo | Settimo file non previsto dalla ricerca. Trovato dai test. |
+| Stack-based (non CFSM-flatten) | Struttura gia ricorsiva. Zero preprocessing. Backward compat. |
+| ChoiceFrame frozen + _frame_positions | Separa metadata immutabile da contatore mutabile. |
+| `_pop_exhausted_frames` idempotente | Chiamato 3x per send ma corretto per design (Guardiana F2: accept). |
+| _eval.py recursive fix | verify_source crashava su nested .lu. Stesso pattern del compiler fix. |
 
 ---
 
@@ -53,37 +47,36 @@ LINGUA UNIVERSALE (LA MISSIONE):
   FASE E: PER TUTTI
     E.1-E.5: DONE (9.5/10)
     E.6 CervellaLang 1.0: IN PROGRESS
-      T3.1 Grammar 1.0 RFC:    DONE (S444)  <- grammatica frozen
+      T3.1 Grammar 1.0 RFC:    DONE (S444)
       T3.2 Standard Library:    DONE (S445)  <- 20 protocolli
-      T3.3 lu init:              DONE (S444)  <- scaffolding + --template
-      T3.4 lu verify:            DONE (S444)  <- verifica standalone
+      T3.3 lu init:              DONE (S444)
+      T3.4 lu verify:            DONE (S444)
       T3.5 VS Code Marketplace:  TODO         <- blocco: Rafa publisher
-  T2.1 PyPI v0.3.1:              LIVE!       <- published 13 Mar 2026
-  LU 1.1 Nested Choice:          DONE!       <- S447, 28 test
-  Moduli: 29 | Test: 3466 | EBNF: 64 (frozen) | Stdlib: 20 protocolli
+  T2.1 PyPI v0.3.1:              LIVE!
+  LU 1.1 Nested Choice:          DONE!       <- parser/compiler/spec
+  LU 1.2 Nested Runtime:          DONE!       <- SessionChecker stack-based
+  Moduli: 29 | Test: 3494 | EBNF: 64 | Stdlib: 20
 
 CI/CD: TUTTO GREEN (local)
-DEPENDABOT: 1 PR aperta (#18 express 4->5, needs review)
+DEPENDABOT: 1 PR (#18 express 4->5)
 ```
 
 ---
 
-## PROSSIMA SESSIONE -- COSA FARE
+## PROSSIMA SESSIONE
 
-### 1. TODO Rafa (azioni manuali)
-- [ ] **VS Code Publisher**: creare account per T3.5
-- [ ] **Blog post**: revisione "From Vibe Coding to Vericoding"
+### 1. TODO Rafa
+- [ ] VS Code Publisher: creare account per T3.5
+- [ ] Blog post: revisione "From Vibe Coding to Vericoding"
 
 ### 2. OBIETTIVI (priorita)
-- **SessionChecker nested runtime** (LU 1.2 -- stack-based branch tracking)
-- **T3.5 VS Code Marketplace** (blocco: Rafa publisher account)
-- **T3.6 Community Seeding** (blog update con stdlib + nested choice)
-- **Express 4->5 review** (PR #18, unica Dependabot rimasta)
-- **PyPI v0.3.2** (include nested choice, SessionChecker doc)
+- **PyPI v0.3.2** (nested choice + SessionChecker runtime)
+- **T3.5 VS Code Marketplace** (blocco: Rafa publisher)
+- **T3.6 Community Seeding** (blog + nested choice showcase)
+- **Express 4->5 review** (PR #18)
 
 ### 3. Quick wins
 - `lu lint` / `lu fmt` (backlog B5/B6)
-- Stdlib: saga_order.lu con vera nested choice (ora che e supportato)
 
 ---
 
@@ -91,36 +84,33 @@ DEPENDABOT: 1 PR aperta (#18 express 4->5, needs review)
 
 | Metrica | Valore |
 |---------|--------|
-| Test LU | **3466** |
+| Test LU | **3494** |
 | Moduli LU | **29** |
-| Stdlib Protocolli | **20** (5 categorie) |
-| CLI Comandi | **10** |
-| PropertyKind | **9** (tutti coperti!) |
-| EBNF Produzioni | **64** (frozen) |
-| Guardiana Audit S447 | **9.0** → 8 fix → 9.5+ |
+| Stdlib | **20** (5 categorie) |
+| CLI | **10** |
+| PropertyKind | **9** |
+| EBNF | **64** (frozen) |
+| Guardiana S447 | LU 1.1: 9.5+, LU 1.2: 9.5/10 |
 
 ---
 
 ## Lezioni Apprese (S447)
 
 ### Cosa ha funzionato bene
-- **Ricerca PRIMA**: report 401 righe (14 fonti) -> implementazione precisa in 6 file (poi 8)
-- **Guardiana pattern**: implement → audit → fix = trova bug reali (F2 deadlock non ricorsivo!)
-- **Test-driven discovery**: i 23 test iniziali hanno trovato codegen.py (7° file non previsto)
-
-### Cosa non ha funzionato (poi fixato)
-- **Research sottostima**: report diceva 7 file, erano 8 (codegen.py mancava dalla lista)
+- **Ricerca PRIMA x2**: LU 1.1 report + LU 1.2 report = implementazione precisa
+- **Bug trovato dal quick win**: saga_order.lu con nested -> scoperto _eval.py crash
+- **Stack-based design**: researcher propose, Regina implementa, Guardiana valida
 
 ### Pattern confermato
-- **`_collect_all_steps` helper**: DRY ricorsivo per tutti i checker che iterano elementi
-- **`_find_violating_steps`**: preserva branch context nel evidence (diagnostica migliore)
+- **`_convert_elements` recursive**: stesso pattern in _compiler.py, _eval.py, codegen.py
+- **Test-driven bug discovery**: test reali trovano bug che la theory non prevede
 
 ---
 *"Ultrapassar os proprios limites!" -- S447*
 <!-- AUTO-CHECKPOINT-START -->
-## AUTO-CHECKPOINT: 2026-03-13 16:37 (auto)
+## AUTO-CHECKPOINT: 2026-03-13 17:03 (auto)
 - **Branch**: main
-- **Ultimo commit**: ced61a36 - S447: Nested Choice LU 1.1 -- 8 files, 28 tests, Guardiana 9.0 all findings fixed
+- **Ultimo commit**: f72e1739 - S447: LU 1.2 SessionChecker nested runtime -- stack-based ChoiceFrame, 28 new tests, Guardiana 9.5/10
 - **File modificati** (3):
   - sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
   - .sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md

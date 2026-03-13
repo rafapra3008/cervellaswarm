@@ -31,7 +31,7 @@ paths:
 
 ## Convenzioni
 - Error codes: `LU-EXXX` con severity (error/warning/info)
-- Test: `pytest packages/lingua-universale/tests/` (3466 test)
+- Test: `pytest packages/lingua-universale/tests/` (3494 test)
 - Ogni modifica -> test -> Guardiana audit
 - MAI rompere backward compatibility senza versione major
 
@@ -65,8 +65,9 @@ paths:
 - FASE E: Per Tutti (IntentBridge) -- IN PROGRESS (E.1-E.5 DONE, E.6 IN PROGRESS)
 - E.6 CervellaLang 1.0: T3.1-T3.4 DONE (S444-S445), LU 1.1 Nested Choice DONE (S447)
 - LU 1.1: `when X decides:` inside branches. Parser recursive, MAX_CHOICE_DEPTH=32
+- LU 1.2: SessionChecker stack-based ChoiceFrame for nested runtime tracking
 - `lu demo`: autonomous scripted demo (3 lingue, 3 speed, typewriter effect, injected I/O)
 - Subroadmap: `.sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md`
 - Task list dettagliata: `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md`
 - FASE D: L'Ecosistema -- COMPLETA! D1-D6 DONE (media 9.5/10)
-- Test: 3466 (LU), 6764 totali repo (stima)
+- Test: 3494 (LU), 6764 totali repo (stima)

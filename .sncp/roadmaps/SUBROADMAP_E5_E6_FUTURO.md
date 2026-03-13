@@ -23,8 +23,9 @@
 |     T3.4 lu verify standalone      DONE (S444)                   |
 |     T3.2 Standard Library          DONE (S445)                   |
 |                                                                |
-|   Asset: 29 moduli, 3466 test, ~14000+ LOC, ZERO deps core    |
+|   Asset: 29 moduli, 3494 test, ~14000+ LOC, ZERO deps core    |
 |     LU 1.1 Nested Choice    DONE (S447)                       |
+|     LU 1.2 Nested Runtime   DONE (S447) stack-based           |
 +================================================================+
 ```
 
@@ -620,7 +621,14 @@ LU 1.1 NESTED CHOICE: DONE (S447)
   Parser: recursive _parse_choice(), MAX_CHOICE_DEPTH = 32
   Spec checkers: _collect_all_steps, _find_violating_steps (recursive)
   Guardiana: 9.0 → 8 findings fixed → 9.5+
-  SessionChecker runtime: TBD LU 1.2 (stack-based tracking needed)
+
+LU 1.2 NESTED RUNTIME: DONE (S447)
+  Stack-based ChoiceFrame in SessionChecker
+  _current_elements(), _peek_at() recursive, _pop_exhausted_frames() cascading
+  _eval.py recursive _convert_elements() (bug fix: ChoiceNode.sender crash)
+  saga_order.lu: real nested choice (payment→inventory decision)
+  28 new tests, Guardiana 9.5/10, 3 P3 all fixed
+  42 existing checker tests: ZERO regressions
 ```
 
 ---
