@@ -1012,3 +1012,35 @@ class TestCLI:
         result = self._run_lu("lint", str(lu_file))
         # LU-W020 (no properties) is WARNING; exit should be 0
         assert result.returncode == 0
+
+
+# ============================================================
+# Stdlib regression: all 20 stdlib protocols must be lint-clean
+# ============================================================
+
+
+class TestStdlibLintClean:
+    """Regression: all stdlib .lu files must have zero lint findings."""
+
+    _STDLIB_DIR = (
+        Path(__file__).resolve().parent.parent
+        / "src"
+        / "cervellaswarm_lingua_universale"
+        / "stdlib"
+    )
+
+    @pytest.fixture(params=sorted(
+        Path(__file__).resolve().parent.parent.joinpath(
+            "src", "cervellaswarm_lingua_universale", "stdlib",
+        ).rglob("*.lu"),
+    ), ids=lambda p: p.stem)
+    def stdlib_file(self, request):
+        return request.param
+
+    def test_stdlib_lint_clean(self, stdlib_file):
+        """Each stdlib protocol should produce zero lint findings."""
+        findings = lint_file(stdlib_file)
+        assert findings == [], (
+            f"{stdlib_file.name} has lint findings: "
+            + "; ".join(f"{f.code}: {f.message}" for f in findings)
+        )
