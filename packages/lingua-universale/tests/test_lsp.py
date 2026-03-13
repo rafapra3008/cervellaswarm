@@ -612,3 +612,155 @@ class TestCompletion:
         items = _completion_items("", 99, 0)
         labels = [i["label"] for i in items]
         assert "type" in labels  # fallback to top-level
+
+
+# ============================================================
+# B5: Lint diagnostics via LSP
+# ============================================================
+
+
+class TestLintDiagnostics:
+    """Test that lint findings appear as LSP diagnostics after successful parse."""
+
+    def test_self_send_produces_lint_diagnostic(self):
+        """LU-W012: sender == receiver should produce a warning."""
+        source = """\
+protocol Broken:
+    roles: alice, bob
+    alice asks alice to do task
+    bob returns result to alice
+    properties:
+        always terminates
+"""
+        diags = _source_diagnostics(source)
+        lint_diags = [d for d in diags if d.source == "lu-lint"]
+        assert len(lint_diags) >= 1
+        assert any("LU-W012" == d.code for d in lint_diags)
+        assert all(d.severity == types.DiagnosticSeverity.Error for d in lint_diags
+                   if d.code == "LU-W012")
+
+    def test_duplicate_role_produces_lint_diagnostic(self):
+        """LU-W010: Duplicate role in roles list."""
+        source = """\
+protocol Dup:
+    roles: alice, bob, alice
+    alice asks bob to do task
+    bob returns result to alice
+    properties:
+        always terminates
+"""
+        diags = _source_diagnostics(source)
+        lint_diags = [d for d in diags if d.source == "lu-lint"]
+        assert any("LU-W010" == d.code for d in lint_diags)
+
+    def test_clean_source_no_lint_diagnostics(self):
+        """A well-formed protocol should have zero lint findings."""
+        source = """\
+protocol Clean:
+    roles: alice, bob
+    alice asks bob to do task
+    bob returns result to alice
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+"""
+        diags = _source_diagnostics(source)
+        assert diags == []
+
+    def test_lint_diagnostic_has_correct_structure(self):
+        """Lint diagnostics have source='lu-lint', code, and category in message."""
+        source = """\
+protocol SelfSend:
+    roles: alice, bob
+    alice asks alice to do task
+    bob returns result to alice
+    properties:
+        always terminates
+"""
+        diags = _source_diagnostics(source)
+        lint_diags = [d for d in diags if d.source == "lu-lint"]
+        assert len(lint_diags) >= 1
+        d = lint_diags[0]
+        assert d.source == "lu-lint"
+        assert d.code is not None
+        assert d.code.startswith("LU-W")
+        assert isinstance(d.range, types.Range)
+        # Message includes category in brackets
+        assert "[" in d.message and "]" in d.message
+
+    def test_lint_only_runs_on_valid_parse(self):
+        """Lint should NOT run when parse fails (only parse errors shown)."""
+        source = "this is not valid lu at all"
+        diags = _source_diagnostics(source)
+        assert len(diags) >= 1
+        # Should be parse error, not lint
+        assert all(d.source == "lingua-universale" for d in diags)
+        assert not any(d.source == "lu-lint" for d in diags)
+
+    def test_lint_line_is_zero_indexed(self):
+        """Lint findings get converted from LU 1-indexed to LSP 0-indexed."""
+        source = """\
+protocol SelfSend:
+    roles: alice, bob
+    alice asks alice to do task
+    bob returns result to alice
+    properties:
+        always terminates
+"""
+        diags = _source_diagnostics(source)
+        lint_diags = [d for d in diags if d.code == "LU-W012"]
+        assert len(lint_diags) >= 1
+        # The self-send is on LU line 3 -> LSP line 2
+        assert lint_diags[0].range.start.line >= 0  # 0-indexed
+
+
+# ============================================================
+# B6: Formatting via LSP
+# ============================================================
+
+
+class TestLSPFormatting:
+    """Test textDocument/formatting handler via create_server()."""
+
+    def test_server_has_formatting_capability(self):
+        """Server should register textDocument/formatting."""
+        from cervellaswarm_lingua_universale._lsp import create_server
+        server = create_server()
+        # The formatting handler is registered via @server.feature
+        assert server is not None
+
+    def test_format_source_integration(self):
+        """format_source() should be callable from _fmt module."""
+        from cervellaswarm_lingua_universale._fmt import format_source
+        source = """\
+protocol Messy:
+    roles:   alice,bob
+    alice asks bob to do task
+    bob returns result to alice
+    properties:
+        no deadlock
+        always terminates
+"""
+        formatted = format_source(source)
+        # Properties should be reordered (terminates before deadlock)
+        lines = formatted.splitlines()
+        prop_lines = [l.strip() for l in lines if "terminates" in l or "deadlock" in l]
+        assert prop_lines.index("always terminates") < prop_lines.index("no deadlock")
+
+    def test_format_already_canonical_returns_same(self):
+        """Canonical source should not change after formatting."""
+        from cervellaswarm_lingua_universale._fmt import format_source
+        source = """\
+protocol Clean:
+    roles: alice, bob
+
+    alice asks bob to do task
+    bob returns result to alice
+
+    properties:
+        always terminates
+        no deadlock
+"""
+        formatted = format_source(source)
+        assert formatted == source

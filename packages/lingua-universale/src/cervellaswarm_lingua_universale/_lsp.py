@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 CervellaSwarm Contributors
 
-"""Language Server Protocol implementation for Lingua Universale (D2 + D5).
+"""Language Server Protocol implementation for Lingua Universale (D2 + D5 + B5 + B6).
 
-Provides real-time diagnostics, hover, completion, and go-to-definition
-in editors via LSP.
+Provides real-time diagnostics (with lint findings), hover, completion,
+go-to-definition, and document formatting in editors via LSP.
 Uses pygls v2 as an optional dependency (``pip install cervellaswarm-lingua-universale[lsp]``).
 
 Architecture (D2 - diagnostics):
@@ -120,6 +120,35 @@ def _source_diagnostics(source: str) -> list:
                 source="lingua-universale",
             )
         )
+
+    # If parse succeeded, run lint for additional diagnostics
+    if not diagnostics:
+        try:
+            from ._lint import lint_source, LintSeverity
+
+            findings = lint_source(source)
+            for f in findings:
+                lsp_line = max(0, f.line - 1)
+                lsp_char = max(0, f.col)
+                severity = (
+                    types.DiagnosticSeverity.Error
+                    if f.severity == LintSeverity.ERROR
+                    else types.DiagnosticSeverity.Warning
+                )
+                diagnostics.append(
+                    types.Diagnostic(
+                        range=types.Range(
+                            start=types.Position(line=lsp_line, character=lsp_char),
+                            end=types.Position(line=lsp_line, character=lsp_char + 1),
+                        ),
+                        message=f"{f.message} [{f.category.value}]",
+                        severity=severity,
+                        source="lu-lint",
+                        code=f.code,
+                    )
+                )
+        except Exception:
+            pass  # lint failures should not block diagnostics
 
     return diagnostics
 
@@ -704,6 +733,38 @@ def create_server():
             )
 
         return types.CompletionList(is_incomplete=False, items=lsp_items)
+
+    # ---------------------------------------------------------------
+    # B6: Formatting (lu fmt via LSP)
+    # ---------------------------------------------------------------
+
+    @server.feature(types.TEXT_DOCUMENT_FORMATTING)
+    def formatting(ls: LanguageServer, params: types.DocumentFormattingParams) -> list[types.TextEdit] | None:
+        """Format the entire document using lu fmt (zero-config)."""
+        doc = ls.workspace.get_text_document(params.text_document.uri)
+        try:
+            from ._fmt import format_source
+
+            formatted = format_source(doc.source)
+        except Exception:
+            return None  # don't break the editor on format errors
+
+        if formatted == doc.source:
+            return []  # already canonical
+
+        # Replace entire document content
+        lines = doc.source.splitlines(keepends=True)
+        last_line = max(0, len(lines) - 1)
+        last_char = len(lines[-1]) if lines else 0
+        return [
+            types.TextEdit(
+                range=types.Range(
+                    start=types.Position(line=0, character=0),
+                    end=types.Position(line=last_line, character=last_char),
+                ),
+                new_text=formatted,
+            )
+        ]
 
     return server
 
