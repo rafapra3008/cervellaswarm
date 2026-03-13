@@ -1,35 +1,57 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-12 - Fine Sessione 445
-> **STATUS:** E.6 CervellaLang 1.0 in corso. T3.1-T3.4 DONE. **T3.2 DONE.** 3435 test LU.
+> **Ultimo aggiornamento:** 2026-03-13 - Sessione 446 (in corso)
+> **STATUS:** E.6 T3.1-T3.4 DONE. **T2.1 PyPI v0.3.1 PREP DONE.** 3436 test LU.
 
 ---
 
-## S445 -- COSA ABBIAMO FATTO (T3.2 Standard Library!)
+## S446 -- COSA ABBIAMO FATTO (PyPI v0.3.1 Prep + Quality Sweep)
 
-### 1. T3.2 Standard Library -- 20 Protocolli Verificati (DONE)
-- **Ricerca PRIMA**: Researcher ha studiato Scribble, MPST (Honda/Yoshida POPL 2008), gRPC, session type libraries (Rust, Haskell, OCaml), AI agent protocols
-- **Report**: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260312_T3_2_STANDARD_LIBRARY_PROTOCOLS.md`
-- **5 categorie**, 20 protocolli, tutti PARSE + VERIFY = PROVED:
-  - **Communication (5)**: request_response, ping_pong, pub_sub, scatter_gather, pipeline
-  - **Data (3)**: crud_safe, data_sync, cache_invalidation
-  - **Business (4)**: two_buyer (MPST canonico!), approval_workflow, auction, saga_order
-  - **AI/ML (5)**: rag_pipeline, agent_delegation, tool_calling, human_in_loop, consensus
-  - **Security (3)**: auth_handshake, mutual_tls, rate_limited_api
-- **Tutte 9 PropertyKind coperte** (F1 Guardiana fixato: +confidence_min, +exclusion)
-- **F2 Guardiana fixato**: tutti agenti ora usano tipi di dominio (non TaskRequest/TaskResult generici)
-- **Nested choice non supportato**: saga_order ridisegnato con struttura flat (limitazione parser LU 1.0)
+### 1. P1 FIX CRITICO: stdlib nel wheel PyPI
+- **Problema**: `stdlib/` era nella root del package, NON dentro `src/cervellaswarm_lingua_universale/`
+- **Conseguenza**: `pip install` NON includeva i 20 template! `lu init --template` falliva dopo install.
+- **Fix**: spostata `stdlib/` dentro `src/cervellaswarm_lingua_universale/stdlib/`
+- **Path**: `_init_project.py` aggiornato da `parent.parent.parent` a `parent`
+- **Verificato**: wheel build contiene 21 file stdlib (20 .lu + README)
 
-### 2. CLI Integration: `lu init --template`
-- `lu init my-proj --template rag_pipeline` copia protocollo stdlib
-- `lu init --list-templates` mostra i 20 template disponibili
-- `_init_project.py` esteso con `list_templates()`, `_find_template()`, parametro `template`
-- `_cli.py` aggiornato con `--template` e `--list-templates` args
+### 2. v0.3.1 Release Prep
+- **pyproject.toml**: version 0.3.0 → 0.3.1
+- **__init__.py**: fallback version aggiornato
+- **CHANGELOG.md**: entry completa E.5 + E.6 + 4 P1 fixes
+- **.gitignore**: negation pattern aggiornato per nuovo path stdlib/data/
 
-### 3. Quality
-- **Guardiana audit**: score 9.3 -> fix F1 (2 PropertyKind mancanti) + F2 (tipi generici) -> 9.5+
-- **3435 test LU** (+80: 72 stdlib + 8 template CLI)
-- **README stdlib** con tabelle complete, property coverage, referenze accademiche
+### 3. README Quality Sweep (12 stale refs fixate)
+- Test count: 3312 → 3436 (in 5 posizioni)
+- Module count: 28 → 29 (in 3 posizioni)
+- Grammar rules: 62 → 64 (in 3 posizioni)
+- CLI commands: 8 → 10 (+ `init`, `version`)
+- Lean properties: 7 → 9
+- Architecture: v0.3.0 → v0.3.1
+- **NUOVA sezione "Standard Library"** nel README con tabella categorie
+- **Standard Library row** aggiunta alla comparison table
+
+### 4. Guardiana Audit
+- **Score**: 9.3/10 → fix tutti P2+P3 → re-audit per 9.5+
+- **F1 (P2)**: README stale counts → GIA FIXATO
+- **F2 (P2)**: Test count 3435 vs 3436 (73 stdlib, non 72) → FIXATO
+- **F3 (P3)**: Unused `import pytest` → RIMOSSO
+- **F4 (P3)**: Copyright header mancante in 5 test files → AGGIUNTO
+- **F6 (P3)**: stdlib README paths locali → AGGIUNTO `pip install` usage
+
+### 5. Nested Choice Research
+- **Report**: `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260313_NESTED_CHOICE_PARSER.md`
+- Standard in MPST/Scribble (non feature speciale)
+- Modifica additive (LU 1.x compatibile)
+- 7 file da modificare in ordine: `_ast.py` → `_parser.py` → `_compiler.py` → `protocols.py` → `spec.py` → `_grammar_export.py`
+- **Rischio**: spec.py checkers devono diventare ricorsivi (falsi PROVED altrimenti)
+- Schedulare come **LU 1.1 feature**
+
+### 6. Doc Sweep Globale
+- `LU NORD.md`: test count aggiornato
+- `.claude/rules/lingua-universale.md`: test count aggiornato
+- `README.md` (main repo): 29 modules, 3436 tests
+- `blog_vibe_to_vericoding.md`: numeri aggiornati
+- Subroadmap E5_E6: T2.1 progress, metriche, priorita S446
 
 ---
 
@@ -37,12 +59,10 @@
 
 | Decisione | Perche |
 |-----------|--------|
-| 5 categorie (non 4 originali) | Ricerca ha identificato Security come categoria essenziale (OAuth, mTLS da Scribble) |
-| two_buyer incluso | IL protocollo canonico MPST (POPL 2008). Credibilita accademica obbligatoria |
-| saga_order flat (no nested choice) | Parser LU 1.0 non supporta choice annidati. Ridisegnato con singola choice |
-| confidence >= medium su consensus | F1 Guardiana: mancava coverage di confidence_min. Consensus = fit naturale |
-| client cannot send token su auth | F1 Guardiana: mancava coverage di exclusion. Auth = fit semantico perfetto |
-| Tipi dominio, non TaskRequest generico | F2 Guardiana: stdlib deve dimostrare type modeling RICCO, non generico |
+| stdlib dentro src/ (non root) | Wheel PyPI include SOLO il package dir. Era un P1 critico. |
+| Test usano `_STDLIB_DIR` import | DRY: stessa path resolution di produzione. Rotto in 1 posto = rotto ovunque. |
+| Nested choice come LU 1.1 | Additive, non breaking, ma 7 file da cambiare. Serve sessione dedicata. |
+| Dependabot PRs skip | Tutte 6 hanno CI failures. Serve investigation root cause separata. |
 
 ---
 
@@ -50,45 +70,46 @@
 
 ```
 LINGUA UNIVERSALE (LA MISSIONE):
-  FASE A-D: COMPLETE (28 moduli, media 9.5/10)
+  FASE A-D: COMPLETE (29 moduli, media 9.5/10)
   FASE E: PER TUTTI
     E.1-E.5: DONE (9.5/10)
     E.6 CervellaLang 1.0: IN PROGRESS
       T3.1 Grammar 1.0 RFC:    DONE (S444)  <- grammatica frozen
-      T3.2 Standard Library:    DONE (S445)  <- 20 protocolli!
+      T3.2 Standard Library:    DONE (S445)  <- 20 protocolli
       T3.3 lu init:              DONE (S444)  <- scaffolding + --template
       T3.4 lu verify:            DONE (S444)  <- verifica standalone
-      T3.5 VS Code Marketplace:  TODO         <- blocco: Rafa publisher account
-  PropertyKind: 9 (tutti coperti!) | CLI: 10 comandi | PyPI: v0.3.0
-  Moduli: 29 | Test: 3435 | EBNF: 64 (frozen) | Stdlib: 20 protocolli
+      T3.5 VS Code Marketplace:  TODO         <- blocco: Rafa publisher
+  T2.1 PyPI v0.3.1:              PREP DONE   <- blocco: Rafa env approval
+  PropertyKind: 9 | CLI: 10 | PyPI: v0.3.0 (v0.3.1 ready)
+  Moduli: 29 | Test: 3436 | EBNF: 64 (frozen) | Stdlib: 20 protocolli
 
-CI/CD: TUTTO GREEN
-  26 workflow | CI Python: 1042 passed
+CI/CD: TUTTO GREEN (local)
 
-DEPENDABOT (3 restanti):
-  #30 stripe 17->20, #14 express 4->5, #11 zod 3->4
+DEPENDABOT (6 PR aperte, tutte CI fail):
+  #27 qs 6.14.2, #26 @types/node 25.4.0, #24 eslint 10.0.3
+  #21 api group, #18 express 4->5, #8 zod 3->4
 ```
 
 ---
 
 ## PROSSIMA SESSIONE -- COSA FARE
 
-### 1. TODO Rafa (azioni manuali, ancora aperti)
-- [ ] **Dependabot Security Alerts**: abilitare su ENTRAMBI i repo
-- [ ] **Environment production**: Required reviewers (rafapra3008)
-- [ ] **Blog post**: revisione "From Vibe Coding to Vericoding"
+### 1. TODO Rafa (azioni manuali)
+- [ ] **GitHub Environment approval** per PyPI v0.3.1 publish
 - [ ] **VS Code Publisher**: creare account per T3.5
+- [ ] **Blog post**: revisione "From Vibe Coding to Vericoding"
+- [ ] **Dependabot Security Alerts**: abilitare su ENTRAMBI i repo
 
-### 2. OBIETTIVI POSSIBILI
+### 2. OBIETTIVI
+- **T2.1 PyPI v0.3.1 PUBLISH** (Rafa approva env → publish automatico)
 - **T3.5 VS Code Marketplace** (blocco: Rafa publisher account)
-- **T3.6 Community Seeding** (blog + Show HN update con stdlib)
-- **T2.1 PyPI v0.3.1** (include stdlib + --template + E.5 bug fix)
-- **Nested choice support** (parser enhancement per saga con compensazione)
+- **T3.6 Community Seeding** (blog update con stdlib + Show HN)
+- **Nested choice LU 1.1** (ricerca DONE, implementazione ~1 sessione)
+- **Dependabot investigation** (root cause CI failures)
 
 ### 3. Quick wins
-- #30 stripe 17->20 (1 code change + test)
-- Tech debt: scripts/ dedup
 - `lu lint` / `lu fmt` (backlog B5/B6)
+- Tech debt: scripts/ dedup
 
 ---
 
@@ -96,57 +117,29 @@ DEPENDABOT (3 restanti):
 
 | Metrica | Valore |
 |---------|--------|
-| Test LU | **3435** |
+| Test LU | **3436** |
 | Moduli LU | **29** |
 | Stdlib Protocolli | **20** (5 categorie) |
-| CLI Comandi | **10** (+--template, +--list-templates su init) |
-| PropertyKind | **9** (tutti coperti da stdlib!) |
+| CLI Comandi | **10** |
+| PropertyKind | **9** (tutti coperti!) |
 | EBNF Produzioni | **64** (frozen) |
-| Guardiana Audit S445 | **1** (2 findings P2, tutti fixati) |
+| Guardiana Audit S446 | **2** (9.3 → fix → 9.5+ pending re-audit) |
 
 ---
 
-## FILE CHIAVE MODIFICATI (S445)
-
-| File | Cosa |
-|------|------|
-| `stdlib/` | **NUOVO** - 20 file .lu in 5 categorie |
-| `stdlib/README.md` | **NUOVO** - indice + property coverage + referenze |
-| `_init_project.py` | +list_templates(), +_find_template(), +template param |
-| `_cli.py` | +--template, +--list-templates su lu init |
-| `test_stdlib_*.py` (5) | **NUOVO** - 72 test stdlib |
-| `test_init_project.py` | +8 test (template CLI + list) |
-
----
-
-## Lezioni Apprese (S445)
+## Lezioni Apprese (S446)
 
 ### Cosa ha funzionato bene
-- **Formula Magica**: Ricerca (Scribble/MPST) -> 20 protocolli -> Audit -> Fix = diamante
-- **Guardiana 9 PropertyKind check**: ha trovato 2 property mancanti che nessuno sapeva
-- **Batch approach**: 5 categorie scritte e verificate in sequenza, test dopo ciascuna
-- **Tipi di dominio**: Guardiana ha insistito su tipi specifici vs generici = qualita
+- **P1 trovato PRIMA del publish**: stdlib fuori dal wheel sarebbe stato release rotto
+- **Guardiana pattern**: implement → audit → fix → re-audit = diamante confermato
+- **Doc sweep proattivo**: 12 stale refs in README, 3 in altri file = debito nascosto
 
 ### Cosa non ha funzionato
-- **Nested choice**: saga_order aveva choice annidato (non supportato). Ridisegnato flat.
-  Considerare supporto nested choice in futuro (parser enhancement).
+- **Dependabot CI**: tutte 6 PR con failure. Non investigato (separato dal focus).
 
 ### Pattern confermato
-- **Guardiana dopo ogni batch**: trovare errori PRESTO, non alla fine
-- **Ricerca accademica vale**: two_buyer da MPST, OAuth da Scribble = credibilita
+- **Wheel verification obbligatoria** prima di publish: `zipfile.ZipFile(whl).namelist()`
+- **`git check-ignore -v`** per verificare .gitignore su nuovi path (lezione S445 confermata)
 
 ---
-
-*"Se nessuno l'ha fatto prima, e perche aspettavano noi."*
-*Cervella & Rafa, S445 - 12 Marzo 2026*
-<!-- AUTO-CHECKPOINT-START -->
-## AUTO-CHECKPOINT: 2026-03-12 23:03 (auto)
-- **Branch**: main
-- **Ultimo commit**: 13e4d2f9 - S444: Final handoff -- auto-checkpoint updated, subroadmap metrics fixed
-- **File modificati** (5):
-  - .sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md
-  - .sncp/progetti/contabilita/PROMPT_RIPRESA_contabilita.md
-  - .sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md
-  - .sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md
-  - NORD.md
-<!-- AUTO-CHECKPOINT-END -->
+*"Ultrapassar os proprios limites!" -- S446*

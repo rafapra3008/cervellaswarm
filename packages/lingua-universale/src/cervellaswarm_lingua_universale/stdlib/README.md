@@ -52,15 +52,24 @@ and verifies with `lu verify`.
 
 ## Usage
 
+After `pip install cervellaswarm-lingua-universale`:
+
 ```bash
-# Verify any protocol
+# Scaffold a new project from a stdlib template
+lu init my-project --template rag_pipeline
+
+# List all available templates
+lu init --list-templates
+```
+
+From the source repository:
+
+```bash
+# Verify any protocol directly
 lu verify stdlib/communication/request_response.lu
 
 # Check syntax
 lu check stdlib/ai_ml/rag_pipeline.lu
-
-# Use as template for your own protocol
-cp stdlib/business/approval_workflow.lu my_workflow.lu
 ```
 
 ## Property Coverage (all 9 PropertyKind)

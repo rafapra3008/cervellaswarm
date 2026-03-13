@@ -3,7 +3,7 @@
 [![PyPI](https://img.shields.io/pypi/v/cervellaswarm-lingua-universale.svg)](https://pypi.org/project/cervellaswarm-lingua-universale/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org)
-[![Tests](https://img.shields.io/badge/tests-3312%20passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-3436%20passed-brightgreen.svg)](tests/)
 [![Coverage](https://img.shields.io/badge/coverage-98%25-brightgreen.svg)](tests/)
 [![Playground](https://img.shields.io/badge/playground-try%20it%20now-blueviolet.svg)](https://rafapra3008.github.io/cervellaswarm/)
 [![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)]()
@@ -30,7 +30,7 @@ what to whom, under what contracts, with what confidence.
 
 It started as a session types library. It is now a full language:
 
-- **Grammatica**: 62 production rules, formal EBNF, Lark + GBNF export
+- **Grammatica**: 64 production rules, formal EBNF, Lark + GBNF export
 - **Compilatore**: tokenizer -> AST -> contract checker -> Python codegen
 - **REPL**: interactive session with history and error recovery
 - **LSP**: Language Server Protocol server for editor support
@@ -94,18 +94,20 @@ lu repl               # interactive REPL
 
 ## CLI Reference
 
-The `lu` command ships with 8 subcommands:
+The `lu` command ships with 10 subcommands:
 
 | Command | Description |
 |---------|-------------|
 | `lu run <file.lu>` | Parse, compile, and execute a .lu file |
 | `lu check <file.lu>` | Parse and compile without executing (fast lint) |
-| `lu verify <file.lu>` | Parse, compile, and formally verify with Lean 4 |
+| `lu verify <file.lu>` | Verify per-property with colored output (PROVED/VIOLATED/SKIPPED) |
 | `lu compile <file.lu>` | Show (or save with `-o`) the generated Python source |
+| `lu init <name>` | Scaffold a new LU project (`--template`, `--list-templates`) |
 | `lu repl` | Start the interactive REPL with history |
 | `lu lsp` | Start the LSP server over STDIO (requires `pygls`) |
 | `lu chat` | Build protocols conversationally in natural language (3 languages) |
 | `lu demo` | Run the autonomous "La Nonna" demo with typewriter effect |
+| `lu version` | Show version and module count |
 
 ```bash
 # Check a file and see what was declared
@@ -168,11 +170,11 @@ Each step has editable, runnable code. No install required.
 
 ## Features
 
-- **28 modules**, 131+ public API symbols
-- **3312 tests**, 98% coverage, runs in under 1 second
+- **29 modules**, 131+ public API symbols
+- **3436 tests**, 98% coverage, runs in under 1 second
 - **Zero dependencies** -- pure Python standard library
 - **Python 3.10+** including 3.13 free-threaded (thread-safe internals)
-- **Grammar**: 62 production rules, GBNF + Lark export for constrained decoding
+- **Grammar**: 64 production rules, GBNF + Lark export for constrained decoding
 - **Errors**: 74 error codes in 3 languages (English, Italian, Portuguese)
 
 ---
@@ -180,7 +182,7 @@ Each step has editable, runnable code. No install required.
 ## Architecture
 
 ```
-Lingua Universale v0.3.0 -- 28 modules, zero dependencies
+Lingua Universale v0.3.1 -- 29 modules, zero dependencies
 
 FASE A: Session Types
   types.py           14 MessageKind, 14 message dataclasses, 17 AgentRole
@@ -188,7 +190,7 @@ FASE A: Session Types
   checker.py         SessionChecker: runtime protocol enforcement
   dsl.py             Parse/render Scribble-inspired notation
   monitor.py         6 event types, ProtocolMonitor, MetricsCollector
-  lean4_bridge.py    Generate + verify Lean 4 proofs (7 properties)
+  lean4_bridge.py    Generate + verify Lean 4 proofs (9 properties)
   integration.py     AgentInfo catalog, create_session, validate_swarm
 
 FASE B: Advanced Types
@@ -201,14 +203,15 @@ FASE B: Advanced Types
 FASE C: Il Linguaggio (compiler pipeline)
   _tokenizer.py      Lexer: 30+ token types, position tracking
   _ast.py            AST node hierarchy (agents, protocols, types, imports)
-  _parser.py         Recursive descent parser, 62 production rules
+  _parser.py         Recursive descent parser, 64 production rules
   _contracts.py      Contract checker: scope, type, arity validation
   _compiler.py       ASTCompiler -> CompiledModule (Python AST)
   _interop.py        compile_file / load_file public API
   _grammar_export.py GBNF + Lark grammar export (constrained decoding)
   _eval.py           check_source / run_source / verify_source
   _repl.py           Interactive REPL with history and error recovery
-  _cli.py            lu command: 8 subcommands (incl. chat, demo)
+  _cli.py            lu command: 10 subcommands (incl. chat, demo, init, verify)
+  _init_project.py   Project scaffolding + stdlib templates (20 protocols)
   errors.py          74 error codes, 3 locales (en/it/pt), rich snippets
   _colors.py         ANSI colors respecting NO_COLOR / FORCE_COLOR
 
@@ -380,15 +383,42 @@ print(report.all_proved)  # True -- mathematically proven
 
 ---
 
+## Standard Library
+
+20 verified protocols across 5 categories, ready to use as templates:
+
+```bash
+lu init --list-templates          # see all 20 templates
+lu init my-project --template rag_pipeline  # scaffold from a template
+```
+
+| Category | Protocols |
+|----------|-----------|
+| **Communication** (5) | request_response, ping_pong, pub_sub, scatter_gather, pipeline |
+| **Data** (3) | crud_safe, data_sync, cache_invalidation |
+| **Business** (4) | two_buyer (MPST canonical), approval_workflow, auction, saga_order |
+| **AI/ML** (5) | rag_pipeline, agent_delegation, tool_calling, human_in_loop, consensus |
+| **Security** (3) | auth_handshake, mutual_tls, rate_limited_api |
+
+All 9 PropertyKind covered: `always_terminates`, `no_deadlock`, `all_roles_participate`,
+`ordering`, `trust_min`, `confidence_min`, `no_deletion`, `role_exclusive`, `exclusion`.
+
+Based on research of Scribble, MPST (Honda/Yoshida POPL 2008), gRPC patterns,
+and AI agent protocols. Every protocol parses and verifies to PROVED.
+(Structural guarantee for finite protocols.)
+
+---
+
 ## How It Compares
 
 | Feature | AutoGen | CrewAI | LangGraph | **Lingua Universale** |
 |---------|---------|--------|-----------|----------------------|
 | Typed messages | No | No | No | **Yes** (14 message types) |
 | Protocol enforcement | No | No | No | **Yes** (runtime checker) |
-| Formal DSL + compiler | No | No | No | **Yes** (62 grammar rules) |
+| Formal DSL + compiler | No | No | No | **Yes** (64 grammar rules) |
+| Standard library | No | No | No | **Yes** (20 verified protocols) |
 | Protocol observability | No | No | Partial | **Yes** (6 event types) |
-| Lean 4 verification | No | No | No | **Yes** (7 properties) |
+| Lean 4 verification | No | No | No | **Yes** (9 properties) |
 | Confidence types | No | No | No | **Yes** (`Confident[T]`) |
 | Trust composition | No | No | No | **Yes** (transitive) |
 | REPL + LSP (hover, completion, goto-def) | No | No | No | **Yes** |
@@ -450,7 +480,7 @@ git clone https://github.com/rafapra3008/cervellaswarm.git
 cd cervellaswarm/packages/lingua-universale
 pip install -e ".[dev]"
 
-# Run tests (3312 tests, < 1s)
+# Run tests (3436 tests, < 2s)
 pytest
 
 # Run with coverage

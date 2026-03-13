@@ -1,15 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 CervellaSwarm Contributors
 
 """Tests for stdlib Communication protocols (5 protocols)."""
 
 from __future__ import annotations
 
-import pathlib
-import pytest
-
 from cervellaswarm_lingua_universale._eval import check_source, verify_source
+from cervellaswarm_lingua_universale._init_project import _STDLIB_DIR
 
-_STDLIB = pathlib.Path(__file__).resolve().parent.parent / "stdlib" / "communication"
+_STDLIB = _STDLIB_DIR / "communication"
 
 
 def _read(name: str) -> str:

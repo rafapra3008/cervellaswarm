@@ -271,7 +271,7 @@ Dalla nostra COSTITUZIONE, applicati alla Lingua Universale:
 Quando leggerai questo in un momento di dubbio, ricorda:
 
 1. 242 fonti dicono che nessuno l'ha mai fatto in Python
-2. 3355 test dimostrano che FUNZIONA
+2. 3436 test dimostrano che FUNZIONA
 3. 17 agenti reali aspettano di parlare questa lingua
 4. La nonna con le ricette merita software che PROVA di funzionare
 

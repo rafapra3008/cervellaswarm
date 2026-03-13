@@ -23,7 +23,7 @@
 |     T3.4 lu verify standalone      DONE (S444)                   |
 |     T3.2 Standard Library          DONE (S445)                   |
 |                                                                |
-|   Asset: 29 moduli, 3435 test, ~14000+ LOC, ZERO deps core    |
+|   Asset: 29 moduli, 3436 test, ~14000+ LOC, ZERO deps core    |
 +================================================================+
 ```
 
@@ -193,18 +193,25 @@ describe their own verified behavior in natural language."
 
 **Blocco:** GitHub environment approval da Rafa.
 
-**Cosa include:**
-- NO_DELETION + ROLE_EXCLUSIVE properties
-- IntentBridge NL mode (E.3)
-- Voice interface (E.4)
-- Bug fix pipeline verifica
-- 3274 test
+**Cosa include (v0.3.1):**
+- E.5 complete: IntentBridge, NL mode, Voice, violation demo, lu demo
+- E.6 T3.1-T3.4: Grammar RFC, stdlib 20 protocols, lu init --template, lu verify
+- 2 new PropertyKind: NO_DELETION, ROLE_EXCLUSIVE (9 total)
+- P1 FIX: stdlib moved inside package for wheel inclusion
+- CHANGELOG completo, README aggiornato (3436 test, 29 moduli, 10 CLI)
+- 3436 test
 
 **Criterio completamento:**
 - [ ] Rafa approva GitHub environment
+- [x] CHANGELOG v0.3.1 scritto (S446)
+- [x] Version bump 0.3.0 -> 0.3.1 (pyproject.toml + __init__.py)
+- [x] stdlib in wheel (spostata in src/, verificato con zipfile)
+- [x] .gitignore aggiornato per nuovo path
+- [x] README aggiornato (12 stale refs fixate, +Standard Library sezione)
+- [x] Wheel build test: `cervellaswarm_lingua_universale-0.3.1-py3-none-any.whl` OK
 - [ ] `pip install cervellaswarm-lingua-universale[nl,voice]` funziona
 - [ ] Test installazione pulita
-- [ ] CHANGELOG aggiornato
+- [ ] Guardiana audit (IN PROGRESS S446)
 
 ---
 
@@ -576,8 +583,8 @@ TOTALE fino a E.6 base: 7-11 sessioni
 
 | Metrica | Attuale | Target E.5 | Target E.6 |
 |---------|---------|------------|------------|
-| Test LU | 3435 | 3400+ | 3600+ |
-| Moduli LU | 28 | 29 (+ demo runner) | 32+ |
+| Test LU | 3436 | 3400+ | 3600+ |
+| Moduli LU | 29 | 29 | 32+ |
 | PropertyKind | 9 | 9 | 9+ |
 | Protocolli standard lib | 20 | 0 | 20+ |
 | CLI commands | 10 (check, run, verify, compile, init, repl, lsp, chat, demo, version) | 10 (attuale) | 12+ (+lint, +fmt) |
@@ -588,20 +595,27 @@ TOTALE fino a E.6 base: 7-11 sessioni
 
 ---
 
-## PRIORITA SESSIONE CORRENTE (S444)
+## PRIORITA SESSIONE CORRENTE (S446)
 
 ```
 FASE 1-2: SOSTANZIALMENTE DONE
   T1.5 Test persona non-tecnica  ← dipende da tester reale
-  T2.1 PyPI v0.3.1               ← blocco: Rafa environment approval
+  T2.1 PyPI v0.3.1               ← IN PROGRESS S446 (prep done, blocco: Rafa env approval)
+  T2.5 Dependabot PR Cleanup     ← CI failures su tutte le PR, investigation needed
 
-FASE 3 (E.6): IN PROGRESS
+FASE 3 (E.6): T3.1-T3.4 DONE
   T3.1 Grammar 1.0 RFC           ← DONE S444
   T3.2 Standard Library 20 prot  ← DONE S445 (20 protocolli, 72 test)
   T3.3 lu init (+--template)     ← DONE S444+S445
   T3.4 lu verify                 ← DONE S444
   T3.5 VS Code Marketplace       ← PROSSIMO (blocco: Rafa publisher)
   T3.6 Community Seeding          ← PROSSIMO (aggiornare con stdlib)
+
+S446 FINDINGS:
+  P1 FIX: stdlib was outside src/ → not in wheel! Moved + verified.
+  P3 FIX: README 12 stale references (test counts, module counts, grammar rules)
+  P3 FIX: .gitignore negation pattern for new stdlib path
+  RESEARCH: Nested choice support (Researcher in background)
 ```
 
 ---

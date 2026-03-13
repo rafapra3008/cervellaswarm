@@ -1,14 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 CervellaSwarm Contributors
 
 """Tests for stdlib Business protocols (4 protocols)."""
 
 from __future__ import annotations
 
-import pathlib
-
 from cervellaswarm_lingua_universale._eval import check_source, verify_source
+from cervellaswarm_lingua_universale._init_project import _STDLIB_DIR
 
-_STDLIB = pathlib.Path(__file__).resolve().parent.parent / "stdlib" / "business"
+_STDLIB = _STDLIB_DIR / "business"
 
 
 def _read(name: str) -> str:

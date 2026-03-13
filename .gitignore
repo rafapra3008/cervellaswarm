@@ -6,7 +6,7 @@ build/
 
 # Data directory (operational data, logs, database, retro reports)
 data/
-!packages/lingua-universale/stdlib/data/
+!packages/lingua-universale/src/cervellaswarm_lingua_universale/stdlib/data/
 *.db
 *.sqlite
 

@@ -23,7 +23,7 @@ from textwrap import dedent
 # Standard Library template support
 # ============================================================
 
-_STDLIB_DIR = Path(__file__).resolve().parent.parent.parent / "stdlib"
+_STDLIB_DIR = Path(__file__).resolve().parent / "stdlib"
 
 
 def list_templates() -> list[str]:
