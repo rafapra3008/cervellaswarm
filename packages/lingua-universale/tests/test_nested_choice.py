@@ -801,3 +801,36 @@ class TestEndToEnd:
 
         result = compiler.compile(prog, source_file="auth.lu")
         compile(result.python_source, "auth.lu", "exec")
+
+    def test_verify_source_nested_choice(self):
+        """verify_source() handles nested choice via _eval.py path."""
+        from cervellaswarm_lingua_universale._eval import verify_source
+
+        src = textwrap.dedent("""\
+            protocol NestedVerify:
+                roles: a, b, c
+
+                a asks b to do task
+                when b decides:
+                    ok:
+                        b returns result to a
+                        when a decides:
+                            forward:
+                                a tells c update info
+                            skip:
+                                a tells b done session
+                    fail:
+                        b returns error to a
+
+                properties:
+                    always terminates
+                    no deadlock
+        """)
+        r = verify_source(src)
+        assert r.ok
+        verdicts = {
+            res.spec.kind.value: res.verdict.name
+            for rpt in (r.property_reports or []) for res in rpt.results
+        }
+        assert verdicts["always_terminates"] == "PROVED"
+        assert verdicts["no_deadlock"] == "PROVED"

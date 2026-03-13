@@ -343,46 +343,41 @@ def _safe_check_properties(protocol, spec):
 def _protocol_node_to_runtime(node: ProtocolNode):
     """Convert an AST ProtocolNode to a runtime Protocol object.
 
-    Handles both ``StepNode`` (flat steps) and ``ChoiceNode`` (branches)
-    so property checkers see the complete protocol structure.
+    Handles both ``StepNode`` (flat steps) and ``ChoiceNode`` (branches),
+    including arbitrarily nested choices (LU 1.1 AST, recursive
+    conversion added LU 1.2), so property checkers and ``verify_source``
+    see the complete protocol structure.
     """
     from .protocols import Protocol, ProtocolChoice, ProtocolStep
     from .types import MessageKind
 
     action_to_kind = _action_to_kind_map()
 
-    elements: list[ProtocolStep | ProtocolChoice] = []
-    for step_node in node.steps:
-        if isinstance(step_node, ChoiceNode):
-            branches: dict[str, tuple[ProtocolStep, ...]] = {}
-            for branch in step_node.branches:
-                branches[branch.label] = tuple(
-                    ProtocolStep(
-                        sender=s.sender,
-                        receiver=s.receiver,
-                        message_kind=action_to_kind.get(
-                            s.action, MessageKind.TASK_REQUEST,
-                        ),
-                        description=s.payload,
-                    )
-                    for s in branch.steps
+    def _convert_elements(items):
+        """Recursively convert AST step/choice nodes to runtime elements."""
+        result: list[ProtocolStep | ProtocolChoice] = []
+        for item in items:
+            if isinstance(item, ChoiceNode):
+                branches: dict[str, tuple[ProtocolStep | ProtocolChoice, ...]] = {}
+                for branch in item.branches:
+                    branches[branch.label] = tuple(_convert_elements(branch.steps))
+                result.append(
+                    ProtocolChoice(decider=item.decider, branches=branches),
                 )
-            elements.append(
-                ProtocolChoice(decider=step_node.decider, branches=branches),
-            )
-        elif hasattr(step_node, "sender"):
-            kind = action_to_kind.get(step_node.action, MessageKind.TASK_REQUEST)
-            elements.append(ProtocolStep(
-                sender=step_node.sender,
-                receiver=step_node.receiver,
-                message_kind=kind,
-                description=step_node.payload,
-            ))
+            elif hasattr(item, "sender"):
+                kind = action_to_kind.get(item.action, MessageKind.TASK_REQUEST)
+                result.append(ProtocolStep(
+                    sender=item.sender,
+                    receiver=item.receiver,
+                    message_kind=kind,
+                    description=item.payload,
+                ))
+        return result
 
     return Protocol(
         name=node.name,
         roles=node.roles,
-        elements=tuple(elements),
+        elements=tuple(_convert_elements(node.steps)),
     )
 
 

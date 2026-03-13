@@ -4,10 +4,11 @@
 # through payment and inventory services with compensation on failure.
 # Demonstrates session types for distributed transactions: deadlock-freedom
 # and correct ordering are GUARANTEED BY CONSTRUCTION.
-# Note: LU 1.1 supports nested choice; this protocol uses flat choice
-# for simplicity. See test_nested_choice.py for a nested saga variant.
-# `all roles participate` is intentionally absent -- in the failure branch,
-# inventory receives a cancellation but does not return (fire-and-forget).
+# LU 1.1 nested choice: after payment succeeds, inventory may still fail
+# (out of stock), requiring a compensating refund. This is the classic
+# distributed saga pattern with nested decision points.
+# `all roles participate` is intentionally absent -- in the payment failure
+# branch, inventory is never involved (no compensation needed).
 
 type OrderStatus = Created | Paid | Fulfilled | Compensated | Failed
 
@@ -60,10 +61,14 @@ protocol SagaOrder:
         success:
             payment returns confirmation to coordinator
             coordinator asks inventory to reserve items
-            inventory returns reservation to coordinator
+            when inventory decides:
+                reserved:
+                    inventory returns reservation to coordinator
+                out_of_stock:
+                    inventory returns error to coordinator
+                    coordinator tells payment refund order
         failure:
             payment returns error to coordinator
-            coordinator tells inventory cancel reservation
 
     properties:
         always terminates
