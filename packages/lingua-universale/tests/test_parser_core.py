@@ -29,9 +29,11 @@ from cervellaswarm_lingua_universale._ast import (
     ExclusionProp,
     Loc,
     NoDeadlock,
+    NoDeletionProp,
     OrderingProp,
     ProgramNode,
     ProtocolNode,
+    RoleExclusiveProp,
     StepNode,
     TrustProp,
 )
@@ -384,7 +386,7 @@ class TestParseChoice:
 
 
 class TestParseProperties:
-    """All 7 property variants and validation errors."""
+    """All 9 property variants and validation errors."""
 
     def _props(self, *prop_lines: str) -> list:
         lines = "\n                    ".join(prop_lines)
@@ -458,6 +460,19 @@ class TestParseProperties:
         assert isinstance(prop, ExclusionProp)
         assert prop.role == "backend"
         assert prop.message == "audit_verdict"
+
+    def test_no_deletion(self) -> None:
+        props = self._props("no deletion")
+        assert len(props) == 1
+        assert isinstance(props[0], NoDeletionProp)
+
+    def test_role_exclusive(self) -> None:
+        props = self._props("approver exclusive verdict")
+        assert len(props) == 1
+        prop = props[0]
+        assert isinstance(prop, RoleExclusiveProp)
+        assert prop.role == "approver"
+        assert prop.message == "verdict"
 
     def test_invalid_confidence_level_raises(self) -> None:
         with pytest.raises(ParseError, match="invalid confidence level"):

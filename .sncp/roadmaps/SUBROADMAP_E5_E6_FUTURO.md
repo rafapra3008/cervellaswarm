@@ -189,9 +189,9 @@ describe their own verified behavior in natural language."
 
 ## FASE 2: INFRASTRUTTURA & QUALITA (1-2 sessioni)
 
-### T2.1: PyPI v0.3.1 Publish (P1)
+### T2.1: PyPI v0.3.1 Publish (P1) -- DONE!
 
-**Blocco:** GitHub environment approval da Rafa.
+**LIVE su PyPI dal 13 Marzo 2026!** `pip install cervellaswarm-lingua-universale==0.3.1`
 
 **Cosa include (v0.3.1):**
 - E.5 complete: IntentBridge, NL mode, Voice, violation demo, lu demo
@@ -202,16 +202,18 @@ describe their own verified behavior in natural language."
 - 3436 test
 
 **Criterio completamento:**
-- [ ] Rafa approva GitHub environment
+- [x] Rafa approva GitHub environment (auto-approved via API S446)
 - [x] CHANGELOG v0.3.1 scritto (S446)
 - [x] Version bump 0.3.0 -> 0.3.1 (pyproject.toml + __init__.py)
 - [x] stdlib in wheel (spostata in src/, verificato con zipfile)
 - [x] .gitignore aggiornato per nuovo path
 - [x] README aggiornato (12 stale refs fixate, +Standard Library sezione)
 - [x] Wheel build test: `cervellaswarm_lingua_universale-0.3.1-py3-none-any.whl` OK
-- [ ] `pip install cervellaswarm-lingua-universale[nl,voice]` funziona
-- [ ] Test installazione pulita
-- [ ] Guardiana audit (IN PROGRESS S446)
+- [x] `pip install cervellaswarm-lingua-universale==0.3.1` funziona (clean venv verified)
+- [x] Test installazione pulita: 20 templates, lu init --template, lu verify OK
+- [x] Guardiana audit (S446)
+- [x] GitHub Release creata automaticamente
+- [x] Sync to public repo (103 files, 14/14 security checks)
 
 ---
 
@@ -600,7 +602,7 @@ TOTALE fino a E.6 base: 7-11 sessioni
 ```
 FASE 1-2: SOSTANZIALMENTE DONE
   T1.5 Test persona non-tecnica  ← dipende da tester reale
-  T2.1 PyPI v0.3.1               ← IN PROGRESS S446 (prep done, blocco: Rafa env approval)
+  T2.1 PyPI v0.3.1               ← DONE! LIVE su PyPI (13 Mar 2026)
   T2.5 Dependabot PR Cleanup     ← CI failures su tutte le PR, investigation needed
 
 FASE 3 (E.6): T3.1-T3.4 DONE

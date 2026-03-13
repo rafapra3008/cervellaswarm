@@ -139,10 +139,12 @@ The system supports three languages: Italian, English, and Portuguese. Voice inp
 
 This is alpha software. Here is what is real:
 
-- 3436 tests, 0 regressions across 29 modules
+- 3438 tests, 0 regressions across 29 modules
 - 9 property kinds with formal verification via Lean 4
+- 20 verified standard library protocols across 5 categories (AI/ML, Business, Communication, Data, Security)
 - The complete pipeline from NL to certified Python works end-to-end
 - The La Nonna demo runs exactly as described above
+- `lu init --template rag_pipeline` scaffolds from stdlib in seconds
 - Zero core dependencies (Claude and voice are optional extras)
 
 Here is what is not yet ready:
@@ -158,7 +160,7 @@ We are calling this approach **Vericoding** — the complement to vibe coding. N
 ## Try It
 
 ```bash
-pip install cervellaswarm-lingua-universale
+pip install cervellaswarm-lingua-universale==0.3.1
 lu chat --lang en
 ```
 
@@ -175,10 +177,10 @@ pip install "cervellaswarm-lingua-universale[voice]"
 lu chat --lang it --voice
 ```
 
-The source, all 29 modules and 3436 tests, is at [github.com/rafapra3008/cervellaswarm](https://github.com/rafapra3008/cervellaswarm). The live playground is at [rafapra3008.github.io/cervellaswarm](https://rafapra3008.github.io/cervellaswarm/).
+The source, all 29 modules and 3438 tests, is at [github.com/rafapra3008/cervellaswarm](https://github.com/rafapra3008/cervellaswarm). The live playground is at [rafapra3008.github.io/cervellaswarm](https://rafapra3008.github.io/cervellaswarm/).
 
 If you are working on AI agents, autonomous systems, or just want a language where the proof comes with the code — we want to hear what you think.
 
 ---
 
-*Lingua Universale v0.3.0 — CervellaSwarm, March 2026*
+*Lingua Universale v0.3.1 — CervellaSwarm, March 2026*
