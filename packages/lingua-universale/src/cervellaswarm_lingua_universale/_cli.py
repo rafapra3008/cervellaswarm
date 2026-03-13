@@ -9,8 +9,8 @@ Subcommands::
     lu check <file.lu>    Parse and compile without executing (fast).
     lu verify <file.lu>   Parse, compile, and formally verify with Lean 4.
     lu compile <file.lu>  Show the generated Python source.
-    lu lint <file.lu>     Check style, correctness, and best practices (B5).
-    lu fmt <file.lu>      Format to canonical style, zero-config (B6).
+    lu lint <path>        Check style, correctness, and best practices (B5).
+    lu fmt <path>         Format to canonical style, zero-config (B6).
     lu init <name>        Create a new LU project with scaffolding (T3.3).
     lu repl               Start the interactive REPL.
     lu chat               Interactive guided protocol builder (E.2+E.4).
@@ -352,108 +352,175 @@ def _cmd_demo(args: argparse.Namespace) -> int:
     return 0
 
 
+def _discover_lu_files(path: str) -> list[Path]:
+    """Discover .lu files from a path (file or directory).
+
+    If path is a file, return [path].
+    If path is a directory, return all .lu files recursively, sorted.
+    """
+    p = Path(path)
+    if p.is_file():
+        return [p]
+    if p.is_dir():
+        return sorted(p.rglob("*.lu"))
+    # Not found -- let caller handle the error
+    return []
+
+
 def _cmd_lint(args: argparse.Namespace) -> int:
-    """Handle ``lu lint <file>``."""
+    """Handle ``lu lint <path>`` (file or directory)."""
     from ._lint import lint_file, LintSeverity
 
     ignore = frozenset(c.strip() for c in args.ignore.split(",") if c.strip()) if args.ignore else frozenset()
 
-    try:
-        findings = lint_file(args.file, ignore=ignore)
-    except FileNotFoundError:
+    files = _discover_lu_files(args.path)
+    if not files:
         print(
-            f"{_c.RED}Error: file not found: {args.file}{_c.RESET}",
-            file=sys.stderr,
-        )
-        return 1
-    except Exception as exc:
-        print(
-            f"{_c.RED}Error: {exc}{_c.RESET}",
+            f"{_c.RED}Error: no .lu files found at: {args.path}{_c.RESET}",
             file=sys.stderr,
         )
         return 1
 
-    if not findings:
-        print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {args.file} -- no lint findings")
-        return 0
+    total_errors = 0
+    total_warnings = 0
+    files_with_findings = 0
 
-    has_errors = False
-    for f in findings:
-        if f.severity == LintSeverity.ERROR:
-            prefix = f"{_c.RED}{f.severity.value}{_c.RESET}"
-            has_errors = True
+    for lu_file in files:
+        try:
+            findings = lint_file(str(lu_file), ignore=ignore)
+        except Exception as exc:
+            print(
+                f"{_c.RED}Error: {lu_file}: {exc}{_c.RESET}",
+                file=sys.stderr,
+            )
+            total_errors += 1
+            continue
+
+        if not findings:
+            if len(files) == 1:
+                print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {lu_file} -- no lint findings")
+            continue
+
+        files_with_findings += 1
+        for f in findings:
+            if f.severity == LintSeverity.ERROR:
+                prefix = f"{_c.RED}{f.severity.value}{_c.RESET}"
+                total_errors += 1
+            else:
+                prefix = f"{_c.YELLOW}{f.severity.value}{_c.RESET}"
+                total_warnings += 1
+            print(f"  {lu_file}:{f.line}: {prefix} {f.code} [{f.category.value}] {f.message}")
+
+    # Summary for multi-file
+    if len(files) > 1:
+        if total_errors == 0 and total_warnings == 0:
+            print(f"\n{_c.GREEN}{_c.BOLD}OK{_c.RESET} {len(files)} files checked, no findings")
         else:
-            prefix = f"{_c.YELLOW}{f.severity.value}{_c.RESET}"
-        print(f"  {prefix} {f.code} [{f.category.value}] line {f.line}: {f.message}")
+            parts = []
+            if total_errors:
+                parts.append(f"{_c.RED}{total_errors} error(s){_c.RESET}")
+            if total_warnings:
+                parts.append(f"{_c.YELLOW}{total_warnings} warning(s){_c.RESET}")
+            print(f"\n{len(files)} files checked, {files_with_findings} with findings: {', '.join(parts)}")
 
-    errors = sum(1 for f in findings if f.severity == LintSeverity.ERROR)
-    warnings = sum(1 for f in findings if f.severity == LintSeverity.WARNING)
-    summary_parts = []
-    if errors:
-        summary_parts.append(f"{_c.RED}{errors} error(s){_c.RESET}")
-    if warnings:
-        summary_parts.append(f"{_c.YELLOW}{warnings} warning(s){_c.RESET}")
-    print(f"\n  {args.file}: {', '.join(summary_parts)}")
-
-    return 1 if has_errors else 0
+    return 1 if total_errors > 0 else 0
 
 
 def _cmd_fmt(args: argparse.Namespace) -> int:
-    """Handle ``lu fmt <file>``."""
+    """Handle ``lu fmt <path>`` (file or directory)."""
     import difflib
 
     from ._fmt import format_file
 
-    try:
-        formatted, changed = format_file(args.file)
-    except FileNotFoundError:
+    files = _discover_lu_files(args.path)
+    if not files:
         print(
-            f"{_c.RED}Error: file not found: {args.file}{_c.RESET}",
+            f"{_c.RED}Error: no .lu files found at: {args.path}{_c.RESET}",
             file=sys.stderr,
         )
         return 1
-    except Exception as exc:
+
+    # --stdout only makes sense for a single file
+    if args.stdout and len(files) > 1:
         print(
-            f"{_c.RED}Error: {exc}{_c.RESET}",
+            f"{_c.RED}Error: --stdout only works with a single file{_c.RESET}",
             file=sys.stderr,
         )
         return 1
+
+    would_reformat = 0
+    reformatted = 0
+    error_count = 0
+
+    for lu_file in files:
+        try:
+            formatted, changed = format_file(str(lu_file))
+        except Exception as exc:
+            print(
+                f"{_c.RED}Error: {lu_file}: {exc}{_c.RESET}",
+                file=sys.stderr,
+            )
+            error_count += 1
+            continue
+
+        if args.check:
+            if changed:
+                print(f"{_c.YELLOW}Would reformat{_c.RESET} {lu_file}")
+                would_reformat += 1
+            elif len(files) == 1:
+                print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {lu_file}")
+            continue
+
+        if args.diff:
+            if not changed:
+                if len(files) == 1:
+                    print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {lu_file} -- already formatted")
+                continue
+            original = Path(str(lu_file)).read_text(encoding="utf-8")
+            diff = difflib.unified_diff(
+                original.splitlines(keepends=True),
+                formatted.splitlines(keepends=True),
+                fromfile=f"a/{lu_file}",
+                tofile=f"b/{lu_file}",
+            )
+            sys.stdout.writelines(diff)
+            reformatted += 1
+            continue
+
+        if args.stdout:
+            sys.stdout.write(formatted)
+            return 0
+
+        # Default: in-place write
+        if not changed:
+            if len(files) == 1:
+                print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {lu_file} -- already formatted")
+            continue
+
+        Path(str(lu_file)).write_text(formatted, encoding="utf-8")
+        print(f"{_c.GREEN}Formatted{_c.RESET} {lu_file}")
+        reformatted += 1
+
+    # Summary for multi-file
+    if len(files) > 1:
+        if args.check:
+            if would_reformat == 0 and error_count == 0:
+                print(f"\n{_c.GREEN}{_c.BOLD}OK{_c.RESET} {len(files)} files checked, all formatted")
+            else:
+                print(f"\n{len(files)} files checked, {would_reformat} would be reformatted")
+            return 1 if (would_reformat > 0 or error_count > 0) else 0
+        elif args.diff:
+            if reformatted == 0:
+                print(f"\n{_c.GREEN}{_c.BOLD}OK{_c.RESET} {len(files)} files checked, all formatted")
+        else:
+            if reformatted == 0 and error_count == 0:
+                print(f"\n{_c.GREEN}{_c.BOLD}OK{_c.RESET} {len(files)} files checked, all formatted")
+            elif reformatted > 0:
+                print(f"\n{len(files)} files checked, {reformatted} reformatted")
 
     if args.check:
-        if changed:
-            print(
-                f"{_c.YELLOW}Would reformat{_c.RESET} {args.file}",
-            )
-            return 1
-        print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {args.file}")
-        return 0
-
-    if args.diff:
-        if not changed:
-            print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {args.file} -- already formatted")
-            return 0
-        original = Path(args.file).read_text(encoding="utf-8")
-        diff = difflib.unified_diff(
-            original.splitlines(keepends=True),
-            formatted.splitlines(keepends=True),
-            fromfile=f"a/{args.file}",
-            tofile=f"b/{args.file}",
-        )
-        sys.stdout.writelines(diff)
-        return 0
-
-    if args.stdout:
-        sys.stdout.write(formatted)
-        return 0
-
-    # Default: in-place write
-    if not changed:
-        print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {args.file} -- already formatted")
-        return 0
-
-    Path(args.file).write_text(formatted, encoding="utf-8")
-    print(f"{_c.GREEN}Formatted{_c.RESET} {args.file}")
-    return 0
+        return 1 if (would_reformat > 0 or error_count > 0) else 0
+    return 1 if error_count > 0 else 0
 
 
 def _cmd_version(args: argparse.Namespace) -> int:
@@ -601,7 +668,7 @@ def _build_parser() -> argparse.ArgumentParser:
     p_lint = subparsers.add_parser(
         "lint", help="Check style, correctness, and best practices",
     )
-    p_lint.add_argument("file", help="Path to a .lu file")
+    p_lint.add_argument("path", help="Path to a .lu file or directory")
     p_lint.add_argument(
         "--ignore",
         default="",
@@ -610,9 +677,9 @@ def _build_parser() -> argparse.ArgumentParser:
 
     # lu fmt
     p_fmt = subparsers.add_parser(
-        "fmt", help="Format a .lu file to canonical style (zero-config)",
+        "fmt", help="Format .lu files to canonical style (zero-config)",
     )
-    p_fmt.add_argument("file", help="Path to a .lu file")
+    p_fmt.add_argument("path", help="Path to a .lu file or directory")
     fmt_mode = p_fmt.add_mutually_exclusive_group()
     fmt_mode.add_argument(
         "--check",

@@ -414,3 +414,291 @@ class TestCmdDemo:
         """Demo handler is in the command dispatch table."""
         from cervellaswarm_lingua_universale._cli import _COMMAND_HANDLERS
         assert "demo" in _COMMAND_HANDLERS
+
+
+# ============================================================
+# lu lint / lu fmt -- multi-file support
+# ============================================================
+
+# LU source that is already in canonical format (no changes expected from fmt).
+_CLEAN_SOURCE = """\
+protocol Clean:
+    roles: alice, bob
+
+    alice asks bob to do task
+    bob returns result to alice
+
+    properties:
+        always terminates
+        no deadlock
+"""
+
+# Valid LU source that is NOT in canonical format (fmt will change it).
+_MESSY_SOURCE = """\
+protocol Messy:
+    roles: alice, bob
+    alice asks bob to do task
+    bob returns result to alice
+    properties:
+        no deadlock
+        always terminates
+"""
+
+# Valid LU source that triggers LU-W012 (self-send, severity ERROR).
+_BAD_SOURCE = """\
+protocol Bad:
+    roles: alice, bob
+    alice asks alice to do task
+    bob returns result to alice
+    properties:
+        always terminates
+"""
+
+
+class TestMultiFile:
+    """Multi-file support for lu lint and lu fmt (directory traversal)."""
+
+    # ----------------------------------------------------------
+    # _discover_lu_files
+    # ----------------------------------------------------------
+
+    def test_discover_single_file_returns_that_file(self, tmp_path: Path) -> None:
+        """_discover_lu_files on a single .lu file returns [that file]."""
+        from cervellaswarm_lingua_universale._cli import _discover_lu_files
+
+        f = tmp_path / "proto.lu"
+        f.write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        result = _discover_lu_files(str(f))
+        assert result == [f]
+
+    def test_discover_directory_returns_all_lu_files_recursively(self, tmp_path: Path) -> None:
+        """_discover_lu_files on a directory returns all .lu files, including nested."""
+        from cervellaswarm_lingua_universale._cli import _discover_lu_files
+
+        (tmp_path / "a.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+        (tmp_path / "sub").mkdir()
+        (tmp_path / "sub" / "b.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+        (tmp_path / "sub" / "notes.txt").write_text("not a lu file", encoding="utf-8")
+
+        result = _discover_lu_files(str(tmp_path))
+        names = {p.name for p in result}
+        assert names == {"a.lu", "b.lu"}
+        assert (tmp_path / "notes.txt") not in result
+
+    def test_discover_directory_returns_sorted_paths(self, tmp_path: Path) -> None:
+        """_discover_lu_files returns paths in sorted order."""
+        from cervellaswarm_lingua_universale._cli import _discover_lu_files
+
+        (tmp_path / "z.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+        (tmp_path / "a.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+        (tmp_path / "m.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        result = _discover_lu_files(str(tmp_path))
+        assert result == sorted(result)
+
+    def test_discover_empty_directory_returns_empty_list(self, tmp_path: Path) -> None:
+        """_discover_lu_files on a directory with no .lu files returns []."""
+        from cervellaswarm_lingua_universale._cli import _discover_lu_files
+
+        result = _discover_lu_files(str(tmp_path))
+        assert result == []
+
+    def test_discover_nonexistent_path_returns_empty_list(self) -> None:
+        """_discover_lu_files on a nonexistent path returns [] (no crash)."""
+        from cervellaswarm_lingua_universale._cli import _discover_lu_files
+
+        result = _discover_lu_files("/nonexistent/path/that/does/not/exist")
+        assert result == []
+
+    # ----------------------------------------------------------
+    # lu lint <directory>
+    # ----------------------------------------------------------
+
+    def test_lint_directory_clean_files_exits_zero(self, tmp_path: Path) -> None:
+        """lu lint <dir> with all clean files exits 0."""
+        (tmp_path / "a.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+        (tmp_path / "b.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        exit_code = main(["lint", str(tmp_path)])
+        assert exit_code == 0
+
+    def test_lint_directory_clean_files_shows_summary(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture
+    ) -> None:
+        """lu lint <dir> with clean files shows a summary line."""
+        (tmp_path / "a.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+        (tmp_path / "b.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        main(["lint", str(tmp_path)])
+        captured = capsys.readouterr()
+        assert "2 files" in captured.out
+        assert "OK" in captured.out
+
+    def test_lint_directory_dirty_files_exits_one(self, tmp_path: Path) -> None:
+        """lu lint <dir> with files containing errors exits 1."""
+        (tmp_path / "clean.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+        (tmp_path / "bad.lu").write_text(_BAD_SOURCE, encoding="utf-8")
+
+        exit_code = main(["lint", str(tmp_path)])
+        assert exit_code == 1
+
+    def test_lint_directory_dirty_files_shows_findings(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture
+    ) -> None:
+        """lu lint <dir> with errors shows the finding code and file path."""
+        (tmp_path / "bad.lu").write_text(_BAD_SOURCE, encoding="utf-8")
+        (tmp_path / "clean.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        main(["lint", str(tmp_path)])
+        captured = capsys.readouterr()
+        combined = captured.out + captured.err
+        assert "LU-W012" in combined
+        assert "bad.lu" in combined
+
+    def test_lint_empty_directory_exits_one(self, tmp_path: Path) -> None:
+        """lu lint <dir> with no .lu files exits 1 and reports the error."""
+        exit_code = main(["lint", str(tmp_path)])
+        assert exit_code == 1
+
+    def test_lint_empty_directory_error_message(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture
+    ) -> None:
+        """lu lint <dir> with no .lu files prints an error to stderr."""
+        main(["lint", str(tmp_path)])
+        captured = capsys.readouterr()
+        assert "no .lu files" in captured.err.lower() or "no .lu" in captured.err
+
+    # ----------------------------------------------------------
+    # lu fmt --check <directory>
+    # ----------------------------------------------------------
+
+    def test_fmt_check_directory_all_formatted_exits_zero(self, tmp_path: Path) -> None:
+        """lu fmt --check <dir> with all already-formatted files exits 0."""
+        (tmp_path / "a.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+        (tmp_path / "b.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        exit_code = main(["fmt", "--check", str(tmp_path)])
+        assert exit_code == 0
+
+    def test_fmt_check_directory_all_formatted_shows_ok(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture
+    ) -> None:
+        """lu fmt --check <dir> all-clean shows OK summary."""
+        (tmp_path / "a.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+        (tmp_path / "b.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        main(["fmt", "--check", str(tmp_path)])
+        captured = capsys.readouterr()
+        assert "OK" in captured.out
+
+    def test_fmt_check_directory_some_unformatted_exits_one(self, tmp_path: Path) -> None:
+        """lu fmt --check <dir> with at least one unformatted file exits 1."""
+        (tmp_path / "clean.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+        (tmp_path / "messy.lu").write_text(_MESSY_SOURCE, encoding="utf-8")
+
+        exit_code = main(["fmt", "--check", str(tmp_path)])
+        assert exit_code == 1
+
+    def test_fmt_check_directory_unformatted_reports_file(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture
+    ) -> None:
+        """lu fmt --check <dir> names the files that would be reformatted."""
+        (tmp_path / "messy.lu").write_text(_MESSY_SOURCE, encoding="utf-8")
+        (tmp_path / "clean.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        main(["fmt", "--check", str(tmp_path)])
+        captured = capsys.readouterr()
+        combined = captured.out + captured.err
+        assert "messy.lu" in combined
+
+    # ----------------------------------------------------------
+    # lu fmt <directory> (in-place)
+    # ----------------------------------------------------------
+
+    def test_fmt_directory_rewrites_unformatted_files(self, tmp_path: Path) -> None:
+        """lu fmt <dir> rewrites unformatted files in place."""
+        messy = tmp_path / "messy.lu"
+        messy.write_text(_MESSY_SOURCE, encoding="utf-8")
+
+        exit_code = main(["fmt", str(tmp_path)])
+        assert exit_code == 0
+        # File must have been changed (formatted != original messy source)
+        assert messy.read_text(encoding="utf-8") != _MESSY_SOURCE
+
+    def test_fmt_directory_leaves_clean_files_unchanged(self, tmp_path: Path) -> None:
+        """lu fmt <dir> does not modify already-formatted files."""
+        clean = tmp_path / "clean.lu"
+        clean.write_text(_CLEAN_SOURCE, encoding="utf-8")
+        original_mtime = clean.stat().st_mtime
+
+        main(["fmt", str(tmp_path)])
+        # Content must be identical (formatter is idempotent)
+        assert clean.read_text(encoding="utf-8") == _CLEAN_SOURCE
+
+    def test_fmt_directory_reports_reformatted_files(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture
+    ) -> None:
+        """lu fmt <dir> prints the name of each file it reformats."""
+        (tmp_path / "messy.lu").write_text(_MESSY_SOURCE, encoding="utf-8")
+
+        main(["fmt", str(tmp_path)])
+        captured = capsys.readouterr()
+        combined = captured.out + captured.err
+        assert "messy.lu" in combined
+
+    def test_fmt_directory_multiple_files_reformatted_summary(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture
+    ) -> None:
+        """lu fmt <dir> shows a summary when multiple files are processed."""
+        (tmp_path / "a.lu").write_text(_MESSY_SOURCE, encoding="utf-8")
+        (tmp_path / "b.lu").write_text(_MESSY_SOURCE, encoding="utf-8")
+        (tmp_path / "c.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        main(["fmt", str(tmp_path)])
+        captured = capsys.readouterr()
+        # 3 files processed -> summary line expected
+        assert "3 files" in captured.out
+
+    # ----------------------------------------------------------
+    # lu fmt --stdout <directory> (error case)
+    # ----------------------------------------------------------
+
+    def test_fmt_stdout_with_multiple_files_exits_one(self, tmp_path: Path) -> None:
+        """lu fmt --stdout with a directory containing multiple files exits 1."""
+        (tmp_path / "a.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+        (tmp_path / "b.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        exit_code = main(["fmt", "--stdout", str(tmp_path)])
+        assert exit_code == 1
+
+    def test_fmt_stdout_with_multiple_files_error_message(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture
+    ) -> None:
+        """lu fmt --stdout with multiple files prints an informative error."""
+        (tmp_path / "a.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+        (tmp_path / "b.lu").write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        main(["fmt", "--stdout", str(tmp_path)])
+        captured = capsys.readouterr()
+        assert "single file" in captured.err.lower() or "--stdout" in captured.err
+
+    def test_fmt_stdout_with_single_file_exits_zero(self, tmp_path: Path) -> None:
+        """lu fmt --stdout with a single .lu file exits 0 and prints to stdout."""
+        f = tmp_path / "clean.lu"
+        f.write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        exit_code = main(["fmt", "--stdout", str(f)])
+        assert exit_code == 0
+
+    def test_fmt_stdout_with_single_file_prints_formatted_source(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture
+    ) -> None:
+        """lu fmt --stdout with a single file prints formatted LU source."""
+        f = tmp_path / "clean.lu"
+        f.write_text(_CLEAN_SOURCE, encoding="utf-8")
+
+        main(["fmt", "--stdout", str(f)])
+        captured = capsys.readouterr()
+        assert "protocol" in captured.out
+        assert "roles:" in captured.out

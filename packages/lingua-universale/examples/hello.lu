@@ -10,10 +10,12 @@ agent Worker:
 
 protocol DelegateTask:
     roles: regina, worker, guardiana
+
     regina asks worker to do task
     worker returns result to regina
     regina asks guardiana to verify
     guardiana returns verdict to regina
+
     properties:
         always terminates
         no deadlock

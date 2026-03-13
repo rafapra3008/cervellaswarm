@@ -56,6 +56,7 @@ protocol DeployPipeline:
             builder returns result to regina
             regina asks guardian to verify deployment
             guardian returns verdict to regina
+
         reject:
             regina tells architect revise plan
             architect returns revised proposal to regina
