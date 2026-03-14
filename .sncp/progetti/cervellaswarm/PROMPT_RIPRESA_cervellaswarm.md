@@ -1,43 +1,47 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-14 - Sessione 454
-> **STATUS:** S454 COMPLETA. Primo dogfooding LU! 8/8 PROVED. **3684 test.** PyPI v0.3.3. VS Code v0.2.0 LIVE.
+> **Ultimo aggiornamento:** 2026-03-14 - Sessione 455
+> **STATUS:** S455 COMPLETA. Playground Chat LIVE! Live dogfood runner PRONTO. Show HN READY 18 Marzo. **3684 test.** PyPI v0.3.3. VS Code v0.2.0 LIVE.
 
 ---
 
-## S454 -- COSA ABBIAMO FATTO (2 blocchi)
+## S455 -- COSA ABBIAMO FATTO (3 blocchi)
 
-### Blocco 1: 1M Context Freedom (infrastruttura)
+### Blocco 1: Show HN v2 + Blog (Punto 1)
 
-Adattamento PROFONDO da 200K a 1M context. Non solo parametri (S452) ma COMPORTAMENTO, REGOLE e MENTALITA.
+Audit completo (Guardiana 9.2+) di entrambi i draft per il lancio su HN.
 
-**17 modifiche principali** (30+ file toccati):
-1. context-monitor.py v3.0.0: soglie 85/92/85%, DRY import, 200K cliff gate
-2. subagent_context_inject.py v2.0.0: RIPRESA senza limite, FATOS 200
-3. _SHARED_DNA output 3000->5000 token, task inline 5->15 min
-4. bash_validator v1.1.0: P1 sicurezza (long flag bypass rm --force /)
-5. session_end_sync_agents: P1 logic (message loss)
-6. observability v1.1.0: transcript fallback < 5 min
-7. 17/17 agenti v2.1.0, +memory Security/Ingegnera, architect limiti 1M
-8. Settings sync, validated patterns (P18 700, P20 250, +P22), ANSI+notify DRY
-9. **REGOLE "ANSIA 200K" RIMOSSE**: checkpoint guidato dal LAVORO, non dalla PAURA
-10. 12 file stali insiders archiviati, dead code disabilitato, 520MB cleanup
+**5 fix applicati:**
+1. Titolo HN: 113→73 caratteri (sotto limite 80)
+2. Conteggio moduli: 29→31 (aggiunta _lint.py e _fmt.py)
+3. LSP features: 6→5 (conteggio accurato)
+4. Honda et al. (1998) → Honda/Yoshida/Carbone (POPL 2008) nel blog
+5. Prefissi interni B.4/B.5 rimossi dal blog
 
-**5 agenti paralleli**: Tester 15/15, Reviewer 7.5->9+, Ingegnera 8.5->9.5, Researcher 20+ fonti, Guardiana 9.5+
+**Status: READY per lancio mercoledi 18 Marzo, 18:00 CET (9 AM Pacific)**
 
-### Blocco 2: Primo Dogfooding LU (momento storico!)
+### Blocco 2: Playground Chat Tab (Punto 2, T2.3)
 
-**Il primo programma REALE scritto in Lingua Universale.**
+Chat tab nel playground -- costruisci protocolli conversando nel browser.
 
-- `examples/dogfood_agent_orchestration.lu`: 3 agenti (supervisor/worker/validator), nested choice (pass/fail), **8/8 proprieta PROVED**
-- `examples/dogfood_runner.py`: parse, verify, codegen, happy path, fail branch, violation BLOCCATA a runtime
-- Guardiana audit: 9.3 -> fix (SPDX, dead type, TODO comment) -> 9.5+
-- Gap trovato: serve public API `load_protocol(path) -> Protocol` (TODO per T4.1)
+- **1 solo file modificato**: `playground/index.html` (+370 righe)
+- **Architettura**: Sync bridge via `process_input()` -- zero modifiche al package Python
+- **Flusso**: Tab Chat → lingua (EN/IT/PT) → Start → domande guidate → protocollo generato → auto-inject in Monaco → Check automatico
+- **Guardiana**: 9.2 → fix F1 (JSON.stringify), F2 (ARIA tablist/tab/tabpanel) → 9.5+
+- **Testato e2e** nel browser: protocollo GestioneOrdini costruito in italiano
+- **Scoperta critica** (Researcher): `ChatSession.__init__` setta `_phase = WELCOME` ma `_handle()` non la gestisce. Fix: `_phase = ChatPhase.ROLES` dopo init (come `run()` linea 738)
 
-### Ricerche completate (3 report)
-- Big players (Cursor/Aider/Windsurf/Cline) context strategies: 20+ fonti
-- Playground Chat tab: architettura sync bridge (process_input API gia esiste!)
-- Dogfooding strategy: Guardiana valutazione 3 opzioni -> Agent Orchestration (8.5/10)
+### Blocco 3: Live Dogfood Runner (Punto 3)
+
+Runner con agenti AI REALI via Claude API.
+
+- **Nuovo file**: `examples/dogfood_runner_live.py` (319 righe)
+- **3 agenti** (supervisor/worker/validator) come Claude API calls
+- **Protocollo** definisce struttura, **AI** decide contenuto
+- **SessionChecker** valida ogni messaggio a runtime
+- **Fallback mock** quando no API key
+- **Guardiana**: 9.3 → fix P1 (f-string mancante!), 3 P2, 4 P3 → 9.5+
+- **BLOCCO**: serve `ANTHROPIC_API_KEY` per modalita live
 
 ---
 
@@ -45,10 +49,12 @@ Adattamento PROFONDO da 200K a 1M context. Non solo parametri (S452) ma COMPORTA
 
 | Decisione | Perche |
 |-----------|--------|
-| Soglie 85/92% | 85% = 150K liberi (piu del vecchio context!). 92% = 80K per checkpoint |
-| Regole "ansia 200K" rimosse | COSTITUZIONE dice "il tempo crea paura". Checkpoint meccanici contraddicevano |
-| Dogfood = Agent Orchestration | Score 8.5/10 vs 6.0 (ricette) e 6.8 (task). IL differenziatore T4.1 |
-| Costo rimosso da statusline | Rafa preferisce pulizia. Costo in observability DB |
+| Titolo: "A language for verified AI agent protocols" | 73 char, sotto limite HN 80. I numeri nel primo commento. |
+| "We" nel blog | Siamo un team (Rafa + Famiglia). Trasmette convinzione. |
+| Lancio mercoledi 18 Marzo 18:00 CET | Picco traffico HN (Wed US morning). Post ha tutta la giornata US. |
+| Chat tab sync (no WebWorker) | process_input() < 200ms, no freeze. KISS. |
+| JSON.stringify per Python string | Pattern gia usato nel file (execLU, handleLint). Escaping manuale fragile. |
+| Verdict parsing con word boundaries | `"PASS" in text.upper()` matcherebbe "COMPASSION". `re.search(r'\bPASS\b')` preciso. |
 
 ---
 
@@ -56,60 +62,65 @@ Adattamento PROFONDO da 200K a 1M context. Non solo parametri (S452) ma COMPORTA
 
 ```
 LINGUA UNIVERSALE (LA MISSIONE):
-  FASE A-D: COMPLETE (29 moduli, media 9.5/10)
+  FASE A-D: COMPLETE (31 moduli, media 9.5/10)
   FASE E: PER TUTTI
     E.1-E.5: DONE (9.5/10)
     E.6 CervellaLang 1.0: T3.1-T3.5 ALL DONE
-  PyPI v0.3.3 LIVE | VS Code v0.2.0 LIVE | Playground LIVE
-  Moduli: 29 | Test: 3684 | CLI: 12 | Stdlib: 20
+  PyPI v0.3.3 LIVE | VS Code v0.2.0 LIVE | Playground LIVE (+Chat!)
+  Moduli: 31 | Test: 3684 | CLI: 12 | Stdlib: 20
 
-DOGFOODING: PRIMO PROGRAMMA REALE IN LU!  <- NUOVO S454!
+DOGFOODING:
   dogfood_agent_orchestration.lu: 8/8 PROVED
-  dogfood_runner.py: happy + fail + violation
+  dogfood_runner.py: mock (happy + fail + violation)
+  dogfood_runner_live.py: Claude API (serve ANTHROPIC_API_KEY)
   Gap: load_protocol() public API (T4.1)
+
+LAUNCH: READY 18 MARZO
+  Show HN v2: READY (Guardiana 9.5+)
+  Blog vibe-to-vericoding: READY (Guardiana 9.5+)
+  Playground Chat: LIVE (testato e2e)
 
 INFRASTRUTTURA: 1M CONTEXT FREEDOM (S454, 9.5/10)
   18 hooks, 17 agenti v2.1.0, regole "ansia" rimosse
 
 CI/CD: TUTTO GREEN
-PUBLIC REPO: synced S454 (packages/ non cambiati = gia sync)
+PUBLIC REPO: sync needed (playground Chat = nuova feature!)
 DEPENDABOT: 2 HOLD (stripe #30, express #14)
 ```
 
 ---
 
-## PROSSIMA SESSIONE (S455)
+## PROSSIMA SESSIONE (S456)
 
-### Priorita 1: Community & Launch
+### Priorita 1: Launch Prep
 
 | # | Cosa | Blocco | Effort |
 |---|------|--------|--------|
-| 1 | **Show HN v2 review finale con Rafa** | Rafa review | 15 min insieme |
-| 2 | **Blog post review** (blog_vibe_to_vericoding.md) | Rafa review | 10 min |
-| 3 | **Decidere timing lancio** (martedi/mercoledi US mattina) | Decisione Rafa | 5 min |
+| 1 | **Rafa review Show HN + Blog** | Decisione CEO | 15 min |
+| 2 | **Sync public repo** (playground Chat) | sync-to-public.sh | 5 min |
+| 3 | **API key setup** per live dogfood | Rafa account Anthropic | 5 min |
 
-### Priorita 2: Playground Chat (T2.3)
-
-| # | Cosa | Note | Effort |
-|---|------|------|--------|
-| 4 | **Playground Chat tab** | Ricerca FATTA, architettura sync bridge. `process_input()` API gia esiste. ~50 righe JS + HTML bubbles | 1 sessione |
-
-### Priorita 3: Dogfooding Fase 2
+### Priorita 2: Launch Day (18 Marzo)
 
 | # | Cosa | Note | Effort |
 |---|------|------|--------|
-| 5 | **Dogfood con Claude API reale** (non mock) | Integrare anthropic SDK nel runner | 1 sessione |
-| 6 | **Public API load_protocol()** | Gap trovato dal dogfooding, serve per T4.1 | 0.5 sessione |
-| 7 | **Demo video VHS** (dogfood + playground) | VHS gia installato, pattern validato | 0.5 sessione |
+| 4 | **Submit Show HN** | 18:00 CET = 9 AM Pacific | 5 min |
+| 5 | **Demo video VHS** (playground Chat + dogfood) | VHS installato, pattern validato | 0.5 sessione |
+
+### Priorita 3: Post-Launch
+
+| # | Cosa | Note | Effort |
+|---|------|------|--------|
+| 6 | **Public API load_protocol()** | Gap dal dogfooding, serve per T4.1 | 0.5 sessione |
+| 7 | **Monitor HN + risposte** | Community engagement | ongoing |
 
 ### Backlog
 
 | # | Cosa | Effort |
 |---|------|--------|
 | 8 | Dependabot (stripe #30, express #14) | 0.5 sessione |
-| 9 | T1.5 Test persona non-tecnica | Dipende da tester |
-| 10 | Dynamic context discovery (Cursor-style) | Ricerca fatta, implementazione futura |
-| 11 | Retrieval semantico su SNCP | Lungo termine |
+| 9 | Dynamic context discovery (Cursor-style) | Ricerca fatta |
+| 10 | Retrieval semantico su SNCP | Lungo termine |
 
 ---
 
@@ -117,30 +128,29 @@ DEPENDABOT: 2 HOLD (stripe #30, express #14)
 
 | Cosa | Path |
 |------|------|
+| **Playground Chat** | `playground/index.html` (Chat tab, ~370 righe aggiunte) |
+| **Live dogfood runner** | `packages/lingua-universale/examples/dogfood_runner_live.py` |
+| **Mock dogfood runner** | `packages/lingua-universale/examples/dogfood_runner.py` |
 | **Dogfood protocollo** | `packages/lingua-universale/examples/dogfood_agent_orchestration.lu` |
-| **Dogfood runner** | `packages/lingua-universale/examples/dogfood_runner.py` |
-| **Research Big Players** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_1M_CONTEXT_BIG_PLAYERS.md` |
-| **Research Playground Chat** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_PLAYGROUND_CHAT_TAB.md` |
-| **Ingegnera Agent Audit** | `.sncp/progetti/cervellaswarm/reports/ENGINEER_20260314_AGENT_DEFINITIONS_AUDIT.md` |
-| Show HN v2 draft | `docs/SHOW_HN_V2_DRAFT.md` (aggiornato con VS Code link) |
-| Blog post | `packages/lingua-universale/docs/blog_vibe_to_vericoding.md` |
+| **Show HN v2 draft** | `docs/SHOW_HN_V2_DRAFT.md` (READY) |
+| **Blog post** | `packages/lingua-universale/docs/blog_vibe_to_vericoding.md` (READY) |
+| **Piano Chat tab** | `.sncp/progetti/cervellaswarm/reports/PLAN_20260314_PLAYGROUND_CHAT_TAB.md` |
 | Subroadmap E5+E6+Futuro | `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md` |
-| Subroadmap S452 (1M) | `.sncp/roadmaps/SUBROADMAP_S452_OPUS_4_6_1M.md` |
 
 ---
 
-## Lezioni Apprese (S454)
+## Lezioni Apprese (S455)
 
 ### Cosa ha funzionato bene
-- **5 agenti paralleli per audit**: Tester + Reviewer + Ingegnera + Researcher + Guardiana. Copertura totale. Pattern confermato per la 5a volta.
-- **Dogfooding trova gap REALI**: Il primo programma in LU ha trovato `load_protocol()` mancante + 3 gap API doc. Evidenza concreta per T4.1.
-- **"Fixare anche P3"**: Ogni finding risolto, zero aperti. Il diamante brilla nei dettagli.
+- **Guardiana su ogni step**: 3 audit (Show HN+Blog, Playground, Runner) hanno trovato 1 P1 + 10 P2. Il diamante brilla perche OGNI dettaglio e controllato.
+- **Researcher in background**: Piano Chat completo (778 righe) con scoperta critica (_phase = WELCOME). Ha risparmiato ore di debug.
+- **Browser testing end-to-end**: Playwright MCP ha verificato il Chat tab in tempo reale -- dal tab click al protocollo generato.
 
 ### Cosa non ha funzionato
-- **Proporre checkpoint compulsivamente**: Abitudine da 200K. Fixato nelle regole E in memoria. Con 1M, il lavoro guida il ritmo.
+- **f-string mancante (P1)**: Stringa multi-riga con implicit concatenation -- facile dimenticare il `f` prefix. La Guardiana l'ha trovato, non io.
 
 ### Pattern confermato
-- **Dogfooding come metodo di sviluppo**: Usare il proprio linguaggio per costruire qualcosa di REALE trova gap che nessun test unitario troverebbe. Il runner ha rivelato 4 gap in 2 ore che sarebbero rimasti nascosti per mesi. Evidenza: S454.
+- **"Step -> Guardiana -> Fix -> Avanti"**: Ogni blocco di lavoro seguito da audit formale. 3 cicli in questa sessione, tutti con fix significativi. Evidenza: S455 (6a conferma del pattern).
 
 ---
-*"Ultrapassar os proprios limites!" -- S454, il giorno in cui LU e diventato REALE.*
+*"Ultrapassar os proprios limites!" -- S455, il giorno del lancio.*
