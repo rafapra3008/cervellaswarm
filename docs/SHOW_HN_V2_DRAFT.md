@@ -1,7 +1,7 @@
 # Show HN v2 Draft - Lingua Universale
 
-> **Status:** DRAFT
-> **Preparato:** Sessione 449 - 13 Marzo 2026
+> **Status:** DRAFT (aggiornato S454 con VS Code Marketplace)
+> **Preparato:** Sessione 449, aggiornato S454 - 14 Marzo 2026
 > **Focus:** LU come linguaggio di programmazione per AI
 
 ---
@@ -9,7 +9,7 @@
 ## TITOLO
 
 ```
-Show HN: Lingua Universale – A programming language for AI agents, with formal proofs (3684 tests, zero deps)
+Show HN: Lingua Universale – A programming language for verified AI agent communication (3684 tests, zero deps)
 ```
 
 ---
@@ -39,6 +39,7 @@ What's real (not a pitch, just facts):
   - 9 verified property kinds (always_terminates, no_deadlock, no_deletion, role_exclusive...)
   - 20 standard library protocols (AI/ML, Business, Communication, Data, Security)
   - LSP server with diagnostics, hover, completion, go-to-def, lint, formatting
+  - VS Code extension on Marketplace: search "Lingua Universale" in Extensions
   - Linter (10 rules) + formatter (zero-config, like gofmt)
   - CI gate: `lu fmt --check` + `lu lint` enforce style on every push
   - NL pipeline: Italian/English/Portuguese -> IntentDraft -> parse -> verify -> Python
@@ -65,6 +66,7 @@ Try it:
 
 Source: https://github.com/rafapra3008/cervellaswarm
 Playground: https://rafapra3008.github.io/cervellaswarm/
+VS Code: search "Lingua Universale" in Extensions marketplace
 ```
 
 ---
@@ -84,6 +86,7 @@ Playground: https://rafapra3008.github.io/cervellaswarm/
 | No voice | Local STT voice input |
 | No stdlib | 20 verified protocols |
 | No playground | Browser playground LIVE |
+| No IDE support | VS Code extension on Marketplace |
 
 ### Messaggi chiave per HN
 
@@ -93,6 +96,7 @@ Playground: https://rafapra3008.github.io/cervellaswarm/
 4. **"Session types"** -- PL theory crowd will recognize Honda/Yoshida.
 5. **"La Nonna"** -- Human story, not just tech.
 6. **"gofmt for session types"** -- linter/formatter story resonates.
+7. **"VS Code Marketplace"** -- Legitimate tooling, not just a CLI.
 
 ### Timing suggerito
 
