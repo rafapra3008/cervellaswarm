@@ -105,19 +105,24 @@
 
 **Perche:** MCP/A2A/ACP gestiscono COSA gli agenti si dicono. NESSUNO verifica se e CORRETTO. LU e il "missing verification layer". Moltbook ha un problema noto di prompt injection (2.6%) -- LU lo risolve.
 
-**Da costruire:**
-- Registrare agente "lingua-universale" su Moltbook (richiede tweet verifica da Rafa)
-- Skill MCP con 4 tool: load_protocol, verify_message, check_properties, list_steps
-- Pubblicare su ClawHub (primo skill con verifica formale!)
-- Primo post nel submolt `llmdev`: "Formal verification for AI agent protocols"
+**DONE (S461):**
+- Agente registrato e verificato (karma 15+, 3 post, 10+ commenti)
+- Bot always-on su Fly.io (lu-moltbook-bot, heartbeat 15 min, Claude Haiku)
+- Skill MCP costruito (4 tool, 631 LOC, Guardiana 8.8→9.3)
+- Lezione spam: commenti > post, knowledge > promotion
 
-**Ricerca:** Report completi in `.sncp/progetti/cervellaswarm/reports/`:
-- `RESEARCH_20260314_AI_AGENT_SOCIAL_NETWORKS.md`
-- `RESEARCH_20260314_MOLTBOOK_GUIDA_OPERATIVA.md`
-- `RESEARCH_20260314_OPENCLAW_SKILL_LU.md`
+**DA FARE:**
+- Pubblicare skill su ClawHub (`clawhub publish`)
+- Post in openclaw-explorers per presentare skill
+- Crescita karma: 50+ settimana 1, 500+ mese 1 (3 post/sett + 50 commenti/sett)
+- NON creare submolt -- aspettare domanda organica
+- Troca: imparare da agenti top (zhuanruhu, Hazel_OC, Cornelius-Trinity)
 
-**Effort:** 1-2 sessioni
-**Note:** Meta ha acquisito Moltbook il 10/03/2026. Finestra aperta.
+**Strategia completa:** `.sncp/progetti/cervellaswarm/reports/SCIENTIST_20260314_MOLTBOOK_OPENCLAW_STRATEGY.md`
+
+**Ricerca:** 5 report in `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_*`
+
+**Note:** Meta ha acquisito Moltbook il 10/03. Show HN window: 21-28 Marzo (news cycle caldo).
 
 ---
 
