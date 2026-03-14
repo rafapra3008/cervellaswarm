@@ -11,6 +11,7 @@ import asyncio
 import json
 import os
 import re
+import uuid
 from typing import AsyncGenerator
 
 from demo_data import LINE, PROTOCOL_SOURCE
@@ -98,7 +99,6 @@ def _call_agent(client: anthropic.Anthropic, role: str, context: str) -> str:
         max_tokens=150,
         system=_SYSTEM_PROMPTS[role],
         messages=[{"role": "user", "content": context}],
-        timeout=30,
     )
     if not response.content or not hasattr(response.content[0], "text"):
         return "(no response)"
@@ -124,8 +124,8 @@ async def live_happy_path() -> AsyncGenerator[str, None]:
         yield _sse_event({"type": "error", "message": "Live mode unavailable"})
         return
 
-    client = anthropic.Anthropic()
-    checker = _build_checker("live-session")
+    client = anthropic.Anthropic(timeout=30.0)
+    checker = _build_checker(f"live-{uuid.uuid4().hex[:8]}")
 
     # Step 1: customer -> warehouse
     content = await asyncio.to_thread(
@@ -269,8 +269,8 @@ async def live_break() -> AsyncGenerator[str, None]:
         yield _sse_event({"type": "error", "message": "Live mode unavailable"})
         return
 
-    client = anthropic.Anthropic()
-    checker = _build_checker("live-break")
+    client = anthropic.Anthropic(timeout=30.0)
+    checker = _build_checker(f"live-break-{uuid.uuid4().hex[:8]}")
 
     # Step 1: customer -> warehouse (real)
     content = await asyncio.to_thread(
