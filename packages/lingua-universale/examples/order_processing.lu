@@ -1,0 +1,53 @@
+# SPDX-License-Identifier: Apache-2.0
+# Order Processing Protocol -- LU Debugger Demo
+#
+# Three agents coordinate an order: Customer places it,
+# Warehouse checks stock, Payment processes only AFTER
+# Warehouse confirms availability. If out of stock,
+# Payment never runs -- the protocol makes it impossible.
+
+type OrderStatus = Pending | Confirmed | OutOfStock
+
+agent Customer:
+    role: customer
+    trust: standard
+    accepts: TaskResult
+    produces: TaskRequest
+    requires: order.valid
+    ensures: order.placed
+
+agent Warehouse:
+    role: warehouse
+    trust: trusted
+    accepts: TaskRequest
+    produces: TaskResult
+    requires: order.received
+    ensures: stock.checked
+
+agent PaymentProcessor:
+    role: payment
+    trust: verified
+    accepts: TaskRequest
+    produces: TaskResult
+    requires: stock.confirmed
+    ensures: payment.processed
+
+protocol OrderProcessing:
+    roles: customer, warehouse, payment
+
+    customer asks warehouse to check availability
+    warehouse returns stock status to customer
+
+    when customer decides:
+        in_stock:
+            customer asks payment to process order
+            payment returns confirmation to customer
+
+        out_of_stock:
+            customer sends cancellation to warehouse
+
+    properties:
+        always terminates
+        no deadlock
+        no deletion
+        all roles participate

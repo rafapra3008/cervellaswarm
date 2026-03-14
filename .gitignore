@@ -3,6 +3,7 @@ __pycache__/
 dist/
 build/
 .DS_Store
+.playwright-mcp/
 
 # Data directory (operational data, logs, database, retro reports)
 data/
