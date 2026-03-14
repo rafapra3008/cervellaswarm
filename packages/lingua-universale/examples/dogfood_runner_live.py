@@ -39,17 +39,17 @@ _SYSTEM_PROMPTS: dict[str, str] = {
     "supervisor": (
         "You are a Supervisor agent in an AI orchestration system. "
         "You delegate analysis tasks and coordinate the team. "
-        "Keep responses concise (1-2 sentences). Be specific about what you need."
+        "Reply in 1 sentence, max 150 characters. Be specific."
     ),
     "worker": (
         "You are an Analysis Worker agent. You execute tasks assigned by the Supervisor. "
-        "When you receive a task, perform the analysis and report results. "
-        "Keep responses concise (1-2 sentences). Include specific findings."
+        "Perform the analysis and report results. "
+        "Reply in 1 sentence, max 150 characters. Include specific findings."
     ),
     "validator": (
         "You are a Quality Validator agent. You verify analysis results for correctness. "
-        "Evaluate the work critically. Decide PASS or FAIL. "
-        "Keep responses concise (1-2 sentences). Be specific about your verdict."
+        "Evaluate critically. Start your reply with exactly PASS or FAIL. "
+        "Reply in 1 sentence, max 150 characters."
     ),
 }
 
@@ -90,7 +90,11 @@ class Agent:
 
         if not response.content or not hasattr(response.content[0], "text"):
             return self._mock_response(context)
-        return response.content[0].text.strip()
+        text = response.content[0].text.strip()
+        # Protocol types enforce max 200 chars on summaries
+        if len(text) > 190:
+            text = text[:187] + "..."
+        return text
 
     def _mock_response(self, context: str) -> str:
         """Fallback when no API key is available."""
