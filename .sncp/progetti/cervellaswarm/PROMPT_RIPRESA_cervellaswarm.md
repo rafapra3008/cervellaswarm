@@ -1,126 +1,119 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-14 - Sessione 455
-> **STATUS:** S455 COMPLETA. Playground Chat LIVE! Live dogfood runner PRONTO. Show HN READY 18 Marzo. **3684 test.** PyPI v0.3.3. VS Code v0.2.0 LIVE.
+> **Ultimo aggiornamento:** 2026-03-14 - Sessione 455-456
+> **STATUS:** SVOLTA STRATEGICA. Identita fixata (LU-first). 5 progetti showcase pianificati. README riscritto. Mappa strategica con 7 report.
 
 ---
 
-## S455 -- COSA ABBIAMO FATTO (3 blocchi)
+## COSA E SUCCESSO (S455-S456) -- LA SESSIONE PIU IMPORTANTE
 
-### Blocco 1: Show HN v2 + Blog (Punto 1)
+### Il punto di svolta
 
-Audit completo (Guardiana 9.2+) di entrambi i draft per il lancio su HN.
+Rafa ha detto: *"Sembra che lavoriamo non tanto organizzati. Serve UNA mappa."*
 
-**5 fix applicati:**
-1. Titolo HN: 113→73 caratteri (sotto limite 80)
-2. Conteggio moduli: 29→31 (aggiunta _lint.py e _fmt.py)
-3. LSP features: 6→5 (conteggio accurato)
-4. Honda et al. (1998) → Honda/Yoshida/Carbone (POPL 2008) nel blog
-5. Prefissi interni B.4/B.5 rimossi dal blog
+Abbiamo fermato tutto e fatto un'analisi COMPLETA con 7 report indipendenti:
+- **Ingegnera**: stato reale (health 6/10 -- prodotto 9.5, distribuzione 1)
+- **Scienziata**: mercato ($7.5B->$199B, zero competitor diretti)
+- **Researcher x3**: DSL launches, community strategy, README patterns
+- **Guardiana Qualita + Ops**: audit mappa e infrastruttura
 
-**Status: READY per lancio mercoledi 18 Marzo, 18:00 CET (9 AM Pacific)**
+### La verita brutale
 
-### Blocco 2: Playground Chat Tab (Punto 2, T2.3)
+| Dato | Valore |
+|------|--------|
+| GitHub Stars | 4 |
+| Show HN tentativi | 3, tutti 1 punto |
+| Utenti reali | ~0 |
+| Revenue | $0 |
+| Test | 3684 |
+| Qualita tecnica | 9.5/10 |
 
-Chat tab nel playground -- costruisci protocolli conversando nel browser.
+**455 sessioni di sviluppo, zero utenti. Il prodotto e pronto. La distribuzione no.**
 
-- **1 solo file modificato**: `playground/index.html` (+370 righe)
-- **Architettura**: Sync bridge via `process_input()` -- zero modifiche al package Python
-- **Flusso**: Tab Chat → lingua (EN/IT/PT) → Start → domande guidate → protocollo generato → auto-inject in Monaco → Check automatico
-- **Guardiana**: 9.2 → fix F1 (JSON.stringify), F2 (ARIA tablist/tab/tabpanel) → 9.5+
-- **Testato e2e** nel browser: protocollo GestioneOrdini costruito in italiano
-- **Scoperta critica** (Researcher): `ChatSession.__init__` setta `_phase = WELCOME` ma `_handle()` non la gestisce. Fix: `_phase = ChatPhase.ROLES` dopo init (come `run()` linea 738)
+### Cosa abbiamo fatto (concreto)
 
-### Blocco 3: Live Dogfood Runner (Punto 3)
-
-Runner con agenti AI REALI via Claude API.
-
-- **Nuovo file**: `examples/dogfood_runner_live.py` (319 righe)
-- **3 agenti** (supervisor/worker/validator) come Claude API calls
-- **Protocollo** definisce struttura, **AI** decide contenuto
-- **SessionChecker** valida ogni messaggio a runtime
-- **Fallback mock** quando no API key
-- **Guardiana**: 9.3 → fix P1 (f-string mancante!), 3 P2, 4 P3 → 9.5+
-- **BLOCCO**: serve `ANTHROPIC_API_KEY` per modalita live
+1. **README riscritto** -- LU in primo piano, non framework multi-agent. LIVE sul pubblico.
+2. **Mappa strategica** -- FASE 0-5 con validazione PMF e Piano B
+3. **5 progetti showcase pianificati** -- LU Debugger, Tour, Incident Replay, Protocol Zoo, AI Code Review
+4. **Playground Chat tab** -- LIVE (costruisci protocolli conversando nel browser)
+5. **Live dogfood runner** -- agenti Claude API reali su protocollo verificato (FUNZIONA!)
+6. **Show HN + Blog** -- Guardiana 9.8/10, READY (ma lancio DOPO i progetti showcase)
+7. **OrderProcessing.lu** -- protocollo per il Debugger, 4/4 PROVED
+8. **HN Response Playbook** -- 10 risposte preparate
+9. **Citazione Vericoding** (POPL 2026) aggiunta al blog
+10. **API key** configurata (.zshrc + .env)
 
 ---
 
-## DECISIONI PRESE (con PERCHE)
+## DECISIONE CHIAVE: COSTRUIRE PRIMA, LANCIARE DOPO
 
-| Decisione | Perche |
-|-----------|--------|
-| Titolo: "A language for verified AI agent protocols" | 73 char, sotto limite HN 80. I numeri nel primo commento. |
-| "We" nel blog | Siamo un team (Rafa + Famiglia). Trasmette convinzione. |
-| Lancio mercoledi 18 Marzo 18:00 CET | Picco traffico HN (Wed US morning). Post ha tutta la giornata US. |
-| Chat tab sync (no WebWorker) | process_input() < 200ms, no freeze. KISS. |
-| JSON.stringify per Python string | Pattern gia usato nel file (execLU, handleLint). Escaping manuale fragile. |
-| Verdict parsing con word boundaries | `"PASS" in text.upper()` matcherebbe "COMPASSION". `re.search(r'\bPASS\b')` preciso. |
+Rafa: *"Dov'e il nostro progetto completo con LU? Dobbiamo utilizzare! Facciamo qualcosa di bello, 360 gradi!"*
+
+**Piano:** Costruire 5 progetti REALI con LU. Ogni progetto = materiale per il lancio. Non lanciamo su HN finche non abbiamo almeno il LU Debugger live.
+
+---
+
+## L'IDENTITA (DECISA)
+
+```
+Lingua Universale = il PRODOTTO (linguaggio verificato per AI)
+CervellaSwarm     = l'ORGANIZZAZIONE (come PSF per Python)
+```
+
+README, GitHub description, tutto allineato. NORD.md da aggiornare.
 
 ---
 
 ## MAPPA SITUAZIONE
 
 ```
-LINGUA UNIVERSALE (LA MISSIONE):
-  FASE A-D: COMPLETE (31 moduli, media 9.5/10)
-  FASE E: PER TUTTI
-    E.1-E.5: DONE (9.5/10)
-    E.6 CervellaLang 1.0: T3.1-T3.5 ALL DONE
-  PyPI v0.3.3 LIVE | VS Code v0.2.0 LIVE | Playground LIVE (+Chat!)
-  Moduli: 31 | Test: 3684 | CLI: 12 | Stdlib: 20
+LINGUA UNIVERSALE:
+  31 moduli | 3684 test | PyPI v0.3.3 | VS Code v0.2.0
+  Playground LIVE (+Chat tab!)
+  Zero deps | 12 CLI cmd | 20 stdlib | 9 PropertyKind
 
-DOGFOODING:
-  dogfood_agent_orchestration.lu: 8/8 PROVED
-  dogfood_runner.py: mock (happy + fail + violation)
-  dogfood_runner_live.py: Claude API (serve ANTHROPIC_API_KEY)
-  Gap: load_protocol() public API (T4.1)
+5 PROGETTI SHOWCASE (la priorita):
+  1. LU Debugger      <- PROSSIMO (1.5 sessioni)
+  2. Tour of LU       (2 sessioni)
+  3. Incident Replay  (1 sessione)
+  4. Protocol Zoo     (2-3 sessioni)
+  5. AI Code Review   (3-4 sessioni)
 
-LAUNCH: READY 18 MARZO
-  Show HN v2: READY (Guardiana 9.5+)
-  Blog vibe-to-vericoding: READY (Guardiana 9.5+)
-  Playground Chat: LIVE (testato e2e)
+LANCIO:
+  Show HN v2: READY ma aspetta progetti
+  Blog: READY (Guardiana 9.8/10)
+  HN Playbook: 10 risposte pronte
+  Discord: DA CREARE (Rafa deve farlo)
 
-INFRASTRUTTURA: 1M CONTEXT FREEDOM (S454, 9.5/10)
-  18 hooks, 17 agenti v2.1.0, regole "ansia" rimosse
-
-CI/CD: TUTTO GREEN
-PUBLIC REPO: sync needed (playground Chat = nuova feature!)
-DEPENDABOT: 2 HOLD (stripe #30, express #14)
+INFRASTRUTTURA:
+  API key: configurata (.zshrc + .env)
+  Public repo: synced (README nuovo LIVE)
+  CI/CD: tutto green
+  Dependabot: 8 branch aperti (cleanup pre-lancio)
 ```
 
 ---
 
-## PROSSIMA SESSIONE (S456)
+## PROSSIMA SESSIONE (S457)
 
-### Priorita 1: Launch Prep
+### Priorita UNICA: LU Debugger
 
-| # | Cosa | Blocco | Effort |
-|---|------|--------|--------|
-| 1 | **Rafa review Show HN + Blog** | Decisione CEO | 15 min |
-| 2 | **Sync public repo** (playground Chat) | sync-to-public.sh | 5 min |
-| 3 | **API key setup** per live dogfood | Rafa account Anthropic | 5 min |
+| Step | Cosa | Note |
+|------|------|------|
+| 1 | **server.py** | FastAPI + SSE, ~180 righe |
+| 2 | **runner.py** | Async adapter del dogfood runner, ~120 righe |
+| 3 | **demo_data.py** | Script pre-registrati, ~80 righe |
+| 4 | **debugger.html** | UI Monaco + chat + violation, ~400 righe |
+| 5 | **Deploy Fly.io** | Dockerfile + fly.toml, $1.94/mese |
+| 6 | **Guardiana audit** | Target 9.5+ |
+| 7 | **Sync public** | URL live per Show HN |
 
-### Priorita 2: Launch Day (18 Marzo)
+**Architettura completa:** `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_LU_DEBUGGER_ARCHITECTURE.md`
 
-| # | Cosa | Note | Effort |
-|---|------|------|--------|
-| 4 | **Submit Show HN** | 18:00 CET = 9 AM Pacific | 5 min |
-| 5 | **Demo video VHS** (playground Chat + dogfood) | VHS installato, pattern validato | 0.5 sessione |
+### Serve da Rafa (CEO)
 
-### Priorita 3: Post-Launch
-
-| # | Cosa | Note | Effort |
-|---|------|------|--------|
-| 6 | **Public API load_protocol()** | Gap dal dogfooding, serve per T4.1 | 0.5 sessione |
-| 7 | **Monitor HN + risposte** | Community engagement | ongoing |
-
-### Backlog
-
-| # | Cosa | Effort |
-|---|------|--------|
-| 8 | Dependabot (stripe #30, express #14) | 0.5 sessione |
-| 9 | Dynamic context discovery (Cursor-style) | Ricerca fatta |
-| 10 | Retrieval semantico su SNCP | Lungo termine |
+- [ ] Creare Discord "Lingua Universale" (5 canali, invite link permanente)
+- [ ] Lista 15-20 persone per DM pre-lancio
 
 ---
 
@@ -128,29 +121,36 @@ DEPENDABOT: 2 HOLD (stripe #30, express #14)
 
 | Cosa | Path |
 |------|------|
-| **Playground Chat** | `playground/index.html` (Chat tab, ~370 righe aggiunte) |
+| **MAPPA STRATEGICA** | `.sncp/roadmaps/MAPPA_STRATEGICA_2026.md` |
+| **MAPPA 5 PROGETTI** | `.sncp/roadmaps/MAPPA_5_PROGETTI_LU.md` |
+| **Analisi Ingegnera** | `.sncp/progetti/cervellaswarm/reports/ENGINEER_20260314_ANALISI_COMPLETA.md` |
+| **Analisi Scienziata** | `.sncp/progetti/cervellaswarm/reports/SCIENTIST_20260314.md` |
+| **DSL Launch Patterns** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_DSL_LAUNCH_SUCCESS_PATTERNS.md` |
+| **Community Strategy** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_COMMUNITY_STRATEGY.md` |
+| **README Patterns** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_DSL_README_PATTERNS.md` |
+| **Debugger Architecture** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_LU_DEBUGGER_ARCHITECTURE.md` |
+| **OrderProcessing.lu** | `packages/lingua-universale/examples/order_processing.lu` |
 | **Live dogfood runner** | `packages/lingua-universale/examples/dogfood_runner_live.py` |
-| **Mock dogfood runner** | `packages/lingua-universale/examples/dogfood_runner.py` |
-| **Dogfood protocollo** | `packages/lingua-universale/examples/dogfood_agent_orchestration.lu` |
-| **Show HN v2 draft** | `docs/SHOW_HN_V2_DRAFT.md` (READY) |
-| **Blog post** | `packages/lingua-universale/docs/blog_vibe_to_vericoding.md` (READY) |
-| **Piano Chat tab** | `.sncp/progetti/cervellaswarm/reports/PLAN_20260314_PLAYGROUND_CHAT_TAB.md` |
-| Subroadmap E5+E6+Futuro | `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md` |
+| **HN Response Playbook** | `docs/HN_RESPONSE_PLAYBOOK.md` |
+| **Show HN v2** | `docs/SHOW_HN_V2_DRAFT.md` (READY) |
+| **Blog** | `packages/lingua-universale/docs/blog_vibe_to_vericoding.md` (READY) |
 
 ---
 
-## Lezioni Apprese (S455)
+## Lezioni Apprese (S455-S456)
 
 ### Cosa ha funzionato bene
-- **Guardiana su ogni step**: 3 audit (Show HN+Blog, Playground, Runner) hanno trovato 1 P1 + 10 P2. Il diamante brilla perche OGNI dettaglio e controllato.
-- **Researcher in background**: Piano Chat completo (778 righe) con scoperta critica (_phase = WELCOME). Ha risparmiato ore di debug.
-- **Browser testing end-to-end**: Playwright MCP ha verificato il Chat tab in tempo reale -- dal tab click al protocollo generato.
+- **7 report paralleli**: Ingegnera + Scienziata + Researcher x3 + Guardiana x2. Il quadro completo e emerso solo dalla COMBINAZIONE di tutti i report.
+- **Guardiana su ogni step**: il pattern "step -> audit -> fix" ha trovato 3 P1 e 15+ P2 in questa sessione.
+- **Rafa che ferma tutto**: "Serve UNA mappa" e stato il momento chiave. La COSTITUZIONE funziona.
 
 ### Cosa non ha funzionato
-- **f-string mancante (P1)**: Stringa multi-riga con implicit concatenation -- facile dimenticare il `f` prefix. La Guardiana l'ha trovato, non io.
+- **Costruire senza distribuire**: 455 sessioni, 3684 test, zero utenti. Il prodotto e perfetto ma nessuno lo conosce.
+- **3 Show HN falliti**: il messaggio o il canale non funzionavano. Non abbiamo analizzato i fallimenti fino ad oggi.
 
-### Pattern confermato
-- **"Step -> Guardiana -> Fix -> Avanti"**: Ogni blocco di lavoro seguito da audit formale. 3 cicli in questa sessione, tutti con fix significativi. Evidenza: S455 (6a conferma del pattern).
+### Pattern nuovo
+- **"Costruire il progetto showcase PRIMA di lanciare"**: Non dire "abbiamo un linguaggio, provalo." Dire "abbiamo costruito QUESTO con il nostro linguaggio, guarda." Evidenza: Stripe (demo store), Vercel (sito con Next.js), Prisma (app esempio).
 
 ---
-*"Ultrapassar os proprios limites!" -- S455, il giorno del lancio.*
+*"Non e sempre come immaginiamo... ma alla fine e il 100000%!"*
+*S455-S456: il giorno in cui abbiamo guardato la verita in faccia. E abbiamo deciso di agire.*
