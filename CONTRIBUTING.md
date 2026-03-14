@@ -66,20 +66,40 @@ By making a contribution to this project, I certify that:
     this project or the open source license(s) involved.
 ```
 
+## Good First Issues
+
+Looking for a place to start? These are beginner-friendly:
+
+1. **Add shell completion for bash/zsh/fish** -- Generate completion scripts for `lu` CLI subcommands.
+2. **Write a new stdlib protocol** -- Add a verified `.lu` protocol to `stdlib/` (e.g., WebSocket handshake, OAuth flow). Must pass `lu lint` + `lu fmt --check`.
+3. **Improve an error message** -- Find a confusing error in `_errors.py` (74 error codes) and make it friendlier. Inspiration: Elm and Rust compilers.
+4. **Add a benchmark script** -- Measure parse/compile/verify time for all 20 stdlib protocols.
+5. **Translate `lu chat`** -- Add Spanish, French, or German locale strings to `_intent_bridge.py`.
+
 ## How to Contribute
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
-4. Sign off your commits (`git commit -s -m "Add amazing feature"`)
-5. Push to your branch (`git push origin feature/amazing-feature`)
-6. Open a Pull Request
+4. Run tests: `pytest packages/lingua-universale/tests/ -x` (all 3684 must pass)
+5. Lint `.lu` files: `lu fmt --check` and `lu lint`
+6. Sign off your commits (`git commit -s -m "Add amazing feature"`)
+7. Push to your branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request
 
 ## Code Style
 
+- Pure Python standard library -- zero external dependencies in the core package
 - Keep it simple and readable
 - Follow existing patterns in the codebase
 - Add comments only where logic isn't self-evident
+
+## Quick Links
+
+- [Playground](https://rafapra3008.github.io/cervellaswarm/) -- Try LU in your browser
+- [Interactive Tour](https://rafapra3008.github.io/cervellaswarm/?tour) -- Learn LU in 10 minutes
+- [Protocol Zoo](https://rafapra3008.github.io/cervellaswarm/zoo.html) -- 20 verified protocol examples
+- [PyPI](https://pypi.org/project/cervellaswarm-lingua-universale/) -- `pip install cervellaswarm-lingua-universale`
 
 ## Questions?
 
