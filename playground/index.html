@@ -2832,6 +2832,16 @@ chatDom.chatInput.addEventListener("keydown", (e) => {
   // 2. Populate example selector
   initExampleSelector();
 
+  // 2b. Handle ?example= URL parameter (deep-link from Protocol Zoo)
+  const urlExample = new URLSearchParams(window.location.search).get("example");
+  if (urlExample && window.LU_EXAMPLES) {
+    const match = window.LU_EXAMPLES.find(ex => ex.id === urlExample);
+    if (match && dom.exampleSelect) {
+      dom.exampleSelect.value = match.id;
+      dom.exampleSelect.dispatchEvent(new Event("change"));
+    }
+  }
+
   // 3. Init tour UI (buttons, keyboard shortcuts, URL hash)
   if (typeof initTourUI === "function") initTourUI();
 

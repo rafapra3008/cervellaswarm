@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Protocol Zoo — 20 Verified AI Agent Protocols | Lingua Universale</title>
+  <meta name="description" content="Browse, explore, and fork 20 verified protocols for AI agent communication. From RAG pipelines to distributed sagas." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Protocol Zoo — 20 Verified AI Agent Protocols" />
+  <meta property="og:description" content="Browse, explore, and fork 20 verified protocols for AI agent communication. From RAG pipelines to distributed sagas." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://rafapra3008.github.io/cervellaswarm/zoo.html" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Protocol Zoo — 20 Verified AI Agent Protocols" />
+  <meta name="twitter:description" content="Browse, explore, and fork 20 verified protocols for AI agent communication. From RAG pipelines to distributed sagas." />
+
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-base:        #1e1e2e;
+      --bg-surface:     #181825;
+      --bg-overlay:     #11111b;
+      --bg-panel:       #24253a;
+      --bg-panel-alt:   #2a2b40;
+      --border:         #313244;
+      --border-subtle:  #2a2b40;
+
+      --accent-blue:    #89b4fa;
+      --accent-violet:  #cba6f7;
+      --accent-green:   #a6e3a1;
+      --accent-red:     #f38ba8;
+      --accent-yellow:  #f9e2af;
+      --accent-teal:    #94e2d5;
+      --accent-sky:     #74c7ec;
+
+      --text-primary:   #cdd6f4;
+      --text-secondary: #a6adc8;
+      --text-muted:     #6c7086;
+      --text-on-accent: #1e1e2e;
+
+      --font-ui:   system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.6);
+
+      --t-fast: 0.15s ease;
+      --t-base: 0.25s ease;
+      --t-slow: 0.4s ease;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ============================================================
+       SKIP LINK (ACCESSIBILITY)
+    ============================================================ */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--accent-blue);
+      color: var(--text-on-accent);
+      padding: 8px 16px;
+      text-decoration: none;
+      font-weight: 600;
+      z-index: 9999;
+      border-radius: var(--radius-sm);
+      transition: top var(--t-fast);
+    }
+
+    .skip-link:focus {
+      top: 8px;
+    }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    .zoo-nav {
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 48px;
+      padding: 0 24px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--accent-violet), var(--accent-blue));
+      flex-shrink: 0;
+    }
+
+    .nav-logo svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: var(--text-on-accent);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav-brand-name {
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      transition: background var(--t-fast), border-color var(--t-fast);
+    }
+
+    .nav-link:hover {
+      background: var(--bg-panel);
+      border-color: var(--accent-blue);
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .zoo-hero {
+      text-align: center;
+      padding: 72px 24px 48px;
+    }
+
+    .zoo-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 100px;
+      background: rgba(137, 180, 250, 0.12);
+      border: 1px solid rgba(137, 180, 250, 0.3);
+      color: var(--accent-blue);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .zoo-hero h1 {
+      font-size: clamp(36px, 6vw, 60px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-violet) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .zoo-hero-subtitle {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+
+    .zoo-hero-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* ============================================================
+       FILTER PILLS
+    ============================================================ */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 24px 48px;
+    }
+
+    .filter-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--bg-panel);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+      user-select: none;
+    }
+
+    .filter-pill:hover {
+      border-color: var(--accent-blue);
+      color: var(--text-primary);
+    }
+
+    .filter-pill.active {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      color: var(--text-on-accent);
+      font-weight: 600;
+    }
+
+    .pill-count {
+      font-size: 11px;
+      opacity: 0.75;
+    }
+
+    /* ============================================================
+       PROTOCOL GRID
+    ============================================================ */
+    .zoo-grid-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .zoo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    /* ============================================================
+       PROTOCOL CARD
+    ============================================================ */
+    .zoo-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color var(--t-base), transform var(--t-base), box-shadow var(--t-base);
+      /* reveal initial state */
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .zoo-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .zoo-card:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* badge */
+    .card-badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 2px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .category-ai_ml     { background: rgba(203, 166, 247, 0.15); color: var(--accent-violet); }
+    .category-business  { background: rgba(249, 226, 175, 0.15); color: var(--accent-yellow); }
+    .category-communication { background: rgba(137, 180, 250, 0.15); color: var(--accent-blue); }
+    .category-data      { background: rgba(148, 226, 213, 0.15); color: var(--accent-teal); }
+    .category-security  { background: rgba(243, 139, 168, 0.15); color: var(--accent-red); }
+
+    /* title */
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    /* description */
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      flex: 1;
+    }
+
+    /* meta row */
+    .card-meta {
+      display: flex;
+      gap: 12px;
+    }
+
+    .card-roles,
+    .card-props {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-roles::before { content: ""; }
+    .card-props::before { content: ""; }
+
+    .meta-icon {
+      font-style: normal;
+      font-size: 11px;
+    }
+
+    /* CTA */
+    .card-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--bg-panel-alt);
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+      margin-top: auto;
+    }
+
+    .card-cta:hover {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      color: var(--text-on-accent);
+    }
+
+    /* ============================================================
+       EMPTY STATE (when filter matches nothing)
+    ============================================================ */
+    .zoo-empty {
+      display: none;
+      text-align: center;
+      padding: 60px 24px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .zoo-empty.visible {
+      display: block;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-brand {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color var(--t-fast);
+    }
+
+    .footer-link:hover {
+      color: var(--accent-blue);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1023px) {
+      .zoo-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav-link.nav-link-hide-tablet {
+        display: none;
+      }
+    }
+
+    @media (max-width: 599px) {
+      .zoo-nav {
+        padding: 0 16px;
+      }
+
+      .zoo-hero {
+        padding: 48px 16px 36px;
+      }
+
+      .filter-bar {
+        padding: 0 16px 36px;
+      }
+
+      .zoo-grid-wrapper {
+        padding: 0 16px 60px;
+      }
+
+      .zoo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-links {
+        justify-content: center;
+      }
+    }
+
+    /* ============================================================
+       REDUCED MOTION
+    ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      .zoo-card {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      .zoo-card:hover {
+        transform: none;
+      }
+
+      * {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav class="zoo-nav" aria-label="Site navigation">
+    <a href="./" class="nav-brand" aria-label="Lingua Universale home">
+      <div class="nav-logo" aria-hidden="true">
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M8 2L3 5v4c0 3 2.5 5.3 5 6 2.5-.7 5-3 5-6V5L8 2z"/>
+        </svg>
+      </div>
+      <span class="nav-brand-name">Lingua Universale</span>
+    </a>
+    <div class="nav-right">
+      <a href="./" class="nav-link nav-link-hide-tablet">Playground</a>
+      <a href="./?tour" class="nav-link nav-link-hide-tablet">Tour</a>
+      <a href="./incident.html" class="nav-link nav-link-hide-tablet">Incident</a>
+      <a href="https://lu-debugger.fly.dev/" class="nav-link" target="_blank" rel="noopener">Debugger</a>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       MAIN
+  ============================================================ -->
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section class="zoo-hero" aria-labelledby="zoo-heading">
+      <div class="zoo-hero-badge" aria-label="Protocol count">
+        <span aria-hidden="true">&#9881;</span> 20 Protocols
+      </div>
+      <h1 id="zoo-heading">Protocol Zoo</h1>
+      <p class="zoo-hero-subtitle">20 verified protocols. Click to explore in the Playground.</p>
+      <p class="zoo-hero-meta">Every protocol compiles, verifies, and runs. Zero dependencies.</p>
+    </section>
+
+    <!-- FILTER PILLS -->
+    <div class="filter-bar" role="group" aria-label="Filter protocols by category">
+      <button class="filter-pill active" data-category="all" aria-pressed="true">
+        All <span class="pill-count">(20)</span>
+      </button>
+      <button class="filter-pill" data-category="ai_ml" aria-pressed="false">
+        AI/ML <span class="pill-count">(5)</span>
+      </button>
+      <button class="filter-pill" data-category="business" aria-pressed="false">
+        Business <span class="pill-count">(4)</span>
+      </button>
+      <button class="filter-pill" data-category="communication" aria-pressed="false">
+        Communication <span class="pill-count">(5)</span>
+      </button>
+      <button class="filter-pill" data-category="data" aria-pressed="false">
+        Data <span class="pill-count">(3)</span>
+      </button>
+      <button class="filter-pill" data-category="security" aria-pressed="false">
+        Security <span class="pill-count">(3)</span>
+      </button>
+    </div>
+
+    <!-- PROTOCOL GRID -->
+    <div class="zoo-grid-wrapper">
+      <div class="zoo-grid" id="zoo-grid" aria-label="Protocol cards">
+        <!-- Cards are injected by JavaScript -->
+      </div>
+      <p class="zoo-empty" id="zoo-empty" aria-live="polite">No protocols match this filter.</p>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer>
+    <span class="footer-brand">Lingua Universale &mdash; by CervellaSwarm</span>
+    <nav class="footer-links" aria-label="Footer links">
+      <a
+        href="https://github.com/rafapra3008/cervellaswarm"
+        class="footer-link"
+        target="_blank" rel="noopener"
+      >GitHub</a>
+      <a
+        href="https://pypi.org/project/cervellaswarm-lingua-universale/"
+        class="footer-link"
+        target="_blank" rel="noopener"
+      >PyPI</a>
+      <a href="./" class="footer-link">Playground</a>
+    </nav>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    'use strict';
+
+    /* ----------------------------------------------------------
+       PROTOCOL DATA
+    ---------------------------------------------------------- */
+    const PROTOCOLS = [
+      // AI/ML
+      { id: "rag_pipeline", title: "RAG Pipeline", category: "ai_ml", categoryLabel: "AI/ML",
+        desc: "Retrieval-Augmented Generation. Query, retrieve documents, generate grounded answers.",
+        roles: 3, props: 4 },
+      { id: "tool_calling", title: "Tool Calling", category: "ai_ml", categoryLabel: "AI/ML",
+        desc: "Agent requests tool execution, executor runs it, returns results safely.",
+        roles: 3, props: 4 },
+      { id: "consensus", title: "Consensus", category: "ai_ml", categoryLabel: "AI/ML",
+        desc: "Multi-agent voting. Proposer submits, validators vote, aggregator tallies.",
+        roles: 3, props: 6 },
+      { id: "agent_delegation", title: "Agent Delegation", category: "ai_ml", categoryLabel: "AI/ML",
+        desc: "Queen delegates task to worker, worker reports back. Verified coordination.",
+        roles: 3, props: 5 },
+      { id: "human_in_loop", title: "Human-in-the-Loop", category: "ai_ml", categoryLabel: "AI/ML",
+        desc: "AI proposes, human approves or rejects. Verified approval workflow.",
+        roles: 3, props: 4 },
+      // Business
+      { id: "approval_workflow", title: "Approval Workflow", category: "business", categoryLabel: "Business",
+        desc: "Multi-level approval chain. Request, review, approve or reject with audit.",
+        roles: 3, props: 4 },
+      { id: "auction", title: "Auction", category: "business", categoryLabel: "Business",
+        desc: "Sealed-bid auction. Bidders submit, auctioneer evaluates, winner announced.",
+        roles: 3, props: 3 },
+      { id: "saga_order", title: "Saga Order", category: "business", categoryLabel: "Business",
+        desc: "Distributed transaction with compensation. Payment to inventory with rollback on failure.",
+        roles: 3, props: 3 },
+      { id: "two_buyer", title: "Two-Buyer Protocol", category: "business", categoryLabel: "Business",
+        desc: "Classic session type: two buyers negotiate a shared purchase with a seller.",
+        roles: 3, props: 4 },
+      // Communication
+      { id: "request_response", title: "Request-Response", category: "communication", categoryLabel: "Communication",
+        desc: "The simplest protocol. One agent asks, another answers. Foundation of everything.",
+        roles: 2, props: 2 },
+      { id: "ping_pong", title: "Ping-Pong", category: "communication", categoryLabel: "Communication",
+        desc: "Echo protocol. Send a ping, receive a pong. Heartbeat pattern.",
+        roles: 2, props: 2 },
+      { id: "scatter_gather", title: "Scatter-Gather", category: "communication", categoryLabel: "Communication",
+        desc: "One coordinator broadcasts to many workers, gathers results. Map-reduce pattern.",
+        roles: 3, props: 3 },
+      { id: "pub_sub", title: "Pub-Sub", category: "communication", categoryLabel: "Communication",
+        desc: "Publisher broadcasts events, subscriber receives. Decoupled communication.",
+        roles: 3, props: 3 },
+      { id: "pipeline", title: "Pipeline", category: "communication", categoryLabel: "Communication",
+        desc: "Sequential processing chain. Data flows through stages in verified order.",
+        roles: 4, props: 6 },
+      // Data
+      { id: "data_sync", title: "Data Sync", category: "data", categoryLabel: "Data",
+        desc: "Bidirectional data synchronization between primary and replica with conflict resolution.",
+        roles: 3, props: 5 },
+      { id: "cache_invalidation", title: "Cache Invalidation", category: "data", categoryLabel: "Data",
+        desc: "Writer updates data, notifies cache to invalidate. The two hardest problems solved.",
+        roles: 3, props: 3 },
+      { id: "crud_safe", title: "CRUD Safe", category: "data", categoryLabel: "Data",
+        desc: "Verified CRUD operations with audit logging. No deletion without authorization.",
+        roles: 3, props: 4 },
+      // Security
+      { id: "auth_handshake", title: "Auth Handshake", category: "security", categoryLabel: "Security",
+        desc: "OAuth-inspired authentication. Client authenticates, gets token, accesses resource.",
+        roles: 3, props: 4 },
+      { id: "mutual_tls", title: "Mutual TLS", category: "security", categoryLabel: "Security",
+        desc: "Both sides verify certificates. Trust established by mutual authentication.",
+        roles: 2, props: 4 },
+      { id: "rate_limited_api", title: "Rate-Limited API", category: "security", categoryLabel: "Security",
+        desc: "API gateway enforces rate limits. Clients cannot exceed their quota by construction.",
+        roles: 3, props: 3 },
+    ];
+
+    /* ----------------------------------------------------------
+       RENDER CARDS
+    ---------------------------------------------------------- */
+    const grid = document.getElementById('zoo-grid');
+
+    function buildCard(protocol) {
+      const card = document.createElement('article');
+      card.className = 'zoo-card';
+      card.dataset.category = protocol.category;
+      card.setAttribute('aria-label', protocol.title + ' protocol');
+
+      const rolesLabel = protocol.roles === 1 ? '1 role' : protocol.roles + ' roles';
+      const propsLabel = protocol.props === 1 ? '1 property' : protocol.props + ' properties';
+
+      card.innerHTML = `
+        <div class="card-badge category-${protocol.category}" aria-label="Category: ${protocol.categoryLabel}">${protocol.categoryLabel}</div>
+        <h2 class="card-title">${protocol.title}</h2>
+        <p class="card-desc">${protocol.desc}</p>
+        <div class="card-meta">
+          <span class="card-roles"><em class="meta-icon" aria-hidden="true">&#10022;</em>${rolesLabel}</span>
+          <span class="card-props"><em class="meta-icon" aria-hidden="true">&#9670;</em>${propsLabel}</span>
+        </div>
+        <a href="./?example=${protocol.id}" class="card-cta" aria-label="Open ${protocol.title} in Playground">Open in Playground &rarr;</a>
+      `;
+      return card;
+    }
+
+    PROTOCOLS.forEach(p => grid.appendChild(buildCard(p)));
+
+    /* ----------------------------------------------------------
+       CARD REVEAL (IntersectionObserver)
+    ---------------------------------------------------------- */
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+      document.querySelectorAll('.zoo-card').forEach(card => card.classList.add('visible'));
+    } else {
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              // Stagger: use position among siblings
+              const cards = Array.from(grid.children).filter(c => c.style.display !== 'none');
+              const idx = cards.indexOf(entry.target);
+              const delay = (idx % 4) * 60; // stagger within the row, 60ms apart
+              setTimeout(() => entry.target.classList.add('visible'), delay);
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      document.querySelectorAll('.zoo-card').forEach(card => revealObserver.observe(card));
+    }
+
+    /* ----------------------------------------------------------
+       FILTER LOGIC
+    ---------------------------------------------------------- */
+    const pills = document.querySelectorAll('.filter-pill');
+    const cards = document.querySelectorAll('.zoo-card');
+    const emptyState = document.getElementById('zoo-empty');
+
+    pills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        const cat = pill.dataset.category;
+
+        // Update active pill + aria-pressed
+        pills.forEach(p => {
+          p.classList.remove('active');
+          p.setAttribute('aria-pressed', 'false');
+        });
+        pill.classList.add('active');
+        pill.setAttribute('aria-pressed', 'true');
+
+        // Show/hide cards
+        let visibleCount = 0;
+        cards.forEach(card => {
+          const show = cat === 'all' || card.dataset.category === cat;
+          card.style.display = show ? '' : 'none';
+          if (show) visibleCount++;
+
+          // Ensure visible cards are revealed
+          if (show && !card.classList.contains('visible')) {
+            card.classList.add('visible');
+          }
+        });
+
+        // Empty state
+        emptyState.classList.toggle('visible', visibleCount === 0);
+      });
+    });
+
+  </script>
+
+</body>
+</html>
