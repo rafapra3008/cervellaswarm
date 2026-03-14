@@ -237,6 +237,23 @@ def process_post(
     comments = fetch_comments(client, post_id)
     logger.info("Post %s ('%s'): %d comments found", post_id, post_title[:50], len(comments))
 
+    # Auto-seed replied_ids: any comment that already has a LU reply after it
+    # is considered "handled" (covers manual replies before bot deployment)
+    seen_non_lu: list[str] = []
+    for c in comments:
+        cid = c.get("id") or c.get("comment_id")
+        author_obj = c.get("author", {})
+        cname = author_obj.get("name", "") if isinstance(author_obj, dict) else ""
+        if cname == config.AGENT_NAME:
+            # Our reply found -- mark all preceding non-LU comments as replied
+            for prev_id in seen_non_lu:
+                if prev_id not in replied_ids:
+                    replied_ids.add(prev_id)
+                    logger.debug("Auto-seeded replied_id %s (manual reply exists)", prev_id)
+            seen_non_lu.clear()
+        elif cid:
+            seen_non_lu.append(cid)
+
     for comment in comments:
         if replies_this_cycle[0] >= config.MAX_REPLIES_PER_CYCLE:
             logger.info("Max replies per cycle (%d) reached, stopping.", config.MAX_REPLIES_PER_CYCLE)
@@ -258,6 +275,12 @@ def process_post(
         # Skip already replied
         if comment_id in replied_ids:
             logger.debug("Already replied to comment %s", comment_id)
+            continue
+
+        # Skip low-effort comments (< 30 chars, not worth a Haiku call)
+        if len(comment_content.strip()) < 30:
+            logger.debug("Skipping short comment %s (%d chars)", comment_id, len(comment_content))
+            replied_ids.add(comment_id)
             continue
 
         # Safety check
