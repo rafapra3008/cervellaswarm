@@ -163,10 +163,10 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |   29 moduli, 3684 test, 12 CLI cmd, 9 PropertyKind, ZERO deps|
 |   DOGFOODING S454: Primo programma REALE in LU! 8/8 PROVED  |
 |                                                                  |
-|   SHOWCASE S458:                                                |
+|   SHOWCASE S458-S459:                                           |
 |     LU Debugger LIVE: https://lu-debugger.fly.dev/             |
-|     3 AI agents, real-time SSE, Monaco, violation demo          |
-|     FastAPI + Fly.io (Frankfurt), ~$0.000005/run                |
+|     Tour of LU LIVE: playground/?tour (24 step, 4 chapters)    |
+|     2/5 showcase projects DONE, synced to public repo           |
 |                                                                  |
 |   VISIONE (S442 - Rafa):                                        |
 |   "Un giorno le AI sviluppano CON Lingua Universale."           |

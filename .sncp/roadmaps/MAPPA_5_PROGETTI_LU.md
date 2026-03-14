@@ -27,31 +27,27 @@
 
 ---
 
-## PROGETTO 2: Tour of LU (PROSSIMO)
+## PROGETTO 2: Tour of LU -- DONE! (S459)
 
-**Cosa:** Tutorial interattivo nel browser (come Tour of Go). 8-10 lezioni progressive.
+**URL LIVE:** https://rafapra3008.github.io/cervellaswarm/?tour
 
-**Struttura:**
-1. Definisci un agent
-2. Scrivi un protocollo
-3. Aggiungi proprieta
-4. Verifica (PROVED!)
-5. Esegui
-6. Nested choice
-7. La violazione
-8. Da zero a protocollo completo
+**Cosa:** Tutorial interattivo nel browser. 24 step, 4 capitoli, 4 esercizi con soluzioni.
 
-**Da costruire:**
-- 8-10 lezioni (testo + .lu iniziale + soluzione)
-- Sistema step nel playground (Prev/Next, stato)
-- Validazione automatica
+**Capitoli:**
+1. Types (7 step) -- variant, record, Confident[T], Optional, exercise
+2. Agents (7 step) -- trust tiers, contracts, team building, exercise
+3. Protocols (6 step) -- actions, choice/branching, properties, exercise
+4. Putting It All Together (4 step) -- check, errors, run, finale
 
-**Effort:** 2 sessioni
-**Output:** Pagina nel playground (zero backend)
+**Scoperta:** Il tour era gia implementato al 90% nel playground (tour.js 413 righe, tour-ui.js 450 righe). S459 ha aggiunto completion tracking ("done" vs "visited") e celebration finale con link a Debugger e PyPI.
+
+**File:** `playground/tour.js`, `playground/tour-ui.js`, `playground/tour.css`
+**Guardiana:** 9.5/10. P2 fixato (progress regression), P3 fixati (keyframes, noopener, a11y).
+**Effort reale:** ~1 ora (era al 90%, +77 righe di polish)
 
 ---
 
-## PROGETTO 3: Incident Replay
+## PROGETTO 3: Incident Replay (PROSSIMO)
 
 **Cosa:** Storia interattiva: "Un bug AI e costato $34K. Ecco come LU lo avrebbe fermato."
 
@@ -99,7 +95,7 @@
 ## ORDINE E DIPENDENZE
 
 ```
-[1] LU Debugger ✅ ──> [2] Tour of LU  ────> [3] Incident Replay
+[1] LU Debugger ✅ ──> [2] Tour of LU ✅ ──> [3] Incident Replay
                                                       |
                                                [4] Protocol Zoo
                                                       |
