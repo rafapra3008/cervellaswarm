@@ -12,6 +12,7 @@ from __future__ import annotations
 import importlib
 import os
 import shutil
+import subprocess
 import sys
 
 from ._colors import colors as _c
@@ -32,6 +33,42 @@ def _err(label: str, detail: str = "") -> None:
     print(f"  {_c.RED}[ERR]{_c.RESET}  {label}{suffix}")
 
 
+def _check_pypi_version(current: str) -> str | None:
+    """Check latest version on PyPI.  Returns None on network error."""
+    try:
+        import json
+        from urllib.request import urlopen
+
+        url = "https://pypi.org/pypi/cervellaswarm-lingua-universale/json"
+        with urlopen(url, timeout=3) as resp:
+            data = json.loads(resp.read())
+            return data.get("info", {}).get("version")
+    except Exception:
+        return None
+
+
+def _get_tool_version(cmd: str, flag: str = "--version") -> str:
+    """Run a tool with --version and return the first line."""
+    try:
+        result = subprocess.run(
+            [cmd, flag], capture_output=True, text=True, timeout=5,
+        )
+        return result.stdout.strip().split("\n")[0] if result.stdout else ""
+    except Exception:
+        return ""
+
+
+def _has_vscode_extension(extension_id: str) -> bool:
+    """Check if a VS Code extension is installed."""
+    try:
+        result = subprocess.run(
+            ["code", "--list-extensions"], capture_output=True, text=True, timeout=5,
+        )
+        return extension_id in result.stdout
+    except Exception:
+        return False
+
+
 def run_doctor() -> int:
     """Run all diagnostic checks.  Returns 0 if all required checks pass."""
     from . import __version__
@@ -48,8 +85,12 @@ def run_doctor() -> int:
         _err("Python", f"{py} -- requires 3.10+")
         issues += 1
 
-    # ── LU core ─────────────────────────────────────────────────
-    _ok("Lingua Universale", f"v{__version__}")
+    # ── LU core + version freshness ──────────────────────────────
+    latest = _check_pypi_version(__version__)
+    if latest and latest != __version__:
+        _warn("Lingua Universale", f"v{__version__} -- update available: v{latest}")
+    else:
+        _ok("Lingua Universale", f"v{__version__}")
 
     # ── Parser / compiler ───────────────────────────────────────
     try:
@@ -122,14 +163,19 @@ def run_doctor() -> int:
     # ── Optional: Lean 4 ────────────────────────────────────────
     print(f"\n{_c.BOLD}External tools:{_c.RESET}\n")
 
-    if shutil.which("lean"):
-        _ok("Lean 4", "formal proofs available")
+    lean_path = shutil.which("lean")
+    if lean_path:
+        lean_ver = _get_tool_version("lean", "--version")
+        _ok("Lean 4", lean_ver or "installed")
     else:
         _warn("Lean 4", "not installed -- optional, for theorem proving")
 
-    # ── VS Code extension ───────────────────────────────────────
+    # ── VS Code + LU extension ────────────────────────────────
     if shutil.which("code"):
-        _ok("VS Code", "detected")
+        if _has_vscode_extension("cervellaswarm.lingua-universale"):
+            _ok("VS Code extension", "cervellaswarm.lingua-universale installed")
+        else:
+            _warn("VS Code extension", "not installed -- search 'Lingua Universale' in Extensions")
     else:
         _warn("VS Code", "not detected")
 
