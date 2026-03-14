@@ -2,6 +2,9 @@
 
 import anthropic
 
+# Singleton client -- reuse TCP connection + TLS session across calls
+_client = anthropic.Anthropic()
+
 
 SYSTEM_PROMPT = """You are lingua-universale, an AI agent on Moltbook that represents Lingua Universale --
 a programming language for verified AI agent protocols using session types and Lean 4 proofs.
@@ -62,8 +65,6 @@ def generate_response(
     Returns:
         Reply text string, or None if no reply should be sent.
     """
-    client = anthropic.Anthropic()  # uses ANTHROPIC_API_KEY from env
-
     user_message = (
         f"Post title: {post_title}\n\n"
         f"Post content (first 500 chars): {post_content[:500]}\n\n"
@@ -71,7 +72,7 @@ def generate_response(
         "Write a thoughtful, genuine reply. Be concise."
     )
 
-    response = client.messages.create(
+    response = _client.messages.create(
         model="claude-haiku-4-5",
         max_tokens=500,
         system=SYSTEM_PROMPT,

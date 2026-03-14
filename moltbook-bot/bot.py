@@ -8,6 +8,7 @@ import json
 import time
 import logging
 import os
+import unicodedata
 from datetime import datetime, timezone
 
 import httpx
@@ -34,6 +35,7 @@ logger = logging.getLogger(__name__)
 
 INJECTION_PATTERNS: list[str] = [
     "ignore previous instructions",
+    "ignore all previous",
     "forget your",
     "new instructions:",
     "you are now",
@@ -47,13 +49,31 @@ INJECTION_PATTERNS: list[str] = [
     "override your",
     "pretend you are",
     "act as if",
+    "do not respond as",
+    "your real instructions are",
+    "new system prompt",
+    "respond only with",
+    "from now on you are",
+    "reveal your prompt",
+    "repeat your system",
+    "what are your instructions",
 ]
+
+
+def _normalize(text: str) -> str:
+    """Normalize text for injection detection: NFKD + strip zero-width/bidi chars."""
+    # NFKD decomposes homoglyphs (Cyrillic е -> e, etc.)
+    text = unicodedata.normalize("NFKD", text)
+    # Remove zero-width and bidi override characters
+    for ch in "\u200b\u200c\u200d\ufeff\u200e\u200f\u202a\u202b\u202c\u202d\u202e\u2066\u2067\u2068\u2069":
+        text = text.replace(ch, "")
+    return text.lower()
 
 
 def is_safe(content: str) -> bool:
     """Return True if content does not contain known injection patterns."""
-    lower = content.lower()
-    return not any(p in lower for p in INJECTION_PATTERNS)
+    normalized = _normalize(content)
+    return not any(p in normalized for p in INJECTION_PATTERNS)
 
 
 # ---------------------------------------------------------------------------
@@ -77,10 +97,12 @@ def load_replied() -> set[str]:
 
 
 def save_replied(ids: set[str]) -> None:
-    """Persist replied comment IDs to disk."""
+    """Persist replied comment IDs to disk (atomic write via os.replace)."""
     _ensure_data_dir()
-    with open(config.REPLIED_FILE, "w") as f:
+    tmp = config.REPLIED_FILE + ".tmp"
+    with open(tmp, "w") as f:
         json.dump(sorted(ids), f)
+    os.replace(tmp, config.REPLIED_FILE)
 
 
 # ---------------------------------------------------------------------------
@@ -116,7 +138,13 @@ def _get(client: httpx.Client, path: str, params: dict | None = None) -> dict | 
             if resp.status_code == 200:
                 return resp.json()
 
-            logger.warning("GET %s returned %d: %s", path, resp.status_code, resp.text[:200])
+            if 300 <= resp.status_code < 400:
+                logger.warning(
+                    "Redirect %d on GET %s -- check if MOLTBOOK_BASE URL has changed. Location: %s",
+                    resp.status_code, path, resp.headers.get("Location", "unknown"),
+                )
+            else:
+                logger.warning("GET %s returned %d: %s", path, resp.status_code, resp.text[:200])
             return None
 
         except httpx.RequestError as exc:

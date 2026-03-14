@@ -172,6 +172,8 @@ def _sanitize_code(code: str) -> str:
     """Sanitize user-provided code for safe processing."""
     if len(code) > MAX_CODE_LENGTH:
         code = code[:MAX_CODE_LENGTH]
+    # Prevent XML boundary escape injection
+    code = code.replace("</user_code>", "")
     return code
 
 
@@ -237,10 +239,10 @@ async def live_review(code: str) -> AsyncGenerator[str, None]:
         })
         await asyncio.sleep(0.3)
 
-        # Real Claude API call
+        # Real Claude API call -- wrap code in XML tags for anti-injection
         content = await asyncio.to_thread(
             _call_agent, client, reviewer,
-            f"Review this code:\n\n```\n{code}\n```\n\nReturn 1-3 findings.",
+            f"Review this code:\n\n<user_code>\n{code}\n</user_code>\n\nReturn 1-3 findings.",
         )
 
         # Reviewer returns findings (summary max 200 chars for TaskResult)

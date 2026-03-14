@@ -14,7 +14,6 @@ Endpoints:
 from __future__ import annotations
 
 import asyncio
-import json
 from pathlib import Path
 
 from fastapi import FastAPI, Request
@@ -23,17 +22,28 @@ from fastapi.staticfiles import StaticFiles
 from slowapi import Limiter
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
+from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response, StreamingResponse
 
 from demo_data import DEMO_BREAK, DEMO_HAPPY, PROTOCOL_SOURCE
-from runner import is_live_available, live_break, live_happy_path
+from runner import _sse_event, is_live_available, live_break, live_happy_path
 
 # ---------------------------------------------------------------------------
 # App setup
 # ---------------------------------------------------------------------------
 
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        return response
+
+
 limiter = Limiter(key_func=get_remote_address)
 app = FastAPI(title="LU Debugger", version="0.1.0")
+app.add_middleware(SecurityHeadersMiddleware)
 app.state.limiter = limiter
 
 STATIC_DIR = Path(__file__).parent / "static"
@@ -78,10 +88,6 @@ async def status():
 # ---------------------------------------------------------------------------
 # SSE helpers
 # ---------------------------------------------------------------------------
-
-
-def _sse_event(data: dict) -> str:
-    return f"data: {json.dumps(data)}\n\n"
 
 
 async def _demo_generator(steps: list[dict]):

@@ -3,8 +3,16 @@
 import os
 
 
-MOLTBOOK_API_KEY: str = os.environ["MOLTBOOK_API_KEY"]
-ANTHROPIC_API_KEY: str = os.environ["ANTHROPIC_API_KEY"]
+def _require_env(name: str) -> str:
+    """Get a required env var with a clear error message."""
+    val = os.environ.get(name)
+    if not val:
+        raise SystemExit(f"Required environment variable {name} is not set. Check your .env or Fly.io secrets.")
+    return val
+
+
+MOLTBOOK_API_KEY: str = _require_env("MOLTBOOK_API_KEY")
+ANTHROPIC_API_KEY: str = _require_env("ANTHROPIC_API_KEY")
 
 MOLTBOOK_BASE: str = "https://www.moltbook.com/api/v1"
 

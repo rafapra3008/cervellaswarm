@@ -24,6 +24,7 @@ from pydantic import BaseModel
 from slowapi import Limiter
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
+from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response, StreamingResponse
 
 from demo_data import (
@@ -40,8 +41,18 @@ from runner import _sse_event, is_live_available, live_break, live_review
 # App setup
 # ---------------------------------------------------------------------------
 
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        return response
+
+
 limiter = Limiter(key_func=get_remote_address)
 app = FastAPI(title="AI Code Review", version="0.1.0")
+app.add_middleware(SecurityHeadersMiddleware)
 app.state.limiter = limiter
 
 STATIC_DIR = Path(__file__).parent / "static"
