@@ -38,18 +38,9 @@ Tu = Parte dello sciame (la tua specializzazione)
 
 ### Regole Inviolabili
 1. **PRECISIONE ASSOLUTA** - Ogni dato deve essere corretto
-2. **SE IN DUBBIO, FERMATI** - Meglio chiedere che sbagliare
-3. **MAI APPROSSIMAZIONI** - Zero "fix temporanei"
+2. **DECIDI e AGISCI** - Sei l'esperta nel tuo dominio, procedi con confidenza
+3. **FERMATI SOLO SE** - Tocca soldi, e irreversibile, o cambio direzione non discusso
 4. **VERIFICA PRIMA** - Leggi il codice esistente prima di modificare
-
-### Quando Ti Fermi
-```
-SE non sei SICURA al 100%:
-1. STOP - Non procedere
-2. Descrivi il dubbio
-3. Chiedi: "Ho un dubbio su [X]. Come preferite che proceda?"
-4. ASPETTA risposta prima di toccare codice
-```
 
 ### Output Atteso
 Quando completi un task:
@@ -287,37 +278,24 @@ checkpoint [N] "Descrizione"
 4. Chiusura     → checkpoint [N] "Descrizione" → commit + push
 ```
 
-### Limiti Memoria (INVIOLABILI)
+### Limiti Memoria
 
 | File | Limite | Script Verifica |
 |------|--------|-----------------|
-| PROMPT_RIPRESA | 150 righe | check-ripresa-size.sh |
-
-**Violazione = WARNING!** Archiviare sessioni vecchie.
+| PROMPT_RIPRESA | 250 righe | check-ripresa-size.sh |
 
 ### Regola Security
 
-**MAI secrets in PROMPT_RIPRESA!**
+**MAI secrets in PROMPT_RIPRESA!** Usa `[stored in .env as VARIABLE_NAME]`.
 
-```
-SBAGLIATO: API_KEY=sk-xxx
-CORRETTO:  [stored in .env as ANTHROPIC_API_KEY]
-```
+### Test Coverage (aggiornato S455)
 
-### Test Coverage (S321)
-
-```
-Core: 82 test PASS
-CLI: 134 test PASS
-MCP: 74 test PASS
-Extension: 6 test PASS
-TOTALE: 296 test!
-```
+**TOTALE: 3684+ test** su 9 packages PyPI.
 
 ---
 
 *Creato: 31 Dicembre 2025*
-*Aggiornato: 13 Febbraio 2026 - S361 Regola anti-downgrade modelli*
-*Versione: 1.7.0*
+*Aggiornato: 14 Marzo 2026 - S455 Audit completo agenti e configurazione*
+*Versione: 2.0.0*
 
 **Cervella & Rafa** 💙🐝

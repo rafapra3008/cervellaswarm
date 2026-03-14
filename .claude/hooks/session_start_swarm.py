@@ -5,8 +5,8 @@ Hook SessionStart CervellaSwarm - Caricamento Contesto Sciame
 Inietta SOLO info essenziali (puntatori, warnings). NON ripete contenuto
 gia' presente in CLAUDE.md, MEMORY.md o auto-caricato dal system-reminder.
 
-Versione: 3.1.0
-Data: 2026-02-28
+Versione: 3.2.0
+Data: 2026-03-14
 Cervella & Rafa
 
 v2.0.0 - Aggiunta COSTITUZIONE obbligatoria!
@@ -56,10 +56,10 @@ def check_prompt_ripresa_age(file_path: Path, max_days: int = 7) -> tuple:
         return False, 0
 
 
-def check_handoff_age(handoff_dir: Path, project_name: str, max_days: int = 3) -> tuple:
+def check_handoff_age(handoff_dir: Path, project_name: str, max_days: int = 7) -> tuple:
     """
     Verifica se ultimo handoff per il progetto e' troppo vecchio.
-    SNCP 2.0 - Warning se > 3 giorni senza handoff.
+    SNCP 2.0 - Nota se > 7 giorni senza handoff.
 
     Returns: (is_old, days_old, last_handoff_name)
     """
@@ -117,15 +117,15 @@ def main():
         prompt_ripresa_path = PROJECT_ROOT / ".sncp/progetti/cervellaswarm/PROMPT_RIPRESA_cervellaswarm.md"
         is_pr_old, pr_days = check_prompt_ripresa_age(prompt_ripresa_path, max_days=7)
         if is_pr_old:
-            context_parts.append(f"WARNING SNCP: PROMPT_RIPRESA non aggiornato da {pr_days} giorni - aggiornare a fine sessione.")
+            context_parts.append(f"Nota SNCP: PROMPT_RIPRESA non aggiornato da {pr_days} giorni.")
             context_parts.append("")
 
-        # Warning: handoff mancante
+        # Nota: handoff vecchio (informativo, non allarmante)
         handoff_dir = PROJECT_ROOT / ".swarm/handoff"
-        is_handoff_old, handoff_days, last_handoff = check_handoff_age(handoff_dir, "cervellaswarm", max_days=3)
+        is_handoff_old, handoff_days, last_handoff = check_handoff_age(handoff_dir, "cervellaswarm", max_days=7)
         if is_handoff_old and handoff_days > 0:
             last = f" (ultimo: {last_handoff})" if last_handoff else ""
-            context_parts.append(f"WARNING SNCP: Ultimo handoff {handoff_days} giorni fa{last} - creare handoff a fine sessione.")
+            context_parts.append(f"Nota SNCP: Ultimo handoff {handoff_days} giorni fa{last}.")
             context_parts.append("")
 
         context_md = "\n".join(context_parts)

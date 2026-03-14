@@ -42,8 +42,16 @@ def main():
         # Timestamp
         ts = datetime.now().isoformat()
 
-        # Log di debug
+        # Log di debug (con rotazione: max 1000 righe)
         debug_file = LOGS_DIR / "subagent_stop_debug.log"
+        # Rotazione: se > 1000 righe, tieni solo le ultime 500
+        if debug_file.exists():
+            try:
+                lines = debug_file.read_text().splitlines()
+                if len(lines) > 1000:
+                    debug_file.write_text("\n".join(lines[-500:]) + "\n")
+            except Exception:
+                pass
         with open(debug_file, "a") as f:
             f.write(f"\n{'='*60}\n")
             f.write(f"TIMESTAMP: {ts}\n")
