@@ -1,7 +1,7 @@
 # Show HN v2 Draft - Lingua Universale
 
-> **Status:** DRAFT (aggiornato S454 con VS Code Marketplace)
-> **Preparato:** Sessione 449, aggiornato S454 - 14 Marzo 2026
+> **Status:** READY (Regina review S455 - titolo fixato, lancio 18 Marzo)
+> **Preparato:** Sessione 449, aggiornato S455 - 14 Marzo 2026
 > **Focus:** LU come linguaggio di programmazione per AI
 
 ---
@@ -9,7 +9,7 @@
 ## TITOLO
 
 ```
-Show HN: Lingua Universale – A programming language for verified AI agent communication (3684 tests, zero deps)
+Show HN: Lingua Universale – A language for verified AI agent protocols
 ```
 
 ---
@@ -34,11 +34,11 @@ It compiles to Python and generates Lean 4 proofs.
 
 What's real (not a pitch, just facts):
 
-  - 3684 tests, 29 modules, ZERO external dependencies (pure stdlib)
+  - 3684 tests, 31 modules, ZERO external dependencies (pure stdlib)
   - Full compiler: tokenizer -> parser (64 rules) -> AST -> contract checker -> codegen
   - 9 verified property kinds (always_terminates, no_deadlock, no_deletion, role_exclusive...)
   - 20 standard library protocols (AI/ML, Business, Communication, Data, Security)
-  - LSP server with diagnostics, hover, completion, go-to-def, lint, formatting
+  - LSP server with diagnostics, hover, completion, go-to-def, formatting
   - VS Code extension on Marketplace: search "Lingua Universale" in Extensions
   - Linter (10 rules) + formatter (zero-config, like gofmt)
   - CI gate: `lu fmt --check` + `lu lint` enforce style on every push
@@ -81,7 +81,7 @@ VS Code: search "Lingua Universale" in Extensions marketplace
 | 134 tests | 3684 tests |
 | CLI tool | Full compiler + LSP + linter + formatter |
 | No formal verification | 9 PropertyKind + Lean 4 |
-| No language server | LSP with 6 features |
+| No language server | LSP with 5 features |
 | No NL interface | 3-language NL pipeline |
 | No voice | Local STT voice input |
 | No stdlib | 20 verified protocols |

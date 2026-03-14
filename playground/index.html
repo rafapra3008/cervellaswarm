@@ -1083,6 +1083,163 @@
         padding: 14px;
       }
     }
+
+
+    /* ============================================================
+       CHAT TAB
+    ============================================================ */
+
+    .output-tab-bar {
+      display: flex;
+      align-items: stretch;
+    }
+
+    .output-tab {
+      padding: 0 16px;
+      height: 36px;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color var(--t-fast), border-color var(--t-fast);
+    }
+
+    .output-tab:hover {
+      color: var(--text-secondary);
+    }
+
+    .output-tab.active {
+      color: var(--accent-blue);
+      border-bottom-color: var(--accent-blue);
+    }
+
+    #chat-panel {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--bg-base);
+    }
+
+    #chat-panel.visible {
+      display: flex;
+    }
+
+    #chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #chat-messages::-webkit-scrollbar { width: 6px; }
+    #chat-messages::-webkit-scrollbar-track { background: transparent; }
+    #chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    .chat-bubble {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+      animation: fadeIn 0.15s ease;
+    }
+
+    .chat-bubble.system {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      align-self: flex-start;
+      border-bottom-left-radius: 3px;
+    }
+
+    .chat-bubble.user {
+      background: var(--accent-blue);
+      color: var(--text-on-accent);
+      align-self: flex-end;
+      border-bottom-right-radius: 3px;
+    }
+
+    #chat-controls {
+      flex-shrink: 0;
+      padding: 12px 16px;
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    #chat-lang-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #chat-lang {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    #chat-input-row {
+      display: none;
+      gap: 8px;
+      align-items: center;
+    }
+
+    #chat-input-row.visible {
+      display: flex;
+    }
+
+    #chat-input {
+      flex: 1;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      padding: 8px 12px;
+      font-size: 13px;
+      font-family: var(--font-ui);
+      outline: none;
+      transition: border-color var(--t-fast);
+    }
+
+    #chat-input:focus {
+      border-color: var(--accent-blue);
+    }
+
+    #chat-input:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    #btn-chat-send {
+      flex-shrink: 0;
+    }
+
+    .chat-done-banner {
+      padding: 8px 14px;
+      background: var(--accent-green);
+      color: var(--text-on-accent);
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -1266,17 +1423,14 @@
 
     <!-- OUTPUT PANE -->
     <div id="output-pane">
-      <div class="pane-header">
-        <div class="pane-label">
-          <!-- Terminal icon -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-2h16v2zm0-4H4V6h16v8zM6 10.5l1.5-1.5-1.5-1.5L7.5 6 11 9.5 7.5 13 6 11.5zm5.5 1.5h4v-2h-4v2z"/>
-          </svg>
-          Output
+      <div class="pane-header" style="padding: 0;">
+        <div class="output-tab-bar" role="tablist">
+          <button class="output-tab active" id="tab-output" role="tab" aria-selected="true" aria-controls="output-area">Output</button>
+          <button class="output-tab" id="tab-chat" role="tab" aria-selected="false" aria-controls="chat-panel">Chat</button>
         </div>
-        <div class="pane-info" id="output-timing"></div>
+        <div class="pane-info" id="output-timing" style="padding-right: 14px;"></div>
       </div>
-      <div id="output-area" aria-live="polite" aria-label="Execution output">
+      <div id="output-area" role="tabpanel" aria-labelledby="tab-output" aria-live="polite" aria-label="Execution output">
         <div class="output-empty" id="output-empty">
           <!-- Placeholder icon -->
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1284,6 +1438,28 @@
           </svg>
           <p>Press <strong>Check</strong> to validate or <strong>Run</strong> to execute</p>
           <p class="hint">Results will appear here</p>
+        </div>
+      </div>
+
+      <!-- CHAT PANEL -->
+      <div id="chat-panel" role="tabpanel" aria-labelledby="tab-chat" aria-label="Chat protocol builder">
+        <div id="chat-messages" aria-live="polite"></div>
+        <div id="chat-controls">
+          <div id="chat-lang-row">
+            <select id="chat-lang" aria-label="Language">
+              <option value="en">English</option>
+              <option value="it">Italiano</option>
+              <option value="pt">Portugues</option>
+            </select>
+            <button class="btn btn-check" id="btn-chat-start">Start Chat</button>
+          </div>
+          <div id="chat-input-row">
+            <input id="chat-input" type="text"
+                   placeholder="Type your answer..."
+                   aria-label="Chat input"
+                   autocomplete="off" />
+            <button class="btn btn-check" id="btn-chat-send">Send</button>
+          </div>
         </div>
       </div>
 
@@ -1417,6 +1593,24 @@ const dom = {
 };
 
 dom.statusDot = dom.statusBadge.querySelector(".status-dot");
+
+
+// ============================================================
+// CHAT TAB - DOM REFERENCES
+// ============================================================
+
+const chatDom = {
+  tabOutput:    $("tab-output"),
+  tabChat:      $("tab-chat"),
+  chatPanel:    $("chat-panel"),
+  chatMessages: $("chat-messages"),
+  chatLang:     $("chat-lang"),
+  chatLangRow:  $("chat-lang-row"),
+  chatInputRow: $("chat-input-row"),
+  chatInput:    $("chat-input"),
+  btnChatStart: $("btn-chat-start"),
+  btnChatSend:  $("btn-chat-send"),
+};
 
 
 // ============================================================
@@ -2444,6 +2638,181 @@ dom.btnClear.addEventListener("click", () => {
 window.addEventListener("resize", () => {
   if (state.editor) {
     state.editor.layout();
+  }
+});
+
+
+// ============================================================
+// CHAT TAB
+// ============================================================
+
+const chatState = {
+  active: false,
+  done: false,
+};
+
+function switchToOutputTab() {
+  chatDom.tabOutput.classList.add("active");
+  chatDom.tabChat.classList.remove("active");
+  chatDom.tabOutput.setAttribute("aria-selected", "true");
+  chatDom.tabChat.setAttribute("aria-selected", "false");
+  dom.outputArea.style.display = "";
+  chatDom.chatPanel.classList.remove("visible");
+}
+
+function switchToChatTab() {
+  chatDom.tabChat.classList.add("active");
+  chatDom.tabOutput.classList.remove("active");
+  chatDom.tabChat.setAttribute("aria-selected", "true");
+  chatDom.tabOutput.setAttribute("aria-selected", "false");
+  dom.outputArea.style.display = "none";
+  chatDom.chatPanel.classList.add("visible");
+}
+
+chatDom.tabOutput.addEventListener("click", switchToOutputTab);
+chatDom.tabChat.addEventListener("click", switchToChatTab);
+
+function addChatBubble(speaker, text) {
+  const bubble = document.createElement("div");
+  bubble.className = "chat-bubble " + speaker;
+  bubble.textContent = text;
+  chatDom.chatMessages.appendChild(bubble);
+  chatDom.chatMessages.scrollTop = chatDom.chatMessages.scrollHeight;
+}
+
+async function startChatSession() {
+  if (!state.ready) {
+    addChatBubble("system", "Pyodide not ready yet. Please wait...");
+    return;
+  }
+
+  const lang = chatDom.chatLang.value;
+
+  chatDom.btnChatStart.disabled = true;
+  chatDom.chatLang.disabled = true;
+
+  chatDom.chatMessages.innerHTML = "";
+  chatState.done = false;
+  chatState.active = false;
+
+  try {
+    await state.pyodide.runPythonAsync(`
+import re as _re_chat
+from cervellaswarm_lingua_universale._intent_bridge import ChatSession, ChatPhase, _t
+
+_ANSI_CHAT = _re_chat.compile(r'\\x1b\\[[0-9;]*m')
+
+def _chat_strip(s):
+    return _ANSI_CHAT.sub('', str(s))
+
+_chat_session = ChatSession(
+    lang=${JSON.stringify(lang)},
+    output_fn=lambda *a, **kw: None,
+)
+# Skip WELCOME phase (no handler in _handle()). Same as run() line 738.
+_chat_session._phase = ChatPhase.ROLES
+_chat_lang = ${JSON.stringify(lang)}
+`);
+
+    const welcome = state.pyodide.runPython(
+      `_chat_strip(_t("welcome", _chat_lang))`
+    );
+    const firstQuestion = state.pyodide.runPython(
+      `_chat_strip(_t("ask_name", _chat_lang))`
+    );
+
+    addChatBubble("system", welcome);
+    addChatBubble("system", firstQuestion);
+
+    chatState.active = true;
+
+    chatDom.chatInputRow.classList.add("visible");
+    chatDom.chatInput.disabled = false;
+    chatDom.chatInput.focus();
+
+  } catch (err) {
+    console.error("Chat init error:", err);
+    addChatBubble("system", "Error: " + (err.message || String(err)));
+    chatDom.btnChatStart.disabled = false;
+    chatDom.chatLang.disabled = false;
+  }
+}
+
+function sendChatMessage() {
+  if (!chatState.active || chatState.done) return;
+
+  const text = chatDom.chatInput.value.trim();
+  if (!text) return;
+
+  chatDom.chatInput.value = "";
+  addChatBubble("user", text);
+
+  try {
+    const response = state.pyodide.runPython(
+      `_chat_strip(_chat_session.process_input(${JSON.stringify(text)}))`
+    );
+
+    if (response) {
+      addChatBubble("system", response);
+    }
+
+    const phase = state.pyodide.runPython(`_chat_session.phase.name`);
+
+    if (phase === "DONE") {
+      onChatDone();
+    }
+
+  } catch (err) {
+    console.error("Chat send error:", err);
+    addChatBubble("system", "Error: " + (err.message || String(err)));
+  }
+}
+
+function onChatDone() {
+  chatState.done = true;
+
+  chatDom.chatInput.disabled = true;
+  chatDom.btnChatSend.disabled = true;
+
+  let luSource = "";
+  try {
+    luSource = state.pyodide.runPython(
+      `_chat_session.result.intent_source if _chat_session.result else ""`
+    );
+  } catch (e) {
+    console.warn("Could not extract intent_source:", e);
+  }
+
+  if (luSource && state.editor) {
+    state.editor.setValue(luSource);
+    dom.editorInfo.textContent = "chat-generated.lu";
+
+    const banner = document.createElement("div");
+    banner.className = "chat-done-banner";
+    banner.textContent = {
+      en: "Protocol created! See the editor.",
+      it: "Protocollo creato! Vedi l'editor.",
+      pt: "Protocolo criado! Veja o editor.",
+    }[chatDom.chatLang.value] || "Protocol created!";
+    chatDom.chatMessages.appendChild(banner);
+    chatDom.chatMessages.scrollTop = chatDom.chatMessages.scrollHeight;
+
+    switchToOutputTab();
+    setTimeout(() => { dom.btnCheck.click(); }, 100);
+  }
+
+  // Re-enable start for new session
+  chatDom.btnChatStart.disabled = false;
+  chatDom.chatLang.disabled = false;
+}
+
+chatDom.btnChatStart.addEventListener("click", startChatSession);
+chatDom.btnChatSend.addEventListener("click", sendChatMessage);
+
+chatDom.chatInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendChatMessage();
   }
 });
 
