@@ -1,7 +1,7 @@
 # Show HN v2 Draft - Lingua Universale
 
-> **Status:** READY (Regina review S455 - titolo fixato, lancio 18 Marzo)
-> **Preparato:** Sessione 449, aggiornato S455 - 14 Marzo 2026
+> **Status:** READY (updated S463 - 5/5 showcase LIVE, all links verified)
+> **Preparato:** Sessione 449, aggiornato S463 - 14 Marzo 2026
 > **Focus:** LU come linguaggio di programmazione per AI
 
 ---
@@ -59,10 +59,12 @@ What I'd love feedback on:
 2. The linter + formatter story -- useful for a DSL this young?
 3. Would you use `lu init --template rag_pipeline` to scaffold AI protocols?
 
-See it in action:
+See it in action (5 interactive demos):
+  AI Code Review: https://lu-code-review.fly.dev/ (paste code, 4 AI agents review it with verified protocol)
   Live Debugger: https://lu-debugger.fly.dev/ (3 AI agents, click "Break" to see a violation blocked)
   Interactive Tour: https://rafapra3008.github.io/cervellaswarm/?tour (learn LU in 10 min)
   $34K Bug Story: https://rafapra3008.github.io/cervellaswarm/incident.html (why protocols matter)
+  Protocol Zoo: https://rafapra3008.github.io/cervellaswarm/zoo.html (20 verified protocols to explore)
 
 Try it:
   pip install cervellaswarm-lingua-universale
@@ -93,8 +95,9 @@ Discord: DISCORD_LINK_HERE
 | No stdlib | 20 verified protocols |
 | No playground | Browser playground LIVE |
 | No IDE support | VS Code extension on Marketplace |
-| No live demos | 3 interactive showcases LIVE |
-| No community | Agent on Moltbook (1.6M AI agents) |
+| No live demos | 5 interactive showcases LIVE |
+| No code review | AI Code Review: 4 agents + verified protocol |
+| No community | Agent on Moltbook (1.6M AI agents, karma 23) |
 
 ### Messaggi chiave per HN
 
@@ -106,8 +109,10 @@ Discord: DISCORD_LINK_HERE
 6. **"gofmt for session types"** -- linter/formatter story resonates.
 7. **"VS Code Marketplace"** -- Legitimate tooling, not just a CLI.
 8. **"$34K bug prevention"** -- Incident Replay makes it visceral and real.
-9. **"Missing verification layer for MCP/A2A"** -- Positions LU in the protocol wars.
-10. **"AI agents already using it"** -- Moltbook presence = social proof.
+9. **"Paste your code, 4 AI agents review it"** -- AI Code Review is the hook. Try it live.
+10. **"Missing verification layer for MCP/A2A"** -- Positions LU in the protocol wars.
+11. **"AI agents already using it"** -- Moltbook presence = social proof.
+12. **"5 live demos"** -- Nobody else has this much to show. Proof of depth.
 
 ### Timing suggerito
 

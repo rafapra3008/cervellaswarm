@@ -1,8 +1,8 @@
 # MAPPA 5 PROGETTI -- Showcase Lingua Universale
 
-> **Data:** 14 Marzo 2026
-> **Obiettivo:** Costruire 5 progetti REALI con LU prima del lancio al mondo.
-> **Regola:** Uno alla volta. Finisci. Audit. Prossimo.
+> **Data:** 14 Marzo 2026 (aggiornato S463)
+> **Obiettivo:** 5 progetti REALI con LU -- **TUTTI LIVE!**
+> **Status:** 5/5 DONE. Show HN window: 21-28 Marzo.
 
 ---
 

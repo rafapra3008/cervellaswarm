@@ -1,8 +1,18 @@
 ---
 name: lingua-universale
+version: 0.1.0
 description: Verify agent-to-agent communication against session type protocols. Mathematical proofs, not trust.
+author: CervellaSwarm
+homepage: https://github.com/rafapra3008/cervellaswarm
+tags: [protocol-verification, session-types, mcp, ai-agents, formal-methods]
 user-invocable: true
-metadata: {"openclaw":{"emoji":"🔬","requires":{"bins":["uvx"],"env":[]}}}
+metadata:
+  clawdbot:
+    emoji: "🔬"
+    requires:
+      bins:
+        - uvx
+      env: []
 ---
 
 # Lingua Universale - Protocol Verification Skill
