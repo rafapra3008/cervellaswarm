@@ -167,7 +167,7 @@ HANDOFF_YYYYMMDD_{progetto}_S{N}.md
 | | PROMPT_RIPRESA | Handoff |
 |--|----------------|---------|
 | **Purpose** | Quick context resume | Detailed session record |
-| **Length** | Max 150 lines | As needed |
+| **Length** | Max 250 lines | As needed |
 | **Updated** | Every session | Every significant session |
 | **Contains** | Current state, next steps | Full session narrative |
 | **Read by** | Agent at start | Human/agent when needed |
@@ -257,7 +257,7 @@ cat .sncp/progetti/my-project/PROMPT_RIPRESA.md
 ## Best Practices
 
 ### 1. Keep PROMPT_RIPRESA.md Concise
-**Problem:** Files > 150 lines slow down session start.
+**Problem:** Files > 250 lines slow down session start.
 **Solution:** Archive old sessions regularly.
 
 ```bash
@@ -307,7 +307,7 @@ Yes. Commit SNCP files to track project memory over time. `.gitignore` already e
 Technically yes, but you lose automatic hooks and agent integration. It's designed for the swarm.
 
 **Q: What if PROMPT_RIPRESA.md gets too long?**
-Archive it. Move old content to `archivio/` and keep only recent context (< 150 lines recommended).
+Archive it. Move old content to `archivio/` and keep only recent context (< 250 lines recommended).
 
 **Q: Can multiple projects share SNCP?**
 Each project gets isolated memory in `.sncp/progetti/project-name/`. Projects don't interfere.

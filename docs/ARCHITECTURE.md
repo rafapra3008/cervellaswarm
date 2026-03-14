@@ -324,7 +324,7 @@ AI agents are stateless - they forget everything between sessions. SNCP solves t
 .sncp/
 ├── progetti/
 │   ├── project-a/
-│   │   ├── PROMPT_RIPRESA_project-a.md  # Resume instructions (max 150 lines)
+│   │   ├── PROMPT_RIPRESA_project-a.md  # Resume instructions (max 250 lines)
 │   │   ├── archivio/                     # Archived sessions
 │   │   └── roadmaps/                     # Plans
 │   └── project-b/
@@ -351,7 +351,7 @@ Session End:
 ```
 
 **File Size Limits** (enforced by hooks):
-- `PROMPT_RIPRESA_*.md`: 150 lines max (300 in CervellaSwarm)
+- `PROMPT_RIPRESA_*.md`: 250 lines max
 
 When limits exceeded, archive old sessions to `archivio/`.
 
@@ -463,7 +463,7 @@ User Project
 
 - **Agents:** 17 (1 Regina + 3 Guardians + 1 Architect + 2 Analysts + 10 Workers)
 - **Parallel Workers:** Up to 5 simultaneously
-- **Context Size:** ~150 lines per PROMPT_RIPRESA
+- **Context Size:** ~250 lines per PROMPT_RIPRESA
 - **API Model:** Anthropic Claude (Opus/Sonnet)
 
 ### Cost Management
