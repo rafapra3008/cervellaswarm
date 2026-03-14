@@ -85,6 +85,40 @@ function saveTourProgress() {
 }
 
 // ============================================================
+// COMPLETION TRACKING
+// ============================================================
+
+/**
+ * Mark the current tour step as completed (Check/Run succeeded).
+ * Called from index.html after successful output in tour mode.
+ */
+function markTourStepCompleted() {
+  var steps = getTourSteps();
+  var step = steps[tourState.currentStep];
+  if (!step) return;
+  tourState.progress[step.id] = "done";
+  saveTourProgress();
+
+  // Celebration on the very last step
+  if (tourState.currentStep === steps.length - 1) {
+    var resultEl = $("tour-result");
+    if (resultEl && !resultEl.querySelector(".tour-celebration")) {
+      var cel = document.createElement("div");
+      cel.className = "tour-celebration";
+      cel.innerHTML =
+        '<strong>You completed the Tour of Lingua Universale!</strong><br>' +
+        'Install: <code>pip install cervellaswarm-lingua-universale</code><br>' +
+        '<a href="https://lu-debugger.fly.dev/" target="_blank">Watch AI agents live</a> | ' +
+        '<a href="https://pypi.org/project/cervellaswarm-lingua-universale/" target="_blank">PyPI</a>';
+      resultEl.appendChild(cel);
+    }
+  }
+}
+
+// Expose for index.html
+window.markTourStepCompleted = markTourStepCompleted;
+
+// ============================================================
 // LIGHTWEIGHT MARKDOWN RENDERER
 // ============================================================
 
@@ -298,7 +332,7 @@ function renderChaptersOverlay() {
 
     var desc = document.createElement("div");
     desc.className = "ch-desc";
-    var completed = ch.steps.filter(function (s) { return tourState.progress[s.id]; }).length;
+    var completed = ch.steps.filter(function (s) { return tourState.progress[s.id] === "done"; }).length;
     desc.textContent = completed + " / " + ch.steps.length + " completed — " + ch.description;
     card.appendChild(desc);
 
@@ -308,7 +342,8 @@ function renderChaptersOverlay() {
     ch.steps.forEach(function (s, i) {
       var dot = document.createElement("div");
       dot.className = "ch-dot";
-      if (tourState.progress[s.id]) dot.classList.add("completed");
+      if (tourState.progress[s.id] === "done") dot.classList.add("completed");
+      else if (tourState.progress[s.id]) dot.classList.add("visited");
       if (globalIdx + i === tourState.currentStep) dot.classList.add("current");
       dots.appendChild(dot);
     });

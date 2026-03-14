@@ -2107,6 +2107,10 @@ function renderOutput(result, mode, elapsed) {
 
   if (result.ok) {
     renderSuccess(container, result, mode);
+    // Mark tour step as completed on success
+    if (typeof tourState !== "undefined" && tourState.active && typeof markTourStepCompleted === "function") {
+      markTourStepCompleted();
+    }
   } else {
     renderError(container, result);
   }

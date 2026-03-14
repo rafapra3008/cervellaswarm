@@ -267,8 +267,44 @@
 .ch-dot.completed {
   background: var(--accent-green);
 }
+.ch-dot.visited {
+  background: rgba(166, 173, 186, 0.5);
+}
 .ch-dot.current {
   background: var(--accent-blue);
+}
+
+/* Tour celebration */
+.tour-celebration {
+  margin-top: 16px;
+  padding: 16px;
+  background: rgba(166, 227, 161, 0.1);
+  border: 1px solid var(--accent-green);
+  border-radius: var(--radius-md);
+  text-align: center;
+  line-height: 1.8;
+  animation: fadeIn 0.5s ease;
+}
+.tour-celebration strong {
+  color: var(--accent-green);
+  font-size: 15px;
+}
+.tour-celebration code {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(166, 227, 161, 0.15);
+  font-size: 12px;
+}
+.tour-celebration a {
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+.tour-celebration a:hover {
+  text-decoration: underline;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Responsive */
