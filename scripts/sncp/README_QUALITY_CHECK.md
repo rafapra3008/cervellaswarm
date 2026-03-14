@@ -54,10 +54,10 @@ Cerca:
 ### 4. Conciseness (20%)
 **"Rispetta limiti di righe?"**
 
-- < 100 righe: 10/10
-- 100-150 righe: 8/10 + warning
-- 150-200 righe: 4/10 + WARNING
-- > 200 righe: 0/10 + ERROR
+- < 200 righe: 10/10
+- 200-250 righe: 8/10 + warning
+- 250-300 righe: 4/10 + WARNING
+- > 300 righe: 0/10 + ERROR
 
 ## Usage
 

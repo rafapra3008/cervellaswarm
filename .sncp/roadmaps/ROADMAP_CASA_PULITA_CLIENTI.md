@@ -46,7 +46,7 @@ Portare i miglioramenti di Casa Pulita (interni) nel prodotto per i clienti.
 
 1. **PROMPT_RIPRESA template** - aggiungere commento limiti:
 ```markdown
-<!-- LIMITI: Questo file deve restare < 150 righe -->
+<!-- LIMITI: Questo file deve restare < 250 righe -->
 <!-- Se cresce troppo, archivia sessioni vecchie in .sncp/archivio/ -->
 ```
 
@@ -62,7 +62,7 @@ Portare i miglioramenti di Casa Pulita (interni) nel prodotto per i clienti.
 
 > *"Casa pulita = mente pulita = lavoro pulito!"*
 
-- PROMPT_RIPRESA: max 150 righe (archivia il vecchio)
+- PROMPT_RIPRESA: max 250 righe (archivia il vecchio)
 - stato.md: max 500 righe (compatta periodicamente)
 - reports/: archivia file > 30 giorni
 
@@ -132,7 +132,7 @@ cervellaswarm housekeeping
 - Less token usage = lower costs
 
 ## The Rules
-1. PROMPT_RIPRESA: max 150 lines
+1. PROMPT_RIPRESA: max 250 lines
 2. stato.md: max 500 lines
 3. Archive reports older than 30 days
 

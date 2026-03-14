@@ -123,8 +123,8 @@ print_project_stats() {
 
     local total_files=$(count_files "$project_dir")
     local obsolete=$(count_obsolete "$project_dir")
-    local stato_lines=$(get_line_count "$project_dir/stato.md")
-    local stato_date=$(get_file_age "$project_dir/stato.md")
+    local ripresa_file="$project_dir/PROMPT_RIPRESA_${project}.md"
+    local ripresa_lines=$(get_line_count "$ripresa_file")
 
     # Status indicator
     local status_icon="${GREEN}OK${NC}"
@@ -134,16 +134,16 @@ print_project_stats() {
         status_icon="${YELLOW}! ${NC}"
     fi
 
-    # stato.md size check
-    local stato_icon="${GREEN}OK${NC}"
-    if [ "$stato_lines" -gt 300 ]; then
-        stato_icon="${RED}!!${NC}"
-    elif [ "$stato_lines" -gt 200 ]; then
-        stato_icon="${YELLOW}! ${NC}"
+    # PROMPT_RIPRESA size check (max 250 righe)
+    local ripresa_icon="${GREEN}OK${NC}"
+    if [ "$ripresa_lines" -gt 250 ]; then
+        ripresa_icon="${RED}!!${NC}"
+    elif [ "$ripresa_lines" -gt 200 ]; then
+        ripresa_icon="${YELLOW}! ${NC}"
     fi
 
-    printf "  %-15s | %3d files | stato: %3d righe [%b] | obsoleti: %2d [%b]\n" \
-        "$project" "$total_files" "$stato_lines" "$stato_icon" "$obsolete" "$status_icon"
+    printf "  %-15s | %3d files | ripresa: %3d righe [%b] | obsoleti: %2d [%b]\n" \
+        "$project" "$total_files" "$ripresa_lines" "$ripresa_icon" "$obsolete" "$status_icon"
 }
 
 # Print global stats
@@ -154,14 +154,13 @@ print_global_stats() {
     local total_files=$(count_files "$SNCP_ROOT")
     local total_obsolete=$(count_obsolete "$SNCP_ROOT")
 
-    # oggi.md DEPRECATO (SNCP 2.0 - Sessione 297)
-    # Ora mostriamo solo statistiche generali
+    # SNCP 5.0: solo PROMPT_RIPRESA + NORD.md (stato.md/oggi.md eliminati S357)
 
     echo -e "  ${CYAN}SNCP Root:${NC} $SNCP_ROOT"
     echo -e "  ${CYAN}Totale file MD:${NC} $total_files"
     echo -e "  ${CYAN}File obsoleti (>30gg):${NC} $total_obsolete"
     echo ""
-    echo -e "  ${CYAN}Sistema:${NC} SNCP 2.0 (PROMPT_RIPRESA + Handoff)"
+    echo -e "  ${CYAN}Sistema:${NC} SNCP 5.0 (PROMPT_RIPRESA + NORD.md)"
 }
 
 # Print projects section
@@ -169,7 +168,7 @@ print_projects_section() {
     echo ""
     echo -e "${BLUE}--- PROGETTI ---${NC}"
     echo ""
-    echo "  Progetto        | Files    | stato.md         | Obsoleti"
+    echo "  Progetto        | Files    | PROMPT_RIPRESA   | Obsoleti"
     echo "  ----------------|----------|------------------|----------"
 
     for proj in miracollo cervellaswarm contabilita; do
@@ -185,9 +184,6 @@ print_recommendations() {
 
     local recommendations=0
 
-    # oggi.md DEPRECATO (SNCP 2.0 - Sessione 297)
-    # Ora controlliamo PROMPT_RIPRESA e stato.md
-
     # Check obsolete files
     local total_obsolete=$(count_obsolete "$SNCP_ROOT")
     if [ "$total_obsolete" -gt 10 ]; then
@@ -195,25 +191,16 @@ print_recommendations() {
         ((recommendations++))
     fi
 
-    # Check projects stato.md e PROMPT_RIPRESA
+    # Check PROMPT_RIPRESA size (max 250 righe)
     for proj in miracollo cervellaswarm contabilita; do
-        local stato_file="$SNCP_ROOT/progetti/$proj/stato.md"
-        if [ -f "$stato_file" ]; then
-            local lines=$(get_line_count "$stato_file")
-            if [ "$lines" -gt 500 ]; then
-                echo -e "  ${RED}[!]${NC} $proj/stato.md ha $lines righe > 500 - SERVE COMPACTION!"
-                ((recommendations++))
-            elif [ "$lines" -gt 400 ]; then
-                echo -e "  ${YELLOW}[!]${NC} $proj/stato.md ha $lines righe - considera archiviazione"
-                ((recommendations++))
-            fi
-        fi
-
         local prompt_file="$SNCP_ROOT/progetti/$proj/PROMPT_RIPRESA_$proj.md"
         if [ -f "$prompt_file" ]; then
             local lines=$(get_line_count "$prompt_file")
-            if [ "$lines" -gt 150 ]; then
-                echo -e "  ${RED}[!]${NC} $proj/PROMPT_RIPRESA ha $lines righe > 150 - ARCHIVIA!"
+            if [ "$lines" -gt 250 ]; then
+                echo -e "  ${RED}[!]${NC} $proj/PROMPT_RIPRESA ha $lines righe > 250 - ARCHIVIA!"
+                ((recommendations++))
+            elif [ "$lines" -gt 200 ]; then
+                echo -e "  ${YELLOW}[!]${NC} $proj/PROMPT_RIPRESA ha $lines righe - si avvicina al limite"
                 ((recommendations++))
             fi
         fi
@@ -227,14 +214,13 @@ print_recommendations() {
 # Print summary score
 print_score() {
     echo ""
-    echo -e "${BLUE}--- SCORE SNCP 2.0 ---${NC}"
+    echo -e "${BLUE}--- SCORE SNCP 5.0 ---${NC}"
     echo ""
 
     local score=100
     local issues=""
 
-    # oggi.md DEPRECATO (SNCP 2.0 - Sessione 297)
-    # Score basato su: obsolete files, stato.md size, PROMPT_RIPRESA freshness
+    # Score basato su: obsolete files, PROMPT_RIPRESA size/freshness
 
     # Deduct for obsolete files
     local total_obsolete=$(count_obsolete "$SNCP_ROOT")
@@ -245,24 +231,12 @@ print_score() {
         score=$((score - 5))
     fi
 
-    # Deduct for stato.md size (any project)
-    for proj in miracollo cervellaswarm contabilita; do
-        local stato_file="$SNCP_ROOT/progetti/$proj/stato.md"
-        if [ -f "$stato_file" ]; then
-            local lines=$(get_line_count "$stato_file")
-            if [ "$lines" -gt 500 ]; then
-                score=$((score - 10))
-                issues="$issues ${proj}_stato_size"
-            fi
-        fi
-    done
-
-    # Deduct for PROMPT_RIPRESA too long
+    # Deduct for PROMPT_RIPRESA too long (max 250 righe)
     for proj in miracollo cervellaswarm contabilita; do
         local prompt_file="$SNCP_ROOT/progetti/$proj/PROMPT_RIPRESA_$proj.md"
         if [ -f "$prompt_file" ]; then
             local lines=$(get_line_count "$prompt_file")
-            if [ "$lines" -gt 150 ]; then
+            if [ "$lines" -gt 250 ]; then
                 score=$((score - 10))
                 issues="$issues ${proj}_prompt_size"
             fi
@@ -277,7 +251,7 @@ print_score() {
         score_color="${YELLOW}"
     fi
 
-    echo -e "  SNCP 2.0 Health Score: ${score_color}$score/100${NC}"
+    echo -e "  SNCP 5.0 Health Score: ${score_color}$score/100${NC}"
     echo ""
 
     # Visual bar

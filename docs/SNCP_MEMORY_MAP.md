@@ -13,7 +13,7 @@
 |                                                                |
 |   Hook automatici: SessionStart, SessionEnd                    |
 |   Script manuali: checkpoint, daily-log, audit-secrets         |
-|   Limiti: PROMPT_RIPRESA 150, stato.md 500 righe               |
+|   Limiti: PROMPT_RIPRESA 250 righe                             |
 +================================================================+
 ```
 
@@ -121,8 +121,7 @@ checkpoint 321 "Descrizione lavoro"
 
 ```
 .sncp/progetti/{progetto}/
-├── PROMPT_RIPRESA_{progetto}.md   # Context principale (150 righe MAX)
-├── stato.md                        # Status progetto (500 righe MAX)
+├── PROMPT_RIPRESA_{progetto}.md   # Context principale (250 righe MAX)
 ├── memoria/
 │   ├── 2026-01-30.md              # Daily log oggi
 │   └── archivio/                  # Log vecchi
@@ -151,7 +150,7 @@ checkpoint 321 "Descrizione lavoro"
 
 ```python
 # .claude/hooks/file_limits_guard.py
-# Verifica limiti file (150/500 righe)
+# Verifica limiti file (250/500 righe)
 
 # .claude/hooks/memory_flush_auto.py
 # Auto-save contesto worker (NEW S321)
@@ -170,7 +169,7 @@ checkpoint 321 "Descrizione lavoro"
 │    - NORD.md                                                │
 │    - PROMPT_RIPRESA_{progetto}.md                          │
 │                                                             │
-│ 2. Cervella verifica stato.md (se serve)                   │
+│ 2. Cervella verifica PROMPT_RIPRESA (se serve)             │
 └─────────────────────────────────────────────────────────────┘
                            │
                            ▼
@@ -208,13 +207,12 @@ checkpoint 321 "Descrizione lavoro"
 
 | File | Limite | Azione se Superato |
 |------|--------|-------------------|
-| PROMPT_RIPRESA | 150 righe | Archiviare in archivio/ |
-| stato.md | 500 righe | Condensare o archiviare |
+| PROMPT_RIPRESA | 250 righe | Archiviare in archivio/ |
 
 ### Regola Security
 
 ```
-MAI in PROMPT_RIPRESA o stato.md:
+MAI in PROMPT_RIPRESA:
 - API keys
 - Passwords
 - Tokens

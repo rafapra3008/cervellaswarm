@@ -111,32 +111,14 @@ check_file_sizes() {
         if [ -d "$project_dir" ]; then
             local project_name=$(basename "$project_dir")
 
-            # Check stato.md
-            local stato_file="$project_dir/stato.md"
-            if [ -f "$stato_file" ]; then
-                local lines=$(wc -l < "$stato_file" | tr -d ' ')
-
-                # AUTO-COMPACT se > 400 righe
-                if [ "$lines" -gt "$AUTO_COMPACT_TRIGGER" ]; then
-                    log "AUTO-COMPACT: $project_name/stato.md ha $lines righe (> $AUTO_COMPACT_TRIGGER)"
-                    if [ -x "$COMPACT_SCRIPT" ]; then
-                        "$COMPACT_SCRIPT" --auto "$stato_file" "$AUTO_COMPACT_TRIGGER" "$AUTO_COMPACT_KEEP" >> "$LOG_FILE" 2>&1 || true
-                        ((compacted_files++))
-                        log "  -> Compattato automaticamente"
-                    fi
-                # WARNING se > 300 righe
-                elif [ "$lines" -gt 300 ]; then
-                    log "WARNING: $project_name/stato.md ha $lines righe (max 300, auto-compact a $AUTO_COMPACT_TRIGGER)"
-                    ((large_files++))
-                fi
-            fi
+            # SNCP 5.0: stato.md eliminato (S357). Solo PROMPT_RIPRESA.
 
             # Check PROMPT_RIPRESA
             local pr_file="$project_dir/PROMPT_RIPRESA_${project_name}.md"
             if [ -f "$pr_file" ]; then
                 local pr_lines=$(wc -l < "$pr_file" | tr -d ' ')
-                if [ "$pr_lines" -gt 150 ]; then
-                    log "WARNING: $project_name/PROMPT_RIPRESA ha $pr_lines righe (max 150)"
+                if [ "$pr_lines" -gt 250 ]; then
+                    log "WARNING: $project_name/PROMPT_RIPRESA ha $pr_lines righe (max 250)"
                     ((large_files++))
                 fi
             fi

@@ -33,12 +33,11 @@
 ```
 .sncp/progetti/{nome_progetto}/
 ├── PROMPT_RIPRESA_{nome_progetto}.md  <- Stato sessioni (LEGGI QUESTO!)
-├── stato.md                           <- Stato tecnico progetto
 ├── CONFIG.md                          <- Configurazione e convenzioni
 ├── decisioni/                         <- Decisioni importanti
 ├── roadmaps/                          <- Piani e subroadmap
 ├── handoff/                           <- Sessioni parallele
-├── archivio/                          <- Sessioni vecchie (> 150 righe)
+├── archivio/                          <- Sessioni vecchie (> 250 righe)
 └── ricerche/                          <- Studi e analisi
 ```
 
@@ -90,16 +89,7 @@ Dopo aver eseguito `sncp-init`:
 - PUNTATORI -> Link a docs importanti
 ```
 
-### 3. Aggiorna stato.md
-
-```markdown
-# Info tecniche:
-- Stack reale (Python, React, etc.)
-- Comandi utili (dev, test, build)
-- Struttura cartelle
-```
-
-### 4. Inizia a lavorare!
+### 3. Inizia a lavorare!
 
 ```bash
 # Ogni inizio sessione, leggi:
@@ -173,9 +163,9 @@ Rispondi `y` per sovrascrivere, `n` per annullare.
 | Comando | Scopo |
 |---------|-------|
 | `pre-session-check.sh {progetto}` | Verifica salute SNCP a inizio sessione |
-| `check-ripresa-size.sh {progetto}` | Controlla limite 150 righe |
+| `check-ripresa-size.sh {progetto}` | Controlla limite 250 righe |
 | `health-check.sh` | Check completo di tutti i progetti |
-| `compact-state.sh {progetto}` | Compatta stato.md se troppo grande |
+| `consolidate-ripresa.sh {progetto}` | Consolida PROMPT_RIPRESA se troppo grande |
 
 ---
 

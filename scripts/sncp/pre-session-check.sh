@@ -99,7 +99,7 @@ check_project() {
     local normalized=$(echo "$project" | tr '-' '_' | tr '[:upper:]' '[:lower:]')
     local ripresa_file="$project_dir/PROMPT_RIPRESA_${normalized}.md"
     if [ -f "$ripresa_file" ]; then
-        check_file_size "$ripresa_file" "PROMPT_RIPRESA" 150 || ((issues++))
+        check_file_size "$ripresa_file" "PROMPT_RIPRESA" 250 || ((issues++))
     else
         echo -e "  ${YELLOW}[!]${NC} PROMPT_RIPRESA: NON ESISTE"
         ((issues++))
@@ -114,11 +114,10 @@ check_global() {
 
     local issues=0
 
-    # oggi.md DEPRECATO (SNCP 2.0 - Sessione 297)
-    # Ora usiamo solo PROMPT_RIPRESA per ripresa sessione
+    # SNCP 5.0: solo PROMPT_RIPRESA + NORD.md (stato.md/oggi.md/mappa_viva.md eliminati)
 
-    # Check mappa_viva.md
-    check_file_size "$SNCP_ROOT/stato/mappa_viva.md" "mappa_viva.md" 200 || ((issues++))
+    # Check PROMPT_RIPRESA_MASTER
+    check_file_size "$SNCP_ROOT/../PROMPT_RIPRESA_MASTER.md" "PROMPT_RIPRESA_MASTER" 60 || ((issues++))
 
     return $issues
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Quality checker for PROMPT_RIPRESA files - SNCP 4.0 FASE 2.
+"""Quality checker for PROMPT_RIPRESA files - SNCP 5.0.
 
 Valuta qualità dei PROMPT_RIPRESA su 4 criteri:
 - Actionability (30%): TODO chiari e prossimi step
@@ -32,8 +32,8 @@ logger = logging.getLogger(__name__)
 
 # Costanti
 SNCP_BASE = Path(".sncp/progetti")
-MAX_LINES = 150
-WARNING_LINES = 100
+MAX_LINES = 250
+WARNING_LINES = 200
 WEIGHTS = {
     "actionability": 0.30,
     "specificity": 0.30,
@@ -299,7 +299,7 @@ def print_human_readable(results: List[Dict]) -> None:
         results: Lista di risultati da stampare
     """
     print("\n" + "="*70)
-    print("SNCP 4.0 - PROMPT_RIPRESA Quality Check")
+    print("SNCP 5.0 - PROMPT_RIPRESA Quality Check")
     print("="*70 + "\n")
 
     for result in results:

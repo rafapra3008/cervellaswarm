@@ -261,7 +261,7 @@ Examples:
   $ cervellaswarm hk --auto            Run all cleanup automatically
 
 File Limits:
-  - PROMPT_RIPRESA: max 150 lines
+  - PROMPT_RIPRESA: max 250 lines
   - reports/: archive after 30 days
 
 "Casa pulita = mente pulita = lavoro pulito!"

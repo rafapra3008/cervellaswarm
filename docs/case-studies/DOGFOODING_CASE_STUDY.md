@@ -123,7 +123,7 @@ Specialized execution. Each worker knows its domain deeply:
 ```
 CervellaSwarm/.sncp/
 ├── progetti/cervellaswarm/
-│   ├── PROMPT_RIPRESA_cervellaswarm.md    # Session continuity (max 150 lines)
+│   ├── PROMPT_RIPRESA_cervellaswarm.md    # Session continuity (max 250 lines)
 │   ├── stato.md                            # Current state (max 500 lines)
 │   └── memoria/
 │       ├── 2026-02-02.md                   # Daily logs
@@ -157,11 +157,11 @@ We researched how 9 other AI coding tools handle memory (Aider, Cursor, Copilot,
 **Finding**: SNCP scored 8.8/10 vs industry average 7.2/10.
 
 **Why**: Because we enforce limits.
-- PROMPT_RIPRESA: max 150 lines (or archive old sessions)
+- PROMPT_RIPRESA: max 250 lines (or archive old sessions)
 - stato.md: max 500 lines
 - Scripts verify compliance (check-ripresa-size.sh)
 
-**The Rule**: If you can't fit your context in 150 lines, you need better structure, not more lines.
+**The Rule**: If you can't fit your context in 250 lines, you need better structure, not more lines.
 
 ---
 

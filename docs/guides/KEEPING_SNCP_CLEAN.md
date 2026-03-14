@@ -19,7 +19,7 @@ A clean `.sncp/` folder means:
 
 | File | Max Lines | When Too Big |
 |------|-----------|--------------|
-| `PROMPT_RIPRESA_*.md` | 150 | Archive old sessions |
+| `PROMPT_RIPRESA_*.md` | 250 | Archive old sessions |
 | `stato.md` | 500 | Compact with housekeeping |
 | `reports/` | 30 days | Archive old files |
 
@@ -83,7 +83,7 @@ Files are organized by month for easy reference.
 Every generated file includes limit comments:
 
 ```markdown
-<!-- LIMITI: Questo file deve restare < 150 righe -->
+<!-- LIMITI: Questo file deve restare < 250 righe -->
 <!-- Se cresce troppo, archivia sessioni vecchie in .sncp/archivio/ -->
 ```
 
@@ -95,7 +95,7 @@ When you see these, respect them!
 
 | Limit | Reason |
 |-------|--------|
-| 150 lines for PROMPT_RIPRESA | AI reads this EVERY session - keep it focused |
+| 250 lines for PROMPT_RIPRESA | AI reads this EVERY session - keep it focused |
 | 500 lines for stato.md | History is good, but too much slows everything |
 | 30 days for reports | Old reports rarely needed, archive them |
 

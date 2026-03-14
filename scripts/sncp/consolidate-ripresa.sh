@@ -24,8 +24,8 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 SNCP_ROOT="${SNCP_ROOT:-$REPO_ROOT/.sncp/progetti}"
 
 # Thresholds
-LIMIT=150          # Maximum allowed lines
-WARNING=120        # Trigger consolidation threshold (80%)
+LIMIT=250          # Maximum allowed lines
+WARNING=200        # Trigger consolidation threshold (80%)
 TARGET=80          # Target lines after consolidation
 
 # Colors
@@ -57,12 +57,12 @@ OPTIONS:
     --force, -f     Force consolidation even if under threshold
 
 THRESHOLDS:
-    WARNING:  120 lines (80% of limit) - triggers consolidation
-    LIMIT:    150 lines (maximum allowed)
+    WARNING:  200 lines (80% of limit) - triggers consolidation
+    LIMIT:    250 lines (maximum allowed)
     TARGET:   80 lines (goal after consolidation)
 
 PROCESS:
-    1. Detect PROMPT_RIPRESA > 120 lines
+    1. Detect PROMPT_RIPRESA > 200 lines
     2. Send to Claude Haiku for intelligent consolidation
     3. Haiku identifies:
        - Duplicates → merge
@@ -215,7 +215,7 @@ Remember: Output ONLY the consolidated markdown, nothing else. Target ~80 lines.
         -H "x-api-key: ${ANTHROPIC_API_KEY}" \
         -H "anthropic-version: 2023-06-01" \
         -d "$(jq -n \
-            --arg model "claude-3-haiku-20240307" \
+            --arg model "claude-haiku-4-5-20251001" \
             --arg system "$system_prompt" \
             --arg user "$user_prompt" \
             '{
@@ -342,7 +342,7 @@ File: $file
 - Original: $archived_file
 
 ## API
-- Model: claude-3-haiku-20240307
+- Model: claude-haiku-4-5-20251001
 - Status: SUCCESS
 
 ---

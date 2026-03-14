@@ -111,11 +111,11 @@ Worker   Worker   Worker
 
 ```
 SBAGLIATO:
-  DNA dice "ricordati di non superare 150 righe"
+  DNA dice "ricordati di non superare 250 righe"
   Agente puo' ignorare
 
 CORRETTO:
-  Hook pre-commit BLOCCA se > 150 righe
+  Hook pre-commit BLOCCA se > 250 righe
   Impossibile violare
 ```
 

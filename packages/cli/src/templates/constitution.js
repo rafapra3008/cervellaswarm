@@ -115,7 +115,7 @@ When working on this project:
 
 Keep your .sncp/ folder clean:
 
-- **PROMPT_RIPRESA:** max 150 lines (archive old sessions)
+- **PROMPT_RIPRESA:** max 250 lines (archive old sessions)
 - **reports/:** archive files older than 30 days
 
 **Command:** \`cervellaswarm housekeeping\`

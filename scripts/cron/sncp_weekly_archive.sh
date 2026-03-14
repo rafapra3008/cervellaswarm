@@ -41,7 +41,7 @@ ARCHIVE_SOURCES=(
 
 # Cartelle da NON archiviare MAI
 NEVER_ARCHIVE=(
-    "stato.md"
+    "PROMPT_RIPRESA_*.md"
     "roadmaps"
     "workflow"
 )

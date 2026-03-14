@@ -45,15 +45,23 @@ check_line_limit() {
     fi
 }
 
+# Ottieni file staged (usato in tutti i check successivi)
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM 2>/dev/null || true)
+
 echo ""
 echo ">> Verificando limiti righe..."
 
-# PROMPT_RIPRESA (max 150)
+# PROMPT_RIPRESA (max 250 - aggiornato S452 per 1M context era)
+# Solo file STAGED (non bloccare commit per file di altre sessioni)
 for pr in .sncp/progetti/*/PROMPT_RIPRESA_*.md; do
-    [ -f "$pr" ] && check_line_limit "$pr" 150 "$(basename "$pr")"
+    if [ -f "$pr" ]; then
+        if echo "$STAGED_FILES" | grep -q "$(echo "$pr" | sed 's|^\./||')" 2>/dev/null; then
+            check_line_limit "$pr" 250 "$(basename "$pr")"
+        fi
+    fi
 done
 
-# SNCP 4.0 (S357): oggi.md e stato.md eliminati. Solo PROMPT_RIPRESA.
+# SNCP 5.0 (S357): oggi.md e stato.md eliminati. Solo PROMPT_RIPRESA.
 
 # =================================================================
 # 2. VERIFICA NAMING CONVENTION (WARNING + BLOCCANTE)
@@ -61,9 +69,6 @@ done
 
 echo ""
 echo ">> Verificando naming convention..."
-
-# Ottieni file staged
-STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM 2>/dev/null || true)
 
 for file in $STAGED_FILES; do
     filename=$(basename "$file")

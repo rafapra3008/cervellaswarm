@@ -89,10 +89,10 @@ output "----------------------------"
 # 1. Check PROMPT_RIPRESA size
 if [[ -f "$PROMPT_RIPRESA" ]]; then
     lines=$(wc -l < "$PROMPT_RIPRESA" | tr -d ' ')
-    output "PROMPT_RIPRESA: $lines/150 lines"
+    output "PROMPT_RIPRESA: $lines/250 lines"
 
-    if [[ $lines -gt 120 ]]; then
-        log_message "WARNING: PROMPT_RIPRESA at $lines lines (>120)"
+    if [[ $lines -gt 200 ]]; then
+        log_message "WARNING: PROMPT_RIPRESA at $lines lines (>200)"
         output "⚠️  Approaching limit! Consider archiving old sessions."
     fi
 else

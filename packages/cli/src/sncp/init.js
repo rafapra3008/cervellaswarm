@@ -39,7 +39,7 @@ export async function initSNCP(answers) {
   // Create initial PROMPT_RIPRESA
   const promptRipresaContent = `# PROMPT RIPRESA - ${answers.projectName}
 
-<!-- LIMITI: Questo file deve restare < 150 righe -->
+<!-- LIMITI: Questo file deve restare < 250 righe -->
 <!-- Se cresce troppo, archivia sessioni vecchie in .sncp/archivio/ -->
 
 > **Ultimo aggiornamento:** ${new Date().toISOString().split('T')[0]}

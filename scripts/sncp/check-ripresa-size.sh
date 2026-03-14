@@ -4,7 +4,7 @@
 # Author: Cervella Ingegnera
 # Date: 29 Gennaio 2026
 # Version: 1.0.0
-# Purpose: Warn before PROMPT_RIPRESA files exceed the 150-line limit
+# Purpose: Warn before PROMPT_RIPRESA files exceed the 250-line limit
 
 set -uo pipefail
 
@@ -16,22 +16,22 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 
 # Limits
-LIMIT=150        # Maximum allowed lines
-WARNING=120      # Warning threshold (80%)
+LIMIT=250        # Maximum allowed lines
+WARNING=200      # Warning threshold (80%)
 
 # Help
 if [[ "${1:-}" == "--help" ]] || [[ "${1:-}" == "-h" ]]; then
     echo "Usage: check-ripresa-size.sh [project]"
     echo ""
-    echo "Checks PROMPT_RIPRESA file sizes against the 150-line limit."
+    echo "Checks PROMPT_RIPRESA file sizes against the 250-line limit."
     echo ""
     echo "Arguments:"
     echo "  project   Check specific project (optional)"
     echo ""
     echo "Thresholds:"
-    echo "  OK        < 120 lines (under 80%)"
-    echo "  WARNING   120-150 lines (80-100%)"
-    echo "  ERROR     > 150 lines (over limit!)"
+    echo "  OK        < 200 lines (under 80%)"
+    echo "  WARNING   200-250 lines (80-100%)"
+    echo "  ERROR     > 250 lines (over limit!)"
     echo ""
     echo "Examples:"
     echo "  ./check-ripresa-size.sh              # Check all projects"

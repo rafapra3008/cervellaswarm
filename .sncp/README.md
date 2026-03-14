@@ -1,8 +1,8 @@
 # SNCP - Sistema Nervoso Centrale Persistente
 
 > **Progetto:** CervellaSwarm
-> **Versione SNCP:** 5.0 (Semplificato + Senza Ridondanza!)
-> **Aggiornato:** 20 Gennaio 2026 - Sessione 296
+> **Versione SNCP:** 5.0 (PROMPT_RIPRESA + NORD.md)
+> **Aggiornato:** 14 Marzo 2026 - Sessione 460
 
 ---
 
@@ -13,241 +13,142 @@
 |                                                                  |
 |   "SNCP funziona solo se lo VIVIAMO!"                           |
 |                                                                  |
-|   Semplice da usare. Chiaro dove mettere cosa.                  |
-|   Se e' troppo complicato, non viene usato.                     |
-|                                                                  |
-|   ORA AUTOMATICO: Hook pre/post sessione + Launchd!             |
+|   Solo 2 file per progetto: PROMPT_RIPRESA + NORD.md            |
+|   Hook automatici: pre/post sessione + compact                   |
 |                                                                  |
 +------------------------------------------------------------------+
 ```
 
 ---
 
-## STRUTTURA REALE (v4.0)
+## STRUTTURA REALE
 
 ```
 .sncp/
-├── README.md              # Questo file
+├── README.md                  # Questo file
+├── PROMPT_RIPRESA_MASTER.md   # Indice puro (tabella link progetti)
 │
-├── progetti/              # CUORE - Un folder per progetto!
-│   ├── cervellaswarm/     # CervellaSwarm
-│   ├── miracollo/         # Miracollo
-│   └── contabilita/       # Contabilita
+├── progetti/                  # CUORE - Un folder per progetto
+│   ├── cervellaswarm/         # CervellaSwarm
+│   ├── miracollo/             # Miracollo (+bracci/miracollook)
+│   ├── contabilita/           # Contabilita
+│   ├── cervellabrasil/        # CervellaBrasil
+│   ├── chavefy/               # Chavefy
+│   └── cervellacostruzione/   # CervellaCostruzione
 │
-├── stato/                 # (DEPRECATO - vedi sotto)
-│
-├── memoria/               # DECISIONI GLOBALI
-│   └── decisioni/         # Decisioni architetturali cross-progetto
-│
-├── idee/                  # IDEE CORRENTI
-│   └── *.md               # Idee in valutazione
-│
-├── handoff/               # PASSAGGI SESSIONE
-│   └── *.md               # Handoff tra sessioni
-│
-├── reports/               # REPORT GLOBALI
-│   └── daily/             # Health check giornalieri
-│
-├── sessioni_parallele/    # TEMPLATE
-│   └── _TEMPLATE/         # Template per sessioni parallele
-│
-├── validazioni/           # VALIDAZIONI
-│   └── *.md               # Report validazione
-│
-└── archivio/              # ARCHIVIO (automatico!)
-    ├── 2026-01/           # Per mese
-    └── 2026-W03/          # Per settimana
+├── roadmaps/                  # Roadmap e subroadmap attive
+├── reports/                   # Report globali (daily health)
+├── handoff/                   # Handoff sessione (legacy)
+└── archivio/                  # Archivio per mese/settimana
 ```
 
 ---
 
-## RUOLI FILE (v5.0 - SNCP 4.0 Aggiornato!)
-
-> **Nota SNCP 4.0 (S357):** stato.md e oggi.md sono stati archiviati. Il sistema usa ora solo PROMPT_RIPRESA + NORD.md.
+## RUOLI FILE
 
 ```
 +------------------------------------------------------------------+
-|   PROMPT_RIPRESA_{progetto}.md (MAX 150 righe)                   |
-|   └── Context ripresa VELOCE (ultima sessione, next, blockers)   |
+|   PROMPT_RIPRESA_{progetto}.md (MAX 250 righe)                   |
+|   └── Context ripresa VELOCE (stato, decisioni, next steps)      |
 |   └── Aggiornare: OGNI sessione                                  |
 |   └── Leggere: SEMPRE a inizio sessione                          |
 |                                                                  |
-|   NORD.md (nella root del progetto)                              |
+|   NORD.md (nella root del progetto, NON in .sncp/)               |
 |   └── Direzione strategica + milestone + architettura            |
 |   └── Aggiornare: solo a milestone importanti                    |
 |   └── Leggere: quando serve visione d'insieme                    |
 |                                                                  |
-|   PROMPT_RIPRESA_MASTER.md (MAX 50 righe)                        |
-|   └── INDICE puro (tabella link progetti)                        |
-|   └── Aggiornare: quando cambia progetto                         |
-|   └── Leggere: quando switch progetto                            |
-|                                                                  |
-|   ARCHIVIATI (S357):                                             |
-|   - stato.md → .sncp/*/archivio/*_archived_S357.md               |
-|   - oggi.md  → .sncp/stato/archivio/oggi_archived_S357.md        |
+|   PROMPT_RIPRESA_MASTER.md (MAX 60 righe)                        |
+|   └── INDICE puro (tabella link ai progetti)                     |
+|   └── Aggiornare: quando cambia stato progetto                   |
 +------------------------------------------------------------------+
 ```
 
+> **SNCP 4.0 (S357):** stato.md e oggi.md archiviati. Il sistema usa SOLO PROMPT_RIPRESA + NORD.md.
+
 ---
 
-## STRUTTURA PROGETTO (dentro progetti/)
+## STRUTTURA PROGETTO
 
-Ogni progetto ha la stessa struttura:
+Ogni progetto in `progetti/{nome}/`:
 
 ```
-.sncp/progetti/{nome}/
-├── PROMPT_RIPRESA_{nome}.md  # Ripresa sessioni (MAX 150 righe)
-├── CONFIG.md                 # Configurazione (stack, path, convenzioni)
-├── decisioni/                # Decisioni specifiche del progetto
-├── idee/                     # Idee specifiche
-├── reports/                  # Report e audit
-├── roadmaps/                 # Piani attivi
-├── workflow/                 # Protocolli specifici
-├── moduli/                   # Sotto-moduli (es: room_manager)
-└── archivio/                 # File archiviati (stato.md vecchi, ecc)
+├── PROMPT_RIPRESA_{nome}.md   # Ripresa sessioni (MAX 250 righe)
+├── reports/                   # Report e audit
+├── roadmaps/                  # Piani attivi (se presenti)
+├── archivio/                  # File archiviati
+└── bracci/                    # Sub-progetti (es: miracollook)
 ```
 
 ---
 
 ## COME USARE
 
-### INIZIO SESSIONE (Automatico!)
+### Inizio Sessione (Automatico via hook)
 ```
-Hook pre-session fa:
-1. Check stato SNCP
-2. Mostra ultimo aggiornamento
-3. Warning se docs vecchi
+sncp_pre_session_hook.py:
+1. Check stato SNCP + puntatori progetto
+2. Warning se docs vecchi
 
 Tu fai:
-1. Leggi progetti/{nome}/PROMPT_RIPRESA_{nome}.md
-2. Leggi NORD.md (nella root progetto) per visione strategica
+1. Leggi PROMPT_RIPRESA_{progetto}.md
+2. Leggi NORD.md (root progetto) se serve visione strategica
 ```
 
-### DURANTE SESSIONE
+### Fine Sessione (Automatico via hook)
 ```
-- Lavoro su progetto?  → progetti/{nome}/...
-- Decisione globale?   → memoria/decisioni/YYYYMMDD_cosa.md
-- Idea corrente?       → idee/YYYYMMDD_nome.md
-- Ricerca?             → progetti/{nome}/ricerche/YYYYMMDD_topic.md
-- Report?              → progetti/{nome}/reports/YYYYMMDD_report.md
-```
-
-### FINE SESSIONE (Automatico!)
-```
-Hook post-session fa:
-1. Verifica coerenza docs/codice
-2. Warning se PROMPT_RIPRESA non aggiornato
-3. Reminder per commit
+SessionEnd hooks:
+1. update_prompt_ripresa.py - checkpoint automatico
+2. file_limits_guard.py - verifica limiti (250 righe)
+3. sncp_verify_sync_hook.py - coerenza docs/codice
 
 Tu fai:
-1. Aggiorna progetti/{nome}/PROMPT_RIPRESA_{nome}.md
-2. Aggiorna NORD.md (solo se milestone importante)
-3. Commit
+1. Aggiorna PROMPT_RIPRESA_{progetto}.md
+2. Aggiorna NORD.md solo se milestone importante
+3. Commit + push
 ```
 
----
-
-## HANDOFF SESSIONE (SNCP 2.0)
-
-Template 6-sezioni in `.swarm/templates/TEMPLATE_SESSION_HANDOFF.md`
-
-**Naming:** `HANDOFF_YYYYMMDD_{progetto}_S{N}.md`
-**Dove:** `.swarm/handoff/`
-
-**Sezioni:**
-1. ACCOMPLISHED - Cosa completato
-2. CURRENT STATE - Stato attuale
-3. LESSONS LEARNED - Cosa imparato
-4. NEXT STEPS - Prossimi passi
-5. KEY FILES - File importanti
-6. BLOCKERS - Problemi aperti
-
----
-
-## NAMING FILE
-
+### Compact (Automatico via hook)
 ```
-GENERALE:    YYYYMMDD_NOME_BREVE.md
-DECISIONI:   YYYYMMDD_COSA_DECISO.md
-RICERCHE:    YYYYMMDD_RICERCA_TOPIC.md
-REPORT:      YYYYMMDD_TIPO_cosa.md
+PreCompact: salva snapshot + checkpoint PROMPT_RIPRESA
+PostCompact: salva compact_summary generato da Claude
 ```
 
 ---
 
 ## AUTOMAZIONI ATTIVE
 
-| Quando | Cosa | Hook/Script |
-|--------|------|-------------|
-| Inizio sessione | Check stato SNCP + Warning | session_start_swarm.py |
+| Quando | Cosa | Hook |
+|--------|------|------|
+| Inizio sessione | Check SNCP + puntatori | sncp_pre_session_hook.py |
+| Fine sessione | Checkpoint PROMPT_RIPRESA | update_prompt_ripresa.py |
 | Fine sessione | Verifica limiti file | file_limits_guard.py |
-| Login Mac | Daily maintenance | Launchd daily |
-| Ogni Lunedi | Weekly archive | Launchd weekly |
+| Pre/Post compact | Salva stato e summary | pre_compact_save.py + post_compact_save.py |
+| Ogni subagent | Inietta contesto | subagent_context_inject.py |
+
+Tutti gli hook usano `cervella_hooks_common.py` come single source of truth.
 
 ---
 
-## TOOLS SNCP
-
-### sncp-init - Wizard nuovo progetto
-
-```bash
-# Uso base
-sncp-init nome-progetto
-
-# Con analisi automatica stack
-sncp-init nome-progetto --analyze
-
-# Help
-sncp-init --help
-```
-
-**Cosa crea:**
-```
-.sncp/progetti/{nome}/
-├── PROMPT_RIPRESA_{nome}.md  <- Context ripresa sessioni
-├── CONFIG.md                 <- Configurazione progetto
-├── decisioni/                <- Decisioni importanti
-├── roadmaps/                 <- Piani attivi
-└── archivio/                 <- File archiviati
-```
-
-### verify-sync - Verifica coerenza docs/codice
-
-```bash
-# Tutti i progetti
-verify-sync
-
-# Singolo progetto
-verify-sync miracollo
-
-# Output dettagliato
-verify-sync --verbose
-```
-
-**Cosa controlla:**
-- PROMPT_RIPRESA aggiornato di recente
-- Commit recenti documentati
-- Migrations menzionate
-- File grandi modificati
-
-### Altri script (in scripts/sncp/)
+## TOOLS
 
 | Script | Cosa fa |
 |--------|---------|
-| `pre-session-check.sh` | Check salute SNCP a inizio sessione |
-| `health-check.sh` | Check completo stato SNCP |
-| `compact-state.sh` | Compatta file troppo grandi |
-| `post-session-update.sh` | Update automatico fine sessione |
+| `verify-sync [progetto]` | Verifica coerenza docs/codice |
+| `sncp-init nome` | Wizard nuovo progetto |
+| `check-ripresa-size.sh [progetto]` | Controlla limiti (250 righe) |
+| `health-check.sh` | Dashboard salute SNCP |
 
 ---
 
-## FILOSOFIA
+## NAMING FILE
 
-> "Il sistema centrale DEVE funzionare!"
-> "Semplificare = usare di piu!"
-> "Lavoriamo in pace! Senza casino!"
-> "La memoria e' il fondamento dell'intelligenza collettiva."
-> "Avere attrezzature ma non usarle = non averle" (ORA SI USANO DA SOLE!)
+```
+REPORT:      YYYYMMDD_TIPO_cosa.md     (es: RESEARCH_20260314_topic.md)
+RICERCHE:    RESEARCH_YYYYMMDD_topic.md
+AUDIT:       AUDIT_YYYYMMDD_cosa.md
+ENGINEER:    ENGINEER_YYYYMMDD_cosa.md
+```
 
 ---
 
@@ -257,10 +158,9 @@ verify-sync --verbose
 |----------|------|
 | 163 | Semplificazione iniziale |
 | 207 | sncp-init wizard + verify-sync |
-| 209 | Hook automatici + Launchd manutenzione |
-| 211 | Pulizia struttura v4.0 (rimosse 4 cartelle obsolete) |
-| **296** | **SNCP 5.0: Deprecato oggi.md, chiariti ruoli file** |
-| 299 | SNCP 2.0 Day 5-6: Hook v2.1.0 + Documentazione finale |
+| 296 | SNCP 5.0: Deprecato oggi.md/stato.md, solo PROMPT_RIPRESA + NORD |
+| 442 | cervella_hooks_common.py: single source of truth |
+| **460** | **README riscritto, PostCompact hook, COMPACT INSTRUCTIONS, fix limiti 250** |
 
 ---
 

@@ -86,7 +86,7 @@ Health check automatico + cleanup file temporanei.
 **Cosa fa:**
 - Esegue health-check.sh e salva report
 - Pulisce file temporanei (.DS_Store, *.bak)
-- Verifica dimensioni file (warning se > 300 righe)
+- Verifica dimensioni file (warning se > 250 righe)
 - Genera statistiche SNCP
 
 **Test manuale:**
@@ -105,7 +105,7 @@ Archivia file vecchi (> 30 giorni) per mantenere SNCP pulito.
 
 **Cosa fa:**
 - Archivia file da idee/, reports/, decisioni/
-- Mantiene stato.md e roadmaps/ sempre attivi
+- Mantiene PROMPT_RIPRESA e roadmaps/ sempre attivi
 - Pulisce archivi > 90 giorni
 - Genera report settimanale
 
