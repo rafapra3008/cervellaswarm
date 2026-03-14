@@ -206,9 +206,10 @@ def post_comment(client: httpx.Client, post_id: str, content: str, parent_id: st
     return result is not None
 
 
-def mark_notifications_read(client: httpx.Client) -> None:
-    """Mark all notifications as read if endpoint exists."""
-    _post(client, "/notifications/mark-read", {})
+def mark_notifications_read(client: httpx.Client, post_ids: list[str]) -> None:
+    """Mark notifications as read for specific posts."""
+    for post_id in post_ids:
+        _post(client, f"/notifications/read-by-post/{post_id}", {})
 
 
 # ---------------------------------------------------------------------------
@@ -338,9 +339,12 @@ def heartbeat(client: httpx.Client, replied_ids: set[str]) -> None:
             post_id = post.get("id", "unknown")
             logger.error("Unexpected error processing post %s: %s", post_id, exc)
 
-    # Mark notifications as read
+    # Mark notifications as read for posts we processed
+    processed_post_ids = [
+        p.get("id") or p.get("post_id") for p in my_posts if (p.get("id") or p.get("post_id"))
+    ]
     try:
-        mark_notifications_read(client)
+        mark_notifications_read(client, processed_post_ids)
     except Exception as exc:
         logger.warning("Could not mark notifications read: %s", exc)
 
