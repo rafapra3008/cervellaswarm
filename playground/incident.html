@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>$34,000 — The Cost of One Missing Protocol | Lingua Universale</title>
+  <meta name="description" content="How a duplicate refund bug cost $34K in 72 hours, and how Lingua Universale session types would have prevented it." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="$34,000 — The Cost of One Missing Protocol" />
+  <meta property="og:description" content="How a duplicate refund bug cost $34K in 72 hours, and how Lingua Universale session types would have prevented it." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rafapra3008.github.io/cervellaswarm/incident.html" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="$34,000 — The Cost of One Missing Protocol" />
+  <meta name="twitter:description" content="How a duplicate refund bug cost $34K in 72 hours, and how Lingua Universale session types would have prevented it." />
+
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-base:        #1e1e2e;
+      --bg-surface:     #181825;
+      --bg-overlay:     #11111b;
+      --bg-panel:       #24253a;
+      --bg-panel-alt:   #2a2b40;
+      --border:         #313244;
+      --border-subtle:  #2a2b40;
+
+      --accent-blue:    #89b4fa;
+      --accent-violet:  #cba6f7;
+      --accent-green:   #a6e3a1;
+      --accent-red:     #f38ba8;
+      --accent-yellow:  #f9e2af;
+      --accent-teal:    #94e2d5;
+      --accent-sky:     #74c7ec;
+
+      --text-primary:   #cdd6f4;
+      --text-secondary: #a6adc8;
+      --text-muted:     #6c7086;
+      --text-on-accent: #1e1e2e;
+
+      --font-ui:   system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.6);
+
+      --t-fast: 0.15s ease;
+      --t-base: 0.25s ease;
+      --t-slow: 0.4s ease;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ============================================================
+       SKIP LINK (ACCESSIBILITY)
+    ============================================================ */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--accent-blue);
+      color: var(--text-on-accent);
+      padding: 8px 16px;
+      text-decoration: none;
+      font-weight: 600;
+      z-index: 9999;
+      border-radius: var(--radius-sm);
+      transition: top var(--t-fast);
+    }
+
+    .skip-link:focus {
+      top: 8px;
+    }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    .incident-nav {
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 48px;
+      padding: 0 24px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--accent-violet), var(--accent-blue));
+      flex-shrink: 0;
+    }
+
+    .nav-logo svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: var(--text-on-accent);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav-brand-name {
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      transition: background var(--t-fast), border-color var(--t-fast);
+    }
+
+    .nav-link:hover {
+      background: var(--bg-panel);
+      border-color: var(--accent-blue);
+    }
+
+    /* ============================================================
+       MAIN CONTENT WRAPPER
+    ============================================================ */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 80px 0;
+    }
+
+    /* ============================================================
+       REVEAL ANIMATIONS
+    ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    @keyframes fadeScale {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounceY {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(8px); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%       { transform: translateX(-6px); }
+      40%       { transform: translateX(6px); }
+      60%       { transform: translateX(-4px); }
+      80%       { transform: translateX(4px); }
+    }
+
+    @keyframes scaleBounce {
+      0%   { transform: scale(0); }
+      60%  { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes redGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(243, 139, 168, 0); }
+      50%       { box-shadow: 0 0 16px 4px rgba(243, 139, 168, 0.25); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-left {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      * {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+    /* ============================================================
+       ACT 1: HERO
+    ============================================================ */
+    #act-1-hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 48px;
+      padding-bottom: 60px;
+      gap: 24px;
+    }
+
+    .incident-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 100px;
+      background: rgba(243, 139, 168, 0.12);
+      border: 1px solid rgba(243, 139, 168, 0.3);
+      color: var(--accent-red);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hero-cost {
+      font-size: clamp(56px, 10vw, 96px);
+      font-weight: 900;
+      color: var(--accent-red);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      animation: fadeScale 0.8s ease 0.3s both;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(18px, 3vw, 22px);
+      color: var(--text-secondary);
+      font-weight: 400;
+      max-width: 480px;
+    }
+
+    .hero-intro {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    .agent-cards {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+      max-width: 860px;
+    }
+
+    .agent-card {
+      flex: 1 1 240px;
+      max-width: 280px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      text-align: left;
+      transition: border-color var(--t-base), transform var(--t-base);
+    }
+
+    .agent-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .agent-card.blue  { border-top: 3px solid var(--accent-blue); }
+    .agent-card.violet { border-top: 3px solid var(--accent-violet); }
+    .agent-card.green  { border-top: 3px solid var(--accent-green); }
+
+    .agent-card-name {
+      font-size: 13px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      margin-bottom: 6px;
+    }
+
+    .agent-card.blue   .agent-card-name { color: var(--accent-blue); }
+    .agent-card.violet .agent-card-name { color: var(--accent-violet); }
+    .agent-card.green  .agent-card-name { color: var(--accent-green); }
+
+    .agent-card-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .hero-day-zero {
+      font-size: 16px;
+      color: var(--accent-green);
+      font-style: italic;
+      font-weight: 500;
+    }
+
+    .scroll-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-muted);
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .scroll-chevron {
+      animation: bounceY 1.5s ease-in-out infinite;
+    }
+
+    .scroll-chevron svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--text-muted);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ============================================================
+       SECTION HEADERS
+    ============================================================ */
+    .section-heading {
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+
+    .section-heading.red    { color: var(--accent-red); }
+    .section-heading.green  { color: var(--accent-green); }
+    .section-heading.blue   { color: var(--accent-blue); }
+
+    .label-heading {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .branch-name {
+      color: var(--accent-yellow);
+    }
+
+    .section-subheading {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+    }
+
+    /* ============================================================
+       ACT 2: THE BUG (TIMELINE)
+    ============================================================ */
+    #act-2-bug {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: repeating-linear-gradient(
+        to bottom,
+        var(--accent-red) 0px,
+        var(--accent-red) 6px,
+        transparent 6px,
+        transparent 12px
+      );
+    }
+
+    .timeline-step {
+      position: relative;
+      padding: 0 0 32px 20px;
+    }
+
+    .timeline-step:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -24px;
+      top: 4px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--bg-base);
+      flex-shrink: 0;
+    }
+
+    .timeline-dot.green  { background: var(--accent-green); }
+    .timeline-dot.yellow { background: var(--accent-yellow); }
+    .timeline-dot.red    { background: var(--accent-red); }
+
+    .timeline-step-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .timeline-step-text {
+      font-size: 15px;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    .timeline-step.highlight {
+      background: rgba(243, 139, 168, 0.06);
+      border: 1px solid rgba(243, 139, 168, 0.2);
+      border-radius: var(--radius-md);
+      padding: 16px 16px 16px 20px;
+      margin-left: -16px;
+    }
+
+    .timeline-step.highlight .timeline-dot {
+      left: -40px;
+    }
+
+    .counter-value {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 900;
+      color: var(--accent-red);
+      font-family: var(--font-mono);
+      display: block;
+      margin-top: 8px;
+    }
+
+    /* ============================================================
+       ACT 3: ROOT CAUSE
+    ============================================================ */
+    #act-3-root {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .flow-diagram {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      margin: 32px 0;
+    }
+
+    .flow-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+
+    .flow-box {
+      background: var(--bg-panel-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .flow-box.customer  { color: var(--text-secondary); }
+    .flow-box.support   { color: var(--accent-blue); border-color: var(--accent-blue); }
+    .flow-box.payment   { color: var(--accent-violet); border-color: var(--accent-violet); }
+    .flow-box.dispute   { color: var(--accent-green); border-color: var(--accent-green); }
+
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      color: var(--text-muted);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .flow-split {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 0 8px;
+    }
+
+    .flow-path {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .flow-path-check {
+      font-size: 14px;
+      margin-left: 8px;
+      color: var(--accent-green);
+    }
+
+    .flow-no-coord {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 20px 0 8px;
+      padding: 10px 20px;
+      background: rgba(243, 139, 168, 0.08);
+      border: 1px solid rgba(243, 139, 168, 0.3);
+      border-radius: var(--radius-md);
+      color: var(--accent-red);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.03em;
+    }
+
+    .flow-no-coord.animate-shake {
+      animation: shake 0.5s ease 0.3s 1;
+    }
+
+    .root-cause-quote {
+      border-left: 3px solid var(--accent-red);
+      background: rgba(243, 139, 168, 0.06);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 16px 20px;
+      margin-top: 32px;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    /* ============================================================
+       ACT 4: SOLUTION
+    ============================================================ */
+    #act-4-solution {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .solution-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    /* Code Block with Line Numbers */
+    .code-block {
+      background: var(--bg-overlay);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .code-block-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .code-block-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .code-block-dot.red    { background: #f38ba8; }
+    .code-block-dot.yellow { background: #f9e2af; }
+    .code-block-dot.green  { background: #a6e3a1; }
+
+    .code-block-filename {
+      margin-left: 4px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .code-block-body {
+      padding: 20px;
+      overflow-x: auto;
+    }
+
+    .code-lines {
+      counter-reset: line;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .code-line {
+      display: flex;
+      counter-increment: line;
+    }
+
+    .code-line::before {
+      content: counter(line);
+      display: inline-block;
+      min-width: 28px;
+      text-align: right;
+      color: var(--text-muted);
+      margin-right: 20px;
+      user-select: none;
+      flex-shrink: 0;
+      font-size: 11px;
+      padding-top: 1px;
+    }
+
+    .code-content {
+      white-space: pre;
+      flex: 1;
+    }
+
+    /* LU Syntax highlighting */
+    .lu-comment  { color: var(--text-muted); font-style: italic; }
+    .lu-keyword  { color: var(--accent-violet); font-weight: 700; }
+    .lu-role     { color: var(--accent-blue); }
+    .lu-action   { color: var(--accent-teal); }
+    .lu-property { color: var(--accent-green); }
+    .lu-branch   { color: var(--accent-yellow); }
+    .lu-name     { color: var(--text-primary); }
+
+    /* Replay Panel */
+    .replay-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .replay-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: var(--bg-panel-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .replay-header-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+    }
+
+    .replay-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .replay-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      opacity: 0;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateX(-8px);
+    }
+
+    .replay-step.step-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .step-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-icon.ok {
+      background: rgba(166, 227, 161, 0.15);
+      border: 1px solid var(--accent-green);
+      color: var(--accent-green);
+    }
+
+    .step-icon.ok.animate-bounce {
+      animation: scaleBounce 0.3s ease both;
+    }
+
+    .step-icon.fail {
+      background: rgba(243, 139, 168, 0.15);
+      border: 1px solid var(--accent-red);
+      color: var(--accent-red);
+    }
+
+    .step-text {
+      font-size: 13px;
+      line-height: 1.5;
+      padding-top: 2px;
+    }
+
+    .step-text.ok-text   { color: var(--text-primary); }
+    .step-text.fail-text { color: var(--accent-red); }
+
+    .step-branch-tag {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: 100px;
+      background: rgba(249, 226, 175, 0.15);
+      border: 1px solid rgba(249, 226, 175, 0.35);
+      color: var(--accent-yellow);
+      font-size: 11px;
+      font-weight: 600;
+      margin-left: 6px;
+      font-family: var(--font-mono);
+    }
+
+    .violation-box {
+      margin-top: 16px;
+      background: rgba(243, 139, 168, 0.07);
+      border: 1px solid rgba(243, 139, 168, 0.4);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.7;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .violation-box.show {
+      opacity: 1;
+      animation: redGlow 2s ease-in-out 0.5s 2;
+    }
+
+    .violation-box.shake-it {
+      animation: shake 0.4s ease both, redGlow 2s ease-in-out 0.5s 2;
+    }
+
+    .violation-title {
+      color: var(--accent-red);
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .violation-line {
+      color: var(--text-secondary);
+    }
+
+    .violation-line .vl-label {
+      color: var(--text-muted);
+      display: inline-block;
+      width: 56px;
+    }
+
+    .violation-line .vl-value {
+      color: var(--text-primary);
+    }
+
+    .violation-verdict {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(243, 139, 168, 0.2);
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    .violation-verdict strong {
+      color: var(--accent-green);
+      font-style: normal;
+    }
+
+    /* ============================================================
+       ACT 5: CTA
+    ============================================================ */
+    #act-5-cta {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 40px;
+      text-align: left;
+    }
+
+    .cta-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      text-decoration: none;
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: border-color var(--t-base), transform var(--t-base), box-shadow var(--t-base);
+    }
+
+    .cta-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .cta-card.blue   { border-top: 3px solid var(--accent-blue); }
+    .cta-card.violet { border-top: 3px solid var(--accent-violet); }
+    .cta-card.green  { border-top: 3px solid var(--accent-green); }
+    .cta-card.teal   { border-top: 3px solid var(--accent-teal); }
+
+    .cta-card:hover.blue   { border-color: var(--accent-blue); }
+    .cta-card:hover.violet { border-color: var(--accent-violet); }
+    .cta-card:hover.green  { border-color: var(--accent-green); }
+    .cta-card:hover.teal   { border-color: var(--accent-teal); }
+
+    .cta-icon {
+      font-size: 22px;
+    }
+
+    .cta-title {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .cta-card.blue   .cta-title { color: var(--accent-blue); }
+    .cta-card.violet .cta-title { color: var(--accent-violet); }
+    .cta-card.green  .cta-title { color: var(--accent-green); }
+    .cta-card.teal   .cta-title { color: var(--accent-teal); }
+
+    .cta-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .cta-card-install {
+      cursor: default;
+    }
+
+    .install-code-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .install-code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent-teal);
+      background: var(--bg-overlay);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .copy-btn {
+      background: var(--bg-panel-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      cursor: pointer;
+      transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+      white-space: nowrap;
+      font-family: var(--font-ui);
+    }
+
+    .copy-btn:hover {
+      background: var(--bg-overlay);
+      color: var(--accent-teal);
+      border-color: var(--accent-teal);
+    }
+
+    .copy-btn.copied {
+      color: var(--accent-green);
+      border-color: var(--accent-green);
+    }
+
+    .secondary-links {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+
+    .secondary-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color var(--t-fast);
+    }
+
+    .secondary-link:hover {
+      color: var(--accent-blue);
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-brand {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color var(--t-fast);
+    }
+
+    .footer-link:hover {
+      color: var(--accent-blue);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1023px) {
+      .solution-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 767px) {
+      main {
+        padding: 0 16px;
+      }
+
+      section {
+        padding: 60px 0;
+      }
+
+      #act-1-hero {
+        padding-top: 32px;
+        gap: 20px;
+      }
+
+      .agent-card {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+
+      .cta-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-row {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .flow-arrow {
+        transform: rotate(90deg);
+        padding: 4px 0;
+      }
+
+      .flow-split {
+        align-items: center;
+      }
+
+      footer {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-links {
+        justify-content: center;
+      }
+
+      .code-block-body {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav class="incident-nav" aria-label="Site navigation">
+    <a href="./" class="nav-brand" aria-label="Lingua Universale home">
+      <div class="nav-logo" aria-hidden="true">
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M8 2L3 5v4c0 3 2.5 5.3 5 6 2.5-.7 5-3 5-6V5L8 2z"/>
+        </svg>
+      </div>
+      <span class="nav-brand-name">Lingua Universale</span>
+    </a>
+    <a href="./" class="nav-link" aria-label="Open the Lingua Universale playground">
+      Open Playground &rarr;
+    </a>
+  </nav>
+
+  <!-- ============================================================
+       MAIN
+  ============================================================ -->
+  <main id="main-content">
+
+    <!-- ACT 1: HERO -->
+    <section id="act-1-hero" aria-labelledby="hero-heading">
+
+      <div class="incident-badge" aria-label="Incident report">
+        <span aria-hidden="true">&#9888;</span> Incident Report
+      </div>
+
+      <h1 class="hero-cost" id="hero-heading">$34,000</h1>
+
+      <p class="hero-subtitle">The cost of one missing protocol</p>
+
+      <p class="hero-intro">
+        ShopFast deploys AI agents for automated customer support. Three agents handle
+        the refund pipeline: CustomerService, PaymentProcessor, and DisputeResolver.
+      </p>
+
+      <div class="agent-cards" role="list">
+
+        <div class="agent-card blue reveal" style="animation-delay:0.1s" role="listitem">
+          <div class="agent-card-name">CustomerService</div>
+          <div class="agent-card-desc">Receives customer complaints, decides resolution path</div>
+        </div>
+
+        <div class="agent-card violet reveal" style="animation-delay:0.2s" role="listitem">
+          <div class="agent-card-name">PaymentProcessor</div>
+          <div class="agent-card-desc">Processes refunds to customer payment method</div>
+        </div>
+
+        <div class="agent-card green reveal" style="animation-delay:0.3s" role="listitem">
+          <div class="agent-card-name">DisputeResolver</div>
+          <div class="agent-card-desc">Handles chargebacks from payment providers</div>
+        </div>
+
+      </div>
+
+      <p class="hero-day-zero reveal">Day 0: Everything works perfectly.</p>
+
+      <div class="scroll-indicator" aria-hidden="true">
+        <div class="scroll-chevron">
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <polyline points="5,8 10,13 15,8"/>
+          </svg>
+        </div>
+        <span>scroll</span>
+      </div>
+
+    </section>
+
+    <!-- ACT 2: THE BUG -->
+    <section id="act-2-bug" aria-labelledby="act2-heading">
+
+      <h2 class="section-heading red reveal" id="act2-heading">The Bug</h2>
+      <p class="section-subheading reveal">72 hours. 2,847 customers. One unguarded race condition.</p>
+
+      <div class="timeline" role="list" aria-label="Incident timeline">
+
+        <div class="timeline-step reveal-left" role="listitem">
+          <div class="timeline-dot green" aria-hidden="true"></div>
+          <div class="timeline-step-label">Step 1</div>
+          <div class="timeline-step-text">Customer requests refund for Order #4892: $12.99</div>
+        </div>
+
+        <div class="timeline-step reveal-left" role="listitem">
+          <div class="timeline-dot green" aria-hidden="true"></div>
+          <div class="timeline-step-label">Step 2</div>
+          <div class="timeline-step-text">CustomerService routes to PaymentProcessor — refund processed</div>
+        </div>
+
+        <div class="timeline-step reveal-left" role="listitem">
+          <div class="timeline-dot yellow" aria-hidden="true"></div>
+          <div class="timeline-step-label">Step 3 — Concurrent event</div>
+          <div class="timeline-step-text">Customer also files a dispute with their credit card company</div>
+        </div>
+
+        <div class="timeline-step reveal-left" role="listitem">
+          <div class="timeline-dot red" aria-hidden="true"></div>
+          <div class="timeline-step-label">Step 4 — The mistake</div>
+          <div class="timeline-step-text">DisputeResolver processes the chargeback — unaware a refund was already sent</div>
+        </div>
+
+        <div class="timeline-step reveal-left" role="listitem">
+          <div class="timeline-dot red" aria-hidden="true"></div>
+          <div class="timeline-step-label">Step 5 — The result</div>
+          <div class="timeline-step-text">Customer receives money twice: $12.99 refund + $12.99 chargeback</div>
+        </div>
+
+        <div class="timeline-step highlight reveal-left" role="listitem">
+          <div class="timeline-dot red" aria-hidden="true"></div>
+          <div class="timeline-step-label">72 hours later</div>
+          <div class="timeline-step-text">
+            2,847 customers. Total payout:
+            <span
+              class="counter-value"
+              data-target="34011.53"
+              aria-live="polite"
+              aria-label="$34,011.53 total loss"
+            >$0.00</span>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ACT 3: ROOT CAUSE -->
+    <section id="act-3-root" aria-labelledby="act3-heading">
+
+      <h2 class="section-heading red reveal" id="act3-heading">The Root Cause</h2>
+      <p class="section-subheading reveal">Not a code bug. A protocol bug.</p>
+
+      <div
+        class="flow-diagram reveal"
+        role="img"
+        aria-label="Flow diagram showing CustomerService splitting into two independent paths (PaymentProcessor and DisputeResolver) with no coordination between them"
+      >
+        <div class="flow-row">
+          <div class="flow-box customer">Customer</div>
+          <div class="flow-arrow" aria-hidden="true">&rarr;</div>
+          <div class="flow-box support">CustomerService</div>
+          <div class="flow-arrow" aria-hidden="true">&rarr;</div>
+          <div class="flow-split" aria-label="Two independent paths">
+            <div class="flow-path">
+              <div class="flow-box payment">PaymentProcessor</div>
+              <span class="flow-path-check" aria-label="executes">&#10003; executes</span>
+            </div>
+            <div class="flow-path">
+              <div class="flow-box dispute">DisputeResolver</div>
+              <span class="flow-path-check" aria-label="also executes">&#10003; also executes</span>
+            </div>
+          </div>
+        </div>
+        <div class="flow-no-coord" id="no-coord-label" aria-live="assertive">
+          <span aria-hidden="true">&#9888;</span> NO COORDINATION
+        </div>
+      </div>
+
+      <blockquote class="root-cause-quote reveal">
+        Both agents act independently. Neither knows what the other did. Without session types,
+        both paths execute — and the customer gets paid twice.
+      </blockquote>
+
+    </section>
+
+    <!-- ACT 4: SOLUTION -->
+    <section id="act-4-solution" aria-labelledby="act4-heading">
+
+      <h2 class="section-heading green reveal" id="act4-heading">With Lingua Universale</h2>
+      <p class="section-subheading reveal">One protocol. Zero duplicates. By mathematical proof.</p>
+
+      <div class="solution-grid">
+
+        <!-- LEFT: THE PROTOCOL -->
+        <div class="reveal">
+          <h3 class="label-heading">The Protocol</h3>
+          <div class="code-block">
+            <div class="code-block-header">
+              <div class="code-block-dot red"></div>
+              <div class="code-block-dot yellow"></div>
+              <div class="code-block-dot green"></div>
+              <span class="code-block-filename">refund_processing.lu</span>
+            </div>
+            <div class="code-block-body">
+              <div class="code-lines" aria-label="Lingua Universale protocol definition">
+
+                <div class="code-line">
+                  <span class="code-content"><span class="lu-comment"># RefundProcessing Protocol</span></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content"><span class="lu-comment"># Mutually exclusive: refund OR dispute, never both</span></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content"></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content"><span class="lu-keyword">protocol</span> <span class="lu-name">RefundProcessing</span><span class="lu-keyword">:</span></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content">    <span class="lu-keyword">roles:</span> <span class="lu-role">support</span>, <span class="lu-role">payment</span>, <span class="lu-role">dispute</span></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content"></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content">    <span class="lu-role">customer</span> <span class="lu-action">sends</span> complaint <span class="lu-keyword">to</span> <span class="lu-role">support</span></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content"></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content">    <span class="lu-keyword">when</span> <span class="lu-role">support</span> <span class="lu-keyword">decides:</span></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content">        <span class="lu-branch">refund:</span></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content">            <span class="lu-role">support</span> <span class="lu-action">asks</span> <span class="lu-role">payment</span> <span class="lu-action">to</span> process refund</span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content">            <span class="lu-role">payment</span> <span class="lu-action">returns</span> confirmation <span class="lu-keyword">to</span> <span class="lu-role">support</span></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content">        <span class="lu-branch">chargeback:</span></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content">            <span class="lu-role">support</span> <span class="lu-action">asks</span> <span class="lu-role">dispute</span> <span class="lu-action">to</span> handle chargeback</span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content">            <span class="lu-role">dispute</span> <span class="lu-action">returns</span> resolution <span class="lu-keyword">to</span> <span class="lu-role">support</span></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content"></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content">    <span class="lu-role">support</span> <span class="lu-action">sends</span> resolution <span class="lu-keyword">to</span> customer</span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content"></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content">    <span class="lu-keyword">properties:</span></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content">        <span class="lu-property">always terminates</span></span>
+                </div>
+                <div class="code-line">
+                  <span class="code-content">        <span class="lu-property">no deadlock</span></span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: THE REPLAY -->
+        <div class="reveal">
+          <h3 class="label-heading">The Replay</h3>
+          <div class="replay-panel">
+            <div class="replay-header">
+              <div class="replay-header-dot" aria-hidden="true"></div>
+              <span>Session Checker — Live replay</span>
+            </div>
+            <div class="replay-body" id="replay-body" aria-label="Protocol replay steps">
+
+              <div class="replay-step" id="rs-1" role="listitem">
+                <div class="step-icon ok" aria-label="Pass">&#10003;</div>
+                <div class="step-text ok-text">customer sends complaint to support</div>
+              </div>
+
+              <div class="replay-step" id="rs-2" role="listitem">
+                <div class="step-icon ok" aria-label="Pass">&#10003;</div>
+                <div class="step-text ok-text">support decides: refund<span class="step-branch-tag">branch active</span></div>
+              </div>
+
+              <div class="replay-step" id="rs-3" role="listitem">
+                <div class="step-icon ok" aria-label="Pass">&#10003;</div>
+                <div class="step-text ok-text">payment processes refund</div>
+              </div>
+
+              <div class="replay-step" id="rs-4" role="listitem">
+                <div class="step-icon ok" aria-label="Pass">&#10003;</div>
+                <div class="step-text ok-text">payment returns confirmation</div>
+              </div>
+
+              <div class="replay-step" id="rs-5" role="listitem">
+                <div class="step-icon fail" aria-label="Violation">&#10007;</div>
+                <div class="step-text fail-text">DisputeResolver tries to process chargeback&hellip;</div>
+              </div>
+
+              <div
+                class="violation-box"
+                id="violation-box"
+                aria-live="assertive"
+                role="alert"
+              >
+                <div class="violation-title">Protocol Violation</div>
+                <div class="violation-line">
+                  <span class="vl-label">Expected:</span>
+                  <span class="vl-value">support sends resolution to customer (step 6)</span>
+                </div>
+                <div class="violation-line">
+                  <span class="vl-label">Got:</span>
+                  <span class="vl-value">dispute &rarr; handle chargeback</span>
+                </div>
+                <div class="violation-verdict">
+                  Branch <strong class="branch-name">"refund"</strong> is active.
+                  The <strong class="branch-name">"chargeback"</strong> branch was not selected.
+                  Session type makes this <strong>IMPOSSIBLE.</strong><br/><br/>
+                  Not by convention. Not by code review.<br/>
+                  By <strong>mathematical proof.</strong>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ACT 5: CTA -->
+    <section id="act-5-cta" aria-labelledby="act5-heading">
+
+      <h2 class="section-heading blue reveal" id="act5-heading">See It In Action</h2>
+      <p class="section-subheading reveal">Try the protocol, walk the tour, break things in the debugger.</p>
+
+      <div class="cta-grid">
+
+        <a href="./" class="cta-card blue reveal" aria-label="Open Lingua Universale playground">
+          <div class="cta-icon" aria-hidden="true">&#9654;</div>
+          <div class="cta-title">Playground</div>
+          <div class="cta-desc">Write LU protocols in your browser. No install required.</div>
+        </a>
+
+        <a href="./?tour" class="cta-card violet reveal" aria-label="Start the interactive Lingua Universale tour">
+          <div class="cta-icon" aria-hidden="true">&#128218;</div>
+          <div class="cta-title">Interactive Tour</div>
+          <div class="cta-desc">24 steps, 4 chapters. From zero to verified protocol in minutes.</div>
+        </a>
+
+        <a href="https://lu-debugger.fly.dev/" class="cta-card green reveal" target="_blank" rel="noopener" aria-label="Open LU Debugger (opens in new tab)">
+          <div class="cta-icon" aria-hidden="true">&#128269;</div>
+          <div class="cta-title">Live Debugger</div>
+          <div class="cta-desc">Watch the session checker block violations in real time.</div>
+        </a>
+
+        <div class="cta-card teal cta-card-install reveal" aria-label="Install Lingua Universale via pip">
+          <div class="cta-icon" aria-hidden="true">&gt;_</div>
+          <div class="cta-title">Install</div>
+          <div class="install-code-row">
+            <code class="install-code" id="pip-cmd">pip install cervellaswarm-lingua-universale</code>
+            <button
+              class="copy-btn"
+              id="copy-btn"
+              aria-label="Copy pip install command to clipboard"
+            >Copy</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="secondary-links">
+        <a
+          href="https://pypi.org/project/cervellaswarm-lingua-universale/"
+          class="secondary-link"
+          target="_blank" rel="noopener"
+          aria-label="PyPI package page (opens in new tab)"
+        >PyPI</a>
+        <a
+          href="https://github.com/rafapra3008/cervellaswarm"
+          class="secondary-link"
+          target="_blank" rel="noopener"
+          aria-label="GitHub repository (opens in new tab)"
+        >GitHub</a>
+        <a
+          href="https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale"
+          class="secondary-link"
+          target="_blank" rel="noopener"
+          aria-label="VS Code extension (opens in new tab)"
+        >VS Code</a>
+        <a
+          href="https://github.com/rafapra3008/cervellaswarm/blob/main/docs/blog/from-vibecoding-to-vericoding.md"
+          class="secondary-link"
+          target="_blank" rel="noopener"
+          aria-label="Blog post about Lingua Universale (opens in new tab)"
+        >Blog</a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer>
+    <span class="footer-brand">Lingua Universale &mdash; by CervellaSwarm</span>
+    <nav class="footer-links" aria-label="Footer links">
+      <a
+        href="https://github.com/rafapra3008/cervellaswarm"
+        class="footer-link"
+        target="_blank" rel="noopener"
+      >GitHub</a>
+      <a
+        href="https://pypi.org/project/cervellaswarm-lingua-universale/"
+        class="footer-link"
+        target="_blank" rel="noopener"
+      >PyPI</a>
+      <a href="./" class="footer-link">Playground</a>
+    </nav>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    'use strict';
+
+    /* ----------------------------------------------------------
+       REDUCED MOTION CHECK
+    ---------------------------------------------------------- */
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ----------------------------------------------------------
+       INTERSECTION OBSERVER — REVEAL ELEMENTS
+    ---------------------------------------------------------- */
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const delay = el.dataset.delay;
+            if (delay) {
+              el.style.transitionDelay = delay + 's';
+            }
+            el.classList.add('visible');
+            revealObserver.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    document.querySelectorAll('.reveal, .reveal-left').forEach((el) => {
+      revealObserver.observe(el);
+    });
+
+    /* ----------------------------------------------------------
+       COUNTER ANIMATION
+    ---------------------------------------------------------- */
+    function easeOutExpo(t) {
+      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    }
+
+    function animateCounter(el) {
+      if (prefersReducedMotion) {
+        el.textContent = '$34,011.53';
+        return;
+      }
+
+      const target = parseFloat(el.dataset.target);
+      const duration = 2000;
+      const startTime = performance.now();
+      const fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
+      function tick(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = easeOutExpo(progress);
+        el.textContent = fmt.format(eased * target);
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          el.textContent = fmt.format(target);
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    const counterEl = document.querySelector('.counter-value');
+    let counterFired = false;
+
+    const counterObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !counterFired) {
+            counterFired = true;
+            animateCounter(counterEl);
+            counterObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    counterObserver.observe(counterEl);
+
+    /* ----------------------------------------------------------
+       FLOW DIAGRAM — NO COORDINATION shake
+    ---------------------------------------------------------- */
+    const noCoordEl = document.getElementById('no-coord-label');
+    let noCoordFired = false;
+
+    const noCoordObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !noCoordFired) {
+            noCoordFired = true;
+            noCoordEl.classList.add('animate-shake');
+            noCoordObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    noCoordObserver.observe(noCoordEl);
+
+    /* ----------------------------------------------------------
+       REPLAY STEPS — SEQUENTIAL ANIMATION
+    ---------------------------------------------------------- */
+    const replaySteps = document.querySelectorAll('.replay-step');
+    const violationBox = document.getElementById('violation-box');
+    let replayFired = false;
+
+    function runReplay() {
+      if (prefersReducedMotion) {
+        replaySteps.forEach((s) => s.classList.add('step-visible'));
+        violationBox.classList.add('show');
+        return;
+      }
+
+      replaySteps.forEach((step, index) => {
+        setTimeout(() => {
+          step.classList.add('step-visible');
+          const icon = step.querySelector('.step-icon');
+          if (icon && icon.classList.contains('ok')) {
+            icon.classList.add('animate-bounce');
+          }
+        }, index * 500);
+      });
+
+      setTimeout(() => {
+        violationBox.classList.add('show', 'shake-it');
+      }, replaySteps.length * 500 + 300);
+    }
+
+    const replayObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !replayFired) {
+            replayFired = true;
+            runReplay();
+            replayObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    const replayPanel = document.querySelector('.replay-panel');
+    if (replayPanel) {
+      replayObserver.observe(replayPanel);
+    }
+
+    /* ----------------------------------------------------------
+       COPY TO CLIPBOARD
+    ---------------------------------------------------------- */
+    function copyPip() {
+      const cmd = document.getElementById('pip-cmd').textContent;
+      const btn = document.getElementById('copy-btn');
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(cmd).then(() => {
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.textContent = 'Copy';
+            btn.classList.remove('copied');
+          }, 2000);
+        }).catch(() => {
+          btn.textContent = 'Error';
+          setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+        });
+      } else {
+        // Fallback for older browsers
+        const range = document.createRange();
+        range.selectNode(document.getElementById('pip-cmd'));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        try {
+          document.execCommand('copy');
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+        } catch (e) {
+          btn.textContent = 'Error';
+        }
+        window.getSelection().removeAllRanges();
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      }
+    }
+
+    document.getElementById('copy-btn').addEventListener('click', copyPip);
+  </script>
+
+</body>
+</html>

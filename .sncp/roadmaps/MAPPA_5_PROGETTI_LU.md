@@ -47,18 +47,25 @@
 
 ---
 
-## PROGETTO 3: Incident Replay (PROSSIMO)
+## PROGETTO 3: Incident Replay -- DONE! (S461)
 
-**Cosa:** Storia interattiva: "Un bug AI e costato $34K. Ecco come LU lo avrebbe fermato."
+**URL LIVE:** https://rafapra3008.github.io/cervellaswarm/incident.html
 
-**Da costruire:**
-- Narrativa credibile (e-commerce, rimborsi duplicati)
-- Animazione step-by-step del bug
-- Replay "con LU" -- violazione bloccata
-- Landing page standalone
+**Cosa:** Landing page narrativa: "$34,000 — The cost of one missing protocol." Storia di ShopFast: rimborso + chargeback duplicati perche nessun protocollo impedisce entrambi i path. LU lo ferma con choice/branching mutualmente esclusivo.
 
-**Effort:** 1 sessione
-**Output:** Pagina statica (zero backend)
+**Stack:** HTML + CSS + JS puro (zero deps, zero backend, Catppuccin Mocha)
+
+**File:** `playground/incident.html` -- ~1700 righe, singolo file
+- 5 atti: Hero ($34K), Timeline (counter animato), Root Cause (flow diagram), Solution (side-by-side LU protocol + replay con violation), CTA
+- IntersectionObserver scroll-triggered animations
+- Syntax highlighting LU CSS-only
+- Counter $0→$34,011.53 con easeOutExpo + requestAnimationFrame
+- Violation shake animation (match Debugger)
+- Responsive (3 breakpoints), prefers-reduced-motion, ARIA labels, skip-to-content
+
+**Ricerca:** Counterfactual Replay (AgenTracer 2025), Evil Martians devtool pattern, sticky panel
+**Guardiana:** 9.1→9.5+/10 (3 P2 + 4 P3 fixati: LU verbs corretti, blog link, inline styles, a11y)
+**Effort reale:** 1 sessione (come stimato)
 
 ---
 
@@ -92,17 +99,41 @@
 
 ---
 
+## CANALE BONUS: Moltbook + OpenClaw (scoperta S461!)
+
+**Cosa:** Agente LU su Moltbook (1.6M agenti AI) + Skill MCP su ClawHub (13.729 skills).
+
+**Perche:** MCP/A2A/ACP gestiscono COSA gli agenti si dicono. NESSUNO verifica se e CORRETTO. LU e il "missing verification layer". Moltbook ha un problema noto di prompt injection (2.6%) -- LU lo risolve.
+
+**Da costruire:**
+- Registrare agente "lingua-universale" su Moltbook (richiede tweet verifica da Rafa)
+- Skill MCP con 4 tool: load_protocol, verify_message, check_properties, list_steps
+- Pubblicare su ClawHub (primo skill con verifica formale!)
+- Primo post nel submolt `llmdev`: "Formal verification for AI agent protocols"
+
+**Ricerca:** Report completi in `.sncp/progetti/cervellaswarm/reports/`:
+- `RESEARCH_20260314_AI_AGENT_SOCIAL_NETWORKS.md`
+- `RESEARCH_20260314_MOLTBOOK_GUIDA_OPERATIVA.md`
+- `RESEARCH_20260314_OPENCLAW_SKILL_LU.md`
+
+**Effort:** 1-2 sessioni
+**Note:** Meta ha acquisito Moltbook il 10/03/2026. Finestra aperta.
+
+---
+
 ## ORDINE E DIPENDENZE
 
 ```
-[1] LU Debugger ✅ ──> [2] Tour of LU ✅ ──> [3] Incident Replay
+[1] LU Debugger ✅ ──> [2] Tour of LU ✅ ──> [3] Incident Replay ✅
                                                       |
                                                [4] Protocol Zoo
                                                       |
                                                [5] AI Code Review
+
+[BONUS] Moltbook Agent + OpenClaw Skill (parallelo, indipendente)
 ```
 
-Ogni progetto completato = materiale per il lancio. Non aspettiamo tutti e 5.
+3/5 progetti DONE! Ogni progetto completato = materiale per il lancio.
 
 ---
 

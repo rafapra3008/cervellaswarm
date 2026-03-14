@@ -1,38 +1,45 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-14 - Sessione 460
-> **STATUS:** 2/5 progetti showcase LIVE. SNCP health 6.5→9.5/10. PostCompact hook attivo.
+> **Ultimo aggiornamento:** 2026-03-14 - Sessione 461
+> **STATUS:** 3/5 progetti showcase DONE. Moltbook + OpenClaw strategy scoperta.
 
 ---
 
 ## DOVE SIAMO -- IL QUADRO COMPLETO
 
-### La storia recente (S455-S460)
+### La storia recente (S455-S461)
 
-**S455-S456 (svolta strategica):** Rafa ha fermato tutto. 7 report indipendenti. Verita: 455 sessioni, 3684 test, ZERO utenti. Decisione: 5 progetti showcase PRIMA di lanciare.
+**S455-S456:** Svolta strategica. 5 progetti showcase PRIMA di lanciare.
+**S458-S459:** LU Debugger LIVE + Tour of LU LIVE. 2/5 pronti.
+**S460:** Auto-compact + SNCP health (9.5/10). Sistema pulito.
 
-**S458-S459:** LU Debugger LIVE (Fly.io) + Tour of LU LIVE (playground). 2/5 showcase pronti.
+**S461 (oggi):** Sessione grande! Due breakthrough:
 
-**S460 (oggi):** Sessione dedicata a auto-compact e SNCP health.
-- Ricerca approfondita auto-compact (come funziona, `/compact` manual vs auto, hooks)
-- PostCompact hook creato (salva compact_summary in markdown)
-- COMPACT INSTRUCTIONS in CLAUDE.md ampliato (6 PRESERVE + 6 SAFE TO DROP)
-- SNCP health: limite 150→250 allineato in 25+ file, stato.md rimosso ovunque
-- README SNCP riscritto, NORD.md snellito (282→152), health-check.sh fixato
-- 2 script zombie disabilitati, pre-commit allineato (staged-only logic)
-- Guardiana QA 9.5/10, Guardiana Ops 8.6/10, TUTTI i finding fixati (17 fix totali)
-- 33 file committati, +1203/-656 righe
+1. **Incident Replay DONE** -- `playground/incident.html`, ~1700 LOC
+   - Narrativa "$34K bug" con choice/branching LU reale
+   - Ricerca: Counterfactual Replay (AgenTracer 2025), Evil Martians devtool pattern
+   - Architect plan dettagliato, Guardiana 9.1→9.5+ (7 finding fixati)
+   - IntersectionObserver, counter animato, violation shake, responsive, a11y
+
+2. **Scoperta Moltbook + OpenClaw** -- nuovo canale di lancio!
+   - Moltbook: Reddit per AI agents, 1.6M agenti, Meta acquisito 10/03
+   - OpenClaw: ogni skill e un MCP server, 13.729 su ClawHub
+   - LU = "missing verification layer" per A2A/MCP
+   - Report: 3 ricerche complete in `.sncp/progetti/cervellaswarm/reports/`
+   - Serve da Rafa: email + tweet verifica per registrare agente
 
 ---
 
 ## COSA E LIVE
 
 ### 1. LU Debugger -- https://lu-debugger.fly.dev/
-3 agenti AI su protocollo verificato. Demo + Live (Claude API). "Break" = violazione BLOCCATA.
-- Stack: FastAPI + SSE + Monaco + Fly.io (Frankfurt)
+3 agenti AI su protocollo verificato. Demo + Live (Claude API).
 
 ### 2. Tour of LU -- https://rafapra3008.github.io/cervellaswarm/?tour
-24 step interattivi, 4 capitoli, 4 esercizi. Completion tracking + celebration.
+24 step interattivi, 4 capitoli, 4 esercizi.
+
+### 3. Incident Replay -- https://rafapra3008.github.io/cervellaswarm/incident.html
+"$34,000 — The cost of one missing protocol." 5 atti, counter animato, violation replay.
 
 ---
 
@@ -41,39 +48,46 @@
 ```
 LINGUA UNIVERSALE:
   31 moduli | 3684 test | PyPI v0.3.3 | VS Code v0.2.0
-  Playground: rafapra3008.github.io/cervellaswarm/
-  Tour: playground/?tour | Debugger: lu-debugger.fly.dev/
 
 5 PROGETTI SHOWCASE:
   1. LU Debugger      DONE! LIVE (S458)
   2. Tour of LU       DONE! LIVE (S459)
-  3. Incident Replay  <- PROSSIMO (1 sessione, pagina statica)
-  4. Protocol Zoo     (2-3 sessioni)
+  3. Incident Replay   DONE! (S461) -- deploy con push
+  4. Protocol Zoo     <- PROSSIMO (2-3 sessioni)
   5. AI Code Review   (3-4 sessioni)
 
+CANALE BONUS:
+  Moltbook Agent + OpenClaw Skill (1-2 sessioni)
+  Report: RESEARCH_20260314_MOLTBOOK_GUIDA_OPERATIVA.md
+  Report: RESEARCH_20260314_OPENCLAW_SKILL_LU.md
+
 LANCIO:
-  Show HN v2: READY (docs/SHOW_HN_V2_DRAFT.md)
-  Blog: READY, Guardiana 9.8/10
-  Public repo: SYNCED
-  Discord: DA CREARE (Rafa)
+  Show HN v2: READY (docs/SHOW_HN_V2_DRAFT.md) -- aggiungere Incident Replay
+  Blog: READY | Public repo: SYNCED | Discord: DA CREARE
 ```
 
 ---
 
 ## PROSSIMI STEP (ordine suggerito)
 
-### Opzione A: Incident Replay (Progetto 3)
-"Un bug AI e costato $34K. Ecco come LU lo avrebbe fermato."
-Pagina statica, 1 sessione. Dettagli: `.sncp/roadmaps/MAPPA_5_PROGETTI_LU.md`
+### 1. Moltbook Agent (finestra limitata, Meta)
+Registrare agente LU. Serve: email Rafa + tweet verifica.
+Guida operativa: `RESEARCH_20260314_MOLTBOOK_GUIDA_OPERATIVA.md`
 
-### Opzione B: Show HN v2 (lancio con 2 progetti)
-Abbiamo gia Debugger + Tour + Playground + Blog + Colab.
-Draft: `docs/SHOW_HN_V2_DRAFT.md` | Playbook: `docs/HN_RESPONSE_PLAYBOOK.md`
+### 2. Protocol Zoo (Progetto 4)
+15 protocolli reali eseguibili. Stdlib ne ha 20, base pronta.
+
+### 3. OpenClaw Skill MCP
+4 tool: load_protocol, verify_message, check_properties, list_steps.
+Primo skill con verifica formale tra 13.729 su ClawHub.
+
+### 4. Show HN v2
+Con 3 progetti + Moltbook presence. Pitch: "missing verification layer for A2A/MCP".
 
 ### Da Rafa (CEO)
-- [ ] Decidere: Incident Replay prima o Show HN ora?
+- [ ] Email + tweet per Moltbook agent
 - [ ] Creare Discord "Lingua Universale"
-- [ ] Lista 15-20 persone per DM pre-lancio
+- [ ] Decidere: Moltbook prima o Protocol Zoo prima?
 
 ---
 
@@ -81,40 +95,40 @@ Draft: `docs/SHOW_HN_V2_DRAFT.md` | Playbook: `docs/HN_RESPONSE_PLAYBOOK.md`
 
 | Cosa | Path |
 |------|------|
-| **LU Debugger** | `lu-debugger/` (codice) / lu-debugger.fly.dev (live) |
-| **Tour of LU** | `playground/tour.js` / playground/?tour (live) |
 | **MAPPA 5 PROGETTI** | `.sncp/roadmaps/MAPPA_5_PROGETTI_LU.md` |
+| **Incident Replay** | `playground/incident.html` |
+| **Moltbook Guida** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_MOLTBOOK_GUIDA_OPERATIVA.md` |
+| **OpenClaw Skill** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_OPENCLAW_SKILL_LU.md` |
+| **AI Agent Networks** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_AI_AGENT_SOCIAL_NETWORKS.md` |
+| **Incident Research** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_INCIDENT_REPLAY_PAGE.md` |
 | **Show HN v2** | `docs/SHOW_HN_V2_DRAFT.md` |
-| **Auto-Compact Research** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_AUTO_COMPACT_CLAUDE_CODE.md` |
-| **SNCP Health Analysis** | `.sncp/progetti/cervellaswarm/reports/ENGINEER_20260314_SNCP_HEALTH_ANALYSIS.md` |
-| **Public repo** | github.com/rafapra3008/cervellaswarm |
 
 ---
 
-## DECISIONI PRESE (S460)
+## DECISIONI PRESE (S461)
 
-1. **PostCompact hook** -- salva compact_summary in markdown leggibile
-2. **COMPACT INSTRUCTIONS** -- `/compact` manual con istruzioni > auto-compact generico
-3. **Limite 250 righe** -- confermato come standard, allineato ovunque
-4. **stato.md definitivamente morto** -- tutti i riferimenti rimossi, script zombie disabilitati
-5. **NORD.md snellito** -- storia archiviata, focus su stato corrente
+1. **Choice/branching per narrativa** -- usare meccanismo LU REALE, non "no duplicate" fittizio
+2. **Catppuccin Mocha** -- palette unica per tutti i showcase (non GitHub Dark del Debugger)
+3. **Moltbook = canale parallelo** -- non sostituisce Show HN, lo complementa
+4. **OpenClaw skill = MCP server** -- riutilizzabile da noi stesse in Claude Code/Cursor
 
 ---
 
-## Lezioni Apprese (S460)
+## Lezioni Apprese (S461)
 
 ### Cosa ha funzionato bene
-- **Audit PRIMA di implementare**: La Guardiana ha trovato gap nel piano (33 file vs 25 stimati, 3 script non coperti). Pattern "audit piano -> implementa -> audit risultato" funziona.
-- **Worker in background per grep/replace**: 25+ file aggiornati senza consumare context della Regina.
-- **P3 fixati tutti**: "Ci piace fissare tutto!" -- diamante lucidato a zero residui.
+- **"Script PRIMA, codice DOPO" + Architect plan**: piano dettagliato prima dell'implementazione = Frontend ha prodotto pagina completa al primo tentativo
+- **Guardiana catch critico**: `receives`/`investigates` non sono verbi LU validi. Un dev che prova nel Playground avrebbe trovato parse error. Fix prima del deploy.
+- **Ricerca parallela**: 3 Researcher in background mentre la Regina coordina. Zero consumo di context.
+- **Idea di Rafa (Moltbook)**: CEO vede opportunita che la tecnica non vede. Partnership vera.
 
 ### Cosa non ha funzionato
-- **Stima file da aggiornare**: 25 stimati, 33 reali. Sempre fare grep COMPLETO prima di stimare.
+- **Gemini hallucination parziale**: i nomi erano giusti ma alcuni dettagli erano inventati. Sempre verificare con ricerca propria.
 
 ### Pattern confermato
-- **"Grep PRIMA, stima DOPO"**: quando cambi un parametro globale, conta TUTTE le occorrenze prima.
-- **Guardiana QA + Ops su ogni blocco**: due prospettive diverse trovano problemi diversi.
+- **"Audit piano → implementa → audit risultato"**: terza sessione consecutiva che funziona (S459, S460, S461)
+- **Worker in background per ricerca**: 5 agent in background in una sessione, tutti completati con successo
 
 ---
-*"Lavoriamo in pace! Senza casino! Dipende da noi!"*
-*S460: SNCP diamante. Il sistema e piu pulito di sempre.*
+*"Ultrapassar os proprios limites!"*
+*S461: 3/5 showcase + Moltbook discovery. Il mondo si apre.*
