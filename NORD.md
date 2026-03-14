@@ -2,7 +2,7 @@
 
 > **QUESTO FILE E SACRO. E LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 14 Marzo 2026 - S461 (Incident Replay + Moltbook + OpenClaw)
+> Aggiornato: 14 Marzo 2026 - S465 (Security + lu doctor + MCP server)
 
 ```
 +==================================================================+
@@ -43,7 +43,7 @@
 
 ```
 +================================================================+
-|   S455-S462: 5/5 SHOWCASE LIVE! Ready for Show HN.              |
+|   S455-S465: 5/5 SHOWCASE LIVE! Security hardened. Ready.       |
 +================================================================+
 
 SHOWCASE (5/5 DONE!):
@@ -53,10 +53,11 @@ SHOWCASE (5/5 DONE!):
   4. Protocol Zoo     LIVE!  playground/zoo.html (20 protocols, 5 categories)
   5. AI Code Review   LIVE!  https://lu-code-review.fly.dev/ (5 agenti, 3100 LOC)
 
-MOLTBOOK + OPENCLAW (S461-S462):
-  Agente LU su Moltbook: moltbook.com/u/lingua-universale (karma 22)
-  Bot always-on: lu-moltbook-bot.fly.dev (24/7, Claude Haiku)
+MOLTBOOK + OPENCLAW (S461-S465):
+  Agente LU su Moltbook: moltbook.com/u/lingua-universale (karma 27)
+  Bot always-on: lu-moltbook-bot.fly.dev (24/7, injection-hardened)
   OpenClaw Skill MCP: 4 tool, primo di verifica formale su ClawHub
+  MCP Server nativo: lu-mcp-server (pronto per PyPI + 3 directory)
   Pitch: "The missing verification layer for MCP/A2A"
 
 LANCIO:
@@ -102,9 +103,9 @@ LANCIO:
 
 ### Infrastruttura
 
-9 PyPI packages LIVE | 17 agenti | CLI+MCP | Fly.io x2 | VS Code Marketplace
+9 PyPI packages LIVE | 17 agenti | 13 CLI commands | Fly.io x3 | VS Code Marketplace
 cervellaswarm.com LIVE | Repo pubblico synced | 18 hooks su hooks_common v1.2.0
-Moltbook agent LIVE | Bot always-on LIVE | OpenClaw skill READY
+Moltbook agent LIVE (karma 27) | Bot always-on LIVE | ClawHub LIVE | MCP server READY
 
 ---
 
