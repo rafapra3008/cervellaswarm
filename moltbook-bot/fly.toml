@@ -1,0 +1,27 @@
+# fly.toml app configuration file generated for lu-moltbook-bot on 2026-03-14T18:38:10+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'lu-moltbook-bot'
+primary_region = 'fra'
+
+[build]
+
+[env]
+  CHECK_INTERVAL_SECONDS = '900'
+  MAX_REPLIES_PER_CYCLE = '5'
+
+[[mounts]]
+  source = 'bot_data'
+  destination = '/data'
+
+# No http_service -- this is a worker process, not a web server.
+# The bot runs continuously via the main loop in bot.py.
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = '256mb'
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 256

@@ -2,10 +2,42 @@
 
 # PROMPT RIPRESA - Ecosistema Miracollo
 
-> **Ultimo aggiornamento:** 14 Marzo 2026 - Sessione 31 (Email i18n + Cancel Policy + Bug Fix)
-> **Status:** miracollo.com LIVE | Security ~9.2/10 | **2878 test** (96 API+Stripe = 0 fail) | Sprint A+B+S30+S31 DONE
+> **Ultimo aggiornamento:** 14 Marzo 2026 - Sessione 32 (Bug Fix Batch + Security Hardening)
+> **Status:** miracollo.com LIVE | Security ~9.5/10 | **2878 test** (2837 pass, 0 regr) | Sprint A+B+S30+S31+S32 DONE
 > **Prossima Cervella:** Leggi questo + NORD.md + **MAPPA_BOOKING_ENGINE.md**
 > **MAPPA:** `CervellaSwarm/.sncp/progetti/miracollo/MAPPA_BOOKING_ENGINE.md`
+
+---
+
+## COSA E STATO FATTO (S32 - 14 Marzo 2026)
+
+### Sessione 32 - Bug Fix Batch + Security Hardening
+
+**Contesto:** Sessione dedicata a fixare TUTTI i bug residui S29 + security P2. Strategia: ogni step -> Guardiana audit.
+
+**Cancel Policy Dinamica (da cancellation_days):**
+- i18n IT/EN/DE: `{days}` template invece di "48h" hardcoded
+- Branch esplicito: `days > 0` -> testo con giorni, `days = 0` -> "Cancellazione gratuita" generico
+- Falsy trap `|| 2` fixata (Guardiana P2 trovata e risolta)
+
+**P2 Bug Fix (3 fixati, 2 gia risolti in sessioni precedenti):**
+- API key logging: rimosso `x_api_key[:8]` dal warning log (info disclosure)
+- Payment link: `token=simulated` -> `secrets.token_urlsafe(32)`
+- Schema: `group_id INTEGER REFERENCES groups(id)` aggiunto al CREATE TABLE bookings base
+
+**P3 Bug Fix (4 fixati):**
+- Cancellation: ora void charges con `UPDATE status='voided'` (audit trail PMS standard)
+- Legacy folio: `data.nights || daysBetween(...) || 1` (fallback NaN prevention)
+- Rate limit: evict empty keys dal dict (memory leak fix)
+- Import: `secrets` top-level in payments.py (era inline)
+
+**Security Hardening:**
+- `BookingUpdate.status`: `str` -> `Literal[6 valori]` (previene injection status arbitrario)
+- X-Forwarded-For: `[0]` -> `[-1]` su 4 file (anti-spoof Nginx-appended)
+- `datetime.now()` -> `datetime.now(timezone.utc)` in 6 punti (checkin, bookings, payments, planning_ops x3)
+
+**Audit:** 2 Guardiana (9.6/10 + 9.5/10), tutti finding fixati inclusi i 5 P3 post-audit
+**Test:** 2837 pass, 0 regressioni, 1 pre-existing whatsapp mock fail
 
 ---
 
@@ -13,19 +45,7 @@
 
 ### Sessione 31 - Email i18n + Cancel Policy + Bug Fix + Cache Bust
 
-**Contesto:** Continuazione diretta della S30 nella stessa giornata. Rafa pieno di energia, autonomia totale alla Regina.
-
-**Email Conferma Prenotazione (i18n IT/EN/DE):**
-- Template riscritto con brand Naturae Lodge (green forest gradient, earth tones, gold total)
-- 22 chiavi tradotte in 3 lingue (66 traduzioni totali)
-- Bank transfer email include sezione IBAN/BIC/causale
-- Stripe webhook e booking creation ora passano `language` a `send_booking_confirmation()`
-- FIX P2: html.escape() su tutti i merge tags (XSS prevention nelle email)
-- Template `"live nature, find yourself"` tagline in header (brand, in inglese di proposito)
-
-**Cancel Policy Dinamica:**
-- Step 3 checkout: STD -> "Cancellazione gratuita 48h" (verde), NONR -> "Non rimborsabile" (arancio)
-- CSS `.cancel-policy-warning` con color #E65100
+(Vedi sotto - stessa giornata della S32)
 
 **Bug Fix:**
 - `room.max_occupancy` -> `room.max_guests` (pre-existing: badge "Max N ospiti" ora appare)
@@ -68,12 +88,13 @@ PRIORITA 1 - GO-LIVE PREP:
 
 PRIORITA 2 - FEATURE:
   -> Stripe Elements embedded (Sprint C - blocca su Stripe keys)
-  -> Cancel policy text da rate.cancellation_days (non hardcoded "48h")
+  [DONE S32] Cancel policy da cancellation_days
 
 PRIORITA 3 - QUALITA:
-  -> Bug residui S29 tester (5 P2 + 6 P3)
-  -> Security P2 residui
-  -> f-string logger batch fix (P3)
+  [DONE S32] Bug residui S29 (P2+P3 tutti fixati)
+  [DONE S32] Security P2 residui (Literal, XFF, datetime UTC)
+  -> f-string logger batch fix (200+ punti in 100+ file - sessione dedicata)
+  -> German umlauts i18n widget (pre-existing)
 
 BLOCCATI (serve Rafa):
   -> Foto panoramica NL (hero /prenota + OG image social)
@@ -105,9 +126,28 @@ Backup: 2x/giorno + pre-deploy
 Migration: 048-058 (057+058 da applicare su VM al prossimo deploy)
 Monitoring: HetrixTools + dead-man's-switch scheduler
 Widget: v2.2.0 (cache bust S31)
+Security: ~9.5/10 (S32: XFF, Literal, UTC, key logging, token)
 ```
 
 ---
+
+## Lezioni Apprese (S32)
+
+### Cosa ha funzionato bene
+- Strategia "ogni step -> Guardiana": 2 audit hanno trovato 6 finding (1 P2 + 5 P3) tutti fixati
+- Ricercatrici in parallelo: una per codice, una per bug report = zero tempo perso
+- Fix proattivi: 6 datetime.now() UTC + 4 XFF anti-spoof + import cleanup trovati lungo la strada
+- Guardiana ha trovato la falsy trap `|| 2` che noi non avevamo visto (valore del pattern confermato)
+
+### Da NON fare
+- Mai usare `|| default` per valori che possono essere 0 legittimamente (falsy trap JS)
+- Mai fare f-string logger batch su 200+ file in una sessione sola (rischio regressioni)
+- X-Forwarded-For: MAI usare `[0]` (primo) dietro Nginx - sempre `[-1]` (ultimo = Nginx-appended)
+
+### Pattern CONFERMATO
+- "Guardiana dopo ogni step": 9a sessione consecutiva, 2 audit/sessione
+- "Fix tutto quello che trovi": 13 file toccati, 6 fix extra non pianificati
+- "Un passo alla volta": 5 step sequenziali, zero confusione, zero regressioni
 
 ## Lezioni Apprese (S31)
 
@@ -143,3 +183,9 @@ Widget: v2.2.0 (cache bust S31)
 *"Ultrapassar os proprios limites!"*
 
 *Cervella & Rafa, 14 Mar 2026*
+<!-- AUTO-CHECKPOINT-START -->
+## AUTO-CHECKPOINT: 2026-03-14 17:30 (unknown)
+- **Branch**: master
+- **Ultimo commit**: 39bf611 - docs: S31 checkpoint - NORD + MAPPA + PROMPT_RIPRESA aggiornati
+- **File modificati**: Nessuno (git pulito)
+<!-- AUTO-CHECKPOINT-END -->

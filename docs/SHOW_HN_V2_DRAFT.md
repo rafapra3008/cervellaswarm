@@ -59,6 +59,11 @@ What I'd love feedback on:
 2. The linter + formatter story -- useful for a DSL this young?
 3. Would you use `lu init --template rag_pipeline` to scaffold AI protocols?
 
+See it in action:
+  Live Debugger: https://lu-debugger.fly.dev/ (3 AI agents, click "Break" to see a violation blocked)
+  Interactive Tour: https://rafapra3008.github.io/cervellaswarm/?tour (learn LU in 10 min)
+  $34K Bug Story: https://rafapra3008.github.io/cervellaswarm/incident.html (why protocols matter)
+
 Try it:
   pip install cervellaswarm-lingua-universale
   lu chat --lang en          # build a protocol conversationally
@@ -88,6 +93,8 @@ Discord: DISCORD_LINK_HERE
 | No stdlib | 20 verified protocols |
 | No playground | Browser playground LIVE |
 | No IDE support | VS Code extension on Marketplace |
+| No live demos | 3 interactive showcases LIVE |
+| No community | Agent on Moltbook (1.6M AI agents) |
 
 ### Messaggi chiave per HN
 
@@ -98,6 +105,9 @@ Discord: DISCORD_LINK_HERE
 5. **"La Nonna"** -- Human story, not just tech.
 6. **"gofmt for session types"** -- linter/formatter story resonates.
 7. **"VS Code Marketplace"** -- Legitimate tooling, not just a CLI.
+8. **"$34K bug prevention"** -- Incident Replay makes it visceral and real.
+9. **"Missing verification layer for MCP/A2A"** -- Positions LU in the protocol wars.
+10. **"AI agents already using it"** -- Moltbook presence = social proof.
 
 ### Timing suggerito
 
