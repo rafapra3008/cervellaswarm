@@ -163,6 +163,11 @@ FASE 4: Launch                    [###################.] 95% IN CORSO
 |   29 moduli, 3684 test, 12 CLI cmd, 9 PropertyKind, ZERO deps|
 |   DOGFOODING S454: Primo programma REALE in LU! 8/8 PROVED  |
 |                                                                  |
+|   SHOWCASE S458:                                                |
+|     LU Debugger LIVE: https://lu-debugger.fly.dev/             |
+|     3 AI agents, real-time SSE, Monaco, violation demo          |
+|     FastAPI + Fly.io (Frankfurt), ~$0.000005/run                |
+|                                                                  |
 |   VISIONE (S442 - Rafa):                                        |
 |   "Un giorno le AI sviluppano CON Lingua Universale."           |
 |   Come Python per ML, LU per AI verified communication.          |
@@ -212,6 +217,7 @@ STATO ATTUALE:
   ✓ VS Code Marketplace           LIVE! cervellaswarm.lingua-universale v0.2.0
   ✓ Memoria                       SQLite DB + analytics + retrospective
   ✓ Cron                          6 job automatici (2 crontab + 4 launchd)
+  ✓ LU Debugger (Fly.io)         LIVE! lu-debugger.fly.dev (S458)
 ```
 
 ---

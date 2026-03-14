@@ -6,43 +6,28 @@
 
 ---
 
-## PROGETTO 1: LU Debugger (PROSSIMO)
+## PROGETTO 1: LU Debugger -- DONE! (S458)
 
-**Cosa:** App web dove 3 agenti AI comunicano in tempo reale. Bottone "Break" mostra la violazione bloccata.
+**URL LIVE:** https://lu-debugger.fly.dev/
 
-**Scenario:** OrderProcessing -- Customer, Warehouse, Payment. Il protocollo impedisce a Payment di processare prima che Warehouse confermi.
+**Cosa:** App web dove 3 agenti AI (Customer, Warehouse, Payment) comunicano in tempo reale su protocollo OrderProcessing.lu verificato. Bottone "Break" mostra la violazione BLOCCATA.
 
-**Architettura** (report: `RESEARCH_20260314_LU_DEBUGGER_ARCHITECTURE.md`):
-- Frontend: HTML statico (Monaco + chat log + toolbar)
-- Backend: FastAPI + SSE (Server-Sent Events)
-- Hosting: Fly.io ($1.94/mese, no cold start)
-- Costo: ~$0.000005 per run (Haiku 4.5)
-- Demo mode: mock responses (zero API) + Live mode: Claude API reale
-- Rate limit: 3 run/min per IP (SlowAPI)
+**Stack:** FastAPI + SSE + Monaco editor + Fly.io (Frankfurt, 2 macchine)
 
-**File gia pronti:**
-- `examples/order_processing.lu` -- 4/4 PROVED
-- `examples/dogfood_runner_live.py` -- runner con agenti reali
+**File:** `lu-debugger/` -- 7 file, 1474 righe
+- `server.py` (165) -- FastAPI + SSE + rate limiting (SlowAPI)
+- `runner.py` (346) -- async Claude API agents (Haiku 4.5, ~$0.000005/run)
+- `demo_data.py` (184) -- protocol source + pre-scripted steps
+- `static/index.html` (748) -- Monaco + LU syntax + chat UI + dark theme
+- `Dockerfile` + `fly.toml` + `requirements.txt`
 
-**Da costruire:**
-```
-lu-debugger/
-├── server.py          ~180 righe  (FastAPI, SSE, rate limit)
-├── runner.py          ~120 righe  (async adapter del dogfood runner)
-├── demo_data.py       ~80 righe   (script pre-registrati)
-├── requirements.txt   ~6 righe
-├── Dockerfile         ~15 righe
-├── fly.toml           ~20 righe
-└── static/
-    └── debugger.html  ~400 righe  (Monaco + chat + violation display)
-```
+**4 endpoint:** `/api/run/demo`, `/api/run/demo-break`, `/api/run/live`, `/api/run/live-break`
 
-**Effort:** 1.5-2 sessioni
-**Output:** URL live (lu-debugger.fly.dev)
+**Effort reale:** 1 sessione (architettura pre-progettata da Researcher S456)
 
 ---
 
-## PROGETTO 2: Tour of LU
+## PROGETTO 2: Tour of LU (PROSSIMO)
 
 **Cosa:** Tutorial interattivo nel browser (come Tour of Go). 8-10 lezioni progressive.
 
@@ -114,7 +99,7 @@ lu-debugger/
 ## ORDINE E DIPENDENZE
 
 ```
-[1] LU Debugger  ────> [2] Tour of LU  ────> [3] Incident Replay
+[1] LU Debugger ✅ ──> [2] Tour of LU  ────> [3] Incident Replay
                                                       |
                                                [4] Protocol Zoo
                                                       |
