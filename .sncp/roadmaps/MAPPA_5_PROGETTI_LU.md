@@ -168,5 +168,30 @@
 
 ---
 
+## POST-SHOWCASE: Hardening + DX (S464-S465)
+
+**S464:** Security hardening sprint. 5 agenti paralleli, 54 issues, 12 fix deployati.
+- SecurityHeadersMiddleware su Debugger + Code Review
+- Injection filter bot: 23 pattern + Unicode NFKD + bidi chars
+- Atomic file write, client singleton, .dockerignore, redirect warning
+- OG + Twitter Card tags su tutti i 5 showcase
+- Competitive landscape: ZERO competitor verifica sequenza
+- Hidden gems: 20 quick wins identificati
+- Repo pubblico sincronizzato
+
+**S465:** Developer Experience sprint.
+- `lu doctor` -- diagnostic command (Flutter/Homebrew pattern, 10 test)
+- README badges aggiornati (VS Code Marketplace + test count)
+- CONTRIBUTING.md con 5 Good First Issues
+
+**Da fare pre-Show HN:**
+- GitHub Topics su repo pubblico (Rafa, 5 min)
+- SkillsMP topic `skill-md` (Rafa, 2 min)
+- Awesome lists PR (4 repo)
+- Loom video 60s
+- Discord (Rafa)
+
+---
+
 *"Un passo alla volta. Fatto bene > fatto veloce."*
-*"5/5. Il cerchio e completo."*
+*"5/5. Il cerchio e completo. Il diamante brilla nei dettagli."*
