@@ -1,39 +1,38 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-14 - Sessione 459
-> **STATUS:** 2/5 progetti showcase LIVE e synced al pubblico. Prossimo: Incident Replay o Show HN.
+> **Ultimo aggiornamento:** 2026-03-14 - Sessione 460
+> **STATUS:** 2/5 progetti showcase LIVE. SNCP health 6.5→9.5/10. PostCompact hook attivo.
 
 ---
 
 ## DOVE SIAMO -- IL QUADRO COMPLETO
 
-### La storia recente (S455-S459)
+### La storia recente (S455-S460)
 
-**S455-S456 (svolta strategica):** Rafa ha fermato tutto. 7 report indipendenti. Verita: 455 sessioni, 3684 test, ZERO utenti. Decisione: 5 progetti showcase PRIMA di lanciare. Identita fixata: LU = prodotto, CervellaSwarm = organizzazione.
+**S455-S456 (svolta strategica):** Rafa ha fermato tutto. 7 report indipendenti. Verita: 455 sessioni, 3684 test, ZERO utenti. Decisione: 5 progetti showcase PRIMA di lanciare.
 
-**S457:** Security fixes, bug hunt, ops cleanup.
+**S458-S459:** LU Debugger LIVE (Fly.io) + Tour of LU LIVE (playground). 2/5 showcase pronti.
 
-**S458:** Costruito e deployato il **LU Debugger** su Fly.io in 1 sessione.
-
-**S459 (oggi):** Sync pubblico del Debugger + README. Scoperto che il **Tour of LU** era gia al 90% nel playground -- aggiunto completion tracking + celebration. 2 audit Guardiana (9.5/10 entrambi), tutti i fix applicati. 2 sync al repo pubblico.
+**S460 (oggi):** Sessione dedicata a auto-compact e SNCP health.
+- Ricerca approfondita auto-compact (come funziona, `/compact` manual vs auto, hooks)
+- PostCompact hook creato (salva compact_summary in markdown)
+- COMPACT INSTRUCTIONS in CLAUDE.md ampliato (6 PRESERVE + 6 SAFE TO DROP)
+- SNCP health: limite 150→250 allineato in 25+ file, stato.md rimosso ovunque
+- README SNCP riscritto, NORD.md snellito (282→152), health-check.sh fixato
+- 2 script zombie disabilitati, pre-commit allineato (staged-only logic)
+- Guardiana QA 9.5/10, Guardiana Ops 8.6/10, TUTTI i finding fixati (17 fix totali)
+- 33 file committati, +1203/-656 righe
 
 ---
 
 ## COSA E LIVE
 
 ### 1. LU Debugger -- https://lu-debugger.fly.dev/
-
-3 agenti AI (Customer, Warehouse, Payment) su protocollo verificato. Demo + Live (Claude API). Click "Break" = violazione BLOCCATA.
-- Stack: FastAPI + SSE + Monaco + Fly.io (Frankfurt, 2 macchine)
-- Codice: `lu-debugger/` (7 file, 1474 righe)
-- Costo: ~$0.000005/run (Haiku 4.5)
-- Fly.io console: https://fly.io/apps/lu-debugger
+3 agenti AI su protocollo verificato. Demo + Live (Claude API). "Break" = violazione BLOCCATA.
+- Stack: FastAPI + SSE + Monaco + Fly.io (Frankfurt)
 
 ### 2. Tour of LU -- https://rafapra3008.github.io/cervellaswarm/?tour
-
-24 step interattivi, 4 capitoli (Types, Agents, Protocols, Putting It All Together). 4 esercizi con soluzioni. Completion tracking + celebration finale.
-- Codice: `playground/tour.js` + `playground/tour-ui.js` + `playground/tour.css`
-- Zero backend (Pyodide + Monaco nel browser)
+24 step interattivi, 4 capitoli, 4 esercizi. Completion tracking + celebration.
 
 ---
 
@@ -42,9 +41,8 @@
 ```
 LINGUA UNIVERSALE:
   31 moduli | 3684 test | PyPI v0.3.3 | VS Code v0.2.0
-  Playground: https://rafapra3008.github.io/cervellaswarm/
-  Tour: playground/?tour (24 step, 4 capitoli)
-  Debugger: https://lu-debugger.fly.dev/
+  Playground: rafapra3008.github.io/cervellaswarm/
+  Tour: playground/?tour | Debugger: lu-debugger.fly.dev/
 
 5 PROGETTI SHOWCASE:
   1. LU Debugger      DONE! LIVE (S458)
@@ -54,11 +52,10 @@ LINGUA UNIVERSALE:
   5. AI Code Review   (3-4 sessioni)
 
 LANCIO:
-  Show HN v2: READY (docs/SHOW_HN_V2_DRAFT.md) -- da aggiornare con link Debugger+Tour
+  Show HN v2: READY (docs/SHOW_HN_V2_DRAFT.md)
   Blog: READY, Guardiana 9.8/10
-  HN Playbook: 10 risposte pronte
+  Public repo: SYNCED
   Discord: DA CREARE (Rafa)
-  Public repo: SYNCED (Debugger + Tour + README aggiornato)
 ```
 
 ---
@@ -66,27 +63,16 @@ LANCIO:
 ## PROSSIMI STEP (ordine suggerito)
 
 ### Opzione A: Incident Replay (Progetto 3)
-
-Storia interattiva: "Un bug AI e costato $34K. Ecco come LU lo avrebbe fermato."
-- Narrativa credibile (e-commerce, rimborsi duplicati)
-- Animazione step-by-step del bug
-- Replay "con LU" -- violazione bloccata
-- Pagina statica (zero backend), 1 sessione
-- Dettagli: `.sncp/roadmaps/MAPPA_5_PROGETTI_LU.md`
+"Un bug AI e costato $34K. Ecco come LU lo avrebbe fermato."
+Pagina statica, 1 sessione. Dettagli: `.sncp/roadmaps/MAPPA_5_PROGETTI_LU.md`
 
 ### Opzione B: Show HN v2 (lancio con 2 progetti)
-
-Abbiamo gia Debugger + Tour + Playground + Blog + Colab. Potremmo lanciare ora:
-1. Aggiornare Show HN draft con link Debugger + Tour
-2. Aggiornare blog con link
-3. Submit su Hacker News
-- Draft pronto: `docs/SHOW_HN_V2_DRAFT.md`
-- Playbook: `docs/HN_RESPONSE_PLAYBOOK.md`
+Abbiamo gia Debugger + Tour + Playground + Blog + Colab.
+Draft: `docs/SHOW_HN_V2_DRAFT.md` | Playbook: `docs/HN_RESPONSE_PLAYBOOK.md`
 
 ### Da Rafa (CEO)
-
 - [ ] Decidere: Incident Replay prima o Show HN ora?
-- [ ] Creare Discord "Lingua Universale" (5 canali, invite link permanente)
+- [ ] Creare Discord "Lingua Universale"
 - [ ] Lista 15-20 persone per DM pre-lancio
 
 ---
@@ -95,45 +81,40 @@ Abbiamo gia Debugger + Tour + Playground + Blog + Colab. Potremmo lanciare ora:
 
 | Cosa | Path |
 |------|------|
-| **LU Debugger (codice)** | `lu-debugger/` (7 file) |
-| **LU Debugger (live)** | https://lu-debugger.fly.dev/ |
-| **Tour of LU (codice)** | `playground/tour.js`, `tour-ui.js`, `tour.css` |
-| **Tour of LU (live)** | https://rafapra3008.github.io/cervellaswarm/?tour |
+| **LU Debugger** | `lu-debugger/` (codice) / lu-debugger.fly.dev (live) |
+| **Tour of LU** | `playground/tour.js` / playground/?tour (live) |
 | **MAPPA 5 PROGETTI** | `.sncp/roadmaps/MAPPA_5_PROGETTI_LU.md` |
-| **MAPPA STRATEGICA** | `.sncp/roadmaps/MAPPA_STRATEGICA_2026.md` |
 | **Show HN v2** | `docs/SHOW_HN_V2_DRAFT.md` |
-| **Blog** | `packages/lingua-universale/docs/blog_vibe_to_vericoding.md` |
-| **HN Playbook** | `docs/HN_RESPONSE_PLAYBOOK.md` |
-| **Fly.io console** | https://fly.io/apps/lu-debugger |
+| **Auto-Compact Research** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_AUTO_COMPACT_CLAUDE_CODE.md` |
+| **SNCP Health Analysis** | `.sncp/progetti/cervellaswarm/reports/ENGINEER_20260314_SNCP_HEALTH_ANALYSIS.md` |
 | **Public repo** | github.com/rafapra3008/cervellaswarm |
-| **Debugger Architecture** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_LU_DEBUGGER_ARCHITECTURE.md` |
-| **Tour Research** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_TOUR_OF_LU.md` |
 
 ---
 
-## DECISIONI PRESE (S458-S459)
+## DECISIONI PRESE (S460)
 
-1. **SSE, non WebSocket** per Debugger -- unidirezionale, piu semplice
-2. **Fly.io** per hosting -- account esistente, no cold start
-3. **Tour al 90% gia esistente** -- non ricostruire, polish e ship
-4. **Completion tracking "done" vs "visited"** -- distingue chi ha cliccato Check/Run
-5. **Celebration finale** con link a Debugger + PyPI -- cross-promotion tra showcase
+1. **PostCompact hook** -- salva compact_summary in markdown leggibile
+2. **COMPACT INSTRUCTIONS** -- `/compact` manual con istruzioni > auto-compact generico
+3. **Limite 250 righe** -- confermato come standard, allineato ovunque
+4. **stato.md definitivamente morto** -- tutti i riferimenti rimossi, script zombie disabilitati
+5. **NORD.md snellito** -- storia archiviata, focus su stato corrente
 
 ---
 
-## Lezioni Apprese (S459)
+## Lezioni Apprese (S460)
 
 ### Cosa ha funzionato bene
-- **Guardiana su ogni step**: 2 audit, 1 P2 critico trovato (progress regression). Pattern "step -> audit -> fix" funziona.
-- **Researcher in background**: ha scoperto che il Tour era gia al 90%. Ha risparmiato 2 sessioni di lavoro.
-- **Cross-promotion**: ogni nuovo progetto linka gli altri (Debugger celebration -> Tour, README -> Debugger)
+- **Audit PRIMA di implementare**: La Guardiana ha trovato gap nel piano (33 file vs 25 stimati, 3 script non coperti). Pattern "audit piano -> implementa -> audit risultato" funziona.
+- **Worker in background per grep/replace**: 25+ file aggiornati senza consumare context della Regina.
+- **P3 fixati tutti**: "Ci piace fissare tutto!" -- diamante lucidato a zero residui.
 
 ### Cosa non ha funzionato
-- **Stima sforzo Tour**: MAPPA diceva 2 sessioni, reale ~1 ora. Leggere il codice PRIMA di stimare.
+- **Stima file da aggiornare**: 25 stimati, 33 reali. Sempre fare grep COMPLETO prima di stimare.
 
 ### Pattern confermato
-- **"Leggi prima, costruisci dopo"**: controllare cosa esiste prima di pianificare da zero. Il Tour era GIA LA.
+- **"Grep PRIMA, stima DOPO"**: quando cambi un parametro globale, conta TUTTE le occorrenze prima.
+- **Guardiana QA + Ops su ogni blocco**: due prospettive diverse trovano problemi diversi.
 
 ---
-*"Non e sempre come immaginiamo... ma alla fine e il 100000%!"*
-*S459: due progetti showcase LIVE. Il mondo ci puo trovare.*
+*"Lavoriamo in pace! Senza casino! Dipende da noi!"*
+*S460: SNCP diamante. Il sistema e piu pulito di sempre.*
