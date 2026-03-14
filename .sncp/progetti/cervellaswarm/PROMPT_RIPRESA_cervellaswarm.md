@@ -1,7 +1,7 @@
 # PROMPT RIPRESA - CervellaSwarm
 
 > **Ultimo aggiornamento:** 2026-03-14 - Sessione 458
-> **STATUS:** LU Debugger COSTRUITO e testato. Primo progetto showcase FUNZIONANTE. Deploy Fly.io pending.
+> **STATUS:** LU Debugger LIVE! https://lu-debugger.fly.dev/ -- Primo progetto showcase DEPLOYED.
 
 ---
 
@@ -55,7 +55,7 @@ LINGUA UNIVERSALE:
   Zero deps | 12 CLI cmd | 20 stdlib | 9 PropertyKind
 
 5 PROGETTI SHOWCASE:
-  1. LU Debugger      <- COSTRUITO! Deploy pending
+  1. LU Debugger      <- LIVE! lu-debugger.fly.dev
   2. Tour of LU       (2 sessioni)
   3. Incident Replay  (1 sessione)
   4. Protocol Zoo     (2-3 sessioni)
@@ -72,24 +72,21 @@ LANCIO:
 
 ## PROSSIMI STEP
 
-### Immediato: Deploy LU Debugger su Fly.io
+### Immediato: Sync public repo + Show HN
 
 | Step | Cosa | Note |
 |------|------|------|
-| 1 | `fly auth login` | Apre browser per OAuth |
-| 2 | `cd lu-debugger && fly launch` | Crea app su Fly.io |
-| 3 | `fly secrets set ANTHROPIC_API_KEY=...` | API key per live mode |
-| 4 | `fly deploy` | Deploy! |
-| 5 | Verificare URL live | lu-debugger.fly.dev |
-| 6 | Sync public repo | `./scripts/git/sync-to-public.sh` |
+| 1 | Sync public repo | `./scripts/git/sync-to-public.sh` |
+| 2 | Aggiungere link Debugger nel README | URL live per Show HN |
+| 3 | Show HN v2 submit | Blog + Debugger link |
 
-### Dopo deploy: Progetto 2 -- Tour of LU
+### Progetto 2: Tour of LU
 
 Tutorial interattivo (come Tour of Go). 8-10 lezioni nel playground. Zero backend.
 
 ### Serve da Rafa (CEO)
 
-- [ ] `fly auth login` (browser OAuth, 30 secondi)
+- [x] ~~`fly auth login`~~ DONE (S458)
 - [ ] Creare Discord "Lingua Universale"
 - [ ] Lista 15-20 persone per DM pre-lancio
 
