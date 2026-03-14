@@ -67,6 +67,7 @@ Try it:
 Source: https://github.com/rafapra3008/cervellaswarm
 Playground: https://rafapra3008.github.io/cervellaswarm/
 VS Code: search "Lingua Universale" in Extensions marketplace
+Discord: DISCORD_LINK_HERE
 ```
 
 ---

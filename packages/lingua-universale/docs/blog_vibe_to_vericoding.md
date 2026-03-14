@@ -156,7 +156,7 @@ Here is what is not yet ready:
 - Voice input requires local installation of `faster-whisper`
 - Production hardening for protocols with more than ~10 roles is ongoing
 
-We are calling this approach **Vericoding** — the complement to vibe coding. Not because AI-assisted development is wrong, but because AI-assisted development with mathematical proofs attached is a different category of claim.
+We are calling this approach **Vericoding** — the complement to vibe coding, building on the paradigm formalized by Bursuc, Tegmark et al. ([arXiv 2509.22908](https://arxiv.org/abs/2509.22908), POPL 2026). Not because AI-assisted development is wrong, but because AI-assisted development with mathematical proofs attached is a different category of claim.
 
 ---
 
