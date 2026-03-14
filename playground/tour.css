@@ -283,7 +283,7 @@
   border-radius: var(--radius-md);
   text-align: center;
   line-height: 1.8;
-  animation: fadeIn 0.5s ease;
+  animation: tourFadeIn 0.5s ease;
 }
 .tour-celebration strong {
   color: var(--accent-green);
@@ -302,7 +302,7 @@
 .tour-celebration a:hover {
   text-decoration: underline;
 }
-@keyframes fadeIn {
+@keyframes tourFadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
@@ -331,5 +331,8 @@
   }
   .tour-progress-bar {
     transition: none;
+  }
+  .tour-celebration {
+    animation: none;
   }
 }

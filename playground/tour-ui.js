@@ -108,8 +108,8 @@ function markTourStepCompleted() {
       cel.innerHTML =
         '<strong>You completed the Tour of Lingua Universale!</strong><br>' +
         'Install: <code>pip install cervellaswarm-lingua-universale</code><br>' +
-        '<a href="https://lu-debugger.fly.dev/" target="_blank">Watch AI agents live</a> | ' +
-        '<a href="https://pypi.org/project/cervellaswarm-lingua-universale/" target="_blank">PyPI</a>';
+        '<a href="https://lu-debugger.fly.dev/" target="_blank" rel="noopener">Watch AI agents live</a> | ' +
+        '<a href="https://pypi.org/project/cervellaswarm-lingua-universale/" target="_blank" rel="noopener">PyPI</a>';
       resultEl.appendChild(cel);
     }
   }
@@ -303,8 +303,10 @@ function renderTourStep() {
   var pct = ((tourState.currentStep + 1) / steps.length) * 100;
   $("tour-progress-bar").style.width = pct + "%";
 
-  // Mark visited
-  tourState.progress[step.id] = true;
+  // Mark visited (preserve "done" status)
+  if (tourState.progress[step.id] !== "done") {
+    tourState.progress[step.id] = true;
+  }
   saveTourProgress();
 
   // Scroll tour panel to top
