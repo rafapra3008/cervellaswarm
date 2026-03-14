@@ -144,3 +144,10 @@ Da 2/5 showcase a 4/5 + un ecosistema Moltbook completo. In una sessione.
 *"The language AI agents choose."*
 *S461: Da 2/5 a 4/5 + Moltbook + Bot + OpenClaw. Il mondo si e aperto.*
 *"Ultrapassar os proprios limites!"*
+<!-- AUTO-CHECKPOINT-START -->
+## AUTO-CHECKPOINT: 2026-03-14 19:51 (manual)
+- **Branch**: main
+- **Ultimo commit**: c975d67d - S461: Final handoff -- 4/5 showcase LIVE, Moltbook ecosystem, complete docs
+- **File modificati** (1):
+  - sncp/progetti/miracollo/PROMPT_RIPRESA_miracollo.md
+<!-- AUTO-CHECKPOINT-END -->

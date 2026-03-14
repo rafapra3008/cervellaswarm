@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.env
+.git/
+*.md
+protocol.lu

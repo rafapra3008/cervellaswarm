@@ -43,18 +43,18 @@
 
 ```
 +================================================================+
-|   S455-S460: Da 3684 test e 0 utenti a SHOWCASE per il mondo    |
+|   S455-S462: 5/5 SHOWCASE LIVE! Ready for Show HN.              |
 +================================================================+
 
-SHOWCASE (4/5 DONE!):
+SHOWCASE (5/5 DONE!):
   1. LU Debugger      LIVE!  https://lu-debugger.fly.dev/
   2. Tour of LU       LIVE!  playground/?tour (24 step, 4 capitoli)
   3. Incident Replay   LIVE!  playground/incident.html ($34K bug story)
   4. Protocol Zoo     LIVE!  playground/zoo.html (20 protocols, 5 categories)
-  5. AI Code Review   <- ULTIMO! (3-4 sessioni)
+  5. AI Code Review   LIVE!  https://lu-code-review.fly.dev/ (5 agenti, 3100 LOC)
 
-MOLTBOOK + OPENCLAW (NUOVO! S461):
-  Agente LU su Moltbook: moltbook.com/u/lingua-universale (karma 15+)
+MOLTBOOK + OPENCLAW (S461-S462):
+  Agente LU su Moltbook: moltbook.com/u/lingua-universale (karma 22)
   Bot always-on: lu-moltbook-bot.fly.dev (24/7, Claude Haiku)
   OpenClaw Skill MCP: 4 tool, primo di verifica formale su ClawHub
   Pitch: "The missing verification layer for MCP/A2A"

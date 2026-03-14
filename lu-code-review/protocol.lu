@@ -1,0 +1,91 @@
+# SPDX-License-Identifier: Apache-2.0
+# Code Review Protocol -- AI Code Review Demo
+#
+# Four AI agents review code in enforced order:
+# Security MUST complete before Performance starts.
+# Performance MUST complete before Quality starts.
+# Why? No point optimizing insecure code.
+
+type ReviewSeverity = Critical | Warning | Info
+
+type CodeSubmission =
+    language: String
+    source: String
+    filename: String
+
+type ReviewFinding =
+    category: String
+    severity: ReviewSeverity
+    line: Number
+    message: String
+    suggestion: String
+
+type ReviewReport =
+    total_findings: Number
+    critical_count: Number
+    summary: String
+
+agent Developer:
+    role: developer
+    trust: standard
+    accepts: ReviewReport
+    produces: CodeSubmission
+    requires: code.valid
+    ensures: code.submitted
+
+agent SecurityReviewer:
+    role: security
+    trust: verified
+    accepts: CodeSubmission
+    produces: ReviewFinding
+    requires: code.received
+    ensures: security.reviewed
+
+agent PerformanceReviewer:
+    role: performance
+    trust: trusted
+    accepts: CodeSubmission
+    produces: ReviewFinding
+    requires: security.cleared
+    ensures: performance.reviewed
+
+agent QualityReviewer:
+    role: quality
+    trust: trusted
+    accepts: CodeSubmission
+    produces: ReviewFinding
+    requires: performance.done
+    ensures: quality.reviewed
+
+agent Orchestrator:
+    role: orchestrator
+    trust: verified
+    accepts: ReviewFinding, CodeSubmission
+    produces: ReviewReport, CodeSubmission
+    requires: reviews.collected
+    ensures: report.generated
+
+protocol CodeReview:
+    roles: developer, orchestrator, security, performance, quality
+
+    developer sends code to orchestrator
+    orchestrator asks security to review code
+    security returns security findings to orchestrator
+    orchestrator asks performance to review code
+    performance returns performance findings to orchestrator
+    orchestrator asks quality to review code
+    quality returns quality findings to orchestrator
+
+    when orchestrator decides:
+        critical_found:
+            orchestrator sends urgent report to developer
+
+        all_clear:
+            orchestrator sends clean report to developer
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+        performance before quality
+        security before performance
