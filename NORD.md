@@ -2,7 +2,7 @@
 
 > **QUESTO FILE E SACRO. E LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 14 Marzo 2026 - S460 (SNCP Health + Auto-Compact)
+> Aggiornato: 14 Marzo 2026 - S461 (Incident Replay + Moltbook + OpenClaw)
 
 ```
 +==================================================================+
@@ -46,18 +46,22 @@
 |   S455-S460: Da 3684 test e 0 utenti a SHOWCASE per il mondo    |
 +================================================================+
 
-SHOWCASE:
+SHOWCASE (3/5 DONE!):
   1. LU Debugger      LIVE!  https://lu-debugger.fly.dev/
   2. Tour of LU       LIVE!  playground/?tour (24 step, 4 capitoli)
-  3. Incident Replay  <- PROSSIMO (1 sessione, pagina statica)
-  4. Protocol Zoo     (2-3 sessioni)
+  3. Incident Replay   LIVE!  playground/incident.html ($34K bug story)
+  4. Protocol Zoo     <- PROSSIMO (2-3 sessioni)
   5. AI Code Review   (3-4 sessioni)
+
+MOLTBOOK + OPENCLAW (NUOVO! S461):
+  Agente LU su Moltbook: moltbook.com/u/lingua-universale (karma 15+)
+  Bot always-on: lu-moltbook-bot.fly.dev (24/7, Claude Haiku)
+  OpenClaw Skill MCP: 4 tool, primo di verifica formale su ClawHub
+  Pitch: "The missing verification layer for MCP/A2A"
 
 LANCIO:
   Show HN v2: READY (docs/SHOW_HN_V2_DRAFT.md)
-  Blog: READY, Guardiana 9.8/10
-  Public repo: SYNCED
-  Discord: DA CREARE (Rafa)
+  Blog: READY | Public repo: SYNCED | Discord: DA CREARE
 ```
 
 ### Lingua Universale -- La Stella Polare
@@ -98,8 +102,9 @@ LANCIO:
 
 ### Infrastruttura
 
-9 PyPI packages LIVE | 17 agenti | CLI+MCP | Fly.io | VS Code Marketplace
+9 PyPI packages LIVE | 17 agenti | CLI+MCP | Fly.io x2 | VS Code Marketplace
 cervellaswarm.com LIVE | Repo pubblico synced | 18 hooks su hooks_common v1.2.0
+Moltbook agent LIVE | Bot always-on LIVE | OpenClaw skill READY
 
 ---
 
@@ -116,7 +121,7 @@ cervellaswarm.com LIVE | Repo pubblico synced | 18 hooks su hooks_common v1.2.0
 
 | Cosa | Dove |
 |------|------|
-| **MAPPA 5 PROGETTI (FOCUS!)** | `.sncp/roadmaps/MAPPA_5_PROGETTI_LU.md` |
+| **MAPPA 5 PROGETTI + MOLTBOOK** | `.sncp/roadmaps/MAPPA_5_PROGETTI_LU.md` |
 | **MAPPA LINGUAGGIO** | `.sncp/roadmaps/MAPPA_LINGUAGGIO_CERVELLASWARM.md` |
 | **FASE E: INTENTBRIDGE** | `.sncp/roadmaps/SUBROADMAP_FASE_E_INTENTBRIDGE.md` |
 | **E.5+E.6+FUTURO** | `.sncp/roadmaps/SUBROADMAP_E5_E6_FUTURO.md` |
