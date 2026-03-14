@@ -46,12 +46,12 @@
 |   S455-S460: Da 3684 test e 0 utenti a SHOWCASE per il mondo    |
 +================================================================+
 
-SHOWCASE (3/5 DONE!):
+SHOWCASE (4/5 DONE!):
   1. LU Debugger      LIVE!  https://lu-debugger.fly.dev/
   2. Tour of LU       LIVE!  playground/?tour (24 step, 4 capitoli)
   3. Incident Replay   LIVE!  playground/incident.html ($34K bug story)
-  4. Protocol Zoo     <- PROSSIMO (2-3 sessioni)
-  5. AI Code Review   (3-4 sessioni)
+  4. Protocol Zoo     LIVE!  playground/zoo.html (20 protocols, 5 categories)
+  5. AI Code Review   <- ULTIMO! (3-4 sessioni)
 
 MOLTBOOK + OPENCLAW (NUOVO! S461):
   Agente LU su Moltbook: moltbook.com/u/lingua-universale (karma 15+)

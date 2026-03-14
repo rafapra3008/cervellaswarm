@@ -69,18 +69,25 @@
 
 ---
 
-## PROGETTO 4: Protocol Zoo
+## PROGETTO 4: Protocol Zoo -- DONE! (S461)
 
-**Cosa:** Libreria di 15 protocolli reali eseguibili (e-commerce, code review, RAG, triage, support).
+**URL LIVE:** https://rafapra3008.github.io/cervellaswarm/zoo.html
 
-**Da costruire:**
-- 15 protocolli .lu ben documentati (stdlib ne ha 20, base pronta)
-- Pagine per ogni protocollo (template generabile)
-- Animazione flow (SVG/CSS)
-- Bottone "Fork in Playground"
+**Cosa:** Gallery di 20 protocolli verificati in 5 categorie con filtri e deep link al Playground.
 
-**Effort:** 2-3 sessioni
-**Output:** Sito statico (GitHub Pages)
+**Stack:** HTML + CSS + JS puro (774 LOC, singolo file, zero deps, Catppuccin Mocha)
+
+**File:** `playground/zoo.html`
+- 20 protocolli: AI/ML(5), Business(4), Communication(5), Data(3), Security(3)
+- Card grid: 4 col desktop, 2 tablet, 1 mobile
+- Pill filters per categoria, instant, aria-pressed
+- "Open in Playground →" con deep link `?example=ID`
+- IntersectionObserver stagger animation, prefers-reduced-motion
+- `playground/index.html` aggiornato con `?example=` URL param handler
+
+**Ricerca:** Elm Examples, Vercel Templates, Go by Example, card grid UX patterns
+**Guardiana:** 9.2→9.5 (F1: deep link aggiunto, F2: 10 conteggi roles/props corretti)
+**Effort reale:** 1 sessione (stimato 2-3, fatto in 1!)
 
 ---
 
@@ -131,14 +138,14 @@
 ```
 [1] LU Debugger ✅ ──> [2] Tour of LU ✅ ──> [3] Incident Replay ✅
                                                       |
-                                               [4] Protocol Zoo
+                                               [4] Protocol Zoo ✅
                                                       |
-                                               [5] AI Code Review
+                                               [5] AI Code Review ← ULTIMO!
 
 [BONUS] Moltbook Agent + OpenClaw Skill (parallelo, indipendente)
 ```
 
-3/5 progetti DONE! Ogni progetto completato = materiale per il lancio.
+4/5 progetti DONE! Manca solo AI Code Review. Show HN window: 21-28 Marzo.
 
 ---
 
