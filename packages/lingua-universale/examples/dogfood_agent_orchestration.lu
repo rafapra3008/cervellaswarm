@@ -1,0 +1,62 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lingua Universale Dogfooding: Mini Agent Orchestration
+# First real program written in LU -- CervellaSwarm S454.
+# 3 AI agents coordinated with formal guarantees: supervisor
+# delegates analysis, worker executes, validator verifies.
+# If anyone violates the protocol, the runtime blocks it.
+
+type TaskComplexity = Simple | Moderate | Complex
+
+type AnalysisTask =
+    id: String
+    description: String
+    complexity: TaskComplexity
+
+agent Supervisor:
+    role: supervisor
+    trust: trusted
+    accepts: TaskResult
+    produces: TaskRequest
+    requires: task.assigned
+    ensures: result.verified
+
+agent AnalysisWorker:
+    role: worker
+    trust: standard
+    accepts: TaskRequest
+    produces: TaskResult
+    requires: task.received
+    ensures: analysis.complete
+
+agent QualityValidator:
+    role: validator
+    trust: verified
+    accepts: TaskRequest
+    produces: AuditVerdict
+    requires: result.submitted
+    ensures: verdict.justified
+
+protocol AgentOrchestration:
+    roles: supervisor, worker, validator
+
+    supervisor asks worker to execute analysis
+    worker returns result to supervisor
+    supervisor asks validator to verify result
+
+    when validator decides:
+        pass:
+            validator returns approval to supervisor
+
+        fail:
+            validator sends feedback to supervisor
+            supervisor tells worker revise task
+
+    properties:
+        always terminates
+        no deadlock
+        no deletion
+        all roles participate
+        trust >= standard
+        task_request before task_result
+        worker cannot send dm
+        validator exclusive dm

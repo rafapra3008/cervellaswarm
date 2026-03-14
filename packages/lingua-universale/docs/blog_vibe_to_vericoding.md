@@ -36,10 +36,10 @@ Natural Language (Italian, English, Portuguese)
 [IntentDraft] Structured micro-language — unambiguous, parseable
     |
     v
-[B.4 Parser] Deterministic parse — zero ambiguity, 100% syntactic correctness
+[Parser] Deterministic parse — zero ambiguity, 100% syntactic correctness
     |
     v
-[B.5 Spec Checker] Formal property verification — 9 property kinds
+[Spec Checker] Formal property verification — 9 property kinds
     |
     v
 [Lean 4 Bridge] Mathematical proofs generated
@@ -123,13 +123,13 @@ The session ends:
 
 ## How It Works
 
-Lingua Universale is built on session types, a formalism from Honda et al. (1998) that describes communication protocols as types. If two processes follow the same session type, they cannot deadlock, messages cannot arrive in the wrong order, and the conversation terminates.
+Lingua Universale is built on session types, a formalism from Honda, Yoshida, and Carbone (POPL 2008) that describes multiparty communication protocols as types. If two processes follow the same session type, they cannot deadlock, messages cannot arrive in the wrong order, and the conversation terminates.
 
 Session types have been a research area for nearly 30 years. What has been missing is the human layer — a way for people who are not type theorists to specify and benefit from this kind of guarantee.
 
-The `_intent_bridge.py` module (the IntentBridge) translates between natural language and the Lingua Universale micro-language. It is a multi-turn conversational system that uses Claude for NL interpretation with a `tool_use` schema for structured extraction. If the intent is ambiguous, it raises `NLClarificationNeeded` and asks the user a targeted question. Once the intent is confirmed, it becomes an `IntentDraft` — a frozen intermediate representation that feeds the deterministic B.4 parser.
+The `_intent_bridge.py` module (the IntentBridge) translates between natural language and the Lingua Universale micro-language. It is a multi-turn conversational system that uses Claude for NL interpretation with a `tool_use` schema for structured extraction. If the intent is ambiguous, it raises `NLClarificationNeeded` and asks the user a targeted question. Once the intent is confirmed, it becomes an `IntentDraft` — a frozen intermediate representation that feeds the deterministic parser.
 
-The nine `PropertyKind` values currently supported include `NO_DELETION`, `ROLE_EXCLUSIVE`, `ALWAYS_TERMINATES`, `NO_DEADLOCK`, `CONFIDENCE_MIN`, and four others. Each can be checked at spec time (B.5) and enforced at runtime by the `SessionChecker`.
+The nine `PropertyKind` values currently supported include `NO_DELETION`, `ROLE_EXCLUSIVE`, `ALWAYS_TERMINATES`, `NO_DEADLOCK`, `CONFIDENCE_MIN`, and four others. Each can be checked at spec time and enforced at runtime by the `SessionChecker`.
 
 The system supports three languages: Italian, English, and Portuguese. Voice input is optional via `faster-whisper` (local STT, no cloud dependency).
 
@@ -139,7 +139,7 @@ The system supports three languages: Italian, English, and Portuguese. Voice inp
 
 This is alpha software. Here is what is real:
 
-- 3684 tests, 0 regressions across 29 modules
+- 3684 tests, 0 regressions across 31 modules
 - 9 property kinds with formal verification via Lean 4
 - 20 verified standard library protocols across 5 categories (AI/ML, Business, Communication, Data, Security)
 - `lu lint`: 10 style and correctness rules, integrated into LSP (real-time diagnostics)
@@ -180,7 +180,7 @@ pip install "cervellaswarm-lingua-universale[voice]"
 lu chat --lang it --voice
 ```
 
-The source, all 29 modules and 3684 tests, is at [github.com/rafapra3008/cervellaswarm](https://github.com/rafapra3008/cervellaswarm). The live playground is at [rafapra3008.github.io/cervellaswarm](https://rafapra3008.github.io/cervellaswarm/).
+The source, all 31 modules and 3684 tests, is at [github.com/rafapra3008/cervellaswarm](https://github.com/rafapra3008/cervellaswarm). The live playground is at [rafapra3008.github.io/cervellaswarm](https://rafapra3008.github.io/cervellaswarm/).
 
 If you are working on AI agents, autonomous systems, or just want a language where the proof comes with the code — we want to hear what you think.
 
