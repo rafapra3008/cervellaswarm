@@ -55,7 +55,7 @@ Based on multiparty session types (Honda/Yoshida/Carbone, POPL 2008) and the
 two-stage Req2LTL pattern (ASE 2025) for NL-to-formal translation.
 
 What I'd love feedback on:
-1. Is session types the right formalism for AI agent coordination?
+1. Are session types the right formalism for AI agent coordination?
 2. The linter + formatter story -- useful for a DSL this young?
 3. Would you use `lu init --template rag_pipeline` to scaffold AI protocols?
 

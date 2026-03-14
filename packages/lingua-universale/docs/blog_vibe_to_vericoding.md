@@ -127,7 +127,7 @@ Lingua Universale is built on session types, a formalism from Honda, Yoshida, an
 
 Session types have been a research area for nearly 30 years. What has been missing is the human layer — a way for people who are not type theorists to specify and benefit from this kind of guarantee.
 
-The `_intent_bridge.py` module (the IntentBridge) translates between natural language and the Lingua Universale micro-language. It is a multi-turn conversational system that uses Claude for NL interpretation with a `tool_use` schema for structured extraction. If the intent is ambiguous, it raises `NLClarificationNeeded` and asks the user a targeted question. Once the intent is confirmed, it becomes an `IntentDraft` — a frozen intermediate representation that feeds the deterministic B.4 parser.
+The `_intent_bridge.py` module (the IntentBridge) translates between natural language and the Lingua Universale micro-language. It is a multi-turn conversational system that uses Claude for NL interpretation with a `tool_use` schema for structured extraction. If the intent is ambiguous, it raises `NLClarificationNeeded` and asks the user a targeted question. Once the intent is confirmed, it becomes an `IntentDraft` — a frozen intermediate representation that feeds the deterministic parser.
 
 The nine `PropertyKind` values currently supported include `NO_DELETION`, `ROLE_EXCLUSIVE`, `ALWAYS_TERMINATES`, `NO_DEADLOCK`, `CONFIDENCE_MIN`, and four others. Each can be checked at spec time and enforced at runtime by the `SessionChecker`.
 
