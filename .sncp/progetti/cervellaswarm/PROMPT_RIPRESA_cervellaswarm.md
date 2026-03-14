@@ -1,66 +1,48 @@
 # PROMPT RIPRESA - CervellaSwarm
 
-> **Ultimo aggiornamento:** 2026-03-14 - Sessione 455-456
-> **STATUS:** SVOLTA STRATEGICA. Identita fixata (LU-first). 5 progetti showcase pianificati. README riscritto. Mappa strategica con 7 report.
+> **Ultimo aggiornamento:** 2026-03-14 - Sessione 458
+> **STATUS:** LU Debugger COSTRUITO e testato. Primo progetto showcase FUNZIONANTE. Deploy Fly.io pending.
 
 ---
 
-## COSA E SUCCESSO (S455-S456) -- LA SESSIONE PIU IMPORTANTE
+## COSA E SUCCESSO (S458) -- IL PRIMO SHOWCASE
 
-### Il punto di svolta
+### LU Debugger: COSTRUITO
 
-Rafa ha detto: *"Sembra che lavoriamo non tanto organizzati. Serve UNA mappa."*
+7 file, 1474 righe. App web dove 3 agenti AI (Customer, Warehouse, Payment) comunicano in tempo reale su protocollo verificato. Bottone "Break" mostra la violazione BLOCCATA.
 
-Abbiamo fermato tutto e fatto un'analisi COMPLETA con 7 report indipendenti:
-- **Ingegnera**: stato reale (health 6/10 -- prodotto 9.5, distribuzione 1)
-- **Scienziata**: mercato ($7.5B->$199B, zero competitor diretti)
-- **Researcher x3**: DSL launches, community strategy, README patterns
-- **Guardiana Qualita + Ops**: audit mappa e infrastruttura
+**Testato localmente -- FUNZIONA:**
+- Demo mode: pre-scripted, zero API, instant
+- Live mode: agenti Claude API reali (Haiku 4.5, ~$0.000005/run)
+- Break mode: violazione catturata e mostrata (sia demo che live)
+- UI: Monaco editor con syntax highlighting LU custom + chat log + violation display
 
-### La verita brutale
-
-| Dato | Valore |
-|------|--------|
-| GitHub Stars | 4 |
-| Show HN tentativi | 3, tutti 1 punto |
-| Utenti reali | ~0 |
-| Revenue | $0 |
-| Test | 3684 |
-| Qualita tecnica | 9.5/10 |
-
-**455 sessioni di sviluppo, zero utenti. Il prodotto e pronto. La distribuzione no.**
-
-### Cosa abbiamo fatto (concreto)
-
-1. **README riscritto** -- LU in primo piano, non framework multi-agent. LIVE sul pubblico.
-2. **Mappa strategica** -- FASE 0-5 con validazione PMF e Piano B
-3. **5 progetti showcase pianificati** -- LU Debugger, Tour, Incident Replay, Protocol Zoo, AI Code Review
-4. **Playground Chat tab** -- LIVE (costruisci protocolli conversando nel browser)
-5. **Live dogfood runner** -- agenti Claude API reali su protocollo verificato (FUNZIONA!)
-6. **Show HN + Blog** -- Guardiana 9.8/10, READY (ma lancio DOPO i progetti showcase)
-7. **OrderProcessing.lu** -- protocollo per il Debugger, 4/4 PROVED
-8. **HN Response Playbook** -- 10 risposte preparate
-9. **Citazione Vericoding** (POPL 2026) aggiunta al blog
-10. **API key** configurata (.zshrc + .env)
-
----
-
-## DECISIONE CHIAVE: COSTRUIRE PRIMA, LANCIARE DOPO
-
-Rafa: *"Dov'e il nostro progetto completo con LU? Dobbiamo utilizzare! Facciamo qualcosa di bello, 360 gradi!"*
-
-**Piano:** Costruire 5 progetti REALI con LU. Ogni progetto = materiale per il lancio. Non lanciamo su HN finche non abbiamo almeno il LU Debugger live.
-
----
-
-## L'IDENTITA (DECISA)
-
+**File:**
 ```
-Lingua Universale = il PRODOTTO (linguaggio verificato per AI)
-CervellaSwarm     = l'ORGANIZZAZIONE (come PSF per Python)
+lu-debugger/
+  server.py      165 righe  (FastAPI + SSE + rate limiting)
+  runner.py      346 righe  (async adapter, Claude API agents)
+  demo_data.py   184 righe  (protocol source + pre-scripted steps)
+  static/
+    index.html   748 righe  (Monaco + chat UI + dark theme)
+  requirements.txt / Dockerfile / fly.toml
 ```
 
-README, GitHub description, tutto allineato. NORD.md da aggiornare.
+**4 endpoint SSE verificati:**
+- `/api/run/demo` -- happy path pre-scripted
+- `/api/run/demo-break` -- violazione pre-scripted
+- `/api/run/live` -- agenti Claude reali, protocollo completato
+- `/api/run/live-break` -- 1 step reale + violazione forzata
+
+---
+
+## CONTESTO (S455-S457)
+
+S455-S456: svolta strategica. Identita fixata (LU = prodotto, CervellaSwarm = organizzazione). 5 progetti showcase pianificati. README riscritto. 7 report dalle ragazze.
+
+S457: security fixes, bug hunt, ops cleanup (audit completo config + hooks + agenti).
+
+S458: **costruito il LU Debugger** -- primo progetto showcase.
 
 ---
 
@@ -72,47 +54,43 @@ LINGUA UNIVERSALE:
   Playground LIVE (+Chat tab!)
   Zero deps | 12 CLI cmd | 20 stdlib | 9 PropertyKind
 
-5 PROGETTI SHOWCASE (la priorita):
-  1. LU Debugger      <- PROSSIMO (1.5 sessioni)
+5 PROGETTI SHOWCASE:
+  1. LU Debugger      <- COSTRUITO! Deploy pending
   2. Tour of LU       (2 sessioni)
   3. Incident Replay  (1 sessione)
   4. Protocol Zoo     (2-3 sessioni)
   5. AI Code Review   (3-4 sessioni)
 
 LANCIO:
-  Show HN v2: READY ma aspetta progetti
+  Show HN v2: READY ma aspetta deploy Debugger
   Blog: READY (Guardiana 9.8/10)
   HN Playbook: 10 risposte pronte
-  Discord: DA CREARE (Rafa deve farlo)
-
-INFRASTRUTTURA:
-  API key: configurata (.zshrc + .env)
-  Public repo: synced (README nuovo LIVE)
-  CI/CD: tutto green
-  Dependabot: 8 branch aperti (cleanup pre-lancio)
+  Discord: DA CREARE (Rafa)
 ```
 
 ---
 
-## PROSSIMA SESSIONE (S457)
+## PROSSIMI STEP
 
-### Priorita UNICA: LU Debugger
+### Immediato: Deploy LU Debugger su Fly.io
 
 | Step | Cosa | Note |
 |------|------|------|
-| 1 | **server.py** | FastAPI + SSE, ~180 righe |
-| 2 | **runner.py** | Async adapter del dogfood runner, ~120 righe |
-| 3 | **demo_data.py** | Script pre-registrati, ~80 righe |
-| 4 | **debugger.html** | UI Monaco + chat + violation, ~400 righe |
-| 5 | **Deploy Fly.io** | Dockerfile + fly.toml, $1.94/mese |
-| 6 | **Guardiana audit** | Target 9.5+ |
-| 7 | **Sync public** | URL live per Show HN |
+| 1 | `fly auth login` | Apre browser per OAuth |
+| 2 | `cd lu-debugger && fly launch` | Crea app su Fly.io |
+| 3 | `fly secrets set ANTHROPIC_API_KEY=...` | API key per live mode |
+| 4 | `fly deploy` | Deploy! |
+| 5 | Verificare URL live | lu-debugger.fly.dev |
+| 6 | Sync public repo | `./scripts/git/sync-to-public.sh` |
 
-**Architettura completa:** `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_LU_DEBUGGER_ARCHITECTURE.md`
+### Dopo deploy: Progetto 2 -- Tour of LU
+
+Tutorial interattivo (come Tour of Go). 8-10 lezioni nel playground. Zero backend.
 
 ### Serve da Rafa (CEO)
 
-- [ ] Creare Discord "Lingua Universale" (5 canali, invite link permanente)
+- [ ] `fly auth login` (browser OAuth, 30 secondi)
+- [ ] Creare Discord "Lingua Universale"
 - [ ] Lista 15-20 persone per DM pre-lancio
 
 ---
@@ -121,36 +99,29 @@ INFRASTRUTTURA:
 
 | Cosa | Path |
 |------|------|
+| **LU Debugger** | `lu-debugger/` (7 file, testato) |
 | **MAPPA STRATEGICA** | `.sncp/roadmaps/MAPPA_STRATEGICA_2026.md` |
 | **MAPPA 5 PROGETTI** | `.sncp/roadmaps/MAPPA_5_PROGETTI_LU.md` |
-| **Analisi Ingegnera** | `.sncp/progetti/cervellaswarm/reports/ENGINEER_20260314_ANALISI_COMPLETA.md` |
-| **Analisi Scienziata** | `.sncp/progetti/cervellaswarm/reports/SCIENTIST_20260314.md` |
-| **DSL Launch Patterns** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_DSL_LAUNCH_SUCCESS_PATTERNS.md` |
-| **Community Strategy** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_COMMUNITY_STRATEGY.md` |
-| **README Patterns** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_DSL_README_PATTERNS.md` |
 | **Debugger Architecture** | `.sncp/progetti/cervellaswarm/reports/RESEARCH_20260314_LU_DEBUGGER_ARCHITECTURE.md` |
 | **OrderProcessing.lu** | `packages/lingua-universale/examples/order_processing.lu` |
-| **Live dogfood runner** | `packages/lingua-universale/examples/dogfood_runner_live.py` |
-| **HN Response Playbook** | `docs/HN_RESPONSE_PLAYBOOK.md` |
 | **Show HN v2** | `docs/SHOW_HN_V2_DRAFT.md` (READY) |
 | **Blog** | `packages/lingua-universale/docs/blog_vibe_to_vericoding.md` (READY) |
 
 ---
 
-## Lezioni Apprese (S455-S456)
+## Lezioni Apprese (S458)
 
 ### Cosa ha funzionato bene
-- **7 report paralleli**: Ingegnera + Scienziata + Researcher x3 + Guardiana x2. Il quadro completo e emerso solo dalla COMBINAZIONE di tutti i report.
-- **Guardiana su ogni step**: il pattern "step -> audit -> fix" ha trovato 3 P1 e 15+ P2 in questa sessione.
-- **Rafa che ferma tutto**: "Serve UNA mappa" e stato il momento chiave. La COSTITUZIONE funziona.
+- **Architettura pre-progettata**: il report della Researcher (S456) ha dato SSE vs WS, Fly.io, costi, UI pattern. Zero decisioni da prendere durante la build.
+- **Prompt tuning per simulazione**: Haiku 4.5 ha safety features che bloccano "process payment". Fix: chiarire "SIMULATED demo" nel system prompt. 3 iterazioni, risolto.
+- **Monaco custom language**: syntax highlighting LU con Monarch tokenizer in ~40 righe. Impatto visivo enorme per il costo.
 
 ### Cosa non ha funzionato
-- **Costruire senza distribuire**: 455 sessioni, 3684 test, zero utenti. Il prodotto e perfetto ma nessuno lo conosce.
-- **3 Show HN falliti**: il messaggio o il canale non funzionavano. Non abbiamo analizzato i fallimenti fino ad oggi.
+- **Stima righe sottovalutata**: architettura diceva ~820, reale 1474. HTML con CSS/JS embedded = +350 righe. Runner con 2 generator async = +226 righe. Non un problema, ma calibrare meglio.
 
-### Pattern nuovo
-- **"Costruire il progetto showcase PRIMA di lanciare"**: Non dire "abbiamo un linguaggio, provalo." Dire "abbiamo costruito QUESTO con il nostro linguaggio, guarda." Evidenza: Stripe (demo store), Vercel (sito con Next.js), Prisma (app esempio).
+### Pattern confermato
+- **"Ricerca PRIMA, codice DOPO"** (Formula Magica): la sessione di ricerca S456 ha reso la build S458 fluida. Zero blocchi, zero decisioni architetturali da prendere live.
 
 ---
 *"Non e sempre come immaginiamo... ma alla fine e il 100000%!"*
-*S455-S456: il giorno in cui abbiamo guardato la verita in faccia. E abbiamo deciso di agire.*
+*S458: il giorno in cui il primo showcase ha preso vita.*
