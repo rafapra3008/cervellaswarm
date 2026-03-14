@@ -2,7 +2,7 @@
 
 > **QUESTO FILE È SACRO. È LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 13 Marzo 2026 - S453 (T3.5 VS Code Marketplace PUBLISHED! + Opus 4.6 + 1M)
+> Aggiornato: 14 Marzo 2026 - S454 (1M Context Freedom + Opus 4.6 deep adaptation)
 
 ```
 +==================================================================+
@@ -206,11 +206,11 @@ STATO ATTUALE:
                                    quality-gates = TUTTI LIVE su pypi.org!
   ✓ Repo Pubblico                 github.com/rafapra3008/cervellaswarm
   ✓ Scripts                       135+ file, ~20,000+ righe
-  ✓ Hooks                         16 hooks su cervella_hooks_common.py v1.2.0 (DRY!)
-  ✓ Opus 4.6 + 1M Context         ADATTATO (S452, Guardiana 9.5/10)
+  ✓ Hooks                         18 hooks (15 globali + 3 progetto) su cervella_hooks_common.py v1.2.0
+  ✓ Opus 4.6 + 1M Context         DEEP ADAPTED (S452+S454, 30+ file, 9.5/10)
   ✓ VS Code Marketplace           LIVE! cervellaswarm.lingua-universale v0.2.0
   ✓ Memoria                       SQLite DB + analytics + retrospective
-  ✓ Cron                          5 job automatici
+  ✓ Cron                          6 job automatici (2 crontab + 4 launchd)
 ```
 
 ---

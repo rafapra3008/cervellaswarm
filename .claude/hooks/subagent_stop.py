@@ -5,8 +5,9 @@ Hook SubagentStop - Logga quando un subagent completa.
 Riceve dati da stdin in formato JSON.
 Salva nel database swarm_memory.db e in file di debug.
 
-Versione: 2.0.0
-Data: 2026-03-06
+Versione: 2.1.0
+Data: 2026-03-14
+v2.1.0 - S454: DRY fix - project detection via cervella_hooks_common (was inline mapping)
 Upgrade v2: Legge agent_type, agent_id, agent_transcript_path, last_assistant_message
              (campi disponibili da Claude Code v2.1.49+, prima ignorati)
 """
@@ -17,6 +18,10 @@ import sqlite3
 import uuid
 from datetime import datetime
 from pathlib import Path
+
+# Import project detection from single source of truth (DRY - S454)
+sys.path.insert(0, str(Path.home() / ".claude" / "hooks"))
+from cervella_hooks_common import detect_project_name as _detect_project_name
 
 # Path ASSOLUTO al database centrale CervellaSwarm
 # Questo garantisce che lo script funzioni anche quando eseguito da altri progetti
@@ -53,22 +58,9 @@ def main():
         transcript_path = input_data.get("agent_transcript_path", input_data.get("transcript_path", ""))
         last_message = input_data.get("last_assistant_message", "")
 
-        # Determina il progetto dal CWD o transcript_path (case-insensitive)
+        # Determina il progetto dal CWD (DRY - S454: usa cervella_hooks_common)
         cwd = input_data.get("cwd", "")
-        search_str = (cwd + transcript_path).lower()
-        project = "unknown"
-        if "cervellaswarm" in search_str:
-            project = "cervellaswarm"
-        elif "miracollo" in search_str:
-            project = "miracollo"
-        elif "contabilita" in search_str:
-            project = "contabilita"
-        elif "chavefy" in search_str:
-            project = "chavefy"
-        elif "cervellabrasil" in search_str:
-            project = "cervellabrasil"
-        elif "cervellacostruzione" in search_str:
-            project = "cervellacostruzione"
+        project = _detect_project_name(cwd) or "unknown"
 
         # Salva evento nel database
         try:

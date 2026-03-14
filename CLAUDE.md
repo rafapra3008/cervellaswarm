@@ -9,9 +9,10 @@
 
 | Hook | Cosa Fa |
 |------|---------|
-| session_start_swarm.py | Puntatori + warnings (v3.1.0 - output snello) |
-| file_limits_guard.py | Verifica limiti PROMPT_RIPRESA (max 150 righe, globale) |
-| subagent_context_inject.py | Inietta contesto ridotto agli agenti |
+| sncp_pre_session_hook.py | Pre-session checks + puntatori (v1.1.0) |
+| file_limits_guard.py | Verifica limiti PROMPT_RIPRESA (max 250 righe, v3.3.0) |
+| subagent_context_inject.py | Inietta contesto COMPLETO agli agenti (v2.0.0 - no truncation) |
+| context-monitor.py | Statusline CTX + soglie 85/92% (v3.0.0 - 1M era) |
 
 ## La Famiglia
 

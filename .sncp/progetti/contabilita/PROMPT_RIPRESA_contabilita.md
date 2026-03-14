@@ -84,3 +84,9 @@ NESSUNO!
 ---
 
 *"Lavoriamo in pace! Senza casino! Dipende da noi!"*
+<!-- AUTO-CHECKPOINT-START -->
+## AUTO-CHECKPOINT: 2026-03-12 13:16 (unknown)
+- **Branch**: split-v31
+- **Ultimo commit**: 732836a - S318: Checkpoint completo + landing v3.3 DEPLOYATA + audit documentazione
+- **File modificati**: Nessuno (git pulito)
+<!-- AUTO-CHECKPOINT-END -->
