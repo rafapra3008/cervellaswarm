@@ -11,6 +11,7 @@
 [![VS Code](https://img.shields.io/badge/VS_Code-Marketplace-blue.svg)](https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale)
 
 [**Try it in your browser**](https://rafapra3008.github.io/cervellaswarm/) -- no install needed.
+[**Watch AI agents live**](https://lu-debugger.fly.dev/) -- 3 agents on a verified protocol.
 
 </div>
 
@@ -148,6 +149,8 @@ LU doesn't replace your AI agent framework. It makes it safe. Like TypeScript fo
 
 ## Examples
 
+**[LU Debugger](https://lu-debugger.fly.dev/)** -- Live web app: 3 AI agents (Customer, Warehouse, Payment) communicate on a verified OrderProcessing protocol. Click "Break" to see a protocol violation blocked in real time. [Source code](lu-debugger/).
+
 See the [`examples/`](packages/lingua-universale/examples/) directory:
 
 - **[Agent Orchestration](packages/lingua-universale/examples/dogfood_agent_orchestration.lu)** -- 3 AI agents with nested choice, 8/8 properties proved
@@ -198,6 +201,6 @@ Copyright 2025-2026 CervellaSwarm Contributors.
 
 **Lingua Universale** -- *Verified protocols for AI agents.*
 
-[Playground](https://rafapra3008.github.io/cervellaswarm/) | [PyPI](https://pypi.org/project/cervellaswarm-lingua-universale/) | [VS Code](https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale) | [Blog](docs/blog/from-vibecoding-to-vericoding.md) | [Colab Demo](https://colab.research.google.com/github/rafapra3008/cervellaswarm/blob/main/docs/blog/from-vibecoding-to-vericoding-demo.ipynb)
+[Playground](https://rafapra3008.github.io/cervellaswarm/) | [LU Debugger](https://lu-debugger.fly.dev/) | [PyPI](https://pypi.org/project/cervellaswarm-lingua-universale/) | [VS Code](https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale) | [Blog](docs/blog/from-vibecoding-to-vericoding.md) | [Colab Demo](https://colab.research.google.com/github/rafapra3008/cervellaswarm/blob/main/docs/blog/from-vibecoding-to-vericoding-demo.ipynb)
 
 </div>

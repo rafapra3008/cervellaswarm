@@ -73,6 +73,7 @@ PUBLIC_FILES=(
     "docs/DUAL_REPO_STRATEGY.md"
     "docs/blog"
     "playground"
+    "lu-debugger"
 )
 
 # Files/directories that must NEVER appear in public root
