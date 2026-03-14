@@ -158,7 +158,7 @@ copy_excluding() {
     
     if [ -d "$src" ]; then
         # For directories, use rsync to exclude node_modules etc.
-        rsync -a --exclude='node_modules' --exclude='dist' --exclude='.turbo' "$src/" "$dst/"
+        rsync -a --exclude='node_modules' --exclude='dist' --exclude='.turbo' --exclude='__pycache__' "$src/" "$dst/"
     else
         cp "$src" "$dst"
     fi
@@ -170,7 +170,7 @@ copy_excluding() {
 
 echo -e "${BOLD}${CYAN}"
 echo "=============================================="
-echo "  SYNC TO PUBLIC - v3.2 (Extended Scanning)"
+echo "  SYNC TO PUBLIC - v3.5 (lu-debugger + __pycache__ exclude)"
 if [ "$DRY_RUN" -eq 1 ]; then
     echo -e "  ${YELLOW}[DRY RUN - no push]${CYAN}"
 fi
