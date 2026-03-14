@@ -16,6 +16,7 @@ Subcommands::
     lu chat               Interactive guided protocol builder (E.2+E.4).
     lu demo               Run the La Nonna demo autonomously (E.5).
     lu lsp                Start the Language Server Protocol server (STDIO).
+    lu doctor             Check environment and dependencies.
     lu version            Show version information.
 
 Design decisions (STUDIO C3):
@@ -537,6 +538,13 @@ def _cmd_fmt(args: argparse.Namespace) -> int:
     return 1 if error_count > 0 else 0
 
 
+def _cmd_doctor(args: argparse.Namespace) -> int:
+    """Handle ``lu doctor``."""
+    from ._doctor import run_doctor
+
+    return run_doctor()
+
+
 def _cmd_version(args: argparse.Namespace) -> int:
     """Handle ``lu version``."""
     from . import __version__
@@ -711,6 +719,9 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Print formatted output to stdout instead of writing file",
     )
 
+    # lu doctor
+    subparsers.add_parser("doctor", help="Check environment and dependencies")
+
     # lu version
     subparsers.add_parser("version", help="Show version information")
 
@@ -734,6 +745,7 @@ _COMMAND_HANDLERS = {
     "demo": _cmd_demo,
     "lint": _cmd_lint,
     "fmt": _cmd_fmt,
+    "doctor": _cmd_doctor,
     "version": _cmd_version,
 }
 
