@@ -17,6 +17,7 @@ v3.1.0 - Sessione 428 - Output ridotto: solo puntatori + warnings (~600 char, er
 """
 
 import json
+import re
 import sys
 from pathlib import Path
 from datetime import datetime, timedelta
@@ -64,15 +65,16 @@ def check_handoff_age(handoff_dir: Path, project_name: str, max_days: int = 7) -
     Returns: (is_old, days_old, last_handoff_name)
     """
     try:
+        HANDOFF_NOT_FOUND_DAYS = 9999
         if not handoff_dir.exists():
-            return True, 999, None
+            return True, HANDOFF_NOT_FOUND_DAYS, None
 
         # Cerca handoff per questo progetto
         # Pattern: HANDOFF_*cervellaswarm*.md o HANDOFF_*_S*.md (nuovo formato)
         handoffs = []
         for f in handoff_dir.glob("*.md"):
             name_lower = f.name.lower()
-            if project_name.lower() in name_lower or f"_s" in name_lower:
+            if project_name.lower() in name_lower or re.search(r"_s\d+", name_lower):
                 handoffs.append(f)
 
         if not handoffs:
@@ -123,7 +125,7 @@ def main():
         # Nota: handoff vecchio (informativo, non allarmante)
         handoff_dir = PROJECT_ROOT / ".swarm/handoff"
         is_handoff_old, handoff_days, last_handoff = check_handoff_age(handoff_dir, "cervellaswarm", max_days=7)
-        if is_handoff_old and handoff_days > 0:
+        if is_handoff_old:
             last = f" (ultimo: {last_handoff})" if last_handoff else ""
             context_parts.append(f"Nota SNCP: Ultimo handoff {handoff_days} giorni fa{last}.")
             context_parts.append("")
