@@ -4,6 +4,18 @@ All notable changes to `cervellaswarm-lingua-universale` will be documented in t
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.3.4] - 2026-03-15
+
+### Added
+
+- **`lu doctor`**: Environment diagnostics command -- checks Python version, LU installation, optional dependencies, external tools. Added post-v0.3.3, now included in PyPI wheel.
+- **`lu --version`**: Standard version flag (was missing, returned exit 2).
+
+### Fixed
+
+- `lu fmt --diff` exit code: now correctly returns 1 when files need reformatting (same as `--check`).
+- CLI description aligned to "protocol verification language" (DSL strategy).
+
 ## [0.3.3] - 2026-03-13
 
 ### Added

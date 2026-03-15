@@ -562,10 +562,13 @@ def _cmd_version(args: argparse.Namespace) -> int:
 
 def _build_parser() -> argparse.ArgumentParser:
     """Build the argparse parser with all subcommands."""
+    from . import __version__  # noqa: PLC0415
+
     parser = argparse.ArgumentParser(
         prog="lu",
-        description="Lingua Universale - the first programming language native to AI",
+        description="Lingua Universale - protocol verification language for AI agents",
     )
+    parser.add_argument("--version", action="version", version=f"lu {__version__}")
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
     # lu check
