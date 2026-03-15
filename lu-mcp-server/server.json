@@ -3,13 +3,13 @@
   "name": "io.github.rafapra3008/lu-mcp-server",
   "description": "Verify AI agent communication with session types and formal proofs",
   "title": "Lingua Universale MCP Server",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "packages": [
     {
       "registryType": "pypi",
       "registryBaseUrl": "https://pypi.org",
       "identifier": "lu-mcp-server",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "runtimeHint": "uvx",
       "transport": {
         "type": "stdio"
