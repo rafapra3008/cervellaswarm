@@ -38,13 +38,34 @@ mcp = FastMCP(
     "lingua-universale",
     instructions=(
         "Verify agent-to-agent communication against session type protocols. "
-        "Mathematical proofs, not trust. "
-        "Use lu_load_protocol to parse a .lu definition, "
-        "lu_verify_message to check individual messages, "
-        "lu_check_properties for formal safety proofs, "
-        "and lu_list_templates to browse 20 standard library protocols."
+        "Mathematical proofs, not trust.\n\n"
+        "Recommended workflow:\n"
+        "1. lu_list_templates -- browse 20 stdlib protocols to find a starting point\n"
+        "2. lu_load_protocol -- parse a .lu definition to inspect structure\n"
+        "3. lu_check_properties -- verify safety properties (always terminates, no deadlock)\n"
+        "4. lu_verify_message -- check individual messages against a running session\n\n"
+        "Start with lu_list_templates if unsure which protocol to use. "
+        "Use lu_check_properties before deploying any protocol."
     ),
 )
+
+
+# ---------------------------------------------------------------------------
+# Safety limits
+# ---------------------------------------------------------------------------
+
+MAX_PROTOCOL_SIZE = 1_000_000  # 1 MB
+MAX_HISTORY_LENGTH = 10_000
+
+
+def _check_size(text: str, label: str = "protocol_text") -> str | None:
+    """Return error JSON if text exceeds size limit, else None."""
+    if len(text) > MAX_PROTOCOL_SIZE:
+        return json.dumps({
+            "ok": False,
+            "error": f"{label} exceeds maximum size ({len(text)} > {MAX_PROTOCOL_SIZE})",
+        })
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -91,6 +112,8 @@ async def lu_load_protocol(protocol_text: str) -> str:
           ok (bool), protocol_name (str), roles (list[str]),
           steps (list), properties (list), error (str on failure).
     """
+    if err := _check_size(protocol_text):
+        return err
     lu = _require_lu()
 
     result = lu.check_source(protocol_text, source_file="<mcp-input>")
@@ -235,10 +258,17 @@ async def lu_verify_message(
 
     Example:
         protocol_text = "protocol Ping:\\n    roles: a, b\\n    a asks b to ping\\n    b returns pong to a\\n    properties:\\n        always terminates\\n"
-        messages = [{"sender": "a", "receiver": "b", "action": "ask"}]
-        next_message = {"sender": "b", "receiver": "a", "action": "return"}
+        messages = [{"sender": "a", "receiver": "b", "action": "asks"}]
+        next_message = {"sender": "b", "receiver": "a", "action": "returns"}
         # Returns: {"valid": true, ...}
     """
+    if err := _check_size(protocol_text):
+        return err
+    if len(messages) > MAX_HISTORY_LENGTH:
+        return json.dumps({
+            "valid": False,
+            "error": f"Message history too long ({len(messages)} > {MAX_HISTORY_LENGTH})",
+        })
     lu = _require_lu()
 
     # Step 1: Parse the protocol
@@ -295,6 +325,11 @@ async def lu_verify_message(
 
     # Replay existing messages
     for i, msg in enumerate(messages):
+        if not isinstance(msg, dict):
+            return json.dumps({
+                "valid": False,
+                "error": f"Message {i}: expected dict, got {type(msg).__name__}",
+            })
         sender = msg.get("sender", "")
         receiver = msg.get("receiver", "")
         action = msg.get("action", "")
@@ -415,6 +450,7 @@ def _kind_to_swarm_msg(kind: Any) -> Any:
         ),
         MessageKind.AUDIT_VERDICT: AuditVerdict(
             audit_id="mcp-a1", verdict=AuditVerdictType.APPROVED, score=9.5,
+            checked=("mcp-verify",),
         ),
         MessageKind.PLAN_REQUEST: PlanRequest(
             plan_id="mcp-p1", task_description="plan",
@@ -483,6 +519,8 @@ async def lu_check_properties(protocol_text: str) -> str:
           Each protocol result has: protocol_name, all_passed, results (list).
           Each result has: kind, verdict, evidence, params.
     """
+    if err := _check_size(protocol_text):
+        return err
     lu = _require_lu()
 
     verify_result = lu.verify_source(protocol_text, source_file="<mcp-input>")

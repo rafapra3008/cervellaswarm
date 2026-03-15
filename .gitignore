@@ -27,6 +27,9 @@ reports/
 # MCP config (local paths)
 .mcp.json
 
+# MCP publisher tokens (S466: mcp-publisher login creates these)
+.mcpregistry_*
+
 # IDE config (personal paths)
 .vscode/
 

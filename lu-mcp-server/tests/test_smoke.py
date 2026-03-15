@@ -103,6 +103,28 @@ def test_tool_lu_list_templates_filtered():
     assert all(t["category"] == "security" for t in result["templates"])
 
 
+def test_tool_lu_verify_message_valid():
+    """lu_verify_message accepts a valid first message."""
+    import asyncio
+    from lu_mcp_server import lu_verify_message
+
+    protocol = (
+        "protocol Ping:\n"
+        "    roles: a, b\n"
+        "    a asks b to ping\n"
+        "    b returns pong to a\n"
+        "    properties:\n"
+        "        always terminates\n"
+    )
+    result = json.loads(asyncio.run(lu_verify_message(
+        protocol_text=protocol,
+        messages=[],
+        next_message={"sender": "a", "receiver": "b", "action": "asks"},
+    )))
+    assert result["valid"] is True
+    assert "next_expected" in result
+
+
 def test_tool_lu_verify_message_invalid_action():
     """lu_verify_message returns error for unknown action."""
     import asyncio
@@ -145,3 +167,45 @@ def test_tool_lu_load_protocol_invalid():
 
     result = json.loads(asyncio.run(lu_load_protocol("not a protocol")))
     assert result["ok"] is False
+
+
+def test_tool_lu_verify_message_none_in_history():
+    """lu_verify_message handles None in messages list."""
+    import asyncio
+    from lu_mcp_server import lu_verify_message
+
+    protocol = "protocol P:\n    roles: a, b\n    a asks b to ping\n"
+    result = json.loads(asyncio.run(lu_verify_message(
+        protocol_text=protocol,
+        messages=[None],
+        next_message={"sender": "a", "receiver": "b", "action": "asks"},
+    )))
+    assert result["valid"] is False
+    assert "expected dict" in result["error"]
+
+
+def test_tool_lu_load_protocol_size_limit():
+    """lu_load_protocol rejects oversized input."""
+    import asyncio
+    from lu_mcp_server import lu_load_protocol, MAX_PROTOCOL_SIZE
+
+    huge = "x" * (MAX_PROTOCOL_SIZE + 1)
+    result = json.loads(asyncio.run(lu_load_protocol(huge)))
+    assert result["ok"] is False
+    assert "exceeds maximum size" in result["error"]
+
+
+def test_tool_lu_verify_message_history_limit():
+    """lu_verify_message rejects oversized history."""
+    import asyncio
+    from lu_mcp_server import lu_verify_message, MAX_HISTORY_LENGTH
+
+    protocol = "protocol P:\n    roles: a, b\n    a asks b to ping\n"
+    messages = [{"sender": "a", "receiver": "b", "action": "asks"}] * (MAX_HISTORY_LENGTH + 1)
+    result = json.loads(asyncio.run(lu_verify_message(
+        protocol_text=protocol,
+        messages=messages,
+        next_message={"sender": "a", "receiver": "b", "action": "asks"},
+    )))
+    assert result["valid"] is False
+    assert "too long" in result["error"]
