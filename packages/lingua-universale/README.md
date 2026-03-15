@@ -3,16 +3,17 @@
 [![PyPI](https://img.shields.io/pypi/v/cervellaswarm-lingua-universale.svg)](https://pypi.org/project/cervellaswarm-lingua-universale/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org)
-[![Tests](https://img.shields.io/badge/tests-3684%20passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-3696%20passed-brightgreen.svg)](tests/)
 [![Coverage](https://img.shields.io/badge/coverage-98%25-brightgreen.svg)](tests/)
 [![VS Code](https://img.shields.io/visual-studio-marketplace/v/cervellaswarm.lingua-universale?label=VS%20Code&color=blueviolet)](https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale)
 [![Playground](https://img.shields.io/badge/playground-try%20it%20now-blueviolet.svg)](https://rafapra3008.github.io/cervellaswarm/)
 [![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)]()
 
-**The first programming language designed for AI. By AI.**
+**The first protocol verification language designed for AI. By AI.**
 
-A complete language — grammar, compiler, REPL, LSP server, and formal verification —
-built entirely on the Python standard library. **Zero external dependencies.**
+Think of it as **SQL for AI protocols** -- a focused, declarative language for defining
+and verifying how agents communicate. Grammar, compiler, REPL, LSP server, and formal
+verification -- built entirely on the Python standard library. **Zero external dependencies.**
 
 ```bash
 pip install cervellaswarm-lingua-universale
@@ -25,11 +26,10 @@ pip install cervellaswarm-lingua-universale
 
 ## What Is Lingua Universale?
 
-Lingua Universale (LU) is a programming language where the question and the answer
-live in the same language. It models AI agent communication with precision: who sends
-what to whom, under what contracts, with what confidence.
+Lingua Universale (LU) is a domain-specific language for verified AI agent communication.
+It models who sends what to whom, in what order, under what contracts -- and proves it correct.
 
-It started as a session types library. It is now a full language:
+It started as a session types library. It is now a complete verification language:
 
 - **Grammatica**: 64 production rules, formal EBNF, Lark + GBNF export
 - **Compilatore**: tokenizer -> AST -> contract checker -> Python codegen
@@ -206,8 +206,8 @@ Each step has editable, runnable code. No install required.
 
 ## Features
 
-- **29 modules**, 137+ public API symbols
-- **3684 tests**, 98% coverage, runs in ~2 seconds
+- **33 modules**, 150+ public API symbols
+- **3696 tests**, 98% coverage, runs in ~2 seconds
 - **Zero dependencies** -- pure Python standard library
 - **Python 3.10+** including 3.13 free-threaded (thread-safe internals)
 - **Grammar**: 64 production rules, GBNF + Lark export for constrained decoding
@@ -218,7 +218,7 @@ Each step has editable, runnable code. No install required.
 ## Architecture
 
 ```
-Lingua Universale v0.3.3 -- 29 modules, zero dependencies
+Lingua Universale v0.3.3 -- 33 modules, zero dependencies
 
 FASE A: Session Types
   types.py           14 MessageKind, 14 message dataclasses, 17 AgentRole
@@ -519,7 +519,7 @@ git clone https://github.com/rafapra3008/cervellaswarm.git
 cd cervellaswarm/packages/lingua-universale
 pip install -e ".[dev]"
 
-# Run tests (3684 tests, ~2s)
+# Run tests (3696 tests, ~2s)
 pytest
 
 # Run with coverage

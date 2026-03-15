@@ -2,6 +2,11 @@
 
 # lu-mcp-server
 
+[![PyPI](https://img.shields.io/pypi/v/lu-mcp-server.svg)](https://pypi.org/project/lu-mcp-server/)
+[![Tests](https://img.shields.io/badge/tests-25%20passed-brightgreen.svg)](tests/)
+[![Glama](https://glama.ai/mcp/servers/@rafapra3008/lu-mcp-server/badge)](https://glama.ai/mcp/servers/@rafapra3008/lu-mcp-server)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+
 MCP server for [Lingua Universale](https://github.com/rafapra3008/cervellaswarm) protocol verification.
 
 Verify AI agent communication with session types -- mathematical proofs, not trust.
