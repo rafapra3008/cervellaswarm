@@ -1,0 +1,40 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lu-mcp-server"
+version = "0.1.0"
+description = "MCP server for Lingua Universale protocol verification -- verify AI agent communication with session types"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10"
+authors = [{name = "CervellaSwarm", email = "noreply@cervellaswarm.com"}]
+keywords = ["mcp", "session-types", "protocol-verification", "ai-agents", "formal-methods"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = [
+    "cervellaswarm-lingua-universale>=0.3.3",
+    "mcp[cli]>=1.0.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7.0"]
+
+[project.urls]
+Homepage = "https://github.com/rafapra3008/cervellaswarm"
+Documentation = "https://rafapra3008.github.io/cervellaswarm/"
+Repository = "https://github.com/rafapra3008/cervellaswarm"
+Issues = "https://github.com/rafapra3008/cervellaswarm/issues"
+
+[project.scripts]
+lu-mcp-server = "lu_mcp_server:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
