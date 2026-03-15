@@ -1,3 +1,5 @@
+<!-- mcp-name: io.github.rafapra3008/lu-mcp-server -->
+
 # lu-mcp-server
 
 MCP server for [Lingua Universale](https://github.com/rafapra3008/cervellaswarm) protocol verification.

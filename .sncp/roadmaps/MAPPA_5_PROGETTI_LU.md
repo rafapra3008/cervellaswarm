@@ -1,8 +1,8 @@
 # MAPPA 5 PROGETTI -- Showcase Lingua Universale
 
-> **Data:** 14 Marzo 2026 (aggiornato S463)
+> **Data:** 15 Marzo 2026 (aggiornato S466)
 > **Obiettivo:** 5 progetti REALI con LU -- **TUTTI LIVE!**
-> **Status:** 5/5 DONE. Show HN window: 21-28 Marzo.
+> **Status:** 5/5 DONE + lu-mcp-server su PyPI. Show HN window: 21-28 Marzo.
 
 ---
 
@@ -91,9 +91,9 @@
 
 ---
 
-## PROGETTO 5: AI Code Review System -- IN PROGRESS (S462)
+## PROGETTO 5: AI Code Review System -- DONE! (S462)
 
-**URL (target):** https://lu-code-review.fly.dev/
+**URL LIVE:** https://lu-code-review.fly.dev/
 
 **Cosa:** Incolla codice, 4 agenti AI (Security, Performance, Quality + Orchestrator) lo analizzano con protocollo verificato. Il protocollo FORZA l'ordine: Security PRIMA di Performance PRIMA di Quality. Violazione? BLOCCATA.
 
@@ -127,7 +127,7 @@
 **Perche:** MCP/A2A/ACP gestiscono COSA gli agenti si dicono. NESSUNO verifica se e CORRETTO. LU e il "missing verification layer". Moltbook ha un problema noto di prompt injection (2.6%) -- LU lo risolve.
 
 **DONE (S461-S462):**
-- Agente registrato e verificato (karma 22, 3 post, 23+ commenti, 3 follower)
+- Agente registrato e verificato (karma 27, 4 post, 27+ commenti, 3 follower)
 - Bot always-on su Fly.io (lu-moltbook-bot, heartbeat 15 min, Claude Haiku)
 - Skill MCP costruito (4 tool, 631 LOC, Guardiana 8.8→9.3)
 - Conversazione strategica su security/injection con deep technical engagement
@@ -180,11 +180,19 @@
 - Repo pubblico sincronizzato
 
 **S465:** Developer Experience sprint.
-- `lu doctor` -- diagnostic command (Flutter/Homebrew pattern, 10 test)
+- `lu doctor` -- diagnostic command (Flutter/Homebrew pattern, 12 test)
+- `lu-mcp-server` -- standalone package (pronto per PyPI)
 - README badges aggiornati (VS Code Marketplace + test count)
 - CONTRIBUTING.md con 5 Good First Issues
+- Moltbook risposte filosofiche (karma 23->27)
+
+**S466:** PyPI publish + quality sprint.
+- lu-mcp-server v0.1.0 su PyPI (13 test, Guardiana 9.5+, CI + publish workflow)
+- Trusted Publisher OIDC configurato
+- Sync to public + security scan 14/14 clear
 
 **Da fare pre-Show HN:**
+- MCP directory registration (PulseMCP, Glama, Official MCP Registry)
 - GitHub Topics su repo pubblico (Rafa, 5 min)
 - SkillsMP topic `skill-md` (Rafa, 2 min)
 - Awesome lists PR (4 repo)

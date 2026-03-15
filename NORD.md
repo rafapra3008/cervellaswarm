@@ -2,7 +2,7 @@
 
 > **QUESTO FILE E SACRO. E LA NOSTRA BUSSOLA.**
 >
-> Aggiornato: 14 Marzo 2026 - S465 (Security + lu doctor + MCP server)
+> Aggiornato: 15 Marzo 2026 - S466 (lu-mcp-server PyPI LIVE + MCP directories)
 
 ```
 +==================================================================+
@@ -43,7 +43,7 @@
 
 ```
 +================================================================+
-|   S455-S465: 5/5 SHOWCASE LIVE! Security hardened. Ready.       |
+|   S455-S466: 5/5 SHOWCASE + lu-mcp-server PyPI LIVE!             |
 +================================================================+
 
 SHOWCASE (5/5 DONE!):
@@ -57,7 +57,7 @@ MOLTBOOK + OPENCLAW (S461-S465):
   Agente LU su Moltbook: moltbook.com/u/lingua-universale (karma 27)
   Bot always-on: lu-moltbook-bot.fly.dev (24/7, injection-hardened)
   OpenClaw Skill MCP: 4 tool, primo di verifica formale su ClawHub
-  MCP Server nativo: lu-mcp-server (pronto per PyPI + 3 directory)
+  MCP Server nativo: lu-mcp-server v0.1.0 LIVE su PyPI (10o package!)
   Pitch: "The missing verification layer for MCP/A2A"
 
 LANCIO:
@@ -103,9 +103,9 @@ LANCIO:
 
 ### Infrastruttura
 
-9 PyPI packages LIVE | 17 agenti | 13 CLI commands | Fly.io x3 | VS Code Marketplace
+10 PyPI packages LIVE | 17 agenti | 13 CLI commands | Fly.io x3 | VS Code Marketplace
 cervellaswarm.com LIVE | Repo pubblico synced | 18 hooks su hooks_common v1.2.0
-Moltbook agent LIVE (karma 27) | Bot always-on LIVE | ClawHub LIVE | MCP server READY
+Moltbook agent LIVE (karma 27) | Bot always-on LIVE | ClawHub LIVE | MCP server LIVE (PyPI)
 
 ---
 
