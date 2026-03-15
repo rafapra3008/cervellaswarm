@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org)
 [![Tests](https://img.shields.io/badge/tests-3696%20passed-brightgreen.svg)](tests/)
-[![Coverage](https://img.shields.io/badge/coverage-98%25-brightgreen.svg)](tests/)
+[![Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen.svg)](tests/)
 [![VS Code](https://img.shields.io/visual-studio-marketplace/v/cervellaswarm.lingua-universale?label=VS%20Code&color=blueviolet)](https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale)
 [![Playground](https://img.shields.io/badge/playground-try%20it%20now-blueviolet.svg)](https://rafapra3008.github.io/cervellaswarm/)
 [![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)]()
@@ -160,7 +160,7 @@ lu lsp
 
 ## Editor Support (VS Code)
 
-Install the [Lingua Universale VS Code extension](https://github.com/rafapra3008/cervellaswarm/tree/main/extensions/lingua-universale-vscode)
+Install the [Lingua Universale VS Code extension](https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale)
 for a full editing experience:
 
 | Feature | Description |
