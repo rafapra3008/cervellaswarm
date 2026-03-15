@@ -55,18 +55,28 @@ jobs:
             requirements*.txt
             cervella/pyproject.toml
 
+      - name: Check if test infrastructure exists
+        id: check
+        run: |
+          if [ ! -f "requirements-dev.txt" ] || [ ! -d "tests" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "Skipping: requirements-dev.txt or tests/ not found (public repo)"
+          fi
+
       - name: Install dependencies
+        if: steps.check.outputs.skip != 'true'
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
 
       - name: Run linting (Python 3.12 only)
-        if: matrix.python-version == '3.12'
+        if: steps.check.outputs.skip != 'true' && matrix.python-version == '3.12'
         run: |
           ruff check scripts/ src/ --ignore=E501
         continue-on-error: true
 
       - name: Run tests with coverage
+        if: steps.check.outputs.skip != 'true'
         run: |
           pytest tests/ \
             --ignore=tests/sncp \
@@ -78,7 +88,7 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
 
       - name: Upload coverage report (Python 3.12 only)
-        if: matrix.python-version == '3.12'
+        if: steps.check.outputs.skip != 'true' && matrix.python-version == '3.12'
         uses: actions/upload-artifact@v7
         with:
           name: coverage-report
