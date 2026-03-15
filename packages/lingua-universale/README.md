@@ -194,12 +194,20 @@ Learn LU step by step with ["A Tour of Lingua Universale"](https://rafapra3008.g
 
 Each step has editable, runnable code. No install required.
 
+## See It In Action
+
+- [**AI Code Review**](https://lu-code-review.fly.dev/) -- paste code, 4 AI agents review it with a verified protocol
+- [**Live Debugger**](https://lu-debugger.fly.dev/) -- 3 AI agents communicate; click "Break" to see a violation blocked
+- [**$34K Bug Story**](https://rafapra3008.github.io/cervellaswarm/incident.html) -- why protocols matter (interactive narrative)
+- [**Protocol Zoo**](https://rafapra3008.github.io/cervellaswarm/zoo.html) -- browse 20 verified protocols across 5 categories
+- [**MCP Server**](https://pypi.org/project/lu-mcp-server/) -- `pip install lu-mcp-server` for Claude Code, Cursor, Windsurf
+
 ---
 
 ## Features
 
 - **29 modules**, 137+ public API symbols
-- **3682 tests**, 98% coverage, runs in ~2 seconds
+- **3684 tests**, 98% coverage, runs in ~2 seconds
 - **Zero dependencies** -- pure Python standard library
 - **Python 3.10+** including 3.13 free-threaded (thread-safe internals)
 - **Grammar**: 64 production rules, GBNF + Lark export for constrained decoding
@@ -511,7 +519,7 @@ git clone https://github.com/rafapra3008/cervellaswarm.git
 cd cervellaswarm/packages/lingua-universale
 pip install -e ".[dev]"
 
-# Run tests (3682 tests, ~2s)
+# Run tests (3684 tests, ~2s)
 pytest
 
 # Run with coverage
