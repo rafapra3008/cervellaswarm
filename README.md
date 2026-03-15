@@ -35,7 +35,7 @@ review = Protocol(name="Review", roles=("dev", "reviewer"), elements=(
 checker = SessionChecker(review)
 checker.send("dev", "reviewer", TaskRequest(task_id="1", description="Review auth"))  # OK
 checker.send("dev", "reviewer", TaskRequest(task_id="2", description="Oops"))         # ProtocolViolation!
-#                                                                                      ^^^ wrong sender order
+#                                                                                      ^^^ wrong turn: reviewer must send next
 ```
 
 The protocol says reviewer goes next. The runtime blocks it. Not because you trust the code -- because the session type makes it impossible.
@@ -104,13 +104,13 @@ Mathematical proof. Not a test that passes today and fails tomorrow.
 | **Linter + Formatter** | `lu lint` (10 rules) + `lu fmt` (zero-config, like gofmt) |
 | **LSP server** | Diagnostics, hover, completion, go-to-definition, formatting |
 | **VS Code extension** | [Install from Marketplace](https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale) |
-| **Interactive chat** | `lu chat --lang it` -- build protocols conversationally in English, Italian, or Portuguese |
+| **Interactive chat** | `lu chat` -- build protocols conversationally (English, Italian, Portuguese) |
 | **Browser playground** | [Try it now](https://rafapra3008.github.io/cervellaswarm/) -- Check, Lint, Run, Chat |
 | **Lean 4 bridge** | Generate and verify mathematical proofs |
 | **REPL** | `lu repl` for interactive exploration |
 | **Project scaffolding** | `lu init --template rag_pipeline` from 20 verified templates |
 
-33 modules. 3696 tests. Zero external dependencies. Pure Python stdlib.
+36 modules. 3867 tests. Zero external dependencies. Pure Python stdlib.
 
 ---
 

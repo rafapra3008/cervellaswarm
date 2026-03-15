@@ -1,0 +1,56 @@
+# CI Workflow for Moltbook Bot (lingua-universale agent)
+#
+# Runs on push/PR when bot files change.
+# Python 3.12 + 3.13 (Dockerfile target).
+# 359+ tests, all mocked (no external API calls).
+#
+# Quality is not negotiable.
+
+name: Moltbook Bot CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'moltbook-bot/**'
+      - '.github/workflows/ci-moltbook-bot.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'moltbook-bot/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.12', '3.13']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: moltbook-bot/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+        working-directory: moltbook-bot
+
+      - name: Run tests
+        run: pytest tests/ -v --tb=short
+        working-directory: moltbook-bot

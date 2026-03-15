@@ -1,0 +1,306 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 CervellaSwarm Contributors
+
+"""JSON Schema generation from verified protocol definitions.
+
+Generates JSON Schema (2020-12) from Protocol definitions. The schema
+describes the protocol structure including roles, steps, choices, and
+verified properties.
+
+Uses draft 2020-12 (not draft-07) because:
+- MCP is adopting it as standard (SEP-1613)
+- ``$defs`` is the native keyword (not ``definitions``)
+- Recursion via ``$defs`` + ``$ref`` is stable
+- Aligns with OpenAPI 3.1+ direction
+
+The generated schema includes:
+- ``$defs`` for ProtocolStep, ProtocolChoice, ProtocolElement, MessageKind
+- Steps array with ``oneOf`` for step/choice discrimination
+- ``x-lu-properties`` extension for verified property names
+- ``x-lu-version`` and ``x-lu-roles`` extensions for metadata
+- Recursive ``$ref`` for nested ProtocolChoice (LU 1.1)
+
+Architecture follows ``codegen.py`` and ``codegen_ts.py`` (template-based,
+pure generation).  ZERO external dependencies.
+
+Sprint 5 of PLAN_LU_GENERATE.md.
+Research: ``.sncp/.../reports/RESEARCH_20260315_JSON_SCHEMA_CODEGEN.md``
+"""
+
+from __future__ import annotations
+
+import json
+from typing import TYPE_CHECKING, Optional, Sequence
+
+from .protocols import Protocol, ProtocolChoice, ProtocolElement, ProtocolStep
+from .types import MessageKind
+
+if TYPE_CHECKING:
+    from .spec import ProtocolSpec
+
+
+# ============================================================
+# Helpers
+# ============================================================
+
+
+def _collect_all_steps(
+    elements: Sequence[ProtocolElement],
+) -> list[ProtocolStep]:
+    """Collect all ProtocolSteps from elements, including nested choice branches."""
+    steps: list[ProtocolStep] = []
+    for elem in elements:
+        if isinstance(elem, ProtocolStep):
+            steps.append(elem)
+        elif isinstance(elem, ProtocolChoice):
+            for branch_elems in elem.branches.values():
+                steps.extend(_collect_all_steps(branch_elems))
+    return steps
+
+
+def _used_message_kinds(protocol: Protocol) -> list[MessageKind]:
+    """Collect MessageKinds used in a protocol (preserving enum order)."""
+    used: set[MessageKind] = set()
+    for step in _collect_all_steps(protocol.elements):
+        used.add(step.message_kind)
+    return [k for k in MessageKind if k in used]
+
+
+def _step_to_dict(step: ProtocolStep) -> dict:
+    """Convert a ProtocolStep to a JSON-serializable dict."""
+    d: dict = {
+        "type": "step",
+        "sender": step.sender,
+        "receiver": step.receiver,
+        "message_kind": step.message_kind.value,
+    }
+    if step.description:
+        d["description"] = step.description
+    return d
+
+
+def _choice_to_dict(choice: ProtocolChoice) -> dict:
+    """Convert a ProtocolChoice to a JSON-serializable dict (recursive)."""
+    branches: dict[str, list] = {}
+    for branch_name, branch_elems in choice.branches.items():
+        branches[branch_name] = _elements_to_list(branch_elems)
+    d: dict = {
+        "type": "choice",
+        "decider": choice.decider,
+        "branches": branches,
+    }
+    if choice.description:
+        d["description"] = choice.description
+    return d
+
+
+def _elements_to_list(
+    elements: Sequence[ProtocolElement],
+) -> list[dict]:
+    """Convert a sequence of ProtocolElements to JSON-serializable list."""
+    result: list[dict] = []
+    for elem in elements:
+        if isinstance(elem, ProtocolStep):
+            result.append(_step_to_dict(elem))
+        elif isinstance(elem, ProtocolChoice):
+            result.append(_choice_to_dict(elem))
+    return result
+
+
+# ============================================================
+# JSON Schema Generator
+# ============================================================
+
+
+class JSONSchemaGenerator:
+    """Generates JSON Schema from Protocol definitions.
+
+    Pure generation.  No side effects.
+    The generated schema is a complete, self-contained JSON Schema document.
+    """
+
+    @staticmethod
+    def _get_version() -> str:
+        """Get the current LU package version."""
+        try:
+            from . import __version__
+            return __version__
+        except (ImportError, AttributeError):
+            return "0.0.0"
+
+    def generate(
+        self,
+        protocol: Protocol,
+        properties: ProtocolSpec | None = None,
+    ) -> str:
+        """Generate a JSON Schema document for a protocol.
+
+        Args:
+            protocol: The protocol definition.
+            properties: Optional verified properties for x-lu-properties.
+
+        Returns:
+            JSON string (pretty-printed, 2-space indent).
+        """
+        schema = self._build_schema(protocol, properties)
+        return json.dumps(schema, indent=2, ensure_ascii=False) + "\n"
+
+    def _build_schema(
+        self,
+        protocol: Protocol,
+        properties: ProtocolSpec | None,
+    ) -> dict:
+        """Build the complete JSON Schema dict."""
+        kinds = _used_message_kinds(protocol)
+
+        schema: dict = {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": protocol.name,
+            "x-lu-version": self._get_version(),
+        }
+
+        # Build description (unified punctuation)
+        if protocol.description:
+            schema["description"] = (
+                f"{protocol.description} "
+                f"(auto-generated by Lingua Universale)."
+            )
+        else:
+            schema["description"] = (
+                f"Protocol schema for {protocol.name}, "
+                f"auto-generated by Lingua Universale."
+            )
+
+        # Add LU metadata extensions
+        schema["x-lu-roles"] = list(protocol.roles)
+        if properties:
+            schema["x-lu-properties"] = [
+                p.kind.value for p in properties.properties
+            ]
+
+        schema["type"] = "object"
+        schema["required"] = ["protocol", "roles", "steps"]
+
+        schema["properties"] = {
+            "protocol": {
+                "const": protocol.name,
+                "description": "Protocol name.",
+            },
+            "roles": {
+                "type": "array",
+                "items": {
+                    "enum": list(protocol.roles),
+                },
+                "minItems": len(protocol.roles),
+                "maxItems": len(protocol.roles),
+                "description": "Roles participating in this protocol.",
+            },
+            "steps": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/$defs/ProtocolElement",
+                },
+                "description": "Ordered sequence of protocol elements.",
+            },
+        }
+
+        # $defs
+        schema["$defs"] = self._build_defs(kinds)
+
+        return schema
+
+    def _build_defs(self, kinds: list[MessageKind]) -> dict:
+        """Build the $defs section with reusable schema components."""
+        defs: dict = {}
+
+        # MessageKind enum
+        defs["MessageKind"] = {
+            "type": "string",
+            "enum": [k.value for k in kinds],
+            "description": "Message kinds used in this protocol.",
+        }
+
+        # ProtocolStep
+        defs["ProtocolStep"] = {
+            "type": "object",
+            "required": ["type", "sender", "receiver", "message_kind"],
+            "properties": {
+                "type": {
+                    "const": "step",
+                },
+                "sender": {
+                    "type": "string",
+                    "description": "Role that sends the message.",
+                },
+                "receiver": {
+                    "type": "string",
+                    "description": "Role that receives the message.",
+                },
+                "message_kind": {
+                    "$ref": "#/$defs/MessageKind",
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Human-readable step description.",
+                },
+            },
+            "additionalProperties": False,
+        }
+
+        # ProtocolChoice (recursive via $ref to ProtocolElement)
+        defs["ProtocolChoice"] = {
+            "type": "object",
+            "required": ["type", "decider", "branches"],
+            "properties": {
+                "type": {
+                    "const": "choice",
+                },
+                "decider": {
+                    "type": "string",
+                    "description": "Role that decides which branch to take.",
+                },
+                "branches": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/$defs/ProtocolElement",
+                        },
+                    },
+                    "description": "Map of branch name to element sequence.",
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Human-readable choice description.",
+                },
+            },
+            "additionalProperties": False,
+        }
+
+        # ProtocolElement (discriminated union via "type" field)
+        defs["ProtocolElement"] = {
+            "oneOf": [
+                {"$ref": "#/$defs/ProtocolStep"},
+                {"$ref": "#/$defs/ProtocolChoice"},
+            ],
+            "description": "A protocol element: either a step or a choice.",
+        }
+
+        return defs
+
+
+# ============================================================
+# Convenience function
+# ============================================================
+
+
+def generate_json_schema(
+    protocol: Protocol,
+    properties: ProtocolSpec | None = None,
+) -> str:
+    """Generate a JSON Schema document for a protocol.
+
+    Convenience wrapper around ``JSONSchemaGenerator().generate()``.
+    """
+    return JSONSchemaGenerator().generate(protocol, properties=properties)

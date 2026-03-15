@@ -149,7 +149,7 @@ def run_doctor() -> int:
         if os.environ.get("ANTHROPIC_API_KEY"):
             _ok("ANTHROPIC_API_KEY", "set")
         else:
-            _warn("ANTHROPIC_API_KEY", "not set -- lu chat will not work")
+            _warn("ANTHROPIC_API_KEY", "not set -- lu chat --mode nl will not work (guided mode works fine)")
     except ImportError:
         _warn("anthropic SDK", "not installed -- pip install cervellaswarm-lingua-universale[nl]")
 

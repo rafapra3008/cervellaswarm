@@ -1,0 +1,53 @@
+# Backup Moltbook Bot /data volume
+#
+# Schedule: daily at 06:00 UTC
+# Manual: workflow_dispatch
+# Stores: 4 JSON files (replied_ids, karma_state, comment_history, comment_queue)
+# Retention: 30 days as GitHub Artifact (< 100KB total)
+#
+# Quality is not negotiable.
+
+name: Backup Bot Data
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  backup:
+    name: Backup /data volume
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Download /data via SSH
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          mkdir -p backup
+          flyctl ssh console \
+            --command 'tar czf - /data' \
+            --app lu-moltbook-bot \
+            > backup/bot_data_$(date +%Y%m%d_%H%M%S).tar.gz
+
+      - name: Verify backup
+        run: |
+          ls -lh backup/
+          # Ensure the file is not empty (> 100 bytes)
+          size=$(stat -c%s backup/bot_data_*.tar.gz 2>/dev/null || stat -f%z backup/bot_data_*.tar.gz)
+          if [ "$size" -lt 100 ]; then
+            echo "ERROR: Backup file too small ($size bytes), likely empty"
+            exit 1
+          fi
+          echo "Backup size: $size bytes -- OK"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bot-data-${{ github.run_number }}
+          path: backup/
+          retention-days: 30

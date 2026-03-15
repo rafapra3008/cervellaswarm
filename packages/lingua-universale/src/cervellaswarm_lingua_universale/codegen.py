@@ -432,7 +432,7 @@ class PythonGenerator:
             '        session_id: str = "",',
             "        role_bindings: Optional[dict[str, str]] = None,",
             "    ) -> None:",
-            f"        self._checker = SessionChecker(",
+            f"        self._session_checker = SessionChecker(",
             f"            protocol={protocol.name.upper()},",
             f"            session_id=session_id,",
             f"            role_bindings=role_bindings,",
@@ -445,7 +445,7 @@ class PythonGenerator:
             "",
             "    def send(self, sender: str, receiver: str, msg: object) -> None:",
             '        """Send a message through the session checker."""',
-            "        self._checker.send(sender, receiver, msg)",
+            "        self._session_checker.send(sender, receiver, msg)",
         ])
 
         # choose_branch() for protocols with choices
@@ -454,7 +454,7 @@ class PythonGenerator:
                 "",
                 "    def choose_branch(self, branch_name: str) -> None:",
                 '        """Choose a branch at a choice point."""',
-                "        self._checker.choose_branch(branch_name)",
+                "        self._session_checker.choose_branch(branch_name)",
             ])
 
         # Properties
@@ -463,17 +463,17 @@ class PythonGenerator:
             "    @property",
             "    def is_complete(self) -> bool:",
             '        """True when the protocol session has completed."""',
-            "        return self._checker.is_complete",
+            "        return self._session_checker.is_complete",
             "",
             "    @property",
             "    def session_id(self) -> str:",
             '        """The session identifier."""',
-            "        return self._checker.session_id",
+            "        return self._session_checker.session_id",
             "",
             "    @property",
             "    def checker(self) -> SessionChecker:",
             '        """Access the underlying SessionChecker."""',
-            "        return self._checker",
+            "        return self._session_checker",
         ])
 
         lines.extend(property_lines)
@@ -653,7 +653,7 @@ def _generate_multi_session_class(protocol: Protocol) -> str:
         '        session_id: str = "",',
         "        role_bindings: Optional[dict[str, str]] = None,",
         "    ) -> None:",
-        f"        self._checker = SessionChecker(",
+        f"        self._session_checker = SessionChecker(",
         f"            protocol={protocol.name.upper()},",
         f"            session_id=session_id,",
         f"            role_bindings=role_bindings,",
@@ -669,7 +669,7 @@ def _generate_multi_session_class(protocol: Protocol) -> str:
         "",
         "    def send(self, sender: str, receiver: str, msg: object) -> None:",
         '        """Send a message through the session checker."""',
-        "        self._checker.send(sender, receiver, msg)",
+        "        self._session_checker.send(sender, receiver, msg)",
     ])
 
     if _has_choices(protocol):
@@ -677,18 +677,18 @@ def _generate_multi_session_class(protocol: Protocol) -> str:
             "",
             "    def choose_branch(self, branch_name: str) -> None:",
             '        """Choose a branch at a choice point."""',
-            "        self._checker.choose_branch(branch_name)",
+            "        self._session_checker.choose_branch(branch_name)",
         ])
 
     session_lines.extend([
         "",
         "    @property",
         "    def is_complete(self) -> bool:",
-        "        return self._checker.is_complete",
+        "        return self._session_checker.is_complete",
         "",
         "    @property",
         "    def session_id(self) -> str:",
-        "        return self._checker.session_id",
+        "        return self._session_checker.session_id",
     ])
 
     for role in protocol.roles:

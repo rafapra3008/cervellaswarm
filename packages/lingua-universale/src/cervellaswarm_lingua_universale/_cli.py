@@ -16,6 +16,7 @@ Subcommands::
     lu chat               Interactive guided protocol builder (E.2+E.4).
     lu demo               Run the La Nonna demo autonomously (E.5).
     lu lsp                Start the Language Server Protocol server (STDIO).
+    lu generate <t> <f>   Generate code (Python, TypeScript, JSON Schema).
     lu doctor             Check environment and dependencies.
     lu version            Show version information.
 
@@ -538,6 +539,52 @@ def _cmd_fmt(args: argparse.Namespace) -> int:
     return 1 if error_count > 0 else 0
 
 
+def _cmd_generate(args: argparse.Namespace) -> int:
+    """Handle ``lu generate``."""
+    from ._generate import generate_from_file
+
+    try:
+        results = generate_from_file(args.file, args.target)
+    except FileNotFoundError as exc:
+        print(f"{_c.RED}Error:{_c.RESET} {exc}", file=sys.stderr)
+        return 1
+    except (ValueError, ImportError) as exc:
+        print(f"{_c.RED}Error:{_c.RESET} {exc}", file=sys.stderr)
+        return 1
+
+    for result in results:
+        if args.dry_run:
+            print(
+                f"Would generate {result.target} for "
+                f"{result.protocol_name} ({result.file_extension})"
+            )
+            continue
+
+        if args.output:
+            out_path = Path(args.output)
+            if out_path.is_dir():
+                filename = f"{result.protocol_name.lower()}{result.file_extension}"
+                out_path = out_path / filename
+            elif len(results) > 1:
+                # Multi-protocol: append protocol name to avoid overwrite
+                stem = out_path.stem
+                filename = f"{stem}_{result.protocol_name.lower()}{result.file_extension}"
+                out_path = out_path.parent / filename
+            try:
+                out_path.write_text(result.source, encoding="utf-8")
+            except (PermissionError, OSError) as exc:
+                print(f"{_c.RED}Error:{_c.RESET} {exc}", file=sys.stderr)
+                return 1
+            print(
+                f"{_c.GREEN}Generated:{_c.RESET} {out_path} "
+                f"({result.target}, {result.protocol_name})"
+            )
+        else:
+            print(result.source)
+
+    return 0
+
+
 def _cmd_doctor(args: argparse.Namespace) -> int:
     """Handle ``lu doctor``."""
     from ._doctor import run_doctor
@@ -550,7 +597,7 @@ def _cmd_version(args: argparse.Namespace) -> int:
     from . import __version__
 
     print(f"Lingua Universale {_c.BOLD}v{__version__}{_c.RESET}")
-    print("The first programming language native to AI.")
+    print("A verification language for AI agent protocols.")
     print(f"  {_c.CYAN}Session types + Formal verification + ZERO deps{_c.RESET}")
     return 0
 
@@ -722,6 +769,27 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Print formatted output to stdout instead of writing file",
     )
 
+    # lu generate
+    p_generate = subparsers.add_parser(
+        "generate",
+        help="Generate code from a .lu file (Python, TypeScript, JSON Schema)",
+    )
+    p_generate.add_argument(
+        "target",
+        choices=["python", "typescript", "ts", "json-schema", "json"],
+        help="Target language",
+    )
+    p_generate.add_argument("file", help="Path to the .lu source file")
+    p_generate.add_argument(
+        "-o", "--output",
+        help="Write output to file or directory instead of stdout",
+    )
+    p_generate.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Show what would be generated without writing",
+    )
+
     # lu doctor
     subparsers.add_parser("doctor", help="Check environment and dependencies")
 
@@ -748,6 +816,7 @@ _COMMAND_HANDLERS = {
     "demo": _cmd_demo,
     "lint": _cmd_lint,
     "fmt": _cmd_fmt,
+    "generate": _cmd_generate,
     "doctor": _cmd_doctor,
     "version": _cmd_version,
 }

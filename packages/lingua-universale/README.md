@@ -109,7 +109,7 @@ lu repl                # interactive REPL
 
 ## CLI Reference
 
-The `lu` command ships with 12 subcommands:
+The `lu` command ships with 14 subcommands:
 
 | Command | Description |
 |---------|-------------|
@@ -124,7 +124,9 @@ The `lu` command ships with 12 subcommands:
 | `lu lsp` | Start the LSP server over STDIO (requires `pygls`) |
 | `lu chat` | Build protocols conversationally in natural language (3 languages) |
 | `lu demo` | Run the autonomous "La Nonna" demo with typewriter effect |
-| `lu version` | Show version and module count |
+| `lu generate <target> <file>` | Generate Python/TypeScript/JSON Schema from .lu |
+| `lu doctor` | Check system setup and dependencies |
+| `lu version` | Show version and tagline |
 
 ```bash
 # Check a file and see what was declared
@@ -207,7 +209,7 @@ Each step has editable, runnable code. No install required.
 ## Features
 
 - **33 modules**, 150+ public API symbols
-- **3696 tests**, 98% coverage, runs in ~2 seconds
+- **3867 tests**, 95% coverage, runs in ~2 seconds
 - **Zero dependencies** -- pure Python standard library
 - **Python 3.10+** including 3.13 free-threaded (thread-safe internals)
 - **Grammar**: 64 production rules, GBNF + Lark export for constrained decoding
@@ -246,7 +248,7 @@ FASE C: Il Linguaggio (compiler pipeline)
   _grammar_export.py GBNF + Lark grammar export (constrained decoding)
   _eval.py           check_source / run_source / verify_source
   _repl.py           Interactive REPL with history and error recovery
-  _cli.py            lu command: 12 subcommands (incl. chat, demo, lint, fmt)
+  _cli.py            lu command: 14 subcommands (incl. chat, demo, lint, fmt)
   _init_project.py   Project scaffolding + stdlib templates (20 protocols)
   _lint.py           10 lint rules (3 categories), single-pass AST walk
   _fmt.py            Zero-config auto-formatter (canonical style)
@@ -519,7 +521,7 @@ git clone https://github.com/rafapra3008/cervellaswarm.git
 cd cervellaswarm/packages/lingua-universale
 pip install -e ".[dev]"
 
-# Run tests (3696 tests, ~2s)
+# Run tests (3867 tests, ~2s)
 pytest
 
 # Run with coverage

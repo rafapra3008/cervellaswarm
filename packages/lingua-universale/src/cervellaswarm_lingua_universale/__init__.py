@@ -8,7 +8,7 @@ from importlib.metadata import version, PackageNotFoundError
 try:
     __version__ = version("cervellaswarm-lingua-universale")
 except PackageNotFoundError:
-    __version__ = "0.3.4"
+    __version__ = "0.4.0"
 
 # Public API re-exports for convenience.
 # Users can also import directly from submodules.
@@ -118,6 +118,19 @@ from .codegen import (
     PythonGenerator,
     generate_python,
     generate_python_multi,
+)
+from .codegen_ts import (
+    TypeScriptGenerator,
+    generate_typescript,
+)
+from .codegen_json import (
+    JSONSchemaGenerator,
+    generate_json_schema,
+)
+from ._generate import (
+    GenerateResult,
+    generate_from_file,
+    generate_from_source,
 )
 from .intent import (
     IntentParseResult,
@@ -308,6 +321,14 @@ __all__ = [
     "PythonGenerator",
     "generate_python",
     "generate_python_multi",
+    "TypeScriptGenerator",
+    "generate_typescript",
+    "JSONSchemaGenerator",
+    "generate_json_schema",
+    # Generate bridge
+    "GenerateResult",
+    "generate_from_file",
+    "generate_from_source",
     # Intent
     "IntentParseResult",
     "IntentParseError",

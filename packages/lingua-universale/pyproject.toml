@@ -10,8 +10,8 @@ build-backend = "hatchling.build"
 # ---------------------------------------------------------------------------
 [project]
 name = "cervellaswarm-lingua-universale"
-version = "0.3.4"
-description = "The first programming language designed for AI — session types, compiler, REPL, and formal verification"
+version = "0.4.0"
+description = "A verification language for AI agent protocols — session types, compiler, code generation, and formal verification"
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]

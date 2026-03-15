@@ -4,6 +4,34 @@ All notable changes to `cervellaswarm-lingua-universale` will be documented in t
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.4.0] - 2026-03-15
+
+### Added
+
+**`lu generate` -- Code Generation from .lu Files (S469)**
+- `_generate.py`: Bridge module -- `.lu → parse → ASTCompiler → Protocol → target dispatch`.
+- `codegen_ts.py` (~370 LOC): TypeScript generator.
+  - Discriminated union types for MessageKind.
+  - Role interfaces with typed `send*` methods (concrete, with receiver).
+  - Session class with `@verified` JSDoc tags.
+  - `chooseBranch()` with union of all decision types.
+  - `_safe_ts_ident()` for TypeScript reserved words.
+- `codegen_json.py` (~300 LOC): JSON Schema generator.
+  - Draft 2020-12 (aligned with MCP SEP-1613 direction).
+  - `$defs` for ProtocolStep, ProtocolChoice, ProtocolElement (discriminated via `type` field).
+  - Recursive `$ref` for nested choice (LU 1.1).
+  - `x-lu-properties`, `x-lu-version`, `x-lu-roles` extensions.
+- CLI: `lu generate <target> <file.lu> [-o output] [--dry-run]`.
+  - Targets: `python`, `typescript`/`ts`, `json-schema`/`json`.
+  - Output: stdout (default), file (`-o`), directory (`-o dir/`).
+- Public API: `generate_from_source()`, `generate_from_file()`, `GenerateResult`.
+- Exports: `TypeScriptGenerator`, `JSONSchemaGenerator`, `generate_typescript`, `generate_json_schema`.
+- 171 new tests (66 bridge + 59 TypeScript + 46 JSON Schema). All 20 stdlib protocols × 3 targets.
+
+### Fixed
+
+- `codegen.py`: `_checker` → `_session_checker` naming collision. Protocols with a role named "checker" generated broken code (P2, found by HARDTEST).
+
 ## [0.3.4] - 2026-03-15
 
 ### Added
@@ -292,6 +320,8 @@ This project follows [Semantic Versioning](https://semver.org/).
 - Frozen dataclasses with `__post_init__` validation throughout
 - Pre-computed O(1) lookup tables for MessageKind <-> PascalCase conversion
 
+[0.4.0]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.4.0
+[0.3.4]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.3.4
 [0.3.3]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.3.3
 [0.3.2]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.3.2
 [0.3.1]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.3.1
