@@ -209,3 +209,145 @@ def test_tool_lu_verify_message_history_limit():
     )))
     assert result["valid"] is False
     assert "too long" in result["error"]
+
+
+def test_tool_lu_check_properties_invalid():
+    """lu_check_properties returns error for invalid protocol."""
+    import asyncio
+    from lu_mcp_server import lu_check_properties
+
+    result = json.loads(asyncio.run(lu_check_properties("not a protocol")))
+    assert result["ok"] is False
+
+
+def test_tool_lu_check_properties_size_limit():
+    """lu_check_properties rejects oversized input."""
+    import asyncio
+    from lu_mcp_server import lu_check_properties, MAX_PROTOCOL_SIZE
+
+    huge = "x" * (MAX_PROTOCOL_SIZE + 1)
+    result = json.loads(asyncio.run(lu_check_properties(huge)))
+    assert result["ok"] is False
+    assert "exceeds maximum size" in result["error"]
+
+
+def test_tool_lu_verify_message_wrong_sender():
+    """lu_verify_message detects wrong sender (ProtocolViolation)."""
+    import asyncio
+    from lu_mcp_server import lu_verify_message
+
+    protocol = (
+        "protocol Ping:\n"
+        "    roles: a, b\n"
+        "    a asks b to ping\n"
+        "    b returns pong to a\n"
+        "    properties:\n"
+        "        always terminates\n"
+    )
+    # b should not send first -- a should
+    result = json.loads(asyncio.run(lu_verify_message(
+        protocol_text=protocol,
+        messages=[],
+        next_message={"sender": "b", "receiver": "a", "action": "returns"},
+    )))
+    assert result["valid"] is False
+    assert "violation" in result
+
+
+def test_tool_lu_verify_message_session_complete():
+    """lu_verify_message detects extra message after protocol completion."""
+    import asyncio
+    from lu_mcp_server import lu_verify_message
+
+    protocol = (
+        "protocol Ping:\n"
+        "    roles: a, b\n"
+        "    a asks b to ping\n"
+        "    b returns pong to a\n"
+        "    properties:\n"
+        "        always terminates\n"
+    )
+    # Replay full session, then try to send one more
+    result = json.loads(asyncio.run(lu_verify_message(
+        protocol_text=protocol,
+        messages=[
+            {"sender": "a", "receiver": "b", "action": "asks"},
+            {"sender": "b", "receiver": "a", "action": "returns"},
+        ],
+        next_message={"sender": "a", "receiver": "b", "action": "asks"},
+    )))
+    assert result["valid"] is False
+
+
+def test_tool_lu_load_protocol_choice():
+    """lu_load_protocol handles protocol with choice node."""
+    import asyncio
+    from lu_mcp_server import lu_load_protocol
+
+    protocol = (
+        "protocol Order:\n"
+        "    roles: client, server\n"
+        "    client asks server to order\n"
+        "    when server decides:\n"
+        "        accept:\n"
+        "            server returns receipt to client\n"
+        "        reject:\n"
+        "            server tells client to retry\n"
+        "    properties:\n"
+        "        always terminates\n"
+    )
+    result = json.loads(asyncio.run(lu_load_protocol(protocol)))
+    assert result["ok"] is True
+    assert result["protocols"][0]["has_choices"] is True
+
+
+def test_tool_lu_verify_message_action_not_string():
+    """lu_verify_message handles non-string action gracefully."""
+    import asyncio
+    from lu_mcp_server import lu_verify_message
+
+    protocol = "protocol P:\n    roles: a, b\n    a asks b to ping\n"
+    result = json.loads(asyncio.run(lu_verify_message(
+        protocol_text=protocol,
+        messages=[],
+        next_message={"sender": "a", "receiver": "b", "action": 42},
+    )))
+    assert result["valid"] is False
+    assert "string" in result["error"]
+
+
+def test_tool_lu_verify_message_none_containers():
+    """lu_verify_message handles None messages/next_message."""
+    import asyncio
+    from lu_mcp_server import lu_verify_message
+
+    protocol = "protocol P:\n    roles: a, b\n    a asks b to ping\n"
+
+    result1 = json.loads(asyncio.run(lu_verify_message(
+        protocol_text=protocol,
+        messages=None,
+        next_message={"sender": "a", "receiver": "b", "action": "asks"},
+    )))
+    assert result1["valid"] is False
+    assert "list" in result1["error"]
+
+    result2 = json.loads(asyncio.run(lu_verify_message(
+        protocol_text=protocol,
+        messages=[],
+        next_message=None,
+    )))
+    assert result2["valid"] is False
+    assert "dict" in result2["error"]
+
+
+def test_tool_lu_list_templates_case_insensitive():
+    """lu_list_templates category filter is case-insensitive."""
+    import asyncio
+    from lu_mcp_server import lu_list_templates
+
+    lower = json.loads(asyncio.run(lu_list_templates(category="security")))
+    upper = json.loads(asyncio.run(lu_list_templates(category="Security")))
+    mixed = json.loads(asyncio.run(lu_list_templates(category="SECURITY")))
+
+    assert lower["ok"] is True
+    assert lower["total"] == upper["total"] == mixed["total"]

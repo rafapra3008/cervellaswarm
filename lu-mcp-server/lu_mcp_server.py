@@ -28,7 +28,7 @@ from typing import Any
 try:
     __version__ = version("lu-mcp-server")
 except PackageNotFoundError:
-    __version__ = "0.1.0"
+    __version__ = "0.0.0-dev"
 
 from mcp.server.fastmcp import FastMCP
 
@@ -264,6 +264,16 @@ async def lu_verify_message(
     """
     if err := _check_size(protocol_text):
         return err
+    if not isinstance(messages, list):
+        return json.dumps({
+            "valid": False,
+            "error": f"messages must be a list, got {type(messages).__name__}",
+        })
+    if not isinstance(next_message, dict):
+        return json.dumps({
+            "valid": False,
+            "error": f"next_message must be a dict, got {type(next_message).__name__}",
+        })
     if len(messages) > MAX_HISTORY_LENGTH:
         return json.dumps({
             "valid": False,
@@ -304,6 +314,8 @@ async def lu_verify_message(
 
     def _make_swarm_msg(action: str) -> Any:
         """Create a minimal SwarmMessage for the given action."""
+        if not isinstance(action, str):
+            raise ValueError(f"action must be a string, got {type(action).__name__}")
         from cervellaswarm_lingua_universale.types import (  # noqa: PLC0415
             TaskRequest, MessageKind,
         )
@@ -367,33 +379,22 @@ async def lu_verify_message(
     except ValueError as exc:
         return json.dumps({"valid": False, "error": str(exc)})
 
-    # Peek at what's expected before attempting send
-    # NOTE: uses private API (_state) -- no public equivalent yet
-    try:
-        expected_step = checker._state.peek_next_step()
-    except AttributeError:
-        expected_step = None
-    expected_desc = (
-        f"{expected_step.sender} -> {expected_step.receiver} : {expected_step.message_kind.value}"
-        if expected_step else "protocol complete or at choice point"
-    )
-
     try:
         checker.send(next_sender, next_receiver, next_swarm_msg)
     except lu.ProtocolViolation as exc:
         return json.dumps({
             "valid": False,
-            "violation": str(exc),
-            "expected": exc.expected,
-            "got": exc.got,
+            "violation": str(exc)[:1000],
+            "expected": str(exc.expected)[:500] if exc.expected else None,
+            "got": str(exc.got)[:500] if exc.got else None,
             "step": exc.step,
         })
     except lu.SessionComplete as exc:
         return json.dumps({
             "valid": False,
-            "violation": str(exc),
+            "violation": str(exc)[:1000],
             "expected": "no more messages (protocol complete)",
-            "got": f"{next_sender} -> {next_receiver} : {next_action}",
+            "got": f"{next_sender[:100]} -> {next_receiver[:100]} : {next_action[:100]}",
         })
 
     # Success
@@ -647,8 +648,8 @@ async def lu_list_templates(category: str = "") -> str:
                     cat = category_dir.name
                     break
 
-        # Apply filter if provided
-        if category and cat != category:
+        # Apply filter if provided (case-insensitive)
+        if category and cat != category.lower():
             continue
 
         templates.append({
