@@ -23,6 +23,8 @@ Your AI agents talk to each other, but nothing guarantees they follow the rules.
 
 Lingua Universale (LU) is a type checker for AI agent conversations. You define the protocol, LU proves it's correct, and the runtime enforces it.
 
+[![lu-mcp-server MCP server](https://glama.ai/mcp/servers/rafapra3008/cervellaswarm/badges/card.svg)](https://glama.ai/mcp/servers/rafapra3008/cervellaswarm)
+
 ```python
 from cervellaswarm_lingua_universale import Protocol, ProtocolStep, MessageKind, SessionChecker, TaskRequest
 
