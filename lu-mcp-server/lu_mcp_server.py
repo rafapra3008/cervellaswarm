@@ -22,7 +22,13 @@ from __future__ import annotations
 
 import json
 import logging
+from importlib.metadata import version, PackageNotFoundError
 from typing import Any
+
+try:
+    __version__ = version("lu-mcp-server")
+except PackageNotFoundError:
+    __version__ = "0.1.0"
 
 from mcp.server.fastmcp import FastMCP
 
@@ -131,6 +137,7 @@ async def lu_load_protocol(protocol_text: str) -> str:
     try:
         program = parse(protocol_text)
     except Exception as exc:
+        logger.warning("Parse error in lu_load_protocol: %s", exc)
         return json.dumps({
             "ok": False,
             "error": f"Parse error: {exc}",
@@ -242,6 +249,7 @@ async def lu_verify_message(
     try:
         program = parse(protocol_text)
     except Exception as exc:
+        logger.warning("Parse error in lu_verify_message: %s", exc)
         return json.dumps({"valid": False, "error": f"Parse error: {exc}"})
 
     protocol_nodes = [
@@ -325,7 +333,11 @@ async def lu_verify_message(
         return json.dumps({"valid": False, "error": str(exc)})
 
     # Peek at what's expected before attempting send
-    expected_step = checker._state.peek_next_step()
+    # NOTE: uses private API (_state) -- no public equivalent yet
+    try:
+        expected_step = checker._state.peek_next_step()
+    except AttributeError:
+        expected_step = None
     expected_desc = (
         f"{expected_step.sender} -> {expected_step.receiver} : {expected_step.message_kind.value}"
         if expected_step else "protocol complete or at choice point"
@@ -350,7 +362,11 @@ async def lu_verify_message(
         })
 
     # Success
-    next_expected_step = checker._state.peek_next_step()
+    # NOTE: uses private API (_state) -- no public equivalent yet
+    try:
+        next_expected_step = checker._state.peek_next_step()
+    except AttributeError:
+        next_expected_step = None
     next_expected_desc = (
         f"{next_expected_step.sender} -> {next_expected_step.receiver} : {next_expected_step.message_kind.value}"
         if next_expected_step else "protocol complete"

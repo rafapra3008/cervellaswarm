@@ -16,6 +16,7 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Software Development :: Quality Assurance",
 ]
 dependencies = [
@@ -30,6 +31,7 @@ test = ["pytest>=7.0"]
 Homepage = "https://github.com/rafapra3008/cervellaswarm"
 Documentation = "https://rafapra3008.github.io/cervellaswarm/"
 Repository = "https://github.com/rafapra3008/cervellaswarm"
+Issues = "https://github.com/rafapra3008/cervellaswarm/issues"
 
 [project.scripts]
 lu-mcp-server = "lu_mcp_server:main"

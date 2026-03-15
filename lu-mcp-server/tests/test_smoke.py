@@ -11,6 +11,13 @@ def test_import():
     import lu_mcp_server  # noqa: F401
 
 
+def test_version():
+    """Package exposes __version__."""
+    from lu_mcp_server import __version__
+    assert isinstance(__version__, str)
+    assert "." in __version__
+
+
 def test_main_exists():
     """Entry point function exists."""
     from lu_mcp_server import main
@@ -83,6 +90,17 @@ def test_tool_lu_list_templates():
     result = json.loads(asyncio.run(lu_list_templates()))
     assert result["ok"] is True
     assert result["total"] == 20
+
+
+def test_tool_lu_list_templates_filtered():
+    """lu_list_templates filters by category."""
+    import asyncio
+    from lu_mcp_server import lu_list_templates
+
+    result = json.loads(asyncio.run(lu_list_templates(category="security")))
+    assert result["ok"] is True
+    assert result["total"] == 3
+    assert all(t["category"] == "security" for t in result["templates"])
 
 
 def test_tool_lu_verify_message_invalid_action():
