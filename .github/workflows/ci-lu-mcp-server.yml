@@ -1,0 +1,59 @@
+# CI Workflow for lu-mcp-server
+#
+# Runs on push/PR when package files change.
+# Python 3.10, 3.12 matrix.
+#
+# Quality is not negotiable.
+
+name: lu-mcp-server CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lu-mcp-server/**'
+      - '.github/workflows/ci-lu-mcp-server.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'lu-mcp-server/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.12']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: Install package with test deps
+        run: pip install -e ".[test]"
+        working-directory: lu-mcp-server
+
+      - name: Run tests
+        run: pytest tests/ -v --tb=short
+        working-directory: lu-mcp-server
+
+      - name: Verify build
+        run: |
+          pip install build twine
+          python -m build
+          twine check dist/*
+        working-directory: lu-mcp-server

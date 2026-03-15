@@ -74,6 +74,7 @@ PUBLIC_FILES=(
     "docs/blog"
     "playground"
     "lu-debugger"
+    "lu-mcp-server"
 )
 
 # Files/directories that must NEVER appear in public root

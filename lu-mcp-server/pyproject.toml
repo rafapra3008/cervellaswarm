@@ -23,6 +23,9 @@ dependencies = [
     "mcp[cli]>=1.0.0",
 ]
 
+[project.optional-dependencies]
+test = ["pytest>=7.0"]
+
 [project.urls]
 Homepage = "https://github.com/rafapra3008/cervellaswarm"
 Documentation = "https://rafapra3008.github.io/cervellaswarm/"
@@ -30,3 +33,6 @@ Repository = "https://github.com/rafapra3008/cervellaswarm"
 
 [project.scripts]
 lu-mcp-server = "lu_mcp_server:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

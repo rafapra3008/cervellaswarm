@@ -1,0 +1,115 @@
+# Publish lu-mcp-server to PyPI
+# Triggered on tag: lu-mcp-server-v*
+# Trusted Publisher config on PyPI: workflow=publish-lu-mcp-server.yml, environment=pypi
+# NOTE: Publish/release jobs inline due to PyPI OIDC limitation (warehouse#11096)
+
+name: Publish lu-mcp-server
+
+on:
+  push:
+    tags:
+      - 'lu-mcp-server-v[0-9]+.[0-9]+.[0-9]+'
+      - 'lu-mcp-server-v[0-9]+.[0-9]+.[0-9]+-*'
+
+concurrency:
+  group: publish-lu-mcp-server-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    uses: ./.github/workflows/_build-package.yml
+    with:
+      package_name: "lu-mcp-server"
+      package_dir: "lu-mcp-server"
+
+  publish-testpypi:
+    name: Publish to TestPyPI
+    needs: [build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha')
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/lu-mcp-server
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: lu-mcp-server-distributions
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          skip-existing: true
+          verbose: true
+
+  publish-pypi:
+    name: Publish to PyPI
+    needs: [build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: "!contains(github.ref_name, '-rc') && !contains(github.ref_name, '-beta') && !contains(github.ref_name, '-alpha')"
+    environment:
+      name: pypi
+      url: https://pypi.org/p/lu-mcp-server
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: lu-mcp-server-distributions
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          verbose: true
+
+  github-release:
+    name: Create GitHub Release
+    needs: [build, publish-pypi, publish-testpypi]
+    if: always() && needs.build.result == 'success' && (needs.publish-pypi.result == 'success' || needs.publish-testpypi.result == 'success')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v8
+        with:
+          name: lu-mcp-server-distributions
+          path: dist/
+      - name: Extract version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#lu-mcp-server-v}" >> "$GITHUB_OUTPUT"
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "lu-mcp-server ${{ steps.version.outputs.version }}"
+          body: |
+            ## lu-mcp-server ${{ steps.version.outputs.version }}
+
+            **MCP server for Lingua Universale protocol verification.**
+            Verify AI agent communication with session types -- mathematical proofs, not trust.
+
+            **Install:**
+            ```bash
+            pip install lu-mcp-server==${{ steps.version.outputs.version }}
+            ```
+
+            **Configure:**
+            ```bash
+            claude mcp add lu-mcp-server -- lu-mcp-server
+            ```
+
+            **Tools:** lu_load_protocol, lu_verify_message, lu_check_properties, lu_list_templates
+
+            **Links:**
+            - [PyPI package](https://pypi.org/project/lu-mcp-server/${{ steps.version.outputs.version }}/)
+            - [Playground](https://rafapra3008.github.io/cervellaswarm/)
+            - [Documentation](https://github.com/rafapra3008/cervellaswarm/tree/main/lu-mcp-server#readme)
+
+            ---
+            *Part of the [Lingua Universale](https://github.com/rafapra3008/cervellaswarm) ecosystem.*
+          files: dist/*
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha') }}
