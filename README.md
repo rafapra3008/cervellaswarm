@@ -5,7 +5,7 @@
 **A language for verified AI agent protocols.**
 
 [![PyPI](https://img.shields.io/pypi/v/cervellaswarm-lingua-universale.svg)](https://pypi.org/project/cervellaswarm-lingua-universale/)
-[![Tests](https://img.shields.io/badge/tests-3684_passing-brightgreen.svg)](packages/lingua-universale/)
+[![Tests](https://img.shields.io/badge/tests-3696_passing-brightgreen.svg)](packages/lingua-universale/)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Zero Dependencies](https://img.shields.io/badge/dependencies-zero-blue.svg)](packages/lingua-universale/)
 [![VS Code](https://img.shields.io/badge/VS_Code-Marketplace-blue.svg)](https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale)
@@ -110,7 +110,7 @@ Mathematical proof. Not a test that passes today and fails tomorrow.
 | **REPL** | `lu repl` for interactive exploration |
 | **Project scaffolding** | `lu init --template rag_pipeline` from 20 verified templates |
 
-31 modules. 3684 tests. Zero external dependencies. Pure Python stdlib.
+33 modules. 3696 tests. Zero external dependencies. Pure Python stdlib.
 
 ---
 
