@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "lu-mcp-server"
-version = "0.1.0"
+version = "0.1.1"
 description = "MCP server for Lingua Universale protocol verification -- verify AI agent communication with session types"
 readme = "README.md"
 license = "Apache-2.0"
