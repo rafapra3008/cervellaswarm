@@ -1,0 +1,23 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.rafapra3008/lu-mcp-server",
+  "description": "MCP server for Lingua Universale protocol verification -- verify AI agent communication with session types",
+  "title": "Lingua Universale MCP Server",
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "registryBaseUrl": "https://pypi.org",
+      "identifier": "lu-mcp-server",
+      "version": "0.1.0",
+      "runtimeHint": "uvx",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/rafapra3008/cervellaswarm",
+    "subdirectory": "lu-mcp-server"
+  }
+}
