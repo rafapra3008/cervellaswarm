@@ -3,7 +3,7 @@
 [![PyPI](https://img.shields.io/pypi/v/cervellaswarm-lingua-universale.svg)](https://pypi.org/project/cervellaswarm-lingua-universale/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org)
-[![Tests](https://img.shields.io/badge/tests-3696%20passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-3867%20passed-brightgreen.svg)](tests/)
 [![Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen.svg)](tests/)
 [![VS Code](https://img.shields.io/visual-studio-marketplace/v/cervellaswarm.lingua-universale?label=VS%20Code&color=blueviolet)](https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale)
 [![Playground](https://img.shields.io/badge/playground-try%20it%20now-blueviolet.svg)](https://rafapra3008.github.io/cervellaswarm/)
@@ -208,7 +208,7 @@ Each step has editable, runnable code. No install required.
 
 ## Features
 
-- **33 modules**, 150+ public API symbols
+- **36 modules**, 150+ public API symbols
 - **3867 tests**, 95% coverage, runs in ~2 seconds
 - **Zero dependencies** -- pure Python standard library
 - **Python 3.10+** including 3.13 free-threaded (thread-safe internals)
@@ -220,7 +220,7 @@ Each step has editable, runnable code. No install required.
 ## Architecture
 
 ```
-Lingua Universale v0.3.4 -- 33 modules, zero dependencies
+Lingua Universale v0.4.0 -- 36 modules, zero dependencies
 
 FASE A: Session Types
   types.py           14 MessageKind, 14 message dataclasses, 17 AgentRole
@@ -257,6 +257,9 @@ FASE C: Il Linguaggio (compiler pipeline)
 
 FASE D: Ecosistema
   _lsp.py            LSP server (diagnostics, lint, formatting, hover, completion, goto-def)
+  _generate.py       lu generate bridge: .lu -> Python, TypeScript, or JSON Schema
+  codegen_ts.py      TypeScript code generation (discriminated unions, @verified JSDoc)
+  codegen_json.py    JSON Schema generation (draft 2020-12, x-lu-properties)
 
 FASE E: Per Tutti (IntentBridge)
   _intent_bridge.py  NL/guided -> IntentDraft -> verified protocol (3 languages)

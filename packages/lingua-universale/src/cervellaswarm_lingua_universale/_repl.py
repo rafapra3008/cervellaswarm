@@ -31,7 +31,6 @@ Design decisions (STUDIO C3.1, S421):
 from __future__ import annotations
 
 import os
-import sys
 from dataclasses import dataclass
 from typing import Callable
 

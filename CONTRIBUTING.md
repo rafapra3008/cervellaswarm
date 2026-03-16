@@ -81,7 +81,7 @@ Looking for a place to start? These are beginner-friendly:
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
-4. Run tests: `pytest packages/lingua-universale/tests/ -x` (all 3696 must pass)
+4. Run tests: `pytest packages/lingua-universale/tests/ -x` (all 3867 must pass)
 5. Lint `.lu` files: `lu fmt --check` and `lu lint`
 6. Sign off your commits (`git commit -s -m "Add amazing feature"`)
 7. Push to your branch (`git push origin feature/amazing-feature`)

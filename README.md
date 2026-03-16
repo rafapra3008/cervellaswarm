@@ -5,10 +5,11 @@
 **A language for verified AI agent protocols.**
 
 [![PyPI](https://img.shields.io/pypi/v/cervellaswarm-lingua-universale.svg)](https://pypi.org/project/cervellaswarm-lingua-universale/)
-[![Tests](https://img.shields.io/badge/tests-3696_passing-brightgreen.svg)](packages/lingua-universale/)
+[![Tests](https://img.shields.io/badge/tests-3867_passing-brightgreen.svg)](packages/lingua-universale/)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Zero Dependencies](https://img.shields.io/badge/dependencies-zero-blue.svg)](packages/lingua-universale/)
 [![VS Code](https://img.shields.io/badge/VS_Code-Marketplace-blue.svg)](https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale)
+[![Discord](https://img.shields.io/badge/Discord-community-5865F2.svg)](https://discord.gg/bvUBuejXxV)
 
 [**Try it in your browser**](https://rafapra3008.github.io/cervellaswarm/) -- no install needed.
 [**Watch AI agents live**](https://lu-debugger.fly.dev/) -- 3 agents on a verified protocol.
