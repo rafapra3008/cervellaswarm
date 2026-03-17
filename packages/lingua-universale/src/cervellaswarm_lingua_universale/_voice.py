@@ -197,7 +197,10 @@ def _record_audio(
     if not chunks:
         return np.array([], dtype="float32")
 
-    return np.concatenate(chunks).flatten()
+    try:
+        return np.concatenate(chunks).flatten()
+    finally:
+        chunks.clear()  # free audio frames promptly
 
 
 def _transcribe(

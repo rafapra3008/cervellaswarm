@@ -3,10 +3,69 @@
 
 /**
  * Lingua Universale Playground - Preloaded Examples
- * Preloaded examples: 4 tutorials + 3 standard library protocols.
+ * Preloaded examples: 1 violation demo + 4 tutorials + 3 standard library protocols.
  */
 
 const LU_EXAMPLES = [
+  {
+    id: "violation",
+    label: "Violation Demo",
+    description: "Protocol with a property violation -- click Verify to see it caught!",
+    code: `type Priority = Critical | High | Normal | Low
+
+type DeployResult =
+    success: Boolean
+    log: List[String]
+    duration: Number
+
+agent Developer:
+    role: developer
+    trust: standard
+    accepts: TaskRequest
+    produces: TaskResult
+    requires: code.ready
+    ensures: code.reviewed
+
+agent Reviewer:
+    role: reviewer
+    trust: trusted
+    accepts: AuditRequest
+    produces: AuditVerdict
+    requires: code.submitted
+    ensures: verdict.justified
+
+agent Deployer:
+    role: deployer
+    trust: verified
+    accepts: TaskRequest
+    produces: TaskResult
+    requires: approval.granted
+    ensures: deploy.safe
+
+protocol SafeDeploy:
+    roles: developer, reviewer, deployer
+
+    developer asks reviewer to verify code
+    reviewer returns verdict to developer
+
+    when reviewer decides:
+        approve:
+            developer asks deployer to do deployment
+            deployer returns result to developer
+        reject:
+            reviewer tells developer revise code
+
+    # BUG: developer bypasses review and approves their own code!
+    developer returns verdict to deployer
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+        developer cannot send audit_verdict
+`,
+  },
+
   {
     id: "hello",
     label: "Hello World",

@@ -1,0 +1,139 @@
+name: "LU Protocol Checker"
+description: "Verify, lint, and audit Lingua Universale (.lu) protocol files in CI"
+author: "CervellaSwarm"
+
+branding:
+  icon: "check-circle"
+  color: "green"
+
+inputs:
+  command:
+    description: "Command to run: verify, lint, fmt-check, mcp-audit, or all"
+    required: false
+    default: "all"
+  paths:
+    description: "Space-separated paths to .lu files or directories"
+    required: false
+    default: "."
+  version:
+    description: "Package version to install (e.g., '0.4.0'). Empty = latest."
+    required: false
+    default: ""
+  manifest:
+    description: "Path to MCP manifest JSON (only for mcp-audit command)"
+    required: false
+    default: ""
+
+outputs:
+  result:
+    description: "Overall result: pass or fail"
+    value: ${{ steps.run.outputs.result }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.11"
+        cache: "pip"
+
+    - name: Install Lingua Universale
+      shell: bash
+      env:
+        LU_VERSION: ${{ inputs.version }}
+      run: |
+        if [ -n "$LU_VERSION" ]; then
+          pip install "cervellaswarm-lingua-universale==$LU_VERSION"
+        else
+          pip install cervellaswarm-lingua-universale
+        fi
+
+    - name: Register problem matcher
+      shell: bash
+      run: echo "::add-matcher::${{ github.action_path }}/lu-matcher.json"
+
+    - name: Run LU checks
+      id: run
+      shell: bash
+      env:
+        LU_COMMAND: ${{ inputs.command }}
+        LU_PATHS: ${{ inputs.paths }}
+        LU_MANIFEST: ${{ inputs.manifest }}
+      run: |
+        EXIT=0
+
+        # Discover .lu files from paths (for commands that need file-by-file)
+        discover_lu_files() {
+          for p in $LU_PATHS; do
+            if [ -f "$p" ] && [[ "$p" == *.lu ]]; then
+              echo "$p"
+            elif [ -d "$p" ]; then
+              find "$p" -name "*.lu" -not -type l | sort
+            fi
+          done
+        }
+
+        run_lint() {
+          echo "::group::lu lint"
+          lu lint $LU_PATHS || EXIT=1
+          echo "::endgroup::"
+        }
+
+        run_fmt_check() {
+          echo "::group::lu fmt --check"
+          lu fmt --check $LU_PATHS || EXIT=1
+          echo "::endgroup::"
+        }
+
+        run_verify() {
+          echo "::group::lu verify"
+          local files
+          files=$(discover_lu_files)
+          if [ -z "$files" ]; then
+            echo "No .lu files found in: $LU_PATHS"
+            EXIT=1
+          else
+            for f in $files; do
+              lu verify "$f" || EXIT=1
+            done
+          fi
+          echo "::endgroup::"
+        }
+
+        run_mcp_audit() {
+          if [ -n "$LU_MANIFEST" ]; then
+            echo "::group::lu mcp-audit"
+            lu mcp-audit --manifest "$LU_MANIFEST" || EXIT=1
+            echo "::endgroup::"
+          fi
+        }
+
+        case "$LU_COMMAND" in
+          lint)       run_lint ;;
+          verify)     run_verify ;;
+          fmt-check)  run_fmt_check ;;
+          mcp-audit)  run_mcp_audit ;;
+          all)
+            run_fmt_check
+            run_lint
+            run_verify
+            run_mcp_audit
+            ;;
+          *)
+            echo "::error::Unknown command: $LU_COMMAND"
+            EXIT=1
+            ;;
+        esac
+
+        if [ $EXIT -eq 0 ]; then
+          echo "result=pass" >> $GITHUB_OUTPUT
+        else
+          echo "result=fail" >> $GITHUB_OUTPUT
+        fi
+        exit $EXIT
+
+    - name: Remove problem matcher
+      if: always()
+      shell: bash
+      run: echo "::remove-matcher owner=lu-lint::"

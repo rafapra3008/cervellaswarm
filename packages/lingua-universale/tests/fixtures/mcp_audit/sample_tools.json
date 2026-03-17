@@ -1,0 +1,74 @@
+{
+  "server_name": "my-database-server",
+  "tools": [
+    {
+      "name": "connect_db",
+      "description": "Connect to the database. Must be called before any other operation.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "connection_string": {"type": "string", "description": "Database connection URI"}
+        },
+        "required": ["connection_string"]
+      }
+    },
+    {
+      "name": "create_user",
+      "description": "Create a new user in the database.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string"},
+          "email": {"type": "string"}
+        },
+        "required": ["name", "email"]
+      }
+    },
+    {
+      "name": "get_user",
+      "description": "Get a user by ID.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "user_id": {"type": "string", "description": "The user ID returned by create_user"}
+        },
+        "required": ["user_id"]
+      }
+    },
+    {
+      "name": "update_user",
+      "description": "Update an existing user's information.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "user_id": {"type": "string"},
+          "name": {"type": "string"},
+          "email": {"type": "string"}
+        },
+        "required": ["user_id"]
+      }
+    },
+    {
+      "name": "delete_user",
+      "description": "Delete a user permanently.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "user_id": {"type": "string"}
+        },
+        "required": ["user_id"]
+      }
+    },
+    {
+      "name": "list_users",
+      "description": "List all users with optional filtering.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "limit": {"type": "integer", "description": "Max results"},
+          "offset": {"type": "integer"}
+        }
+      }
+    }
+  ]
+}

@@ -3,13 +3,13 @@
 [![PyPI](https://img.shields.io/pypi/v/cervellaswarm-lingua-universale.svg)](https://pypi.org/project/cervellaswarm-lingua-universale/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org)
-[![Tests](https://img.shields.io/badge/tests-3867%20passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-3920%20passed-brightgreen.svg)](tests/)
 [![Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen.svg)](tests/)
 [![VS Code](https://img.shields.io/visual-studio-marketplace/v/cervellaswarm.lingua-universale?label=VS%20Code&color=blueviolet)](https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale)
 [![Playground](https://img.shields.io/badge/playground-try%20it%20now-blueviolet.svg)](https://rafapra3008.github.io/cervellaswarm/)
 [![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)]()
 
-**The first protocol verification language designed for AI. By AI.**
+**The first protocol verification language for AI agents.**
 
 Think of it as **SQL for AI protocols** -- a focused, declarative language for defining
 and verifying how agents communicate. Grammar, compiler, REPL, LSP server, and formal
@@ -21,6 +21,37 @@ pip install cervellaswarm-lingua-universale
 
 > **No install needed?** [Try it in your browser](https://rafapra3008.github.io/cervellaswarm/) --
 > write and run LU code in seconds, powered by Pyodide (Python in WebAssembly).
+
+---
+
+## Getting Started in 5 Minutes
+
+```bash
+# 1. Install (zero dependencies, ~2s)
+pip install cervellaswarm-lingua-universale
+
+# 2. Create a protocol from a template
+lu init agent_delegation --template agent_delegation
+cd agent_delegation/
+
+# 3. Verify it -- all properties should PROVE
+lu verify agent_delegation.lu
+# always_terminates: PROVED
+# no_deadlock: PROVED
+
+# 4. Break it -- swap two lines to violate ordering
+# (edit agent_delegation.lu: move "worker returns result" before "supervisor asks worker")
+
+# 5. Verify again -- violation CAUGHT at compile time
+lu verify agent_delegation.lu
+# no_deadlock: VIOLATED - worker sends before receiving task
+
+# 6. Generate typed Python code from the correct protocol
+lu generate python agent_delegation.lu -o ./generated/
+# Generated: generated/agentdelegation.py (python, AgentDelegation)
+```
+
+Like mypy, LU is **incremental** -- verify one critical protocol today, the rest can wait.
 
 ---
 
@@ -109,7 +140,7 @@ lu repl                # interactive REPL
 
 ## CLI Reference
 
-The `lu` command ships with 14 subcommands:
+The `lu` command ships with 15 subcommands:
 
 | Command | Description |
 |---------|-------------|
@@ -125,6 +156,7 @@ The `lu` command ships with 14 subcommands:
 | `lu chat` | Build protocols conversationally in natural language (3 languages) |
 | `lu demo` | Run the autonomous "La Nonna" demo with typewriter effect |
 | `lu generate <target> <file>` | Generate Python/TypeScript/JSON Schema from .lu |
+| `lu mcp-audit` | Audit MCP server protocols for safety violations (`--manifest`, `--json`) |
 | `lu doctor` | Check system setup and dependencies |
 | `lu version` | Show version and tagline |
 
@@ -209,7 +241,7 @@ Each step has editable, runnable code. No install required.
 ## Features
 
 - **36 modules**, 150+ public API symbols
-- **3867 tests**, 95% coverage, runs in ~2 seconds
+- **3920 tests**, 95% coverage, runs in ~2 seconds
 - **Zero dependencies** -- pure Python standard library
 - **Python 3.10+** including 3.13 free-threaded (thread-safe internals)
 - **Grammar**: 64 production rules, GBNF + Lark export for constrained decoding
@@ -220,7 +252,7 @@ Each step has editable, runnable code. No install required.
 ## Architecture
 
 ```
-Lingua Universale v0.4.0 -- 36 modules, zero dependencies
+Lingua Universale v0.5.0 -- 36 modules, zero dependencies
 
 FASE A: Session Types
   types.py           14 MessageKind, 14 message dataclasses, 17 AgentRole
@@ -248,7 +280,7 @@ FASE C: Il Linguaggio (compiler pipeline)
   _grammar_export.py GBNF + Lark grammar export (constrained decoding)
   _eval.py           check_source / run_source / verify_source
   _repl.py           Interactive REPL with history and error recovery
-  _cli.py            lu command: 14 subcommands (incl. chat, demo, lint, fmt)
+  _cli.py            lu command: 15 subcommands (incl. mcp-audit, chat, lint, fmt)
   _init_project.py   Project scaffolding + stdlib templates (20 protocols)
   _lint.py           10 lint rules (3 categories), single-pass AST walk
   _fmt.py            Zero-config auto-formatter (canonical style)
@@ -454,24 +486,22 @@ and AI agent protocols. Every protocol parses and verifies to PROVED.
 
 ## How It Compares
 
-| Feature | AutoGen | CrewAI | LangGraph | **Lingua Universale** |
-|---------|---------|--------|-----------|----------------------|
-| Typed messages | No | No | No | **Yes** (14 message types) |
-| Protocol enforcement | No | No | No | **Yes** (runtime checker) |
-| Formal DSL + compiler | No | No | No | **Yes** (64 grammar rules) |
-| Standard library | No | No | No | **Yes** (20 verified protocols) |
-| Protocol observability | No | No | Partial | **Yes** (6 event types) |
-| Lean 4 verification | No | No | No | **Yes** (9 properties) |
-| Confidence types | No | No | No | **Yes** (`Confident[T]`) |
-| Trust composition | No | No | No | **Yes** (transitive) |
-| Linter + Formatter | No | No | No | **Yes** (10 rules, zero-config fmt) |
-| REPL + LSP (hover, completion, goto-def) | No | No | No | **Yes** |
-| NL protocol building (chat) | No | No | No | **Yes** (3 languages) |
-| Voice input | No | No | No | **Yes** (local STT) |
-| Browser playground | No | No | No | **Yes** (Pyodide, $0) |
-| Interactive tutorial | No | No | No | **Yes** (24 steps) |
-| Constrained decoding export | No | No | No | **Yes** (GBNF + Lark) |
-| External dependencies | Many | Many | Many | **Zero** |
+LU sits at the intersection of protocol verification and agent development:
+
+| Feature | Scribble | TLA+ / SPIN | TypeSpec | **Lingua Universale** |
+|---------|----------|-------------|----------|----------------------|
+| **Focus** | Session types (academic) | Model checking (general) | API descriptions | **Agent protocols** |
+| Runtime enforcement | No (spec only) | No (model check only) | No | **Yes** (SessionChecker) |
+| Formal proofs | Type checking | Model checking | No | **Yes** (Lean 4, 9 properties) |
+| Code generation | No | No | Yes (HTTP clients) | **Yes** (Python + TS + JSON Schema) |
+| Agent-specific types | No | No | No | **Yes** (`Confident[T]`, trust tiers) |
+| Linter + Formatter | No | No | Yes | **Yes** (10 rules, zero-config fmt) |
+| LSP + IDE | Partial (Eclipse) | VS Code plugin | Yes | **Yes** (hover, completion, goto-def) |
+| Learning curve | Academic | Steep (temporal logic) | Medium | **Low** (reads like pseudocode) |
+| Dependencies | Java | Java / TLC | Node.js | **Zero** (pure Python stdlib) |
+| Browser playground | No | No | Yes | **Yes** (Pyodide, $0 hosting) |
+
+**Why not AutoGen / CrewAI / LangGraph?** Those are agent *frameworks* -- they help you build agents. LU is a *verification layer* -- it proves your agents communicate correctly. They're complementary: use LU to define the protocol, use any framework to implement the agents.
 
 ---
 
@@ -517,6 +547,29 @@ audit flows that don't exist in traditional distributed systems.
 
 ---
 
+## CI Integration
+
+```yaml
+# .github/workflows/lu-check.yml
+on:
+  push:
+    paths: ["**/*.lu"]
+
+jobs:
+  lu-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - run: pip install cervellaswarm-lingua-universale
+      - run: lu lint protocols/
+      - run: lu verify protocols/
+```
+
+---
+
 ## Development
 
 ```bash
@@ -524,7 +577,7 @@ git clone https://github.com/rafapra3008/cervellaswarm.git
 cd cervellaswarm/packages/lingua-universale
 pip install -e ".[dev]"
 
-# Run tests (3867 tests, ~2s)
+# Run tests (3920 tests, ~2s)
 pytest
 
 # Run with coverage

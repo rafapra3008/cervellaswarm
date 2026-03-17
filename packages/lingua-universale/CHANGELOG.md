@@ -4,6 +4,50 @@ All notable changes to `cervellaswarm-lingua-universale` will be documented in t
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.5.0] - 2026-03-17
+
+### Added
+
+**`lu mcp-audit` -- MCP Server Protocol Auditing (S479-S480)**
+- `_mcp_audit.py` (~530 LOC): Audit MCP servers for protocol safety violations.
+  - Heuristic inference engine: categorizes tools (LIFECYCLE/CRUD/CLEANUP),
+    infers ordering from names + schemas + descriptions, detects cycles.
+  - Generates `.lu` protocol automatically, verifies with `verify_source()`.
+  - Terminal report (colored) + `--json` + `--save-lu` output modes.
+  - Word-boundary matching for short tool names (avoids false positives).
+  - Digit-prefixed tool names sanitized (`"2fast"` → `"_2fast"`).
+  - Numeric server names handled (`"3rd-party"` → `"Mcp3RdPartyApi"`).
+- CLI: `lu mcp-audit --manifest tools.json [--json] [--save-lu out.lu]`.
+- 53 tests (manifest loading, categorization, ordering inference, cycle
+  detection, .lu generation, full audit pipeline, edge cases, CLI error handling).
+- Zero competitors verify sequence + formal properties on MCP servers.
+- Demo fixtures: `filesystem_server.json` (Anthropic, 11 tools) + `lu_mcp_server.json` (dog-fooding).
+
+**GitHub Action for CI Integration (S480)**
+- `.github/actions/lu-action/`: Composite GitHub Action with problem matcher.
+- Supports: `lint`, `verify`, `fmt-check`, `mcp-audit`, `all` commands.
+- Problem matcher converts `lu lint` output to inline GitHub annotations.
+- Shell injection safe (env vars, not direct interpolation).
+- CI Integration section added to README with copy-paste workflow example.
+
+**LLM One-Shot Test (S480)**
+- `examples/payment_auth.lu`: 3-agent payment protocol written in 1 shot.
+- 4/4 properties PASSED (3 proved, 1 skipped). Full pipeline verified.
+- Documented in `docs/LLM_ONE_SHOT_TEST.md`.
+
+### Fixed
+
+- **P1**: `NameError: json not defined` when `lu mcp-audit --manifest` fails to find file.
+- **P2**: `lu init /absolute/path` now extracts basename as project name.
+- **P2**: Silent `except (KeyError, ValueError): pass` in `_eval.py` -- added logging (lesson S442).
+- **P2**: Unused imports removed (`field`, `Any` in `_mcp_audit.py`).
+- **P2**: Separator width capped at 80 chars in terminal output.
+
+### Changed
+
+- HN Response Playbook: 18 → 27 Q&A (added mcp-audit, awesome-mcp-servers, performance, CI, LLM, annotations, adoption, buf comparison).
+- Test count: 3867 → 3920 (+53 tests).
+
 ## [0.4.0] - 2026-03-15
 
 ### Added
@@ -320,6 +364,7 @@ This project follows [Semantic Versioning](https://semver.org/).
 - Frozen dataclasses with `__post_init__` validation throughout
 - Pre-computed O(1) lookup tables for MessageKind <-> PascalCase conversion
 
+[0.5.0]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.5.0
 [0.4.0]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.4.0
 [0.3.4]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.3.4
 [0.3.3]: https://github.com/rafapra3008/cervellaswarm/releases/tag/lingua-universale-v0.3.3

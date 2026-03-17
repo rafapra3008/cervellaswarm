@@ -1,0 +1,50 @@
+{
+  "server_name": "lu-mcp-server",
+  "tools": [
+    {
+      "name": "lu_load_protocol",
+      "description": "Load and parse a Lingua Universale protocol. Must be called before verify_message or check_properties. Returns parsed protocol summary with roles, steps, and properties.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "protocol_text": {"type": "string", "description": "The .lu protocol source text to load"}
+        },
+        "required": ["protocol_text"]
+      }
+    },
+    {
+      "name": "lu_verify_message",
+      "description": "Verify whether a message is valid in the context of an ongoing session. Requires lu_load_protocol to have been called first. Replays the existing message history against the protocol, then checks whether next_message is the expected next step.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "protocol_text": {"type": "string", "description": "Full .lu protocol definition text"},
+          "messages": {"type": "array", "items": {"type": "object"}, "description": "List of already-sent messages, each with sender, receiver, action"},
+          "next_message": {"type": "object", "description": "The message to validate, same format as messages"}
+        },
+        "required": ["protocol_text", "messages", "next_message"]
+      }
+    },
+    {
+      "name": "lu_check_properties",
+      "description": "Check all declared properties of a protocol. Returns PROVED or VIOLATED for each property with evidence.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "protocol_text": {"type": "string", "description": "The .lu protocol source to verify"}
+        },
+        "required": ["protocol_text"]
+      }
+    },
+    {
+      "name": "lu_list_templates",
+      "description": "List available protocol templates from the standard library. Optionally filter by category.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "category": {"type": "string", "description": "Filter by category (communication, data, business, ai_ml, security)", "default": ""}
+        }
+      }
+    }
+  ]
+}

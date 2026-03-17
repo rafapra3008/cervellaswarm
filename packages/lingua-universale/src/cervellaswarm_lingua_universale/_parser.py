@@ -424,28 +424,32 @@ class Parser:
                 line=tok.line,
                 col=tok.col,
             )
-        self._expect_ident("when")
-        decider_tok = self._expect_ident()
-        self._expect_ident("decides")
-        self._expect(TokKind.COLON)
-        self._expect(TokKind.NEWLINE)
-        self._expect(TokKind.INDENT)
+        try:
+            self._expect_ident("when")
+            decider_tok = self._expect_ident()
+            self._expect_ident("decides")
+            self._expect(TokKind.COLON)
+            self._expect(TokKind.NEWLINE)
+            self._expect(TokKind.INDENT)
 
-        branches: list[BranchNode] = []
-        while not self._at(TokKind.DEDENT) and not self._at(TokKind.EOF):
-            self._skip_newlines()
-            if self._at(TokKind.DEDENT) or self._at(TokKind.EOF):
-                break
-            branches.append(self._parse_branch())
+            branches: list[BranchNode] = []
+            while not self._at(TokKind.DEDENT) and not self._at(TokKind.EOF):
+                self._skip_newlines()
+                if self._at(TokKind.DEDENT) or self._at(TokKind.EOF):
+                    break
+                branches.append(self._parse_branch())
 
-        self._expect(TokKind.DEDENT)
+            self._expect(TokKind.DEDENT)
 
-        if not branches:
-            raise ParseError(
-                "choice must have at least one branch",
-                line=decider_tok.line,
-                col=decider_tok.col,
-            )
+            if not branches:
+                raise ParseError(
+                    "choice must have at least one branch",
+                    line=decider_tok.line,
+                    col=decider_tok.col,
+                )
+        except Exception:
+            self._choice_depth -= 1
+            raise
 
         self._choice_depth -= 1
         return ChoiceNode(

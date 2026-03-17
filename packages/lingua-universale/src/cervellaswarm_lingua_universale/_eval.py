@@ -15,7 +15,10 @@ are captured in the result.  This makes them safe for CLI and REPL use.
 
 from __future__ import annotations
 
+import logging
 import types
+
+_log = logging.getLogger(__name__)
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -314,8 +317,10 @@ def _safe_check_properties(protocol, spec):
     # Try full batch first (fast path)
     try:
         return check_properties(protocol, spec)
-    except (KeyError, ValueError):
-        pass
+    except (KeyError, ValueError) as exc:
+        # Fallback to per-property checking (some params may not resolve).
+        # Log to avoid silent swallowing (lesson: S442 silent except bug).
+        _log.debug("Batch check_properties failed, falling back: %s", exc)
 
     # Slow path: check one property at a time
     results: list[PropertyResult] = []
@@ -351,8 +356,6 @@ def _protocol_node_to_runtime(node: ProtocolNode):
     from .protocols import Protocol, ProtocolChoice, ProtocolStep
     from .types import MessageKind
 
-    action_to_kind = _action_to_kind_map()
-
     def _convert_elements(items):
         """Recursively convert AST step/choice nodes to runtime elements."""
         result: list[ProtocolStep | ProtocolChoice] = []
@@ -365,7 +368,7 @@ def _protocol_node_to_runtime(node: ProtocolNode):
                     ProtocolChoice(decider=item.decider, branches=branches),
                 )
             elif hasattr(item, "sender"):
-                kind = action_to_kind.get(item.action, MessageKind.TASK_REQUEST)
+                kind = _infer_kind_from_step(item)
                 result.append(ProtocolStep(
                     sender=item.sender,
                     receiver=item.receiver,
@@ -434,17 +437,55 @@ def _ast_properties_to_spec(node: ProtocolNode):
     )
 
 
-def _action_to_kind_map() -> dict[str, object]:
-    """Return the shared action-verb → MessageKind mapping (lazy import)."""
+def _infer_kind_from_step(step) -> object:
+    """Infer MessageKind from a parsed step, matching _compiler.py logic.
+
+    Must mirror ASTCompiler._step_to_message_kind() so that verify_source
+    and the compiler agree on message kinds.  Without payload-aware
+    inference, property checks on audit_verdict, plan_request, etc.
+    would silently pass even when violated.
+    """
     from .types import MessageKind
 
-    return {
-        "asks": MessageKind.TASK_REQUEST,
-        "returns": MessageKind.TASK_RESULT,
-        "sends": MessageKind.DM,
-        "tells": MessageKind.BROADCAST,
-        "proposes": MessageKind.PLAN_PROPOSAL,
-    }
+    action = step.action
+    payload = step.payload.lower() if step.payload else ""
+
+    if action == "asks":
+        if any(w in payload for w in ("verify", "audit", "check")):
+            return MessageKind.AUDIT_REQUEST
+        if "plan" in payload:
+            return MessageKind.PLAN_REQUEST
+        if any(w in payload for w in ("research", "search")):
+            return MessageKind.RESEARCH_QUERY
+        return MessageKind.TASK_REQUEST
+
+    if action == "returns":
+        if any(w in payload for w in ("verdict", "audit")):
+            return MessageKind.AUDIT_VERDICT
+        if any(w in payload for w in ("plan", "proposal")):
+            return MessageKind.PLAN_PROPOSAL
+        if any(w in payload for w in ("report", "research")):
+            return MessageKind.RESEARCH_REPORT
+        return MessageKind.TASK_RESULT
+
+    if action == "tells":
+        if "decision" in payload:
+            return MessageKind.PLAN_DECISION
+        return MessageKind.DM
+
+    if action == "proposes":
+        return MessageKind.PLAN_PROPOSAL
+
+    if action == "sends":
+        if "shutdown" in payload:
+            return MessageKind.SHUTDOWN_REQUEST
+        if "context" in payload:
+            return MessageKind.CONTEXT_INJECT
+        if "broadcast" in payload:
+            return MessageKind.BROADCAST
+        return MessageKind.DM
+
+    return MessageKind.DM
 
 
 def _protocol_node_to_lean4(node: ProtocolNode) -> str:

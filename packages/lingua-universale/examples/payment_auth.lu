@@ -1,0 +1,31 @@
+type PaymentResult = Approved | Declined | Fraud
+
+agent Gateway:
+    role: gateway
+    trust: verified
+    accepts: PaymentRequest
+    produces: PaymentResult
+
+agent AuthService:
+    role: auth
+    trust: verified
+
+agent Merchant:
+    role: merchant
+    trust: standard
+
+protocol SecurePayment:
+    roles: merchant, auth, gateway
+
+    merchant asks auth to verify_identity
+    auth returns credentials to merchant
+    merchant asks gateway to charge_card
+    gateway returns payment_result to merchant
+    merchant asks gateway to send_receipt
+    gateway returns confirmation to merchant
+
+    properties:
+        always terminates
+        no deadlock
+        all roles participate
+        auth before gateway

@@ -5,7 +5,7 @@
 **A language for verified AI agent protocols.**
 
 [![PyPI](https://img.shields.io/pypi/v/cervellaswarm-lingua-universale.svg)](https://pypi.org/project/cervellaswarm-lingua-universale/)
-[![Tests](https://img.shields.io/badge/tests-3867_passing-brightgreen.svg)](packages/lingua-universale/)
+[![Tests](https://img.shields.io/badge/tests-3920_passing-brightgreen.svg)](packages/lingua-universale/)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Zero Dependencies](https://img.shields.io/badge/dependencies-zero-blue.svg)](packages/lingua-universale/)
 [![VS Code](https://img.shields.io/badge/VS_Code-Marketplace-blue.svg)](https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale)
@@ -111,7 +111,7 @@ Mathematical proof. Not a test that passes today and fails tomorrow.
 | **REPL** | `lu repl` for interactive exploration |
 | **Project scaffolding** | `lu init --template rag_pipeline` from 20 verified templates |
 
-36 modules. 3867 tests. Zero external dependencies. Pure Python stdlib.
+36 modules. 3920 tests. Zero external dependencies. Pure Python stdlib.
 
 ---
 
@@ -126,9 +126,37 @@ lu fmt file.lu            # Zero-config auto-formatter
 lu chat --lang en         # Build a protocol conversationally
 lu demo --lang it         # See the La Nonna demo
 lu init --template NAME   # Scaffold from stdlib templates
+lu mcp-audit --manifest t.json  # Audit MCP server protocols
 lu repl                   # Interactive REPL
 lu lsp                    # Start LSP server
 ```
+
+---
+
+## CI Integration
+
+Add protocol verification to your GitHub Actions workflow:
+
+```yaml
+# .github/workflows/lu-check.yml
+on:
+  push:
+    paths: ["**/*.lu"]
+
+jobs:
+  lu-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - run: pip install cervellaswarm-lingua-universale
+      - run: lu lint protocols/
+      - run: lu verify protocols/
+```
+
+Exit code is non-zero on violations -- works with any CI system.
 
 ---
 

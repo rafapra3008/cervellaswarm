@@ -370,6 +370,18 @@
       box-shadow: 0 0 0 1px var(--accent-yellow);
     }
 
+    /* Verify button - outlined green */
+    .btn-verify {
+      background: transparent;
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+    }
+
+    .btn-verify:not(:disabled):hover {
+      background: rgba(166, 227, 161, 0.1);
+      box-shadow: 0 0 0 1px var(--accent-green);
+    }
+
     /* Run button - filled */
     .btn-run {
       background: linear-gradient(135deg, var(--accent-violet), var(--accent-blue));
@@ -1385,6 +1397,14 @@
       Lint
     </button>
 
+    <button class="btn btn-verify" id="btn-verify" disabled aria-label="Verify properties (formal verification)" title="Verify properties (Ctrl+Shift+V)">
+      <!-- Verify / certificate icon -->
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 16h2v2h-2v-2zm0-10h2v8h-2V7z"/>
+      </svg>
+      Verify
+    </button>
+
     <button class="btn btn-run" id="btn-run" disabled aria-label="Run code (parse, compile and execute)">
       <!-- Play icon -->
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -1609,6 +1629,7 @@ const dom = {
   exampleSelect:  $("example-select"),
   btnCheck:       $("btn-check"),
   btnLint:        $("btn-lint"),
+  btnVerify:      $("btn-verify"),
   btnRun:         $("btn-run"),
   btnClear:       $("btn-clear"),
   editorContainer:$("editor-container"),
@@ -1727,6 +1748,7 @@ async function initPyodide() {
     state.ready = true;
     dom.btnCheck.disabled = false;
     dom.btnLint.disabled = false;
+    dom.btnVerify.disabled = false;
     dom.btnRun.disabled = false;
 
     updateStatus("ready", "Ready  v" + version);
@@ -2070,6 +2092,14 @@ function initMonaco() {
         () => { if (state.ready && !state.running) handleLint(); }
       );
 
+      // Ctrl+Shift+V -> Verify
+      state.editor.addAction({
+        id: "lu-verify",
+        label: "Verify Properties",
+        keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KeyV],
+        run: () => { if (state.ready && !state.running) handleVerify(); }
+      });
+
       resolve();
     });
   });
@@ -2132,6 +2162,14 @@ function renderOutput(result, mode, elapsed) {
 
   const container = document.createElement("div");
   container.className = "result-block";
+
+  // Special rendering for verify mode
+  if (mode === "verify") {
+    renderVerification(container, result, elapsed);
+    targetArea.appendChild(container);
+    dom.outputTiming.textContent = elapsed + "ms";
+    return;
+  }
 
   if (result.ok) {
     renderSuccess(container, result, mode);
@@ -2355,6 +2393,137 @@ function renderError(container, result) {
   container.appendChild(list);
 }
 
+function renderVerification(container, result, elapsed) {
+  // Header
+  const header = document.createElement("div");
+  header.className = "result-header";
+
+  const icon = document.createElement("div");
+  icon.className = result.ok ? "result-icon ok" : "result-icon err";
+  icon.textContent = result.ok ? "✓" : "✗";
+
+  const title = document.createElement("div");
+  title.className = result.ok ? "result-title ok" : "result-title err";
+  title.textContent = result.ok
+    ? "All properties verified!"
+    : "Property violation found";
+
+  header.appendChild(icon);
+  header.appendChild(title);
+  container.appendChild(header);
+
+  // Timing chip
+  if (elapsed != null) {
+    const timing = document.createElement("div");
+    timing.className = "stats-grid";
+    const chip = document.createElement("div");
+    chip.className = "stat-chip";
+    const numSpan = document.createElement("span");
+    numSpan.className = "stat-num";
+    numSpan.textContent = elapsed;
+    chip.appendChild(numSpan);
+    chip.appendChild(document.createTextNode(" ms"));
+    timing.appendChild(chip);
+    container.appendChild(timing);
+  }
+
+  // Parse errors (if any)
+  if (!result.ok && result.errors && result.errors.length > 0) {
+    const list = document.createElement("div");
+    list.className = "error-list";
+    result.errors.forEach(msg => {
+      const item = document.createElement("div");
+      item.className = "error-item";
+      item.textContent = String(msg);
+      list.appendChild(item);
+    });
+    container.appendChild(list);
+    return;
+  }
+
+  // Verification lines
+  const verification = result.verification || [];
+  if (verification.length > 0) {
+    const verifySection = document.createElement("div");
+    verifySection.className = "verify-section";
+    verifySection.style.marginTop = "12px";
+
+    verification.forEach(line => {
+      const lineEl = document.createElement("div");
+      lineEl.style.padding = "4px 8px";
+      lineEl.style.fontFamily = "var(--font-mono)";
+      lineEl.style.fontSize = "12.5px";
+      lineEl.style.lineHeight = "1.6";
+      lineEl.style.borderRadius = "var(--radius-sm)";
+
+      const text = String(line);
+      if (text.includes("PROVED") || text.includes("VACUOUS")) {
+        lineEl.style.color = "var(--accent-green)";
+        lineEl.textContent = text.replace("PROVED", "PROVED \u2713").replace("VACUOUS", "VACUOUS \u2713");
+      } else if (text.includes("VIOLATED")) {
+        lineEl.style.color = "var(--accent-red)";
+        lineEl.style.background = "rgba(243, 139, 168, 0.07)";
+        lineEl.style.borderLeft = "3px solid var(--accent-red)";
+        lineEl.style.fontWeight = "600";
+        lineEl.textContent = text.replace("VIOLATED", "VIOLATED \u2717");
+      } else if (text.startsWith("Protocol:")) {
+        lineEl.style.color = "var(--accent-blue)";
+        lineEl.style.fontWeight = "600";
+        lineEl.style.fontSize = "13px";
+        lineEl.style.marginTop = "8px";
+        lineEl.textContent = text;
+      } else if (text.includes("PASSED") || text.includes("passed")) {
+        lineEl.style.color = result.ok ? "var(--accent-green)" : "var(--accent-yellow)";
+        lineEl.style.fontWeight = "600";
+        lineEl.style.marginTop = "6px";
+        lineEl.textContent = text;
+      } else {
+        lineEl.style.color = "var(--text-muted)";
+        lineEl.textContent = text;
+      }
+
+      verifySection.appendChild(lineEl);
+    });
+
+    container.appendChild(verifySection);
+  }
+
+  // Generated Python (collapsible) - reuse from renderSuccess
+  if (result.python_source) {
+    const pySection = document.createElement("div");
+    pySection.className = "python-section";
+
+    const toggle = document.createElement("div");
+    toggle.className = "python-toggle";
+    toggle.setAttribute("role", "button");
+    toggle.setAttribute("tabindex", "0");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.innerHTML = '<span class="toggle-arrow">&#x25B6;</span> Generated Python';
+
+    const codeDiv = document.createElement("div");
+    codeDiv.className = "python-code";
+    const code = document.createElement("code");
+    code.textContent = result.python_source;
+    codeDiv.appendChild(code);
+
+    toggle.addEventListener("click", () => {
+      const isOpen = codeDiv.classList.toggle("visible");
+      toggle.classList.toggle("open", isOpen);
+      toggle.setAttribute("aria-expanded", String(isOpen));
+    });
+    toggle.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggle.click();
+      }
+    });
+
+    pySection.appendChild(toggle);
+    pySection.appendChild(codeDiv);
+    container.appendChild(pySection);
+  }
+}
+
 function escHtml(str) {
   return String(str)
     .replace(/&/g, "&amp;")
@@ -2378,10 +2547,16 @@ async function handleRun() {
   await execLU("run");
 }
 
+async function handleVerify() {
+  if (!state.ready || state.running) return;
+  await execLU("verify");
+}
+
 async function execLU(mode) {
   state.running = true;
   dom.btnCheck.disabled = true;
   dom.btnLint.disabled = true;
+  dom.btnVerify.disabled = true;
   dom.btnRun.disabled = true;
 
   const source = state.editor.getValue();
@@ -2397,11 +2572,18 @@ from cervellaswarm_lingua_universale import check_source as _cs
 _r = _cs(${JSON.stringify(source)})
 _r
 `);
-    } else {
+    } else if (mode === "run") {
       // call run_source(source) -> EvalResult
       result = await state.pyodide.runPythonAsync(`
 from cervellaswarm_lingua_universale import run_source as _rs
 _r = _rs(${JSON.stringify(source)})
+_r
+`);
+    } else {
+      // call verify_source(source) -> EvalResult with property checking
+      result = await state.pyodide.runPythonAsync(`
+from cervellaswarm_lingua_universale import verify_source as _vs
+_r = _vs(${JSON.stringify(source)})
 _r
 `);
     }
@@ -2427,6 +2609,7 @@ _r
     state.running = false;
     dom.btnCheck.disabled = false;
     dom.btnLint.disabled = false;
+    dom.btnVerify.disabled = false;
     dom.btnRun.disabled = false;
   }
 }
@@ -2461,6 +2644,16 @@ function extractResult(proxy) {
       python_source = ps ? String(ps) : null;
     } catch (_) {}
 
+    // verification lines (from verify_source)
+    let verification = [];
+    try {
+      const rawVerify = proxy.verification;
+      if (rawVerify) {
+        verification = rawVerify.toJs ? Array.from(rawVerify.toJs()) :
+                      (Array.isArray(rawVerify) ? rawVerify : []);
+      }
+    } catch (_) {}
+
     // compiled (we keep the proxy for stats, extracted lazily in renderSuccess)
     try {
       compiled = proxy.compiled;
@@ -2471,7 +2664,7 @@ function extractResult(proxy) {
       module = proxy.module;
     } catch (_) {}
 
-    return { ok, errors, python_source, compiled, module };
+    return { ok, errors, python_source, verification, compiled, module };
   } catch (e) {
     return { ok: false, errors: [String(e)], compiled: null, python_source: null, module: null };
   }
@@ -2487,6 +2680,7 @@ async function handleLint() {
   state.running = true;
   dom.btnCheck.disabled = true;
   dom.btnRun.disabled = true;
+  dom.btnVerify.disabled = true;
   dom.btnLint.disabled = true;
 
   const source = state.editor.getValue();
@@ -2517,6 +2711,7 @@ _findings = _ls(${JSON.stringify(source)})
     state.running = false;
     dom.btnCheck.disabled = false;
     dom.btnRun.disabled = false;
+    dom.btnVerify.disabled = false;
     dom.btnLint.disabled = false;
   }
 }
@@ -2597,6 +2792,7 @@ function renderLintOutput(findings, elapsed) {
 
 dom.btnCheck.addEventListener("click", handleCheck);
 dom.btnLint.addEventListener("click", handleLint);
+dom.btnVerify.addEventListener("click", handleVerify);
 dom.btnRun.addEventListener("click", handleRun);
 
 dom.btnClear.addEventListener("click", () => {

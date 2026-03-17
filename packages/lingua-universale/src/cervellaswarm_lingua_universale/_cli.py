@@ -17,6 +17,7 @@ Subcommands::
     lu demo               Run the La Nonna demo autonomously (E.5).
     lu lsp                Start the Language Server Protocol server (STDIO).
     lu generate <t> <f>   Generate code (Python, TypeScript, JSON Schema).
+    lu mcp-audit <m>      Audit MCP server for protocol safety.
     lu doctor             Check environment and dependencies.
     lu version            Show version information.
 
@@ -168,12 +169,24 @@ def _cmd_init(args: argparse.Namespace) -> int:
         )
         return 1
 
+    # Support absolute/relative paths: extract basename as project name,
+    # use parent as target directory (e.g. "lu init /tmp/my_project")
+    name_arg = args.name
+    project_path = Path(name_arg)
+    if "/" in name_arg or "\\" in name_arg:
+        project_name = project_path.name
+        target_dir = project_path.parent
+    else:
+        project_name = name_arg
+        target_dir = None
+
     try:
         created = init_project(
-            args.name,
+            project_name,
             minimal=args.minimal,
             force=args.force,
             template=getattr(args, "template", None),
+            target_dir=target_dir,
         )
     except (ValueError, OSError) as exc:
         print(f"{_c.RED}{_c.BOLD}ERROR{_c.RESET} {exc}", file=sys.stderr)
@@ -585,6 +598,36 @@ def _cmd_generate(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_mcp_audit(args: argparse.Namespace) -> int:
+    """Audit an MCP server for protocol safety."""
+    import json as _json_mod
+    from ._mcp_audit import load_manifest, audit_tools, render_terminal, render_json
+
+    try:
+        server_name, tools = load_manifest(args.manifest)
+    except (FileNotFoundError, ValueError, _json_mod.JSONDecodeError) as exc:
+        print(f"Error loading manifest: {exc}", file=sys.stderr)
+        return 1
+
+    if not tools:
+        print("No tools found in manifest.", file=sys.stderr)
+        return 1
+
+    report = audit_tools(server_name, tools)
+
+    if args.json_output:
+        print(_json_mod.dumps(render_json(report), indent=2))
+    else:
+        print(render_terminal(report))
+
+    if args.save_lu:
+        from pathlib import Path
+        Path(args.save_lu).write_text(report.lu_source, encoding="utf-8")
+        print(f"Protocol saved to: {args.save_lu}")
+
+    return 0 if report.violated == 0 else 1
+
+
 def _cmd_doctor(args: argparse.Namespace) -> int:
     """Handle ``lu doctor``."""
     from ._doctor import run_doctor
@@ -790,6 +833,23 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Show what would be generated without writing",
     )
 
+    # lu mcp-audit
+    p_mcp_audit = subparsers.add_parser(
+        "mcp-audit", help="Audit MCP server for protocol safety",
+    )
+    p_mcp_audit.add_argument(
+        "--manifest", required=True,
+        help="Path to JSON file with MCP tool definitions",
+    )
+    p_mcp_audit.add_argument(
+        "--json", action="store_true", dest="json_output",
+        help="Output results as JSON",
+    )
+    p_mcp_audit.add_argument(
+        "--save-lu",
+        help="Save generated .lu protocol to file",
+    )
+
     # lu doctor
     subparsers.add_parser("doctor", help="Check environment and dependencies")
 
@@ -817,6 +877,7 @@ _COMMAND_HANDLERS = {
     "lint": _cmd_lint,
     "fmt": _cmd_fmt,
     "generate": _cmd_generate,
+    "mcp-audit": _cmd_mcp_audit,
     "doctor": _cmd_doctor,
     "version": _cmd_version,
 }

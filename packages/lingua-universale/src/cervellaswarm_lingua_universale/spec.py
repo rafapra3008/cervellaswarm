@@ -732,6 +732,9 @@ def _find_violating_steps(
     return violations
 
 
+_MAX_PATHS = 1000  # Safety cap: prevent exponential blowup on deeply nested choices
+
+
 def _collect_all_paths(
     elements: tuple[ProtocolElement, ...],
 ) -> list[list[ProtocolStep]]:
@@ -743,6 +746,8 @@ def _collect_all_paths(
     For a linear protocol with no choices, returns a single path.
     For a protocol with a ProtocolChoice (including nested choices),
     returns one path per branch combination.
+
+    Capped at _MAX_PATHS to prevent OOM on pathological inputs (Bug Hunt S476 P1).
     """
     # Start with one empty path
     paths: list[list[ProtocolStep]] = [[]]
@@ -763,6 +768,12 @@ def _collect_all_paths(
                         new_path = list(path)
                         new_path.extend(bp)
                         new_paths.append(new_path)
+                        if len(new_paths) >= _MAX_PATHS:
+                            break
+                    if len(new_paths) >= _MAX_PATHS:
+                        break
+                if len(new_paths) >= _MAX_PATHS:
+                    break
             paths = new_paths if new_paths else paths
 
     return paths

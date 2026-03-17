@@ -69,6 +69,42 @@ def _has_vscode_extension(extension_id: str) -> bool:
         return False
 
 
+def _check_test_suite() -> None:
+    """Try to discover tests via pytest, fall back to static count."""
+    # Try to find tests/ directory relative to package source
+    pkg_dir = os.path.dirname(os.path.abspath(__file__))
+    # Source layout: src/cervellaswarm_lingua_universale/ -> ../../tests/
+    tests_dir = os.path.normpath(os.path.join(pkg_dir, "..", "..", "tests"))
+
+    if os.path.isdir(tests_dir):
+        try:
+            result = subprocess.run(
+                [sys.executable, "-m", "pytest", "--co", "-q", tests_dir],
+                capture_output=True, text=True, timeout=30,
+            )
+            if result.returncode == 0:
+                # Parse test count from pytest --co -q output
+                total = 0
+                for line in result.stdout.strip().split("\n"):
+                    line = line.strip()
+                    # Format: "tests/test_foo.py: 42"
+                    if ": " in line and line.split(": ")[-1].isdigit():
+                        total += int(line.split(": ")[-1])
+                    # Format: "N tests/no tests collected" (older pytest)
+                    elif "test" in line:
+                        parts = line.split()
+                        if parts and parts[0].isdigit():
+                            total = int(parts[0])
+                            break
+                if total > 0:
+                    _ok("Test suite", f"{total} tests discovered")
+                    return
+        except Exception:
+            pass
+
+    _warn("Test suite", "pytest not available -- run `pytest` in source tree to verify")
+
+
 def run_doctor() -> int:
     """Run all diagnostic checks.  Returns 0 if all required checks pass."""
     from . import __version__
@@ -138,6 +174,9 @@ def run_doctor() -> int:
             _warn("Standard library", "no templates found in stdlib/")
     except ImportError:
         _warn("Standard library", "init_project module not found")
+
+    # ── Test suite ─────────────────────────────────────────────
+    _check_test_suite()
 
     # ── Optional: anthropic (for lu chat) ───────────────────────
     print(f"\n{_c.BOLD}Optional dependencies:{_c.RESET}\n")

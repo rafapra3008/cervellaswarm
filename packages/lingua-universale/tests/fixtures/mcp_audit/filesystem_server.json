@@ -1,0 +1,149 @@
+{
+  "server_name": "server-filesystem",
+  "tools": [
+    {
+      "name": "read_file",
+      "description": "Read the complete contents of a file from the file system. Only works within allowed directories.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {"type": "string", "description": "Path to the file to read"}
+        },
+        "required": ["path"]
+      }
+    },
+    {
+      "name": "read_multiple_files",
+      "description": "Read the contents of multiple files simultaneously. Failed reads for individual files won't stop the entire operation.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "paths": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Array of file paths to read"
+          }
+        },
+        "required": ["paths"]
+      }
+    },
+    {
+      "name": "write_file",
+      "description": "Create a new file or completely overwrite an existing file with new content. Use with caution as it will overwrite existing files without warning.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {"type": "string", "description": "Path where to write the file"},
+          "content": {"type": "string", "description": "Content to write to the file"}
+        },
+        "required": ["path", "content"]
+      }
+    },
+    {
+      "name": "edit_file",
+      "description": "Make line-based edits to a text file. Each edit replaces exact line sequences with new content. Returns the file content after all edits are applied.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {"type": "string", "description": "Path to the file to edit"},
+          "edits": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "oldText": {"type": "string"},
+                "newText": {"type": "string"}
+              },
+              "required": ["oldText", "newText"]
+            },
+            "description": "Array of edit operations"
+          },
+          "dryRun": {"type": "boolean", "description": "Preview changes without applying", "default": false}
+        },
+        "required": ["path", "edits"]
+      }
+    },
+    {
+      "name": "create_directory",
+      "description": "Create a new directory or ensure a directory exists. Can create multiple nested directories in one operation.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {"type": "string", "description": "Path of the directory to create"}
+        },
+        "required": ["path"]
+      }
+    },
+    {
+      "name": "list_directory",
+      "description": "Get a detailed listing of all files and directories in a specified path.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {"type": "string", "description": "Path of the directory to list"}
+        },
+        "required": ["path"]
+      }
+    },
+    {
+      "name": "directory_tree",
+      "description": "Get a recursive tree view of files and directories as a JSON structure.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {"type": "string", "description": "Root path for the tree"},
+          "depth": {"type": "integer", "description": "Maximum depth to traverse", "default": 3}
+        },
+        "required": ["path"]
+      }
+    },
+    {
+      "name": "move_file",
+      "description": "Move or rename files and directories. Can move files between directories and rename them in a single operation.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "source": {"type": "string", "description": "Source path of the file or directory"},
+          "destination": {"type": "string", "description": "Destination path"}
+        },
+        "required": ["source", "destination"]
+      }
+    },
+    {
+      "name": "search_files",
+      "description": "Recursively search for files and directories matching a pattern. Searches through all subdirectories from the starting path.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {"type": "string", "description": "Starting path for the search"},
+          "pattern": {"type": "string", "description": "Search pattern (glob format)"},
+          "excludePatterns": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Patterns to exclude from results"
+          }
+        },
+        "required": ["path", "pattern"]
+      }
+    },
+    {
+      "name": "get_file_info",
+      "description": "Retrieve detailed metadata about a file or directory including size, creation time, last modified time, permissions, and type.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {"type": "string", "description": "Path to the file or directory"}
+        },
+        "required": ["path"]
+      }
+    },
+    {
+      "name": "list_allowed_directories",
+      "description": "Returns the list of directories that this server is allowed to access.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  ]
+}

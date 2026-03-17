@@ -8,7 +8,7 @@ from importlib.metadata import version, PackageNotFoundError
 try:
     __version__ = version("cervellaswarm-lingua-universale")
 except PackageNotFoundError:
-    __version__ = "0.4.0"
+    __version__ = "0.5.0"
 
 # Public API re-exports for convenience.
 # Users can also import directly from submodules.
@@ -189,6 +189,15 @@ from ._intent_bridge import (
     NLProcessor,
     Turn,
     render_intent_source,
+)
+from ._mcp_audit import (
+    AuditReport,
+    InferredProtocol,
+    ToolDefinition,
+    audit_tools,
+    load_manifest,
+    render_json as render_audit_json,
+    render_terminal as render_audit_terminal,
 )
 from ._nl_processor import (  # anthropic imported lazily at instantiation
     ClaudeNLProcessor as ClaudeNLProcessor,

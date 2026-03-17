@@ -1,0 +1,27 @@
+{
+  "server_name": "echo-server",
+  "tools": [
+    {
+      "name": "echo",
+      "description": "Echo back the input text.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {"type": "string"}
+        },
+        "required": ["text"]
+      }
+    },
+    {
+      "name": "reverse",
+      "description": "Reverse the input text.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {"type": "string"}
+        },
+        "required": ["text"]
+      }
+    }
+  ]
+}
