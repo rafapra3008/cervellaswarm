@@ -233,3 +233,8 @@ Copyright 2025-2026 CervellaSwarm Contributors.
 [Playground](https://rafapra3008.github.io/cervellaswarm/) | [LU Debugger](https://lu-debugger.fly.dev/) | [PyPI](https://pypi.org/project/cervellaswarm-lingua-universale/) | [VS Code](https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale) | [Blog](docs/blog/from-vibecoding-to-vericoding.md) | [Colab Demo](https://colab.research.google.com/github/rafapra3008/cervellaswarm/blob/main/docs/blog/from-vibecoding-to-vericoding-demo.ipynb)
 
 </div>
+
+## Hosted deployment
+
+A hosted deployment is available on [Fronteir AI](https://fronteir.ai/mcp/rafapra3008-cervellaswarm).
+
