@@ -19,7 +19,6 @@ golden signals, AgentOps session analytics. See report:
 from __future__ import annotations
 
 import threading
-import time
 import warnings
 from contextlib import contextmanager
 from dataclasses import dataclass, field
@@ -125,7 +124,9 @@ class MonitorListener(Protocol):
     If you need I/O, use a queue + worker thread internally.
     """
 
-    def on_event(self, event: MonitorEvent) -> None: ...
+    def on_event(self, event: MonitorEvent) -> None:
+        """Handle a monitor event (implement in subclasses)."""
+        ...
 
 
 # ============================================================
@@ -375,6 +376,7 @@ class LoggingListener:
         self._logger = logging.getLogger(logger_name)
 
     def on_event(self, event: MonitorEvent) -> None:
+        """Log monitor events at appropriate severity levels."""
         if isinstance(event, ViolationOccurred):
             self._logger.warning(
                 "VIOLATION %s[%s] step %d: expected %s, got %s",
@@ -460,10 +462,12 @@ class EventCollector:
             return list(self._events)
 
     def on_event(self, event: MonitorEvent) -> None:
+        """Append the event to the internal collection."""
         with self._lock:
             self._events.append(event)
 
     def clear(self) -> None:
+        """Remove all collected events."""
         with self._lock:
             self._events.clear()
 

@@ -9,6 +9,7 @@
  */
 
 import Conf from "conf";
+import { dirname } from "node:path";
 
 interface ConfigSchema {
   apiKey: string;
@@ -139,8 +140,7 @@ export function getConfigPath(): string {
 }
 
 export function getConfigDir(): string {
-  const configPath = getConfig().path;
-  return configPath.substring(0, configPath.lastIndexOf("/"));
+  return dirname(getConfig().path);
 }
 
 // ============================================

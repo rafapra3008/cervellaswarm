@@ -307,10 +307,14 @@ async def lu_verify_message(
     # Step 2: Build a SessionChecker and replay history
     checker = lu.SessionChecker(protocol_obj, session_id="mcp-verify")
 
-    # Map action names to MessageKind via the action->kind table from _eval
-    from cervellaswarm_lingua_universale._eval import _action_to_kind_map  # noqa: PLC0415
+    # Map action names to MessageKind: both enum values and LU verbs
+    from cervellaswarm_lingua_universale.types import MessageKind  # noqa: PLC0415
 
-    action_map = _action_to_kind_map()
+    action_map = {mk.value: mk for mk in MessageKind}
+    # LU action verbs -> default MessageKind (matches parser behavior)
+    action_map.setdefault("asks", MessageKind.TASK_REQUEST)
+    action_map.setdefault("returns", MessageKind.TASK_RESULT)
+    action_map.setdefault("sends", MessageKind.DM)
 
     def _make_swarm_msg(action: str) -> Any:
         """Create a minimal SwarmMessage for the given action."""

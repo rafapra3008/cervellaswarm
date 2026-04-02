@@ -29,8 +29,10 @@ from cervellaswarm_task_orchestration.task_manager import (
     ack_received,
     ack_understood,
     get_task_status,
+    get_ack_status,
     validate_task_id,
     cleanup_task,
+    ensure_tasks_dir,
 )
 from cervellaswarm_task_orchestration.output_validator import (
     ValidationResult,
@@ -62,8 +64,10 @@ __all__ = [
     "ack_received",
     "ack_understood",
     "get_task_status",
+    "get_ack_status",
     "validate_task_id",
     "cleanup_task",
+    "ensure_tasks_dir",
     # output_validator
     "ValidationResult",
     "validate_output",

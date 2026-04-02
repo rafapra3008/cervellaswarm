@@ -24,7 +24,6 @@ from cervellaswarm_agent_templates.scaffold import (
     create_agent,
     create_shared_dna,
     create_team,
-    create_team_config,
     list_templates,
 )
 from cervellaswarm_agent_templates.validator import validate_agent

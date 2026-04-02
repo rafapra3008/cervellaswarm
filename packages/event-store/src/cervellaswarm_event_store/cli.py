@@ -15,6 +15,8 @@ Usage:
     cervella-events lessons [--agent X] [--project X] [--limit N] [--json]
     cervella-events patterns [--days N] [--min-occurrences N] [--json]
     cervella-events usage [--today] [--days N] [--project X] [--model X] [--json]
+    cervella-events budget [--set-daily N] [--set-weekly N] [--set-monthly N]
+                           [--check] [--json]
 """
 
 import argparse
@@ -34,6 +36,15 @@ def _get_version() -> str:
 
 def _print_json(obj: object) -> None:
     print(json.dumps(obj, indent=2, default=str))
+
+
+def _handle_error(e: Exception, json_mode: bool) -> None:
+    """Print error and exit. Used by all CLI subcommands."""
+    if json_mode:
+        _print_json({"status": "error", "error": str(e)})
+    else:
+        print(f"Error: {e}", file=sys.stderr)
+    sys.exit(1)
 
 
 # ------------------------------------------------------------------
@@ -68,11 +79,7 @@ def main_init(argv: "list[str] | None" = None) -> None:
         else:
             print(f"Event store initialized: {db_path}")
     except Exception as e:
-        if args.json:
-            _print_json({"status": "error", "error": str(e)})
-        else:
-            print(f"Error: {e}", file=sys.stderr)
-        sys.exit(1)
+        _handle_error(e, args.json)
 
 
 # ------------------------------------------------------------------
@@ -147,11 +154,7 @@ def main_log(argv: "list[str] | None" = None) -> None:
         else:
             print(f"Event logged: {event_id}")
     except Exception as e:
-        if args.json:
-            _print_json({"status": "error", "error": str(e)})
-        else:
-            print(f"Error: {e}", file=sys.stderr)
-        sys.exit(1)
+        _handle_error(e, args.json)
 
 
 # ------------------------------------------------------------------
@@ -222,11 +225,7 @@ def main_query(argv: "list[str] | None" = None) -> None:
                 print(f"  {ok} {ev.timestamp[:19]}  {agent_str:15}  {proj_str:15}  {desc}")
             print()
     except Exception as e:
-        if args.json:
-            _print_json({"status": "error", "error": str(e)})
-        else:
-            print(f"Error: {e}", file=sys.stderr)
-        sys.exit(1)
+        _handle_error(e, args.json)
 
 
 # ------------------------------------------------------------------
@@ -297,11 +296,7 @@ def main_stats(argv: "list[str] | None" = None) -> None:
                     print(f"    {proj:20}  {cnt:5} events")
             print()
     except Exception as e:
-        if args.json:
-            _print_json({"status": "error", "error": str(e)})
-        else:
-            print(f"Error: {e}", file=sys.stderr)
-        sys.exit(1)
+        _handle_error(e, args.json)
 
 
 # ------------------------------------------------------------------
@@ -357,11 +352,7 @@ def main_lessons(argv: "list[str] | None" = None) -> None:
                 print(f"     Confidence: {l.confidence:.2f}  Applied: {l.times_applied}")
                 print()
     except Exception as e:
-        if args.json:
-            _print_json({"status": "error", "error": str(e)})
-        else:
-            print(f"Error: {e}", file=sys.stderr)
-        sys.exit(1)
+        _handle_error(e, args.json)
 
 
 # ------------------------------------------------------------------
@@ -416,11 +407,7 @@ def main_patterns(argv: "list[str] | None" = None) -> None:
                 print(f"     Last seen: {p.last_seen[:19]}")
                 print()
     except Exception as e:
-        if args.json:
-            _print_json({"status": "error", "error": str(e)})
-        else:
-            print(f"Error: {e}", file=sys.stderr)
-        sys.exit(1)
+        _handle_error(e, args.json)
 
 
 # ------------------------------------------------------------------
@@ -499,11 +486,105 @@ def main_usage(argv: "list[str] | None" = None) -> None:
                     print(f"    {p:30}  {data['tokens']:>12,} tok  ${data['cost']:.4f}")
             print()
     except Exception as e:
+        _handle_error(e, args.json)
+
+
+# ------------------------------------------------------------------
+# budget
+# ------------------------------------------------------------------
+
+
+def main_budget(argv: "list[str] | None" = None) -> None:
+    """Manage budget thresholds and check spend alerts."""
+    parser = argparse.ArgumentParser(
+        prog="cervella-events budget",
+        description="Budget alerts -- set thresholds and check spend",
+    )
+    parser.add_argument("--set-daily", type=float, metavar="USD", help="Set daily budget (0=disable)")
+    parser.add_argument("--set-weekly", type=float, metavar="USD", help="Set weekly budget (0=disable)")
+    parser.add_argument("--set-monthly", type=float, metavar="USD", help="Set monthly budget (0=disable)")
+    parser.add_argument("--check", action="store_true", help="Check current spend vs thresholds")
+    parser.add_argument("--config-path", default=None, help="Override config file path")
+    parser.add_argument("--db-path", default=None, help="Explicit database path")
+    parser.add_argument("--json", action="store_true", help="Output as JSON")
+    args = parser.parse_args(argv)
+
+    from pathlib import Path
+    from cervellaswarm_event_store.budget import load_config, save_config, check_budget, BudgetConfig
+
+    config_path = Path(args.config_path) if args.config_path else None
+
+    # Set thresholds if any --set-* flag is given
+    if any(x is not None for x in [args.set_daily, args.set_weekly, args.set_monthly]):
+        current = load_config(config_path)
+        new_config = BudgetConfig(
+            daily=args.set_daily if args.set_daily is not None else current.daily,
+            weekly=args.set_weekly if args.set_weekly is not None else current.weekly,
+            monthly=args.set_monthly if args.set_monthly is not None else current.monthly,
+        )
+        saved_path = save_config(new_config, config_path)
         if args.json:
-            _print_json({"status": "error", "error": str(e)})
+            _print_json({"status": "saved", "path": str(saved_path), "config": {
+                "daily": new_config.daily, "weekly": new_config.weekly, "monthly": new_config.monthly,
+            }})
         else:
-            print(f"Error: {e}", file=sys.stderr)
-        sys.exit(1)
+            print(f"Budget saved to {saved_path}")
+            if new_config.daily > 0:
+                print(f"  Daily:   ${new_config.daily:.2f}")
+            if new_config.weekly > 0:
+                print(f"  Weekly:  ${new_config.weekly:.2f}")
+            if new_config.monthly > 0:
+                print(f"  Monthly: ${new_config.monthly:.2f}")
+        return
+
+    # Check or show
+    config = load_config(config_path)
+
+    if args.check or True:  # Default action is check
+        from cervellaswarm_event_store.database import EventStore
+
+        try:
+            with EventStore(db_path=args.db_path) as store:
+                daily = store.query_usage(days=1)
+                weekly = store.query_usage(days=7)
+                monthly = store.query_usage(days=30)
+
+            status = check_budget(
+                daily_cost=daily.total_cost_usd,
+                weekly_cost=weekly.total_cost_usd,
+                monthly_cost=monthly.total_cost_usd,
+                config=config,
+            )
+
+            if args.json:
+                _print_json({
+                    "any_over": status.any_over,
+                    "alerts": [
+                        {"period": a.period, "threshold": a.threshold,
+                         "actual": a.actual, "over": a.over, "percent": a.percent}
+                        for a in status.alerts
+                    ],
+                })
+            else:
+                if not status.alerts:
+                    print("No budget thresholds configured.")
+                    print("Set with: cervella-events budget --set-daily 500 --set-weekly 3000")
+                    return
+
+                print("\nBudget Status")
+                print("=" * 50)
+                for a in status.alerts:
+                    icon = "OVER" if a.over else "OK"
+                    bar_len = min(int(a.percent / 5), 20)
+                    bar = "#" * bar_len + "." * (20 - bar_len)
+                    print(f"  {a.period:8} [{bar}] {a.percent:5.1f}%  ${a.actual:.2f} / ${a.threshold:.2f}  [{icon}]")
+
+                if status.any_over:
+                    print("\n  WARNING: Budget exceeded!")
+                print()
+
+        except Exception as e:
+            _handle_error(e, args.json)
 
 
 # ------------------------------------------------------------------
@@ -531,6 +612,7 @@ def main(argv: "list[str] | None" = None) -> None:
     subparsers.add_parser("lessons", help="Show relevant lessons")
     subparsers.add_parser("patterns", help="Detect error patterns")
     subparsers.add_parser("usage", help="Show token usage and cost")
+    subparsers.add_parser("budget", help="Budget alerts and thresholds")
 
     args, remaining = parser.parse_known_args(argv)
 
@@ -542,6 +624,7 @@ def main(argv: "list[str] | None" = None) -> None:
         "lessons": main_lessons,
         "patterns": main_patterns,
         "usage": main_usage,
+        "budget": main_budget,
     }
 
     if args.command is None:

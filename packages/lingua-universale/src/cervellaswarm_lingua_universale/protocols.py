@@ -12,9 +12,9 @@ This is the HEART of the Lingua Universale.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from types import MappingProxyType
-from typing import Mapping, Optional
+from typing import Mapping
 
 from .types import MessageKind
 

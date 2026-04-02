@@ -10,7 +10,8 @@
           "path": {"type": "string", "description": "Path to the file to read"}
         },
         "required": ["path"]
-      }
+      },
+      "annotations": {"readOnlyHint": true}
     },
     {
       "name": "read_multiple_files",
@@ -25,7 +26,8 @@
           }
         },
         "required": ["paths"]
-      }
+      },
+      "annotations": {"readOnlyHint": true}
     },
     {
       "name": "write_file",
@@ -37,6 +39,11 @@
           "content": {"type": "string", "description": "Content to write to the file"}
         },
         "required": ["path", "content"]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": true
       }
     },
     {
@@ -61,6 +68,11 @@
           "dryRun": {"type": "boolean", "description": "Preview changes without applying", "default": false}
         },
         "required": ["path", "edits"]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false
       }
     },
     {
@@ -72,6 +84,11 @@
           "path": {"type": "string", "description": "Path of the directory to create"}
         },
         "required": ["path"]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true
       }
     },
     {
@@ -83,7 +100,8 @@
           "path": {"type": "string", "description": "Path of the directory to list"}
         },
         "required": ["path"]
-      }
+      },
+      "annotations": {"readOnlyHint": true}
     },
     {
       "name": "directory_tree",
@@ -95,7 +113,8 @@
           "depth": {"type": "integer", "description": "Maximum depth to traverse", "default": 3}
         },
         "required": ["path"]
-      }
+      },
+      "annotations": {"readOnlyHint": true}
     },
     {
       "name": "move_file",
@@ -107,6 +126,11 @@
           "destination": {"type": "string", "description": "Destination path"}
         },
         "required": ["source", "destination"]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false
       }
     },
     {
@@ -124,7 +148,8 @@
           }
         },
         "required": ["path", "pattern"]
-      }
+      },
+      "annotations": {"readOnlyHint": true}
     },
     {
       "name": "get_file_info",
@@ -135,7 +160,8 @@
           "path": {"type": "string", "description": "Path to the file or directory"}
         },
         "required": ["path"]
-      }
+      },
+      "annotations": {"readOnlyHint": true}
     },
     {
       "name": "list_allowed_directories",
@@ -143,7 +169,8 @@
       "inputSchema": {
         "type": "object",
         "properties": {}
-      }
+      },
+      "annotations": {"readOnlyHint": true}
     }
   ]
 }

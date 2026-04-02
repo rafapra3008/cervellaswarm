@@ -26,6 +26,8 @@ import re
 from datetime import datetime, timezone
 from typing import TYPE_CHECKING, Optional, Sequence
 
+from ._codegen_common import collect_all_steps as _collect_all_steps
+from ._codegen_common import used_message_kinds as _used_message_kinds
 from .protocols import Protocol, ProtocolChoice, ProtocolElement, ProtocolStep
 from .types import MessageKind
 
@@ -123,28 +125,6 @@ def _kind_to_literal(kind: MessageKind) -> str:
     Example: MessageKind.TASK_REQUEST -> "'task_request'"
     """
     return f"'{kind.value}'"
-
-
-def _collect_all_steps(
-    elements: Sequence[ProtocolElement],
-) -> list[ProtocolStep]:
-    """Collect all ProtocolSteps from elements, including nested choice branches."""
-    steps: list[ProtocolStep] = []
-    for elem in elements:
-        if isinstance(elem, ProtocolStep):
-            steps.append(elem)
-        elif isinstance(elem, ProtocolChoice):
-            for branch_elems in elem.branches.values():
-                steps.extend(_collect_all_steps(branch_elems))
-    return steps
-
-
-def _used_message_kinds(protocol: Protocol) -> list[MessageKind]:
-    """Collect MessageKinds used in a protocol (preserving enum order)."""
-    used: set[MessageKind] = set()
-    for step in _collect_all_steps(protocol.elements):
-        used.add(step.message_kind)
-    return [k for k in MessageKind if k in used]
 
 
 def _collect_role_steps(
@@ -390,8 +370,20 @@ class TypeScriptGenerator:
         """Generate the ProtocolSession class."""
         class_name = f"{protocol.name}Session"
         lines: list[str] = []
+        has_choice = _has_choices(protocol)
 
-        # JSDoc with @verified tags
+        self._emit_session_jsdoc(lines, protocol, properties)
+        lines.append(f"export class {class_name} {{")
+        self._emit_session_fields(lines, protocol, has_choice)
+        self._emit_session_constructor(lines, protocol, has_choice)
+        self._emit_session_send(lines, protocol, has_choice)
+        self._emit_session_choose_branch(lines, protocol, has_choice)
+        self._emit_session_accessors(lines, protocol)
+        lines.append("}")
+        lines.append("")
+        return "\n".join(lines)
+
+    def _emit_session_jsdoc(self, lines, protocol, properties):
         lines.append("/**")
         lines.append(f" * Runtime-enforced session for {protocol.name}.")
         if protocol.description:
@@ -402,28 +394,24 @@ class TypeScriptGenerator:
                 lines.append(f" * @verified {_property_display(prop)}")
         lines.append(" */")
 
-        # Class declaration
-        lines.append(f"export class {class_name} {{")
-
-        # Private fields
+    def _emit_session_fields(self, lines, protocol, has_choice):
         lines.append("  private readonly _protocol: string;")
         for role in protocol.roles:
             safe_role = _safe_ts_ident(role)
             lines.append(f"  private readonly _{safe_role}: {_to_pascal_case(safe_role)}Role;")
         lines.append("  private _step: number;")
         lines.append("  private _complete: boolean;")
-        if _has_choices(protocol):
+        if has_choice:
             lines.append("  private _branch: string | null;")
         lines.append("")
 
-        # Constructor
+    def _emit_session_constructor(self, lines, protocol, has_choice):
         lines.append("  constructor() {")
         lines.append(f"    this._protocol = '{_escape_ts_string(protocol.name)}';")
         lines.append("    this._step = 0;")
         lines.append("    this._complete = false;")
-        if _has_choices(protocol):
+        if has_choice:
             lines.append("    this._branch = null;")
-        # Build concrete role objects with send methods bound to correct receiver
         role_steps = _collect_role_steps(protocol)
         for role in protocol.roles:
             safe_role = _safe_ts_ident(role)
@@ -446,16 +434,12 @@ class TypeScriptGenerator:
         lines.append("  }")
         lines.append("")
 
-        # send method
-        has_choice = _has_choices(protocol)
+    def _emit_session_send(self, lines, protocol, has_choice):
         if has_choice:
-            lines.append("  /**")
-            lines.append("   * Send a message from sender to receiver.")
-            lines.append("   *")
-            lines.append("   * Note: Completion detection is simplified for protocols with choices.")
-            lines.append("   * It uses the shortest possible path length. For precise tracking,")
-            lines.append("   * integrate with the LU Python runtime (SessionChecker).")
-            lines.append("   */")
+            lines.extend(["  /**", "   * Send a message from sender to receiver.", "   *",
+                          "   * Note: Completion detection is simplified for protocols with choices.",
+                          "   * It uses the shortest possible path length. For precise tracking,",
+                          "   * integrate with the LU Python runtime (SessionChecker).", "   */"])
         else:
             lines.append("  /** Send a message from sender to receiver. */")
         lines.append("  send(sender: string, receiver: string, msg: ProtocolMessage): void {")
@@ -464,67 +448,62 @@ class TypeScriptGenerator:
         lines.append("    }")
         lines.append("    this._step++;")
 
-        # Generate step count for completion check
-        flat_steps = sum(
-            1 for e in protocol.elements if isinstance(e, ProtocolStep)
-        )
-        if has_choice:
-            # Find the minimum path length (flat steps + shortest branch)
-            min_branch_steps = float("inf")
-            for elem in protocol.elements:
-                if isinstance(elem, ProtocolChoice):
-                    for branch_elems in elem.branches.values():
-                        branch_step_count = len(_collect_all_steps(branch_elems))
-                        if branch_step_count < min_branch_steps:
-                            min_branch_steps = branch_step_count
-            if min_branch_steps == float("inf"):
-                min_branch_steps = 0
-            completion_steps = flat_steps + int(min_branch_steps)
-            lines.append(f"    if (this._step >= {completion_steps}) {{")
-        else:
-            lines.append(f"    if (this._step >= {flat_steps}) {{")
+        flat_steps = sum(1 for e in protocol.elements if isinstance(e, ProtocolStep))
+        completion_steps = self._calc_completion_steps(protocol, flat_steps, has_choice)
+        lines.append(f"    if (this._step >= {completion_steps}) {{")
         lines.append("      this._complete = true;")
         lines.append("    }")
         lines.append("  }")
         lines.append("")
 
-        # chooseBranch (if protocol has choices)
-        if has_choice:
-            choices = _collect_choices(protocol.elements)
-            if choices:
-                # Build union of all decision types
-                seen_types: set[str] = set()
-                type_counter_local: dict[str, int] = {}
-                all_type_names: list[str] = []
-                seen_keys: set[tuple[str, frozenset[str]]] = set()
-                for choice in choices:
-                    branch_set = frozenset(choice.branches.keys())
-                    key = (choice.decider, branch_set)
-                    if key in seen_keys:
-                        continue
-                    seen_keys.add(key)
-                    base = _to_pascal_case(choice.decider)
-                    count = type_counter_local.get(choice.decider, 0)
-                    type_counter_local[choice.decider] = count + 1
-                    tn = f"{base}Decision" if count == 0 else f"{base}Decision{count + 1}"
-                    if tn not in seen_types:
-                        seen_types.add(tn)
-                        all_type_names.append(tn)
-                union_type = " | ".join(all_type_names) if len(all_type_names) > 1 else all_type_names[0]
-                lines.append(f"  /** Choose a branch at a decision point. */")
-                lines.append(f"  chooseBranch(branch: {union_type}): void {{")
-                lines.append("    this._branch = branch;")
-                lines.append("  }")
-                lines.append("")
+    def _calc_completion_steps(self, protocol, flat_steps, has_choice):
+        if not has_choice:
+            return flat_steps
+        min_branch = float("inf")
+        for elem in protocol.elements:
+            if isinstance(elem, ProtocolChoice):
+                for branch_elems in elem.branches.values():
+                    count = len(_collect_all_steps(branch_elems))
+                    if count < min_branch:
+                        min_branch = count
+        return flat_steps + (int(min_branch) if min_branch != float("inf") else 0)
 
-        # isComplete getter
+    def _emit_session_choose_branch(self, lines, protocol, has_choice):
+        if not has_choice:
+            return
+        choices = _collect_choices(protocol.elements)
+        if not choices:
+            return
+        seen_types: set[str] = set()
+        type_counter: dict[str, int] = {}
+        all_type_names: list[str] = []
+        seen_keys: set[tuple[str, frozenset[str]]] = set()
+        for choice in choices:
+            branch_set = frozenset(choice.branches.keys())
+            key = (choice.decider, branch_set)
+            if key in seen_keys:
+                continue
+            seen_keys.add(key)
+            base = _to_pascal_case(choice.decider)
+            count = type_counter.get(choice.decider, 0)
+            type_counter[choice.decider] = count + 1
+            tn = f"{base}Decision" if count == 0 else f"{base}Decision{count + 1}"
+            if tn not in seen_types:
+                seen_types.add(tn)
+                all_type_names.append(tn)
+        union_type = " | ".join(all_type_names) if len(all_type_names) > 1 else all_type_names[0]
+        lines.append("  /** Choose a branch at a decision point. */")
+        lines.append(f"  chooseBranch(branch: {union_type}): void {{")
+        lines.append("    this._branch = branch;")
+        lines.append("  }")
+        lines.append("")
+
+    def _emit_session_accessors(self, lines, protocol):
         lines.append("  /** True when the protocol session has completed. */")
         lines.append("  get isComplete(): boolean {")
         lines.append("    return this._complete;")
         lines.append("  }")
         lines.append("")
-
-        # Role accessors
         for role in protocol.roles:
             safe_role = _safe_ts_ident(role)
             iface_name = f"{_to_pascal_case(safe_role)}Role"
@@ -533,11 +512,6 @@ class TypeScriptGenerator:
             lines.append(f"    return this._{safe_role};")
             lines.append("  }")
             lines.append("")
-
-        lines.append("}")
-        lines.append("")
-
-        return "\n".join(lines)
 
 
 # ============================================================

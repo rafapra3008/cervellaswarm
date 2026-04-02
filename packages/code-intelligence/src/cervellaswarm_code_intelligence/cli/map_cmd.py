@@ -20,10 +20,10 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python3 scripts/utils/repo_mapper.py --repo-path .
-  python3 scripts/utils/repo_mapper.py --repo-path . --budget 3000
-  python3 scripts/utils/repo_mapper.py --repo-path . --output repo_map.md
-  python3 scripts/utils/repo_mapper.py --repo-path . --filter "**/*.py"
+  python3 -m cervellaswarm_code_intelligence.cli.map_cmd --repo-path .
+  python3 -m cervellaswarm_code_intelligence.cli.map_cmd --repo-path . --budget 3000
+  python3 -m cervellaswarm_code_intelligence.cli.map_cmd --repo-path . --output repo_map.md
+  python3 -m cervellaswarm_code_intelligence.cli.map_cmd --repo-path . --filter "**/*.py"
         """
     )
 
@@ -82,7 +82,7 @@ Examples:
 
         if args.stats:
             stats = mapper.get_stats()
-            print(f"\nStatistics:")
+            print("\nStatistics:")
             print(f"  Total symbols: {stats['symbols']}")
             print(f"  Graph nodes: {stats['graph_nodes']}")
             print(f"  Graph edges: {stats['graph_edges']}")

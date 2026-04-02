@@ -422,18 +422,18 @@ if __name__ == "__main__":
         print(f"✅ Found {len(symbols)} symbols")
 
         # Build dependency graph
-        print(f"\n🔗 Building dependency graph...")
+        print("\n🔗 Building dependency graph...")
         graph = build_dependency_graph(symbols)
 
         # Show stats
         stats = graph.get_stats()
-        print(f"\nGraph Statistics:")
+        print("\nGraph Statistics:")
         print(f"  Nodes: {stats['nodes']}")
         print(f"  Edges: {stats['edges']}")
         print(f"  Isolated: {stats['isolated']}")
 
         # Compute importance
-        print(f"\n⚡ Computing importance scores...")
+        print("\n⚡ Computing importance scores...")
         graph.compute_importance()
 
         # Show top N

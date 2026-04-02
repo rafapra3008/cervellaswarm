@@ -17,7 +17,7 @@ import {
   readProjectFile,
   listProjects,
   searchSncp,
-  KNOWN_PROJECTS,
+  type SncpProject,
 } from "./reader.js";
 
 /**
@@ -34,8 +34,9 @@ export function registerSncpTools(server: McpServer): void {
       "Contains: last session summary, decisions made, next steps.",
     {
       project: z
-        .enum(KNOWN_PROJECTS)
-        .describe("Project name: cervellaswarm, miracollo, or contabilita"),
+        .string()
+        .min(1)
+        .describe("SNCP project name (e.g. cervellaswarm)"),
     },
     {
       title: "Read Project Session Context",
@@ -47,7 +48,7 @@ export function registerSncpTools(server: McpServer): void {
     async ({ project }) => {
       try {
         const { content, path } = await readProjectFile(
-          project,
+          project as SncpProject,
           "PROMPT_RIPRESA"
         );
         return {
@@ -86,8 +87,9 @@ export function registerSncpTools(server: McpServer): void {
       "Contains: current progress, open issues, technical details.",
     {
       project: z
-        .enum(KNOWN_PROJECTS)
-        .describe("Project name: cervellaswarm, miracollo, or contabilita"),
+        .string()
+        .min(1)
+        .describe("SNCP project name (e.g. cervellaswarm)"),
     },
     {
       title: "Read Project State",
@@ -187,9 +189,10 @@ export function registerSncpTools(server: McpServer): void {
     {
       query: z.string().min(1).describe("Search query (case-insensitive)"),
       project: z
-        .enum(KNOWN_PROJECTS)
+        .string()
+        .min(1)
         .optional()
-        .describe("Limit search to a specific project"),
+        .describe("Limit search to a specific project (e.g. cervellaswarm)"),
     },
     {
       title: "Search SNCP Files",
@@ -200,7 +203,7 @@ export function registerSncpTools(server: McpServer): void {
     },
     async ({ query, project }) => {
       try {
-        const results = await searchSncp(query, project);
+        const results = await searchSncp(query, project as SncpProject | undefined);
 
         if (results.length === 0) {
           return {

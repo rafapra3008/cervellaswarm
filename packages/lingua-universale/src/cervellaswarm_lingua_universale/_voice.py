@@ -212,7 +212,6 @@ def _transcribe(
 
     Returns the joined text of all segments, stripped.
     """
-    import numpy as np
 
     if len(audio) == 0:
         return ""

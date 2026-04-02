@@ -29,7 +29,6 @@ from ._ast import (
     ChoiceNode,
     ConfidenceProp,
     ExclusionProp,
-    GenericType,
     NoDeletionProp,
     NoDeadlock,
     OrderingProp,
@@ -46,7 +45,6 @@ from ._ast import (
 
 if TYPE_CHECKING:
     from ._ast import (
-        Declaration,
         Expr,
         Property,
         StepOrChoice,
@@ -238,6 +236,7 @@ class LUFormatter:
 
         sections: list[list[str]] = []
 
+        # Uses don't need blank lines between them
         if uses:
             section: list[str] = []
             for use in uses:
@@ -247,38 +246,13 @@ class LUFormatter:
                 section.append(self._format_use(use))
             sections.append(section)
 
-        if types:
-            section = []
-            for i, t in enumerate(types):
-                leading = self._drain_comments_before(t.loc.line)
-                if leading:
-                    section.append(leading)
-                section.append(self._format_type(t))
-                if i < len(types) - 1:
-                    section.append("")  # blank line between types
-            sections.append(section)
-
-        if agents:
-            section = []
-            for i, a in enumerate(agents):
-                leading = self._drain_comments_before(a.loc.line)
-                if leading:
-                    section.append(leading)
-                section.append(self._format_agent(a))
-                if i < len(agents) - 1:
-                    section.append("")  # blank line between agents
-            sections.append(section)
-
-        if protocols:
-            section = []
-            for i, p in enumerate(protocols):
-                leading = self._drain_comments_before(p.loc.line)
-                if leading:
-                    section.append(leading)
-                section.append(self._format_protocol(p))
-                if i < len(protocols) - 1:
-                    section.append("")  # blank line between protocols
-            sections.append(section)
+        for group, formatter in [
+            (types, self._format_type),
+            (agents, self._format_agent),
+            (protocols, self._format_protocol),
+        ]:
+            if group:
+                sections.append(self._format_decl_group(group, formatter))
 
         # Join sections with blank lines
         for i, sec in enumerate(sections):
@@ -297,6 +271,18 @@ class LUFormatter:
         if not result.endswith("\n"):
             result += "\n"
         return result
+
+    def _format_decl_group(self, items: list, formatter) -> list[str]:
+        """Format a group of declarations with leading comments and blank lines."""
+        section: list[str] = []
+        for i, item in enumerate(items):
+            leading = self._drain_comments_before(item.loc.line)
+            if leading:
+                section.append(leading)
+            section.append(formatter(item))
+            if i < len(items) - 1:
+                section.append("")
+        return section
 
     def _drain_comments_before(self, line: int) -> str:
         """Return all comments with line < `line`, advance index."""

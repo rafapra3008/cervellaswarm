@@ -30,7 +30,6 @@ from typing import TYPE_CHECKING
 
 from ._ast import (
     AgentNode,
-    BranchNode,
     ChoiceNode,
     ProgramNode,
     ProtocolNode,
@@ -38,7 +37,7 @@ from ._ast import (
 )
 
 if TYPE_CHECKING:
-    from ._ast import Loc, StepOrChoice
+    from ._ast import StepOrChoice
 
 
 # ============================================================
@@ -81,6 +80,7 @@ class LintContext:
     findings: list[LintFinding] = field(default_factory=list)
 
     def add(self, finding: LintFinding) -> None:
+        """Append a lint finding to this context."""
         self.findings.append(finding)
 
 

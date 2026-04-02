@@ -51,7 +51,8 @@ def git_command(args: list[str], cwd: str) -> str:
             timeout=10,
         )
         return result.stdout.strip() if result.returncode == 0 else ""
-    except Exception:
+    except Exception as e:
+        print(f"session_checkpoint: git command failed: {e}", file=sys.stderr)
         return ""
 
 
@@ -80,7 +81,7 @@ def get_git_status(cwd: str) -> str:
 def get_recent_commits(cwd: str, count: int = 5) -> str:
     """Get recent commit messages."""
     log = git_command(
-        ["log", f"--oneline", f"-{count}", "--no-decorate"], cwd
+        ["log", "--oneline", f"-{count}", "--no-decorate"], cwd
     )
     return log if log else "No commits found"
 
@@ -142,7 +143,7 @@ def main():
     """Entry point."""
     try:
         input_data = json.load(sys.stdin)
-    except Exception:
+    except (json.JSONDecodeError, ValueError):
         input_data = {}
 
     cwd = input_data.get("cwd", os.getcwd())
@@ -167,8 +168,8 @@ def main():
     try:
         state_path.parent.mkdir(parents=True, exist_ok=True)
         state_path.write_text(checkpoint + "\n", encoding="utf-8")
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"session_checkpoint: failed to write {state_path}: {e}", file=sys.stderr)
 
     print(json.dumps({"result": f"Checkpoint saved to {state_file}"}))
     return 0

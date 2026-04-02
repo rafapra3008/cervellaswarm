@@ -11,9 +11,8 @@ agent_stats: per-agent aggregated view.
 All result types are frozen dataclasses.
 """
 
-import json
 import sqlite3
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from difflib import SequenceMatcher
 from typing import Optional
@@ -229,6 +228,61 @@ def _get_lessons_scored(
     return scored[:limit]
 
 
+def _cluster_errors(
+    errors: list[dict], similarity_threshold: float
+) -> list[list[dict]]:
+    """Group errors into clusters by message similarity."""
+    processed: set[int] = set()
+    clusters: list[list[dict]] = []
+
+    for i, err in enumerate(errors):
+        if i in processed:
+            continue
+        cluster = [err]
+        processed.add(i)
+        for j, other in enumerate(errors):
+            if j in processed or j <= i:
+                continue
+            sim = _calculate_similarity(
+                err.get("error_message", ""),
+                other.get("error_message", ""),
+            )
+            if sim >= similarity_threshold:
+                cluster.append(other)
+                processed.add(j)
+        clusters.append(cluster)
+
+    return clusters
+
+
+def _build_detected_pattern(cluster: list[dict]) -> DetectedPattern:
+    """Build a DetectedPattern from a cluster of similar errors."""
+    representative = cluster[0].get("error_message", "Unknown Error")
+    if len(representative) > 100:
+        representative = representative[:97] + "..."
+
+    types = [e.get("event_type", "custom") for e in cluster]
+    pattern_type = max(set(types), key=types.count)
+
+    timestamps = [e["timestamp"] for e in cluster if e.get("timestamp")]
+    first_seen = min(timestamps) if timestamps else datetime.now(timezone.utc).isoformat()
+    last_seen = max(timestamps) if timestamps else first_seen
+
+    agents_set = {e["agent_name"] for e in cluster if e.get("agent_name")}
+    error_ids = tuple(e["id"] for e in cluster if e.get("id"))
+
+    return DetectedPattern(
+        pattern_name=representative,
+        pattern_type=pattern_type,
+        severity=_infer_severity(len(cluster)),
+        occurrence_count=len(cluster),
+        first_seen=first_seen,
+        last_seen=last_seen,
+        affected_agents=tuple(sorted(agents_set)),
+        error_ids=error_ids,
+    )
+
+
 def _detect_patterns(
     conn: sqlite3.Connection,
     days: int = 7,
@@ -250,75 +304,18 @@ def _detect_patterns(
         """,
         (cutoff,),
     )
-    rows = cursor.fetchall()
-    errors = [dict(row) for row in rows]
-
+    errors = [dict(row) for row in cursor.fetchall()]
     if not errors:
         return []
 
-    # Cluster by similarity
-    processed: set[int] = set()
-    clusters: list[list[dict]] = []
+    clusters = _cluster_errors(errors, similarity_threshold)
 
-    for i, err in enumerate(errors):
-        if i in processed:
-            continue
-        cluster = [err]
-        processed.add(i)
-        for j, other in enumerate(errors):
-            if j in processed or j <= i:
-                continue
-            sim = _calculate_similarity(
-                err.get("error_message", ""),
-                other.get("error_message", ""),
-            )
-            if sim >= similarity_threshold:
-                cluster.append(other)
-                processed.add(j)
-        clusters.append(cluster)
+    patterns = [
+        _build_detected_pattern(c)
+        for c in clusters
+        if len(c) >= min_occurrences
+    ]
 
-    # Build DetectedPattern for clusters that meet min_occurrences
-    patterns: list[DetectedPattern] = []
-    for cluster in clusters:
-        count = len(cluster)
-        if count < min_occurrences:
-            continue
-
-        # Representative name
-        representative = cluster[0].get("error_message", "Unknown Error")
-        if len(representative) > 100:
-            representative = representative[:97] + "..."
-
-        # Pattern type (most common event_type)
-        types = [e.get("event_type", "custom") for e in cluster]
-        pattern_type = max(set(types), key=types.count)
-
-        # Timestamps
-        timestamps = [e["timestamp"] for e in cluster if e.get("timestamp")]
-        first_seen = min(timestamps) if timestamps else datetime.now(timezone.utc).isoformat()
-        last_seen = max(timestamps) if timestamps else first_seen
-
-        # Affected agents
-        agents_set = {e["agent_name"] for e in cluster if e.get("agent_name")}
-        affected_agents = tuple(sorted(agents_set))
-
-        # Error IDs
-        error_ids = tuple(e["id"] for e in cluster if e.get("id"))
-
-        patterns.append(
-            DetectedPattern(
-                pattern_name=representative,
-                pattern_type=pattern_type,
-                severity=_infer_severity(count),
-                occurrence_count=count,
-                first_seen=first_seen,
-                last_seen=last_seen,
-                affected_agents=affected_agents,
-                error_ids=error_ids,
-            )
-        )
-
-    # Sort: severity asc (critical first), then occurrence_count desc
     patterns.sort(
         key=lambda p: (_SEVERITY_ORDER.get(p.severity, 4), -p.occurrence_count)
     )

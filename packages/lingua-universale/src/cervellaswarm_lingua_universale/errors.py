@@ -1859,46 +1859,41 @@ def _classify_tokenize_error(exc: TokenizeError) -> tuple[str, dict[str, str]]:
     return "LU-N007", _extract_expected_got(msg)
 
 
+_PARSE_EXACT: list[tuple[str, str, str]] = [
+    # (substring, code, extractor_key)
+    # extractor_key: "eg" = _extract_expected_got, "q" = _extract_quoted->got, "qm" = quoted or msg, "" = no ctx
+    ("expected COLON", "LU-N008", "eg"),
+    ("protocol must have at least one step", "LU-N009", ""),
+    ("cannot parse action", "LU-N010", "qm"),
+    ("unknown action", "LU-N010", "qm"),
+    ("unknown property", "LU-N011", "q"),
+    ("unknown agent clause", "LU-N012", "q"),
+    ("invalid trust tier", "LU-N013", "q"),
+    ("invalid confidence level", "LU-N014", "q"),
+]
+
+
 def _classify_parse_error(exc: ParseError) -> tuple[str, dict[str, str]]:
     """Determine LU-N00X code from a ParseError."""
     raw = str(exc)
     msg = raw.split(": ", 1)[-1] if ": " in raw else raw
 
     if "expected 'protocol'" in msg and "'agent'" in msg and "'type'" in msg:
-        # Extract the "got" value -- the quoted token AFTER "got"
         m = re.search(r"got\s+'([^']+)'", msg)
         got = m.group(1) if m else (_extract_quoted(msg) or "")
         return "LU-N006", {"got": got}
 
-    if "expected COLON" in msg:
-        return "LU-N008", _extract_expected_got(msg)
+    for substr, code, ext in _PARSE_EXACT:
+        if substr in msg:
+            if ext == "eg":
+                return code, _extract_expected_got(msg)
+            if ext == "qm":
+                return code, {"got": _extract_quoted(msg) or msg}
+            if ext == "q":
+                return code, {"got": _extract_quoted(msg) or ""}
+            return code, {}
 
-    if "protocol must have at least one step" in msg:
-        return "LU-N009", {}
-
-    if "cannot parse action" in msg or "unknown action" in msg:
-        got = _extract_quoted(msg) or msg
-        return "LU-N010", {"got": got}
-
-    if "unknown property" in msg:
-        got = _extract_quoted(msg) or ""
-        return "LU-N011", {"got": got}
-
-    if "unknown agent clause" in msg:
-        got = _extract_quoted(msg) or ""
-        return "LU-N012", {"got": got}
-
-    if "invalid trust tier" in msg:
-        got = _extract_quoted(msg) or ""
-        return "LU-N013", {"got": got}
-
-    if "invalid confidence level" in msg:
-        got = _extract_quoted(msg) or ""
-        return "LU-N014", {"got": got}
-
-    # Generic parse error: expected X got Y
-    parts = _extract_expected_got(msg)
-    return "LU-N007", parts
+    return "LU-N007", _extract_expected_got(msg)
 
 
 def _parser_similar(code: str, got: str) -> tuple[str, ...]:
@@ -1981,39 +1976,35 @@ def _classify_dsl_error(exc: DSLParseError) -> tuple[str, dict[str, str]]:
     return "LU-D002", parts
 
 
+_SPEC_EXACT: list[tuple[str, str, str]] = [
+    ("tabs are not allowed", "LU-S001", ""),
+    ("indentation must be a multiple of 4", "LU-S002", "p"),
+    ("unknown message kind", "LU-S003", "q"),
+    ("unknown confidence level", "LU-S004", "q"),
+    ("unknown trust tier", "LU-S005", "q"),
+    ("a and b must differ", "LU-S006", ""),
+    ("at least one property", "LU-S008", ""),
+    ("must have at least one property", "LU-S008", ""),
+]
+
+
 def _classify_spec_error(exc: SpecParseError) -> tuple[str, dict[str, str]]:
     """Determine LU-S00X code and context from a SpecParseError."""
     raw = str(exc)
     msg = raw.split(": ", 1)[-1] if ": " in raw else raw
 
-    if "tabs are not allowed" in msg:
-        return "LU-S001", {}
-
-    if "indentation must be a multiple of 4" in msg:
-        got = _extract_parenthesized(msg) or ""
-        return "LU-S002", {"got": got}
-
-    if "unknown message kind" in msg:
-        got = _extract_quoted(msg) or ""
-        return "LU-S003", {"got": got}
-
-    if "unknown confidence level" in msg:
-        got = _extract_quoted(msg) or ""
-        return "LU-S004", {"got": got}
-
-    if "unknown trust tier" in msg:
-        got = _extract_quoted(msg) or ""
-        return "LU-S005", {"got": got}
-
-    if "a and b must differ" in msg or ("ORDERING" in msg and "must differ" in msg):
+    if "ORDERING" in msg and "must differ" in msg:
         return "LU-S006", {}
 
-    if "at least one property" in msg or "must have at least one property" in msg:
-        return "LU-S008", {}
+    for substr, code, ext in _SPEC_EXACT:
+        if substr in msg:
+            if ext == "p":
+                return code, {"got": _extract_parenthesized(msg) or ""}
+            if ext == "q":
+                return code, {"got": _extract_quoted(msg) or ""}
+            return code, {}
 
-    # Generic syntax error
-    parts = _extract_expected_got(msg)
-    return "LU-S007", parts
+    return "LU-S007", _extract_expected_got(msg)
 
 
 def _classify_intent_error(exc: IntentParseError) -> tuple[str, dict[str, str]]:

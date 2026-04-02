@@ -292,7 +292,8 @@ spawn:
 
     class FakeSpawnManager:
         def __init__(self, tasks_dir, logs_dir, status_dir, max_workers,
-                     backend=None, claude_bin=None, register_signals=True):
+                     backend=None, claude_bin=None, register_signals=True,
+                     permission_mode="auto"):
             created_managers.append({
                 "tasks_dir": tasks_dir,
                 "logs_dir": logs_dir,
@@ -318,6 +319,7 @@ spawn:
         tasks_dir=".swarm/tasks",
         logs_dir=".swarm/logs",
         max_workers=5,
+        permission_mode="auto",
     )
 
     with patch("cervellaswarm_spawn_workers.cli.SpawnManager", FakeSpawnManager):

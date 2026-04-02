@@ -300,26 +300,32 @@ class SessionChecker:
 
     @property
     def session_id(self) -> str:
+        """Return the unique identifier for this session."""
         return self._state.session_id
 
     @property
     def protocol_name(self) -> str:
+        """Return the name of the protocol being checked."""
         return self._state.protocol.name
 
     @property
     def is_complete(self) -> bool:
+        """Return True if all protocol steps have been satisfied."""
         return self._state.completed
 
     @property
     def step_index(self) -> int:
+        """Return the zero-based index of the current protocol step."""
         return self._state.step_index
 
     @property
     def log(self) -> list[MessageRecord]:
+        """Return a copy of all recorded messages in this session."""
         return list(self._state.log)
 
     @property
     def current_branch(self) -> Optional[str]:
+        """Return the active choice branch name, or None if not in a choice."""
         return self._state.branch
 
     def choose_branch(self, branch_name: str) -> None:
@@ -513,8 +519,8 @@ class SessionChecker:
 
         if self._monitor is not None:
             if self._state.completed:
-                assert self._state.completed_at is not None
-                assert self._state.completed_at_mono is not None
+                if self._state.completed_at is None or self._state.completed_at_mono is None:
+                    raise RuntimeError("Session marked completed but timestamps are None")
                 self._monitor.emit(SessionEnded(
                     session_id=self.session_id,
                     protocol_name=self.protocol_name,

@@ -203,7 +203,7 @@ L'Architect usa le API di Semantic Search (W3-A) per:
 - `estimate_impact()` - Valutare rischio
 
 ```python
-from scripts.utils.impact_analyzer import estimate_impact
+from cervellaswarm_code_intelligence import ImpactAnalyzer
 
 impact = estimate_impact("AuthService")
 # Returns: risk_score, affected_files, recommendations

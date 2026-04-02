@@ -170,14 +170,14 @@ def main_check(argv: list[str] | None = None) -> None:
             print(f"    File: {r.file}")
             print(f"    Lines: {r.lines} | Updated: {r.updated}")
             if r.scores:
-                print(f"    Scores:")
+                print("    Scores:")
                 print(f"      Actionability:  {r.scores.get('actionability', 0)}/10  (30%)")
                 print(f"      Specificity:    {r.scores.get('specificity', 0)}/10  (30%)")
                 print(f"      Freshness:      {r.scores.get('freshness', 0)}/10  (20%)")
                 print(f"      Conciseness:    {r.scores.get('conciseness', 0)}/10  (20%)")
                 print(f"    TOTAL: {r.total}/10 [{r.status}]")
             if r.suggestions:
-                print(f"    Suggestions:")
+                print("    Suggestions:")
                 for s in r.suggestions:
                     print(f"      - {s}")
 
@@ -267,7 +267,7 @@ def main_audit(argv: list[str] | None = None) -> None:
 
 def main_sync(argv: list[str] | None = None) -> None:
     """Verify session memory freshness and coherence."""
-    from cervellaswarm_session_memory.sync_checker import verify_project, verify_all, CheckStatus
+    from cervellaswarm_session_memory.sync_checker import verify_project, verify_all
 
     parser = argparse.ArgumentParser(
         prog="cervella-session sync",

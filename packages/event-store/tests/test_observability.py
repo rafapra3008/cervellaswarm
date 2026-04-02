@@ -27,14 +27,14 @@ class TestEstimateCost:
         assert estimate_cost("claude-opus-4-6", 0, 0) == 0.0
 
     def test_opus_pricing(self):
-        # 1M input tokens at $15/MTok = $15.00
+        # 1M input tokens at $5/MTok = $5.00
         cost = estimate_cost("claude-opus-4-6", 1_000_000, 0)
-        assert cost == 15.0
+        assert cost == 5.0
 
     def test_opus_output_pricing(self):
-        # 1M output tokens at $75/MTok = $75.00
+        # 1M output tokens at $25/MTok = $25.00
         cost = estimate_cost("claude-opus-4-6", 0, 1_000_000)
-        assert cost == 75.0
+        assert cost == 25.0
 
     def test_sonnet_pricing(self):
         # 1M input at $3 + 1M output at $15 = $18
@@ -42,14 +42,14 @@ class TestEstimateCost:
         assert cost == 18.0
 
     def test_cache_read_pricing(self):
-        # 1M cache read tokens at $1.50/MTok for Opus
+        # 1M cache read tokens at $0.50/MTok for Opus
         cost = estimate_cost("claude-opus-4-6", 0, 0, cache_read_tokens=1_000_000)
-        assert cost == 1.5
+        assert cost == 0.5
 
     def test_cache_creation_pricing(self):
-        # 1M cache creation tokens at $18.75/MTok for Opus
+        # 1M cache creation tokens at $6.25/MTok for Opus
         cost = estimate_cost("claude-opus-4-6", 0, 0, cache_creation_tokens=1_000_000)
-        assert cost == 18.75
+        assert cost == 6.25
 
     def test_combined_pricing(self):
         # Realistic: 50K input + 5K output + 100K cache_read + 20K cache_write (Opus)
@@ -60,7 +60,7 @@ class TestEstimateCost:
             cache_read_tokens=100_000,
             cache_creation_tokens=20_000,
         )
-        expected = (50_000 * 15 + 5_000 * 75 + 100_000 * 1.5 + 20_000 * 18.75) / 1_000_000
+        expected = (50_000 * 5 + 5_000 * 25 + 100_000 * 0.5 + 20_000 * 6.25) / 1_000_000
         assert cost == pytest.approx(expected, abs=0.001)
 
     def test_unknown_model_uses_default(self):
@@ -68,12 +68,13 @@ class TestEstimateCost:
         assert cost == _DEFAULT_PRICING["input"]
 
     def test_haiku_pricing(self):
+        # 1M input at $1/MTok = $1.00
         cost = estimate_cost("claude-haiku-4-5-20251001", 1_000_000, 0)
-        assert cost == 0.8
+        assert cost == 1.0
 
     def test_haiku_alias_without_date(self):
         cost = estimate_cost("claude-haiku-4-5", 1_000_000, 0)
-        assert cost == 0.8
+        assert cost == 1.0
 
     def test_rounding(self):
         # Small tokens should round to 6 decimal places

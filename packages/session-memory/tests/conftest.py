@@ -4,7 +4,6 @@
 """Shared fixtures for cervellaswarm-session-memory tests."""
 
 import pytest
-from pathlib import Path
 
 
 @pytest.fixture

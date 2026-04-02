@@ -235,7 +235,7 @@ def main_validate_output(argv: list[str] | None = None) -> None:
             for w in result.warnings:
                 print(f"  - {w}")
         if result.retry_needed:
-            print(f"\nRETRY SUGGESTED")
+            print("\nRETRY SUGGESTED")
             if result.retry_context:
                 print(f"Context: {result.retry_context}")
 
@@ -297,51 +297,29 @@ def main_task(argv: list[str] | None = None) -> None:
 
     elif args.command in ("ready", "working", "done", "ack-received", "ack-understood", "status", "cleanup"):
         tid = args.task_id
-        if args.command == "ready":
-            ok = mark_ready(tid)
-            if ok:
-                print(f"Task {tid} marked as READY")
-            else:
-                print(f"ERROR: Failed to mark {tid} as READY (invalid ID or task not found)", file=sys.stderr)
-                sys.exit(1)
-        elif args.command == "working":
-            ok = mark_working(tid)
-            if ok:
-                print(f"Task {tid} marked as WORKING")
-            else:
-                print(f"ERROR: Failed to mark {tid} as WORKING (invalid ID, not found, or already claimed)", file=sys.stderr)
-                sys.exit(1)
-        elif args.command == "done":
-            ok = mark_done(tid)
-            if ok:
-                print(f"Task {tid} marked as DONE")
-            else:
-                print(f"ERROR: Failed to mark {tid} as DONE (invalid ID or task not found)", file=sys.stderr)
-                sys.exit(1)
-        elif args.command == "ack-received":
-            ok = ack_received(tid)
-            if ok:
-                print(f"Task {tid} - ACK_RECEIVED confirmed")
-            else:
-                print(f"ERROR: Failed to ACK_RECEIVED {tid} (invalid ID or task not found)", file=sys.stderr)
-                sys.exit(1)
-        elif args.command == "ack-understood":
-            ok = ack_understood(tid)
-            if ok:
-                print(f"Task {tid} - ACK_UNDERSTOOD confirmed")
-            else:
-                print(f"ERROR: Failed to ACK_UNDERSTOOD {tid} (invalid ID or task not found)", file=sys.stderr)
-                sys.exit(1)
-        elif args.command == "status":
+        if args.command == "status":
             st = get_task_status(tid)
             ack = get_ack_status(tid)
             print(f"Task {tid}:")
             print(f"  Status: {st.upper()}")
             print(f"  ACK: {ack} (R=Received, U=Understood, D=Done)")
-        elif args.command == "cleanup":
-            ok = cleanup_task(tid)
+        else:
+            # Dispatch table for state transitions
+            dispatch = {
+                "ready": (mark_ready, "marked as READY"),
+                "working": (mark_working, "marked as WORKING"),
+                "done": (mark_done, "marked as DONE"),
+                "ack-received": (ack_received, "ACK_RECEIVED confirmed"),
+                "ack-understood": (ack_understood, "ACK_UNDERSTOOD confirmed"),
+                "cleanup": (cleanup_task, "marker files removed"),
+            }
+            func, success_msg = dispatch[args.command]
+            ok = func(tid)
             if ok:
-                print(f"Marker files for {tid} removed")
+                print(f"Task {tid} - {success_msg}")
+            else:
+                print(f"ERROR: Failed {args.command} for {tid}", file=sys.stderr)
+                sys.exit(1)
 
 
 # -------------------------------------------------------------------------

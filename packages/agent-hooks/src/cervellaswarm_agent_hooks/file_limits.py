@@ -30,7 +30,8 @@ def count_lines(file_path: Path) -> int:
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             return sum(1 for _ in f)
-    except Exception:
+    except Exception as e:
+        print(f"file_limits: failed to count lines in {file_path}: {e}", file=sys.stderr)
         return 0
 
 
@@ -124,7 +125,7 @@ def main():
     """Entry point."""
     try:
         input_data = json.load(sys.stdin)
-    except Exception:
+    except (json.JSONDecodeError, ValueError):
         input_data = {}
 
     cwd = input_data.get("cwd", os.getcwd())

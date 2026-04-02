@@ -10,7 +10,6 @@ processes across tmux and nohup backends with signal handling.
 
 import atexit
 import logging
-import os
 import shlex
 import shutil
 import signal
@@ -20,7 +19,6 @@ from pathlib import Path
 from typing import Optional
 
 from cervellaswarm_spawn_workers.backend import (
-    ProcessInfo,
     detect_backend,
     is_alive_pid,
     is_alive_tmux,
@@ -30,7 +28,7 @@ from cervellaswarm_spawn_workers.backend import (
     launch_tmux,
 )
 from cervellaswarm_spawn_workers.prompt_builder import build_worker_prompt
-from cervellaswarm_spawn_workers.team_loader import AgentConfig, TeamConfig, get_spawnables
+from cervellaswarm_spawn_workers.team_loader import TeamConfig, get_spawnables
 
 logger = logging.getLogger(__name__)
 
@@ -84,6 +82,7 @@ class SpawnManager:
         backend: Execution backend ("tmux", "nohup", or None for auto-detect).
         claude_bin: Path to claude CLI binary.
         register_signals: Whether to register signal handlers (default True).
+        permission_mode: Claude Code permission mode for workers (default "auto").
     """
 
     def __init__(
@@ -95,6 +94,7 @@ class SpawnManager:
         backend: Optional[str] = None,
         claude_bin: Optional[str] = None,
         register_signals: bool = True,
+        permission_mode: str = "auto",
     ):
         self.tasks_dir = Path(tasks_dir)
         self.logs_dir = Path(logs_dir)
@@ -102,6 +102,7 @@ class SpawnManager:
         self.max_workers = max_workers
         self.backend = backend or detect_backend()
         self.claude_bin = claude_bin or shutil.which("claude") or "claude"
+        self.permission_mode = permission_mode
         self.workers: list[WorkerInfo] = []
 
         if register_signals:
@@ -142,8 +143,8 @@ class SpawnManager:
             if pid_file.exists():
                 try:
                     pid = int(pid_file.read_text().strip())
-                except (ValueError, OSError):
-                    pass
+                except (ValueError, OSError) as e:
+                    logger.debug("Cannot read PID file %s: %s", pid_file, e)
 
             backend = "tmux" if session_name else "nohup"
 
@@ -216,9 +217,15 @@ class SpawnManager:
         # Build claude command (shlex.quote for shell injection safety)
         # Use shlex.quote for prompt content instead of $(cat file) to prevent
         # shell interpretation of $, `, " characters in the prompt
+        perm_flag = (
+            f'--permission-mode {shlex.quote(self.permission_mode)} '
+            if self.permission_mode
+            else ''
+        )
         command = (
             f'CERVELLASWARM_WORKER=1 '
             f'{shlex.quote(self.claude_bin)} -p '
+            f'{perm_flag}'
             f'--append-system-prompt {shlex.quote(system_prompt)} '
             f'{shlex.quote(initial_prompt)}'
         )
@@ -366,7 +373,6 @@ class SpawnManager:
             for f in self.status_dir.glob(pattern):
                 # Extract worker name: worker_myname.pid -> myname
                 stem = f.stem  # worker_myname
-                suffix_map = {".pid": ".pid", ".session": ".session", ".start": ".start"}
                 worker_name = stem.removeprefix("worker_")
                 if worker_name in alive_names:
                     continue

@@ -11,12 +11,13 @@ Usage:
     symbols = extractor.extract_python_symbols(tree, "app.py")
 
 Author: Cervella Backend (F1.1 Split)
-Version: 1.0.0
-Date: 2026-02-02
+Version: 1.1.0
+Date: 2026-03-29
+v1.1.0 - S493: Dispatch dict refactoring (CC 63->8), dedup module-level refs
 """
 
-__version__ = "1.0.0"
-__version_date__ = "2026-02-02"
+__version__ = "1.1.0"
+__version_date__ = "2026-03-29"
 
 import logging
 from typing import List
@@ -44,7 +45,132 @@ class PythonExtractor:
 
     def __init__(self):
         """Initialize Python extractor."""
+        self._ref_handlers = {
+            "call": self._handle_call_ref,
+            "import_from_statement": self._handle_import_from_ref,
+            "import_statement": self._handle_import_ref,
+            "class_definition": self._handle_class_ref,
+            "type": self._handle_type_ref,
+            "decorator": self._handle_decorator_ref,
+        }
         logger.debug("PythonExtractor initialized")
+
+    # --- Reference handler methods ---
+
+    def _handle_call_ref(self, n: Node, refs: set) -> None:
+        """REQ-02/03: Function calls func() and method calls obj.method()."""
+        func_node = n.child_by_field_name("function")
+        if not func_node:
+            return
+        if func_node.type == "identifier":
+            name = func_node.text.decode()
+            if name not in PYTHON_BUILTINS:
+                refs.add(name)
+        elif func_node.type == "attribute":
+            attr_node = func_node.child_by_field_name("attribute")
+            if attr_node:
+                method_name = attr_node.text.decode()
+                if method_name not in PYTHON_BUILTINS:
+                    refs.add(method_name)
+            obj_node = func_node.child_by_field_name("object")
+            if obj_node and obj_node.type == "identifier":
+                obj_name = obj_node.text.decode()
+                if obj_name not in PYTHON_BUILTINS:
+                    refs.add(obj_name)
+
+    def _handle_import_from_ref(self, n: Node, refs: set) -> None:
+        """REQ-04: from X import Y."""
+        module_node = n.child_by_field_name("module_name")
+        if module_node:
+            module_name = module_node.text.decode()
+            first_part = module_name.split(".")[0]
+            if first_part and first_part not in PYTHON_BUILTINS and not first_part.startswith("."):
+                refs.add(first_part)
+        for child in n.children:
+            if child.type == "dotted_name":
+                imported = child.text.decode()
+                if imported not in PYTHON_BUILTINS:
+                    refs.add(imported)
+            elif child.type == "aliased_import":
+                name_node = child.child_by_field_name("name")
+                if name_node:
+                    imported = name_node.text.decode()
+                    if imported not in PYTHON_BUILTINS:
+                        refs.add(imported)
+
+    def _handle_import_ref(self, n: Node, refs: set) -> None:
+        """Import statement: import X."""
+        for child in n.children:
+            if child.type == "dotted_name":
+                module_name = child.text.decode()
+                first_part = module_name.split(".")[0]
+                if first_part and first_part not in PYTHON_BUILTINS:
+                    refs.add(first_part)
+            elif child.type == "aliased_import":
+                name_node = child.child_by_field_name("name")
+                if name_node:
+                    module_name = name_node.text.decode()
+                    first_part = module_name.split(".")[0]
+                    if first_part and first_part not in PYTHON_BUILTINS:
+                        refs.add(first_part)
+
+    def _handle_class_ref(self, n: Node, refs: set) -> None:
+        """REQ-05: Class inheritance class A(B, C)."""
+        bases_node = n.child_by_field_name("superclasses")
+        if not bases_node:
+            return
+        for child in bases_node.children:
+            if child.type == "identifier":
+                base_name = child.text.decode()
+                if base_name not in PYTHON_BUILTINS:
+                    refs.add(base_name)
+            elif child.type == "attribute":
+                attr_node = child.child_by_field_name("attribute")
+                if attr_node:
+                    refs.add(attr_node.text.decode())
+
+    def _handle_type_ref(self, n: Node, refs: set) -> None:
+        """REQ-06: Type annotations x: MyType, def f() -> ReturnType."""
+        for child in n.children:
+            if child.type == "identifier":
+                type_name = child.text.decode()
+                if type_name not in PYTHON_BUILTINS:
+                    refs.add(type_name)
+            elif child.type == "generic_type":
+                type_id = child.child_by_field_name("type")
+                if type_id and type_id.type == "identifier":
+                    type_name = type_id.text.decode()
+                    if type_name not in PYTHON_BUILTINS:
+                        refs.add(type_name)
+                type_args = child.child_by_field_name("type_arguments")
+                if type_args:
+                    for arg in type_args.children:
+                        if arg.type == "type":
+                            for inner in arg.children:
+                                if inner.type == "identifier":
+                                    inner_name = inner.text.decode()
+                                    if inner_name not in PYTHON_BUILTINS:
+                                        refs.add(inner_name)
+
+    def _handle_decorator_ref(self, n: Node, refs: set) -> None:
+        """T11: Decorators @my_decorator, @module.deco, @call()."""
+        for child in n.children:
+            if child.type == "identifier":
+                dec_name = child.text.decode()
+                if dec_name not in PYTHON_BUILTINS:
+                    refs.add(dec_name)
+            elif child.type == "call":
+                func_node = child.child_by_field_name("function")
+                if func_node and func_node.type == "identifier":
+                    dec_name = func_node.text.decode()
+                    if dec_name not in PYTHON_BUILTINS:
+                        refs.add(dec_name)
+            elif child.type == "attribute":
+                attr_node = child.child_by_field_name("attribute")
+                if attr_node:
+                    refs.add(attr_node.text.decode())
+
+    # --- Public API (unchanged) ---
 
     def extract_python_references(self, node: Node) -> List[str]:
         """Extract all references from a Python AST node.
@@ -66,136 +192,12 @@ class PythonExtractor:
             - REQ-06: Type annotations (x: MyType)
         """
         references = set()
+        handlers = self._ref_handlers
 
         def extract_from_node(n: Node) -> None:
-            """Recursively extract references from node."""
-            # REQ-02: Function calls - func()
-            # T01, T02, T12 (nested)
-            if n.type == "call":
-                func_node = n.child_by_field_name("function")
-                if func_node:
-                    # Simple call: func()
-                    if func_node.type == "identifier":
-                        name = func_node.text.decode()
-                        if name not in PYTHON_BUILTINS:
-                            references.add(name)
-                    # REQ-03: Method call: obj.method()
-                    # T03, T04
-                    elif func_node.type == "attribute":
-                        attr_node = func_node.child_by_field_name("attribute")
-                        if attr_node:
-                            method_name = attr_node.text.decode()
-                            if method_name not in PYTHON_BUILTINS:
-                                references.add(method_name)
-                        # Also extract the object if it's an identifier
-                        obj_node = func_node.child_by_field_name("object")
-                        if obj_node and obj_node.type == "identifier":
-                            obj_name = obj_node.text.decode()
-                            if obj_name not in PYTHON_BUILTINS:
-                                references.add(obj_name)
-
-            # REQ-04: Imports - from X import Y
-            # T05, T06
-            elif n.type == "import_from_statement":
-                # Module name
-                module_node = n.child_by_field_name("module_name")
-                if module_node:
-                    module_name = module_node.text.decode()
-                    # Extract first part of dotted name (e.g., "fastapi" from "fastapi.routing")
-                    first_part = module_name.split(".")[0]
-                    if first_part and first_part not in PYTHON_BUILTINS and not first_part.startswith("."):
-                        references.add(first_part)
-                # Imported names
-                for child in n.children:
-                    if child.type == "dotted_name":
-                        imported = child.text.decode()
-                        if imported not in PYTHON_BUILTINS:
-                            references.add(imported)
-                    elif child.type == "aliased_import":
-                        name_node = child.child_by_field_name("name")
-                        if name_node:
-                            imported = name_node.text.decode()
-                            if imported not in PYTHON_BUILTINS:
-                                references.add(imported)
-
-            # Import statement: import X
-            elif n.type == "import_statement":
-                for child in n.children:
-                    if child.type == "dotted_name":
-                        module_name = child.text.decode()
-                        first_part = module_name.split(".")[0]
-                        if first_part and first_part not in PYTHON_BUILTINS:
-                            references.add(first_part)
-                    elif child.type == "aliased_import":
-                        name_node = child.child_by_field_name("name")
-                        if name_node:
-                            module_name = name_node.text.decode()
-                            first_part = module_name.split(".")[0]
-                            if first_part and first_part not in PYTHON_BUILTINS:
-                                references.add(first_part)
-
-            # REQ-05: Class inheritance - class A(B, C)
-            # T07, T08
-            elif n.type == "class_definition":
-                bases_node = n.child_by_field_name("superclasses")
-                if bases_node:
-                    for child in bases_node.children:
-                        if child.type == "identifier":
-                            base_name = child.text.decode()
-                            if base_name not in PYTHON_BUILTINS:
-                                references.add(base_name)
-                        elif child.type == "attribute":
-                            # Handle qualified names like module.ClassName
-                            attr_node = child.child_by_field_name("attribute")
-                            if attr_node:
-                                references.add(attr_node.text.decode())
-
-            # REQ-06: Type annotations - x: MyType, def f() -> ReturnType
-            # T09, T10
-            elif n.type == "type":
-                # Extract type name from annotation
-                for child in n.children:
-                    if child.type == "identifier":
-                        type_name = child.text.decode()
-                        if type_name not in PYTHON_BUILTINS:
-                            references.add(type_name)
-                    elif child.type == "generic_type":
-                        # Handle List[T], Dict[K, V], etc.
-                        type_id = child.child_by_field_name("type")
-                        if type_id and type_id.type == "identifier":
-                            type_name = type_id.text.decode()
-                            if type_name not in PYTHON_BUILTINS:
-                                references.add(type_name)
-                        # Extract type parameters
-                        type_args = child.child_by_field_name("type_arguments")
-                        if type_args:
-                            for arg in type_args.children:
-                                if arg.type == "type":
-                                    for inner in arg.children:
-                                        if inner.type == "identifier":
-                                            inner_name = inner.text.decode()
-                                            if inner_name not in PYTHON_BUILTINS:
-                                                references.add(inner_name)
-
-            # T11: Decorators - @my_decorator
-            elif n.type == "decorator":
-                for child in n.children:
-                    if child.type == "identifier":
-                        dec_name = child.text.decode()
-                        if dec_name not in PYTHON_BUILTINS:
-                            references.add(dec_name)
-                    elif child.type == "call":
-                        func_node = child.child_by_field_name("function")
-                        if func_node and func_node.type == "identifier":
-                            dec_name = func_node.text.decode()
-                            if dec_name not in PYTHON_BUILTINS:
-                                references.add(dec_name)
-                    elif child.type == "attribute":
-                        attr_node = child.child_by_field_name("attribute")
-                        if attr_node:
-                            references.add(attr_node.text.decode())
-
-            # Recurse to children
+            handler = handlers.get(n.type)
+            if handler:
+                handler(n, references)
             for child in n.children:
                 extract_from_node(child)
 
@@ -216,45 +218,48 @@ class PythonExtractor:
         references = set()
 
         for child in root_node.children:
-            # import X, import X as Y
             if child.type == "import_statement":
-                for sub in child.children:
-                    if sub.type == "dotted_name":
-                        module_name = sub.text.decode()
-                        first_part = module_name.split(".")[0]
-                        if first_part and first_part not in PYTHON_BUILTINS:
-                            references.add(first_part)
-                    elif sub.type == "aliased_import":
-                        name_node = sub.child_by_field_name("name")
-                        if name_node:
-                            module_name = name_node.text.decode()
-                            first_part = module_name.split(".")[0]
-                            if first_part and first_part not in PYTHON_BUILTINS:
-                                references.add(first_part)
-
-            # from X import Y, from X import Y as Z
+                self._handle_import_ref(child, references)
             elif child.type == "import_from_statement":
-                # Module name
-                module_node = child.child_by_field_name("module_name")
-                if module_node:
-                    module_name = module_node.text.decode()
-                    first_part = module_name.split(".")[0]
-                    if first_part and first_part not in PYTHON_BUILTINS and not first_part.startswith("."):
-                        references.add(first_part)
-                # Imported names
-                for sub in child.children:
-                    if sub.type == "dotted_name":
-                        imported = sub.text.decode()
-                        if imported not in PYTHON_BUILTINS:
-                            references.add(imported)
-                    elif sub.type == "aliased_import":
-                        name_node = sub.child_by_field_name("name")
-                        if name_node:
-                            imported = name_node.text.decode()
-                            if imported not in PYTHON_BUILTINS:
-                                references.add(imported)
+                self._handle_import_from_ref(child, references)
 
         return sorted(references)
+
+    def _extract_docstring(self, body_node: Node) -> str:
+        """Extract docstring from a body block node."""
+        if not body_node or body_node.child_count == 0:
+            return ""
+        first_stmt = body_node.children[1] if len(body_node.children) > 1 else None
+        if first_stmt and first_stmt.type == "expression_statement":
+            string_node = first_stmt.child(0)
+            if string_node and string_node.type == "string":
+                doc_text = string_node.text.decode()
+                return doc_text.strip('"""').strip("'''").strip()
+        return ""
+
+    def _get_decorator_refs(self, node: Node) -> List[str]:
+        """Extract references from decorators if node is in decorated_definition."""
+        refs = []
+        parent = node.parent
+        if parent and parent.type == "decorated_definition":
+            for child in parent.children:
+                if child.type == "decorator":
+                    for deco_child in child.children:
+                        if deco_child.type == "identifier":
+                            name = deco_child.text.decode()
+                            if name not in PYTHON_BUILTINS:
+                                refs.append(name)
+                        elif deco_child.type == "call":
+                            func = deco_child.child_by_field_name("function")
+                            if func and func.type == "identifier":
+                                name = func.text.decode()
+                                if name not in PYTHON_BUILTINS:
+                                    refs.append(name)
+                        elif deco_child.type == "attribute":
+                            attr = deco_child.child_by_field_name("attribute")
+                            if attr:
+                                refs.append(attr.text.decode())
+        return refs
 
     def extract_python_symbols(self, tree, file_path: str) -> List[Symbol]:
         """Extract symbols from Python AST using direct traversal.
@@ -267,37 +272,9 @@ class PythonExtractor:
             List of Symbol objects
         """
         symbols = []
-
-        # W2.5: Extract module-level references (imports) to add to all symbols
         module_refs = self.extract_module_level_references(tree.root_node)
 
-        def get_decorator_refs(node: Node) -> List[str]:
-            """Extract references from decorators if node is in decorated_definition."""
-            refs = []
-            parent = node.parent
-            if parent and parent.type == "decorated_definition":
-                for child in parent.children:
-                    if child.type == "decorator":
-                        for deco_child in child.children:
-                            if deco_child.type == "identifier":
-                                name = deco_child.text.decode()
-                                if name not in PYTHON_BUILTINS:
-                                    refs.append(name)
-                            elif deco_child.type == "call":
-                                func = deco_child.child_by_field_name("function")
-                                if func and func.type == "identifier":
-                                    name = func.text.decode()
-                                    if name not in PYTHON_BUILTINS:
-                                        refs.append(name)
-                            elif deco_child.type == "attribute":
-                                attr = deco_child.child_by_field_name("attribute")
-                                if attr:
-                                    refs.append(attr.text.decode())
-            return refs
-
         def traverse(node: Node) -> None:
-            """Recursively traverse AST and extract symbols."""
-            # Function definitions
             if node.type == "function_definition":
                 name_node = node.child_by_field_name("name")
                 params_node = node.child_by_field_name("parameters")
@@ -306,34 +283,21 @@ class PythonExtractor:
                 if name_node:
                     name = name_node.text.decode()
                     params = params_node.text.decode() if params_node else "()"
-                    return_type = (
-                        return_node.text.decode() if return_node else ""
-                    )
+                    return_type = return_node.text.decode() if return_node else ""
 
-                    # Build signature
                     if return_type:
                         signature = f"def {name}{params} -> {return_type}"
                     else:
                         signature = f"def {name}{params}"
 
-                    # Try to get docstring
-                    docstring = ""
                     body = node.child_by_field_name("body")
-                    if body and body.child_count > 0:
-                        first_stmt = body.children[1] if len(body.children) > 1 else None
-                        if first_stmt and first_stmt.type == "expression_statement":
-                            string_node = first_stmt.child(0)
-                            if string_node and string_node.type == "string":
-                                doc_text = string_node.text.decode()
-                                docstring = doc_text.strip('"""').strip("'''").strip()
+                    docstring = self._extract_docstring(body)
 
-                    # Extract references from function body (W2.5)
                     body_refs = self.extract_python_references(node)
-                    decorator_refs = get_decorator_refs(node)
-                    # Combine: body refs + module-level imports + decorators
+                    decorator_refs = self._get_decorator_refs(node)
                     all_refs = sorted(set(body_refs) | set(module_refs) | set(decorator_refs))
 
-                    symbol = Symbol(
+                    symbols.append(Symbol(
                         name=name,
                         type="function",
                         file=file_path,
@@ -341,10 +305,8 @@ class PythonExtractor:
                         signature=signature,
                         docstring=docstring,
                         references=all_refs,
-                    )
-                    symbols.append(symbol)
+                    ))
 
-            # Class definitions
             elif node.type == "class_definition":
                 name_node = node.child_by_field_name("name")
                 bases_node = node.child_by_field_name("superclasses")
@@ -353,30 +315,19 @@ class PythonExtractor:
                     name = name_node.text.decode()
                     bases = bases_node.text.decode() if bases_node else ""
 
-                    # Build signature
                     if bases:
                         signature = f"class {name}{bases}"
                     else:
                         signature = f"class {name}"
 
-                    # Try to get docstring
-                    docstring = ""
                     body = node.child_by_field_name("body")
-                    if body and body.child_count > 0:
-                        first_stmt = body.children[1] if len(body.children) > 1 else None
-                        if first_stmt and first_stmt.type == "expression_statement":
-                            string_node = first_stmt.child(0)
-                            if string_node and string_node.type == "string":
-                                doc_text = string_node.text.decode()
-                                docstring = doc_text.strip('"""').strip("'''").strip()
+                    docstring = self._extract_docstring(body)
 
-                    # Extract references from class body (W2.5)
                     body_refs = self.extract_python_references(node)
-                    decorator_refs = get_decorator_refs(node)
-                    # Combine: body refs + module-level imports + decorators
+                    decorator_refs = self._get_decorator_refs(node)
                     all_refs = sorted(set(body_refs) | set(module_refs) | set(decorator_refs))
 
-                    symbol = Symbol(
+                    symbols.append(Symbol(
                         name=name,
                         type="class",
                         file=file_path,
@@ -384,10 +335,8 @@ class PythonExtractor:
                         signature=signature,
                         docstring=docstring,
                         references=all_refs,
-                    )
-                    symbols.append(symbol)
+                    ))
 
-            # Recurse to children
             for child in node.children:
                 traverse(child)
 

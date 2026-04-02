@@ -38,7 +38,8 @@ def _get_interval_minutes() -> int:
 
         cfg = get_hook_config("git_reminder")
         return int(cfg.get("interval_minutes", DEFAULT_INTERVAL_MINUTES))
-    except Exception:
+    except Exception as e:
+        print(f"git_reminder: config load failed: {e}", file=sys.stderr)
         return DEFAULT_INTERVAL_MINUTES
 
 
@@ -55,7 +56,8 @@ def get_uncommitted_count(cwd: str) -> int:
         if result.returncode == 0 and result.stdout.strip():
             return len(result.stdout.strip().split("\n"))
         return 0
-    except Exception:
+    except Exception as e:
+        print(f"git_reminder: git status failed: {e}", file=sys.stderr)
         return 0
 
 
@@ -74,7 +76,8 @@ def should_remind(cwd: str) -> bool:
                 if diff_minutes < interval:
                     return False
         return True
-    except Exception:
+    except (json.JSONDecodeError, ValueError, OSError) as e:
+        print(f"git_reminder: should_remind check failed: {e}", file=sys.stderr)
         return True
 
 
@@ -99,8 +102,8 @@ def update_reminder_state(cwd: str):
         REMINDER_STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
         with open(REMINDER_STATE_FILE, "w") as f:
             json.dump(state, f, indent=2)
-    except Exception:
-        pass
+    except (json.JSONDecodeError, ValueError, OSError) as e:
+        print(f"git_reminder: state update failed: {e}", file=sys.stderr)
 
 
 def send_notification(count: int):
@@ -119,8 +122,8 @@ def send_notification(count: int):
         return
     except FileNotFoundError:
         pass
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"git_reminder: macOS notification failed: {e}", file=sys.stderr)
 
     # Linux: notify-send (optional)
     try:
@@ -129,15 +132,16 @@ def send_notification(count: int):
             capture_output=True,
             timeout=5,
         )
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"git_reminder: Linux notification failed: {e}", file=sys.stderr)
 
 
 def main():
     """Entry point - reads hook input from stdin, checks for uncommitted files."""
     try:
         input_data = json.load(sys.stdin)
-    except Exception:
+    except (json.JSONDecodeError, ValueError) as e:
+        print(f"git_reminder: stdin parse failed: {e}", file=sys.stderr)
         input_data = {}
 
     cwd = input_data.get("cwd", os.getcwd())

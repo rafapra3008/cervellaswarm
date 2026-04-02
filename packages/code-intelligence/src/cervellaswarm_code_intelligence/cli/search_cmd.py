@@ -4,12 +4,84 @@
 """CLI entry point for Semantic Search API.
 
 Extracted from semantic_search.py (S342) to keep library under 500 lines.
+S501: CC refactored 19->7 via dispatch table pattern (validated S436-S437).
 """
 
 import sys
 import logging
 
 from ..semantic_search import SemanticSearch
+
+
+def _cmd_find(search: SemanticSearch, name: str) -> None:
+    print(f"\nFinding symbol: {name}")
+    location = search.find_symbol(name)
+    if location:
+        file_path, line_number = location
+        print(f"\nFound at: {file_path}:{line_number}")
+    else:
+        print(f"\nSymbol not found: {name}")
+
+
+def _cmd_callers(search: SemanticSearch, name: str) -> None:
+    print(f"\nFinding callers of: {name}")
+    callers = search.find_callers(name)
+    if callers:
+        print(f"\nFound {len(callers)} callers:")
+        for file_path, line_number, caller_name in callers:
+            print(f"   {caller_name} at {file_path}:{line_number}")
+    else:
+        print(f"\nNo callers found for: {name}")
+
+
+def _cmd_callees(search: SemanticSearch, name: str) -> None:
+    print(f"\nFinding callees of: {name}")
+    callees = search.find_callees(name)
+    if callees:
+        print(f"\nFound {len(callees)} callees:")
+        for callee in callees:
+            print(f"   {callee}")
+    else:
+        print(f"\nNo callees found for: {name}")
+
+
+def _cmd_refs(search: SemanticSearch, name: str) -> None:
+    print(f"\nFinding references to: {name}")
+    refs = search.find_references(name)
+    if refs:
+        print(f"\nFound {len(refs)} references:")
+        for file_path, line_number in refs:
+            print(f"   {file_path}:{line_number}")
+    else:
+        print(f"\nNo references found for: {name}")
+
+
+def _cmd_info(search: SemanticSearch, name: str) -> None:
+    print(f"\nSymbol info: {name}")
+    info = search.get_symbol_info(name)
+    if info:
+        print("\nSymbol found:")
+        print(f"   Name: {info.name}")
+        print(f"   Type: {info.type}")
+        print(f"   File: {info.file}:{info.line}")
+        print(f"   Signature: {info.signature}")
+        if info.docstring:
+            print(f"   Docstring: {info.docstring[:100]}...")
+        print(f"   References: {len(info.references)} symbols")
+        importance = search.graph.get_symbol_importance(info)
+        print(f"   Importance: {importance:.6f}")
+    else:
+        print(f"\nSymbol not found: {name}")
+
+
+_COMMANDS = {
+    "find": _cmd_find,
+    "callers": _cmd_callers,
+    "callees": _cmd_callees,
+    "refs": _cmd_refs,
+    "info": _cmd_info,
+    "stats": lambda _search, _name: None,  # no-op: repo stats printed unconditionally above
+}
 
 
 def main():
@@ -27,7 +99,6 @@ def main():
         print(f"  python {sys.argv[0]} /path/to/repo login callers")
         sys.exit(1)
 
-    # Enable logging
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -42,71 +113,15 @@ def main():
         search = SemanticSearch(repo_root)
 
         stats = search.get_stats()
-        print(f"\nRepository Statistics:")
+        print("\nRepository Statistics:")
         print(f"   Total symbols: {stats['total_symbols']}")
         print(f"   Unique names: {stats['unique_names']}")
         print(f"   Graph nodes: {stats['graph_nodes']}")
         print(f"   Graph edges: {stats['graph_edges']}")
 
-        if command == "find":
-            print(f"\nFinding symbol: {symbol_name}")
-            location = search.find_symbol(symbol_name)
-            if location:
-                file_path, line_number = location
-                print(f"\nFound at: {file_path}:{line_number}")
-            else:
-                print(f"\nSymbol not found: {symbol_name}")
-
-        elif command == "callers":
-            print(f"\nFinding callers of: {symbol_name}")
-            callers = search.find_callers(symbol_name)
-            if callers:
-                print(f"\nFound {len(callers)} callers:")
-                for file_path, line_number, caller_name in callers:
-                    print(f"   {caller_name} at {file_path}:{line_number}")
-            else:
-                print(f"\nNo callers found for: {symbol_name}")
-
-        elif command == "callees":
-            print(f"\nFinding callees of: {symbol_name}")
-            callees = search.find_callees(symbol_name)
-            if callees:
-                print(f"\nFound {len(callees)} callees:")
-                for callee in callees:
-                    print(f"   {callee}")
-            else:
-                print(f"\nNo callees found for: {symbol_name}")
-
-        elif command == "refs":
-            print(f"\nFinding references to: {symbol_name}")
-            refs = search.find_references(symbol_name)
-            if refs:
-                print(f"\nFound {len(refs)} references:")
-                for file_path, line_number in refs:
-                    print(f"   {file_path}:{line_number}")
-            else:
-                print(f"\nNo references found for: {symbol_name}")
-
-        elif command == "info":
-            print(f"\nSymbol info: {symbol_name}")
-            info = search.get_symbol_info(symbol_name)
-            if info:
-                print(f"\nSymbol found:")
-                print(f"   Name: {info.name}")
-                print(f"   Type: {info.type}")
-                print(f"   File: {info.file}:{info.line}")
-                print(f"   Signature: {info.signature}")
-                if info.docstring:
-                    print(f"   Docstring: {info.docstring[:100]}...")
-                print(f"   References: {len(info.references)} symbols")
-                importance = search.graph.get_symbol_importance(info)
-                print(f"   Importance: {importance:.6f}")
-            else:
-                print(f"\nSymbol not found: {symbol_name}")
-
-        elif command == "stats":
-            pass  # Already printed above
-
+        handler = _COMMANDS.get(command)
+        if handler:
+            handler(search, symbol_name)
         else:
             print(f"\nUnknown command: {command}")
             sys.exit(1)

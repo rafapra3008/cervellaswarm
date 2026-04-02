@@ -58,7 +58,8 @@ def _load_extra_patterns() -> tuple[list, list, list]:
                 except re.error:
                     pass  # Skip invalid regex silently
         return extra_blocked, extra_risky, extra_safe
-    except Exception:
+    except Exception as e:
+        print(f"bash_validator: failed to load extra patterns: {e}", file=sys.stderr)
         return [], [], []
 
 # ============================================================

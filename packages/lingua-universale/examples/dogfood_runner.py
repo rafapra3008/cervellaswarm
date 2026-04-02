@@ -230,7 +230,7 @@ def run_violation_path() -> None:
         )
         print("FAIL - violation not detected (this should not happen)")
     except ProtocolViolation as exc:
-        print(f"OK - ProtocolViolation raised as expected")
+        print("OK - ProtocolViolation raised as expected")
         print(f"   Protocol : {exc.protocol}")
         print(f"   Session  : {exc.session_id}")
         print(f"   Step     : {exc.step}")

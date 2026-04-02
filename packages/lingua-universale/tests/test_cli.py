@@ -204,7 +204,7 @@ class TestNoCommand:
 
     def test_no_args(self) -> None:
         exit_code = main([])
-        assert exit_code == 0
+        assert exit_code == 1  # no subcommand = error (prints help)
 
     def test_unknown_command(self) -> None:
         # argparse will error on unknown subcommand

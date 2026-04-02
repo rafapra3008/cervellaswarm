@@ -72,12 +72,14 @@ class QualityResult:
 def check_actionability(
     content: str,
     patterns: list[str] | None = None,
+    bonus_pattern: str | None = None,
 ) -> float:
     """Check for clear TODOs and next steps.
 
     Args:
         content: File content to analyze.
         patterns: Custom patterns to look for. Defaults to built-in list.
+        bonus_pattern: Regex for section header bonus (+2). Defaults to "NEXT STEPS".
 
     Returns:
         Score from 0.0 to 10.0.
@@ -105,8 +107,9 @@ def check_actionability(
     else:
         score = 2.0
 
-    # Bonus for explicit NEXT STEPS section
-    if re.search(r"NEXT\s+STEPS?", content, re.IGNORECASE):
+    # Bonus for explicit section header
+    bp = bonus_pattern if bonus_pattern is not None else r"NEXT\s+STEPS?"
+    if re.search(bp, content, re.IGNORECASE):
         score = min(10.0, score + 2.0)
 
     return score
@@ -216,6 +219,10 @@ def check_quality(
     weights: dict[str, float] | None = None,
     max_lines: int | None = None,
     warning_lines: int | None = None,
+    actionability_patterns: list[str] | None = None,
+    specificity_good: list[str] | None = None,
+    specificity_bad: list[str] | None = None,
+    bonus_pattern: str | None = None,
 ) -> QualityResult:
     """Run a full quality check on a session state file.
 
@@ -225,6 +232,10 @@ def check_quality(
         weights: Custom scoring weights. Defaults to config.
         max_lines: Maximum allowed lines. Defaults to config.
         warning_lines: Warning threshold. Defaults to config.
+        actionability_patterns: Custom actionability patterns.
+        specificity_good: Custom good specificity patterns.
+        specificity_bad: Custom bad specificity patterns.
+        bonus_pattern: Custom bonus section header pattern.
 
     Returns:
         QualityResult with scores and suggestions.
@@ -265,8 +276,8 @@ def check_quality(
             warnings=[f"Cannot read file: {e}"],
         )
 
-    actionability_score = check_actionability(content)
-    specificity_score = check_specificity(content)
+    actionability_score = check_actionability(content, patterns=actionability_patterns, bonus_pattern=bonus_pattern)
+    specificity_score = check_specificity(content, good_patterns=specificity_good, bad_patterns=specificity_bad)
     freshness_score, updated_date = check_freshness(file_path)
     conciseness_score, conciseness_warnings = check_conciseness(content, max_lines, warning_lines)
 

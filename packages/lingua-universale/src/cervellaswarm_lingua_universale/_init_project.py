@@ -71,8 +71,10 @@ def _template_protocol(name: str) -> str:
 
         protocol {pascal}:
             roles: requester, worker
+
             requester asks worker to do task
             worker returns result to requester
+
             properties:
                 always terminates
                 no deadlock
@@ -94,8 +96,10 @@ def _template_test(name: str) -> str:
 
         protocol Verify{pascal}:
             roles: tester, verifier
+
             tester asks verifier to verify
             verifier returns verdict to tester
+
             properties:
                 always terminates
                 no deadlock

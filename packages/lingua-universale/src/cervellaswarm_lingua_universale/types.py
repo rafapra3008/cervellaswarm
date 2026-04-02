@@ -111,6 +111,75 @@ class MessageKind(Enum):
     CONTEXT_INJECT = "context_inject"
 
 
+# -- Keyword-based heuristic: action + payload -> MessageKind
+# Forward declarations -- reassigned after MessageKind is defined below
+_ASKS_KEYWORDS: dict[tuple[str, ...], "MessageKind"] = {}
+_RETURNS_KEYWORDS: dict[tuple[str, ...], "MessageKind"] = {}
+_SENDS_KEYWORDS: dict[tuple[str, ...], "MessageKind"] = {}
+
+
+def infer_message_kind(action: str, payload: str) -> "MessageKind":
+    """Infer MessageKind from action verb and payload text.
+
+    Shared between _compiler.py and _eval.py to guarantee identical
+    classification. Uses keyword heuristics on the payload.
+
+    Args:
+        action: The action verb (asks, returns, tells, proposes, sends).
+        payload: The payload text, already lowercased.
+
+    Returns:
+        The inferred MessageKind.
+    """
+    payload = payload or ""
+
+    if action == "asks":
+        for keywords, kind in _ASKS_KEYWORDS.items():
+            if any(w in payload for w in keywords):
+                return kind
+        return MessageKind.TASK_REQUEST
+
+    if action == "returns":
+        for keywords, kind in _RETURNS_KEYWORDS.items():
+            if any(w in payload for w in keywords):
+                return kind
+        return MessageKind.TASK_RESULT
+
+    if action == "tells":
+        if "decision" in payload:
+            return MessageKind.PLAN_DECISION
+        return MessageKind.DM
+
+    if action == "proposes":
+        return MessageKind.PLAN_PROPOSAL
+
+    if action == "sends":
+        for keywords, kind in _SENDS_KEYWORDS.items():
+            if any(w in payload for w in keywords):
+                return kind
+        return MessageKind.DM
+
+    return MessageKind.DM
+
+
+# Populate keyword maps after MessageKind is defined
+_ASKS_KEYWORDS = {
+    ("verify", "audit", "check"): MessageKind.AUDIT_REQUEST,
+    ("plan",): MessageKind.PLAN_REQUEST,
+    ("research", "search"): MessageKind.RESEARCH_QUERY,
+}
+_RETURNS_KEYWORDS = {
+    ("verdict", "audit"): MessageKind.AUDIT_VERDICT,
+    ("plan", "proposal"): MessageKind.PLAN_PROPOSAL,
+    ("report", "research"): MessageKind.RESEARCH_REPORT,
+}
+_SENDS_KEYWORDS = {
+    ("shutdown",): MessageKind.SHUTDOWN_REQUEST,
+    ("context",): MessageKind.CONTEXT_INJECT,
+    ("broadcast",): MessageKind.BROADCAST,
+}
+
+
 # ============================================================
 # Message Dataclasses - The typed payloads
 # ============================================================

@@ -12,16 +12,18 @@
 
 import { existsSync } from "node:fs";
 import { readFile, readdir, stat } from "node:fs/promises";
-import { join, resolve } from "node:path";
+import { join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Known SNCP projects
-const KNOWN_PROJECTS = ["cervellaswarm", "miracollo", "contabilita", "cervellacostruzione"] as const;
-export type SncpProject = (typeof KNOWN_PROJECTS)[number];
+// Internal project list -- used for search defaults, NOT exposed in tool schemas
+// (exposing private project names in MCP tool schemas is a privacy leak)
+// NOTE: Auto-discovered at runtime via discoverProjects(). This static list is a fallback only.
+const FALLBACK_PROJECTS = ["cervellaswarm", "miracollo", "contabilita", "economato", "lumine"] as const;
+export type SncpProject = string;
 
 // File types available per project
 // NOTE: stato.md eliminated in SNCP 4.0 (S357). Only PROMPT_RIPRESA and MEMORY survive.
@@ -57,6 +59,37 @@ export function getSncpRoot(): string {
   // Priority 3: Fall back to relative path from module location
   // From dist/sncp/reader.js -> go up 4 levels to CervellaSwarm/
   return resolve(__dirname, "..", "..", "..", "..", ".sncp", "progetti");
+}
+
+/**
+ * Discover projects at runtime by scanning .sncp/progetti/ directory.
+ * Falls back to FALLBACK_PROJECTS if directory scan fails.
+ */
+async function discoverProjects(): Promise<string[]> {
+  const root = getSncpRoot();
+  try {
+    const entries = await readdir(root);
+    const projects: string[] = [];
+    for (const entry of entries) {
+      const projectDir = join(root, entry);
+      try {
+        const stats = await stat(projectDir);
+        if (!stats.isDirectory()) continue;
+        // Only include projects that have a PROMPT_RIPRESA file
+        const files = await readdir(projectDir);
+        if (files.some((f) => f.startsWith("PROMPT_RIPRESA_"))) {
+          projects.push(entry);
+        }
+      } catch (e) {
+        console.warn(`discoverProjects: skipping ${entry}: ${e}`);
+        continue;
+      }
+    }
+    return projects.length > 0 ? projects : [...FALLBACK_PROJECTS];
+  } catch (e) {
+    console.warn(`discoverProjects: scan failed, using fallback: ${e}`);
+    return [...FALLBACK_PROJECTS];
+  }
 }
 
 /**
@@ -165,7 +198,7 @@ export async function searchSncp(
     matches: Array<{ line: number; text: string }>;
   }> = [];
 
-  const projectsToSearch = project ? [project] : KNOWN_PROJECTS;
+  const projectsToSearch = project ? [project] : await discoverProjects();
   const queryLower = query.toLowerCase();
 
   for (const proj of projectsToSearch) {
@@ -202,37 +235,44 @@ export async function searchSncp(
       }
     }
 
-    // Also search roadmaps/ subdirectory
-    const roadmapsDir = join(projectDir, "roadmaps");
-    assertWithinRoot(root, roadmapsDir);
-    let roadmapFiles: string[];
-    try {
-      roadmapFiles = await readdir(roadmapsDir);
-    } catch {
-      continue;
-    }
-
-    for (const file of roadmapFiles) {
-      if (!file.endsWith(".md")) continue;
-
-      const filePath = join(roadmapsDir, file);
-      let content: string;
+    // Search subdirectories (roadmaps, reports, studi, ricerche, memoria)
+    const subdirs = ["roadmaps", "reports", "studi", "ricerche", "memoria"];
+    for (const subdir of subdirs) {
+      const subdirPath = join(projectDir, subdir);
+      assertWithinRoot(root, subdirPath);
+      let subdirFiles: string[];
       try {
-        content = await readFile(filePath, "utf-8");
+        subdirFiles = await readdir(subdirPath);
       } catch {
         continue;
       }
 
-      const matches: Array<{ line: number; text: string }> = [];
-      const lines = content.split("\n");
-      for (let i = 0; i < lines.length; i++) {
-        if (lines[i].toLowerCase().includes(queryLower)) {
-          matches.push({ line: i + 1, text: lines[i].trim() });
-        }
-      }
+      for (const file of subdirFiles) {
+        if (!file.endsWith(".md")) continue;
 
-      if (matches.length > 0) {
-        results.push({ project: proj, file: `roadmaps/${file}`, matches });
+        const filePath = join(subdirPath, file);
+        // Skip archived files (both English "archive" and Italian "archivio")
+        if (filePath.includes("/archive/") || filePath.includes("/archivio/")) continue;
+        let content: string;
+        try {
+          const stats = await stat(filePath);
+          if (!stats.isFile()) continue;
+          content = await readFile(filePath, "utf-8");
+        } catch {
+          continue;
+        }
+
+        const matches: Array<{ line: number; text: string }> = [];
+        const lines = content.split("\n");
+        for (let i = 0; i < lines.length; i++) {
+          if (lines[i].toLowerCase().includes(queryLower)) {
+            matches.push({ line: i + 1, text: lines[i].trim() });
+          }
+        }
+
+        if (matches.length > 0) {
+          results.push({ project: proj, file: `${subdir}/${file}`, matches });
+        }
       }
     }
   }
@@ -247,9 +287,9 @@ export async function searchSncp(
 function assertWithinRoot(root: string, targetPath: string): void {
   const resolvedRoot = resolve(root);
   const resolvedTarget = resolve(targetPath);
-  if (!resolvedTarget.startsWith(resolvedRoot + "/") && resolvedTarget !== resolvedRoot) {
+  if (!resolvedTarget.startsWith(resolvedRoot + sep) && resolvedTarget !== resolvedRoot) {
     throw new Error(`Path traversal blocked: target is outside SNCP root`);
   }
 }
 
-export { KNOWN_PROJECTS, FILE_TYPES, assertWithinRoot };
+export { FALLBACK_PROJECTS, FILE_TYPES, assertWithinRoot, discoverProjects };

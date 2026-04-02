@@ -347,7 +347,7 @@ if __name__ == "__main__":
             print(f"Number of children: {tree.root_node.child_count}")
 
             # Show first few child nodes
-            print(f"\nFirst 5 child nodes:")
+            print("\nFirst 5 child nodes:")
             for i, child in enumerate(tree.root_node.children[:5]):
                 print(f"  {i+1}. {child.type} at line {child.start_point[0]}")
 

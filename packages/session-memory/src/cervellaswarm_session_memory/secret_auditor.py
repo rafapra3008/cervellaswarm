@@ -150,43 +150,22 @@ def audit_file(
     findings = []
     lines = content.split("\n")
 
+    # Build combined pattern list: [(severity, pattern, name), ...]
+    all_patterns = [
+        *(((Severity.CRITICAL, p, n) for p, n in CRITICAL_PATTERNS)),
+        *(((Severity.HIGH, p, n) for p, n in HIGH_PATTERNS)),
+        *(((Severity.HIGH, p, n) for p, n in (extra_patterns or []))),
+    ]
+
     for line_num, line in enumerate(lines, 1):
         if is_sanitized(line):
             continue
-
-        for pattern, name in CRITICAL_PATTERNS:
+        for severity, pattern, name in all_patterns:
             if re.search(pattern, line):
-                findings.append(
-                    Finding(
-                        severity=Severity.CRITICAL,
-                        pattern_name=name,
-                        file=str(file_path),
-                        line_number=line_num,
-                    )
-                )
-
-        for pattern, name in HIGH_PATTERNS:
-            if re.search(pattern, line):
-                findings.append(
-                    Finding(
-                        severity=Severity.HIGH,
-                        pattern_name=name,
-                        file=str(file_path),
-                        line_number=line_num,
-                    )
-                )
-
-        if extra_patterns:
-            for pattern, name in extra_patterns:
-                if re.search(pattern, line):
-                    findings.append(
-                        Finding(
-                            severity=Severity.HIGH,
-                            pattern_name=name,
-                            file=str(file_path),
-                            line_number=line_num,
-                        )
-                    )
+                findings.append(Finding(
+                    severity=severity, pattern_name=name,
+                    file=str(file_path), line_number=line_num,
+                ))
 
     critical = sum(1 for f in findings if f.severity == Severity.CRITICAL)
     high = sum(1 for f in findings if f.severity == Severity.HIGH)
@@ -250,13 +229,7 @@ def audit_directory(
         if file_path.suffix not in extensions:
             continue
 
-        # Check additional skip patterns
-        skip = False
-        for sp in all_skip:
-            if sp in str(file_path):
-                skip = True
-                break
-        if skip:
+        if any(sp in str(file_path) for sp in all_skip):
             continue
 
         result = audit_file(file_path, all_extra if all_extra else None)

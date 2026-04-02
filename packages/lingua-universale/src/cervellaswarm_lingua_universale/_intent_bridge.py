@@ -42,7 +42,7 @@ from __future__ import annotations
 
 import re
 import typing
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum, auto
 from types import MappingProxyType
 from typing import Callable
@@ -53,7 +53,6 @@ from .spec import (
     PropertyKind,
     PropertyReport,
     PropertyVerdict,
-    ProtocolSpec,
     check_properties,
     parse_spec,
 )
@@ -169,7 +168,9 @@ class NLProcessor(typing.Protocol):
 
     def process(
         self, text: str, lang: str, context: list[Turn]
-    ) -> IntentDraft: ...
+    ) -> IntentDraft:
+        """Translate free-text input into a structured IntentDraft."""
+        ...
 
 
 # ============================================================
@@ -695,10 +696,12 @@ class ChatSession:
 
     @property
     def phase(self) -> ChatPhase:
+        """Return the current phase of the chat session."""
         return self._phase
 
     @property
     def draft(self) -> IntentDraft | None:
+        """Build an IntentDraft from the current session state, or None if incomplete."""
         if not self._protocol_name or not self._roles:
             return None
         return IntentDraft(
@@ -711,14 +714,17 @@ class ChatSession:
 
     @property
     def turns(self) -> list[Turn]:
+        """Return a copy of all conversation turns so far."""
         return list(self._turns)
 
     @property
     def lang(self) -> str:
+        """Return the session language code (en, it, or pt)."""
         return self._lang
 
     @property
     def result(self) -> ChatResult | None:
+        """Return the final ChatResult, or None if the session is still running."""
         return self._result
 
     # --------------------------------------------------------

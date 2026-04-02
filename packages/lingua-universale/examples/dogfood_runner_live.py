@@ -225,7 +225,7 @@ def run_live(agents: dict[str, Agent]) -> None:
             "validator", "supervisor",
             DirectMessage(sender_role="validator", content=feedback),
         )
-        print(f"[5] validator -> supervisor: FEEDBACK")
+        print("[5] validator -> supervisor: FEEDBACK")
         print(f"    {feedback}")
 
         revision = agents["supervisor"].think(
@@ -236,7 +236,7 @@ def run_live(agents: dict[str, Agent]) -> None:
             "supervisor", "worker",
             Broadcast(sender_role="supervisor", content=revision),
         )
-        print(f"[6] supervisor -> worker: REVISE")
+        print("[6] supervisor -> worker: REVISE")
         print(f"    {revision}")
 
     # --- Summary ---
@@ -268,7 +268,7 @@ def run_violation_demo() -> None:
         )
         print("FAIL - violation not detected")
     except ProtocolViolation as exc:
-        print(f"BLOCKED! ProtocolViolation raised")
+        print("BLOCKED! ProtocolViolation raised")
         print(f"  Protocol: {exc.protocol}")
         print(f"  Session:  {exc.session_id}")
         print(f"  Step:     {exc.step}")

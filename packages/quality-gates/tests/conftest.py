@@ -3,10 +3,8 @@
 
 """Shared fixtures for cervellaswarm-quality-gates tests."""
 
-import os
 import stat
 import pytest
-from pathlib import Path
 
 
 @pytest.fixture

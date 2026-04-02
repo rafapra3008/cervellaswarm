@@ -93,11 +93,11 @@ def cmd_setup():
         example_content = _get_example_config()
         config_file.write_text(example_content, encoding="utf-8")
         print(f"  Created config: {config_file}")
-        print(f"  Edit it to customize hook behavior.")
+        print("  Edit it to customize hook behavior.")
 
     print()
     print("  Add these hooks to your Claude Code settings.json:")
-    print(f"  (File: ~/.claude/settings.json)")
+    print("  (File: ~/.claude/settings.json)")
     print()
 
     # Generate settings.json snippet
@@ -136,8 +136,8 @@ def _get_example_config() -> str:
         # Try to read from package
         example = (pkg_files / ".." / ".." / "examples" / "hooks.yaml").read_text()
         return example
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"cli: failed to load example hooks.yaml: {e}", file=sys.stderr)
 
     # Fallback: minimal config
     return """# CervellaSwarm Agent Hooks - Configuration

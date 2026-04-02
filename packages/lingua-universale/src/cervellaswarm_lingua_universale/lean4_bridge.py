@@ -39,7 +39,9 @@ from enum import Enum
 from pathlib import Path
 from typing import Optional, Sequence
 
-from .protocols import Protocol, ProtocolChoice, ProtocolElement, ProtocolStep
+from ._codegen_common import collect_all_steps as _collect_all_steps
+from ._codegen_common import used_message_kinds as _used_message_kinds
+from .protocols import Protocol, ProtocolChoice, ProtocolElement
 from .types import MessageKind
 
 
@@ -170,18 +172,6 @@ def _validate_lean_name(name: str) -> None:
             f"'{name}' is not a valid Lean 4 identifier "
             f"(must match {_LEAN_IDENT_RE.pattern})"
         )
-
-
-def _collect_all_steps(elements: Sequence[ProtocolElement]) -> list[ProtocolStep]:
-    """Collect all ProtocolSteps from elements, including those inside choice branches."""
-    steps: list[ProtocolStep] = []
-    for elem in elements:
-        if isinstance(elem, ProtocolStep):
-            steps.append(elem)
-        elif isinstance(elem, ProtocolChoice):
-            for branch_steps in elem.branches.values():
-                steps.extend(branch_steps)
-    return steps
 
 
 def _collect_choices(elements: Sequence[ProtocolElement]) -> list[ProtocolChoice]:
@@ -421,15 +411,6 @@ class Lean4Generator:
         ])
 
         return "\n".join(sections)
-
-
-def _used_message_kinds(protocol: Protocol) -> list[MessageKind]:
-    """Collect MessageKinds actually used in a protocol (preserving enum order)."""
-    used: set[MessageKind] = set()
-    for step in _collect_all_steps(protocol.elements):
-        used.add(step.message_kind)
-    # Return in enum-definition order for deterministic output
-    return [k for k in MessageKind if k in used]
 
 
 # ============================================================

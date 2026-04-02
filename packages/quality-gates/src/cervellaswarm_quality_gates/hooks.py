@@ -20,7 +20,6 @@ Hook statuses:
 
 from __future__ import annotations
 
-import os
 import stat
 from dataclasses import dataclass, field
 from enum import Enum

@@ -51,28 +51,20 @@ v2.2.0 (2026-01-19) - W2.5-C Caching
     - extract_symbols() now uses cache for repeated calls
 
 v2.1.0 (2026-01-19) - W2.5-B TypeScript Reference Extraction
-    - Added TS_BUILTINS frozenset for TypeScript/JavaScript builtins filtering
-    - Added _extract_typescript_references() for TS/JS code analysis
-    - Added _extract_ts_module_level_references() for import extraction
     - TypeScript symbols now include references (REQ-07 implemented)
-    - JavaScript symbols now include references (bonus)
-    - Added class_declaration support for TypeScript
-    - Supports: function calls, method calls, imports, class extends, type annotations
+    - Reference extraction delegated to TypeScriptExtractor
 
 v2.0.0 (2026-01-19) - W2.5-A Python Reference Extraction
-    - Added _extract_python_references() for Python code analysis
     - Symbol.references now populated during extract_symbols()
-    - Supports: function calls, method calls, imports, inheritance, type annotations
-    - Filters Python builtins (PYTHON_BUILTINS set)
+    - Reference extraction delegated to PythonExtractor
     - REQ-01 to REQ-06 implemented
 """
 
 import logging
 import os
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Dict, List
 
-from tree_sitter import Node
 
 from .treesitter_parser import TreesitterParser
 from .symbol_cache import SymbolCache
@@ -119,23 +111,6 @@ class SymbolExtractor:
         self._python_extractor = PythonExtractor()
         self._ts_extractor = TypeScriptExtractor()
         logger.debug(f"SymbolExtractor initialized with cache maxsize={cache_maxsize}")
-
-    # Delegation methods for backward compatibility (private methods)
-    def _extract_python_references(self, node: Node) -> List[str]:
-        """Delegate to PythonExtractor. Kept for backward compatibility."""
-        return self._python_extractor.extract_python_references(node)
-
-    def _extract_module_level_references(self, root_node: Node) -> List[str]:
-        """Delegate to PythonExtractor. Kept for backward compatibility."""
-        return self._python_extractor.extract_module_level_references(root_node)
-
-    def _extract_typescript_references(self, node: Node) -> List[str]:
-        """Delegate to TypeScriptExtractor. Kept for backward compatibility."""
-        return self._ts_extractor.extract_typescript_references(node)
-
-    def _extract_ts_module_level_references(self, root_node: Node) -> List[str]:
-        """Delegate to TypeScriptExtractor. Kept for backward compatibility."""
-        return self._ts_extractor.extract_ts_module_level_references(root_node)
 
     def extract_symbols(self, file_path: str) -> List[Symbol]:
         """Extract all symbols from a file.

@@ -17,11 +17,11 @@ from __future__ import annotations
 
 import logging
 import types
-
-_log = logging.getLogger(__name__)
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import TYPE_CHECKING
+
+_log = logging.getLogger(__name__)
 
 from ._ast import (
     AlwaysTerminates,
@@ -158,7 +158,6 @@ def verify_source(source: str, *, source_file: str = "<input>") -> EvalResult:
         return EvalResult(ok=False, source_file=source_file, errors=errors)
 
     from .lean4_bridge import lean4_available
-    from .spec import check_properties
 
     verification_lines: list[str] = []
     property_reports = []
@@ -215,7 +214,7 @@ def verify_source(source: str, *, source_file: str = "<input>") -> EvalResult:
             else:
                 verification_lines.append(
                     "  Lean 4: not installed "
-                    "(install with: elan toolchain install leanprover-lean4-v4.14.0)"
+                    "(install with: elan toolchain install leanprover-lean4-stable)"
                 )
         except Exception as exc:
             verification_lines.append(f"  Lean 4 generation: {exc}")
@@ -310,7 +309,7 @@ def _safe_check_properties(protocol, spec):
     map to MessageKind values.  Those properties are SKIPPED with evidence.
     """
     from .spec import (
-        PropertyReport, PropertyResult, PropertySpec, PropertyVerdict,
+        PropertyReport, PropertyResult, PropertyVerdict,
         check_properties,
     )
 
@@ -354,7 +353,6 @@ def _protocol_node_to_runtime(node: ProtocolNode):
     see the complete protocol structure.
     """
     from .protocols import Protocol, ProtocolChoice, ProtocolStep
-    from .types import MessageKind
 
     def _convert_elements(items):
         """Recursively convert AST step/choice nodes to runtime elements."""
@@ -438,54 +436,16 @@ def _ast_properties_to_spec(node: ProtocolNode):
 
 
 def _infer_kind_from_step(step) -> object:
-    """Infer MessageKind from a parsed step, matching _compiler.py logic.
+    """Infer MessageKind from a parsed step.
 
-    Must mirror ASTCompiler._step_to_message_kind() so that verify_source
-    and the compiler agree on message kinds.  Without payload-aware
-    inference, property checks on audit_verdict, plan_request, etc.
-    would silently pass even when violated.
+    Delegates to ``types.infer_message_kind()`` -- the single source of
+    truth shared with ``_compiler.py``.
     """
-    from .types import MessageKind
+    from .types import infer_message_kind
 
     action = step.action
     payload = step.payload.lower() if step.payload else ""
-
-    if action == "asks":
-        if any(w in payload for w in ("verify", "audit", "check")):
-            return MessageKind.AUDIT_REQUEST
-        if "plan" in payload:
-            return MessageKind.PLAN_REQUEST
-        if any(w in payload for w in ("research", "search")):
-            return MessageKind.RESEARCH_QUERY
-        return MessageKind.TASK_REQUEST
-
-    if action == "returns":
-        if any(w in payload for w in ("verdict", "audit")):
-            return MessageKind.AUDIT_VERDICT
-        if any(w in payload for w in ("plan", "proposal")):
-            return MessageKind.PLAN_PROPOSAL
-        if any(w in payload for w in ("report", "research")):
-            return MessageKind.RESEARCH_REPORT
-        return MessageKind.TASK_RESULT
-
-    if action == "tells":
-        if "decision" in payload:
-            return MessageKind.PLAN_DECISION
-        return MessageKind.DM
-
-    if action == "proposes":
-        return MessageKind.PLAN_PROPOSAL
-
-    if action == "sends":
-        if "shutdown" in payload:
-            return MessageKind.SHUTDOWN_REQUEST
-        if "context" in payload:
-            return MessageKind.CONTEXT_INJECT
-        if "broadcast" in payload:
-            return MessageKind.BROADCAST
-        return MessageKind.DM
-
-    return MessageKind.DM
+    return infer_message_kind(action, payload)
 
 
 def _protocol_node_to_lean4(node: ProtocolNode) -> str:

@@ -61,7 +61,6 @@ from ._ast import (
     StepOrChoice,
     StringExpr,
     TrustProp,
-    TypeExpr,
     UseNode,
     VariantTypeDecl,
 )

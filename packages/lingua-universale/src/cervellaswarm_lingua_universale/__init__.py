@@ -191,10 +191,12 @@ from ._intent_bridge import (
     render_intent_source,
 )
 from ._mcp_audit import (
+    AnnotationFinding,
     AuditReport,
     InferredProtocol,
     ToolDefinition,
     audit_tools,
+    check_annotations,
     load_manifest,
     render_json as render_audit_json,
     render_terminal as render_audit_terminal,
@@ -408,6 +410,16 @@ __all__ = [
     "suggest_similar",
     "DEFAULT_LOCALE",
     "SUPPORTED_LOCALES",
+    # MCP Audit
+    "AnnotationFinding",
+    "AuditReport",
+    "InferredProtocol",
+    "ToolDefinition",
+    "audit_tools",
+    "check_annotations",
+    "load_manifest",
+    "render_audit_json",
+    "render_audit_terminal",
     # NL Processor (E.3, optional dep -- `pip install ...[nl]`)
     "ClaudeNLProcessor",
     "NLProcessorError",

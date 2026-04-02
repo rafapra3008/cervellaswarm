@@ -101,92 +101,43 @@ def parse_frontmatter(content: str) -> dict[str, Any] | None:
         return None
 
 
-def validate_agent(path: str | Path) -> ValidationResult:
-    """Validate an agent definition file.
-
-    Checks:
-    - File exists and is readable
-    - Has valid YAML frontmatter
-    - Required fields present (name, description, model, tools)
-    - Model is valid (opus/sonnet/haiku)
-    - Tools are recognized
-    - Optional fields have valid values
-    """
-    path = Path(path)
-    issues: list[ValidationIssue] = []
-
-    # File existence
-    if not path.exists():
-        return ValidationResult(
-            path=str(path),
-            valid=False,
-            issues=[ValidationIssue("error", "file", f"File not found: {path}")],
-        )
-
-    if not path.suffix == ".md":
-        issues.append(
-            ValidationIssue("warning", "file", "Agent files should use .md extension")
-        )
-
-    # Read and parse
-    try:
-        content = path.read_text(encoding="utf-8")
-    except (OSError, UnicodeDecodeError) as e:
-        return ValidationResult(
-            path=str(path),
-            valid=False,
-            issues=[ValidationIssue("error", "file", f"Cannot read file: {e}")],
-        )
-    frontmatter = parse_frontmatter(content)
-
-    if frontmatter is None:
-        return ValidationResult(
-            path=str(path),
-            valid=False,
-            issues=[
-                ValidationIssue(
-                    "error", "frontmatter", "No valid YAML frontmatter found"
-                )
-            ],
-        )
-
-    # Required fields
+def _validate_required_and_core(
+    frontmatter: dict, issues: list[ValidationIssue]
+) -> None:
+    """Validate required fields, model, and tools."""
     for req in REQUIRED_FIELDS:
         if req not in frontmatter:
             issues.append(
                 ValidationIssue("error", req, f"Required field '{req}' is missing")
             )
 
-    # Model validation
     model = frontmatter.get("model")
     if model and model not in VALID_MODELS:
         issues.append(
             ValidationIssue(
-                "error",
-                "model",
+                "error", "model",
                 f"Invalid model '{model}'. Valid: {', '.join(sorted(VALID_MODELS))}",
             )
         )
 
-    # Tools validation
     tools_str = frontmatter.get("tools", "")
     if isinstance(tools_str, str) and tools_str:
-        tools = [t.strip() for t in tools_str.split(",")]
-        for tool in tools:
+        for tool in (t.strip() for t in tools_str.split(",")):
             if tool and tool not in VALID_TOOLS:
                 issues.append(
-                    ValidationIssue(
-                        "warning", "tools", f"Unrecognized tool '{tool}'"
-                    )
+                    ValidationIssue("warning", "tools", f"Unrecognized tool '{tool}'")
                 )
 
-    # Optional field validation
+
+def _validate_optional_fields(
+    frontmatter: dict, issues: list[ValidationIssue]
+) -> None:
+    """Validate optional frontmatter fields (role, permissionMode, maxTurns, version)."""
     role = frontmatter.get("role")
     if role and role not in VALID_ROLES:
         issues.append(
             ValidationIssue(
-                "info",
-                "role",
+                "info", "role",
                 f"Custom role '{role}'. Standard roles: {', '.join(sorted(VALID_ROLES))}",
             )
         )
@@ -195,8 +146,7 @@ def validate_agent(path: str | Path) -> ValidationResult:
     if permission_mode and permission_mode not in VALID_PERMISSION_MODES:
         issues.append(
             ValidationIssue(
-                "warning",
-                "permissionMode",
+                "warning", "permissionMode",
                 f"Invalid permissionMode '{permission_mode}'. "
                 f"Valid: {', '.join(sorted(VALID_PERMISSION_MODES))}",
             )
@@ -219,24 +169,62 @@ def validate_agent(path: str | Path) -> ValidationResult:
             )
         )
 
-    # Body content check
+
+def validate_agent(path: str | Path) -> ValidationResult:
+    """Validate an agent definition file.
+
+    Checks:
+    - File exists and is readable
+    - Has valid YAML frontmatter
+    - Required fields present (name, description, model, tools)
+    - Model is valid (opus/sonnet/haiku)
+    - Tools are recognized
+    - Optional fields have valid values
+    """
+    path = Path(path)
+    issues: list[ValidationIssue] = []
+
+    if not path.exists():
+        return ValidationResult(
+            path=str(path), valid=False,
+            issues=[ValidationIssue("error", "file", f"File not found: {path}")],
+        )
+
+    if not path.suffix == ".md":
+        issues.append(
+            ValidationIssue("warning", "file", "Agent files should use .md extension")
+        )
+
+    try:
+        content = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as e:
+        return ValidationResult(
+            path=str(path), valid=False,
+            issues=[ValidationIssue("error", "file", f"Cannot read file: {e}")],
+        )
+
+    frontmatter = parse_frontmatter(content)
+    if frontmatter is None:
+        return ValidationResult(
+            path=str(path), valid=False,
+            issues=[ValidationIssue("error", "frontmatter", "No valid YAML frontmatter found")],
+        )
+
+    _validate_required_and_core(frontmatter, issues)
+    _validate_optional_fields(frontmatter, issues)
+
     body_start = FRONTMATTER_PATTERN.match(content)
     if body_start:
         body = content[body_start.end() :].strip()
         if len(body) < 50:
             issues.append(
                 ValidationIssue(
-                    "warning",
-                    "body",
+                    "warning", "body",
                     "Agent body is very short. Add role description and instructions.",
                 )
             )
 
     has_errors = any(i.level == "error" for i in issues)
-
     return ValidationResult(
-        path=str(path),
-        valid=not has_errors,
-        frontmatter=frontmatter,
-        issues=issues,
+        path=str(path), valid=not has_errors, frontmatter=frontmatter, issues=issues,
     )

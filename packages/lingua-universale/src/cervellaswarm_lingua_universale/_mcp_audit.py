@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import json
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from ._colors import colors as _c
@@ -34,6 +34,7 @@ class ToolDefinition:
     name: str
     description: str
     input_schema: dict
+    annotations: dict = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -43,6 +44,14 @@ class InferredStep:
     after: str
     reason: str
     confidence: str  # "high" | "medium" | "low"
+
+
+@dataclass(frozen=True)
+class AnnotationFinding:
+    """A single finding from annotation analysis."""
+    tool_name: str
+    severity: str  # "critical" | "warning" | "info"
+    message: str
 
 
 @dataclass(frozen=True)
@@ -67,6 +76,8 @@ class AuditReport:
     passed: int
     violated: int
     warnings: tuple[str, ...]
+    annotation_findings: tuple[AnnotationFinding, ...] = ()
+    annotated_count: int = 0
 
 
 # ---------------------------------------------------------------------------
@@ -98,6 +109,7 @@ def load_manifest(path: str | Path) -> tuple[str, list[ToolDefinition]]:
             name=t.get("name", f"tool_{i}"),
             description=t.get("description", ""),
             input_schema=t.get("inputSchema", t.get("input_schema", {})),
+            annotations=t.get("annotations", {}),
         ))
 
     return server_name, tools
@@ -153,21 +165,12 @@ def _extract_id_fields(schema: dict) -> list[str]:
     return id_fields
 
 
-def _infer_orderings(
+def _order_lifecycle_first(
     tools: list[ToolDefinition],
     categories: dict[str, list[str]],
 ) -> list[InferredStep]:
-    """Infer ordering constraints from tool names, schemas, and descriptions."""
-    orderings: list[InferredStep] = []
-    seen: set[tuple[str, str]] = set()
-
-    def _add(before: str, after: str, reason: str, confidence: str) -> None:
-        key = (before, after)
-        if key not in seen and before != after:
-            seen.add(key)
-            orderings.append(InferredStep(before, after, reason, confidence))
-
-    # 1. LIFECYCLE before everything else
+    """Lifecycle tools (init, connect, login) run before everything else."""
+    results: list[InferredStep] = []
     lifecycle = categories.get("LIFECYCLE", [])
     non_lifecycle = [
         t.name for t in tools
@@ -175,9 +178,17 @@ def _infer_orderings(
     ]
     for lc in lifecycle:
         for other in non_lifecycle:
-            _add(lc, other, "lifecycle before operation", "high")
+            results.append(InferredStep(lc, other, "lifecycle before operation", "high"))
+    return results
 
-    # 2. CLEANUP after everything else
+
+def _order_cleanup_last(
+    tools: list[ToolDefinition],
+    categories: dict[str, list[str]],
+) -> list[InferredStep]:
+    """Cleanup tools (close, disconnect, logout) run after everything else."""
+    results: list[InferredStep] = []
+    lifecycle = categories.get("LIFECYCLE", [])
     cleanup = categories.get("CLEANUP", [])
     non_cleanup = [
         t.name for t in tools
@@ -185,53 +196,99 @@ def _infer_orderings(
     ]
     for other in non_cleanup:
         for cl in cleanup:
-            _add(other, cl, "operation before cleanup", "high")
+            results.append(InferredStep(other, cl, "operation before cleanup", "high"))
+    return results
 
-    # 3. CREATE before READ/UPDATE/DELETE of same resource
+
+def _order_crud_sequence(
+    categories: dict[str, list[str]],
+) -> list[InferredStep]:
+    """CREATE before READ/UPDATE/DELETE of the same resource."""
+    results: list[InferredStep] = []
     creates = categories.get("CREATE", [])
-    reads = categories.get("READ", [])
-    updates = categories.get("UPDATE", [])
-    deletes = categories.get("DELETE", [])
-
     for cr in creates:
         resource = _extract_resource_prefix(cr)
-        for rd in reads:
-            if _same_resource(cr, rd, resource):
-                _add(cr, rd, f"create before read ({resource})", "high")
-        for up in updates:
-            if _same_resource(cr, up, resource):
-                _add(cr, up, f"create before update ({resource})", "high")
-        for dl in deletes:
-            if _same_resource(cr, dl, resource):
-                _add(cr, dl, f"create before delete ({resource})", "high")
+        for op_label, op_list in [
+            ("read", categories.get("READ", [])),
+            ("update", categories.get("UPDATE", [])),
+            ("delete", categories.get("DELETE", [])),
+        ]:
+            for other in op_list:
+                if _same_resource(cr, other, resource):
+                    results.append(InferredStep(
+                        cr, other, f"create before {op_label} ({resource})", "high",
+                    ))
+    return results
 
-    # 4. Schema cross-references: tool B requires *_id → needs a create tool
-    tools_by_name = {t.name: t for t in tools}
+
+def _order_by_schema_refs(
+    tools: list[ToolDefinition],
+    categories: dict[str, list[str]],
+) -> list[InferredStep]:
+    """Tool requiring *_id field implies a prior create of that resource."""
+    results: list[InferredStep] = []
+    creates = categories.get("CREATE", [])
     for tool in tools:
-        id_fields = _extract_id_fields(tool.input_schema)
-        for id_field in id_fields:
-            # e.g., user_id → look for create_user
+        for id_field in _extract_id_fields(tool.input_schema):
             prefix = id_field.replace("_id", "")
             for cr in creates:
                 if prefix in cr.lower():
-                    _add(cr, tool.name, f"schema: {id_field} requires {cr}", "high")
+                    results.append(InferredStep(
+                        cr, tool.name, f"schema: {id_field} requires {cr}", "high",
+                    ))
+    return results
 
-    # 5. Description keywords (medium confidence)
+
+def _order_by_description(
+    tools: list[ToolDefinition],
+) -> list[InferredStep]:
+    """Infer ordering from description keywords (medium confidence)."""
+    results: list[InferredStep] = []
     for tool in tools:
         desc = tool.description.lower()
-        if "after" in desc or "requires" in desc or "must first" in desc:
-            for other in tools:
-                if other.name == tool.name:
-                    continue
-                # Word-boundary match avoids false positives with short names
-                # like "get", "set", "open" matching inside larger words
-                other_lower = other.name.lower()
-                if len(other_lower) <= 3:
-                    # Short names need word boundary
-                    if re.search(r'\b' + re.escape(other_lower) + r'\b', desc):
-                        _add(other.name, tool.name, f"description: '{tool.description[:60]}'", "medium")
-                elif other_lower in desc:
-                    _add(other.name, tool.name, f"description: '{tool.description[:60]}'", "medium")
+        if "after" not in desc and "requires" not in desc and "must first" not in desc:
+            continue
+        for other in tools:
+            if other.name == tool.name:
+                continue
+            other_lower = other.name.lower()
+            matched = (
+                re.search(r'\b' + re.escape(other_lower) + r'\b', desc)
+                if len(other_lower) <= 3
+                else other_lower in desc
+            )
+            if matched:
+                results.append(InferredStep(
+                    other.name, tool.name,
+                    f"description: '{tool.description[:60]}'", "medium",
+                ))
+    return results
+
+
+def _infer_orderings(
+    tools: list[ToolDefinition],
+    categories: dict[str, list[str]],
+) -> list[InferredStep]:
+    """Infer ordering constraints from tool names, schemas, and descriptions."""
+    seen: set[tuple[str, str]] = set()
+    orderings: list[InferredStep] = []
+    _MAX_ORDERINGS = 200
+
+    candidates = [
+        *_order_lifecycle_first(tools, categories),
+        *_order_cleanup_last(tools, categories),
+        *_order_crud_sequence(categories),
+        *_order_by_schema_refs(tools, categories),
+        *_order_by_description(tools),
+    ]
+
+    for step in candidates:
+        if len(orderings) >= _MAX_ORDERINGS:
+            break
+        key = (step.before, step.after)
+        if key not in seen and step.before != step.after:
+            seen.add(key)
+            orderings.append(step)
 
     return orderings
 
@@ -266,7 +323,11 @@ def _detect_cycles(orderings: list[InferredStep]) -> list[str]:
     in_stack: set[str] = set()
     warnings: list[str] = []
 
+    _MAX_DFS_DEPTH = 500
+
     def _dfs(node: str, path: list[str]) -> None:
+        if len(path) > _MAX_DFS_DEPTH:
+            return
         if node in in_stack:
             cycle = path[path.index(node):] + [node]
             warnings.append(f"Circular dependency: {' -> '.join(cycle)}")
@@ -284,6 +345,96 @@ def _detect_cycles(orderings: list[InferredStep]) -> list[str]:
             _dfs(node, [])
 
     return warnings
+
+
+_DESTRUCTIVE_PATTERNS = ("delete", "remove", "destroy", "purge", "drop", "clear", "wipe")
+# Long patterns safe for substring matching; short ones need word boundaries
+_WRITE_PATTERNS_LONG = ("write", "create", "insert", "update")
+_WRITE_PATTERNS_SHORT = ("edit", "put", "post", "set", "add")
+_SHORT_PATTERN_RE = re.compile(
+    r'\b(?:' + '|'.join(_WRITE_PATTERNS_SHORT) + r')(?:_|\b)',
+)
+
+
+def _matches_write_pattern(text: str) -> bool:
+    """Check if text indicates a write operation (word-boundary safe)."""
+    if any(p in text for p in _WRITE_PATTERNS_LONG):
+        return True
+    return bool(_SHORT_PATTERN_RE.search(text))
+
+
+def check_annotations(tools: list[ToolDefinition]) -> list[AnnotationFinding]:
+    """Check annotation coverage and coherence across all tools."""
+    findings: list[AnnotationFinding] = []
+    annotated = sum(1 for t in tools if t.annotations)
+
+    # Coverage finding
+    if annotated == 0 and len(tools) > 0:
+        findings.append(AnnotationFinding(
+            tool_name="*",
+            severity="warning",
+            message=f"0/{len(tools)} tools have annotations "
+                    f"(clients default to destructiveHint=true, openWorldHint=true)",
+        ))
+    elif annotated < len(tools):
+        missing = [t.name for t in tools if not t.annotations]
+        findings.append(AnnotationFinding(
+            tool_name="*",
+            severity="info",
+            message=f"{annotated}/{len(tools)} tools annotated; "
+                    f"missing: {', '.join(missing[:5])}"
+                    f"{f' (+{len(missing)-5} more)' if len(missing) > 5 else ''}",
+        ))
+
+    # Per-tool coherence checks
+    for tool in tools:
+        name_lower = tool.name.lower().replace("-", "_")
+        desc_lower = tool.description.lower()
+        combined = name_lower + " " + desc_lower
+
+        is_destructive = any(p in combined for p in _DESTRUCTIVE_PATTERNS)
+        is_write = _matches_write_pattern(combined)
+
+        ann = tool.annotations
+        if not ann:
+            if is_destructive:
+                findings.append(AnnotationFinding(
+                    tool_name=tool.name,
+                    severity="warning",
+                    message="destructive tool has no annotations "
+                            "(clients assume destructiveHint=true by default)",
+                ))
+            continue
+
+        read_only = ann.get("readOnlyHint", False)
+        destructive = ann.get("destructiveHint", True)  # default=True per spec
+
+        # Critical: readOnlyHint=true on destructive tool
+        if read_only and is_destructive:
+            findings.append(AnnotationFinding(
+                tool_name=tool.name,
+                severity="critical",
+                message="readOnlyHint=true but name/description indicates destructive operation "
+                        "(clients may auto-approve a DELETE without user confirmation)",
+            ))
+
+        # Critical: readOnlyHint=true on write tool
+        if read_only and is_write:
+            findings.append(AnnotationFinding(
+                tool_name=tool.name,
+                severity="critical",
+                message="readOnlyHint=true but name/description indicates write operation",
+            ))
+
+        # Warning: destructiveHint=false on destructive tool
+        if not read_only and not destructive and is_destructive:
+            findings.append(AnnotationFinding(
+                tool_name=tool.name,
+                severity="warning",
+                message="destructiveHint=false but name/description indicates destructive operation",
+            ))
+
+    return findings
 
 
 def infer_protocol(
@@ -426,14 +577,18 @@ def audit_tools(
                 "evidence": pr.evidence,
                 "params": list(pr.spec.params),
             })
-            if verdict == "proved":
+            if verdict in ("proved", "satisfied"):
                 passed += 1
-            else:
+            elif verdict == "violated":
                 violated += 1
 
     warnings = list(protocol.warnings)
     if result.errors:
         warnings.extend(result.errors)
+
+    # Annotation audit
+    annotation_findings = check_annotations(tools)
+    annotated_count = sum(1 for t in tools if t.annotations)
 
     return AuditReport(
         server_name=server_name,
@@ -444,6 +599,8 @@ def audit_tools(
         passed=passed,
         violated=violated,
         warnings=tuple(warnings),
+        annotation_findings=tuple(annotation_findings),
+        annotated_count=annotated_count,
     )
 
 
@@ -478,6 +635,20 @@ def render_terminal(report: AuditReport) -> str:
         for w in report.warnings:
             lines.append(f"    {_c.YELLOW}!{_c.RESET} {w}")
 
+    # Annotation audit
+    if report.annotation_findings or report.tool_count > 0:
+        lines.append(f"\n{_c.BOLD}Annotation Audit:{_c.RESET}")
+        lines.append(f"  Coverage: {report.annotated_count}/{report.tool_count} tools annotated")
+        for f in report.annotation_findings:
+            if f.severity == "critical":
+                mark = f"{_c.RED}CRITICAL{_c.RESET}"
+            elif f.severity == "warning":
+                mark = f"{_c.YELLOW}WARNING{_c.RESET}"
+            else:
+                mark = f"{_c.CYAN}INFO{_c.RESET}"
+            prefix = f.tool_name if f.tool_name != "*" else "coverage"
+            lines.append(f"  [{mark}] {prefix}: {f.message}")
+
     # Verification results
     lines.append(f"\n{_c.BOLD}Verification Results:{_c.RESET}")
     for i, pr in enumerate(report.property_results, 1):
@@ -489,8 +660,10 @@ def render_terminal(report: AuditReport) -> str:
         if params:
             label = f"{kind} ({' '.join(params)})"
 
-        if verdict == "proved":
-            mark = f"{_c.GREEN}PROVED{_c.RESET}"
+        if verdict in ("proved", "satisfied"):
+            mark = f"{_c.GREEN}{verdict.upper()}{_c.RESET}"
+        elif verdict == "skipped":
+            mark = f"{_c.YELLOW}SKIPPED{_c.RESET}"
         else:
             mark = f"{_c.RED}VIOLATED{_c.RESET}"
 
@@ -526,6 +699,18 @@ def render_json(report: AuditReport) -> dict:
     return {
         "server_name": report.server_name,
         "tool_count": report.tool_count,
+        "annotation_audit": {
+            "annotated": report.annotated_count,
+            "total": report.tool_count,
+            "findings": [
+                {
+                    "tool": f.tool_name,
+                    "severity": f.severity,
+                    "message": f.message,
+                }
+                for f in report.annotation_findings
+            ],
+        },
         "orderings": [
             {
                 "before": o.before,

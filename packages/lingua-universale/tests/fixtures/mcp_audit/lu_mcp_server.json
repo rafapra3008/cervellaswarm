@@ -10,6 +10,11 @@
           "protocol_text": {"type": "string", "description": "The .lu protocol source text to load"}
         },
         "required": ["protocol_text"]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "idempotentHint": true,
+        "openWorldHint": false
       }
     },
     {
@@ -23,6 +28,11 @@
           "next_message": {"type": "object", "description": "The message to validate, same format as messages"}
         },
         "required": ["protocol_text", "messages", "next_message"]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "idempotentHint": true,
+        "openWorldHint": false
       }
     },
     {
@@ -34,6 +44,11 @@
           "protocol_text": {"type": "string", "description": "The .lu protocol source to verify"}
         },
         "required": ["protocol_text"]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "idempotentHint": true,
+        "openWorldHint": false
       }
     },
     {
@@ -44,6 +59,11 @@
         "properties": {
           "category": {"type": "string", "description": "Filter by category (communication, data, business, ai_ml, security)", "default": ""}
         }
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "idempotentHint": true,
+        "openWorldHint": false
       }
     }
   ]

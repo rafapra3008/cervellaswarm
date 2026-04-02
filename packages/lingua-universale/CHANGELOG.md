@@ -4,6 +4,37 @@ All notable changes to `cervellaswarm-lingua-universale` will be documented in t
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+**`lu visualize` -- Protocol Diagram Generation (S480)**
+- `_visualize.py`: Generate Mermaid sequence diagrams from `.lu` protocol AST.
+- Supports linear steps, choice/branching (`alt`/`else`/`end`), nested choice.
+- CLI: `lu visualize file.lu [--fenced] [-o diagram.md] [--format mermaid]`.
+- `--fenced`: Wraps output in markdown code fences for GitHub/GitLab rendering.
+- 30 tests (including 20 stdlib regression tests).
+- README: Visualization section with Mermaid examples.
+
+**`lu mcp-audit` v2 -- Annotation Audit (S481)**
+- `AnnotationFinding` dataclass: tool_name, severity, message.
+- `check_annotations()`: Coverage + coherence checks on MCP ToolAnnotations.
+  - Detects readOnlyHint mismatch (CRITICAL), destructiveHint mismatch (WARNING).
+  - Reports annotation coverage (X/N tools annotated).
+- `ToolDefinition.annotations`: dict field parsed from manifest JSON.
+- Terminal: "Annotation Audit" section with colored severity markers.
+- JSON: `annotation_audit` key with findings array.
+- Demo fixture: `mismatch_server.json` (killer Show HN demo).
+- Updated fixtures: `filesystem_server.json` and `lu_mcp_server.json` with real annotations.
+- 24 new tests (annotation loading, coherence, render, backward compat).
+
+### Changed
+
+- Test count: 3920 → 3979 (+59 tests: 30 visualize + 29 annotation audit).
+- Module count: 36 → 37 (`_visualize.py`).
+- CLI: 15 → 16 subcommands (`lu visualize`).
+- Test counts synced across README, CONTRIBUTING, Discord guide, bot.
+
 ## [0.5.0] - 2026-03-17
 
 ### Added

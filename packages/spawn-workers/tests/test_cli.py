@@ -149,6 +149,7 @@ def _make_args(**kwargs):
         "prompt": None,
         "worker": None,
         "team": None,
+        "permission_mode": "auto",
     }
     defaults.update(kwargs)
     return argparse.Namespace(**defaults)

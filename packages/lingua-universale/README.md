@@ -3,7 +3,7 @@
 [![PyPI](https://img.shields.io/pypi/v/cervellaswarm-lingua-universale.svg)](https://pypi.org/project/cervellaswarm-lingua-universale/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org)
-[![Tests](https://img.shields.io/badge/tests-3920%20passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-3979%20passed-brightgreen.svg)](tests/)
 [![Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen.svg)](tests/)
 [![VS Code](https://img.shields.io/visual-studio-marketplace/v/cervellaswarm.lingua-universale?label=VS%20Code&color=blueviolet)](https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale)
 [![Playground](https://img.shields.io/badge/playground-try%20it%20now-blueviolet.svg)](https://rafapra3008.github.io/cervellaswarm/)
@@ -128,19 +128,20 @@ protocol DelegateTask:
 ```
 
 ```bash
-lu check hello.lu      # parse and compile, no execution
-lu run   hello.lu      # parse, compile, and execute
-lu verify hello.lu     # formally verify properties
-lu lint  hello.lu      # check style and best practices
-lu fmt   hello.lu      # format to canonical style
-lu repl                # interactive REPL
+lu check hello.lu        # parse and compile, no execution
+lu run   hello.lu        # parse, compile, and execute
+lu verify hello.lu       # formally verify properties
+lu lint  hello.lu        # check style and best practices
+lu fmt   hello.lu        # format to canonical style
+lu visualize hello.lu    # generate Mermaid sequence diagram
+lu repl                  # interactive REPL
 ```
 
 ---
 
 ## CLI Reference
 
-The `lu` command ships with 15 subcommands:
+The `lu` command ships with 16 subcommands:
 
 | Command | Description |
 |---------|-------------|
@@ -157,6 +158,7 @@ The `lu` command ships with 15 subcommands:
 | `lu demo` | Run the autonomous "La Nonna" demo with typewriter effect |
 | `lu generate <target> <file>` | Generate Python/TypeScript/JSON Schema from .lu |
 | `lu mcp-audit` | Audit MCP server protocols for safety violations (`--manifest`, `--json`) |
+| `lu visualize <file.lu>` | Generate Mermaid sequence diagram from protocol (`--fenced`, `-o`) |
 | `lu doctor` | Check system setup and dependencies |
 | `lu version` | Show version and tagline |
 
@@ -181,6 +183,11 @@ lu lint stdlib/ hello.lu   # multiple paths
 lu fmt .                   # format all .lu in directory
 lu fmt --check .           # CI mode: exit 1 if any file needs reformatting
 lu fmt --diff hello.lu     # preview changes without writing
+
+# Visualize: generate a sequence diagram
+lu visualize hello.lu                # Mermaid to stdout
+lu visualize hello.lu --fenced       # wrapped in ```mermaid fences (for GitHub)
+lu visualize hello.lu -o diagram.md  # write to file
 
 # Demo: see the full "La Nonna" demo
 lu demo --lang it --speed normal
@@ -240,8 +247,8 @@ Each step has editable, runnable code. No install required.
 
 ## Features
 
-- **36 modules**, 150+ public API symbols
-- **3920 tests**, 95% coverage, runs in ~2 seconds
+- **37 modules**, 150+ public API symbols
+- **3979 tests**, 95% coverage, runs in ~2 seconds
 - **Zero dependencies** -- pure Python standard library
 - **Python 3.10+** including 3.13 free-threaded (thread-safe internals)
 - **Grammar**: 64 production rules, GBNF + Lark export for constrained decoding
@@ -252,7 +259,7 @@ Each step has editable, runnable code. No install required.
 ## Architecture
 
 ```
-Lingua Universale v0.5.0 -- 36 modules, zero dependencies
+Lingua Universale v0.5.0 -- 37 modules, zero dependencies
 
 FASE A: Session Types
   types.py           14 MessageKind, 14 message dataclasses, 17 AgentRole
@@ -280,7 +287,7 @@ FASE C: Il Linguaggio (compiler pipeline)
   _grammar_export.py GBNF + Lark grammar export (constrained decoding)
   _eval.py           check_source / run_source / verify_source
   _repl.py           Interactive REPL with history and error recovery
-  _cli.py            lu command: 15 subcommands (incl. mcp-audit, chat, lint, fmt)
+  _cli.py            lu command: 16 subcommands (incl. mcp-audit, visualize, chat, lint, fmt)
   _init_project.py   Project scaffolding + stdlib templates (20 protocols)
   _lint.py           10 lint rules (3 categories), single-pass AST walk
   _fmt.py            Zero-config auto-formatter (canonical style)
@@ -290,6 +297,7 @@ FASE C: Il Linguaggio (compiler pipeline)
 FASE D: Ecosistema
   _lsp.py            LSP server (diagnostics, lint, formatting, hover, completion, goto-def)
   _generate.py       lu generate bridge: .lu -> Python, TypeScript, or JSON Schema
+  _visualize.py      Mermaid sequence diagram generation from protocol AST
   codegen_ts.py      TypeScript code generation (discriminated unions, @verified JSDoc)
   codegen_json.py    JSON Schema generation (draft 2020-12, x-lu-properties)
 
@@ -458,6 +466,37 @@ print(report.all_proved)  # True -- mathematically proven
 
 ---
 
+## Visualization
+
+Generate sequence diagrams directly from `.lu` files -- renders on GitHub, GitLab, Notion:
+
+```bash
+lu visualize hello.lu --fenced
+```
+
+Output:
+
+```mermaid
+sequenceDiagram
+    participant regina
+    participant worker
+    participant guardiana
+    regina->>+worker: asks do task
+    worker->>+regina: returns result
+    regina->>+guardiana: asks verify
+    guardiana->>+regina: returns verdict
+```
+
+Choice branches render as `alt`/`else` blocks:
+
+```bash
+lu visualize code_review.lu --fenced -o review_diagram.md
+```
+
+Paste the output into any GitHub README or issue -- it renders as an interactive diagram.
+
+---
+
 ## Standard Library
 
 20 verified protocols across 5 categories, ready to use as templates:
@@ -577,7 +616,7 @@ git clone https://github.com/rafapra3008/cervellaswarm.git
 cd cervellaswarm/packages/lingua-universale
 pip install -e ".[dev]"
 
-# Run tests (3920 tests, ~2s)
+# Run tests (3979 tests, ~2s)
 pytest
 
 # Run with coverage

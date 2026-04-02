@@ -479,6 +479,21 @@ _PROPERTY_KEYWORDS = [
 _ACTION_VERBS = ["asks", "returns", "tells", "proposes", "sends"]
 
 
+def _items_from_pairs(pairs: list[tuple[str, str]], kind: str) -> list[dict]:
+    """Create completion items from (label, detail) pairs."""
+    return [{"label": label, "kind": kind, "detail": detail} for label, detail in pairs]
+
+
+def _items_from_symbols(source: str, kind_filter: set[str]) -> list[dict]:
+    """Create completion items from symbol table entries matching kind filter."""
+    table = build_symbol_table(source)
+    return [{"label": e.name, "kind": e.kind, "detail": e.detail}
+            for e in table.values() if e.kind in kind_filter]
+
+
+_NAMED_TYPE_KINDS = {"variant_type", "record_type"}
+_TOP_LEVEL_SYMBOL_KINDS = {"variant_type", "record_type", "agent", "protocol"}
+
 def _completion_items(source: str, line: int, character: int) -> list:
     """Pure function: source + LSP position -> list of CompletionItem dicts.
 
@@ -487,75 +502,45 @@ def _completion_items(source: str, line: int, character: int) -> list:
     """
     lines = source.splitlines()
     if line < 0 or line >= len(lines):
-        # Empty file or past end -> top-level keywords + defined names
-        result = [{"label": kw, "kind": "keyword", "detail": desc}
-                  for kw, desc in _TOP_LEVEL_KEYWORDS]
-        table = build_symbol_table(source)
-        for entry in table.values():
-            if entry.kind in ("variant_type", "record_type", "agent", "protocol"):
-                result.append({"label": entry.name, "kind": entry.kind, "detail": entry.detail})
-        return result
+        return (_items_from_pairs(_TOP_LEVEL_KEYWORDS, "keyword")
+                + _items_from_symbols(source, _TOP_LEVEL_SYMBOL_KINDS))
 
     current_line = lines[line]
     text_before = current_line[:character].lstrip()
     indent = len(current_line) - len(current_line.lstrip())
 
-    # Detect context by scanning backwards
     context = _detect_completion_context(lines, line, indent, text_before)
 
-    items: list[dict] = []
-
     if context == "top_level":
-        for kw, desc in _TOP_LEVEL_KEYWORDS:
-            items.append({"label": kw, "kind": "keyword", "detail": desc})
-        # Also suggest defined names
-        table = build_symbol_table(source)
-        for entry in table.values():
-            if entry.kind in ("variant_type", "record_type", "agent", "protocol"):
-                items.append({"label": entry.name, "kind": entry.kind, "detail": entry.detail})
+        return (_items_from_pairs(_TOP_LEVEL_KEYWORDS, "keyword")
+                + _items_from_symbols(source, _TOP_LEVEL_SYMBOL_KINDS))
 
-    elif context == "agent_body":
-        for clause, desc in _AGENT_CLAUSES:
-            items.append({"label": clause, "kind": "property", "detail": desc})
+    if context == "agent_body":
+        return _items_from_pairs(_AGENT_CLAUSES, "property")
 
-    elif context == "trust_value":
-        for tier in _TRUST_TIERS:
-            items.append({"label": tier, "kind": "value", "detail": f"Trust: {tier}"})
+    if context == "trust_value":
+        return [{"label": t, "kind": "value", "detail": f"Trust: {t}"} for t in _TRUST_TIERS]
 
-    elif context == "confidence_value":
-        for level in _CONFIDENCE_LEVELS:
-            items.append({"label": level, "kind": "value", "detail": f"Confidence: {level}"})
+    if context == "confidence_value":
+        return [{"label": c, "kind": "value", "detail": f"Confidence: {c}"}
+                for c in _CONFIDENCE_LEVELS]
 
-    elif context == "protocol_body":
-        # Suggest action verbs and defined role names
-        for verb in _ACTION_VERBS:
-            items.append({"label": verb, "kind": "keyword", "detail": f"Step action: {verb}"})
-        table = build_symbol_table(source)
-        for entry in table.values():
-            if entry.kind == "role":
-                items.append({"label": entry.name, "kind": "role", "detail": entry.detail})
+    if context == "protocol_body":
+        verbs = [{"label": v, "kind": "keyword", "detail": f"Step action: {v}"}
+                 for v in _ACTION_VERBS]
+        return verbs + _items_from_symbols(source, {"role"})
 
-    elif context == "properties_body":
-        for prop, desc in _PROPERTY_KEYWORDS:
-            items.append({"label": prop, "kind": "keyword", "detail": desc})
+    if context == "properties_body":
+        return _items_from_pairs(_PROPERTY_KEYWORDS, "keyword")
 
-    elif context == "type_ref":
-        # After accepts:/produces:/field type -> suggest defined type names
-        table = build_symbol_table(source)
-        for entry in table.values():
-            if entry.kind in ("variant_type", "record_type"):
-                items.append({"label": entry.name, "kind": entry.kind, "detail": entry.detail})
+    if context == "type_ref":
+        return _items_from_symbols(source, _NAMED_TYPE_KINDS)
 
-    else:
-        # Fallback: top-level keywords + all defined names
-        for kw, desc in _TOP_LEVEL_KEYWORDS:
-            items.append({"label": kw, "kind": "keyword", "detail": desc})
-        table = build_symbol_table(source)
-        for entry in table.values():
-            if entry.kind not in ("variant_member", "role"):
-                items.append({"label": entry.name, "kind": entry.kind, "detail": entry.detail})
-
-    return items
+    # Fallback
+    table = build_symbol_table(source)
+    fallback_symbols = [{"label": e.name, "kind": e.kind, "detail": e.detail}
+                        for e in table.values() if e.kind not in ("variant_member", "role")]
+    return _items_from_pairs(_TOP_LEVEL_KEYWORDS, "keyword") + fallback_symbols
 
 
 def _detect_completion_context(
@@ -581,8 +566,10 @@ def _detect_completion_context(
     # Scan backwards to find enclosing block
     for i in range(current_line - 1, -1, -1):
         line = lines[i].rstrip()
-        line_indent = len(line) - len(line.lstrip())
         stripped = line.lstrip()
+        if not stripped:
+            continue  # Skip blank lines (they have indent 0, would break scan)
+        line_indent = len(line) - len(line.lstrip())
 
         if line_indent < indent:
             # Found a less-indented line = potential block header
@@ -747,7 +734,8 @@ def create_server():
             from ._fmt import format_source
 
             formatted = format_source(doc.source)
-        except Exception:
+        except Exception as e:
+            logger.debug("format_source failed: %s", e, exc_info=True)
             return None  # don't break the editor on format errors
 
         if formatted == doc.source:

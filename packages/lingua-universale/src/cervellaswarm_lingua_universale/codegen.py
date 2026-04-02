@@ -34,6 +34,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Optional, Sequence
 
+from ._codegen_common import collect_all_steps, used_message_kinds
 from .protocols import Protocol, ProtocolChoice, ProtocolElement, ProtocolStep
 from .types import MessageKind
 
@@ -168,34 +169,16 @@ def _collect_role_steps(
     return role_steps
 
 
-def _collect_all_steps(
-    elements: Sequence[ProtocolElement],
-) -> list[ProtocolStep]:
-    """Collect all ProtocolSteps from elements, including nested choice branches."""
-    steps: list[ProtocolStep] = []
-    for elem in elements:
-        if isinstance(elem, ProtocolStep):
-            steps.append(elem)
-        elif isinstance(elem, ProtocolChoice):
-            for branch_elems in elem.branches.values():
-                steps.extend(_collect_all_steps(branch_elems))
-    return steps
-
-
-def _used_message_kinds(protocol: Protocol) -> list[MessageKind]:
-    """Collect MessageKinds used in a protocol (preserving enum order)."""
-    used: set[MessageKind] = set()
-    for step in _collect_all_steps(protocol.elements):
-        used.add(step.message_kind)
-    return [k for k in MessageKind if k in used]
+_collect_all_steps = collect_all_steps
+_used_message_kinds = used_message_kinds
 
 
 def _has_choices(protocol: Protocol) -> bool:
-    """Check if a protocol contains any ProtocolChoice elements.
+    """Check if a protocol contains any top-level ProtocolChoice elements.
 
-    Only checks top-level elements: nested choices are always inside a
-    top-level ProtocolChoice branch, so if any choice exists in the
-    protocol, at least one exists at the top level.
+    Only checks top-level elements. Since LU 1.1, nested choices can exist
+    inside branches without a top-level choice. For full nested detection,
+    use _collect_all_steps() with isinstance checks.
     """
     return any(isinstance(e, ProtocolChoice) for e in protocol.elements)
 
@@ -357,7 +340,7 @@ class PythonGenerator:
                 f"class {class_name}Role:",
                 f'    """Typed role wrapper for \\"{role}\\" in {protocol.name}.',
                 "",
-                f"    Provides send_* methods for every message this role can send.",
+                "    Provides send_* methods for every message this role can send.",
                 '    Each method validates the message via SessionChecker."""',
                 "",
                 "    def __init__(self, session: ProtocolSession) -> None:",
@@ -382,7 +365,7 @@ class PythonGenerator:
                     "",
                     f"    def {method_name}(",
                     f"        self, msg: {type_hint},",
-                    f"    ) -> None:",
+                    "    ) -> None:",
                     f'        """Send {step.message_kind.value} to {step.receiver}."""',
                     f'        self._session.send(self._role, "{step.receiver}", msg)',
                 ])
@@ -421,7 +404,7 @@ class PythonGenerator:
 
         lines = [
             "",
-            f"class ProtocolSession:",
+            "class ProtocolSession:",
             f'    """Runtime-enforced session for {protocol.name}.',
             "",
             "    Wraps SessionChecker to provide typed role accessors",
@@ -432,11 +415,11 @@ class PythonGenerator:
             '        session_id: str = "",',
             "        role_bindings: Optional[dict[str, str]] = None,",
             "    ) -> None:",
-            f"        self._session_checker = SessionChecker(",
+            "        self._session_checker = SessionChecker(",
             f"            protocol={protocol.name.upper()},",
-            f"            session_id=session_id,",
-            f"            role_bindings=role_bindings,",
-            f"        )",
+            "            session_id=session_id,",
+            "            role_bindings=role_bindings,",
+            "        )",
         ]
         lines.extend(init_lines)
 
@@ -506,33 +489,26 @@ class PythonGenerator:
 # ============================================================
 
 
-_KIND_TO_CLASS: dict[MessageKind, str] | None = None
+_KIND_TO_CLASS: dict[MessageKind, str] = {
+    MessageKind.TASK_REQUEST: "TaskRequest",
+    MessageKind.TASK_RESULT: "TaskResult",
+    MessageKind.AUDIT_REQUEST: "AuditRequest",
+    MessageKind.AUDIT_VERDICT: "AuditVerdict",
+    MessageKind.PLAN_REQUEST: "PlanRequest",
+    MessageKind.PLAN_PROPOSAL: "PlanProposal",
+    MessageKind.PLAN_DECISION: "PlanDecision",
+    MessageKind.RESEARCH_QUERY: "ResearchQuery",
+    MessageKind.RESEARCH_REPORT: "ResearchReport",
+    MessageKind.DM: "DirectMessage",
+    MessageKind.BROADCAST: "Broadcast",
+    MessageKind.SHUTDOWN_REQUEST: "ShutdownRequest",
+    MessageKind.SHUTDOWN_ACK: "ShutdownAck",
+    MessageKind.CONTEXT_INJECT: "ContextInject",
+}
 
 
 def _kind_to_message_class() -> dict[MessageKind, str]:
-    """Map each MessageKind to its corresponding dataclass name.
-
-    Cached after first call for performance.
-    """
-    global _KIND_TO_CLASS  # noqa: PLW0603
-    if _KIND_TO_CLASS is not None:
-        return _KIND_TO_CLASS
-    _KIND_TO_CLASS = {
-        MessageKind.TASK_REQUEST: "TaskRequest",
-        MessageKind.TASK_RESULT: "TaskResult",
-        MessageKind.AUDIT_REQUEST: "AuditRequest",
-        MessageKind.AUDIT_VERDICT: "AuditVerdict",
-        MessageKind.PLAN_REQUEST: "PlanRequest",
-        MessageKind.PLAN_PROPOSAL: "PlanProposal",
-        MessageKind.PLAN_DECISION: "PlanDecision",
-        MessageKind.RESEARCH_QUERY: "ResearchQuery",
-        MessageKind.RESEARCH_REPORT: "ResearchReport",
-        MessageKind.DM: "DirectMessage",
-        MessageKind.BROADCAST: "Broadcast",
-        MessageKind.SHUTDOWN_REQUEST: "ShutdownRequest",
-        MessageKind.SHUTDOWN_ACK: "ShutdownAck",
-        MessageKind.CONTEXT_INJECT: "ContextInject",
-    }
+    """Map each MessageKind to its corresponding dataclass name."""
     return _KIND_TO_CLASS
 
 
@@ -653,11 +629,11 @@ def _generate_multi_session_class(protocol: Protocol) -> str:
         '        session_id: str = "",',
         "        role_bindings: Optional[dict[str, str]] = None,",
         "    ) -> None:",
-        f"        self._session_checker = SessionChecker(",
+        "        self._session_checker = SessionChecker(",
         f"            protocol={protocol.name.upper()},",
-        f"            session_id=session_id,",
-        f"            role_bindings=role_bindings,",
-        f"        )",
+        "            session_id=session_id,",
+        "            role_bindings=role_bindings,",
+        "        )",
     ]
 
     for role in protocol.roles:

@@ -102,7 +102,7 @@ def test_run_doctor_failure_path(capsys):
 
             print(f"\n{c.BOLD}lu doctor{c.RESET} -- Lingua Universale v{__version__}\n")
             _err("Compiler pipeline", "simulated import error")
-            print(f"\n  1 issue(s) found.\n")
+            print("\n  1 issue(s) found.\n")
             return 1
 
         result = _patched_doctor()

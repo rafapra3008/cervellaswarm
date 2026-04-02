@@ -30,8 +30,9 @@ Research: ``.sncp/.../reports/RESEARCH_20260315_JSON_SCHEMA_CODEGEN.md``
 from __future__ import annotations
 
 import json
-from typing import TYPE_CHECKING, Optional, Sequence
+from typing import TYPE_CHECKING, Sequence
 
+from ._codegen_common import used_message_kinds as _used_message_kinds
 from .protocols import Protocol, ProtocolChoice, ProtocolElement, ProtocolStep
 from .types import MessageKind
 
@@ -42,28 +43,6 @@ if TYPE_CHECKING:
 # ============================================================
 # Helpers
 # ============================================================
-
-
-def _collect_all_steps(
-    elements: Sequence[ProtocolElement],
-) -> list[ProtocolStep]:
-    """Collect all ProtocolSteps from elements, including nested choice branches."""
-    steps: list[ProtocolStep] = []
-    for elem in elements:
-        if isinstance(elem, ProtocolStep):
-            steps.append(elem)
-        elif isinstance(elem, ProtocolChoice):
-            for branch_elems in elem.branches.values():
-                steps.extend(_collect_all_steps(branch_elems))
-    return steps
-
-
-def _used_message_kinds(protocol: Protocol) -> list[MessageKind]:
-    """Collect MessageKinds used in a protocol (preserving enum order)."""
-    used: set[MessageKind] = set()
-    for step in _collect_all_steps(protocol.elements):
-        used.add(step.message_kind)
-    return [k for k in MessageKind if k in used]
 
 
 def _step_to_dict(step: ProtocolStep) -> dict:

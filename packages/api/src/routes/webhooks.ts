@@ -125,7 +125,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
   if (subscriptionId) {
     try {
       const subscription = await stripe.subscriptions.retrieve(subscriptionId);
-      currentPeriodEnd = subscription.current_period_end;
+      currentPeriodEnd = subscription.items.data[0]?.current_period_end;
     } catch (error) {
       console.error("Failed to fetch subscription details:", error);
     }
@@ -225,7 +225,7 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription): Pro
     tier,
     status: subscription.status,
     email,
-    currentPeriodEnd: subscription.current_period_end,
+    currentPeriodEnd: subscription.items.data[0]?.current_period_end,
   });
 
   console.log(`Subscription created: ${email} -> ${tier} (${customerId})`);

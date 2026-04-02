@@ -451,7 +451,7 @@ def section_8_confidence_and_trust() -> None:
         TrustScore(value=1.0, tier=TrustTier.VERIFIED, reason="guardiana"),
         TrustScore(value=0.75, tier=TrustTier.STANDARD, reason="backend"),
     ))
-    print(f"  VERIFIED(1.0) x STANDARD(0.75)")
+    print("  VERIFIED(1.0) x STANDARD(0.75)")
     print(f"  Chain result  : {chain.value:.4f}  tier={chain.tier.value}")
     ok("Trust chain composed via multiplicative rule")
 

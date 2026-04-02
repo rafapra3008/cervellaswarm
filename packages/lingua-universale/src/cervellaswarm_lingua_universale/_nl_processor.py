@@ -387,6 +387,82 @@ def _extract_tool_input(response: object) -> dict[str, Any]:
     raise NLProcessorError("No tool_use block in response")
 
 
+def _validate_roles(data: dict[str, Any]) -> tuple[str, ...]:
+    """Validate and extract roles from tool input."""
+    protocol_name = data.get("protocol_name")
+    if not protocol_name or not isinstance(protocol_name, str):
+        raise NLProcessorError("Missing or invalid protocol_name")
+
+    roles = data.get("roles")
+    if not roles or not isinstance(roles, list) or len(roles) < 2:
+        raise NLProcessorError("Need at least 2 roles")
+
+    for role in roles:
+        if not isinstance(role, str) or not role.strip():
+            raise NLProcessorError(f"Invalid role: {role!r}")
+
+    return tuple(r.strip() for r in roles)
+
+
+def _validate_messages(raw_messages: list, roles: tuple[str, ...]) -> tuple[DraftMessage, ...]:
+    """Validate and parse messages from tool input."""
+    if not raw_messages:
+        raise NLProcessorError("Need at least 1 message")
+
+    valid_keys = set(_ACTION_VERBS.keys())
+    messages: list[DraftMessage] = []
+    for msg_data in raw_messages:
+        sender = msg_data.get("sender", "")
+        receiver = msg_data.get("receiver", "")
+        action_key = msg_data.get("action_key", "")
+
+        if sender not in roles:
+            raise NLProcessorError(f"Unknown sender '{sender}'. Available: {roles}")
+        if receiver not in roles:
+            raise NLProcessorError(f"Unknown receiver '{receiver}'. Available: {roles}")
+        if sender == receiver:
+            raise NLProcessorError(f"Sender and receiver must differ: '{sender}'")
+        if action_key not in valid_keys:
+            raise NLProcessorError(f"Invalid action_key '{action_key}'. Valid: {sorted(valid_keys)}")
+
+        messages.append(DraftMessage(sender=sender, receiver=receiver, action_key=action_key))
+    return tuple(messages)
+
+
+def _validate_choices(raw_choices: list, roles: tuple[str, ...]) -> tuple[DraftChoice, ...]:
+    """Validate and parse choices from tool input."""
+    choices: list[DraftChoice] = []
+    for choice_data in raw_choices:
+        decider = choice_data.get("decider", "")
+        branch_names = choice_data.get("branch_names", [])
+
+        if decider not in roles:
+            raise NLProcessorError(f"Unknown decider '{decider}'. Available: {roles}")
+        if len(branch_names) < 2:
+            raise NLProcessorError("Choices need at least 2 branches")
+
+        other = [r for r in roles if r != decider]
+        receiver = other[0] if other else roles[0]
+        branches: list[tuple[str, tuple[DraftMessage, ...]]] = []
+        for name in branch_names:
+            branch_msg = DraftMessage(sender=decider, receiver=receiver, action_key="send_message")
+            branches.append((name.strip(), (branch_msg,)))
+
+        choices.append(DraftChoice(decider=decider, branches=tuple(branches)))
+    return tuple(choices)
+
+
+def _validate_properties(data: dict[str, Any]) -> tuple[str, ...]:
+    """Validate and extract properties with defaults."""
+    raw = data.get("properties")
+    default = ("always_terminates", "no_deadlock")
+    if raw and isinstance(raw, list):
+        valid = set(_PROPERTY_NAMES)
+        props = tuple(p for p in raw if p in valid)
+        return props if props else default
+    return default
+
+
 def _build_draft(data: dict[str, Any]) -> IntentDraft:
     """Build an IntentDraft from a validated tool input dict.
 
@@ -401,97 +477,13 @@ def _build_draft(data: dict[str, Any]) -> IntentDraft:
     Raises:
         NLProcessorError: If required fields are missing or invalid.
     """
-    # Validate required fields
-    protocol_name = data.get("protocol_name")
-    if not protocol_name or not isinstance(protocol_name, str):
-        raise NLProcessorError("Missing or invalid protocol_name")
-
-    roles = data.get("roles")
-    if not roles or not isinstance(roles, list) or len(roles) < 2:
-        raise NLProcessorError("Need at least 2 roles")
-
-    # Validate all roles are strings
-    for role in roles:
-        if not isinstance(role, str) or not role.strip():
-            raise NLProcessorError(f"Invalid role: {role!r}")
-
-    roles_tuple = tuple(r.strip() for r in roles)
-
-    # Parse messages
-    raw_messages = data.get("messages", [])
-    if not raw_messages:
-        raise NLProcessorError("Need at least 1 message")
-
-    messages: list[DraftMessage] = []
-    valid_keys = set(_ACTION_VERBS.keys())
-    for msg_data in raw_messages:
-        sender = msg_data.get("sender", "")
-        receiver = msg_data.get("receiver", "")
-        action_key = msg_data.get("action_key", "")
-
-        if sender not in roles_tuple:
-            raise NLProcessorError(
-                f"Unknown sender '{sender}'. Available: {roles_tuple}"
-            )
-        if receiver not in roles_tuple:
-            raise NLProcessorError(
-                f"Unknown receiver '{receiver}'. Available: {roles_tuple}"
-            )
-        if sender == receiver:
-            raise NLProcessorError(
-                f"Sender and receiver must differ: '{sender}'"
-            )
-        if action_key not in valid_keys:
-            raise NLProcessorError(
-                f"Invalid action_key '{action_key}'. Valid: {sorted(valid_keys)}"
-            )
-
-        messages.append(DraftMessage(sender=sender, receiver=receiver, action_key=action_key))
-
-    # Parse choices (optional)
-    raw_choices = data.get("choices", [])
-    choices: list[DraftChoice] = []
-    for choice_data in raw_choices:
-        decider = choice_data.get("decider", "")
-        branch_names = choice_data.get("branch_names", [])
-
-        if decider not in roles_tuple:
-            raise NLProcessorError(
-                f"Unknown decider '{decider}'. Available: {roles_tuple}"
-            )
-        if len(branch_names) < 2:
-            raise NLProcessorError("Choices need at least 2 branches")
-
-        # Build branch messages (decider sends to first other role)
-        other = [r for r in roles_tuple if r != decider]
-        receiver = other[0] if other else roles_tuple[0]
-        branches: list[tuple[str, tuple[DraftMessage, ...]]] = []
-        for name in branch_names:
-            branch_msg = DraftMessage(
-                sender=decider,
-                receiver=receiver,
-                action_key="send_message",
-            )
-            branches.append((name.strip(), (branch_msg,)))
-
-        choices.append(
-            DraftChoice(decider=decider, branches=tuple(branches))
-        )
-
-    # Parse properties (optional, with defaults)
-    raw_properties = data.get("properties")
-    if raw_properties and isinstance(raw_properties, list):
-        valid_props = set(_PROPERTY_NAMES)
-        properties = tuple(p for p in raw_properties if p in valid_props)
-        if not properties:
-            properties = ("always_terminates", "no_deadlock")
-    else:
-        properties = ("always_terminates", "no_deadlock")
+    roles = _validate_roles(data)
+    protocol_name = data["protocol_name"]
 
     return IntentDraft(
         protocol_name=protocol_name.strip().replace(" ", "_"),
-        roles=roles_tuple,
-        messages=tuple(messages),
-        choices=tuple(choices),
-        properties=properties,
+        roles=roles,
+        messages=_validate_messages(data.get("messages", []), roles),
+        choices=_validate_choices(data.get("choices", []), roles),
+        properties=_validate_properties(data),
     )

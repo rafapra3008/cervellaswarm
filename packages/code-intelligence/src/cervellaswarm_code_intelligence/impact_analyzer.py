@@ -65,7 +65,7 @@ v1.0.0 (2026-01-19) - W3 Day 2 (REQ-05 to REQ-08)
 import logging
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Set
+from typing import Dict, List, Optional
 
 from .semantic_search import SemanticSearch
 

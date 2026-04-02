@@ -40,7 +40,6 @@ from ._ast import (
     AgentNode,
     AttrExpr,
     BinOpExpr,
-    BranchNode,
     ChoiceNode,
     GenericType,
     GroupExpr,
@@ -397,8 +396,6 @@ class ASTCompiler:
         """
         # Local imports: circular import guard (codegen <-> compiler).
         from .codegen import PythonGenerator
-        from .protocols import Protocol, ProtocolChoice, ProtocolStep
-        from .types import MessageKind
 
         # 1. Transform AST -> Protocol runtime object
         protocol = self._ast_to_protocol(node)
@@ -450,7 +447,8 @@ class ASTCompiler:
         self._preamble_imports.add("from typing import Optional")
 
         # Import message dataclasses used by this protocol
-        from .codegen import _kind_to_message_class, _used_message_kinds  # intentional internal API use (C2.2.5)
+        from ._codegen_common import used_message_kinds as _used_message_kinds
+        from .codegen import _kind_to_message_class  # intentional internal API use (C2.2.5)
         kind_map = _kind_to_message_class()
         for kind in _used_message_kinds(protocol):
             cls_name = kind_map.get(kind)
@@ -482,7 +480,7 @@ class ASTCompiler:
         Maps StepNode -> ProtocolStep, ChoiceNode -> ProtocolChoice.
         Returns a ``Protocol`` instance ready for code generation.
         """
-        from .protocols import Protocol, ProtocolChoice, ProtocolStep
+        from .protocols import Protocol
 
         elements = self._transform_steps(node.steps)
 
@@ -523,67 +521,12 @@ class ASTCompiler:
     def _step_to_message_kind(step: StepNode) -> MessageKind:
         """Map a StepNode's action + payload to a ``MessageKind`` enum value.
 
-        Uses keyword-based heuristics on the action verb and payload text.
-        Falls back to ``MessageKind.DM`` for unrecognized patterns.
-
-        Mapping rules:
-          - asks + "verify"/"audit"/"check" -> AUDIT_REQUEST
-          - asks + "plan"                   -> PLAN_REQUEST
-          - asks + "research"/"search"      -> RESEARCH_QUERY
-          - asks (default)                  -> TASK_REQUEST
-          - returns + "verdict"/"audit"     -> AUDIT_VERDICT
-          - returns + "plan"/"proposal"     -> PLAN_PROPOSAL
-          - returns + "report"/"research"   -> RESEARCH_REPORT
-          - returns (default)               -> TASK_RESULT
-          - tells + "decision"              -> PLAN_DECISION
-          - tells (default)                 -> DM
-          - proposes                        -> PLAN_PROPOSAL
-          - sends + "shutdown"              -> SHUTDOWN_REQUEST
-          - sends + "context"              -> CONTEXT_INJECT
-          - sends + "broadcast"            -> BROADCAST
-          - sends (default)                -> DM
+        Delegates to ``types.infer_message_kind()`` -- the single source of
+        truth shared with ``_eval.py``.
         """
-        from .types import MessageKind
+        from .types import infer_message_kind
 
-        action = step.action
-        payload = step.payload.lower()
-
-        if action == "asks":
-            if any(w in payload for w in ("verify", "audit", "check")):
-                return MessageKind.AUDIT_REQUEST
-            if "plan" in payload:
-                return MessageKind.PLAN_REQUEST
-            if any(w in payload for w in ("research", "search")):
-                return MessageKind.RESEARCH_QUERY
-            return MessageKind.TASK_REQUEST
-
-        if action == "returns":
-            if any(w in payload for w in ("verdict", "audit")):
-                return MessageKind.AUDIT_VERDICT
-            if any(w in payload for w in ("plan", "proposal")):
-                return MessageKind.PLAN_PROPOSAL
-            if any(w in payload for w in ("report", "research")):
-                return MessageKind.RESEARCH_REPORT
-            return MessageKind.TASK_RESULT
-
-        if action == "tells":
-            if "decision" in payload:
-                return MessageKind.PLAN_DECISION
-            return MessageKind.DM
-
-        if action == "proposes":
-            return MessageKind.PLAN_PROPOSAL
-
-        if action == "sends":
-            if "shutdown" in payload:
-                return MessageKind.SHUTDOWN_REQUEST
-            if "context" in payload:
-                return MessageKind.CONTEXT_INJECT
-            if "broadcast" in payload:
-                return MessageKind.BROADCAST
-            return MessageKind.DM
-
-        return MessageKind.DM
+        return infer_message_kind(step.action, step.payload.lower())
 
     # ----------------------------------------------------------
     # Expr -> Python expression string

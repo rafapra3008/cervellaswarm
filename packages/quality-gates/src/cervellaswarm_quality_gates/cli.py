@@ -25,7 +25,7 @@ from pathlib import Path
 
 from cervellaswarm_quality_gates.config import load_config, get_section
 from cervellaswarm_quality_gates.hooks import validate_hooks, hooks_summary
-from cervellaswarm_quality_gates.quality import score_content, score_file
+from cervellaswarm_quality_gates.quality import score_file
 from cervellaswarm_quality_gates.sync import compare_agents
 
 
@@ -225,7 +225,7 @@ def _cmd_all(args: argparse.Namespace) -> int:
             status = "PASS" if qr["passes"] else "FAIL"
             print(f"  [{status}] {qr['file']}: {qr['total']}/10")
 
-        print(f"\n--- Hooks ---")
+        print("\n--- Hooks ---")
         hooks_info = results["hooks"]
         if hooks_info["total"] > 0:
             for status_name, count in hooks_info["summary"].items():

@@ -1,0 +1,49 @@
+{
+  "server_name": "unsafe-server",
+  "tools": [
+    {
+      "name": "read_data",
+      "description": "Read data from the database",
+      "inputSchema": {
+        "type": "object",
+        "properties": {"query": {"type": "string"}},
+        "required": ["query"]
+      },
+      "annotations": {"readOnlyHint": true}
+    },
+    {
+      "name": "delete_all_records",
+      "description": "Permanently removes all records from the database",
+      "inputSchema": {
+        "type": "object",
+        "properties": {"confirm": {"type": "boolean"}}
+      },
+      "annotations": {"readOnlyHint": true}
+    },
+    {
+      "name": "write_file",
+      "description": "Write content to a file",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {"type": "string"},
+          "content": {"type": "string"}
+        },
+        "required": ["path", "content"]
+      },
+      "annotations": {"readOnlyHint": true}
+    },
+    {
+      "name": "purge_cache",
+      "description": "Purge the entire cache",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false
+      }
+    }
+  ]
+}

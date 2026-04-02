@@ -15,13 +15,13 @@ Usage:
 
 CLI Usage:
     # Generate map for current directory
-    python3 scripts/utils/repo_mapper.py --repo-path . --budget 2000
+    python3 -m cervellaswarm_code_intelligence.cli.map_cmd --repo-path . --budget 2000
 
     # Save to file
-    python3 scripts/utils/repo_mapper.py --repo-path . --budget 2000 --output map.md
+    python3 -m cervellaswarm_code_intelligence.cli.map_cmd --repo-path . --budget 2000 --output map.md
 
     # Filter specific files
-    python3 scripts/utils/repo_mapper.py --repo-path . --filter "**/*.py"
+    python3 -m cervellaswarm_code_intelligence.cli.map_cmd --repo-path . --filter "**/*.py"
 
 Features:
     - Auto-discovers source files in repository

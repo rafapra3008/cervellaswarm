@@ -45,6 +45,9 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--backend", type=str, choices=["tmux", "nohup"],
                         help="Force execution backend (default: auto-detect)")
     parser.add_argument("--claude-bin", type=str, help="Path to claude CLI binary")
+    parser.add_argument("--permission-mode", type=str, default="auto",
+                        choices=["auto", "default", "plan", "bypassPermissions"],
+                        help="Claude permission mode for workers (default: auto)")
 
     args = parser.parse_args(argv)
 
@@ -125,6 +128,7 @@ def _cmd_team(args: argparse.Namespace) -> None:
         max_workers=team.spawn.max_workers,
         backend=team.spawn.backend or args.backend,
         claude_bin=args.claude_bin,
+        permission_mode=args.permission_mode,
     )
 
     result = manager.spawn_team(team)
@@ -179,6 +183,7 @@ def _make_manager(args: argparse.Namespace, register_signals: bool = True) -> Sp
         backend=args.backend,
         claude_bin=args.claude_bin,
         register_signals=register_signals,
+        permission_mode=args.permission_mode,
     )
 
 

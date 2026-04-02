@@ -12,7 +12,7 @@ All result types are frozen dataclasses.
 
 import json
 import sqlite3
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
@@ -269,73 +269,76 @@ def _query_events(
     return QueryResult(events=records, total=len(records), filters_applied=filters_applied)
 
 
+def _project_filter(project: str) -> tuple[str, list]:
+    """Build WHERE/AND clause and params for optional project filter."""
+    if project:
+        return "WHERE project = ?", [project]
+    return "", []
+
+
+def _count_events(
+    cursor: sqlite3.Cursor, project: str, extra_condition: str = ""
+) -> int:
+    """Count events with optional project filter and extra WHERE condition."""
+    where, params = _project_filter(project)
+    if extra_condition:
+        where = f"{where} AND {extra_condition}" if where else f"WHERE {extra_condition}"
+    cursor.execute(f"SELECT COUNT(*) FROM events {where}", params)
+    return cursor.fetchone()[0] or 0
+
+
+_VALID_GROUP_COLUMNS = {"project", "event_type", "agent_name", "status", "session_id"}
+
+
+def _grouped_counts(
+    cursor: sqlite3.Cursor, column: str, project: str, extra_where: str = ""
+) -> list:
+    """SELECT column, COUNT(*) grouped by column with optional project filter."""
+    if column not in _VALID_GROUP_COLUMNS:
+        raise ValueError(f"Invalid column for grouping: {column!r}")
+    where, params = _project_filter(project)
+    if extra_where:
+        where = f"{where} AND {extra_where}" if where else f"WHERE {extra_where}"
+    cursor.execute(
+        f"SELECT {column}, COUNT(*) as cnt FROM events {where} "
+        f"GROUP BY {column} ORDER BY cnt DESC",
+        params,
+    )
+    return cursor.fetchall()
+
+
 def _get_statistics(conn: sqlite3.Connection, project: str = "") -> Statistics:
     """Internal implementation of EventStore.get_statistics."""
     cursor = conn.cursor()
-    project_clause = "WHERE project = ?" if project else ""
-    project_param: list = [project] if project else []
 
-    # Total events
-    cursor.execute(f"SELECT COUNT(*) FROM events {project_clause}", project_param)
-    total_events: int = cursor.fetchone()[0] or 0
+    total_events = _count_events(cursor, project)
 
-    # Total lessons
     cursor.execute("SELECT COUNT(*) FROM lessons")
     total_lessons: int = cursor.fetchone()[0] or 0
 
-    # Total error patterns
     cursor.execute("SELECT COUNT(*) FROM error_patterns")
     total_patterns: int = cursor.fetchone()[0] or 0
 
-    # Success / fail counts
-    cursor.execute(
-        f"SELECT COUNT(*) FROM events {project_clause} {'AND' if project_clause else 'WHERE'} success = 1"
-        if project_clause
-        else "SELECT COUNT(*) FROM events WHERE success = 1",
-        project_param,
-    )
-    success_count: int = cursor.fetchone()[0] or 0
-
-    if project_clause:
-        cursor.execute(
-            f"SELECT COUNT(*) FROM events {project_clause} AND success = 0",
-            project_param,
-        )
-    else:
-        cursor.execute("SELECT COUNT(*) FROM events WHERE success = 0")
-    fail_count: int = cursor.fetchone()[0] or 0
-
+    success_count = _count_events(cursor, project, "success = 1")
+    fail_count = _count_events(cursor, project, "success = 0")
     success_rate = success_count / total_events if total_events > 0 else 0.0
 
     # Per-agent summary
-    if project_clause:
-        cursor.execute(
-            f"""
-            SELECT agent_name,
-                   COUNT(*) as cnt,
-                   SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as ok,
-                   SUM(CASE WHEN success = 0 THEN 1 ELSE 0 END) as fail
-            FROM events
-            {project_clause}
-            AND agent_name IS NOT NULL
-            GROUP BY agent_name
-            ORDER BY cnt DESC
-            """,
-            project_param,
-        )
-    else:
-        cursor.execute(
-            """
-            SELECT agent_name,
-                   COUNT(*) as cnt,
-                   SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as ok,
-                   SUM(CASE WHEN success = 0 THEN 1 ELSE 0 END) as fail
-            FROM events
-            WHERE agent_name IS NOT NULL
-            GROUP BY agent_name
-            ORDER BY cnt DESC
-            """
-        )
+    where, params = _project_filter(project)
+    agent_where = f"{where} AND agent_name IS NOT NULL" if where else "WHERE agent_name IS NOT NULL"
+    cursor.execute(
+        f"""
+        SELECT agent_name,
+               COUNT(*) as cnt,
+               SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as ok,
+               SUM(CASE WHEN success = 0 THEN 1 ELSE 0 END) as fail
+        FROM events
+        {agent_where}
+        GROUP BY agent_name
+        ORDER BY cnt DESC
+        """,
+        params,
+    )
     by_agent = tuple(
         AgentSummary(
             agent_name=row[0],
@@ -346,40 +349,13 @@ def _get_statistics(conn: sqlite3.Connection, project: str = "") -> Statistics:
         for row in cursor.fetchall()
     )
 
-    # Per-project counts
-    cursor.execute(
-        """
-        SELECT project, COUNT(*) as cnt
-        FROM events
-        WHERE project IS NOT NULL
-        GROUP BY project
-        ORDER BY cnt DESC
-        """
-    )
-    by_project = {row[0]: row[1] for row in cursor.fetchall()}
+    # Per-project counts (always unfiltered)
+    by_project = {
+        row[0]: row[1] for row in _grouped_counts(cursor, "project", "", "project IS NOT NULL")
+    }
 
     # Per-event-type counts
-    if project_clause:
-        cursor.execute(
-            f"""
-            SELECT event_type, COUNT(*) as cnt
-            FROM events
-            {project_clause}
-            GROUP BY event_type
-            ORDER BY cnt DESC
-            """,
-            project_param,
-        )
-    else:
-        cursor.execute(
-            """
-            SELECT event_type, COUNT(*) as cnt
-            FROM events
-            GROUP BY event_type
-            ORDER BY cnt DESC
-            """
-        )
-    by_event_type = {row[0]: row[1] for row in cursor.fetchall()}
+    by_event_type = {row[0]: row[1] for row in _grouped_counts(cursor, "event_type", project)}
 
     return Statistics(
         total_events=total_events,

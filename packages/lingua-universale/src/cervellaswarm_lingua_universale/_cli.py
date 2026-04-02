@@ -454,99 +454,105 @@ def _cmd_lint(args: argparse.Namespace) -> int:
     return 1 if total_errors > 0 else 0
 
 
-def _cmd_fmt(args: argparse.Namespace) -> int:
-    """Handle ``lu fmt <path>`` (file or directory)."""
+def _fmt_check_file(lu_file: Path, changed: bool, single: bool) -> bool:
+    """--check mode: report if file would be reformatted. Returns True if changed."""
+    if changed:
+        print(f"{_c.YELLOW}Would reformat{_c.RESET} {lu_file}")
+    elif single:
+        print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {lu_file}")
+    return changed
+
+
+def _fmt_diff_file(lu_file: Path, formatted: str, changed: bool, single: bool) -> bool:
+    """--diff mode: show unified diff. Returns True if changed."""
     import difflib
 
+    if not changed:
+        if single:
+            print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {lu_file} -- already formatted")
+        return False
+    original = lu_file.read_text(encoding="utf-8")
+    diff = difflib.unified_diff(
+        original.splitlines(keepends=True),
+        formatted.splitlines(keepends=True),
+        fromfile=f"a/{lu_file}",
+        tofile=f"b/{lu_file}",
+    )
+    sys.stdout.writelines(diff)
+    return True
+
+
+def _fmt_inplace_file(lu_file: Path, formatted: str, changed: bool, single: bool) -> bool:
+    """Default mode: write formatted content in-place. Returns True if changed."""
+    if not changed:
+        if single:
+            print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {lu_file} -- already formatted")
+        return False
+    lu_file.write_text(formatted, encoding="utf-8")
+    print(f"{_c.GREEN}Formatted{_c.RESET} {lu_file}")
+    return True
+
+
+def _fmt_print_summary(
+    total: int, would_reformat: int, reformatted: int, error_count: int,
+    check_or_diff: bool,
+) -> None:
+    """Print multi-file format summary."""
+    if total <= 1:
+        return
+    if check_or_diff:
+        if would_reformat == 0 and error_count == 0:
+            print(f"\n{_c.GREEN}{_c.BOLD}OK{_c.RESET} {total} files checked, all formatted")
+        else:
+            print(f"\n{total} files checked, {would_reformat} would be reformatted")
+    else:
+        if reformatted == 0 and error_count == 0:
+            print(f"\n{_c.GREEN}{_c.BOLD}OK{_c.RESET} {total} files checked, all formatted")
+        elif reformatted > 0:
+            print(f"\n{total} files checked, {reformatted} reformatted")
+
+
+def _cmd_fmt(args: argparse.Namespace) -> int:
+    """Handle ``lu fmt <path>`` (file or directory)."""
     from ._fmt import format_file
 
     files: list[Path] = []
     for p in args.path:
         found = _discover_lu_files(p)
         if not found:
-            print(
-                f"{_c.RED}Error: no .lu files found at: {p}{_c.RESET}",
-                file=sys.stderr,
-            )
+            print(f"{_c.RED}Error: no .lu files found at: {p}{_c.RESET}", file=sys.stderr)
             return 1
         files.extend(found)
     files = list(dict.fromkeys(files))  # deduplicate preserving order
 
-    # --stdout only makes sense for a single file
     if args.stdout and len(files) > 1:
-        print(
-            f"{_c.RED}Error: --stdout only works with a single file{_c.RESET}",
-            file=sys.stderr,
-        )
+        print(f"{_c.RED}Error: --stdout only works with a single file{_c.RESET}", file=sys.stderr)
         return 1
 
     would_reformat = 0
     reformatted = 0
     error_count = 0
+    single = len(files) == 1
 
     for lu_file in files:
         try:
             formatted, changed = format_file(str(lu_file))
         except Exception as exc:
-            print(
-                f"{_c.RED}Error: {lu_file}: {exc}{_c.RESET}",
-                file=sys.stderr,
-            )
+            print(f"{_c.RED}Error: {lu_file}: {exc}{_c.RESET}", file=sys.stderr)
             error_count += 1
             continue
 
         if args.check:
-            if changed:
-                print(f"{_c.YELLOW}Would reformat{_c.RESET} {lu_file}")
-                would_reformat += 1
-            elif len(files) == 1:
-                print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {lu_file}")
-            continue
-
-        if args.diff:
-            if not changed:
-                if len(files) == 1:
-                    print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {lu_file} -- already formatted")
-                continue
-            original = lu_file.read_text(encoding="utf-8")
-            diff = difflib.unified_diff(
-                original.splitlines(keepends=True),
-                formatted.splitlines(keepends=True),
-                fromfile=f"a/{lu_file}",
-                tofile=f"b/{lu_file}",
-            )
-            sys.stdout.writelines(diff)
-            would_reformat += 1
-            continue
-
-        if args.stdout:
+            would_reformat += _fmt_check_file(lu_file, changed, single)
+        elif args.diff:
+            would_reformat += _fmt_diff_file(lu_file, formatted, changed, single)
+        elif args.stdout:
             sys.stdout.write(formatted)
             return 0
-
-        # Default: in-place write
-        if not changed:
-            if len(files) == 1:
-                print(f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} {lu_file} -- already formatted")
-            continue
-
-        lu_file.write_text(formatted, encoding="utf-8")
-        print(f"{_c.GREEN}Formatted{_c.RESET} {lu_file}")
-        reformatted += 1
-
-    # Summary for multi-file
-    if len(files) > 1:
-        if args.check or args.diff:
-            if would_reformat == 0 and error_count == 0:
-                print(f"\n{_c.GREEN}{_c.BOLD}OK{_c.RESET} {len(files)} files checked, all formatted")
-            else:
-                print(f"\n{len(files)} files checked, {would_reformat} would be reformatted")
         else:
-            if reformatted == 0 and error_count == 0:
-                print(f"\n{_c.GREEN}{_c.BOLD}OK{_c.RESET} {len(files)} files checked, all formatted")
-            elif reformatted > 0:
-                print(f"\n{len(files)} files checked, {reformatted} reformatted")
+            reformatted += _fmt_inplace_file(lu_file, formatted, changed, single)
 
-    # Exit code: 1 if any files need reformatting or had errors
+    _fmt_print_summary(len(files), would_reformat, reformatted, error_count, args.check or args.diff)
     if args.check or args.diff:
         return 1 if (would_reformat > 0 or error_count > 0) else 0
     return 1 if error_count > 0 else 0
@@ -633,6 +639,33 @@ def _cmd_doctor(args: argparse.Namespace) -> int:
     from ._doctor import run_doctor
 
     return run_doctor()
+
+
+def _cmd_visualize(args: argparse.Namespace) -> int:
+    """Handle ``lu visualize <file.lu>``."""
+    from ._visualize import visualize_file
+
+    try:
+        result = visualize_file(
+            args.file,
+            fmt=args.format,
+            fenced=args.fenced,
+        )
+    except (ValueError, OSError) as exc:
+        print(f"{_c.RED}{_c.BOLD}ERROR{_c.RESET} {exc}", file=sys.stderr)
+        return 1
+
+    if args.output:
+        out_path = Path(args.output)
+        out_path.write_text(result + "\n", encoding="utf-8")
+        print(
+            f"{_c.GREEN}{_c.BOLD}OK{_c.RESET} "
+            f"Diagram written to {out_path} ({args.format})"
+        )
+    else:
+        print(result)
+
+    return 0
 
 
 def _cmd_version(args: argparse.Namespace) -> int:
@@ -850,6 +883,23 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Save generated .lu protocol to file",
     )
 
+    # lu visualize
+    p_vis = subparsers.add_parser(
+        "visualize", help="Generate diagram from .lu protocol",
+    )
+    p_vis.add_argument("file", help="Path to the .lu source file")
+    p_vis.add_argument(
+        "--format", "-f", default="mermaid", choices=["mermaid"],
+        help="Output format (default: mermaid)",
+    )
+    p_vis.add_argument(
+        "-o", "--output", help="Write diagram to file instead of stdout",
+    )
+    p_vis.add_argument(
+        "--fenced", action="store_true",
+        help="Wrap output in markdown code fences (```mermaid ...```)",
+    )
+
     # lu doctor
     subparsers.add_parser("doctor", help="Check environment and dependencies")
 
@@ -878,6 +928,7 @@ _COMMAND_HANDLERS = {
     "fmt": _cmd_fmt,
     "generate": _cmd_generate,
     "mcp-audit": _cmd_mcp_audit,
+    "visualize": _cmd_visualize,
     "doctor": _cmd_doctor,
     "version": _cmd_version,
 }
@@ -892,7 +943,7 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command is None:
         parser.print_help()
-        return 0
+        return 1
 
     handler = _COMMAND_HANDLERS.get(args.command)
     if handler is None:

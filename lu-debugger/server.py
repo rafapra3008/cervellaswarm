@@ -47,6 +47,15 @@ app.add_middleware(SecurityHeadersMiddleware)
 app.state.limiter = limiter
 
 STATIC_DIR = Path(__file__).parent / "static"
+SSE_HEADERS = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
+
+
+async def _unavailable_stream():
+    """Yield a single error SSE event for live mode unavailable."""
+    yield _sse_event({
+        "type": "error",
+        "message": "Live mode unavailable. Set ANTHROPIC_API_KEY and install dependencies.",
+    })
 
 
 @app.exception_handler(RateLimitExceeded)
@@ -112,7 +121,7 @@ async def run_demo(request: Request):
     return StreamingResponse(
         _demo_generator(DEMO_HAPPY),
         media_type="text/event-stream",
-        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+        headers=SSE_HEADERS,
     )
 
 
@@ -123,7 +132,7 @@ async def run_demo_break(request: Request):
     return StreamingResponse(
         _demo_generator(DEMO_BREAK),
         media_type="text/event-stream",
-        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+        headers=SSE_HEADERS,
     )
 
 
@@ -132,20 +141,15 @@ async def run_demo_break(request: Request):
 async def run_live(request: Request):
     """Live happy path with real Claude API agents."""
     if not is_live_available():
-        async def _unavailable():
-            yield _sse_event({
-                "type": "error",
-                "message": "Live mode unavailable. Set ANTHROPIC_API_KEY and install dependencies.",
-            })
         return StreamingResponse(
-            _unavailable(),
+            _unavailable_stream(),
             media_type="text/event-stream",
-            headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+            headers=SSE_HEADERS,
         )
     return StreamingResponse(
         live_happy_path(),
         media_type="text/event-stream",
-        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+        headers=SSE_HEADERS,
     )
 
 
@@ -154,18 +158,13 @@ async def run_live(request: Request):
 async def run_live_break(request: Request):
     """Live violation: 1 real API step then forced protocol violation."""
     if not is_live_available():
-        async def _unavailable():
-            yield _sse_event({
-                "type": "error",
-                "message": "Live mode unavailable. Set ANTHROPIC_API_KEY and install dependencies.",
-            })
         return StreamingResponse(
-            _unavailable(),
+            _unavailable_stream(),
             media_type="text/event-stream",
-            headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+            headers=SSE_HEADERS,
         )
     return StreamingResponse(
         live_break(),
         media_type="text/event-stream",
-        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+        headers=SSE_HEADERS,
     )

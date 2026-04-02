@@ -155,8 +155,15 @@ _SINGLE_CHAR_MAP: dict[str, TokKind] = {
 
 
 def _check_tabs(source: str) -> None:
-    """Reject tabs before textwrap.dedent (which can silently strip them)."""
+    """Reject tabs before textwrap.dedent (which can silently strip them).
+
+    Comment lines (starting with optional whitespace + ``#``) are skipped
+    because tabs inside comments don't affect indentation.
+    """
     for line_no, line in enumerate(source.split("\n"), start=1):
+        stripped = line.lstrip()
+        if stripped.startswith("#"):
+            continue
         if "\t" in line:
             raise TokenizeError(
                 "tabs are not allowed; use 4 spaces for indentation",

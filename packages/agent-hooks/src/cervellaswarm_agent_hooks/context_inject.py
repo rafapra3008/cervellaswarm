@@ -48,7 +48,8 @@ def safe_read(path: Path, max_lines: int = 0) -> str | None:
                 content = "\n".join(lines[:max_lines])
                 content += f"\n\n... ({len(lines) - max_lines} more lines)"
         return content
-    except Exception:
+    except Exception as e:
+        print(f"context_inject: failed to read {path}: {e}", file=sys.stderr)
         return None
 
 
@@ -100,7 +101,7 @@ def main():
     try:
         try:
             input_data = json.load(sys.stdin)
-        except Exception:
+        except (json.JSONDecodeError, ValueError):
             input_data = {}
 
         cwd = input_data.get("cwd", os.getcwd())
@@ -125,7 +126,8 @@ def main():
         }
         print(json.dumps(result))
 
-    except Exception:
+    except Exception as e:
+        print(f"context_inject: {e}", file=sys.stderr)
         print(json.dumps({}))
 
 

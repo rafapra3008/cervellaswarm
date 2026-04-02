@@ -52,12 +52,12 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.79.0",
+    "@anthropic-ai/sdk": "^0.81.0",
     "conf": "^15.1.0"
   },
   "devDependencies": {
     "@types/node": "^25.2.3",
-    "typescript": "^5.7.0"
+    "typescript": "^6.0.2"
   },
   "peerDependencies": {
     "@anthropic-ai/sdk": ">=0.30.0"

@@ -61,6 +61,23 @@ class ValidationResult:
     score: int = 100
 
 
+def _find_incomplete_markers(content: str) -> list[str]:
+    """Find INCOMPLETE_MARKERS that appear outside code blocks."""
+    found = []
+    for marker in INCOMPLETE_MARKERS:
+        idx = 0
+        while True:
+            idx = content.find(marker, idx)
+            if idx == -1:
+                break
+            code_blocks = content[:idx].count("```")
+            if code_blocks % 2 == 0:  # Even count = outside code block
+                found.append(marker)
+                break
+            idx += len(marker)
+    return found
+
+
 def validate_output(output_file: Path, logs_dir: Optional[Path] = None) -> ValidationResult:
     """
     Validate a worker output file.
@@ -118,11 +135,7 @@ def validate_output(output_file: Path, logs_dir: Optional[Path] = None) -> Valid
         result.score -= 10
 
     # CHECK 4: Error markers
-    error_found: list[str] = []
-    for marker in ERROR_MARKERS:
-        if marker in content:
-            error_found.append(marker)
-
+    error_found = [m for m in ERROR_MARKERS if m in content]
     if error_found:
         result.valid = False
         result.errors.append(f"Error markers found: {', '.join(error_found)}")
@@ -131,21 +144,7 @@ def validate_output(output_file: Path, logs_dir: Optional[Path] = None) -> Valid
         result.score -= 40
 
     # CHECK 5: Incomplete markers (outside code blocks)
-    # Check ALL occurrences, not just the first one
-    incomplete_found: list[str] = []
-    for marker in INCOMPLETE_MARKERS:
-        idx = 0
-        while True:
-            idx = content.find(marker, idx)
-            if idx == -1:
-                break
-            before_marker = content[:idx]
-            code_blocks = before_marker.count("```")
-            if code_blocks % 2 == 0:  # Even count = outside code block
-                incomplete_found.append(marker)
-                break  # One match outside code block is enough
-            idx += len(marker)
-
+    incomplete_found = _find_incomplete_markers(content)
     if incomplete_found:
         result.warnings.append(
             f"Incomplete markers: {', '.join(incomplete_found)}"

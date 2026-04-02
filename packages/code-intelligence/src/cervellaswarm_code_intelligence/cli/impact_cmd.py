@@ -33,7 +33,7 @@ def main():
         analyzer = ImpactAnalyzer(repo_root)
 
         stats = analyzer.get_stats()
-        print(f"\nRepository Statistics:")
+        print("\nRepository Statistics:")
         print(f"   Total symbols: {stats['total_symbols']}")
         print(f"   Unique names: {stats['unique_names']}")
         print(f"   Graph nodes: {stats['graph_nodes']}")
@@ -48,11 +48,11 @@ def main():
             print(f"{'='*60}")
             print(f"\nRisk Level: {result.risk_level.upper()}")
             print(f"Risk Score: {result.risk_score:.2f} / 1.00")
-            print(f"\nImpact Metrics:")
+            print("\nImpact Metrics:")
             print(f"   Callers: {result.callers_count}")
             print(f"   Files affected: {result.files_affected}")
             print(f"   PageRank importance: {result.importance_score:.6f}")
-            print(f"\nReasons:")
+            print("\nReasons:")
             for i, reason in enumerate(result.reasons, 1):
                 print(f"   {i}. {reason}")
             print(f"\n{'='*60}")

@@ -9,12 +9,14 @@ import pytest
 from cervellaswarm_lingua_universale._mcp_audit import (
     ToolDefinition,
     InferredStep,
+    AnnotationFinding,
     load_manifest,
     infer_protocol,
     generate_lu_source,
     audit_tools,
     render_json,
     render_terminal,
+    check_annotations,
     _categorize_tools,
     _infer_orderings,
     _detect_cycles,
@@ -607,3 +609,254 @@ class TestSameResourceFalsePositives:
         assert len(spurious) >= 1, (
             "Heuristic improved! Update test: spurious 'file in profile' ordering no longer inferred."
         )
+
+
+# ---------------------------------------------------------------------------
+# Annotation audit (v2)
+# ---------------------------------------------------------------------------
+
+
+class TestAnnotationLoading:
+    """Annotations are loaded from manifest JSON."""
+
+    def test_loads_annotations_from_manifest(self):
+        _, tools = load_manifest(FIXTURES_DIR / "filesystem_server.json")
+        read_file = next(t for t in tools if t.name == "read_file")
+        assert read_file.annotations == {"readOnlyHint": True}
+
+    def test_missing_annotations_default_empty(self):
+        _, tools = load_manifest(FIXTURES_DIR / "sample_tools.json")
+        assert tools[0].annotations == {}
+
+    def test_write_tool_has_full_annotations(self):
+        _, tools = load_manifest(FIXTURES_DIR / "filesystem_server.json")
+        write = next(t for t in tools if t.name == "write_file")
+        assert write.annotations["readOnlyHint"] is False
+        assert write.annotations["destructiveHint"] is True
+        assert write.annotations["idempotentHint"] is True
+
+    def test_lu_mcp_server_all_annotated(self):
+        _, tools = load_manifest(FIXTURES_DIR / "lu_mcp_server.json")
+        assert all(t.annotations for t in tools)
+        for t in tools:
+            assert t.annotations["readOnlyHint"] is True
+            assert t.annotations["openWorldHint"] is False
+
+
+class TestCheckAnnotations:
+    """Coverage and coherence checks on tool annotations."""
+
+    def test_no_annotations_produces_coverage_warning(self):
+        tools = [
+            ToolDefinition("get_data", "Get data", {}),
+            ToolDefinition("set_data", "Set data", {}),
+        ]
+        findings = check_annotations(tools)
+        coverage = [f for f in findings if f.tool_name == "*"]
+        assert len(coverage) == 1
+        assert "0/2" in coverage[0].message
+
+    def test_partial_annotations_produces_info(self):
+        tools = [
+            ToolDefinition("get_data", "Get data", {}, {"readOnlyHint": True}),
+            ToolDefinition("set_data", "Set data", {}),
+        ]
+        findings = check_annotations(tools)
+        coverage = [f for f in findings if f.tool_name == "*"]
+        assert len(coverage) == 1
+        assert coverage[0].severity == "info"
+        assert "1/2" in coverage[0].message
+
+    def test_full_annotations_no_coverage_finding(self):
+        tools = [
+            ToolDefinition("get_data", "", {}, {"readOnlyHint": True}),
+            ToolDefinition("set_data", "", {}, {"readOnlyHint": False}),
+        ]
+        findings = check_annotations(tools)
+        coverage = [f for f in findings if f.tool_name == "*"]
+        assert len(coverage) == 0
+
+    def test_readonly_on_delete_is_critical(self):
+        tools = [
+            ToolDefinition("delete_all", "Delete everything", {}, {"readOnlyHint": True}),
+        ]
+        findings = check_annotations(tools)
+        critical = [f for f in findings if f.severity == "critical"]
+        assert len(critical) >= 1
+        assert "readOnlyHint=true" in critical[0].message
+
+    def test_readonly_on_write_is_critical(self):
+        tools = [
+            ToolDefinition("write_file", "Write content", {}, {"readOnlyHint": True}),
+        ]
+        findings = check_annotations(tools)
+        critical = [f for f in findings if f.severity == "critical"]
+        assert len(critical) >= 1
+
+    def test_destructive_false_on_delete_is_warning(self):
+        tools = [
+            ToolDefinition("purge_cache", "Purge the cache", {}, {
+                "readOnlyHint": False, "destructiveHint": False,
+            }),
+        ]
+        findings = check_annotations(tools)
+        warns = [f for f in findings if f.severity == "warning"]
+        assert len(warns) >= 1
+        assert "destructiveHint=false" in warns[0].message
+
+    def test_correctly_annotated_no_findings(self):
+        tools = [
+            ToolDefinition("read_file", "Read", {}, {"readOnlyHint": True}),
+            ToolDefinition("write_file", "Write", {}, {
+                "readOnlyHint": False, "destructiveHint": True,
+            }),
+        ]
+        findings = check_annotations(tools)
+        # No critical or warning findings (only possible info for coverage)
+        assert all(f.severity not in ("critical", "warning") for f in findings)
+
+    def test_unannotated_destructive_tool_produces_warning(self):
+        tools = [
+            ToolDefinition("delete_user", "Delete user permanently", {}),
+        ]
+        findings = check_annotations(tools)
+        tool_warns = [f for f in findings if f.tool_name == "delete_user"]
+        assert len(tool_warns) >= 1
+        assert tool_warns[0].severity == "warning"
+
+    def test_empty_tools_no_findings(self):
+        assert check_annotations([]) == []
+
+    def test_no_false_critical_on_dataset(self):
+        """'set' in 'dataset' should NOT trigger write pattern (word boundary)."""
+        tools = [
+            ToolDefinition("get_dataset_info", "Get dataset metadata", {}, {"readOnlyHint": True}),
+        ]
+        findings = check_annotations(tools)
+        critical = [f for f in findings if f.severity == "critical"]
+        assert len(critical) == 0
+
+    def test_no_false_critical_on_output(self):
+        """'put' in 'output' should NOT trigger write pattern."""
+        tools = [
+            ToolDefinition("get_output", "Get computation output", {}, {"readOnlyHint": True}),
+        ]
+        findings = check_annotations(tools)
+        critical = [f for f in findings if f.severity == "critical"]
+        assert len(critical) == 0
+
+    def test_no_false_critical_on_address(self):
+        """'add' in 'address' should NOT trigger write pattern."""
+        tools = [
+            ToolDefinition("get_address", "Get user address", {}, {"readOnlyHint": True}),
+        ]
+        findings = check_annotations(tools)
+        critical = [f for f in findings if f.severity == "critical"]
+        assert len(critical) == 0
+
+    def test_real_set_still_detected(self):
+        """'set_value' should still trigger write pattern (word boundary match)."""
+        tools = [
+            ToolDefinition("set_value", "Set a config value", {}, {"readOnlyHint": True}),
+        ]
+        findings = check_annotations(tools)
+        critical = [f for f in findings if f.severity == "critical"]
+        assert len(critical) >= 1
+
+    def test_real_edit_still_detected(self):
+        """'edit_file' should still trigger write pattern."""
+        tools = [
+            ToolDefinition("edit_file", "Edit a file", {}, {"readOnlyHint": True}),
+        ]
+        findings = check_annotations(tools)
+        critical = [f for f in findings if f.severity == "critical"]
+        assert len(critical) >= 1
+
+
+class TestMismatchServerFixture:
+    """Tests for the mismatch demo fixture (killer Show HN demo)."""
+
+    def test_loads_mismatch_manifest(self):
+        name, tools = load_manifest(FIXTURES_DIR / "mismatch_server.json")
+        assert name == "unsafe-server"
+        assert len(tools) == 4
+
+    def test_mismatch_detects_critical_violations(self):
+        _, tools = load_manifest(FIXTURES_DIR / "mismatch_server.json")
+        findings = check_annotations(tools)
+        critical = [f for f in findings if f.severity == "critical"]
+        # delete_all_records: readOnly=true but delete
+        # write_file: readOnly=true but write
+        assert len(critical) >= 2
+        assert any("delete_all_records" in f.tool_name for f in critical)
+        assert any("write_file" in f.tool_name for f in critical)
+
+    def test_mismatch_detects_destructive_false_warning(self):
+        _, tools = load_manifest(FIXTURES_DIR / "mismatch_server.json")
+        findings = check_annotations(tools)
+        warns = [f for f in findings if f.severity == "warning" and f.tool_name == "purge_cache"]
+        assert len(warns) >= 1
+
+    def test_mismatch_audit_report_includes_findings(self):
+        _, tools = load_manifest(FIXTURES_DIR / "mismatch_server.json")
+        report = audit_tools("unsafe-server", tools)
+        assert len(report.annotation_findings) >= 3
+        assert report.annotated_count == 4
+
+
+class TestAnnotationsInRender:
+    """Annotation findings appear in terminal and JSON output."""
+
+    def test_terminal_shows_annotation_section(self):
+        _, tools = load_manifest(FIXTURES_DIR / "mismatch_server.json")
+        report = audit_tools("unsafe-server", tools)
+        output = render_terminal(report)
+        assert "Annotation Audit" in output
+        assert "CRITICAL" in output
+        assert "4/4" in output
+
+    def test_terminal_no_annotations_shows_coverage(self):
+        _, tools = load_manifest(FIXTURES_DIR / "sample_tools.json")
+        report = audit_tools("test", tools)
+        output = render_terminal(report)
+        assert "Annotation Audit" in output
+        assert "0/6" in output
+
+    def test_json_includes_annotation_audit(self):
+        _, tools = load_manifest(FIXTURES_DIR / "mismatch_server.json")
+        report = audit_tools("unsafe-server", tools)
+        data = render_json(report)
+        assert "annotation_audit" in data
+        assert data["annotation_audit"]["annotated"] == 4
+        assert len(data["annotation_audit"]["findings"]) >= 3
+
+    def test_filesystem_annotated_shows_coverage(self):
+        _, tools = load_manifest(FIXTURES_DIR / "filesystem_server.json")
+        report = audit_tools("server-filesystem", tools)
+        output = render_terminal(report)
+        assert "11/11" in output
+
+    def test_lu_mcp_fully_annotated_clean(self):
+        _, tools = load_manifest(FIXTURES_DIR / "lu_mcp_server.json")
+        report = audit_tools("lu-mcp-server", tools)
+        assert report.annotated_count == 4
+        # No critical or warning findings (all tools are correctly annotated read-only)
+        bad = [f for f in report.annotation_findings if f.severity in ("critical", "warning")]
+        assert len(bad) == 0
+
+
+class TestAnnotationBackwardCompat:
+    """Existing code that creates ToolDefinition without annotations still works."""
+
+    def test_positional_args_still_work(self):
+        t = ToolDefinition("name", "desc", {})
+        assert t.annotations == {}
+
+    def test_audit_tools_without_annotations(self):
+        tools = [
+            ToolDefinition("get_data", "Get", {}),
+            ToolDefinition("list_data", "List", {}),
+        ]
+        report = audit_tools("legacy", tools)
+        assert report.violated == 0
+        assert report.annotated_count == 0

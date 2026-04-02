@@ -24,11 +24,12 @@ from cervellaswarm_event_store.writer import _new_id, _utc_now
 # ------------------------------------------------------------------
 
 _MODEL_PRICING: dict[str, dict[str, float]] = {
+    # Pricing as of March 2026 -- https://docs.anthropic.com/en/docs/about-claude/pricing
     "claude-opus-4-6": {
-        "input": 15.0,
-        "output": 75.0,
-        "cache_read": 1.50,
-        "cache_write": 18.75,
+        "input": 5.0,
+        "output": 25.0,
+        "cache_read": 0.50,
+        "cache_write": 6.25,
     },
     "claude-sonnet-4-6": {
         "input": 3.0,
@@ -37,15 +38,16 @@ _MODEL_PRICING: dict[str, dict[str, float]] = {
         "cache_write": 3.75,
     },
     "claude-haiku-4-5-20251001": {
-        "input": 0.80,
-        "output": 4.0,
-        "cache_read": 0.08,
-        "cache_write": 1.0,
+        "input": 1.0,
+        "output": 5.0,
+        "cache_read": 0.10,
+        "cache_write": 1.25,
     },
 }
 
-# Aliases for model names that may appear without date suffix
+# Aliases for model names that may appear without date suffix or with context suffix
 _MODEL_PRICING["claude-haiku-4-5"] = _MODEL_PRICING["claude-haiku-4-5-20251001"]
+_MODEL_PRICING["claude-opus-4-6[1m]"] = _MODEL_PRICING["claude-opus-4-6"]
 
 # Fallback for unknown models (use Sonnet pricing as safe middle ground)
 _DEFAULT_PRICING = _MODEL_PRICING["claude-sonnet-4-6"]

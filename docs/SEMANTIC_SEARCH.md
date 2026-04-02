@@ -313,7 +313,7 @@ find_dependencies(file_path: str) -> List[str]
 
 **Example:**
 ```python
-deps = analyzer.find_dependencies("scripts/utils/semantic_search.py")
+deps = analyzer.find_dependencies("scripts/utils/generate_worker_context.py")
 for dep in deps:
     print(f"Depends on: {dep}")
 ```
@@ -337,7 +337,7 @@ find_dependents(file_path: str) -> List[str]
 
 **Example:**
 ```python
-dependents = analyzer.find_dependents("scripts/utils/symbol_extractor.py")
+dependents = analyzer.find_dependents("scripts/utils/measure_context_tokens.py")
 for dep in dependents:
     print(f"Used by: {dep}")
 ```
@@ -440,7 +440,7 @@ from impact_analyzer import ImpactAnalyzer
 
 analyzer = ImpactAnalyzer("/path/to/your-project")
 
-file = "scripts/utils/semantic_search.py"
+file = "scripts/utils/generate_worker_context.py"
 
 # What does this file depend on?
 deps = analyzer.find_dependencies(file)

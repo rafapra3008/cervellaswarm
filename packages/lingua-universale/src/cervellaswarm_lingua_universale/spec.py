@@ -51,6 +51,7 @@ from enum import Enum, auto
 from types import MappingProxyType
 from typing import Sequence
 
+from ._codegen_common import collect_all_steps
 from .protocols import Protocol, ProtocolChoice, ProtocolElement, ProtocolStep
 from .types import AgentRole, MessageKind
 from .checker import MessageRecord
@@ -699,18 +700,7 @@ def _parse_message_kind(name: str, line: int = 0) -> MessageKind:
 # ============================================================
 
 
-def _collect_all_steps(
-    elements: tuple[ProtocolElement, ...],
-) -> list[ProtocolStep]:
-    """Recursively collect all ProtocolStep objects from elements (including nested choices)."""
-    result: list[ProtocolStep] = []
-    for elem in elements:
-        if isinstance(elem, ProtocolStep):
-            result.append(elem)
-        elif isinstance(elem, ProtocolChoice):
-            for branch_elems in elem.branches.values():
-                result.extend(_collect_all_steps(branch_elems))
-    return result
+_collect_all_steps = collect_all_steps
 
 
 def _find_violating_steps(
@@ -1042,7 +1032,7 @@ def _check_all_roles_participate_static(protocol: Protocol, spec: PropertySpec) 
             spec=spec,
             verdict=PropertyVerdict.VIOLATED,
             evidence=(
-                f"roles declared but never participating: "
+                "roles declared but never participating: "
                 + ", ".join(sorted(missing))
             ),
         )

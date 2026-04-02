@@ -4,10 +4,7 @@
 """Shared fixtures for cervellaswarm-agent-hooks tests."""
 
 import json
-import os
-import tempfile
 from io import StringIO
-from pathlib import Path
 
 import pytest
 

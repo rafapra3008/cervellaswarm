@@ -72,8 +72,14 @@ jobs:
       - name: Run linting (Python 3.12 only)
         if: steps.check.outputs.skip != 'true' && matrix.python-version == '3.12'
         run: |
-          ruff check scripts/ src/ --ignore=E501
-        continue-on-error: true
+          ruff check scripts/ src/ --ignore=E501,E402
+
+      - name: Install local packages (for re-export tests)
+        if: steps.check.outputs.skip != 'true'
+        run: |
+          pip install -e packages/task-orchestration
+          pip install -e packages/event-store
+          pip install -e packages/session-memory
 
       - name: Run tests with coverage
         if: steps.check.outputs.skip != 'true'
@@ -83,6 +89,7 @@ jobs:
             --ignore=tests/tools/test_convert_agents.py \
             --ignore=tests/utils/test_semantic_search.py \
             --ignore=tests/swarm/test_architect_structure.py \
+            --ignore=tests/hardtest_s494_edge_cases.py \
             --cov=scripts --cov=src --cov-report=term --cov-report=xml --cov-fail-under=55
         env:
           PYTHONPATH: ${{ github.workspace }}

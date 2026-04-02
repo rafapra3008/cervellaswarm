@@ -111,7 +111,7 @@ def init_project(
         "decision_placeholder": "Use session memory",
         "choice_placeholder": "cervellaswarm-session-memory",
         "reason_placeholder": "Git-native, human-readable",
-        "description": description or f"A project tracked with session memory.",
+        "description": description or "A project tracked with session memory.",
     }
 
     state_content = _load_and_render("session_state.md", variables)

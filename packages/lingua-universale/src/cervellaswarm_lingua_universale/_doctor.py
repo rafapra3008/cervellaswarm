@@ -43,7 +43,8 @@ def _check_pypi_version(current: str) -> str | None:
         with urlopen(url, timeout=3) as resp:
             data = json.loads(resp.read())
             return data.get("info", {}).get("version")
-    except Exception:
+    except Exception as e:
+        print(f"lu doctor: PyPI version check failed: {e}", file=sys.stderr)
         return None
 
 
@@ -54,7 +55,8 @@ def _get_tool_version(cmd: str, flag: str = "--version") -> str:
             [cmd, flag], capture_output=True, text=True, timeout=5,
         )
         return result.stdout.strip().split("\n")[0] if result.stdout else ""
-    except Exception:
+    except Exception as e:
+        print(f"lu doctor: {cmd} version check failed: {e}", file=sys.stderr)
         return ""
 
 
@@ -65,7 +67,8 @@ def _has_vscode_extension(extension_id: str) -> bool:
             ["code", "--list-extensions"], capture_output=True, text=True, timeout=5,
         )
         return extension_id in result.stdout
-    except Exception:
+    except Exception as e:
+        print(f"lu doctor: VS Code extension check failed: {e}", file=sys.stderr)
         return False
 
 
@@ -99,8 +102,8 @@ def _check_test_suite() -> None:
                 if total > 0:
                     _ok("Test suite", f"{total} tests discovered")
                     return
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"lu doctor: pytest discovery failed: {e}", file=sys.stderr)
 
     _warn("Test suite", "pytest not available -- run `pytest` in source tree to verify")
 

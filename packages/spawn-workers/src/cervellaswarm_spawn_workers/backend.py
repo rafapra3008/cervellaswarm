@@ -125,7 +125,7 @@ def launch_nohup(
     with open(log_file, "w") as log_fh:
         proc = subprocess.Popen(
             command,
-            shell=True,
+            shell=True,  # nosec: command is built internally by spawner with shlex.quote
             stdout=log_fh,
             stderr=subprocess.STDOUT,
             cwd=str(cwd) if cwd else None,
