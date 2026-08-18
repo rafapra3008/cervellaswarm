@@ -4,17 +4,16 @@
 """Tests for cervellaswarm_session_memory.config module."""
 
 import copy
-import pytest
 from pathlib import Path
 
+import pytest
 from cervellaswarm_session_memory.config import (
     DEFAULTS,
-    load_config,
-    get_section,
-    get_memory_dir,
     find_config_file,
+    get_memory_dir,
+    get_section,
+    load_config,
 )
-
 
 # ---------------------------------------------------------------------------
 # DEFAULTS structure
@@ -183,6 +182,18 @@ def test_merge_config_new_section(tmp_path):
     cfg.write_text("custom_section:\n  key: value\n", encoding="utf-8")
     config = load_config(config_path=cfg)
     assert config.get("custom_section") == {"key": "value"}
+
+
+def test_deep_merge_preserves_nested_keys(tmp_path):
+    """Deep merge preserves nested default keys not in user config (S509)."""
+    cfg = tmp_path / "partial.yaml"
+    cfg.write_text("quality:\n  target_score: 9.5\n", encoding="utf-8")
+    config = load_config(config_path=cfg)
+    # Overridden key
+    assert config["quality"]["target_score"] == 9.5
+    # Deep nested defaults preserved (would be lost with shallow merge)
+    assert "weights" in config["quality"]
+    assert config["quality"]["weights"]["actionability"] == 0.30
 
 
 # ---------------------------------------------------------------------------

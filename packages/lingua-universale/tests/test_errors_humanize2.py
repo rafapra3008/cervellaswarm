@@ -11,17 +11,15 @@ custom context parameter, and return-type contract.
 from __future__ import annotations
 
 import pytest
-
+from cervellaswarm_lingua_universale.checker import ProtocolViolation, SessionComplete
+from cervellaswarm_lingua_universale.dsl import DSLParseError
 from cervellaswarm_lingua_universale.errors import (
     ErrorCategory,
     HumanError,
     humanize,
 )
-from cervellaswarm_lingua_universale.checker import ProtocolViolation, SessionComplete
-from cervellaswarm_lingua_universale.dsl import DSLParseError
-from cervellaswarm_lingua_universale.spec import SpecParseError
 from cervellaswarm_lingua_universale.intent import IntentParseError
-
+from cervellaswarm_lingua_universale.spec import SpecParseError
 
 # ============================================================
 # IntentParseError -> LU-I00X

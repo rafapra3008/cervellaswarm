@@ -10,16 +10,14 @@ DSLParseError -> LU-D00X, SpecParseError -> LU-S00X.
 from __future__ import annotations
 
 import pytest
-
+from cervellaswarm_lingua_universale.checker import ProtocolViolation, SessionComplete
+from cervellaswarm_lingua_universale.dsl import DSLParseError
 from cervellaswarm_lingua_universale.errors import (
     ErrorCategory,
     ErrorSeverity,
     humanize,
 )
-from cervellaswarm_lingua_universale.checker import ProtocolViolation, SessionComplete
-from cervellaswarm_lingua_universale.dsl import DSLParseError
 from cervellaswarm_lingua_universale.spec import SpecParseError
-
 
 # ============================================================
 # Helpers

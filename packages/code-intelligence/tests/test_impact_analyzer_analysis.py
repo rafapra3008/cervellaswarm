@@ -9,9 +9,10 @@ Split da test_impact_analyzer.py (869 righe > limite 500).
 Sessione 341 - Split test file.
 """
 
-import pytest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
+
+import pytest
 
 # Setup path
 project_root = Path(__file__).parent.parent.parent

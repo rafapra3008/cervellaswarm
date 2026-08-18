@@ -6,7 +6,6 @@ summary(), log recording, session ID auto-generation.
 """
 
 import pytest
-
 from cervellaswarm_lingua_universale.checker import (
     MessageRecord,
     ProtocolViolation,
@@ -29,7 +28,6 @@ from cervellaswarm_lingua_universale.types import (
     TaskResult,
     TaskStatus,
 )
-
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 

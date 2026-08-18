@@ -4,16 +4,15 @@
 """Tests for cervellaswarm_event_store.reader module."""
 
 import pytest
-
-from cervellaswarm_event_store.writer import Event, Lesson
 from cervellaswarm_event_store.reader import (
     AgentSummary,
     EventRecord,
     QueryResult,
     Statistics,
-    _parse_json_field,
     _parse_json_dict,
+    _parse_json_field,
 )
+from cervellaswarm_event_store.writer import Event, Lesson
 
 
 class TestParseJsonField:

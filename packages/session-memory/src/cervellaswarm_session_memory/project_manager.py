@@ -14,7 +14,7 @@ from datetime import date as date_type
 from importlib import resources
 from pathlib import Path
 
-from cervellaswarm_session_memory.config import DEFAULTS, load_config, get_memory_dir
+from cervellaswarm_session_memory.config import DEFAULTS, get_memory_dir, load_config
 
 
 @dataclass

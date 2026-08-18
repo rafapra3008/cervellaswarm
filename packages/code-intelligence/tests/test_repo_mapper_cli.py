@@ -4,14 +4,13 @@ Covers CLI argument parsing, output modes, verbose and stats flags.
 Error handling and edge cases in test_repo_mapper_cli_errors.py.
 """
 
-import sys
 import logging
-import pytest
+import sys
 from pathlib import Path
-from unittest.mock import Mock, patch, mock_open
+from unittest.mock import Mock, mock_open, patch
 
+import pytest
 from cervellaswarm_code_intelligence.cli.map_cmd import main
-
 
 # ============================================================================
 # FIXTURES
@@ -142,12 +141,12 @@ def test_main_file_output(mock_repo_mapper, capsys):
     MockClass, mock_instance = mock_repo_mapper
 
     m_open = mock_open()
-    with patch('sys.argv', ['repo_mapper_cli.py', '--output', '/tmp/map.md']), \
-         patch('builtins.open', m_open):
+    with (patch('sys.argv', ['repo_mapper_cli.py', '--output', '/tmp/map.md']),  # nosec B108
+         patch('builtins.open', m_open)):
         result = main()
 
     assert result == 0
-    m_open.assert_called_once_with('/tmp/map.md', 'w')
+    m_open.assert_called_once_with('/tmp/map.md', 'w', encoding='utf-8')  # nosec B108
     handle = m_open()
     handle.write.assert_called_once_with("# Repository Map\n\n## Files\n- file1.py\n")
     output = capsys.readouterr().out

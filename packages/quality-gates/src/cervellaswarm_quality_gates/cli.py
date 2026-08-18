@@ -23,8 +23,8 @@ import json
 import sys
 from pathlib import Path
 
-from cervellaswarm_quality_gates.config import load_config, get_section
-from cervellaswarm_quality_gates.hooks import validate_hooks, hooks_summary
+from cervellaswarm_quality_gates.config import get_section, load_config
+from cervellaswarm_quality_gates.hooks import hooks_summary, validate_hooks
 from cervellaswarm_quality_gates.quality import score_file
 from cervellaswarm_quality_gates.sync import compare_agents
 

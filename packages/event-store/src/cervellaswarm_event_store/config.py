@@ -21,10 +21,12 @@ import copy
 import os
 from pathlib import Path
 
+_YAML_ERRORS: tuple[type[Exception], ...] = ()
 try:
     import yaml as _yaml  # optional
 
     _YAML_AVAILABLE = True
+    _YAML_ERRORS = (_yaml.YAMLError,)
 except ImportError:  # pragma: no cover
     _YAML_AVAILABLE = False
 
@@ -76,15 +78,15 @@ def _deep_copy_defaults() -> dict:
     return copy.deepcopy(DEFAULTS)
 
 
-def _merge_config(user_config: dict) -> dict:
-    """Merge user config with defaults (shallow per section)."""
-    merged = _deep_copy_defaults()
-    for section, values in user_config.items():
-        if section in merged and isinstance(values, dict) and isinstance(merged[section], dict):
-            merged[section] = {**merged[section], **values}
+def _deep_merge(base: dict, override: dict) -> dict:
+    """Deep merge override into base (recursive for nested dicts)."""
+    result = copy.deepcopy(base)
+    for key, value in override.items():
+        if key in result and isinstance(result[key], dict) and isinstance(value, dict):
+            result[key] = _deep_merge(result[key], value)
         else:
-            merged[section] = values
-    return merged
+            result[key] = value
+    return result
 
 
 def load_config(config_path: "Path | None" = None) -> dict:
@@ -107,10 +109,13 @@ def load_config(config_path: "Path | None" = None) -> dict:
     try:
         with open(config_file, "r", encoding="utf-8") as f:
             user_config = _yaml.safe_load(f) or {}
-    except (OSError, Exception):
+    except (OSError, ValueError, *_YAML_ERRORS):
         return _deep_copy_defaults()
 
-    return _merge_config(user_config)
+    if not isinstance(user_config, dict):
+        return _deep_copy_defaults()
+
+    return _deep_merge(DEFAULTS, user_config)
 
 
 def get_db_path(config: "dict | None" = None) -> Path:
@@ -163,5 +168,5 @@ def get_section(section: str, config: "dict | None" = None) -> dict:
     section_config = config.get(section, {})
 
     if isinstance(section_config, dict) and isinstance(defaults, dict):
-        return {**defaults, **section_config}
-    return section_config if section_config else copy.deepcopy(defaults) if isinstance(defaults, dict) else defaults
+        return _deep_merge(defaults, section_config)
+    return section_config if section_config else copy.deepcopy(defaults)

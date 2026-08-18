@@ -14,7 +14,6 @@ import sqlite3
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from typing import Optional
 
 _VALID_EVENT_TYPES = frozenset(
     {
@@ -88,20 +87,20 @@ class Event:
     event_type: str
     id: str = field(default_factory=_new_id)
     timestamp: str = field(default_factory=_utc_now)
-    session_id: Optional[str] = None
-    agent_name: Optional[str] = None
-    agent_role: Optional[str] = None
-    task_id: Optional[str] = None
-    parent_task_id: Optional[str] = None
-    description: Optional[str] = None
-    status: Optional[str] = None
-    duration_ms: Optional[int] = None
-    success: Optional[bool] = None
-    error_message: Optional[str] = None
-    project: Optional[str] = None
+    session_id: str | None = None
+    agent_name: str | None = None
+    agent_role: str | None = None
+    task_id: str | None = None
+    parent_task_id: str | None = None
+    description: str | None = None
+    status: str | None = None
+    duration_ms: int | None = None
+    success: bool | None = None
+    error_message: str | None = None
+    project: str | None = None
     files_modified: tuple = field(default_factory=tuple)
     tags: tuple = field(default_factory=tuple)
-    metadata: Optional[dict] = None
+    metadata: dict | None = None
 
     def __post_init__(self) -> None:
         _validate_nonempty(self.event_type, "event_type")
@@ -139,16 +138,16 @@ class Lesson:
 
     id: str = field(default_factory=_new_id)
     timestamp: str = field(default_factory=_utc_now)
-    context: Optional[str] = None
-    problem: Optional[str] = None
-    solution: Optional[str] = None
-    pattern: Optional[str] = None
-    category: Optional[str] = None
+    context: str | None = None
+    problem: str | None = None
+    solution: str | None = None
+    pattern: str | None = None
+    category: str | None = None
     severity: str = "medium"
-    root_cause: Optional[str] = None
-    prevention: Optional[str] = None
+    root_cause: str | None = None
+    prevention: str | None = None
     agents_involved: tuple = field(default_factory=tuple)
-    project: Optional[str] = None
+    project: str | None = None
     confidence: float = 0.5
     times_applied: int = 0
     status: str = "active"
@@ -176,7 +175,7 @@ def _insert_event(conn: sqlite3.Connection, event: Event) -> str:
     tags_json = json.dumps(list(event.tags)) if event.tags else None
     meta_json = json.dumps(event.metadata) if event.metadata else None
 
-    success_int: Optional[int] = None
+    success_int: int | None = None
     if event.success is not None:
         success_int = 1 if event.success else 0
 

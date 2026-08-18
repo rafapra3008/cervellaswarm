@@ -23,7 +23,6 @@ import argparse
 import importlib.metadata
 import json
 import sys
-from typing import Optional
 
 
 def _get_version() -> str:
@@ -78,7 +77,7 @@ def main_init(argv: "list[str] | None" = None) -> None:
             _print_json({"status": "ok", "db_path": db_path})
         else:
             print(f"Event store initialized: {db_path}")
-    except Exception as e:
+    except (OSError, ValueError, KeyError) as e:
         _handle_error(e, args.json)
 
 
@@ -113,7 +112,7 @@ def main_log(argv: "list[str] | None" = None) -> None:
     from cervellaswarm_event_store.database import EventStore
     from cervellaswarm_event_store.writer import Event
 
-    success_val: Optional[bool] = None
+    success_val: bool | None = None
     if args.success:
         success_val = True
     elif args.fail:
@@ -153,7 +152,7 @@ def main_log(argv: "list[str] | None" = None) -> None:
             _print_json({"status": "ok", "event_id": event_id})
         else:
             print(f"Event logged: {event_id}")
-    except Exception as e:
+    except (OSError, ValueError, KeyError) as e:
         _handle_error(e, args.json)
 
 
@@ -224,7 +223,7 @@ def main_query(argv: "list[str] | None" = None) -> None:
                 desc = (ev.description or "")[:50]
                 print(f"  {ok} {ev.timestamp[:19]}  {agent_str:15}  {proj_str:15}  {desc}")
             print()
-    except Exception as e:
+    except (OSError, ValueError, KeyError) as e:
         _handle_error(e, args.json)
 
 
@@ -295,7 +294,7 @@ def main_stats(argv: "list[str] | None" = None) -> None:
                 for proj, cnt in stats.by_project.items():
                     print(f"    {proj:20}  {cnt:5} events")
             print()
-    except Exception as e:
+    except (OSError, ValueError, KeyError) as e:
         _handle_error(e, args.json)
 
 
@@ -351,7 +350,7 @@ def main_lessons(argv: "list[str] | None" = None) -> None:
                     print(f"     Solution: {l.solution[:80]}")
                 print(f"     Confidence: {l.confidence:.2f}  Applied: {l.times_applied}")
                 print()
-    except Exception as e:
+    except (OSError, ValueError, KeyError) as e:
         _handle_error(e, args.json)
 
 
@@ -406,7 +405,7 @@ def main_patterns(argv: "list[str] | None" = None) -> None:
                     print(f"     Agents: {', '.join(p.affected_agents)}")
                 print(f"     Last seen: {p.last_seen[:19]}")
                 print()
-    except Exception as e:
+    except (OSError, ValueError, KeyError) as e:
         _handle_error(e, args.json)
 
 
@@ -485,7 +484,7 @@ def main_usage(argv: "list[str] | None" = None) -> None:
                 for p, data in summary.by_project.items():
                     print(f"    {p:30}  {data['tokens']:>12,} tok  ${data['cost']:.4f}")
             print()
-    except Exception as e:
+    except (OSError, ValueError, KeyError) as e:
         _handle_error(e, args.json)
 
 
@@ -510,7 +509,13 @@ def main_budget(argv: "list[str] | None" = None) -> None:
     args = parser.parse_args(argv)
 
     from pathlib import Path
-    from cervellaswarm_event_store.budget import load_config, save_config, check_budget, BudgetConfig
+
+    from cervellaswarm_event_store.budget import (
+        BudgetConfig,
+        check_budget,
+        load_config,
+        save_config,
+    )
 
     config_path = Path(args.config_path) if args.config_path else None
 
@@ -583,7 +588,7 @@ def main_budget(argv: "list[str] | None" = None) -> None:
                     print("\n  WARNING: Budget exceeded!")
                 print()
 
-        except Exception as e:
+        except (OSError, ValueError, KeyError) as e:
             _handle_error(e, args.json)
 
 

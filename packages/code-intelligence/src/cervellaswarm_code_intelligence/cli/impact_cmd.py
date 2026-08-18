@@ -6,8 +6,8 @@
 Extracted from impact_analyzer.py (S342) to keep library under 500 lines.
 """
 
-import sys
 import logging
+import sys
 
 from ..impact_analyzer import ImpactAnalyzer
 

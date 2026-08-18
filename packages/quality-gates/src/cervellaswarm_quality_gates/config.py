@@ -116,7 +116,7 @@ def load_config(config_path: Path | None = None) -> dict[str, Any]:
         return copy.deepcopy(_DEFAULTS_RAW)
 
     user_config = _load_yaml(config_file)
-    if not user_config:
+    if not user_config or not isinstance(user_config, dict):
         return copy.deepcopy(_DEFAULTS_RAW)
 
     return _deep_merge(_DEFAULTS_RAW, user_config)

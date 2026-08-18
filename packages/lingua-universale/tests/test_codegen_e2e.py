@@ -11,7 +11,6 @@ These tests verify the generated code actually works at runtime:
 """
 
 import pytest
-
 from cervellaswarm_lingua_universale.codegen import (
     PythonGenerator,
     generate_python,
@@ -47,7 +46,7 @@ def _exec_generated(protocol: Protocol) -> dict:
     """Helper: generate code, exec it, return the namespace."""
     code = generate_python(protocol)
     ns: dict = {}
-    exec(code, ns)
+    exec(code, ns)  # nosec B102
     return ns
 
 
@@ -317,7 +316,7 @@ class TestCustomProtocolE2E:
         code = generate_python(proto)
         compile(code, "MinimalProto.py", "exec")
         ns: dict = {}
-        exec(code, ns)
+        exec(code, ns)  # nosec B102
         session = ns["ProtocolSession"](session_id="CUSTOM-001")
         assert hasattr(session, "sender")
         assert hasattr(session, "receiver")
@@ -362,7 +361,7 @@ class TestGeneratePythonMulti:
     def test_two_protocols_have_separate_sessions(self):
         code = generate_python_multi([DelegateTask, SimpleTask])
         ns: dict = {}
-        exec(code, ns)
+        exec(code, ns)  # nosec B102
         assert "DelegateTaskSession" in ns
         assert "SimpleTaskSession" in ns
 
@@ -372,7 +371,7 @@ class TestGeneratePythonMulti:
         )
         compile(code, "all_four.py", "exec")
         ns: dict = {}
-        exec(code, ns)
+        exec(code, ns)  # nosec B102
         assert "DelegateTaskSession" in ns
         assert "SimpleTaskSession" in ns
         assert "ResearchFlowSession" in ns
@@ -381,7 +380,7 @@ class TestGeneratePythonMulti:
     def test_multi_session_works_e2e(self):
         code = generate_python_multi([SimpleTask])
         ns: dict = {}
-        exec(code, ns)
+        exec(code, ns)  # nosec B102
         session = ns["SimpleTaskSession"](session_id="MULTI-001")
         session.send("regina", "worker",
             TaskRequest(task_id="T1", description="test"))
@@ -414,7 +413,7 @@ class TestCodegenEdgeCases:
         for proto in [DelegateTask, ArchitectFlow, ResearchFlow, SimpleTask]:
             code = generate_python(proto)
             ns: dict = {}
-            exec(code, ns)  # Should not raise
+            exec(code, ns)  # nosec B102
             assert "ProtocolSession" in ns
 
     def test_all_roles_have_methods_or_receive_note(self):
@@ -436,7 +435,7 @@ class TestCodegenEdgeCases:
         # Both should have ProtocolSession
         ns1: dict = {}
         ns2: dict = {}
-        exec(code_gen, ns1)
-        exec(code_conv, ns2)
+        exec(code_gen, ns1)  # nosec B102
+        exec(code_conv, ns2)  # nosec B102
         assert "ProtocolSession" in ns1
         assert "ProtocolSession" in ns2

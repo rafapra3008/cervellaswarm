@@ -2,8 +2,9 @@
 # Copyright 2026 CervellaSwarm Contributors
 """Shared fixtures for cervellaswarm-code-intelligence tests."""
 
-import pytest
 from unittest.mock import MagicMock
+
+import pytest
 
 
 @pytest.fixture

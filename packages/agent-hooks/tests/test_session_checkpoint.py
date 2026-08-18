@@ -7,7 +7,6 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
-
 from cervellaswarm_agent_hooks.session_checkpoint import (
     find_project_root,
     get_branch,
@@ -15,7 +14,6 @@ from cervellaswarm_agent_hooks.session_checkpoint import (
     get_recent_commits,
     git_command,
 )
-
 
 # ---------------------------------------------------------------------------
 # find_project_root
@@ -64,7 +62,7 @@ class TestGitCommand:
         assert result == ""
 
     def test_returns_empty_on_exception(self, tmp_path):
-        with patch("subprocess.run", side_effect=Exception("no git")):
+        with patch("subprocess.run", side_effect=OSError("no git")):
             result = git_command(["log"], str(tmp_path))
         assert result == ""
 

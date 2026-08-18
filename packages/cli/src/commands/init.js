@@ -20,7 +20,7 @@ import { runWizard } from '../wizard/questions.js';
 import { generateConstitution } from '../templates/constitution.js';
 import { initSNCP } from '../sncp/init.js';
 import { CervellaError, displayError, ExitCode } from '../utils/errors.js';
-import * as config from '../config/manager.js';
+import * as config from '../config/index.js';
 
 /**
  * Handle API key setup

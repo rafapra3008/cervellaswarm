@@ -9,26 +9,24 @@ mode (SATISFIED/VIOLATED/SKIPPED).
 """
 
 import pytest
-
+from cervellaswarm_lingua_universale.checker import MessageRecord, SessionChecker
+from cervellaswarm_lingua_universale.protocols import DelegateTask
 from cervellaswarm_lingua_universale.spec import (
     PropertyKind,
-    PropertyVerdict,
     PropertySpec,
+    PropertyVerdict,
     ProtocolSpec,
     check_session,
 )
-from cervellaswarm_lingua_universale.protocols import DelegateTask
 from cervellaswarm_lingua_universale.types import (
+    AuditRequest,
+    AuditVerdict,
+    AuditVerdictType,
     MessageKind,
     TaskRequest,
     TaskResult,
     TaskStatus,
-    AuditRequest,
-    AuditVerdict,
-    AuditVerdictType,
 )
-from cervellaswarm_lingua_universale.checker import MessageRecord, SessionChecker
-
 
 # ============================================================
 # Helpers

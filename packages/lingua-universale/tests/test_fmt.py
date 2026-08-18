@@ -20,9 +20,7 @@ import textwrap
 from pathlib import Path
 
 import pytest
-
 from cervellaswarm_lingua_universale._fmt import format_file, format_source
-
 
 # ============================================================
 # Helpers
@@ -812,6 +810,7 @@ class TestCLI:
             [sys.executable, "-m", "cervellaswarm_lingua_universale", *args],
             capture_output=True,
             text=True,
+            timeout=10,
         )
 
     def _canonical_file(self, tmp_path) -> Path:

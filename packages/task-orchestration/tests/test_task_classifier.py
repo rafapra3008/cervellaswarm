@@ -5,6 +5,9 @@
 
 import pytest
 from cervellaswarm_task_orchestration.task_classifier import (
+    COMPLEXITY_KEYWORDS,
+    MULTIFILE_PATTERNS,
+    SIMPLE_KEYWORDS,
     ClassificationResult,
     TaskComplexity,
     calculate_keyword_score,
@@ -13,11 +16,7 @@ from cervellaswarm_task_orchestration.task_classifier import (
     has_multifile_pattern,
     is_simple_task,
     should_use_architect,
-    COMPLEXITY_KEYWORDS,
-    SIMPLE_KEYWORDS,
-    MULTIFILE_PATTERNS,
 )
-
 
 # =============================================================================
 # TaskComplexity enum

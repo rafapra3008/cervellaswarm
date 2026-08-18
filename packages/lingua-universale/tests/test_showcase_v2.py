@@ -16,16 +16,15 @@ import os
 from pathlib import Path
 
 import pytest
-
 from cervellaswarm_lingua_universale import (
+    REPLSession,
     check_file,
     check_source,
     run_file,
     verify_file,
-    REPLSession,
 )
-from cervellaswarm_lingua_universale.errors import humanize, format_error
 from cervellaswarm_lingua_universale._parser import ParseError
+from cervellaswarm_lingua_universale.errors import format_error, humanize
 
 EXAMPLES = Path(__file__).parent.parent / "examples"
 
@@ -121,7 +120,7 @@ class TestLuFilesContent:
         result = run_file(EXAMPLES / "hello.lu")
         assert result.ok
         mod = result.module
-        worker_cls = getattr(mod, "Worker")
+        worker_cls = mod.Worker
         inst = worker_cls()
         assert inst.__lu_role__ == "backend"
         assert inst.__lu_trust__ == "standard"
@@ -131,7 +130,7 @@ class TestLuFilesContent:
         result = run_file(EXAMPLES / "confidence.lu")
         assert result.ok
         mod = result.module
-        cls = getattr(mod, "AnalysisResult")
+        cls = mod.AnalysisResult
         # Verify it's a dataclass with expected fields
         import dataclasses
         assert dataclasses.is_dataclass(cls)

@@ -9,10 +9,9 @@ Produces a quality score (0-100) and determines whether retry is needed.
 Checks for error markers, incomplete placeholders, and corresponding logs.
 """
 
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
-import re
 
 # Error markers to search for in output
 ERROR_MARKERS: list[str] = [
@@ -78,7 +77,7 @@ def _find_incomplete_markers(content: str) -> list[str]:
     return found
 
 
-def validate_output(output_file: Path, logs_dir: Optional[Path] = None) -> ValidationResult:
+def validate_output(output_file: Path, logs_dir: Path | None = None) -> ValidationResult:
     """
     Validate a worker output file.
 
@@ -180,7 +179,7 @@ def validate_output(output_file: Path, logs_dir: Optional[Path] = None) -> Valid
 
 def _check_corresponding_log(
     output_file: Path,
-    logs_dir: Optional[Path] = None,
+    logs_dir: Path | None = None,
 ) -> dict:
     """
     Search for a corresponding log file and check for errors.
@@ -233,7 +232,7 @@ def _check_corresponding_log(
     return check
 
 
-def find_last_output(tasks_dir: Optional[Path] = None) -> Optional[Path]:
+def find_last_output(tasks_dir: Path | None = None) -> Path | None:
     """
     Find the most recently modified output file.
 
@@ -255,7 +254,7 @@ def find_last_output(tasks_dir: Optional[Path] = None) -> Optional[Path]:
     return output_files[0]
 
 
-def find_task_output(task_id: str, tasks_dir: Optional[Path] = None) -> Optional[Path]:
+def find_task_output(task_id: str, tasks_dir: Path | None = None) -> Path | None:
     """
     Find output file for a specific task.
 

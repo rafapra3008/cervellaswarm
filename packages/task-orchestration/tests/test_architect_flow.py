@@ -4,9 +4,13 @@
 """Tests for cervellaswarm_task_orchestration.architect_flow."""
 
 import json
-import pytest
 from pathlib import Path
+
+import pytest
 from cervellaswarm_task_orchestration.architect_flow import (
+    MAX_REVISIONS,
+    REQUIRED_METADATA_FIELDS,
+    REQUIRED_PLAN_SECTIONS,
     ArchitectSession,
     PlanStatus,
     PlanValidationResult,
@@ -23,12 +27,8 @@ from cervellaswarm_task_orchestration.architect_flow import (
     should_fallback,
     validate_plan,
     validate_plan_file,
-    MAX_REVISIONS,
-    REQUIRED_PLAN_SECTIONS,
-    REQUIRED_METADATA_FIELDS,
 )
 from cervellaswarm_task_orchestration.task_classifier import TaskComplexity
-
 
 # =============================================================================
 # Helpers & Fixtures
@@ -402,10 +402,10 @@ def test_save_session_state_creates_valid_json(session, tmp_path):
 
 
 def test_save_session_state_with_plan_path(session, tmp_path):
-    session.plan_path = Path("/tmp/plan.md")
+    session.plan_path = Path("/tmp/plan.md")  # nosec B108
     output = save_session_state(session, output_dir=tmp_path)
     data = json.loads(output.read_text())
-    assert data["plan_path"] == "/tmp/plan.md"
+    assert data["plan_path"] == "/tmp/plan.md"  # nosec B108
 
 
 def test_save_session_state_creates_directory(tmp_path):

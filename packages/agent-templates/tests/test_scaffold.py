@@ -5,7 +5,6 @@
 
 import pytest
 import yaml
-
 from cervellaswarm_agent_templates.scaffold import (
     TEAM_PRESETS,
     TEMPLATE_TYPES,

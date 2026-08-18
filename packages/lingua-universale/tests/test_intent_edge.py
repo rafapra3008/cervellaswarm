@@ -7,7 +7,6 @@ Tests error handling, invalid input, edge cases, and boundary conditions.
 """
 
 import pytest
-
 from cervellaswarm_lingua_universale.intent import (
     IntentParseError,
     IntentParseResult,
@@ -19,7 +18,6 @@ from cervellaswarm_lingua_universale.protocols import (
     ProtocolChoice,
     ProtocolStep,
 )
-
 
 # ============================================================
 # Syntax errors

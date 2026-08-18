@@ -16,7 +16,6 @@ import subprocess
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -25,10 +24,10 @@ logger = logging.getLogger(__name__)
 class ProcessInfo:
     """Information about a launched worker process."""
 
-    pid: Optional[int] = None
-    session_name: Optional[str] = None
+    pid: int | None = None
+    session_name: str | None = None
     backend: str = "unknown"
-    log_file: Optional[Path] = None
+    log_file: Path | None = None
     start_time: float = field(default_factory=time.time)
 
 
@@ -47,8 +46,8 @@ def launch_tmux(
     session_name: str,
     command: str,
     log_file: Path,
-    cwd: Optional[Path] = None,
-    env: Optional[dict] = None,
+    cwd: Path | None = None,
+    env: dict | None = None,
 ) -> ProcessInfo:
     """Launch a command in a detached tmux session.
 
@@ -79,6 +78,7 @@ def launch_tmux(
         env=run_env,
         capture_output=True,
         text=True,
+        timeout=10,
     )
 
     if result.returncode != 0:
@@ -90,6 +90,7 @@ def launch_tmux(
     subprocess.run(
         ["tmux", "set-option", "-t", session_name, "remain-on-exit", "on"],
         capture_output=True,
+        timeout=10,
     )
 
     return ProcessInfo(
@@ -102,8 +103,8 @@ def launch_tmux(
 def launch_nohup(
     command: str,
     log_file: Path,
-    cwd: Optional[Path] = None,
-    env: Optional[dict] = None,
+    cwd: Path | None = None,
+    env: dict | None = None,
 ) -> ProcessInfo:
     """Launch a command as a background process using nohup-style detach.
 
@@ -122,7 +123,7 @@ def launch_nohup(
     if env:
         run_env.update(env)
 
-    with open(log_file, "w") as log_fh:
+    with open(log_file, "w", encoding="utf-8") as log_fh:
         proc = subprocess.Popen(
             command,
             shell=True,  # nosec: command is built internally by spawner with shlex.quote
@@ -145,6 +146,7 @@ def is_alive_tmux(session_name: str) -> bool:
     result = subprocess.run(
         ["tmux", "has-session", "-t", session_name],
         capture_output=True,
+        timeout=10,
     )
     return result.returncode == 0
 
@@ -170,6 +172,7 @@ def kill_tmux(session_name: str) -> bool:
     result = subprocess.run(
         ["tmux", "kill-session", "-t", session_name],
         capture_output=True,
+        timeout=10,
     )
     return result.returncode == 0
 
@@ -221,6 +224,7 @@ def list_tmux_sessions(prefix: str = "swarm_") -> list[str]:
         ["tmux", "list-sessions", "-F", "#{session_name}"],
         capture_output=True,
         text=True,
+        timeout=10,
     )
     if result.returncode != 0:
         return []

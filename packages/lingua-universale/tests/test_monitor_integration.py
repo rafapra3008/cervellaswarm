@@ -10,7 +10,6 @@ Also covers edge cases: empty protocol, violations, backward compat
 """
 
 import pytest
-
 from cervellaswarm_lingua_universale.checker import (
     ProtocolViolation,
     SessionChecker,
@@ -49,7 +48,6 @@ from cervellaswarm_lingua_universale.types import (
     TaskResult,
     TaskStatus,
 )
-
 
 # ============================================================
 # Helpers

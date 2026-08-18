@@ -15,7 +15,6 @@ import tempfile
 from pathlib import Path
 
 import pytest
-
 from cervellaswarm_code_intelligence.dependency_graph import DependencyGraph, build_dependency_graph
 from cervellaswarm_code_intelligence.symbol_extractor import Symbol, SymbolExtractor
 from cervellaswarm_code_intelligence.treesitter_parser import TreesitterParser

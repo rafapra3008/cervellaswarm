@@ -13,16 +13,14 @@ from __future__ import annotations
 import re
 from types import MappingProxyType
 
-import pytest
-
 # Access the internal catalog via the module directly.
 import cervellaswarm_lingua_universale.errors as _errors_mod
+import pytest
 from cervellaswarm_lingua_universale.errors import (
     DEFAULT_LOCALE,
     SUPPORTED_LOCALES,
     ErrorCategory,
 )
-
 
 # ============================================================
 # Catalog access helper

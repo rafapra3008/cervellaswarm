@@ -16,11 +16,10 @@ Usage:
 """
 
 import argparse
+import importlib.metadata
 import json
 import sys
 from pathlib import Path
-
-import importlib.metadata
 
 
 def _get_version() -> str:
@@ -267,7 +266,7 @@ def main_audit(argv: list[str] | None = None) -> None:
 
 def main_sync(argv: list[str] | None = None) -> None:
     """Verify session memory freshness and coherence."""
-    from cervellaswarm_session_memory.sync_checker import verify_project, verify_all
+    from cervellaswarm_session_memory.sync_checker import verify_all, verify_project
 
     parser = argparse.ArgumentParser(
         prog="cervella-session sync",

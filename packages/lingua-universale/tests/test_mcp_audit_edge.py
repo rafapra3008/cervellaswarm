@@ -8,21 +8,19 @@ short tool names, MAX_ORDERINGS overflow, self-reference in descriptions.
 from __future__ import annotations
 
 import pytest
-
 from cervellaswarm_lingua_universale._mcp_audit import (
-    ToolDefinition,
     InferredStep,
+    ToolDefinition,
     _categorize_tools,
-    _order_lifecycle_first,
+    _infer_orderings,
+    _order_by_description,
+    _order_by_schema_refs,
     _order_cleanup_last,
     _order_crud_sequence,
-    _order_by_schema_refs,
-    _order_by_description,
-    _infer_orderings,
-    infer_protocol,
+    _order_lifecycle_first,
     check_annotations,
+    infer_protocol,
 )
-
 
 # ---------------------------------------------------------------------------
 # _order_lifecycle_first

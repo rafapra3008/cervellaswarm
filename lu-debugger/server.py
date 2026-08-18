@@ -16,17 +16,16 @@ from __future__ import annotations
 import asyncio
 from pathlib import Path
 
+from demo_data import DEMO_BREAK, DEMO_HAPPY, PROTOCOL_SOURCE
 from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
+from runner import _sse_event, is_live_available, live_break, live_happy_path
 from slowapi import Limiter
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response, StreamingResponse
-
-from demo_data import DEMO_BREAK, DEMO_HAPPY, PROTOCOL_SOURCE
-from runner import _sse_event, is_live_available, live_break, live_happy_path
 
 # ---------------------------------------------------------------------------
 # App setup

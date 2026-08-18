@@ -65,7 +65,7 @@ v1.0.0 (2026-01-19) - W3 Day 2 (REQ-05 to REQ-08)
 import logging
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 from .semantic_search import SemanticSearch
 
@@ -148,7 +148,7 @@ class ImpactAnalyzer:
 
         logger.info("ImpactAnalyzer initialized")
 
-    def estimate_impact(self, symbol_name: str) -> Optional[ImpactResult]:
+    def estimate_impact(self, symbol_name: str) -> ImpactResult | None:
         """Estimate impact of modifying a symbol (REQ-05).
 
         Analyzes the symbol's dependencies, callers, and importance to compute
@@ -469,7 +469,7 @@ class ImpactAnalyzer:
 # Convenience function for one-off analysis
 def estimate_symbol_impact(
     repo_root: str, symbol_name: str
-) -> Optional[ImpactResult]:
+) -> ImpactResult | None:
     """Estimate impact of modifying a symbol (convenience function).
 
     Creates an ImpactAnalyzer instance, performs the analysis, and returns result.

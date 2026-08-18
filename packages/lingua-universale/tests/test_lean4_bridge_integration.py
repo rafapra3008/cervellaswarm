@@ -12,7 +12,6 @@ import re
 import unittest.mock as mock
 
 import pytest
-
 from cervellaswarm_lingua_universale.lean4_bridge import (
     ALL_PROPERTIES,
     FLAT_PROPERTIES,
@@ -36,7 +35,6 @@ from cervellaswarm_lingua_universale.protocols import (
     SimpleTask,
 )
 from cervellaswarm_lingua_universale.types import MessageKind
-
 
 # ============================================================
 # Helpers

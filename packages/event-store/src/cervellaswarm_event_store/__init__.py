@@ -7,6 +7,11 @@ from importlib.metadata import version as _version
 
 __version__ = _version("cervellaswarm-event-store")
 
+from cervellaswarm_event_store.analytics import (
+    DetectedPattern,
+    ScoredLesson,
+    get_relevant_lessons,
+)
 from cervellaswarm_event_store.config import (
     find_config_file,
     get_db_path,
@@ -14,9 +19,10 @@ from cervellaswarm_event_store.config import (
     load_config,
 )
 from cervellaswarm_event_store.database import EventStore
-from cervellaswarm_event_store.writer import (
-    Event,
-    Lesson,
+from cervellaswarm_event_store.observability import (
+    TokenUsage,
+    UsageSummary,
+    estimate_cost,
 )
 from cervellaswarm_event_store.reader import (
     AgentSummary,
@@ -24,15 +30,9 @@ from cervellaswarm_event_store.reader import (
     QueryResult,
     Statistics,
 )
-from cervellaswarm_event_store.analytics import (
-    DetectedPattern,
-    ScoredLesson,
-    get_relevant_lessons,
-)
-from cervellaswarm_event_store.observability import (
-    TokenUsage,
-    UsageSummary,
-    estimate_cost,
+from cervellaswarm_event_store.writer import (
+    Event,
+    Lesson,
 )
 
 __all__ = [

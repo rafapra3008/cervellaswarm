@@ -30,7 +30,6 @@ import textwrap
 from pathlib import Path
 
 import pytest
-
 from cervellaswarm_lingua_universale._contracts import ContractViolation
 from cervellaswarm_lingua_universale._interop import (
     compile_file,
@@ -38,7 +37,6 @@ from cervellaswarm_lingua_universale._interop import (
     load_module,
     save_module,
 )
-
 
 # ============================================================
 # Shared .lu sources

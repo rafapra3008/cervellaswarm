@@ -81,7 +81,7 @@ describe('Agent Spawner', () => {
     test('returns error when no API key', async () => {
       // Skip this test if API key is configured (either env or saved config)
       // This test is for CI environments without any API key
-      const { getApiKey } = await import('../../src/config/manager.js');
+      const { getApiKey } = await import('../../src/config/index.js');
       if (getApiKey()) {
         // API key is configured, skip test
         return;

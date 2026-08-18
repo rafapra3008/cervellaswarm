@@ -14,7 +14,6 @@ from __future__ import annotations
 
 import time
 from dataclasses import dataclass, field
-from typing import Optional
 
 from .monitor import (
     BranchChosen,
@@ -112,14 +111,14 @@ class SessionState:
     repetition_count: int = 0
     started_at: float = field(default_factory=time.time)
     started_at_mono: float = field(default_factory=time.monotonic)
-    completed_at: Optional[float] = None
-    completed_at_mono: Optional[float] = None
+    completed_at: float | None = None
+    completed_at_mono: float | None = None
     log: list[MessageRecord] = field(default_factory=list)
 
     # -- backward-compat properties ------------------------------------------
 
     @property
-    def branch(self) -> Optional[str]:
+    def branch(self) -> str | None:
         """Name of the current branch (top of the choice stack)."""
         return self.choice_stack[-1].branch_name if self.choice_stack else None
 
@@ -152,7 +151,7 @@ class SessionState:
 
     # -- core state logic ----------------------------------------------------
 
-    def peek_next_step(self) -> Optional[ProtocolStep]:
+    def peek_next_step(self) -> ProtocolStep | None:
         """Return the expected next step WITHOUT mutating state.
 
         Returns ``None`` if the protocol is complete or at a choice point.
@@ -172,7 +171,7 @@ class SessionState:
         elements: tuple[ProtocolElement, ...],
         idx: int,
         depth: int,
-    ) -> Optional[ProtocolStep]:
+    ) -> ProtocolStep | None:
         """Recursively peek through stack levels."""
         if idx < len(elements):
             elem = elements[idx]
@@ -230,7 +229,7 @@ class SessionState:
         self._check_completion_or_repeat()
 
     @property
-    def at_choice(self) -> Optional[ProtocolChoice]:
+    def at_choice(self) -> ProtocolChoice | None:
         """Return the ProtocolChoice if we're at a branching point."""
         if self.completed:
             return None
@@ -267,8 +266,8 @@ class SessionChecker:
         self,
         protocol: Protocol,
         session_id: str = "",
-        role_bindings: Optional[dict[str, str]] = None,
-        monitor: Optional[ProtocolMonitor] = None,
+        role_bindings: dict[str, str] | None = None,
+        monitor: ProtocolMonitor | None = None,
     ) -> None:
         self._state = SessionState(
             session_id=session_id or f"{protocol.name}_{id(self)}",
@@ -324,7 +323,7 @@ class SessionChecker:
         return list(self._state.log)
 
     @property
-    def current_branch(self) -> Optional[str]:
+    def current_branch(self) -> str | None:
         """Return the active choice branch name, or None if not in a choice."""
         return self._state.branch
 
@@ -441,13 +440,13 @@ class SessionChecker:
         resolved_sender = self._resolve_role(sender)
         resolved_receiver = self._resolve_role(receiver)
 
-        for field, resolved, exp_val in [
+        for field_name, resolved, exp_val in [
             ("sender", resolved_sender, expected.sender),
             ("receiver", resolved_receiver, expected.receiver),
         ]:
             if resolved != exp_val:
-                _expected = f"{field}={exp_val}"
-                _got = f"{field}={resolved} (raw: {sender if field == 'sender' else receiver})"
+                _expected = f"{field_name}={exp_val}"
+                _got = f"{field_name}={resolved} (raw: {sender if field_name == 'sender' else receiver})"
                 self._emit_violation(
                     step=self._state.step_index, expected=_expected, got=_got,
                 )
@@ -560,7 +559,7 @@ class SessionChecker:
         sender: str,
         receiver: str,
         kind: MessageKind,
-    ) -> Optional[str]:
+    ) -> str | None:
         """Auto-detect which branch matches the incoming message.
 
         Returns the branch name ONLY if exactly one branch matches.

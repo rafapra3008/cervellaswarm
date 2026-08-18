@@ -5,12 +5,11 @@ Core CLI tests in test_repo_mapper_cli.py.
 """
 
 import sys
-import pytest
 from pathlib import Path
-from unittest.mock import Mock, patch, mock_open
+from unittest.mock import Mock, mock_open, patch
 
+import pytest
 from cervellaswarm_code_intelligence.cli.map_cmd import main
-
 
 # ============================================================================
 # FIXTURES
@@ -232,7 +231,7 @@ def test_main_all_flags_combined(capsys):
         token_budget=3000,
         filter_pattern='**/*.py'
     )
-    m_open.assert_called_once_with('full.md', 'w')
+    m_open.assert_called_once_with('full.md', 'w', encoding='utf-8')
 
     output = capsys.readouterr().out
     assert "Generating repository map for: /project" in output

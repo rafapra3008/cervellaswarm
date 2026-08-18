@@ -14,7 +14,6 @@ import json
 import sqlite3
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
-from typing import Optional
 
 
 @dataclass(frozen=True)
@@ -27,21 +26,21 @@ class EventRecord:
     id: str
     timestamp: str
     event_type: str
-    session_id: Optional[str]
-    agent_name: Optional[str]
-    agent_role: Optional[str]
-    task_id: Optional[str]
-    parent_task_id: Optional[str]
-    description: Optional[str]
-    status: Optional[str]
-    duration_ms: Optional[int]
-    success: Optional[bool]
-    error_message: Optional[str]
-    project: Optional[str]
+    session_id: str | None
+    agent_name: str | None
+    agent_role: str | None
+    task_id: str | None
+    parent_task_id: str | None
+    description: str | None
+    status: str | None
+    duration_ms: int | None
+    success: bool | None
+    error_message: str | None
+    project: str | None
     files_modified: tuple
     tags: tuple
-    metadata: Optional[dict]
-    created_at: Optional[str]
+    metadata: dict | None
+    created_at: str | None
 
 
 @dataclass(frozen=True)
@@ -134,7 +133,7 @@ class Statistics:
 # ------------------------------------------------------------------
 
 
-def _parse_json_field(value: Optional[str]) -> tuple:
+def _parse_json_field(value: str | None) -> tuple:
     """Safely parse a JSON array column to a tuple. Returns empty tuple on error."""
     if not value:
         return ()
@@ -147,7 +146,7 @@ def _parse_json_field(value: Optional[str]) -> tuple:
         return ()
 
 
-def _parse_json_dict(value: Optional[str]) -> Optional[dict]:
+def _parse_json_dict(value: str | None) -> dict | None:
     """Safely parse a JSON object column. Returns None on error."""
     if not value:
         return None
@@ -162,7 +161,7 @@ def _parse_json_dict(value: Optional[str]) -> Optional[dict]:
 
 def _row_to_event_record(row: sqlite3.Row) -> EventRecord:
     """Convert a sqlite3.Row to an EventRecord."""
-    success_val: Optional[bool] = None
+    success_val: bool | None = None
     raw_success = row["success"]
     if raw_success is not None:
         success_val = bool(raw_success)
@@ -202,7 +201,7 @@ def _query_events(
     event_type: str = "",
     session_id: str = "",
     status: str = "",
-    success: Optional[bool] = None,
+    success: bool | None = None,
     days: int = 0,
     limit: int = 50,
 ) -> QueryResult:
@@ -248,17 +247,7 @@ def _query_events(
         filters_applied["days"] = days
 
     where_clause = "WHERE " + " AND ".join(clauses) if clauses else ""
-    sql = f"""
-        SELECT id, timestamp, event_type, session_id,
-               agent_name, agent_role,
-               task_id, parent_task_id, description, status,
-               duration_ms, success, error_message,
-               project, files_modified, tags, metadata, created_at
-        FROM events
-        {where_clause}
-        ORDER BY timestamp DESC
-        LIMIT ?
-    """
+    sql = f"SELECT id, timestamp, event_type, session_id, agent_name, agent_role, task_id, parent_task_id, description, status, duration_ms, success, error_message, project, files_modified, tags, metadata, created_at FROM events {where_clause} ORDER BY timestamp DESC LIMIT ?"  # nosec B608
     params.append(max(1, limit))
 
     cursor = conn.cursor()
@@ -276,34 +265,58 @@ def _project_filter(project: str) -> tuple[str, list]:
     return "", []
 
 
+_VALID_CONDITIONS: dict[str, str] = {
+    "": "",
+    "success_true": "success = 1",
+    "success_false": "success = 0",
+}
+
+
 def _count_events(
-    cursor: sqlite3.Cursor, project: str, extra_condition: str = ""
+    cursor: sqlite3.Cursor, project: str, condition_key: str = ""
 ) -> int:
-    """Count events with optional project filter and extra WHERE condition."""
+    """Count events with optional project filter and condition.
+
+    Args:
+        condition_key: One of '', 'success_true', 'success_false'.
+    """
+    extra = _VALID_CONDITIONS.get(condition_key)
+    if extra is None:
+        raise ValueError(f"Invalid condition_key: {condition_key!r}")
     where, params = _project_filter(project)
-    if extra_condition:
-        where = f"{where} AND {extra_condition}" if where else f"WHERE {extra_condition}"
-    cursor.execute(f"SELECT COUNT(*) FROM events {where}", params)
+    if extra:
+        where = f"{where} AND {extra}" if where else f"WHERE {extra}"
+    cursor.execute(f"SELECT COUNT(*) FROM events {where}", params)  # nosec B608
     return cursor.fetchone()[0] or 0
 
 
 _VALID_GROUP_COLUMNS = {"project", "event_type", "agent_name", "status", "session_id"}
 
 
+_VALID_EXTRA_WHERE: dict[str, str] = {
+    "": "",
+    "not_null_project": "project IS NOT NULL",
+}
+
+
 def _grouped_counts(
-    cursor: sqlite3.Cursor, column: str, project: str, extra_where: str = ""
+    cursor: sqlite3.Cursor, column: str, project: str, extra_where_key: str = ""
 ) -> list:
-    """SELECT column, COUNT(*) grouped by column with optional project filter."""
+    """SELECT column, COUNT(*) grouped by column with optional project filter.
+
+    Args:
+        extra_where_key: One of '', 'not_null_project'.
+    """
     if column not in _VALID_GROUP_COLUMNS:
         raise ValueError(f"Invalid column for grouping: {column!r}")
+    extra = _VALID_EXTRA_WHERE.get(extra_where_key)
+    if extra is None:
+        raise ValueError(f"Invalid extra_where_key: {extra_where_key!r}")
     where, params = _project_filter(project)
-    if extra_where:
-        where = f"{where} AND {extra_where}" if where else f"WHERE {extra_where}"
-    cursor.execute(
-        f"SELECT {column}, COUNT(*) as cnt FROM events {where} "
-        f"GROUP BY {column} ORDER BY cnt DESC",
-        params,
-    )
+    if extra:
+        where = f"{where} AND {extra}" if where else f"WHERE {extra}"
+    q = f"SELECT {column}, COUNT(*) as cnt FROM events {where} GROUP BY {column} ORDER BY cnt DESC"  # nosec B608
+    cursor.execute(q, params)
     return cursor.fetchall()
 
 
@@ -319,26 +332,15 @@ def _get_statistics(conn: sqlite3.Connection, project: str = "") -> Statistics:
     cursor.execute("SELECT COUNT(*) FROM error_patterns")
     total_patterns: int = cursor.fetchone()[0] or 0
 
-    success_count = _count_events(cursor, project, "success = 1")
-    fail_count = _count_events(cursor, project, "success = 0")
+    success_count = _count_events(cursor, project, "success_true")
+    fail_count = _count_events(cursor, project, "success_false")
     success_rate = success_count / total_events if total_events > 0 else 0.0
 
     # Per-agent summary
     where, params = _project_filter(project)
     agent_where = f"{where} AND agent_name IS NOT NULL" if where else "WHERE agent_name IS NOT NULL"
-    cursor.execute(
-        f"""
-        SELECT agent_name,
-               COUNT(*) as cnt,
-               SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as ok,
-               SUM(CASE WHEN success = 0 THEN 1 ELSE 0 END) as fail
-        FROM events
-        {agent_where}
-        GROUP BY agent_name
-        ORDER BY cnt DESC
-        """,
-        params,
-    )
+    q_agents = f"SELECT agent_name, COUNT(*) as cnt, SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as ok, SUM(CASE WHEN success = 0 THEN 1 ELSE 0 END) as fail FROM events {agent_where} GROUP BY agent_name ORDER BY cnt DESC"  # nosec B608
+    cursor.execute(q_agents, params)
     by_agent = tuple(
         AgentSummary(
             agent_name=row[0],
@@ -351,7 +353,7 @@ def _get_statistics(conn: sqlite3.Connection, project: str = "") -> Statistics:
 
     # Per-project counts (always unfiltered)
     by_project = {
-        row[0]: row[1] for row in _grouped_counts(cursor, "project", "", "project IS NOT NULL")
+        row[0]: row[1] for row in _grouped_counts(cursor, "project", "", "not_null_project")
     }
 
     # Per-event-type counts

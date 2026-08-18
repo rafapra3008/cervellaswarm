@@ -7,7 +7,7 @@
  * Licensed under the Apache License, Version 2.0
  */
 
-import { getGlobalConfig } from './schema.js';
+import { getGlobalConfig } from '@cervellaswarm/core/config';
 
 // API URL for billing backend
 const BILLING_API_URL = process.env.CERVELLASWARM_API_URL || 'https://cervellaswarm-api.fly.dev';
@@ -113,10 +113,10 @@ export function setLastSync(timestamp = Date.now()) {
  */
 export function updateSubscriptionData(data) {
   const config = getGlobalConfig();
-  if (data.tier) config.set('tier', data.tier);
-  if (data.customerId) config.set('customerId', data.customerId);
-  if (data.subscriptionId) config.set('subscriptionId', data.subscriptionId);
-  if (data.email) config.set('email', data.email);
+  if (data.tier !== undefined) config.set('tier', data.tier);
+  if (data.customerId !== undefined) config.set('customerId', data.customerId);
+  if (data.subscriptionId !== undefined) config.set('subscriptionId', data.subscriptionId);
+  if (data.email !== undefined) config.set('email', data.email);
   config.set('lastSync', Date.now());
   return true;
 }

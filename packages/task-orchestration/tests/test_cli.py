@@ -4,19 +4,19 @@
 """Tests for cervellaswarm_task_orchestration.cli."""
 
 import json
-import pytest
 from pathlib import Path
 from unittest.mock import patch
 
+import pytest
+from cervellaswarm_task_orchestration import __version__
 from cervellaswarm_task_orchestration.cli import (
+    main,
     main_classify,
     main_route,
-    main_validate_plan,
-    main_validate_output,
     main_task,
-    main,
+    main_validate_output,
+    main_validate_plan,
 )
-from cervellaswarm_task_orchestration import __version__
 
 # Minimal valid plan for validate-plan tests
 VALID_PLAN = """## Metadata
@@ -290,7 +290,7 @@ def test_main_task_list_with_tasks(capsys, monkeypatch):
     monkeypatch.setattr(
         "cervellaswarm_task_orchestration.cli.list_tasks",
         lambda: [{"task_id": "TASK_001", "status": "created", "ack": "-/-/-",
-                  "agent": "agent", "file": "/tmp/TASK_001.md"}],
+                  "agent": "agent", "file": "/tmp/TASK_001.md"}],  # nosec B108
     )
     main_task(["list"])
     out = capsys.readouterr().out

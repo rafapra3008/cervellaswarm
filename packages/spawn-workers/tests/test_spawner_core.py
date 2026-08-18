@@ -9,10 +9,8 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
-
 from cervellaswarm_spawn_workers.backend import ProcessInfo
 from cervellaswarm_spawn_workers.spawner import SpawnManager, WorkerInfo
-
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -25,7 +23,7 @@ def _make_process_info(backend="tmux", session_name="swarm_test_1", pid=None, lo
         backend=backend,
         session_name=session_name,
         pid=pid,
-        log_file=log_file or Path("/tmp/test.log"),
+        log_file=log_file or Path("/tmp/test.log"),  # nosec B108
         start_time=time.time(),
     )
 

@@ -3,21 +3,20 @@
 
 """Tests for cervellaswarm_session_memory.project_manager module."""
 
-import pytest
 from datetime import date
 from pathlib import Path
 
+import pytest
 from cervellaswarm_session_memory.project_manager import (
-    normalize_name,
-    init_project,
-    discover_projects,
-    get_project,
-    archive_state,
     ProjectInfo,
     _load_template,
     _render_template,
+    archive_state,
+    discover_projects,
+    get_project,
+    init_project,
+    normalize_name,
 )
-
 
 # ---------------------------------------------------------------------------
 # normalize_name

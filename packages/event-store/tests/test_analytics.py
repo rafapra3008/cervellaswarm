@@ -4,18 +4,17 @@
 """Tests for cervellaswarm_event_store.analytics module."""
 
 import pytest
-
-from cervellaswarm_event_store.writer import Event, Lesson
 from cervellaswarm_event_store.analytics import (
     DetectedPattern,
     ScoredLesson,
-    _calculate_similarity,
-    _infer_severity,
-    _get_lessons_scored,
-    _detect_patterns,
     _agent_stats,
+    _calculate_similarity,
+    _detect_patterns,
+    _get_lessons_scored,
+    _infer_severity,
     get_relevant_lessons,
 )
+from cervellaswarm_event_store.writer import Event, Lesson
 
 
 class TestCalculateSimilarity:

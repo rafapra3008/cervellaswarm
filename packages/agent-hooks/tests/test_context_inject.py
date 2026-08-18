@@ -9,14 +9,12 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-
 from cervellaswarm_agent_hooks.context_inject import (
     build_context,
     find_project_root,
     main,
     safe_read,
 )
-
 
 # ---------------------------------------------------------------------------
 # find_project_root

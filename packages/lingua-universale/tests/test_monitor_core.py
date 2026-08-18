@@ -15,7 +15,6 @@ from dataclasses import FrozenInstanceError
 from types import MappingProxyType
 
 import pytest
-
 from cervellaswarm_lingua_universale.monitor import (
     BranchChosen,
     EventCollector,
@@ -32,7 +31,6 @@ from cervellaswarm_lingua_universale.monitor import (
     ViolationOccurred,
 )
 from cervellaswarm_lingua_universale.types import MessageKind
-
 
 # ============================================================
 # Helpers / Factories

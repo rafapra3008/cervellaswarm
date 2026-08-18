@@ -18,7 +18,6 @@ import time
 from unittest.mock import patch
 
 import pytest
-
 from cervellaswarm_lingua_universale.checker import SessionChecker
 from cervellaswarm_lingua_universale.dsl import parse_protocol, render_protocol
 from cervellaswarm_lingua_universale.integration import (
@@ -76,7 +75,10 @@ class TestBugP1StandardProtocolsExported:
 
     def test_exported_symbols_are_protocol_instances(self):
         from cervellaswarm_lingua_universale import (
-            DelegateTask, ArchitectFlow, ResearchFlow, SimpleTask,
+            ArchitectFlow,
+            DelegateTask,
+            ResearchFlow,
+            SimpleTask,
         )
         for proto in (DelegateTask, ArchitectFlow, ResearchFlow, SimpleTask):
             assert isinstance(proto, Protocol)

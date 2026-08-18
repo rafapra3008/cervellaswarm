@@ -11,27 +11,7 @@
 
 import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'fs';
 import { join } from 'path';
-
-/**
- * Find .sncp directory in current or parent directories
- */
-function findSncpDir() {
-  let dir = process.cwd();
-
-  for (let i = 0; i < 5; i++) {
-    const sncpPath = join(dir, '.sncp');
-    if (existsSync(sncpPath)) {
-      return sncpPath;
-    }
-    const parent = join(dir, '..');
-    if (parent === dir) break;
-    dir = parent;
-  }
-
-  // Create .sncp in current directory if not found
-  const sncpPath = join(process.cwd(), '.sncp');
-  return sncpPath;
-}
+import { findSncpDir } from './utils.js';
 
 /**
  * Generate timestamp for filenames

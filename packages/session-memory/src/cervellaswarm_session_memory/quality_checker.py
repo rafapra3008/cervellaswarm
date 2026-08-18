@@ -15,7 +15,7 @@ Score target: 8.0/10 by default (configurable).
 
 import re
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 from cervellaswarm_session_memory.config import DEFAULTS, load_config
@@ -162,8 +162,8 @@ def check_freshness(file_path: Path) -> tuple[float, str]:
     if not file_path.exists():
         return 0.0, "N/A"
 
-    mtime = datetime.fromtimestamp(file_path.stat().st_mtime)
-    now = datetime.now()
+    mtime = datetime.fromtimestamp(file_path.stat().st_mtime, tz=timezone.utc)
+    now = datetime.now(tz=timezone.utc)
     days_old = (now - mtime).days
 
     if days_old < 7:

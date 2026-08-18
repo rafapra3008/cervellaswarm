@@ -15,10 +15,10 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from cervellaswarm_event_store.writer import Event, Lesson
-    from cervellaswarm_event_store.reader import QueryResult, Statistics
     from cervellaswarm_event_store.analytics import DetectedPattern, ScoredLesson
     from cervellaswarm_event_store.observability import TokenUsage, UsageSummary
+    from cervellaswarm_event_store.reader import QueryResult, Statistics
+    from cervellaswarm_event_store.writer import Event, Lesson
 
 
 _CREATE_EVENTS = """
@@ -98,6 +98,12 @@ CREATE TABLE IF NOT EXISTS token_usage (
     total_messages INTEGER DEFAULT 0,
     total_tool_calls INTEGER DEFAULT 0,
     cost_usd REAL DEFAULT 0.0,
+    start_time TEXT,
+    end_time TEXT,
+    duration_seconds INTEGER DEFAULT 0,
+    agent_names TEXT,
+    tasks_completed INTEGER DEFAULT 0,
+    errors_count INTEGER DEFAULT 0,
     created_at TEXT DEFAULT (datetime('now'))
 )
 """
@@ -119,6 +125,24 @@ _INDICES = [
     "CREATE INDEX IF NOT EXISTS idx_token_usage_timestamp ON token_usage(timestamp DESC)",
     "CREATE INDEX IF NOT EXISTS idx_token_usage_model ON token_usage(model)",
 ]
+
+SCHEMA_VERSION = 2
+
+# Migrations: version -> list of SQL statements.
+# Applied in order when PRAGMA user_version < SCHEMA_VERSION.
+_MIGRATIONS: dict[int, list[str]] = {
+    # Version 1: initial schema (events, lessons, error_patterns, token_usage + indices).
+    # No SQL needed here -- tables are created via CREATE TABLE IF NOT EXISTS above.
+    # Version 2: session observability columns on token_usage (S512).
+    2: [
+        "ALTER TABLE token_usage ADD COLUMN start_time TEXT",
+        "ALTER TABLE token_usage ADD COLUMN end_time TEXT",
+        "ALTER TABLE token_usage ADD COLUMN duration_seconds INTEGER DEFAULT 0",
+        "ALTER TABLE token_usage ADD COLUMN agent_names TEXT",
+        "ALTER TABLE token_usage ADD COLUMN tasks_completed INTEGER DEFAULT 0",
+        "ALTER TABLE token_usage ADD COLUMN errors_count INTEGER DEFAULT 0",
+    ],
+}
 
 from cervellaswarm_event_store.writer import _VALID_EVENT_TYPES, _VALID_SEVERITIES
 
@@ -148,6 +172,8 @@ class EventStore:
         elif isinstance(db_path, str) and db_path == ":memory:":
             resolved = Path(":memory:")
         else:
+            if isinstance(db_path, str) and not db_path.strip():
+                raise ValueError("db_path cannot be empty")
             resolved = Path(db_path)
 
         self._db_path = resolved
@@ -171,12 +197,13 @@ class EventStore:
         conn.execute("PRAGMA journal_mode=WAL")
         conn.execute("PRAGMA synchronous=NORMAL")
         conn.execute("PRAGMA foreign_keys=ON")
+        conn.execute("PRAGMA busy_timeout=5000")
 
         self._conn = conn
         self._init_schema()
 
     def _init_schema(self) -> None:
-        """Create tables and indices if they do not exist."""
+        """Create tables and indices, then apply pending migrations."""
         if self._conn is None:
             raise RuntimeError("Cannot initialize schema: connection is None")
         cursor = self._conn.cursor()
@@ -186,6 +213,20 @@ class EventStore:
         cursor.execute(_CREATE_TOKEN_USAGE)
         for idx in _INDICES:
             cursor.execute(idx)
+
+        # Migration system: apply pending migrations based on PRAGMA user_version.
+        # ALTER TABLE ADD COLUMN is idempotent: if a fresh DB already has the
+        # column from CREATE TABLE, the OperationalError is safely ignored.
+        current_version = cursor.execute("PRAGMA user_version").fetchone()[0]
+        for version in range(current_version + 1, SCHEMA_VERSION + 1):
+            for sql in _MIGRATIONS.get(version, []):
+                try:
+                    cursor.execute(sql)
+                except sqlite3.OperationalError:
+                    pass  # Column already exists (fresh DB)
+        if current_version < SCHEMA_VERSION:
+            cursor.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
+
         self._conn.commit()
 
     def _require_conn(self) -> sqlite3.Connection:

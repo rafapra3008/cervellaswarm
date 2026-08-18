@@ -40,7 +40,7 @@ __version_date__ = "2026-01-19"
 
 import logging
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 from .dependency_graph import DependencyGraph
 from .symbol_extractor import SymbolExtractor
@@ -91,9 +91,9 @@ class RepoMapper:
 
     def build_map(
         self,
-        relevant_files: Optional[List[str]] = None,
+        relevant_files: List[str] | None = None,
         token_budget: int = 2000,
-        filter_pattern: Optional[str] = None
+        filter_pattern: str | None = None
     ) -> str:
         """Build repository map within token budget.
 
@@ -184,7 +184,7 @@ class RepoMapper:
 
     def _discover_source_files(
         self,
-        filter_pattern: Optional[str] = None
+        filter_pattern: str | None = None
     ) -> List[Path]:
         """Find all source files in repository.
 
@@ -411,8 +411,8 @@ class RepoMapper:
 def generate_repo_map(
     repo_path: str,
     token_budget: int = 2000,
-    filter_pattern: Optional[str] = None,
-    output_file: Optional[str] = None
+    filter_pattern: str | None = None,
+    output_file: str | None = None
 ) -> str:
     """Generate repository map without managing a mapper instance.
 
@@ -439,7 +439,7 @@ def generate_repo_map(
     )
 
     if output_file:
-        with open(output_file, 'w') as f:
+        with open(output_file, 'w', encoding='utf-8') as f:
             f.write(map_text)
         logger.info(f"Saved map to: {output_file}")
 
@@ -448,5 +448,6 @@ def generate_repo_map(
 
 if __name__ == "__main__":
     import sys
+
     from cervellaswarm_code_intelligence.cli.map_cmd import main
     sys.exit(main())

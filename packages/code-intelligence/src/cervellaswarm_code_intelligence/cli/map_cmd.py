@@ -6,9 +6,9 @@
 Extracted from repo_mapper.py (S342) to keep library under 500 lines.
 """
 
-import sys
-import logging
 import argparse
+import logging
+import sys
 
 from ..repo_mapper import RepoMapper
 
@@ -74,7 +74,7 @@ Examples:
         )
 
         if args.output:
-            with open(args.output, 'w') as f:
+            with open(args.output, 'w', encoding='utf-8') as f:
                 f.write(map_text)
             print(f"Map saved to: {args.output}")
         else:

@@ -16,7 +16,6 @@ Config file: ~/.config/cervellaswarm/budget.json
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
 
 DEFAULT_CONFIG_PATH = Path.home() / ".config" / "cervellaswarm" / "budget.json"
 
@@ -75,7 +74,7 @@ class BudgetStatus:
     any_over: bool = False
 
 
-def load_config(path: Optional[Path] = None) -> BudgetConfig:
+def load_config(path: Path | None = None) -> BudgetConfig:
     """Load budget config from JSON file.
 
     Creates default config if file doesn't exist.
@@ -100,7 +99,7 @@ def load_config(path: Optional[Path] = None) -> BudgetConfig:
     return BudgetConfig()
 
 
-def save_config(config: BudgetConfig, path: Optional[Path] = None) -> Path:
+def save_config(config: BudgetConfig, path: Path | None = None) -> Path:
     """Save budget config to JSON file.
 
     Args:

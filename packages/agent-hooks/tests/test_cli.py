@@ -10,7 +10,6 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-
 from cervellaswarm_agent_hooks import __version__
 from cervellaswarm_agent_hooks.cli import (
     HOOKS_INFO,
@@ -20,7 +19,6 @@ from cervellaswarm_agent_hooks.cli import (
     cmd_version,
     main,
 )
-
 
 # ---------------------------------------------------------------------------
 # cmd_list

@@ -10,9 +10,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-
 from cervellaswarm_agent_hooks.file_limits import check_limits, main
-
 
 # ---------------------------------------------------------------------------
 # check_limits

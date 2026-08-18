@@ -75,9 +75,17 @@ async function discoverProjects(): Promise<string[]> {
       try {
         const stats = await stat(projectDir);
         if (!stats.isDirectory()) continue;
-        // Only include projects that have a PROMPT_RIPRESA file
+        // Only include projects that have a PROMPT_RIPRESA CORE file
+        // SNCP 5.1 (S519): escludi .DECISIONI.md / .APPENDIX.md tiers
         const files = await readdir(projectDir);
-        if (files.some((f) => f.startsWith("PROMPT_RIPRESA_"))) {
+        if (
+          files.some(
+            (f) =>
+              f.startsWith("PROMPT_RIPRESA_") &&
+              !f.endsWith(".DECISIONI.md") &&
+              !f.endsWith(".APPENDIX.md")
+          )
+        ) {
           projects.push(entry);
         }
       } catch (e) {
@@ -166,8 +174,12 @@ export async function listProjects(): Promise<
 
     results.push({
       name: entry,
-      hasPromptRipresa: projectFiles.some((f) =>
-        f.startsWith("PROMPT_RIPRESA_")
+      // SNCP 5.1 (S519): hasPromptRipresa = true se almeno CORE presente (escludi tier secondari)
+      hasPromptRipresa: projectFiles.some(
+        (f) =>
+          f.startsWith("PROMPT_RIPRESA_") &&
+          !f.endsWith(".DECISIONI.md") &&
+          !f.endsWith(".APPENDIX.md")
       ),
       hasStato: false, // stato.md eliminated in SNCP 4.0 (S357)
       hasMemory: projectFiles.includes("MEMORY.md"),

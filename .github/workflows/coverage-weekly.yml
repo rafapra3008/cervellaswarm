@@ -1,0 +1,125 @@
+# GitHub Actions: Weekly Coverage Baseline
+#
+# Trigger: Every Sunday 03:00 UTC + manual workflow_dispatch
+# Purpose: Independent coverage baseline (decoupled from feature PRs)
+#         + trend tracking + early infra regression detection
+# Output: coverage-weekly artifact (90-day retention) + summary in job log
+# S525 Day 10 FASE A (Ingegnera scout S523 P1: coverage stale 49gg fix)
+#
+# Why: test-python.yml runs only on Python file changes. Docs-only weeks
+# leave coverage frozen at last Python PR snapshot. This workflow ensures
+# fresh measurement every week regardless of feature activity.
+
+name: Coverage Weekly Baseline
+
+on:
+  schedule:
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  coverage:
+    name: Weekly Coverage Run
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: |
+            requirements*.txt
+            cervella/pyproject.toml
+
+      - name: Check test infrastructure
+        id: check
+        run: |
+          if [ ! -f "requirements-dev.txt" ] || [ ! -d "tests" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "Skipping: test infra missing (public repo)"
+          fi
+
+      - name: Install dependencies
+        if: steps.check.outputs.skip != 'true'
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Install local packages
+        if: steps.check.outputs.skip != 'true'
+        run: |
+          pip install -e cervella/
+          pip install -e packages/task-orchestration
+          pip install -e packages/event-store
+          pip install -e packages/session-memory
+
+      - name: Run tests with coverage
+        if: steps.check.outputs.skip != 'true'
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          pytest tests/ \
+            --ignore=tests/sncp \
+            --ignore=tests/utils/test_semantic_search.py \
+            --ignore=tests/agents/test_agent_defs_drift.py \
+            --ignore=tests/swarm/test_architect_structure.py \
+            --ignore=tests/eval_agent_quality.py \
+            --reruns 2 --reruns-delay 1 \
+            --cov=scripts --cov=cervella \
+            --cov-report=term --cov-report=xml --cov-report=html \
+            --cov-report=json:coverage.json \
+            --cov-fail-under=55
+
+      - name: Extract trend metric
+        if: steps.check.outputs.skip != 'true'
+        run: |
+          python3 -c "
+          import json
+          from datetime import datetime, timezone
+          d = json.load(open('coverage.json'))
+          pct = d['totals']['percent_covered']
+          entry = {
+              'date': datetime.now(timezone.utc).strftime('%Y-%m-%d'),
+              'ts_utc': datetime.now(timezone.utc).isoformat(),
+              'percent_covered': round(pct, 2),
+              'num_statements': d['totals']['num_statements'],
+              'covered_lines': d['totals']['covered_lines'],
+              'missing_lines': d['totals']['missing_lines'],
+              'schema_version': 1,
+          }
+          print(json.dumps(entry, indent=2))
+          open('coverage-trend-entry.json', 'w').write(json.dumps(entry) + '\n')
+          "
+
+      - name: Job summary
+        if: steps.check.outputs.skip != 'true'
+        run: |
+          {
+            echo "## Coverage Weekly Baseline -- $(date -u +%Y-%m-%d)"
+            echo ""
+            echo "### Trend entry"
+            echo ""
+            echo "\`\`\`json"
+            cat coverage-trend-entry.json
+            echo "\`\`\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload coverage artifacts
+        if: steps.check.outputs.skip != 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage-weekly-${{ github.run_id }}
+          path: |
+            coverage.xml
+            coverage.json
+            coverage-trend-entry.json
+            htmlcov/
+          retention-days: 90

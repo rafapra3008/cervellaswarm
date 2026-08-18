@@ -4,26 +4,24 @@
 """Tests for DSL renderer and round-trip fidelity."""
 
 import pytest
-
 from cervellaswarm_lingua_universale.dsl import (
+    _message_kind_to_name,
     parse_protocol,
     parse_protocols,
     render_protocol,
     render_protocols,
-    _message_kind_to_name,
 )
 from cervellaswarm_lingua_universale.protocols import (
+    STANDARD_PROTOCOLS,
+    ArchitectFlow,
+    DelegateTask,
     Protocol,
     ProtocolChoice,
     ProtocolStep,
-    DelegateTask,
-    ArchitectFlow,
     ResearchFlow,
     SimpleTask,
-    STANDARD_PROTOCOLS,
 )
 from cervellaswarm_lingua_universale.types import MessageKind
-
 
 # ============================================================
 # Renderer output tests
@@ -318,7 +316,7 @@ class TestRoundtripFromProtocol:
 
     def test_all_standard_protocols(self):
         """Every standard protocol survives render -> parse."""
-        for name, proto in STANDARD_PROTOCOLS.items():
+        for _name, proto in STANDARD_PROTOCOLS.items():
             dsl = render_protocol(proto)
             parsed = parse_protocol(dsl)
             self._structural_match(proto, parsed)

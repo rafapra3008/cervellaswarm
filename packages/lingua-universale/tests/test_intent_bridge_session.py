@@ -16,13 +16,11 @@ Data model + render + i18n: test_intent_bridge_core.py
 from __future__ import annotations
 
 import pytest
-
 from cervellaswarm_lingua_universale._intent_bridge import (
     ChatPhase,
     ChatSession,
     IntentDraft,
 )
-
 
 # ============================================================
 # Helper
@@ -42,7 +40,7 @@ def _session(inputs: list[str], *, lang: str = "en") -> tuple[ChatSession, list[
         try:
             return next(it)
         except StopIteration:
-            raise EOFError
+            raise EOFError from None
 
     def _output_fn(*args: object, **kwargs: object) -> None:
         output.append(" ".join(str(a) for a in args))

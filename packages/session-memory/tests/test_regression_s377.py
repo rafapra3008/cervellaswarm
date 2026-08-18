@@ -19,13 +19,11 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 import yaml
-
-from cervellaswarm_session_memory.config import load_config, DEFAULTS
+from cervellaswarm_session_memory.config import DEFAULTS, load_config
+from cervellaswarm_session_memory.project_manager import ProjectInfo, archive_state
 from cervellaswarm_session_memory.quality_checker import check_quality
-from cervellaswarm_session_memory.sync_checker import check_file_size, CheckStatus
-from cervellaswarm_session_memory.project_manager import archive_state, ProjectInfo
 from cervellaswarm_session_memory.secret_auditor import audit_directory, audit_file
-
+from cervellaswarm_session_memory.sync_checker import CheckStatus, check_file_size
 
 # ---------------------------------------------------------------------------
 # Fix 1: config.py - narrow except

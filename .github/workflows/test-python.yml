@@ -1,53 +1,111 @@
 # GitHub Actions: Python Test Suite with Coverage
 #
-# Trigger: Push/PR to main on Python file changes
-# Matrix: Python 3.10, 3.11, 3.12
+# Trigger: PR to main (ALL PRs -- S553). The heavy matrix only RUNS when
+#   Python-relevant files change; the `Test Summary` check is ALWAYS produced
+#   (SUCCESS when no Python changes) so it can be a REQUIRED status check
+#   without blocking docs-only PRs forever (GitHub "skipped but required" trap).
+#   See: GitHub Docs -- "Troubleshooting required status checks /
+#        Handling skipped but required checks".
+# Matrix: Python 3.11, 3.12, 3.13
 # Output: Coverage report (55% CI threshold, actual: 95%)
 # S443: Added --ignore for tests/sncp and test_convert_agents.py (local-only hooks)
+# S548: push:main removed (redundant post-squash-merge, 0 captures/15d, Ops APPROVED)
+# S553: paths-filter moved from workflow trigger to a `changes` GATE job so the
+#       required `Test Summary` is emitted on every PR (Ops C1 / FORTEZZA ALTO).
 #
 # Quality is not negotiable.
 
 name: Python Tests
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '**.py'
-      - 'requirements*.txt'
-      - 'cervella/pyproject.toml'
-      - 'tests/**'
-      - '.github/workflows/test-python.yml'
   pull_request:
     branches: [main]
-    paths:
-      - '**.py'
-      - 'requirements*.txt'
-      - 'cervella/pyproject.toml'
-      - 'tests/**'
 
 # Cancel in-progress runs on same branch
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# S515: least privilege GITHUB_TOKEN scope (Ops verified P0)
+permissions:
+  contents: read
+
 jobs:
+  # Gate: detect whether this PR touches Python-relevant files.
+  # Dependency-free (git diff, no external action -> no supply-chain surface).
+  changes:
+    name: Detect Python changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      python: ${{ steps.filter.outputs.python }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Filter Python-relevant paths
+        id: filter
+        run: |
+          base="origin/${{ github.base_ref }}"
+          git fetch --no-tags --depth=1 origin "${{ github.base_ref }}"
+          # List files changed in this PR vs the merge base.
+          changed="$(git diff --name-only "${base}...HEAD")"
+          echo "Changed files:"
+          echo "${changed}"
+          # `^hooks/` e `^pyproject\.toml$` aggiunti in S623: senza, una PR che tocca SOLO il
+          # gate pre-push o SOLO le regole di ruff faceva uscire `Test Summary` verde con zero
+          # test eseguiti. Il gate che esiste per impedire i falsi-verdi era protetto da una CI
+          # che, proprio su di lui, era essa stessa un falso-verde.
+          # S627: aggiunti `.sncp/` e NORD.md. Erano fuori -> una PR che tocca SOLO il registro
+          # dei binari (o la bussola) usciva VERDE con ZERO test eseguiti. Cioe': un check che
+          # sorveglia la dimensione di quei file sarebbe stato STRUTTURALMENTE INCAPACE di
+          # pescare il proprio caso d'uso. Stessa classe del commento qui sopra, un piano piu' su
+          # (gate Ops S627, F1). Predicato: prima di appoggiare un check alla CI, verifica che la
+          # CI GIRI sul tipo di diff che quel check deve pescare.
+          # S629: aggiunti `\.sh$` e `^infra/global-hooks-mirror/`. TERZA istanza della stessa
+          # classe, trovata dal gate Ops PRIMA che la PR esistesse: il lavoro sull'anello (11)
+          # tocca un wrapper .sh, il DNA condiviso e i .md dei 17 agenti -- tutti nel mirror, che
+          # e' la SORGENTE DI RESTORE. Nessuno dei quattro path matchava: la PR sarebbe uscita
+          # `Test Summary` VERDE con ZERO test eseguiti, e i test che devono pescarne gli errori
+          # non sarebbero mai partiti. Compreso `scripts/infra/bootstrap_vm.sh`, cioe' il file che
+          # decide cosa sopravvive a un re-provisioning.
+          # Provato in ENTRAMBI i versi prima di scrivere: i 4 path passano da `skip` a `MATCH`,
+          # e `docs/*.md` + `README.md` restano `skip` -- cioe' il motivo per cui questo gate
+          # esiste (restare verde sulle PR di sola documentazione) e' preservato.
+          if echo "${changed}" | grep -qE '(\.py$|\.sh$|^requirements.*\.txt$|^cervella/pyproject\.toml$|^pyproject\.toml$|^tests/|^hooks/|^\.sncp/|^infra/global-hooks-mirror/|(^|/)NORD\.md$|^\.github/workflows/test-python\.yml$)'; then
+            echo "python=true" >> "$GITHUB_OUTPUT"
+            echo "==> Python-relevant changes detected: tests WILL run."
+          else
+            echo "python=false" >> "$GITHUB_OUTPUT"
+            echo "==> No Python-relevant changes: tests will be skipped (Test Summary stays green)."
+          fi
+
   test:
     name: Test (Python ${{ matrix.python-version }})
+    needs: changes
+    if: needs.changes.outputs.python == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.11", "3.12", "3.13"]
+
+    # S639 -- il segreto va a livello di JOB perche' un `env:` dichiarato SULLO step non e'
+    # visibile nell'`if:` di quello stesso step. E' la forma documentata per poter dire
+    # "salta se il token non c'e'" invece di eseguire e fallire in silenzio.
+    env:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
@@ -72,11 +130,24 @@ jobs:
       - name: Run linting (Python 3.12 only)
         if: steps.check.outputs.skip != 'true' && matrix.python-version == '3.12'
         run: |
-          ruff check scripts/ src/ --ignore=E501,E402
+          # S643 -- `tests/` ENTRA NEL PERIMETRO. Prima era fuori, e nessuno la lintava: un
+          # `import pytest` mancante e' rimasto latente in un ramo di skip, che sarebbe esploso
+          # con NameError proprio nel momento in cui serviva. Il commit diceva "ruff pulito", ed
+          # era vero **sul perimetro dichiarato** -- che e' un modo elegante di non guardare.
+          # Costo misurato prima di allargare: 1 solo errore in tutta la cartella (quello).
+          ruff check --config pyproject.toml scripts/ cervella/ tests/
+
+      - name: Security scan (Python 3.12 only)
+        if: steps.check.outputs.skip != 'true' && matrix.python-version == '3.12'
+        continue-on-error: true
+        run: |
+          pip install bandit
+          bandit -r scripts/ packages/ cervella/ -ll -q
 
       - name: Install local packages (for re-export tests)
         if: steps.check.outputs.skip != 'true'
         run: |
+          pip install -e cervella/
           pip install -e packages/task-orchestration
           pip install -e packages/event-store
           pip install -e packages/session-memory
@@ -84,13 +155,66 @@ jobs:
       - name: Run tests with coverage
         if: steps.check.outputs.skip != 'true'
         run: |
-          pytest tests/ \
+          # S639: aggiunto `cervella/tests/`. Era ORFANO -- la CI installava il pacchetto
+          # (`pip install -e cervella/`) e faceva `--cov=cervella`, ma i suoi test non li
+          # lanciava nessuno: misuravamo la copertura di un pacchetto senza eseguirne la
+          # suite. Trovato da `scripts/test_orfani.py`, che chiede «un comando REALE lo
+          # raccoglie?» invece di «il nome combacia col glob?».
+          # S643 -- OGNI ESCLUSIONE PORTA IL SUO MOTIVO, e i motivi sono stati LANCIATI, non
+          # supposti (lezione S641: su 6 motivi scritti a occhio, 4 erano falsi). Misurato:
+          # questi 4 path danno `220 passed, 12 skipped in 6,3 s` **in locale** -- non sono
+          # lenti ne' rotti: toccano `.sncp/` (gitignored ⇒ ASSENTE in CI) e `~/.claude/`
+          # (assente in CI), quindi qui fallirebbero per l'ambiente, non per il codice.
+          # ⚠️ Non girare in CI non significa non girare: `scripts/test_solo_locali.py` li
+          # esegue QUI derivando il perimetro da queste righe, e `swarm-doctor` ne legge
+          # l'esito e la freschezza. Prima del S643 non li guardava nessuno dei due posti --
+          # la CI non poteva, e `suite_come_la_ci.py` li escludeva per IMITARE la CI.
+          # (Tolta la 5ª riga, `--ignore=tests/utils/test_semantic_search.py`: quel file NON
+          # ESISTE PIU' -- un `--ignore` su un path assente non fa rumore, e restava debito muto.)
+          pytest tests/ cervella/tests/ \
             --ignore=tests/sncp \
-            --ignore=tests/tools/test_convert_agents.py \
-            --ignore=tests/utils/test_semantic_search.py \
+            --ignore=tests/agents/test_agent_defs_drift.py \
             --ignore=tests/swarm/test_architect_structure.py \
-            --ignore=tests/hardtest_s494_edge_cases.py \
-            --cov=scripts --cov=src --cov-report=term --cov-report=xml --cov-fail-under=55
+            --ignore=tests/eval_agent_quality.py \
+            --reruns 2 --reruns-delay 1 \
+            --cov=scripts --cov=cervella --cov-report=term --cov-report=xml --cov-fail-under=55
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+
+      - name: Run knowledge (brain) unit tests
+        if: steps.check.outputs.skip != 'true'
+        # gate auto per le logiche brain (chunker/RRF/rerank/superseded); i test embed-cache
+        # richiedono numpy (skip qui, girano nel venv-brain -> vedi test_brain.py docstring)
+        run: pytest scripts/knowledge/test_brain.py -q
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+
+      # S639 -- 418 TEST CHE NON LANCIAVA NESSUNO.
+      #
+      # La CI eseguiva `pytest tests/` piu' UN file del brain (`test_brain.py`). Tutto il
+      # resto sotto `scripts/` restava fuori: **14 file di test**, fra cui i quattro di
+      # ORACOLA -- il meccanismo che consultiamo ai bivi -- e `test_brain_mcp.py`, che sta
+      # nella stessa cartella del file che invece giriamo.
+      #
+      # Non era teoria: DUE erano ROSSI da mesi (`test_measure_cfr`, che pretendeva ancora
+      # il verdetto DORA ritirato di proposito al S628). Il rosso c'era: mancava chi lo
+      # guardasse. E' il «falso verde nell'INSIEME» -- non mentiva l'asserzione, mentiva il
+      # PERIMETRO di cio' che veniva lanciato.
+      #
+      # ⚠️ Perche' `scripts/` e non `scripts/metrics/`: la prima stesura di questa fix
+      # agganciava solo `metrics/` (167 test) e avrebbe lasciato fuori piu' della meta' del
+      # buco -- ORACOLA compresa. Il numero giusto si vede solo LANCIANDO il conteggio
+      # sull'intera cartella, non sulla sottocartella che si aveva in mano.
+      #
+      # ⚠️ `test_brain.py` resta ESCLUSO qui perche' ha gia' il suo step sopra (evita il
+      # doppio giro), non perche' sia meno importante.
+      #
+      # ⚠️ Il checkout e' SHALLOW (depth 1): i test che guardano la storia del repo devono
+      # tollerare una finestra vuota, non pretenderla piena. Se un test qui dentro diventa
+      # rosso solo in CI, la prima ipotesi e' questa -- non «la misura mente».
+      - name: Run scripts/ tests (metrics, ORACOLA, learning, sncp)
+        if: steps.check.outputs.skip != 'true'
+        run: pytest scripts/ --ignore=scripts/knowledge/test_brain.py -q
         env:
           PYTHONPATH: ${{ github.workspace }}
 
@@ -104,18 +228,62 @@ jobs:
             htmlcov/
           retention-days: 30
 
+      # S639 -- ERA UN FALSO VERDE, e lo diceva il suo stesso log.
+      #
+      # `CODECOV_TOKEN` NON esiste fra i secret del repo (ci sono solo ANTHROPIC_API_KEY e
+      # FLY_API_TOKEN). Lo step girava lo stesso e finiva con:
+      #     -> Token length: 0
+      #     error -- Upload queued for processing failed:
+      #              {"message":"Token required - not valid tokenless upload"}
+      #     ##[end-action ... outcome=success; conclusion=success]
+      # Un errore ESPLICITO nel log, convertito in `success` da `continue-on-error: true` +
+      # `fail_ci_if_error: false`. Su OGNI PR, da quando lo step esiste. Non abbiamo mai
+      # caricato una riga di coverage, e la CI ci diceva di sì.
+      #
+      # LA CURA NON E' TOGLIERE `continue-on-error` (un intoppo di Codecov non deve rompere
+      # la CI): e' far SALTARE lo step quando il token non c'e'. Uno step `skipped` si vede;
+      # uno che fallisce dentro un verde no. Se un giorno il token arriva, riparte da solo.
+      - name: Upload to Codecov (Python 3.12 only)
+        if: steps.check.outputs.skip != 'true' && matrix.python-version == '3.12' && env.CODECOV_TOKEN != ''
+        uses: codecov/codecov-action@v7
+        continue-on-error: true
+        with:
+          files: coverage.xml
+          flags: python
+          fail_ci_if_error: false
+
+  # Aggregator -> the SINGLE stable check that becomes REQUIRED (Ops C1).
+  # Runs on EVERY PR (needs both jobs, if: always()):
+  #  - Python changes  -> green only if the matrix succeeded.
+  #  - No Python change -> matrix was skipped -> green (nothing to test).
+  #  - Matrix failed/cancelled -> red (blocks merge).
   test-summary:
     name: Test Summary
-    needs: [test]
+    needs: [changes, test]
     runs-on: ubuntu-latest
     if: always()
 
     steps:
       - name: Check test results
         run: |
-          if [ "${{ needs.test.result }}" == "success" ]; then
-            echo "All Python tests passed!"
-          else
-            echo "Some tests failed"
+          # FAIL-CLOSED (S553, R29-1): if the `changes` gate itself did NOT
+          # succeed (FAILURE/cancelled -> outputs empty, test skipped), block.
+          # Otherwise an infra error on `changes` would yield a green required
+          # check with ZERO tests run.
+          if [ "${{ needs.changes.result }}" != "success" ]; then
+            echo "changes gate did not succeed (result=${{ needs.changes.result }}) -> blocking merge"
             exit 1
           fi
+          changed='${{ needs.changes.outputs.python }}'
+          result='${{ needs.test.result }}'
+          echo "python-changes=${changed} | test-result=${result}"
+          if [ "${changed}" != "true" ]; then
+            echo "No Python-relevant changes in this PR -> Test Summary PASS (nothing to test)."
+            exit 0
+          fi
+          if [ "${result}" == "success" ]; then
+            echo "All Python tests passed!"
+            exit 0
+          fi
+          echo "Python tests did not succeed (result=${result})."
+          exit 1

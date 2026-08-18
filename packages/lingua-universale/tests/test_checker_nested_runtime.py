@@ -10,7 +10,6 @@ arbitrarily nested ProtocolChoice blocks at runtime.
 from __future__ import annotations
 
 import pytest
-
 from cervellaswarm_lingua_universale.checker import (
     ProtocolViolation,
     SessionChecker,
@@ -30,7 +29,6 @@ from cervellaswarm_lingua_universale.types import (
     TaskResult,
     TaskStatus,
 )
-
 
 # ── Test Protocols ──────────────────────────────────────────────────
 

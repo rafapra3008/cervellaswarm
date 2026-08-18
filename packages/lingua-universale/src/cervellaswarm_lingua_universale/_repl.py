@@ -31,12 +31,12 @@ Design decisions (STUDIO C3.1, S421):
 from __future__ import annotations
 
 import os
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Callable
 
-from ._colors import colors as _c, init_colors as _init_colors
-from ._eval import check_source, run_source, EvalResult
-
+from ._colors import colors as _c
+from ._colors import init_colors as _init_colors
+from ._eval import EvalResult, check_source, run_source
 
 # ============================================================
 # Multiline heuristics

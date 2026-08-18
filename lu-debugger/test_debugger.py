@@ -14,7 +14,6 @@ sys.path.insert(0, str(Path(__file__).parent))
 from demo_data import DEMO_BREAK, DEMO_HAPPY, PROTOCOL_SOURCE
 from runner import _build_checker, _sse_event, is_live_available
 
-
 # ---------------------------------------------------------------------------
 # Runner tests
 # ---------------------------------------------------------------------------
@@ -113,8 +112,8 @@ class TestServer:
 
     @pytest.fixture
     def client(self):
-        from starlette.testclient import TestClient
         from server import app
+        from starlette.testclient import TestClient
         return TestClient(app)
 
     def test_index_returns_html(self, client):

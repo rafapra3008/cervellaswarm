@@ -7,8 +7,8 @@ Extracted from semantic_search.py (S342) to keep library under 500 lines.
 S501: CC refactored 19->7 via dispatch table pattern (validated S436-S437).
 """
 
-import sys
 import logging
+import sys
 
 from ..semantic_search import SemanticSearch
 

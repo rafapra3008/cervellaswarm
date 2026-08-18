@@ -16,7 +16,6 @@ Test structure:
 from __future__ import annotations
 
 import pytest
-
 from cervellaswarm_lingua_universale._ast import (
     AgentNode,
     BranchNode,

@@ -5,19 +5,18 @@
 
 from __future__ import annotations
 
-import pytest
 from pathlib import Path
 
+import pytest
 from cervellaswarm_lingua_universale._eval import (
     EvalResult,
-    check_source,
     check_file,
-    verify_source,
-    verify_file,
-    run_source,
+    check_source,
     run_file,
+    run_source,
+    verify_file,
+    verify_source,
 )
-
 
 # ============================================================
 # Fixtures

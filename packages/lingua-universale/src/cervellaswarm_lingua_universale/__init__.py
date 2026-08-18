@@ -3,7 +3,7 @@
 
 """CervellaSwarm Lingua Universale - Session types for AI agent protocols."""
 
-from importlib.metadata import version, PackageNotFoundError
+from importlib.metadata import PackageNotFoundError, version
 
 try:
     __version__ = version("cervellaswarm-lingua-universale")
@@ -12,172 +12,33 @@ except PackageNotFoundError:
 
 # Public API re-exports for convenience.
 # Users can also import directly from submodules.
-from .types import (
-    AgentRole,
-    AuditVerdictType,
-    MessageKind,
-    PlanComplexity,
-    TaskStatus,
-    TaskRequest,
-    TaskResult,
-    AuditRequest,
-    AuditVerdict,
-    PlanRequest,
-    PlanProposal,
-    PlanDecision,
-    ResearchQuery,
-    ResearchReport,
-    DirectMessage,
-    Broadcast,
-    ShutdownRequest,
-    ShutdownAck,
-    ContextInject,
-    SwarmMessage,
-    message_kind,
+from ._cli import main as cli_main
+from ._compiler import (
+    ASTCompiler,
+    CompiledModule,
 )
-from .protocols import (
-    Protocol,
-    ProtocolStep,
-    ProtocolChoice,
-    ProtocolElement,
-    STANDARD_PROTOCOLS,
-    DelegateTask,
-    ArchitectFlow,
-    ResearchFlow,
-    SimpleTask,
+from ._contracts import (
+    ContractViolation,
 )
-from .checker import (
-    MessageRecord,
-    ProtocolViolation,
-    SessionChecker,
-    SessionComplete,
-    SessionState,
+from ._eval import (
+    EvalResult,
+    check_file,
+    check_source,
+    run_file,
+    run_source,
+    verify_file,
+    verify_source,
 )
-from .dsl import (
-    parse_protocol,
-    parse_protocols,
-    render_protocol,
-    render_protocols,
-    DSLError,
-    DSLParseError,
-)
-from .monitor import (
-    MonitorEvent,
-    SessionStarted,
-    MessageSent,
-    BranchChosen,
-    ViolationOccurred,
-    SessionEnded,
-    RepetitionStarted,
-    MonitorListener,
-    MetricsSnapshot,
-    MetricsCollector,
-    ProtocolMonitor,
-    LoggingListener,
-    EventCollector,
-)
-from .lean4_bridge import (
-    VerificationProperty,
-    VerificationResult,
-    VerificationReport,
-    Lean4Generator,
-    Lean4Verifier,
-    lean4_available,
-    generate_lean4,
-    generate_lean4_multi,
-    FLAT_PROPERTIES,
-    ALL_PROPERTIES,
-)
-from .integration import (
-    AgentInfo,
-    AGENT_CATALOG,
-    agent_by_name,
-    agent_by_role,
-    agents_for_protocol,
-    create_session,
-    SwarmValidationResult,
-    validate_swarm,
-    resolve_bindings,
-)
-from .confidence import (
-    ConfidenceScore,
-    ConfidenceSource,
-    Confident,
-    CompositionStrategy,
-    compose_scores,
-)
-from .trust import (
-    TrustTier,
-    TrustScore,
-    trust_tier_for_role,
-    compose_chain,
-    chain_confidence,
-)
-from .codegen import (
-    GeneratedCode,
-    PythonGenerator,
-    generate_python,
-    generate_python_multi,
-)
-from .codegen_ts import (
-    TypeScriptGenerator,
-    generate_typescript,
-)
-from .codegen_json import (
-    JSONSchemaGenerator,
-    generate_json_schema,
-)
+from ._fmt import format_source as format_source
 from ._generate import (
     GenerateResult,
     generate_from_file,
     generate_from_source,
 )
-from .intent import (
-    IntentParseResult,
-    IntentParseError,
-    parse_intent,
-    parse_intent_protocol,
-)
-from .spec import (
-    PropertyKind,
-    PropertyVerdict,
-    PropertySpec,
-    ProtocolSpec,
-    PropertyResult,
-    PropertyReport,
-    SpecParseError,
-    parse_spec,
-    check_properties,
-    check_session,
-)
-from ._contracts import (
-    ContractViolation,
-)
-from ._compiler import (
-    ASTCompiler,
-    CompiledModule,
-)
-from ._interop import (
-    InteropError,
-    compile_file,
-    save_module,
-    load_module,
-    load_file,
-)
 from ._grammar_export import (
-    GrammarExporter,
     GRAMMAR_VERSION,
+    GrammarExporter,
 )
-from ._eval import (
-    EvalResult,
-    check_source,
-    check_file,
-    verify_source,
-    verify_file,
-    run_source,
-    run_file,
-)
-from ._repl import REPLSession
 from ._intent_bridge import (
     ChatPhase,
     ChatResult,
@@ -190,6 +51,25 @@ from ._intent_bridge import (
     Turn,
     render_intent_source,
 )
+from ._interop import (
+    InteropError,
+    compile_file,
+    load_file,
+    load_module,
+    save_module,
+)
+from ._lint import (
+    LintCategory as LintCategory,
+)
+from ._lint import (
+    LintFinding as LintFinding,
+)
+from ._lint import (
+    LintSeverity as LintSeverity,
+)
+from ._lint import (
+    lint_source as lint_source,
+)
 from ._mcp_audit import (
     AnnotationFinding,
     AuditReport,
@@ -198,37 +78,173 @@ from ._mcp_audit import (
     audit_tools,
     check_annotations,
     load_manifest,
+)
+from ._mcp_audit import (
     render_json as render_audit_json,
+)
+from ._mcp_audit import (
     render_terminal as render_audit_terminal,
+)
+from ._nl_processor import (
+    TOOL_SCHEMA as _NL_TOOL_SCHEMA,
 )
 from ._nl_processor import (  # anthropic imported lazily at instantiation
     ClaudeNLProcessor as ClaudeNLProcessor,
-    NLProcessorError as NLProcessorError,
-    TOOL_SCHEMA as _NL_TOOL_SCHEMA,
 )
+from ._nl_processor import (
+    NLProcessorError as NLProcessorError,
+)
+from ._repl import REPLSession
 from ._voice import (  # faster-whisper+sounddevice imported lazily at instantiation
     VoiceProcessor as VoiceProcessor,
+)
+from ._voice import (
     VoiceProcessorError as VoiceProcessorError,
 )
-from ._lint import (
-    lint_source as lint_source,
-    LintFinding as LintFinding,
-    LintSeverity as LintSeverity,
-    LintCategory as LintCategory,
+from .checker import (
+    MessageRecord,
+    ProtocolViolation,
+    SessionChecker,
+    SessionComplete,
+    SessionState,
 )
-from ._fmt import format_source as format_source
-from ._cli import main as cli_main
+from .codegen import (
+    GeneratedCode,
+    PythonGenerator,
+    generate_python,
+    generate_python_multi,
+)
+from .codegen_json import (
+    JSONSchemaGenerator,
+    generate_json_schema,
+)
+from .codegen_ts import (
+    TypeScriptGenerator,
+    generate_typescript,
+)
+from .confidence import (
+    CompositionStrategy,
+    ConfidenceScore,
+    ConfidenceSource,
+    Confident,
+    compose_scores,
+)
+from .dsl import (
+    DSLError,
+    DSLParseError,
+    parse_protocol,
+    parse_protocols,
+    render_protocol,
+    render_protocols,
+)
 from .errors import (
-    ErrorCategory,
-    ErrorSeverity,
-    ErrorLocation,
-    HumanError,
-    humanize,
-    format_error,
-    render_snippet,
-    suggest_similar,
     DEFAULT_LOCALE,
     SUPPORTED_LOCALES,
+    ErrorCategory,
+    ErrorLocation,
+    ErrorSeverity,
+    HumanError,
+    format_error,
+    humanize,
+    render_snippet,
+    suggest_similar,
+)
+from .integration import (
+    AGENT_CATALOG,
+    AgentInfo,
+    SwarmValidationResult,
+    agent_by_name,
+    agent_by_role,
+    agents_for_protocol,
+    create_session,
+    resolve_bindings,
+    validate_swarm,
+)
+from .intent import (
+    IntentParseError,
+    IntentParseResult,
+    parse_intent,
+    parse_intent_protocol,
+)
+from .lean4_bridge import (
+    ALL_PROPERTIES,
+    FLAT_PROPERTIES,
+    Lean4Generator,
+    Lean4Verifier,
+    VerificationProperty,
+    VerificationReport,
+    VerificationResult,
+    generate_lean4,
+    generate_lean4_multi,
+    lean4_available,
+)
+from .monitor import (
+    BranchChosen,
+    EventCollector,
+    LoggingListener,
+    MessageSent,
+    MetricsCollector,
+    MetricsSnapshot,
+    MonitorEvent,
+    MonitorListener,
+    ProtocolMonitor,
+    RepetitionStarted,
+    SessionEnded,
+    SessionStarted,
+    ViolationOccurred,
+)
+from .protocols import (
+    STANDARD_PROTOCOLS,
+    ArchitectFlow,
+    DelegateTask,
+    Protocol,
+    ProtocolChoice,
+    ProtocolElement,
+    ProtocolStep,
+    ResearchFlow,
+    SimpleTask,
+)
+from .spec import (
+    PropertyKind,
+    PropertyReport,
+    PropertyResult,
+    PropertySpec,
+    PropertyVerdict,
+    ProtocolSpec,
+    SpecParseError,
+    check_properties,
+    check_session,
+    parse_spec,
+)
+from .trust import (
+    TrustScore,
+    TrustTier,
+    chain_confidence,
+    compose_chain,
+    trust_tier_for_role,
+)
+from .types import (
+    AgentRole,
+    AuditRequest,
+    AuditVerdict,
+    AuditVerdictType,
+    Broadcast,
+    ContextInject,
+    DirectMessage,
+    MessageKind,
+    PlanComplexity,
+    PlanDecision,
+    PlanProposal,
+    PlanRequest,
+    ResearchQuery,
+    ResearchReport,
+    ShutdownAck,
+    ShutdownRequest,
+    SwarmMessage,
+    TaskRequest,
+    TaskResult,
+    TaskStatus,
+    message_kind,
 )
 
 __all__ = [

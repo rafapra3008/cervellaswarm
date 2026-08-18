@@ -9,7 +9,6 @@ import re
 from pathlib import Path
 
 import pytest
-
 from cervellaswarm_lingua_universale import check_source
 
 TOUR_JS = Path(__file__).resolve().parents[3] / "playground" / "tour.js"

@@ -11,21 +11,20 @@ Tests cover:
 """
 
 import pytest
-
 from cervellaswarm_lingua_universale.codegen import (
     GeneratedCode,
     PythonGenerator,
-    generate_python,
-    generate_python_multi,
+    _collect_role_steps,
+    _escape_string,
+    _has_choices,
+    _kind_to_message_class,
     _safe_python_ident,
     _to_class_name,
     _to_method_name,
-    _collect_role_steps,
     _used_message_kinds,
-    _has_choices,
-    _kind_to_message_class,
-    _escape_string,
     _validate_protocol_name,
+    generate_python,
+    generate_python_multi,
 )
 from cervellaswarm_lingua_universale.protocols import (
     ArchitectFlow,
@@ -37,7 +36,6 @@ from cervellaswarm_lingua_universale.protocols import (
     SimpleTask,
 )
 from cervellaswarm_lingua_universale.types import MessageKind
-
 
 # ============================================================
 # GeneratedCode result type
@@ -200,7 +198,7 @@ class TestCollectRoleSteps:
     def test_branch_name_annotation(self):
         role_steps = _collect_role_steps(ArchitectFlow)
         # Steps inside branches should have branch_name set
-        for step, branch_name in role_steps["worker"]:
+        for _step, branch_name in role_steps["worker"]:
             assert branch_name == "approve"  # worker only appears in approve branch
 
 

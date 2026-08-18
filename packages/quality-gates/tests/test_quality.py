@@ -4,7 +4,6 @@
 """Tests for cervellaswarm_quality_gates.quality module."""
 
 import pytest
-
 from cervellaswarm_quality_gates.quality import (
     DEFAULT_WEIGHTS,
     QualityScore,

@@ -1,7 +1,7 @@
 # CervellaSwarm Code Intelligence
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org)
+[![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org)
 [![Tests](https://img.shields.io/badge/tests-395%20passed-brightgreen.svg)](tests/)
 
 Find any symbol, trace any dependency, map any repository. Built on [tree-sitter](https://tree-sitter.github.io/).

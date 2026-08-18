@@ -15,29 +15,28 @@ import sys
 from pathlib import Path
 
 from cervellaswarm_task_orchestration import __version__
-from cervellaswarm_task_orchestration.task_classifier import classify_task
 from cervellaswarm_task_orchestration.architect_flow import (
     route_task,
     validate_plan_file,
 )
-from cervellaswarm_task_orchestration.task_manager import (
-    create_task,
-    list_tasks,
-    mark_ready,
-    mark_working,
-    mark_done,
-    ack_received,
-    ack_understood,
-    get_task_status,
-    get_ack_status,
-    cleanup_task,
-)
 from cervellaswarm_task_orchestration.output_validator import (
-    validate_output,
     find_last_output,
     find_task_output,
+    validate_output,
 )
-
+from cervellaswarm_task_orchestration.task_classifier import classify_task
+from cervellaswarm_task_orchestration.task_manager import (
+    ack_received,
+    ack_understood,
+    cleanup_task,
+    create_task,
+    get_ack_status,
+    get_task_status,
+    list_tasks,
+    mark_done,
+    mark_ready,
+    mark_working,
+)
 
 # -------------------------------------------------------------------------
 # cervella-classify

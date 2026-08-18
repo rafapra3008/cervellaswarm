@@ -16,7 +16,6 @@ import signal
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
 
 from cervellaswarm_spawn_workers.backend import (
     detect_backend,
@@ -39,9 +38,9 @@ class WorkerInfo:
 
     name: str
     backend: str
-    session_name: Optional[str] = None
-    pid: Optional[int] = None
-    log_file: Optional[Path] = None
+    session_name: str | None = None
+    pid: int | None = None
+    log_file: Path | None = None
     start_time: float = field(default_factory=time.time)
 
 
@@ -52,8 +51,8 @@ class WorkerStatus:
     name: str
     alive: bool
     backend: str
-    pid: Optional[int] = None
-    session_name: Optional[str] = None
+    pid: int | None = None
+    session_name: str | None = None
     uptime_seconds: float = 0.0
 
 
@@ -91,8 +90,8 @@ class SpawnManager:
         logs_dir: str = ".swarm/logs",
         status_dir: str = ".swarm/status",
         max_workers: int = 5,
-        backend: Optional[str] = None,
-        claude_bin: Optional[str] = None,
+        backend: str | None = None,
+        claude_bin: str | None = None,
         register_signals: bool = True,
         permission_mode: str = "auto",
     ):
@@ -166,10 +165,10 @@ class SpawnManager:
     def spawn_worker(
         self,
         name: str,
-        system_prompt: Optional[str] = None,
-        initial_prompt: Optional[str] = None,
+        system_prompt: str | None = None,
+        initial_prompt: str | None = None,
         specialty: str = "generic",
-        cwd: Optional[Path] = None,
+        cwd: Path | None = None,
     ) -> WorkerInfo:
         """Spawn a single worker process.
 

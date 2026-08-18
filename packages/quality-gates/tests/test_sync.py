@@ -3,8 +3,9 @@
 
 """Tests for cervellaswarm_quality_gates.sync module."""
 
-import pytest
+from pathlib import Path
 
+import pytest
 from cervellaswarm_quality_gates.sync import (
     FileDiff,
     SyncAction,
@@ -14,7 +15,6 @@ from cervellaswarm_quality_gates.sync import (
     _should_ignore,
     compare_agents,
 )
-from pathlib import Path
 
 
 class TestSyncAction:

@@ -6,20 +6,19 @@
 import os
 import stat
 import time
-import pytest
 from pathlib import Path
 
-from cervellaswarm_session_memory.quality_checker import (
-    check_actionability,
-    check_specificity,
-    check_freshness,
-    check_conciseness,
-    check_quality,
-    check_all_projects,
-    QualityResult,
-)
+import pytest
 from cervellaswarm_session_memory.project_manager import init_project
-
+from cervellaswarm_session_memory.quality_checker import (
+    QualityResult,
+    check_actionability,
+    check_all_projects,
+    check_conciseness,
+    check_freshness,
+    check_quality,
+    check_specificity,
+)
 
 # ---------------------------------------------------------------------------
 # Helpers

@@ -9,9 +9,9 @@
   "type": "module",
   "scripts": {
     "start": "node bin/cervellaswarm.js",
-    "test": "node --test test/commands/*.test.js test/agents/*.test.js test/utils/*.test.js test/edge-cases.test.js",
+    "test": "node --test --test-concurrency 1 test/commands/*.test.js test/agents/*.test.js test/utils/*.test.js test/config/*.test.js test/display/*.test.js test/session/*.test.js test/sncp/*.test.js test/edge-cases.test.js",
     "test:watch": "node --test --watch",
-    "test:coverage": "node --test --experimental-test-coverage test/commands/*.test.js test/agents/*.test.js test/utils/*.test.js test/edge-cases.test.js",
+    "test:coverage": "node --test --test-concurrency 1 --experimental-test-coverage test/commands/*.test.js test/agents/*.test.js test/utils/*.test.js test/config/*.test.js test/display/*.test.js test/session/*.test.js test/sncp/*.test.js test/edge-cases.test.js",
     "test:commands": "node --test test/commands/",
     "test:agents": "node --test test/agents/",
     "test:session": "node --test test/session/",
@@ -44,7 +44,7 @@
     "url": "https://github.com/rafapra3008/CervellaSwarm/issues"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "files": [
     "bin/",
@@ -54,13 +54,12 @@
     ".env.example"
   ],
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.39.0",
+    "@anthropic-ai/sdk": "^0.91.1",
     "@cervellaswarm/core": "file:../core",
     "@inquirer/prompts": "^8.3.0",
     "boxen": "^8.0.1",
-    "chalk": "^5.3.0",
-    "commander": "^14.0.3",
-    "conf": "^13.0.1",
+    "chalk": "^6.0.0",
+    "commander": "^15.0.0",
     "figures": "^6.1.0",
     "handlebars": "^4.7.8",
     "open": "^11.0.0",

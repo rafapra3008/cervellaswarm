@@ -8,7 +8,6 @@ empty branches, mixed steps/choices.
 from __future__ import annotations
 
 import pytest
-
 from cervellaswarm_lingua_universale._codegen_common import (
     collect_all_steps,
     used_message_kinds,
@@ -19,7 +18,6 @@ from cervellaswarm_lingua_universale.protocols import (
     ProtocolStep,
 )
 from cervellaswarm_lingua_universale.types import MessageKind
-
 
 # ---------------------------------------------------------------------------
 # Helpers

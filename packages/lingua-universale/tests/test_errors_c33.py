@@ -6,19 +6,17 @@
 from __future__ import annotations
 
 import pytest
-
+from cervellaswarm_lingua_universale._eval import check_source
+from cervellaswarm_lingua_universale._parser import ParseError
+from cervellaswarm_lingua_universale._tokenizer import TokenizeError
 from cervellaswarm_lingua_universale.errors import (
     ErrorCategory,
     ErrorSeverity,
     HumanError,
-    humanize,
     format_error,
+    humanize,
     render_snippet,
 )
-from cervellaswarm_lingua_universale._tokenizer import TokenizeError
-from cervellaswarm_lingua_universale._parser import ParseError
-from cervellaswarm_lingua_universale._eval import check_source
-
 
 # ============================================================
 # render_snippet

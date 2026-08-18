@@ -15,10 +15,10 @@ ZERO external dependencies. Uses confidence.py for score integration.
 
 from __future__ import annotations
 
-from enum import Enum
+from collections.abc import Mapping
 from dataclasses import dataclass
+from enum import Enum
 from types import MappingProxyType
-from typing import Mapping
 
 from .confidence import ConfidenceScore, ConfidenceSource
 from .types import AgentRole

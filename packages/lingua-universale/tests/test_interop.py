@@ -20,7 +20,6 @@ import textwrap
 from pathlib import Path
 
 import pytest
-
 from cervellaswarm_lingua_universale._compiler import ASTCompiler, CompiledModule
 from cervellaswarm_lingua_universale._interop import (
     InteropError,
@@ -29,7 +28,6 @@ from cervellaswarm_lingua_universale._interop import (
     load_module,
     save_module,
 )
-
 
 # ============================================================
 # Sample .lu sources (reusable)
@@ -81,8 +79,8 @@ class TestInteropError:
         assert err.operation == ""
 
     def test_attributes_custom(self) -> None:
-        err = InteropError("fail", path="/tmp/x.lu", operation="compile_file:read")
-        assert err.path == "/tmp/x.lu"
+        err = InteropError("fail", path="/tmp/x.lu", operation="compile_file:read")  # nosec B108
+        assert err.path == "/tmp/x.lu"  # nosec B108
         assert err.operation == "compile_file:read"
 
     def test_catchable_as_runtime_error(self) -> None:
@@ -180,7 +178,7 @@ class TestCompileFile:
 
         result = compile_file(lu_file)
         ns: dict = {}
-        exec(compile(result.python_source, result.source_file, "exec"), ns)  # noqa: S102
+        exec(compile(result.python_source, result.source_file, "exec"), ns)  # noqa: S102  # nosec B102
         assert ns["Status"] is not None
 
     def test_encoding_latin1(self, tmp_path: Path) -> None:
@@ -334,7 +332,7 @@ class TestSaveModule:
 
         saved_source = py_file.read_text(encoding="utf-8")
         ns: dict = {}
-        exec(compile(saved_source, "full.py", "exec"), ns)  # noqa: S102
+        exec(compile(saved_source, "full.py", "exec"), ns)  # noqa: S102  # nosec B102
         assert "Painter" in ns
         assert ns["__all__"] == ["Color", "Painter"]
 
@@ -364,7 +362,7 @@ class TestInteropEdgeCases:
         result = compile_file(lu_file, source_name="path\\to\\file.lu")
         # Should not break the generated Python
         ns: dict = {}
-        exec(compile(result.python_source, "test", "exec"), ns)  # noqa: S102
+        exec(compile(result.python_source, "test", "exec"), ns)  # noqa: S102  # nosec B102
         assert ns["__lu_source__"] == "path\\to\\file.lu"
 
     def test_compile_file_oserror(self, tmp_path: Path) -> None:
@@ -424,7 +422,7 @@ class TestInteropEdgeCases:
 
         result = compile_file(lu_file, source_name='file"with"quotes.lu')
         ns: dict = {}
-        exec(compile(result.python_source, "test", "exec"), ns)  # noqa: S102
+        exec(compile(result.python_source, "test", "exec"), ns)  # noqa: S102  # nosec B102
         assert ns["__lu_source__"] == 'file"with"quotes.lu'
 
 

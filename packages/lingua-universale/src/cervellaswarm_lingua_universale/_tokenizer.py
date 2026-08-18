@@ -31,7 +31,6 @@ import textwrap
 from dataclasses import dataclass
 from enum import Enum, auto
 
-
 # ---------------------------------------------------------------------------
 # Token kinds
 # ---------------------------------------------------------------------------

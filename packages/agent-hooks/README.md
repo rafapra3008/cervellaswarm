@@ -48,8 +48,31 @@ When session stops
 | `cervella-file-limits` | SessionEnd | Warns when files exceed configured line count or file count limits. Prevents session state bloat | pyyaml |
 | `cervella-context-inject` | SubagentStart | Injects project facts and session state into all subagents. They start with full project context | pyyaml |
 | `cervella-session-checkpoint` | SessionEnd | Auto-saves git status, recent commits, and branch info to a state file at session end | pyyaml |
+| `cervella-quality-validator` | SessionEnd | Validates SNCP 5.1 PROMPT_RIPRESA quality across 6 metrics (density, recency, coverage, actionability, anti-rot, self-sufficiency). Warning-only -- mai blocco. Generates daily report `.sncp/reports/daily/sncp_quality_YYYY-MM-DD.md`. | stdlib only |
 
 **All hooks work independently.** Install one, install all -- your choice.
+
+## SessionEnd hook -- cervella-quality-validator
+
+Validates the quality of your SNCP 5.1 PROMPT_RIPRESA files at the end of each
+session. Warning-only mode: the hook never blocks, it just writes a daily
+markdown report you can inspect.
+
+Add to your Claude Code `settings.json`:
+
+```json
+"hooks": {
+  "SessionEnd": [{
+    "matcher": "",
+    "hooks": [{"type": "command", "command": "cervella-quality-validator"}]
+  }]
+}
+```
+
+Output: `.sncp/reports/daily/sncp_quality_YYYY-MM-DD.md` with a per-project
+6-metric table and per-row Verdict (PASS / WARN / SKIP).
+
+Disable temporarily: `export SNCP_QUALITY_VALIDATOR_DISABLE=1`.
 
 ## Quick Start (< 5 minutes)
 
@@ -214,7 +237,7 @@ For `SubagentStart` hooks, inject context:
 
 ## Requirements
 
-- Python >= 3.10
+- Python >= 3.11
 - pyyaml >= 6.0 (only for configurable hooks; bash-validator and git-reminder use stdlib only)
 
 ## Tests
@@ -226,7 +249,7 @@ pip install -e ".[test]"
 pytest
 ```
 
-227 tests, 98% coverage, runs in 0.12s.
+290 tests, 98% coverage, runs in 0.14s.
 
 ## License
 

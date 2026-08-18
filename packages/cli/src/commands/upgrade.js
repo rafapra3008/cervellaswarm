@@ -18,7 +18,7 @@ import {
   setEmail,
   getTier,
   updateSubscriptionData
-} from '../config/manager.js';
+} from '../config/index.js';
 
 // Tier info for display
 const TIER_INFO = {

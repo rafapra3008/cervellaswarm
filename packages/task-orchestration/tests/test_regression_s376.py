@@ -8,21 +8,21 @@ Each test is named after the bug it catches and includes a comment
 explaining the original defect. Tests PASS with the fixed code.
 """
 
-import pytest
 import sys
 from pathlib import Path
 from unittest.mock import patch
 
+import pytest
+from cervellaswarm_task_orchestration.cli import main_task
+from cervellaswarm_task_orchestration.output_validator import (
+    SUCCESS_INDICATORS,
+    find_task_output,
+    validate_output,
+)
 from cervellaswarm_task_orchestration.task_manager import (
     create_task,
     list_tasks,
 )
-from cervellaswarm_task_orchestration.output_validator import (
-    validate_output,
-    find_task_output,
-    SUCCESS_INDICATORS,
-)
-from cervellaswarm_task_orchestration.cli import main_task
 
 # ---------------------------------------------------------------------------
 # Helpers

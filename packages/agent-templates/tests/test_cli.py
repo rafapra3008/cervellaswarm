@@ -9,10 +9,8 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-
 from cervellaswarm_agent_templates import __version__
 from cervellaswarm_agent_templates.cli import build_parser, main
-
 
 # ---------------------------------------------------------------------------
 # Helper
@@ -317,9 +315,10 @@ class TestCmdInitErrorPath:
     """
 
     def test_cmd_init_value_error_returns_1(self, tmp_dir, capsys):
-        from unittest.mock import patch
-        from cervellaswarm_agent_templates.cli import _cmd_init
         import argparse
+        from unittest.mock import patch
+
+        from cervellaswarm_agent_templates.cli import _cmd_init
 
         args = argparse.Namespace(
             type="worker",
@@ -336,9 +335,10 @@ class TestCmdInitErrorPath:
         assert rc == 1
 
     def test_cmd_init_value_error_prints_to_stderr(self, tmp_dir, capsys):
-        from unittest.mock import patch
-        from cervellaswarm_agent_templates.cli import _cmd_init
         import argparse
+        from unittest.mock import patch
+
+        from cervellaswarm_agent_templates.cli import _cmd_init
 
         args = argparse.Namespace(
             type="worker",
@@ -356,9 +356,10 @@ class TestCmdInitErrorPath:
         assert "Error" in captured.err or "bad specialty" in captured.err
 
     def test_cmd_init_team_value_error_returns_1(self, tmp_dir, capsys):
-        from unittest.mock import patch
-        from cervellaswarm_agent_templates.cli import _cmd_init_team
         import argparse
+        from unittest.mock import patch
+
+        from cervellaswarm_agent_templates.cli import _cmd_init_team
 
         args = argparse.Namespace(
             preset="minimal",
@@ -373,9 +374,10 @@ class TestCmdInitErrorPath:
         assert rc == 1
 
     def test_cmd_init_team_value_error_prints_to_stderr(self, tmp_dir, capsys):
-        from unittest.mock import patch
-        from cervellaswarm_agent_templates.cli import _cmd_init_team
         import argparse
+        from unittest.mock import patch
+
+        from cervellaswarm_agent_templates.cli import _cmd_init_team
 
         args = argparse.Namespace(
             preset="minimal",

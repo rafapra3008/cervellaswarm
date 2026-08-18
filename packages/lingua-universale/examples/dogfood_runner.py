@@ -15,23 +15,23 @@ First real program written in Lingua Universale -- CervellaSwarm S454.
 
 from pathlib import Path
 
+from cervellaswarm_lingua_universale import check_source, verify_source
+
 # TODO(T4.1): These internal imports should become a public API:
 #   load_protocol(path) -> Protocol
 # For now, we use the internal pipeline: parse -> ProtocolNode -> runtime Protocol
 from cervellaswarm_lingua_universale._ast import ProtocolNode
 from cervellaswarm_lingua_universale._eval import _protocol_node_to_runtime
 from cervellaswarm_lingua_universale._parser import parse
-from cervellaswarm_lingua_universale.checker import SessionChecker, ProtocolViolation
+from cervellaswarm_lingua_universale.checker import ProtocolViolation, SessionChecker
 from cervellaswarm_lingua_universale.codegen import generate_python
 from cervellaswarm_lingua_universale.types import (
+    Broadcast,
+    DirectMessage,
     TaskRequest,
     TaskResult,
     TaskStatus,
-    DirectMessage,
-    Broadcast,
 )
-from cervellaswarm_lingua_universale import check_source, verify_source
-
 
 LU_FILE = Path(__file__).parent / "dogfood_agent_orchestration.lu"
 

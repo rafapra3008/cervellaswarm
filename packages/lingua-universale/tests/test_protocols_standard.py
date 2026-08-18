@@ -5,16 +5,15 @@ step sequences, branch structure, and STANDARD_PROTOCOLS registry.
 """
 
 from cervellaswarm_lingua_universale.protocols import (
+    STANDARD_PROTOCOLS,
     ArchitectFlow,
     DelegateTask,
     Protocol,
     ProtocolChoice,
     ResearchFlow,
     SimpleTask,
-    STANDARD_PROTOCOLS,
 )
 from cervellaswarm_lingua_universale.types import MessageKind
-
 
 # ── DelegateTask ──────────────────────────────────────────────────────────────
 

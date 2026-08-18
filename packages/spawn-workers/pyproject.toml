@@ -12,7 +12,7 @@ description = "Config-driven worker spawning for multi-agent systems. tmux + noh
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [{ name = "CervellaSwarm Contributors" }]
 keywords = ["multi-agent", "ai-agents", "worker-spawning", "tmux", "process-management"]
 classifiers = [
@@ -22,7 +22,6 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",

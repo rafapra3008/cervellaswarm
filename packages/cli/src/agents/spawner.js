@@ -12,11 +12,12 @@
  */
 
 import Anthropic from '@anthropic-ai/sdk';
-import * as config from '../config/manager.js';
+import * as config from '../config/index.js';
 import {
   buildAgentPrompt,
   getAvailableWorkers,
-  getSuggestedNextStep
+  getSuggestedNextStep,
+  extractFilesFromOutput
 } from '@cervellaswarm/core/workers';
 
 // Retry delays (ms between retries)
@@ -115,7 +116,7 @@ export async function spawnAgent(agent, description, context, options = {}) {
   const agentType = agent.replace(/^cervella-/, '');
   const systemPrompt = buildAgentPrompt(agentType, context);
   const model = options.model || config.getDefaultModel();
-  const maxTokens = options.maxTokens || 4096;
+  const maxTokens = options.maxTokens || 8192;
   const timeout = options.timeout || config.getTimeout();
   const maxRetries = options.maxRetries || config.getMaxRetries();
 
@@ -237,35 +238,7 @@ export async function spawnAgent(agent, description, context, options = {}) {
   };
 }
 
-/**
- * Extract files mentioned in agent output
- */
-function extractFilesFromOutput(output) {
-  const files = [];
-  const patterns = [
-    // Direct file mentions
-    /(?:Create|Created|Modify|Modified|Update|Updated|Write|Wrote|Edit|Edited)(?:\s+file)?[:\s]+`?([^\s`\n]+\.[a-z]+)`?/gi,
-    // Code block file headers
-    /```[a-z]*\s*(?:\/\/|#|\/\*)\s*(?:File|Path)?[:\s]*([^\n]+\.[a-z]+)/gi,
-    // Markdown file references
-    /\*\*([^\*]+\.[a-z]+)\*\*/g,
-    // Common file path patterns
-    /(?:src|lib|test|components|pages|api)\/[^\s\n]+\.[a-z]+/gi
-  ];
-
-  for (const pattern of patterns) {
-    let match;
-    while ((match = pattern.exec(output)) !== null) {
-      const file = match[1] || match[0];
-      const cleanFile = file.trim().replace(/[`*]/g, '');
-      if (cleanFile && !files.includes(cleanFile) && cleanFile.includes('.')) {
-        files.push(cleanFile);
-      }
-    }
-  }
-
-  return [...new Set(files)]; // Remove duplicates
-}
+// extractFilesFromOutput imported from @cervellaswarm/core/workers (DRY - S508)
 
 /**
  * Suggest next step based on agent and task

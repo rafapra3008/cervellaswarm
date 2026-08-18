@@ -1,7 +1,8 @@
 """Tests for cervellaswarm_code_intelligence/cli/impact_cmd.py"""
-import pytest
 import sys
-from unittest.mock import patch, MagicMock, PropertyMock
+from unittest.mock import MagicMock, PropertyMock, patch
+
+import pytest
 from cervellaswarm_code_intelligence.cli.impact_cmd import main
 
 

@@ -23,7 +23,6 @@ NOTE: No __init__.py in this directory (Package Shadowing Fix).
 import dataclasses
 
 import pytest
-
 from cervellaswarm_lingua_universale._ast import (
     AgentNode,
     AllParticipate,
@@ -54,7 +53,6 @@ from cervellaswarm_lingua_universale._ast import (
     UseNode,
     VariantTypeDecl,
 )
-
 
 # ---------------------------------------------------------------------------
 # Shared fixture

@@ -16,7 +16,6 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
-
 from cervellaswarm_session_memory.cli import (
     main,
     main_audit,

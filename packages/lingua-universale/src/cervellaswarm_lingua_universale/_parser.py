@@ -27,7 +27,6 @@ Public API::
 
 from __future__ import annotations
 
-from ._tokenizer import Tok, TokKind, TokenizeError, tokenize  # noqa: F401
 from ._ast import (
     AgentNode,
     AllParticipate,
@@ -64,7 +63,7 @@ from ._ast import (
     UseNode,
     VariantTypeDecl,
 )
-
+from ._tokenizer import Tok, TokenizeError, TokKind, tokenize  # noqa: F401
 
 # ---------------------------------------------------------------------------
 # Shared constants

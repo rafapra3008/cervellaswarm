@@ -33,7 +33,7 @@ Current solutions store memory in opaque binary formats (LanceDB, ChromaDB, Qdra
 pip install cervellaswarm-session-memory
 ```
 
-Requires Python 3.10+. Single dependency: `pyyaml`.
+Requires Python 3.11+. Single dependency: `pyyaml`.
 
 ## Quick Start
 

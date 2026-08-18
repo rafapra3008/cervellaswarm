@@ -12,15 +12,13 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-
 from cervellaswarm_lingua_universale._cli import (
+    _cmd_fmt,
     _fmt_check_file,
     _fmt_diff_file,
     _fmt_inplace_file,
     _fmt_print_summary,
-    _cmd_fmt,
 )
-
 
 # ---------------------------------------------------------------------------
 # _fmt_check_file

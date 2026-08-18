@@ -15,7 +15,6 @@ from __future__ import annotations
 import textwrap
 
 import pytest
-
 from cervellaswarm_lingua_universale._ast import (
     BranchNode,
     ChoiceNode,
@@ -39,7 +38,6 @@ from cervellaswarm_lingua_universale.spec import (
     check_properties,
 )
 from cervellaswarm_lingua_universale.types import MessageKind
-
 
 # ============================================================
 # Shared LU source fixtures

@@ -10,7 +10,6 @@ and extracts spawn-relevant configuration.
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
 
 import yaml
 
@@ -24,8 +23,8 @@ class AgentConfig:
     specialty: str = "generic"
     model: str = "sonnet"
     role: str = ""
-    prompt_file: Optional[str] = None
-    system_prompt: Optional[str] = None
+    prompt_file: str | None = None
+    system_prompt: str | None = None
     spawn_on_start: bool = True
 
 
@@ -33,7 +32,7 @@ class AgentConfig:
 class SpawnConfig:
     """Spawn-specific configuration from team.yaml."""
 
-    backend: Optional[str] = None  # None = auto-detect
+    backend: str | None = None  # None = auto-detect
     max_workers: int = 5
     tasks_dir: str = ".swarm/tasks"
     logs_dir: str = ".swarm/logs"
@@ -48,7 +47,7 @@ class TeamConfig:
     version: str = "1.0.0"
     agents: list[AgentConfig] = field(default_factory=list)
     spawn: SpawnConfig = field(default_factory=SpawnConfig)
-    entry_point: Optional[str] = None
+    entry_point: str | None = None
     process: str = "hierarchical"
 
 

@@ -8,8 +8,7 @@ import stat
 from unittest.mock import patch
 
 import pytest
-
-from cervellaswarm_quality_gates.cli import main, _build_parser
+from cervellaswarm_quality_gates.cli import _build_parser, main
 
 
 class TestBuildParser:

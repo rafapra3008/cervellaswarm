@@ -33,17 +33,16 @@ import re
 import shutil
 import subprocess
 import tempfile
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
 from pathlib import Path
-from typing import Optional, Sequence
 
 from ._codegen_common import collect_all_steps as _collect_all_steps
 from ._codegen_common import used_message_kinds as _used_message_kinds
 from .protocols import Protocol, ProtocolChoice, ProtocolElement
 from .types import MessageKind
-
 
 # ============================================================
 # Enums
@@ -97,7 +96,7 @@ class VerificationResult:
     property_name: str
     proved: bool
     lean_theorem: str
-    error: Optional[str] = None
+    error: str | None = None
 
     def __post_init__(self) -> None:
         if not self.property_name:
@@ -198,7 +197,7 @@ class Lean4Generator:
         "-- DO NOT EDIT - regenerate from Python source\n"
     )
 
-    def generate_message_kind(self, kinds: Optional[Sequence[MessageKind]] = None) -> str:
+    def generate_message_kind(self, kinds: Sequence[MessageKind] | None = None) -> str:
         """Generate the MessageKind inductive type.
 
         If *kinds* is ``None``, all 14 standard kinds are included.
@@ -486,7 +485,7 @@ class Lean4Verifier:
     def verify_protocol(
         self,
         protocol: Protocol,
-        properties: Optional[Sequence[VerificationProperty]] = None,
+        properties: Sequence[VerificationProperty] | None = None,
     ) -> VerificationReport:
         """Generate Lean 4 code for a protocol and verify it.
 

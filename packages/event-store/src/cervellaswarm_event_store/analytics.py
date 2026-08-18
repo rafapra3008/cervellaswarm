@@ -15,7 +15,6 @@ import sqlite3
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from difflib import SequenceMatcher
-from typing import Optional
 
 _SEVERITY_ORDER = {"critical": 0, "high": 1, "medium": 2, "low": 3}
 _SEVERITY_SCORES = {"critical": 20, "high": 15, "medium": 10, "low": 5}
@@ -50,16 +49,16 @@ class ScoredLesson:
     """
 
     id: str
-    context: Optional[str]
-    problem: Optional[str]
-    solution: Optional[str]
-    pattern: Optional[str]
-    category: Optional[str]
+    context: str | None
+    problem: str | None
+    solution: str | None
+    pattern: str | None
+    category: str | None
     severity: str
-    root_cause: Optional[str]
-    prevention: Optional[str]
+    root_cause: str | None
+    prevention: str | None
     agents_involved: tuple
-    project: Optional[str]
+    project: str | None
     confidence: float
     times_applied: int
     status: str
@@ -172,7 +171,6 @@ def _score_lesson(
 
 
 from cervellaswarm_event_store.reader import _parse_json_field as _parse_json_tuple
-
 
 # ------------------------------------------------------------------
 # Internal implementations
@@ -329,22 +327,8 @@ def _agent_stats(conn: sqlite3.Connection, project: str = "") -> list:
     project_clause = "AND project = ?" if project else ""
     params = [project] if project else []
 
-    cursor.execute(
-        f"""
-        SELECT
-            agent_name,
-            COUNT(*) as total,
-            SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as ok,
-            SUM(CASE WHEN success = 0 THEN 1 ELSE 0 END) as fail,
-            AVG(CASE WHEN duration_ms IS NOT NULL THEN duration_ms END) as avg_ms
-        FROM events
-        WHERE agent_name IS NOT NULL
-        {project_clause}
-        GROUP BY agent_name
-        ORDER BY total DESC
-        """,
-        params,
-    )
+    query = f"SELECT agent_name, COUNT(*) as total, SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as ok, SUM(CASE WHEN success = 0 THEN 1 ELSE 0 END) as fail, AVG(CASE WHEN duration_ms IS NOT NULL THEN duration_ms END) as avg_ms FROM events WHERE agent_name IS NOT NULL {project_clause} GROUP BY agent_name ORDER BY total DESC"  # nosec B608
+    cursor.execute(query, params)
 
     result = []
     for row in cursor.fetchall():

@@ -9,9 +9,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-
 from cervellaswarm_agent_hooks.session_checkpoint import build_checkpoint, main
-
 
 # ---------------------------------------------------------------------------
 # build_checkpoint

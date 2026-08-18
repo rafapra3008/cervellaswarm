@@ -4,15 +4,14 @@
 """Integration tests for cervellaswarm-event-store."""
 
 import pytest
-
 from cervellaswarm_event_store import (
-    EventStore,
+    DetectedPattern,
     Event,
+    EventStore,
     Lesson,
     QueryResult,
-    Statistics,
-    DetectedPattern,
     ScoredLesson,
+    Statistics,
 )
 
 
@@ -115,7 +114,7 @@ class TestFullWorkflow:
 class TestPatternDetectionIntegration:
     def test_repeated_errors_create_pattern(self):
         with EventStore(":memory:") as store:
-            for i in range(5):
+            for _i in range(5):
                 store.log_event(Event(
                     event_type="task_failed",
                     agent_name="backend",
@@ -223,7 +222,7 @@ class TestPublicAPICompleteness:
         assert ScoredLesson is not None
 
     def test_config_functions_exported(self):
-        from cervellaswarm_event_store import load_config, get_db_path, get_section
+        from cervellaswarm_event_store import get_db_path, get_section, load_config
         assert load_config is not None
         assert get_db_path is not None
         assert get_section is not None
@@ -290,7 +289,7 @@ class TestEdgeCases:
         with EventStore(":memory:") as store:
             session = "session-abc-123"
             store.log_event(Event(event_type="session_started", session_id=session))
-            for i in range(3):
+            for _i in range(3):
                 store.log_event(Event(
                     event_type="task_completed",
                     session_id=session,

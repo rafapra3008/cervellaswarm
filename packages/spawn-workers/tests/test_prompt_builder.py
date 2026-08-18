@@ -4,13 +4,11 @@
 """Tests for prompt_builder module."""
 
 import pytest
-
 from cervellaswarm_spawn_workers.prompt_builder import (
     SPECIALTIES,
     build_base_prompt,
     build_worker_prompt,
 )
-
 
 # ---------------------------------------------------------------------------
 # SPECIALTIES dict
@@ -65,8 +63,8 @@ def test_base_prompt_default_tasks_dir():
 
 def test_base_prompt_custom_tasks_dir():
     """build_base_prompt uses custom tasks_dir when provided."""
-    result = build_base_prompt(tasks_dir="/tmp/custom/tasks")
-    assert "/tmp/custom/tasks" in result
+    result = build_base_prompt(tasks_dir="/tmp/custom/tasks")  # nosec B108
+    assert "/tmp/custom/tasks" in result  # nosec B108
     assert ".swarm/tasks" not in result
 
 

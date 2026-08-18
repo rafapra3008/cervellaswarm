@@ -12,6 +12,7 @@ Config is searched in this order:
 If no config file is found, sensible defaults are used.
 """
 
+import copy
 import os
 from pathlib import Path
 
@@ -67,6 +68,17 @@ def find_config_file() -> Path | None:
     return None
 
 
+def _deep_merge(base: dict, override: dict) -> dict:
+    """Deep merge override into base (recursive for nested dicts)."""
+    result = copy.deepcopy(base)
+    for key, value in override.items():
+        if key in result and isinstance(result[key], dict) and isinstance(value, dict):
+            result[key] = _deep_merge(result[key], value)
+        else:
+            result[key] = value
+    return result
+
+
 def load_config(config_path: Path | None = None) -> dict:
     """Load session-memory configuration, merging with defaults.
 
@@ -87,7 +99,10 @@ def load_config(config_path: Path | None = None) -> dict:
     except (OSError, yaml.YAMLError):
         return _deep_copy_defaults()
 
-    return _merge_config(user_config)
+    if not isinstance(user_config, dict):
+        return _deep_copy_defaults()
+
+    return _deep_merge(DEFAULTS, user_config)
 
 
 def get_section(section: str, config: dict | None = None) -> dict:
@@ -107,8 +122,8 @@ def get_section(section: str, config: dict | None = None) -> dict:
     section_config = config.get(section, {})
 
     if isinstance(section_config, dict) and isinstance(defaults, dict):
-        return {**defaults, **section_config}
-    return section_config if section_config else defaults
+        return _deep_merge(defaults, section_config)
+    return section_config if section_config else copy.deepcopy(defaults)
 
 
 def get_memory_dir(project_root: Path | None = None, config: dict | None = None) -> Path:
@@ -131,16 +146,4 @@ def get_memory_dir(project_root: Path | None = None, config: dict | None = None)
 
 def _deep_copy_defaults() -> dict:
     """Create a deep copy of DEFAULTS to prevent mutation."""
-    import copy
     return copy.deepcopy(DEFAULTS)
-
-
-def _merge_config(user_config: dict) -> dict:
-    """Merge user config with defaults (shallow per section)."""
-    merged = _deep_copy_defaults()
-    for section, values in user_config.items():
-        if section in merged and isinstance(values, dict) and isinstance(merged[section], dict):
-            merged[section] = {**merged[section], **values}
-        else:
-            merged[section] = values
-    return merged

@@ -5,7 +5,8 @@ Coverage target: 95%+ of main() function (lines 19-125)
 Excludes: __main__ block (lines 128-129)
 """
 import sys
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import MagicMock, Mock, patch
+
 import pytest
 from cervellaswarm_code_intelligence.cli.search_cmd import main
 

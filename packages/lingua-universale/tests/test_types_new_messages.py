@@ -9,7 +9,6 @@ values, and field access.
 """
 
 import pytest
-
 from cervellaswarm_lingua_universale.types import (
     Broadcast,
     ContextInject,
@@ -18,7 +17,6 @@ from cervellaswarm_lingua_universale.types import (
     ShutdownAck,
     ShutdownRequest,
 )
-
 
 # ── DirectMessage ─────────────────────────────────────────────────────────────
 

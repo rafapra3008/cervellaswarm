@@ -31,6 +31,7 @@
     "build": "tsc",
     "watch": "tsc --watch",
     "test": "node --test test/*.test.js",
+    "test:coverage": "node --test --experimental-test-coverage test/*.test.js",
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run clean && npm run build && npm test"
   },
@@ -49,15 +50,15 @@
     "directory": "packages/core"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.99.0",
+    "@anthropic-ai/sdk": "^0.115.0",
     "conf": "^15.1.0"
   },
   "devDependencies": {
-    "@types/node": "^25.2.3",
-    "typescript": "^6.0.2"
+    "@types/node": "^26.1.0",
+    "typescript": "^7.0.2"
   },
   "peerDependencies": {
     "@anthropic-ai/sdk": ">=0.30.0"

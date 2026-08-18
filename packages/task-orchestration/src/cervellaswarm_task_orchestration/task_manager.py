@@ -9,11 +9,10 @@ Git-friendly: all state is plain files, creating a natural audit trail.
 Atomic operations prevent race conditions when multiple workers compete.
 """
 
-from datetime import datetime
-from pathlib import Path
-from typing import Optional
 import logging
 import re
+from datetime import datetime, timezone
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -54,7 +53,7 @@ def validate_task_id(task_id: str) -> bool:
     return True
 
 
-def ensure_tasks_dir(tasks_dir: Optional[str] = None) -> Path:
+def ensure_tasks_dir(tasks_dir: str | None = None) -> Path:
     """
     Ensure the tasks directory exists.
 
@@ -85,7 +84,7 @@ def create_task(
     agent: str,
     description: str,
     risk_level: int = 1,
-    tasks_dir: Optional[str] = None,
+    tasks_dir: str | None = None,
 ) -> str:
     """
     Create a new task with a structured template.
@@ -128,7 +127,7 @@ def create_task(
 - Assigned to: {agent}
 - Risk level: {risk_level} ({risk_map[risk_level]})
 - Timeout: 15 minutes
-- Created: {datetime.now().strftime("%Y-%m-%d %H:%M")}
+- Created: {datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M")}
 
 ## SUCCESS CRITERIA
 - [ ] Criterion 1
@@ -151,12 +150,12 @@ Quality gate (Level {risk_level} - {'functional check' if risk_level == 1 else '
         with open(task_file, "x") as f:
             f.write(template)
     except FileExistsError:
-        raise FileExistsError(f"Task {task_id} already exists!")
+        raise FileExistsError(f"Task {task_id} already exists!") from None
 
     return str(task_file)
 
 
-def list_tasks(tasks_dir: Optional[str] = None) -> list[dict]:
+def list_tasks(tasks_dir: str | None = None) -> list[dict]:
     """
     List all tasks with their status.
 
@@ -202,7 +201,7 @@ def list_tasks(tasks_dir: Optional[str] = None) -> list[dict]:
     return tasks
 
 
-def mark_ready(task_id: str, tasks_dir: Optional[str] = None) -> bool:
+def mark_ready(task_id: str, tasks_dir: str | None = None) -> bool:
     """
     Mark a task as ready (available for workers).
 
@@ -226,7 +225,7 @@ def mark_ready(task_id: str, tasks_dir: Optional[str] = None) -> bool:
     return True
 
 
-def mark_working(task_id: str, tasks_dir: Optional[str] = None) -> bool:
+def mark_working(task_id: str, tasks_dir: str | None = None) -> bool:
     """
     Mark a task as working (in progress).
 
@@ -254,14 +253,14 @@ def mark_working(task_id: str, tasks_dir: Optional[str] = None) -> bool:
     # ATOMIC: 'x' mode = exclusive create, fails if file already exists
     try:
         with open(working_file, "x") as f:
-            f.write(f"started: {datetime.now().isoformat()}\n")
+            f.write(f"started: {datetime.now(tz=timezone.utc).isoformat()}\n")
         return True
     except FileExistsError:
         logger.warning("Task %s already claimed by another worker!", task_id)
         return False
 
 
-def ack_received(task_id: str, tasks_dir: Optional[str] = None) -> bool:
+def ack_received(task_id: str, tasks_dir: str | None = None) -> bool:
     """
     Mark a task as ACK_RECEIVED (worker received the task).
 
@@ -285,7 +284,7 @@ def ack_received(task_id: str, tasks_dir: Optional[str] = None) -> bool:
     return True
 
 
-def ack_understood(task_id: str, tasks_dir: Optional[str] = None) -> bool:
+def ack_understood(task_id: str, tasks_dir: str | None = None) -> bool:
     """
     Mark a task as ACK_UNDERSTOOD (worker understood the task).
 
@@ -309,7 +308,7 @@ def ack_understood(task_id: str, tasks_dir: Optional[str] = None) -> bool:
     return True
 
 
-def mark_done(task_id: str, tasks_dir: Optional[str] = None) -> bool:
+def mark_done(task_id: str, tasks_dir: str | None = None) -> bool:
     """
     Mark a task as done (completed).
 
@@ -333,7 +332,7 @@ def mark_done(task_id: str, tasks_dir: Optional[str] = None) -> bool:
     return True
 
 
-def get_task_status(task_id: str, tasks_dir: Optional[str] = None) -> str:
+def get_task_status(task_id: str, tasks_dir: str | None = None) -> str:
     """
     Get the status of a task.
 
@@ -362,7 +361,7 @@ def get_task_status(task_id: str, tasks_dir: Optional[str] = None) -> str:
     return "created"
 
 
-def get_ack_status(task_id: str, tasks_dir: Optional[str] = None) -> str:
+def get_ack_status(task_id: str, tasks_dir: str | None = None) -> str:
     """
     Get the ACK status of a task (R/U/D format).
 
@@ -385,7 +384,7 @@ def get_ack_status(task_id: str, tasks_dir: Optional[str] = None) -> str:
     return f"{r}/{u}/{d}"
 
 
-def cleanup_task(task_id: str, tasks_dir: Optional[str] = None) -> bool:
+def cleanup_task(task_id: str, tasks_dir: str | None = None) -> bool:
     """
     Remove marker files for a task.
 

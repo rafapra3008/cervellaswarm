@@ -22,7 +22,11 @@ import {
   extractFilesFromOutput,
   extractCodeBlocks,
   formatDuration,
-  parseAgentName
+  parseAgentName,
+  estimateTokens,
+  truncateText,
+  hasErrorIndicators,
+  extractSummary
 } from '../dist/workers/index.js';
 
 describe('Workers Module', () => {
@@ -198,6 +202,134 @@ describe('Workers Module', () => {
 
       const result3 = parseAgentName('CERVELLA-TESTER');
       assert.strictEqual(result3.type, 'tester');
+    });
+  });
+
+  describe('estimateTokens', () => {
+    it('should estimate tokens based on char length / 4', () => {
+      // 12 chars -> ceil(12/4) = 3
+      assert.strictEqual(estimateTokens('hello world!'), 3);
+    });
+
+    it('should return 0 for empty string', () => {
+      assert.strictEqual(estimateTokens(''), 0);
+    });
+
+    it('should ceil fractional results', () => {
+      // 5 chars -> ceil(5/4) = 2
+      assert.strictEqual(estimateTokens('hello'), 2);
+      // 1 char -> ceil(1/4) = 1
+      assert.strictEqual(estimateTokens('a'), 1);
+    });
+
+    it('should handle long text', () => {
+      const longText = 'x'.repeat(4000);
+      assert.strictEqual(estimateTokens(longText), 1000);
+    });
+  });
+
+  describe('truncateText', () => {
+    it('should return text unchanged if within limit', () => {
+      assert.strictEqual(truncateText('short', 100), 'short');
+    });
+
+    it('should truncate with ellipsis when over limit', () => {
+      const result = truncateText('hello world, this is long', 10);
+      assert.strictEqual(result.length, 10);
+      assert.ok(result.endsWith('...'));
+      assert.strictEqual(result, 'hello w...');
+    });
+
+    it('should handle exact length boundary', () => {
+      assert.strictEqual(truncateText('abcde', 5), 'abcde');
+    });
+
+    it('should handle text one char over limit', () => {
+      const result = truncateText('abcdef', 5);
+      assert.strictEqual(result, 'ab...');
+      assert.strictEqual(result.length, 5);
+    });
+  });
+
+  describe('hasErrorIndicators', () => {
+    it('should detect "error:" pattern', () => {
+      assert.strictEqual(hasErrorIndicators('Error: something broke'), true);
+    });
+
+    it('should detect "exception:" pattern', () => {
+      assert.strictEqual(hasErrorIndicators('Exception: null ref'), true);
+    });
+
+    it('should detect "failed:" pattern', () => {
+      assert.strictEqual(hasErrorIndicators('Build failed: timeout'), true);
+    });
+
+    it('should detect "cannot find" pattern', () => {
+      assert.strictEqual(hasErrorIndicators('cannot find module'), true);
+    });
+
+    it('should detect "permission denied" pattern', () => {
+      assert.strictEqual(hasErrorIndicators('Permission denied'), true);
+    });
+
+    it('should detect "not found" pattern', () => {
+      assert.strictEqual(hasErrorIndicators('File not found'), true);
+    });
+
+    it('should return false for clean output', () => {
+      assert.strictEqual(hasErrorIndicators('All tests passed successfully'), false);
+    });
+
+    it('should return false for empty string', () => {
+      assert.strictEqual(hasErrorIndicators(''), false);
+    });
+
+    it('should be case insensitive', () => {
+      assert.strictEqual(hasErrorIndicators('ERROR: boom'), true);
+      assert.strictEqual(hasErrorIndicators('PERMISSION DENIED'), true);
+    });
+  });
+
+  describe('extractSummary', () => {
+    it('should extract text after summary header', () => {
+      const output = `
+Some work done here.
+Summary:
+Task completed with 3 files changed.
+All tests pass.
+      `;
+      const result = extractSummary(output);
+      assert.ok(result.includes('Task completed'));
+    });
+
+    it('should fallback to last line when no summary header', () => {
+      const output = `
+First line
+Second line
+Last meaningful line
+      `;
+      const result = extractSummary(output);
+      assert.strictEqual(result, 'Last meaningful line');
+    });
+
+    it('should respect maxLength parameter', () => {
+      const output = 'A'.repeat(300);
+      const result = extractSummary(output, 50);
+      assert.ok(result.length <= 50);
+    });
+
+    it('should handle empty output', () => {
+      const result = extractSummary('');
+      assert.strictEqual(result, '');
+    });
+
+    it('should recognize different header keywords', () => {
+      const variants = ['Result:', 'Done:', 'Completed:', 'Conclusion:'];
+      for (const header of variants) {
+        const output = `Work log\n${header}\nFinished the job.`;
+        const result = extractSummary(output);
+        assert.ok(result.includes('Finished'), `Failed for header: ${header}`);
+      }
     });
   });
 });

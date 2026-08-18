@@ -19,7 +19,6 @@ Test structure:
 from __future__ import annotations
 
 import pytest
-
 from cervellaswarm_lingua_universale._ast import (
     AgentNode,
     AttrExpr,
@@ -485,7 +484,7 @@ class TestCompileAgentExecution:
         prog = ProgramNode((node,), LOC)
         result = compiler.compile(prog, source_file="exec.lu")
         ns: dict = {}
-        exec(result.python_source, ns)  # noqa: S102
+        exec(result.python_source, ns)  # noqa: S102  # nosec B102
         worker = ns["Worker"]()
         with pytest.raises(NotImplementedError, match="Worker._execute"):
             worker.process()
@@ -497,7 +496,7 @@ class TestCompileAgentExecution:
         prog = ProgramNode((node,), LOC)
         result = compiler.compile(prog, source_file="requires.lu")
         ns: dict = {}
-        exec(result.python_source, ns)  # noqa: S102
+        exec(result.python_source, ns)  # noqa: S102  # nosec B102
         worker = ns["Worker"]()
         from cervellaswarm_lingua_universale._contracts import ContractViolation
         with pytest.raises(ContractViolation, match="requires violated"):
@@ -510,7 +509,7 @@ class TestCompileAgentExecution:
         prog = ProgramNode((node,), LOC)
         result = compiler.compile(prog, source_file="pass.lu")
         ns: dict = {}
-        exec(result.python_source, ns)  # noqa: S102
+        exec(result.python_source, ns)  # noqa: S102  # nosec B102
 
         # Subclass to provide _execute
         class TestWorker(ns["Worker"]):
@@ -527,7 +526,7 @@ class TestCompileAgentExecution:
         prog = ProgramNode((node,), LOC)
         result = compiler.compile(prog, source_file="ensures.lu")
         ns: dict = {}
-        exec(result.python_source, ns)  # noqa: S102
+        exec(result.python_source, ns)  # noqa: S102  # nosec B102
 
         class TestWorker(ns["Worker"]):
             def _execute(self, **kwargs):
@@ -547,7 +546,7 @@ class TestCompileAgentExecution:
         prog = ProgramNode((node,), LOC)
         result = compiler.compile(prog, source_file="meta.lu")
         ns: dict = {}
-        exec(result.python_source, ns)  # noqa: S102
+        exec(result.python_source, ns)  # noqa: S102  # nosec B102
         cls = ns["Worker"]
         assert cls.__lu_role__ == "backend"
         assert cls.__lu_trust__ == "standard"

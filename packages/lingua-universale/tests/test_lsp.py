@@ -17,18 +17,16 @@ import pytest
 # Skip entire module if pygls is not installed
 pygls = pytest.importorskip("pygls", reason="pygls not installed")
 
-from lsprotocol import types
-
 from cervellaswarm_lingua_universale._lsp import (
-    _source_diagnostics,
     _check_pygls_available,
-    build_symbol_table,
-    _word_at_pos,
-    _hover_info,
-    _goto_definition,
     _completion_items,
+    _goto_definition,
+    _hover_info,
+    _source_diagnostics,
+    _word_at_pos,
+    build_symbol_table,
 )
-
+from lsprotocol import types
 
 # ============================================================
 # Availability check
@@ -260,8 +258,8 @@ type Point =
 
 class TestServerCreation:
     def test_create_server_returns_language_server(self):
-        from cervellaswarm_lingua_universale._lsp import create_server
         from cervellaswarm_lingua_universale import __version__
+        from cervellaswarm_lingua_universale._lsp import create_server
         server = create_server()
         assert server is not None
         assert server.name == "lingua-universale-lsp"

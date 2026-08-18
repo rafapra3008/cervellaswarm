@@ -76,43 +76,8 @@ export function registerSncpTools(server: McpServer): void {
     }
   );
 
-  /**
-   * Tool: sncp_read_stato
-   * DEPRECATED: stato.md was eliminated in SNCP 4.0 (S357).
-   * Kept for backward compatibility - returns deprecation notice.
-   */
-  server.tool(
-    "sncp_read_stato",
-    "Read the stato.md (detailed project state) for a CervellaSwarm project. " +
-      "Contains: current progress, open issues, technical details.",
-    {
-      project: z
-        .string()
-        .min(1)
-        .describe("SNCP project name (e.g. cervellaswarm)"),
-    },
-    {
-      title: "Read Project State",
-      readOnlyHint: true,
-      destructiveHint: false,
-      idempotentHint: true,
-      openWorldHint: false,
-    },
-    async ({ project }) => {
-      return {
-        content: [
-          {
-            type: "text",
-            text:
-              `# stato.md - DEPRECATED\n\n` +
-              `stato.md was eliminated in SNCP 4.0 (S357).\n` +
-              `Use \`sncp_read_ripresa\` instead to read the PROMPT_RIPRESA for ${project}.\n` +
-              `PROMPT_RIPRESA contains: session state, decisions, next steps.`,
-          },
-        ],
-      };
-    }
-  );
+  // sncp_read_stato removed S509 -- was deprecated since SNCP 4.0 (S357), returned only deprecation notice.
+  // Use sncp_read_ripresa instead.
 
   /**
    * Tool: sncp_list_projects

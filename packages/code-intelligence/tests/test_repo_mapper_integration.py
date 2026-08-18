@@ -7,9 +7,9 @@ Author: Cervella Tester
 Date: 2026-02-10
 """
 
-import pytest
 from unittest.mock import Mock, patch
 
+import pytest
 from cervellaswarm_code_intelligence.repo_mapper import RepoMapper, generate_repo_map
 from cervellaswarm_code_intelligence.symbol_types import Symbol
 

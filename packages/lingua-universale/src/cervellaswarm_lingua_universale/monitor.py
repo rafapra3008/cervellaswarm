@@ -20,19 +20,16 @@ from __future__ import annotations
 
 import threading
 import warnings
+from collections.abc import Iterator, Mapping
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from types import MappingProxyType
 from typing import (
-    Iterator,
-    Mapping,
-    Optional,
     Protocol,
     runtime_checkable,
 )
 
 from .types import MessageKind
-
 
 # ============================================================
 # Event types (frozen dataclasses, immutable)
@@ -68,7 +65,7 @@ class MessageSent(MonitorEvent):
     receiver: str
     message_kind: MessageKind
     duration_ms: float  # time.monotonic() delta for the send() call
-    branch: Optional[str] = None
+    branch: str | None = None
 
 
 @dataclass(frozen=True)

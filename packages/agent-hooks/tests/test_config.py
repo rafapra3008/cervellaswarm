@@ -8,14 +8,13 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-
 from cervellaswarm_agent_hooks.config import (
     DEFAULTS,
+    _deep_merge,
     find_config_file,
     get_hook_config,
     load_config,
 )
-
 
 # ---------------------------------------------------------------------------
 # find_config_file
@@ -252,3 +251,59 @@ context_inject:
         ):
             config = get_hook_config("git_reminder")
         assert config["interval_minutes"] == 30
+
+
+# ---------------------------------------------------------------------------
+# load_config with config_path parameter (S509 alignment)
+# ---------------------------------------------------------------------------
+
+
+class TestLoadConfigPath:
+    def test_explicit_path(self, tmp_path):
+        cfg = tmp_path / "hooks.yaml"
+        cfg.write_text("git_reminder:\n  interval_minutes: 60\n", encoding="utf-8")
+        config = load_config(config_path=cfg)
+        assert config["git_reminder"]["interval_minutes"] == 60
+        # Defaults preserved
+        assert "file_limits" in config
+
+    def test_explicit_path_invalid_yaml(self, tmp_path):
+        cfg = tmp_path / "bad.yaml"
+        cfg.write_text("{{{bad yaml{", encoding="utf-8")
+        config = load_config(config_path=cfg)
+        assert config == DEFAULTS
+
+    def test_explicit_path_none_uses_discovery(self):
+        with patch("cervellaswarm_agent_hooks.config.find_config_file", return_value=None):
+            config = load_config(config_path=None)
+        assert config == DEFAULTS
+
+
+# ---------------------------------------------------------------------------
+# _deep_merge (S509 alignment)
+# ---------------------------------------------------------------------------
+
+
+class TestDeepMerge:
+    def test_simple_merge(self):
+        result = _deep_merge({"a": 1, "b": 2}, {"b": 3, "c": 4})
+        assert result == {"a": 1, "b": 3, "c": 4}
+
+    def test_nested_merge(self):
+        base = {"section": {"a": 1, "b": 2}}
+        override = {"section": {"b": 3, "c": 4}}
+        result = _deep_merge(base, override)
+        assert result == {"section": {"a": 1, "b": 3, "c": 4}}
+
+    def test_does_not_mutate_base(self):
+        base = {"section": {"a": 1}}
+        _deep_merge(base, {"section": {"b": 2}})
+        assert base == {"section": {"a": 1}}
+
+    def test_empty_override(self):
+        result = _deep_merge({"a": 1}, {})
+        assert result == {"a": 1}
+
+    def test_override_non_dict_with_dict(self):
+        result = _deep_merge({"key": "string"}, {"key": {"nested": True}})
+        assert result == {"key": {"nested": True}}

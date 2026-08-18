@@ -15,7 +15,6 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-
 from cervellaswarm_session_memory.secret_auditor import (
     AuditResult,
     Finding,
@@ -132,6 +131,55 @@ def test_audit_file_openai_key(clean_dir):
     result = audit_file(f)
     assert result.critical_count >= 1
     assert any("OpenAI" in x.pattern_name or "Anthropic" in x.pattern_name for x in result.findings)
+
+
+def test_audit_file_real_secret_with_marker_same_line(clean_dir):
+    """S526 regression: a real secret must be flagged even when a placeholder
+    marker (trailing '# example') appears elsewhere on the SAME line.
+
+    Before the fix, is_sanitized() skipped the whole line if any marker was
+    present anywhere, letting a real secret evade detection.
+    """
+    f = clean_dir / "state.md"
+    f.write_text("api_key=sk-abcdefghijklmnopqrstu  # example\n", encoding="utf-8")
+    result = audit_file(f)
+    assert result.critical_count >= 1, "real sk- secret must be flagged despite trailing 'example'"
+
+
+def test_audit_file_placeholder_inside_value_still_skipped(clean_dir):
+    """S526: a placeholder whose marker is INSIDE the matched value stays skipped."""
+    f = clean_dir / "state.md"
+    f.write_text("api_key=sk-xxxxxxxxxxxxxxxxxxxxx\n", encoding="utf-8")
+    result = audit_file(f)
+    assert result.critical_count == 0, "placeholder value (sk-xxxx) must NOT be flagged"
+
+
+def test_audit_file_multiple_secrets_same_line(clean_dir):
+    """S528: two secrets of the SAME pattern on one line are BOTH flagged.
+
+    Before the finditer fix, re.search returned only the first match, so a
+    second secret on the same line evaded detection.
+    """
+    f = clean_dir / "state.md"
+    # two distinct OpenAI-style keys on a single line (a/b filler, no 'xxx' marker)
+    f.write_text(
+        "keys: sk-aaaaaaaaaaaaaaaaaaaaa sk-bbbbbbbbbbbbbbbbbbbbb\n",
+        encoding="utf-8",
+    )
+    result = audit_file(f)
+    assert result.critical_count == 2, "both sk- secrets on the same line must be flagged"
+
+
+def test_audit_file_multiple_secrets_one_sanitized(clean_dir):
+    """S528: with two same-pattern matches on a line, the real one is flagged
+    and the placeholder one (sk-xxxx) is skipped — independently per match."""
+    f = clean_dir / "state.md"
+    f.write_text(
+        "keys: sk-xxxxxxxxxxxxxxxxxxxxx sk-realkey0000000000000\n",
+        encoding="utf-8",
+    )
+    result = audit_file(f)
+    assert result.critical_count == 1, "only the real sk- secret is flagged, placeholder skipped"
 
 
 def test_audit_file_github_token(clean_dir):

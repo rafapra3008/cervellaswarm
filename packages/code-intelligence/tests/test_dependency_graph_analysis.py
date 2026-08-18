@@ -13,7 +13,6 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-
 from cervellaswarm_code_intelligence.dependency_graph import DependencyGraph, build_dependency_graph
 from cervellaswarm_code_intelligence.symbol_types import Symbol
 

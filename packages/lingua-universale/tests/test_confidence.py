@@ -4,15 +4,13 @@
 """Tests for confidence.py - Confident[T] and ConfidenceScore."""
 
 import pytest
-
 from cervellaswarm_lingua_universale.confidence import (
     CompositionStrategy,
-    Confident,
     ConfidenceScore,
     ConfidenceSource,
+    Confident,
     compose_scores,
 )
-
 
 # ── ConfidenceSource ─────────────────────────────────────────────────────────
 

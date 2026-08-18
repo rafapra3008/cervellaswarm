@@ -4,18 +4,16 @@
 """Tests for trust.py - TrustScore and trust chain composition."""
 
 import pytest
-
 from cervellaswarm_lingua_universale.confidence import ConfidenceScore, ConfidenceSource
 from cervellaswarm_lingua_universale.trust import (
-    TrustTier,
-    TrustScore,
-    trust_tier_for_role,
-    compose_chain,
-    chain_confidence,
     _TIER_VALUES,
+    TrustScore,
+    TrustTier,
+    chain_confidence,
+    compose_chain,
+    trust_tier_for_role,
 )
 from cervellaswarm_lingua_universale.types import AgentRole
-
 
 # ── TrustTier ─────────────────────────────────────────────────────────────────
 

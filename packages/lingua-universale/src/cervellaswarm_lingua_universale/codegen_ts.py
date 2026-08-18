@@ -23,8 +23,9 @@ Sprint 3 of PLAN_LU_GENERATE.md.
 from __future__ import annotations
 
 import re
+from collections.abc import Sequence
 from datetime import datetime, timezone
-from typing import TYPE_CHECKING, Optional, Sequence
+from typing import TYPE_CHECKING
 
 from ._codegen_common import collect_all_steps as _collect_all_steps
 from ._codegen_common import used_message_kinds as _used_message_kinds
@@ -129,16 +130,16 @@ def _kind_to_literal(kind: MessageKind) -> str:
 
 def _collect_role_steps(
     protocol: Protocol,
-) -> dict[str, list[tuple[ProtocolStep, Optional[str]]]]:
+) -> dict[str, list[tuple[ProtocolStep, str | None]]]:
     """Collect all steps where each role is the SENDER.
 
     Returns a dict mapping role -> list of (step, branch_name).
     """
-    role_steps: dict[str, list[tuple[ProtocolStep, Optional[str]]]] = {
+    role_steps: dict[str, list[tuple[ProtocolStep, str | None]]] = {
         r: [] for r in protocol.roles
     }
 
-    def _collect(elements: Sequence[ProtocolElement], branch: Optional[str]) -> None:
+    def _collect(elements: Sequence[ProtocolElement], branch: str | None) -> None:
         for elem in elements:
             if isinstance(elem, ProtocolStep):
                 role_steps[elem.sender].append((elem, branch))

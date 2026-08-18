@@ -8,11 +8,10 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-
 from cervellaswarm_event_store.config import (
     DEFAULTS,
     _deep_copy_defaults,
-    _merge_config,
+    _deep_merge,
     find_config_file,
     get_db_path,
     get_section,
@@ -121,24 +120,32 @@ class TestLoadConfig:
         assert cfg["db_path"] == DEFAULTS["db_path"]
 
 
-class TestMergeConfig:
+class TestDeepMerge:
     def test_overrides_simple_key(self):
-        merged = _merge_config({"db_path": "custom.db"})
+        merged = _deep_merge(DEFAULTS, {"db_path": "custom.db"})
         assert merged["db_path"] == "custom.db"
 
     def test_merges_nested_section(self):
-        merged = _merge_config({"pattern_detection": {"min_occurrences": 5}})
+        merged = _deep_merge(DEFAULTS, {"pattern_detection": {"min_occurrences": 5}})
         assert merged["pattern_detection"]["min_occurrences"] == 5
         assert merged["pattern_detection"]["similarity_threshold"] == 0.7
 
     def test_unknown_key_passthrough(self):
-        merged = _merge_config({"custom_key": "hello"})
+        merged = _deep_merge(DEFAULTS, {"custom_key": "hello"})
         assert merged["custom_key"] == "hello"
 
     def test_does_not_mutate_defaults(self):
         original_db = DEFAULTS["db_path"]
-        _merge_config({"db_path": "mutated.db"})
+        _deep_merge(DEFAULTS, {"db_path": "mutated.db"})
         assert DEFAULTS["db_path"] == original_db
+
+    def test_deep_nested_merge(self):
+        """Deep merge preserves nested keys that shallow would lose."""
+        merged = _deep_merge(
+            {"section": {"a": 1, "b": 2}},
+            {"section": {"b": 3, "c": 4}},
+        )
+        assert merged == {"section": {"a": 1, "b": 3, "c": 4}}
 
 
 class TestGetDbPath:

@@ -20,11 +20,9 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
-
 from cervellaswarm_spawn_workers.backend import is_alive_pid, kill_pid
 from cervellaswarm_spawn_workers.spawner import SpawnManager
 from cervellaswarm_spawn_workers.team_loader import load_team_string
-
 
 # ---------------------------------------------------------------------------
 # Helpers

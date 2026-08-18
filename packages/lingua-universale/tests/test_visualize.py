@@ -4,12 +4,11 @@
 from pathlib import Path
 
 import pytest
-
 from cervellaswarm_lingua_universale._visualize import (
     generate_mermaid,
     generate_mermaid_fenced,
-    visualize_source,
     visualize_file,
+    visualize_source,
 )
 
 EXAMPLES_DIR = Path(__file__).parent.parent / "examples"
@@ -27,8 +26,8 @@ STDLIB_DIR = (
 
 class TestGenerateMermaid:
     def test_hello_world(self):
-        from cervellaswarm_lingua_universale._parser import parse
         from cervellaswarm_lingua_universale._ast import ProtocolNode
+        from cervellaswarm_lingua_universale._parser import parse
 
         source = (EXAMPLES_DIR / "hello.lu").read_text(encoding="utf-8")
         program = parse(source)
@@ -42,8 +41,8 @@ class TestGenerateMermaid:
         assert "worker->>+regina:" in diagram
 
     def test_choice_branching(self):
-        from cervellaswarm_lingua_universale._parser import parse
         from cervellaswarm_lingua_universale._ast import ProtocolNode
+        from cervellaswarm_lingua_universale._parser import parse
 
         source = (STDLIB_DIR / "business" / "approval_workflow.lu").read_text(encoding="utf-8")
         program = parse(source)
@@ -55,8 +54,8 @@ class TestGenerateMermaid:
         assert "end" in diagram
 
     def test_fenced_wraps_in_backticks(self):
-        from cervellaswarm_lingua_universale._parser import parse
         from cervellaswarm_lingua_universale._ast import ProtocolNode
+        from cervellaswarm_lingua_universale._parser import parse
 
         source = (EXAMPLES_DIR / "hello.lu").read_text(encoding="utf-8")
         program = parse(source)

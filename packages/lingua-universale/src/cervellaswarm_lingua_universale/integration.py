@@ -45,15 +45,14 @@ Usage::
 
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from types import MappingProxyType
-from typing import Mapping, Optional, Sequence
 
 from .checker import SessionChecker
 from .monitor import ProtocolMonitor
 from .protocols import STANDARD_PROTOCOLS, Protocol
 from .types import AgentRole
-
 
 # ============================================================
 # Agent metadata
@@ -214,7 +213,7 @@ _NAME_TO_AGENT: Mapping[str, AgentInfo] = MappingProxyType(
 )
 
 
-def agent_by_name(name: str) -> Optional[AgentInfo]:
+def agent_by_name(name: str) -> AgentInfo | None:
     """Look up an agent by its real name (e.g., "cervella-backend").
 
     Returns None if the name is not in the catalog.
@@ -222,7 +221,7 @@ def agent_by_name(name: str) -> Optional[AgentInfo]:
     return _NAME_TO_AGENT.get(name)
 
 
-def agent_by_role(role: AgentRole) -> Optional[AgentInfo]:
+def agent_by_role(role: AgentRole) -> AgentInfo | None:
     """Look up an agent by its AgentRole enum value.
 
     Returns None if the role is not in the catalog.
@@ -237,7 +236,7 @@ def agent_by_role(role: AgentRole) -> Optional[AgentInfo]:
 
 def agents_for_protocol(
     protocol: Protocol,
-    catalog: Optional[Mapping[AgentRole, AgentInfo]] = None,
+    catalog: Mapping[AgentRole, AgentInfo] | None = None,
 ) -> dict[str, list[AgentInfo]]:
     """Find which real agents can fill each role in a protocol.
 
@@ -266,10 +265,10 @@ def agents_for_protocol(
 
 def create_session(
     protocol: Protocol,
-    bindings: Optional[dict[str, str]] = None,
+    bindings: dict[str, str] | None = None,
     session_id: str = "",
-    monitor: Optional[ProtocolMonitor] = None,
-    catalog: Optional[Mapping[AgentRole, AgentInfo]] = None,
+    monitor: ProtocolMonitor | None = None,
+    catalog: Mapping[AgentRole, AgentInfo] | None = None,
 ) -> SessionChecker:
     """Create a SessionChecker with real agent name bindings.
 
@@ -361,8 +360,8 @@ class SwarmValidationResult:
 
 
 def validate_swarm(
-    protocols: Optional[Sequence[Protocol]] = None,
-    available_agents: Optional[Sequence[AgentRole]] = None,
+    protocols: Sequence[Protocol] | None = None,
+    available_agents: Sequence[AgentRole] | None = None,
 ) -> SwarmValidationResult:
     """Validate that the swarm has agents for all protocol roles.
 
@@ -429,8 +428,8 @@ def validate_swarm(
 
 def resolve_bindings(
     protocol: Protocol,
-    preferences: Optional[dict[str, str]] = None,
-    catalog: Optional[Mapping[AgentRole, AgentInfo]] = None,
+    preferences: dict[str, str] | None = None,
+    catalog: Mapping[AgentRole, AgentInfo] | None = None,
 ) -> dict[str, str]:
     """Auto-resolve protocol roles to agent names.
 

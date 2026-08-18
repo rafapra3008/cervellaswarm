@@ -4,18 +4,16 @@
 """Tests for cervellaswarm_event_store.observability module."""
 
 import pytest
-
 from cervellaswarm_event_store.database import EventStore
 from cervellaswarm_event_store.observability import (
+    _DEFAULT_PRICING,
+    _MODEL_PRICING,
     TokenUsage,
     UsageSummary,
-    estimate_cost,
     _insert_token_usage,
     _query_usage,
-    _MODEL_PRICING,
-    _DEFAULT_PRICING,
+    estimate_cost,
 )
-
 
 # ------------------------------------------------------------------
 # estimate_cost
@@ -66,6 +64,13 @@ class TestEstimateCost:
     def test_unknown_model_uses_default(self):
         cost = estimate_cost("unknown-model-xyz", 1_000_000, 0)
         assert cost == _DEFAULT_PRICING["input"]
+
+    def test_opus_4_7_and_4_8_use_opus_pricing(self):
+        # Regression (S526): opus-4-7/4-8 were MISSING from _MODEL_PRICING and
+        # silently fell back to Sonnet ($3), under-reporting Opus cost ~40%.
+        for model in ("claude-opus-4-7", "claude-opus-4-8", "claude-opus-4-8[1m]"):
+            cost = estimate_cost(model, 1_000_000, 0)
+            assert cost == 5.0, f"{model} must use Opus $5/MTok input, got {cost}"
 
     def test_haiku_pricing(self):
         # 1M input at $1/MTok = $1.00
@@ -252,7 +257,7 @@ class TestTokenUsageDatabase:
         assert opus_summary.total_output_tokens == 1000
 
     def test_filter_by_days(self, store):
-        from datetime import datetime, timezone, timedelta
+        from datetime import datetime, timedelta, timezone
 
         old_ts = (datetime.now(timezone.utc) - timedelta(days=10)).isoformat()
         recent_ts = datetime.now(timezone.utc).isoformat()

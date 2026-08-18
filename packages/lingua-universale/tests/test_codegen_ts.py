@@ -15,7 +15,7 @@ import textwrap
 from pathlib import Path
 
 import pytest
-
+from cervellaswarm_lingua_universale._generate import generate_from_source
 from cervellaswarm_lingua_universale.codegen_ts import (
     TypeScriptGenerator,
     _kind_to_interface_name,
@@ -23,7 +23,6 @@ from cervellaswarm_lingua_universale.codegen_ts import (
     _to_camel_case,
     _to_pascal_case,
 )
-from cervellaswarm_lingua_universale._generate import generate_from_source
 from cervellaswarm_lingua_universale.types import MessageKind
 
 # ---------------------------------------------------------------------------

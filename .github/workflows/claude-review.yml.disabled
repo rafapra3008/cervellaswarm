@@ -1,6 +1,23 @@
 # CervellaSwarm - Automated Claude Code Review
 # Version: 1.1.0
 #
+# === DISABLED S519 D6 (CEO decision Opzione D) ===
+# Motivo: ridondante con review manuale Cervella + Guardiana Qualita + Guardiana Ops.
+# Costava Anthropic API tokens ($ inutile, gia paghiamo Max 20x).
+# 11 layer safety net attivi senza questo workflow (vedi MAPPA_VIVA + PATTERN_LIBRARY).
+#
+# Recovery se necessario:
+#   1. Mv this file back to claude-review.yml
+#   2. Re-add 'review' to required_status_checks in Branch Protection:
+#      gh api repos/.../branches/main/protection/required_status_checks \
+#        -X PATCH -F strict=true --field contexts[]=review
+#   3. Considera prima migration a OAuth (gating Day 30 Ops verdict)
+#
+# Tag rollback: pre-disable-claude-review (HEAD pre-disable)
+# Decision log: .sncp/SESSION_LOG.md entry S519 D6
+#
+# === ORIGINAL ===
+#
 # Uses Claude for automated PR review.
 # Triggered on: PR open, sync, or @claude mention
 

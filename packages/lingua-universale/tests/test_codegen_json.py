@@ -21,7 +21,6 @@ import textwrap
 from pathlib import Path
 
 import pytest
-
 from cervellaswarm_lingua_universale._generate import generate_from_source
 from cervellaswarm_lingua_universale.codegen_json import (
     JSONSchemaGenerator,

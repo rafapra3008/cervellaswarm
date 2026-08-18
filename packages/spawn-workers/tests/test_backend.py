@@ -8,7 +8,6 @@ from pathlib import Path
 from unittest.mock import MagicMock, call, patch
 
 import pytest
-
 from cervellaswarm_spawn_workers.backend import (
     ProcessInfo,
     detect_backend,
@@ -20,7 +19,6 @@ from cervellaswarm_spawn_workers.backend import (
     launch_tmux,
     list_tmux_sessions,
 )
-
 
 # ---------------------------------------------------------------------------
 # detect_backend

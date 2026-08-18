@@ -5,9 +5,9 @@
 
 import os
 import stat
+from pathlib import Path
 
 import pytest
-
 from cervellaswarm_quality_gates.hooks import (
     HookReport,
     HookStatus,
@@ -17,7 +17,6 @@ from cervellaswarm_quality_gates.hooks import (
     validate_hook,
     validate_hooks,
 )
-from pathlib import Path
 
 
 class TestHookStatus:

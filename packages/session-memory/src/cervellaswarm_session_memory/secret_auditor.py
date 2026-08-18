@@ -158,14 +158,18 @@ def audit_file(
     ]
 
     for line_num, line in enumerate(lines, 1):
-        if is_sanitized(line):
-            continue
         for severity, pattern, name in all_patterns:
-            if re.search(pattern, line):
-                findings.append(Finding(
-                    severity=severity, pattern_name=name,
-                    file=str(file_path), line_number=line_num,
-                ))
+            # S528: finditer (not search) to catch MULTIPLE secrets of the
+            # same pattern on one line (e.g. two API keys listed together).
+            for match in re.finditer(pattern, line):
+                # S526: check sanitized on the MATCHED span, not the whole line.
+                # A real secret coexisting with a placeholder marker elsewhere
+                # on the line (e.g. a trailing "# example") must NOT be skipped.
+                if not is_sanitized(match.group()):
+                    findings.append(Finding(
+                        severity=severity, pattern_name=name,
+                        file=str(file_path), line_number=line_num,
+                    ))
 
     critical = sum(1 for f in findings if f.severity == Severity.CRITICAL)
     high = sum(1 for f in findings if f.severity == Severity.HIGH)

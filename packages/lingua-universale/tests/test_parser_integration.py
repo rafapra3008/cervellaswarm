@@ -27,8 +27,6 @@ from __future__ import annotations
 import textwrap
 
 import pytest
-
-from cervellaswarm_lingua_universale._parser import ParseError, parse
 from cervellaswarm_lingua_universale._ast import (
     AgentNode,
     AllParticipate,
@@ -57,7 +55,7 @@ from cervellaswarm_lingua_universale._ast import (
     UseNode,
     VariantTypeDecl,
 )
-
+from cervellaswarm_lingua_universale._parser import ParseError, parse
 
 # ===========================================================================
 # 1. TestExample1DelegateTask

@@ -30,7 +30,7 @@ a deterministic complexity score. Same input always produces the same routing de
 pip install cervellaswarm-task-orchestration
 ```
 
-**Requirements:** Python 3.10+ | **Dependencies:** None (zero external deps!)
+**Requirements:** Python 3.11+ | **Dependencies:** None (zero external deps!)
 
 ## Quick Start
 

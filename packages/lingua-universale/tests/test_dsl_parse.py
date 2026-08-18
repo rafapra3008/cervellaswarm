@@ -4,17 +4,16 @@
 """Tests for DSL parser: valid parsing, tokenizer, and error cases."""
 
 import pytest
-
 from cervellaswarm_lingua_universale.dsl import (
+    _KIND_TO_NAME,
+    _NAME_TO_KIND,
     DSLError,
     DSLParseError,
-    parse_protocol,
-    parse_protocols,
-    _tokenize,
     _message_kind_from_name,
     _message_kind_to_name,
-    _NAME_TO_KIND,
-    _KIND_TO_NAME,
+    _tokenize,
+    parse_protocol,
+    parse_protocols,
 )
 from cervellaswarm_lingua_universale.protocols import (
     Protocol,
@@ -22,7 +21,6 @@ from cervellaswarm_lingua_universale.protocols import (
     ProtocolStep,
 )
 from cervellaswarm_lingua_universale.types import MessageKind
-
 
 # ============================================================
 # DSL sources for testing

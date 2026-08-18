@@ -18,7 +18,7 @@ import {
   getSubscriptionInfo,
   updateSubscriptionData,
   needsSync
-} from '../config/manager.js';
+} from '../config/index.js';
 
 // Tier limits for display
 const TIER_LIMITS = {

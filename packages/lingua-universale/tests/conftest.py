@@ -1,7 +1,6 @@
 """Shared fixtures for cervellaswarm-lingua-universale tests."""
 
 import pytest
-
 from cervellaswarm_lingua_universale.types import (
     AuditRequest,
     AuditVerdict,
@@ -16,7 +15,6 @@ from cervellaswarm_lingua_universale.types import (
     TaskResult,
     TaskStatus,
 )
-
 
 # ── TaskRequest fixtures ────────────────────────────────────────────────────
 

@@ -136,7 +136,7 @@ def _get_example_config() -> str:
         # Try to read from package
         example = (pkg_files / ".." / ".." / "examples" / "hooks.yaml").read_text()
         return example
-    except Exception as e:
+    except (OSError, ValueError, KeyError) as e:
         print(f"cli: failed to load example hooks.yaml: {e}", file=sys.stderr)
 
     # Fallback: minimal config

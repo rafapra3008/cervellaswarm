@@ -15,14 +15,12 @@ NOTE: No __init__.py in this directory (Package Shadowing Fix).
 """
 
 import pytest
-
 from cervellaswarm_lingua_universale._tokenizer import (
     Tok,
-    TokKind,
     TokenizeError,
+    TokKind,
     tokenize,
 )
-
 
 # ---------------------------------------------------------------------------
 # Helper utilities

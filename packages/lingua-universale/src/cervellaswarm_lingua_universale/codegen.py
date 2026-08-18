@@ -30,14 +30,13 @@ from __future__ import annotations
 
 import keyword
 import re
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from typing import Optional, Sequence
 
 from ._codegen_common import collect_all_steps, used_message_kinds
 from .protocols import Protocol, ProtocolChoice, ProtocolElement, ProtocolStep
 from .types import MessageKind
-
 
 # ============================================================
 # Result types (frozen dataclasses)
@@ -146,18 +145,18 @@ def _to_method_name(kind: MessageKind) -> str:
 
 def _collect_role_steps(
     protocol: Protocol,
-) -> dict[str, list[tuple[ProtocolStep, Optional[str]]]]:
+) -> dict[str, list[tuple[ProtocolStep, str | None]]]:
     """Collect all steps where each role is the SENDER.
 
     Returns a dict mapping role -> list of (step, branch_name).
     branch_name is None for flat steps, or the branch name for choice steps.
     Recursively handles nested ProtocolChoice elements.
     """
-    role_steps: dict[str, list[tuple[ProtocolStep, Optional[str]]]] = {
+    role_steps: dict[str, list[tuple[ProtocolStep, str | None]]] = {
         r: [] for r in protocol.roles
     }
 
-    def _collect(elements: Sequence[ProtocolElement], branch: Optional[str]) -> None:
+    def _collect(elements: Sequence[ProtocolElement], branch: str | None) -> None:
         for elem in elements:
             if isinstance(elem, ProtocolStep):
                 role_steps[elem.sender].append((elem, branch))
@@ -350,7 +349,7 @@ class PythonGenerator:
 
             # Deduplicate methods (same message_kind + receiver)
             seen_methods: set[str] = set()
-            for step, branch_name in steps:
+            for step, _branch_name in steps:
                 method_name = _to_method_name(step.message_kind)
                 method_key = f"{method_name}_{step.receiver}"
 
@@ -594,7 +593,7 @@ def _generate_multi_role_class(
     ]
 
     seen_methods: set[str] = set()
-    for step, branch_name in steps:
+    for step, _branch_name in steps:
         method_name = _to_method_name(step.message_kind)
         method_key = f"{method_name}_{step.receiver}"
         if method_key in seen_methods:

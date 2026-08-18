@@ -4,7 +4,6 @@
 """Tests for cervellaswarm_agent_templates.validator module."""
 
 import pytest
-
 from cervellaswarm_agent_templates.validator import (
     ValidationIssue,
     ValidationResult,

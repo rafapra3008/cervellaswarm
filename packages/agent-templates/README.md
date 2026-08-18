@@ -225,7 +225,7 @@ print(result.issues)  # []
 
 ## Requirements
 
-- Python 3.10+
+- Python 3.11+
 - pyyaml >= 6.0
 
 ## License

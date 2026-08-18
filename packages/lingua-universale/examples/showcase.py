@@ -67,49 +67,48 @@ def check(label: str, status: str = "OK") -> None:
 # ---------------------------------------------------------------------------
 
 from cervellaswarm_lingua_universale import (
-    # Intent
-    parse_intent_protocol,
-    # DSL
-    render_protocol,
-    # Spec
-    parse_spec,
-    check_properties,
-    check_session,
-    PropertyVerdict,
-    # Lean 4 Bridge
-    generate_lean4,
-    lean4_available,
-    # Code Generation
-    generate_python,
-    # Checker + Monitor
-    SessionChecker,
-    ProtocolMonitor,
-    EventCollector,
-    # Types: message enums
-    TaskStatus,
-    AuditVerdictType,
     AgentRole,
-    # Types: message classes
-    TaskRequest,
-    TaskResult,
     AuditRequest,
     AuditVerdict,
-    # Errors
-    humanize,
-    format_error,
+    AuditVerdictType,
+    CompositionStrategy,
     # Confidence
     ConfidenceScore,
     ConfidenceSource,
     Confident,
-    CompositionStrategy,
-    compose_scores,
+    EventCollector,
+    PropertyVerdict,
+    ProtocolMonitor,
+    # Checker + Monitor
+    SessionChecker,
+    # Types: message classes
+    TaskRequest,
+    TaskResult,
+    # Types: message enums
+    TaskStatus,
     # Trust
     TrustScore,
     TrustTier,
-    trust_tier_for_role,
+    check_properties,
+    check_session,
     compose_chain,
+    compose_scores,
+    format_error,
+    # Lean 4 Bridge
+    generate_lean4,
+    # Code Generation
+    generate_python,
+    # Errors
+    humanize,
+    lean4_available,
+    # Intent
+    parse_intent_protocol,
+    # Spec
+    parse_spec,
+    # DSL
+    render_protocol,
+    trust_tier_for_role,
 )
-
 
 # ---------------------------------------------------------------------------
 # SECTION 1 - Intent (Natural Language -> Protocol)

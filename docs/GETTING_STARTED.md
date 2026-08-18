@@ -11,7 +11,7 @@ This guide will get you from zero to working with your AI team.
 Before starting, make sure you have:
 
 - [ ] macOS or Linux (Windows WSL works too)
-- [ ] Python 3.10+ installed
+- [ ] Python 3.11+ installed
 - [ ] [Claude Code CLI](https://claude.ai/code) installed
 - [ ] Anthropic API key (for MCP server) or Claude Pro subscription
 - [ ] Git installed

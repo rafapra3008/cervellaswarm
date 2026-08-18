@@ -20,13 +20,12 @@ Date: 2026-02-10
 Sprint: S346 - FASE 6 Unit Tests
 """
 
-import pytest
 from pathlib import Path
 from typing import List
-from unittest.mock import Mock, MagicMock, patch, call
+from unittest.mock import MagicMock, Mock, call, patch
 
+import pytest
 from cervellaswarm_code_intelligence.semantic_search import SemanticSearch, find_symbol_in_repo
-
 
 # === Fixtures ===
 

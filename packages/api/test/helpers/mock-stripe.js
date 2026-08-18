@@ -62,6 +62,32 @@ export class MockStripe {
     this.subscriptions = new MockSubscriptions();
     this.paymentLinks = new MockPaymentLinks();
     this.webhooks = new MockWebhooks();
+    this.billingPortal = new MockBillingPortal();
+  }
+}
+
+class MockBillingPortal {
+  constructor() {
+    this.sessions = new MockPortalSessions();
+  }
+}
+
+class MockPortalSessions {
+  async create(params) {
+    if (!params.customer) {
+      throw new Error('customer is required');
+    }
+    if (params.customer === 'cus_nonexistent') {
+      const err = new Error('No such customer: \'cus_nonexistent\'');
+      err.type = 'StripeInvalidRequestError';
+      throw err;
+    }
+    return {
+      id: `bps_${Date.now()}`,
+      url: `https://billing.stripe.com/p/session/test_${Date.now()}`,
+      customer: params.customer,
+      return_url: params.return_url || null,
+    };
   }
 }
 
@@ -163,6 +189,17 @@ export const mockDb = {
 
   async getSubscription(customerId) {
     return this.subscriptions.get(customerId) || null;
+  },
+
+  async getSubscriptionByEmail(email) {
+    const matches = [];
+    for (const sub of this.subscriptions.values()) {
+      if (sub.email && sub.email.toLowerCase() === email.toLowerCase()) {
+        matches.push(sub);
+      }
+    }
+    matches.sort((a, b) => b.updatedAt - a.updatedAt);
+    return matches[0] || null;
   },
 
   reset() {

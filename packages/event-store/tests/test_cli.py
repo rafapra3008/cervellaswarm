@@ -7,17 +7,16 @@ import json
 import sys
 
 import pytest
-
 from cervellaswarm_event_store.cli import (
+    _get_version,
     main,
     main_init,
+    main_lessons,
     main_log,
+    main_patterns,
     main_query,
     main_stats,
-    main_lessons,
-    main_patterns,
     main_usage,
-    _get_version,
 )
 from cervellaswarm_event_store.writer import Event, Lesson
 

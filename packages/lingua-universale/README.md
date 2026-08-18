@@ -2,7 +2,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/cervellaswarm-lingua-universale.svg)](https://pypi.org/project/cervellaswarm-lingua-universale/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org)
+[![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org)
 [![Tests](https://img.shields.io/badge/tests-3979%20passed-brightgreen.svg)](tests/)
 [![Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen.svg)](tests/)
 [![VS Code](https://img.shields.io/visual-studio-marketplace/v/cervellaswarm.lingua-universale?label=VS%20Code&color=blueviolet)](https://marketplace.visualstudio.com/items?itemName=cervellaswarm.lingua-universale)
@@ -250,7 +250,7 @@ Each step has editable, runnable code. No install required.
 - **37 modules**, 150+ public API symbols
 - **3979 tests**, 95% coverage, runs in ~2 seconds
 - **Zero dependencies** -- pure Python standard library
-- **Python 3.10+** including 3.13 free-threaded (thread-safe internals)
+- **Python 3.11+** including 3.13 free-threaded (thread-safe internals)
 - **Grammar**: 64 production rules, GBNF + Lark export for constrained decoding
 - **Errors**: 74 error codes in 3 languages (English, Italian, Portuguese)
 

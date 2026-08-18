@@ -54,9 +54,9 @@ def _source_diagnostics(source: str) -> list:
     """
     from lsprotocol import types
 
-    from ._parser import parse, ParseError
+    from ._parser import ParseError, parse
     from ._tokenizer import TokenizeError
-    from .errors import humanize, ErrorSeverity
+    from .errors import ErrorSeverity, humanize
 
     diagnostics: list[types.Diagnostic] = []
     program = None  # keep parsed AST for lint (avoid double parse)
@@ -125,7 +125,7 @@ def _source_diagnostics(source: str) -> list:
     # If parse succeeded, run lint on the already-parsed AST (no double parse)
     if not diagnostics and program is not None:
         try:
-            from ._lint import lint_program, LintSeverity
+            from ._lint import LintSeverity, lint_program
 
             findings = lint_program(program)
             for f in findings:
@@ -172,7 +172,7 @@ class SymbolEntry:
 
 def _type_expr_str(te) -> str:
     """Convert a TypeExpr AST node to a human-readable string."""
-    from ._ast import SimpleType, GenericType
+    from ._ast import GenericType, SimpleType
 
     if isinstance(te, SimpleType):
         return te.name + ("?" if te.optional else "")
@@ -294,7 +294,7 @@ def _symbol_from_agent(decl, loc: tuple[int, int]) -> dict[str, SymbolEntry]:
 
 def _symbol_from_protocol(decl, loc: tuple[int, int]) -> dict[str, SymbolEntry]:
     """Build symbol entries for a ProtocolNode (protocol + roles)."""
-    from ._ast import AlwaysTerminates, NoDeadlock, AllParticipate
+    from ._ast import AllParticipate, AlwaysTerminates, NoDeadlock
 
     entries: dict[str, SymbolEntry] = {}
     roles_str = ", ".join(decl.roles)
@@ -333,9 +333,9 @@ def build_symbol_table(source: str) -> dict[str, SymbolEntry]:
     Returns an empty dict if the source has parse errors.
     This is a pure function, separated from the server for testability.
     """
-    from ._parser import parse, ParseError
+    from ._ast import AgentNode, ProtocolNode, RecordTypeDecl, UseNode, VariantTypeDecl
+    from ._parser import ParseError, parse
     from ._tokenizer import TokenizeError
-    from ._ast import VariantTypeDecl, RecordTypeDecl, AgentNode, ProtocolNode, UseNode
 
     try:
         program = parse(source)

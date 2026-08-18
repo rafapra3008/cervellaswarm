@@ -5,6 +5,28 @@ from __future__ import annotations
 
 import json
 
+import pytest
+
+# --- S622: DIPENDENZA ASSENTE = SKIP, NON FALLIMENTO ---------------------------------------
+# Questi test fallivano con `ModuleNotFoundError: No module named 'lu_mcp_server'` -- cioe' perche' il pacchetto `lu-mcp-server` non
+# e' installato in questo ambiente, NON perche' il codice sia rotto. Sono due cose diverse:
+# "non l'ho verificato qui" e "e' guasto". Chiamarle uguali produce un FALSO ROSSO, che e' lo
+# specchio del falso verde: 34 rossi permanenti su 11.168 test insegnano a non leggere piu' la
+# suite -- e allora una regressione VERA passa inosservata nel rumore.
+# SKIP con la ragione scritta: chi legge "N skipped" sa QUALI dimensioni non sono state
+# verificate, e puo' installare la dipendenza se gli interessa. Stessa disciplina dello stato
+# SKIP introdotto oggi in swarm-doctor.
+# NB (S622): `pytestmark` e NON `importorskip` a livello di modulo. `importorskip` INTERROMPE
+# la collezione: i 25 test spariscono dal conteggio e restano come UNA riga "1 skipped" -- cioe'
+# nasconde quante dimensioni non sono state verificate, che e' una versione mite del problema
+# che questa guardia esiste per risolvere. Col marker restano collezionati e contati a uno a uno.
+import importlib.util
+
+pytestmark = pytest.mark.skipif(
+    importlib.util.find_spec("lu_mcp_server") is None,
+    reason="pacchetto lu-mcp-server non installato in questo ambiente",
+)
+
 
 def test_import():
     """Module imports without error."""
@@ -47,6 +69,7 @@ def test_steps_to_list_empty():
 def test_tool_lu_load_protocol():
     """lu_load_protocol parses a simple protocol."""
     import asyncio
+
     from lu_mcp_server import lu_load_protocol
 
     protocol = (
@@ -66,6 +89,7 @@ def test_tool_lu_load_protocol():
 def test_tool_lu_check_properties():
     """lu_check_properties verifies safety properties."""
     import asyncio
+
     from lu_mcp_server import lu_check_properties
 
     protocol = (
@@ -85,6 +109,7 @@ def test_tool_lu_check_properties():
 def test_tool_lu_list_templates():
     """lu_list_templates returns standard library templates."""
     import asyncio
+
     from lu_mcp_server import lu_list_templates
 
     result = json.loads(asyncio.run(lu_list_templates()))
@@ -95,6 +120,7 @@ def test_tool_lu_list_templates():
 def test_tool_lu_list_templates_filtered():
     """lu_list_templates filters by category."""
     import asyncio
+
     from lu_mcp_server import lu_list_templates
 
     result = json.loads(asyncio.run(lu_list_templates(category="security")))
@@ -106,6 +132,7 @@ def test_tool_lu_list_templates_filtered():
 def test_tool_lu_verify_message_valid():
     """lu_verify_message accepts a valid first message."""
     import asyncio
+
     from lu_mcp_server import lu_verify_message
 
     protocol = (
@@ -128,6 +155,7 @@ def test_tool_lu_verify_message_valid():
 def test_tool_lu_verify_message_invalid_action():
     """lu_verify_message returns error for unknown action."""
     import asyncio
+
     from lu_mcp_server import lu_verify_message
 
     protocol = (
@@ -150,6 +178,7 @@ def test_tool_lu_verify_message_invalid_action():
 def test_tool_lu_verify_message_no_protocol():
     """lu_verify_message returns error when no protocol found."""
     import asyncio
+
     from lu_mcp_server import lu_verify_message
 
     result = json.loads(asyncio.run(lu_verify_message(
@@ -163,6 +192,7 @@ def test_tool_lu_verify_message_no_protocol():
 def test_tool_lu_load_protocol_invalid():
     """lu_load_protocol returns error for invalid input."""
     import asyncio
+
     from lu_mcp_server import lu_load_protocol
 
     result = json.loads(asyncio.run(lu_load_protocol("not a protocol")))
@@ -172,6 +202,7 @@ def test_tool_lu_load_protocol_invalid():
 def test_tool_lu_verify_message_none_in_history():
     """lu_verify_message handles None in messages list."""
     import asyncio
+
     from lu_mcp_server import lu_verify_message
 
     protocol = "protocol P:\n    roles: a, b\n    a asks b to ping\n"
@@ -187,7 +218,8 @@ def test_tool_lu_verify_message_none_in_history():
 def test_tool_lu_load_protocol_size_limit():
     """lu_load_protocol rejects oversized input."""
     import asyncio
-    from lu_mcp_server import lu_load_protocol, MAX_PROTOCOL_SIZE
+
+    from lu_mcp_server import MAX_PROTOCOL_SIZE, lu_load_protocol
 
     huge = "x" * (MAX_PROTOCOL_SIZE + 1)
     result = json.loads(asyncio.run(lu_load_protocol(huge)))
@@ -198,7 +230,8 @@ def test_tool_lu_load_protocol_size_limit():
 def test_tool_lu_verify_message_history_limit():
     """lu_verify_message rejects oversized history."""
     import asyncio
-    from lu_mcp_server import lu_verify_message, MAX_HISTORY_LENGTH
+
+    from lu_mcp_server import MAX_HISTORY_LENGTH, lu_verify_message
 
     protocol = "protocol P:\n    roles: a, b\n    a asks b to ping\n"
     messages = [{"sender": "a", "receiver": "b", "action": "asks"}] * (MAX_HISTORY_LENGTH + 1)
@@ -214,6 +247,7 @@ def test_tool_lu_verify_message_history_limit():
 def test_tool_lu_check_properties_invalid():
     """lu_check_properties returns error for invalid protocol."""
     import asyncio
+
     from lu_mcp_server import lu_check_properties
 
     result = json.loads(asyncio.run(lu_check_properties("not a protocol")))
@@ -223,7 +257,8 @@ def test_tool_lu_check_properties_invalid():
 def test_tool_lu_check_properties_size_limit():
     """lu_check_properties rejects oversized input."""
     import asyncio
-    from lu_mcp_server import lu_check_properties, MAX_PROTOCOL_SIZE
+
+    from lu_mcp_server import MAX_PROTOCOL_SIZE, lu_check_properties
 
     huge = "x" * (MAX_PROTOCOL_SIZE + 1)
     result = json.loads(asyncio.run(lu_check_properties(huge)))
@@ -234,6 +269,7 @@ def test_tool_lu_check_properties_size_limit():
 def test_tool_lu_verify_message_wrong_sender():
     """lu_verify_message detects wrong sender (ProtocolViolation)."""
     import asyncio
+
     from lu_mcp_server import lu_verify_message
 
     protocol = (
@@ -257,6 +293,7 @@ def test_tool_lu_verify_message_wrong_sender():
 def test_tool_lu_verify_message_session_complete():
     """lu_verify_message detects extra message after protocol completion."""
     import asyncio
+
     from lu_mcp_server import lu_verify_message
 
     protocol = (
@@ -282,6 +319,7 @@ def test_tool_lu_verify_message_session_complete():
 def test_tool_lu_load_protocol_choice():
     """lu_load_protocol handles protocol with choice node."""
     import asyncio
+
     from lu_mcp_server import lu_load_protocol
 
     protocol = (
@@ -304,6 +342,7 @@ def test_tool_lu_load_protocol_choice():
 def test_tool_lu_verify_message_action_not_string():
     """lu_verify_message handles non-string action gracefully."""
     import asyncio
+
     from lu_mcp_server import lu_verify_message
 
     protocol = "protocol P:\n    roles: a, b\n    a asks b to ping\n"
@@ -319,6 +358,7 @@ def test_tool_lu_verify_message_action_not_string():
 def test_tool_lu_verify_message_none_containers():
     """lu_verify_message handles None messages/next_message."""
     import asyncio
+
     from lu_mcp_server import lu_verify_message
 
     protocol = "protocol P:\n    roles: a, b\n    a asks b to ping\n"
@@ -343,6 +383,7 @@ def test_tool_lu_verify_message_none_containers():
 def test_tool_lu_list_templates_case_insensitive():
     """lu_list_templates category filter is case-insensitive."""
     import asyncio
+
     from lu_mcp_server import lu_list_templates
 
     lower = json.loads(asyncio.run(lu_list_templates(category="security")))

@@ -102,7 +102,7 @@ export async function spawnWorker(
 
   const systemPrompt = buildSystemPrompt(worker, context);
   const model = getDefaultModel();
-  const maxTokens = 4096;
+  const maxTokens = 8192;
   const timeout = getTimeout();
   const maxRetries = getMaxRetries();
 

@@ -13,10 +13,8 @@ from unittest.mock import patch
 
 import pytest
 import yaml
-
-from cervellaswarm_agent_hooks.config import load_config, DEFAULTS
 from cervellaswarm_agent_hooks.bash_validator import _load_extra_patterns
-
+from cervellaswarm_agent_hooks.config import DEFAULTS, load_config
 
 # ---------------------------------------------------------------------------
 # Fix 1: config.py - narrowed except clause

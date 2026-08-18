@@ -7,9 +7,7 @@ import json
 from io import StringIO
 
 import pytest
-
 from cervellaswarm_agent_hooks.bash_validator import main, validate
-
 
 # ---------------------------------------------------------------------------
 # VALIDATE (integration)

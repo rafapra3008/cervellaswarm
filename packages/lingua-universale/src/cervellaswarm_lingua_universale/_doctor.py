@@ -40,7 +40,7 @@ def _check_pypi_version(current: str) -> str | None:
         from urllib.request import urlopen
 
         url = "https://pypi.org/pypi/cervellaswarm-lingua-universale/json"
-        with urlopen(url, timeout=3) as resp:
+        with urlopen(url, timeout=3) as resp:  # nosec B310
             data = json.loads(resp.read())
             return data.get("info", {}).get("version")
     except Exception as e:
@@ -118,10 +118,10 @@ def run_doctor() -> int:
 
     # ── Python version ──────────────────────────────────────────
     py = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
-    if sys.version_info >= (3, 10):
+    if sys.version_info >= (3, 11):
         _ok("Python", py)
     else:
-        _err("Python", f"{py} -- requires 3.10+")
+        _err("Python", f"{py} -- requires 3.11+")
         issues += 1
 
     # ── LU core + version freshness ──────────────────────────────
@@ -133,8 +133,8 @@ def run_doctor() -> int:
 
     # ── Parser / compiler ───────────────────────────────────────
     try:
-        from ._parser import parse  # noqa: F401
         from ._compiler import ASTCompiler  # noqa: F401
+        from ._parser import parse  # noqa: F401
 
         _ok("Compiler pipeline", "parser + compiler")
     except ImportError as exc:

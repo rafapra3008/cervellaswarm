@@ -1,7 +1,7 @@
 # CI Workflow for cervellaswarm-lingua-universale
 #
 # Runs on push/PR when package files change.
-# Matrix: Python 3.10, 3.11, 3.12, 3.13
+# Matrix: Python 3.11, 3.12, 3.13
 # ZERO external dependencies - fastest CI of all packages.
 #
 # Quality is not negotiable.
@@ -9,11 +9,6 @@
 name: Lingua Universale CI
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'packages/lingua-universale/**'
-      - '.github/workflows/ci-lingua-universale.yml'
   pull_request:
     branches: [main]
     paths:
@@ -23,6 +18,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# S515: least privilege GITHUB_TOKEN scope (Ops verified P0)
+permissions:
+  contents: read
+
 jobs:
   lint-format:
     name: Lint & Format Check
@@ -31,10 +30,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
 
@@ -59,14 +58,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10", "3.11", "3.12", "3.13"]
+        python-version: ["3.11", "3.12", "3.13"]
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
@@ -103,10 +102,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
 

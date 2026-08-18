@@ -12,10 +12,9 @@ from dataclasses import FrozenInstanceError
 from types import MappingProxyType
 
 import pytest
-
 from cervellaswarm_lingua_universale import (
-    AgentInfo,
     AGENT_CATALOG,
+    AgentInfo,
     AgentRole,
     AuditRequest,
     AuditVerdict,
@@ -41,15 +40,14 @@ from cervellaswarm_lingua_universale.integration import (
     validate_swarm,
 )
 from cervellaswarm_lingua_universale.protocols import (
+    STANDARD_PROTOCOLS,
     ArchitectFlow,
     DelegateTask,
     Protocol,
     ProtocolStep,
     ResearchFlow,
     SimpleTask,
-    STANDARD_PROTOCOLS,
 )
-
 
 # ============================================================
 # Helpers / Factories

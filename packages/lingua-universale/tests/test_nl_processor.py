@@ -21,7 +21,16 @@ from typing import Any
 from unittest.mock import MagicMock, patch
 
 import pytest
-
+from cervellaswarm_lingua_universale._intent_bridge import (
+    _ACTION_VERBS,
+    ChatPhase,
+    ChatSession,
+    DraftChoice,
+    DraftMessage,
+    IntentDraft,
+    NLClarificationNeeded,
+    Turn,
+)
 from cervellaswarm_lingua_universale._nl_processor import (
     SYSTEM_PROMPT,
     TOOL_SCHEMA,
@@ -31,17 +40,6 @@ from cervellaswarm_lingua_universale._nl_processor import (
     _extract_text_response,
     _extract_tool_input,
 )
-from cervellaswarm_lingua_universale._intent_bridge import (
-    ChatPhase,
-    ChatSession,
-    DraftChoice,
-    DraftMessage,
-    IntentDraft,
-    NLClarificationNeeded,
-    Turn,
-    _ACTION_VERBS,
-)
-
 
 # ============================================================
 # 1. TOOL_SCHEMA structure
@@ -417,7 +415,7 @@ def _nl_session(
         try:
             return next(it)
         except StopIteration:
-            raise EOFError
+            raise EOFError from None
 
     def _output_fn(*args: object, **kwargs: object) -> None:
         output.append(" ".join(str(a) for a in args))

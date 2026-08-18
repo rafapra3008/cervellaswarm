@@ -16,9 +16,12 @@ import {
   setMaxRetries,
   isVerbose,
   setVerbose,
+  isTelemetryEnabled,
+  setTelemetry,
   getAllConfig,
   resetConfig,
   resetGlobalConfig,
+  getConfigPath,
   VALID_MODELS,
   CONFIG_CONSTRAINTS
 } from '../dist/config/index.js';
@@ -133,6 +136,27 @@ describe('Config Module', () => {
     });
   });
 
+  describe('Telemetry', () => {
+    it('should default to false', () => {
+      assert.strictEqual(isTelemetryEnabled(), false);
+    });
+
+    it('should allow enabling', () => {
+      setTelemetry(true);
+      assert.strictEqual(isTelemetryEnabled(), true);
+    });
+
+    it('should allow toggling back', () => {
+      setTelemetry(true);
+      setTelemetry(false);
+      assert.strictEqual(isTelemetryEnabled(), false);
+    });
+
+    it('should return true from setTelemetry', () => {
+      assert.strictEqual(setTelemetry(true), true);
+    });
+  });
+
   describe('getAllConfig', () => {
     it('should return config summary', () => {
       const config = getAllConfig();
@@ -148,6 +172,44 @@ describe('Config Module', () => {
     it('should mask API key', () => {
       const config = getAllConfig();
       assert.ok(!config.apiKey.includes('sk-ant'));
+    });
+
+    it('should reflect telemetry setting', () => {
+      setTelemetry(true);
+      const config = getAllConfig();
+      assert.strictEqual(config.telemetry, true);
+    });
+  });
+
+  describe('resetConfig', () => {
+    it('should restore all defaults', () => {
+      setVerbose(true);
+      setTelemetry(true);
+      setMaxRetries(7);
+      resetConfig();
+
+      assert.strictEqual(isVerbose(), false);
+      assert.strictEqual(isTelemetryEnabled(), false);
+      assert.strictEqual(getMaxRetries(), 3);
+      assert.strictEqual(getDefaultModel(), 'claude-sonnet-4-6');
+    });
+
+    it('should return true', () => {
+      assert.strictEqual(resetConfig(), true);
+    });
+  });
+
+  describe('getConfigPath', () => {
+    it('should return a string path', () => {
+      const path = getConfigPath();
+      assert.strictEqual(typeof path, 'string');
+      assert.ok(path.length > 0);
+    });
+
+    it('should contain package name reference', () => {
+      const path = getConfigPath();
+      // conf library uses project name in path
+      assert.ok(path.includes('cervellaswarm') || path.includes('config'), `Path should reference project: ${path}`);
     });
   });
 });

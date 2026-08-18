@@ -20,10 +20,9 @@ import pytest
 from cervellaswarm_code_intelligence.symbol_cache import (
     CacheEntry,
     SymbolCache,
+    _default_cache,
     get_default_cache,
-    _default_cache
 )
-
 
 # ============================================================================
 # CacheEntry Tests

@@ -17,7 +17,6 @@ from __future__ import annotations
 import dataclasses
 
 import pytest
-
 from cervellaswarm_lingua_universale._intent_bridge import (
     _ACTION_MENU,
     _ACTION_VERBS,
@@ -26,17 +25,16 @@ from cervellaswarm_lingua_universale._intent_bridge import (
     _SIM_NARRATIVES,
     _STRINGS,
     _YES_WORDS,
-    _t,
     ChatPhase,
     ChatResult,
     DraftChoice,
     DraftMessage,
     IntentDraft,
     Turn,
+    _t,
     render_intent_source,
 )
 from cervellaswarm_lingua_universale.intent import parse_intent
-
 
 # ============================================================
 # 1. Data Model (frozen dataclasses)
@@ -503,8 +501,8 @@ class TestPropertyExplanationsCoverage:
     def test_property_explanations_has_entry_for_all_property_names(self) -> None:
         """Every name in _PROPERTY_NAMES must have an entry in _PROPERTY_EXPLANATIONS."""
         from cervellaswarm_lingua_universale._intent_bridge import (
-            _PROPERTY_NAMES,
             _PROPERTY_EXPLANATIONS,
+            _PROPERTY_NAMES,
         )
         for name in _PROPERTY_NAMES:
             assert name in _PROPERTY_EXPLANATIONS, (

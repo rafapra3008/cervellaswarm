@@ -21,7 +21,7 @@ import json
 import os
 import subprocess
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 __version__ = "1.0.0"
@@ -38,7 +38,7 @@ def _get_interval_minutes() -> int:
 
         cfg = get_hook_config("git_reminder")
         return int(cfg.get("interval_minutes", DEFAULT_INTERVAL_MINUTES))
-    except Exception as e:
+    except (subprocess.SubprocessError, OSError, ValueError, KeyError) as e:
         print(f"git_reminder: config load failed: {e}", file=sys.stderr)
         return DEFAULT_INTERVAL_MINUTES
 
@@ -56,7 +56,7 @@ def get_uncommitted_count(cwd: str) -> int:
         if result.returncode == 0 and result.stdout.strip():
             return len(result.stdout.strip().split("\n"))
         return 0
-    except Exception as e:
+    except (subprocess.SubprocessError, OSError, ValueError, KeyError) as e:
         print(f"git_reminder: git status failed: {e}", file=sys.stderr)
         return 0
 
@@ -66,13 +66,15 @@ def should_remind(cwd: str) -> bool:
     try:
         interval = _get_interval_minutes()
         if REMINDER_STATE_FILE.exists():
-            with open(REMINDER_STATE_FILE, "r") as f:
+            with open(REMINDER_STATE_FILE, "r", encoding="utf-8") as f:
                 state = json.load(f)
 
             last_reminder = state.get(cwd)
             if last_reminder:
                 last_time = datetime.fromisoformat(last_reminder)
-                diff_minutes = (datetime.now() - last_time).total_seconds() / 60
+                if last_time.tzinfo is None:
+                    last_time = last_time.replace(tzinfo=timezone.utc)
+                diff_minutes = (datetime.now(tz=timezone.utc) - last_time).total_seconds() / 60
                 if diff_minutes < interval:
                     return False
         return True
@@ -89,10 +91,10 @@ def update_reminder_state(cwd: str):
     try:
         state = {}
         if REMINDER_STATE_FILE.exists():
-            with open(REMINDER_STATE_FILE, "r") as f:
+            with open(REMINDER_STATE_FILE, "r", encoding="utf-8") as f:
                 state = json.load(f)
 
-        state[cwd] = datetime.now().isoformat()
+        state[cwd] = datetime.now(tz=timezone.utc).isoformat()
 
         # Prune: keep only the MAX_STATE_ENTRIES most recent entries
         if len(state) > MAX_STATE_ENTRIES:
@@ -100,7 +102,7 @@ def update_reminder_state(cwd: str):
             state = dict(sorted_entries[:MAX_STATE_ENTRIES])
 
         REMINDER_STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
-        with open(REMINDER_STATE_FILE, "w") as f:
+        with open(REMINDER_STATE_FILE, "w", encoding="utf-8") as f:
             json.dump(state, f, indent=2)
     except (json.JSONDecodeError, ValueError, OSError) as e:
         print(f"git_reminder: state update failed: {e}", file=sys.stderr)
@@ -122,7 +124,7 @@ def send_notification(count: int):
         return
     except FileNotFoundError:
         pass
-    except Exception as e:
+    except (subprocess.SubprocessError, OSError, ValueError, KeyError) as e:
         print(f"git_reminder: macOS notification failed: {e}", file=sys.stderr)
 
     # Linux: notify-send (optional)
@@ -132,7 +134,7 @@ def send_notification(count: int):
             capture_output=True,
             timeout=5,
         )
-    except Exception as e:
+    except (subprocess.SubprocessError, OSError, ValueError, KeyError) as e:
         print(f"git_reminder: Linux notification failed: {e}", file=sys.stderr)
 
 

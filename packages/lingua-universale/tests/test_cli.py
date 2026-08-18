@@ -5,11 +5,10 @@
 
 from __future__ import annotations
 
-import pytest
 from pathlib import Path
 
-from cervellaswarm_lingua_universale._cli import main, _build_parser
-
+import pytest
+from cervellaswarm_lingua_universale._cli import _build_parser, main
 
 # ============================================================
 # Fixtures

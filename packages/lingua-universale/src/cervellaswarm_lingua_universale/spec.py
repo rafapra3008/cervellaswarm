@@ -46,17 +46,16 @@ from __future__ import annotations
 
 import re
 import textwrap
+from collections.abc import Sequence
 from dataclasses import dataclass
 from enum import Enum, auto
 from types import MappingProxyType
-from typing import Sequence
 
 from ._codegen_common import collect_all_steps
-from .protocols import Protocol, ProtocolChoice, ProtocolElement, ProtocolStep
-from .types import AgentRole, MessageKind
 from .checker import MessageRecord
+from .protocols import Protocol, ProtocolChoice, ProtocolElement, ProtocolStep
 from .trust import TrustTier, trust_tier_for_role
-
+from .types import AgentRole, MessageKind
 
 # ============================================================
 # Errors

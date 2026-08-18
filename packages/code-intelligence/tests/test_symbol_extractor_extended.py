@@ -6,13 +6,13 @@ Split da test_symbol_extractor.py (662 righe > 500 limite).
 Sessione 348.
 """
 
-import pytest
 import tempfile
 from pathlib import Path
 
+import pytest
 from cervellaswarm_code_intelligence.symbol_extractor import (
-    SymbolExtractor,
     Symbol,
+    SymbolExtractor,
     extract_symbols,
 )
 from cervellaswarm_code_intelligence.treesitter_parser import TreesitterParser

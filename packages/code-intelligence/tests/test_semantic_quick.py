@@ -6,8 +6,8 @@ Author: Cervella Tester
 Date: 2026-01-19
 """
 
-from cervellaswarm_code_intelligence.semantic_search import SemanticSearch
 from cervellaswarm_code_intelligence.impact_analyzer import ImpactAnalyzer, ImpactResult
+from cervellaswarm_code_intelligence.semantic_search import SemanticSearch
 
 
 def test_import_semantic_search():

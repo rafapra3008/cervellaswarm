@@ -8,7 +8,6 @@ Coverage target: 100% integration.py (complementary to test_integration_core.py)
 """
 
 import pytest
-
 from cervellaswarm_lingua_universale import (
     AgentRole,
     AuditRequest,
@@ -17,9 +16,9 @@ from cervellaswarm_lingua_universale import (
     BranchChosen,
     EventCollector,
     MessageSent,
+    PlanComplexity,
     PlanDecision,
     PlanProposal,
-    PlanComplexity,
     PlanRequest,
     ProtocolMonitor,
     ProtocolViolation,
@@ -46,7 +45,6 @@ from cervellaswarm_lingua_universale.protocols import (
     ResearchFlow,
     SimpleTask,
 )
-
 
 # ============================================================
 # Shared message factories

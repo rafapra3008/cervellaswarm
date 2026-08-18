@@ -15,6 +15,7 @@ import {
   DEFAULT_TIMEOUT,
   DEFAULT_MAX_RETRIES,
   sleep,
+  addJitter,
   isRetryableError,
   withRetry,
   withTimeout,
@@ -213,6 +214,50 @@ describe('Client Module - Retry', () => {
       const duration = Date.now() - start;
       assert.ok(duration >= 90); // Allow 10ms tolerance
       assert.ok(duration < 200);
+    });
+  });
+
+  describe('addJitter', () => {
+    it('should return a number close to the base delay', () => {
+      // With 25% jitter, 1000 -> [750, 1250]
+      for (let i = 0; i < 20; i++) {
+        const result = addJitter(1000, 0.25);
+        assert.ok(result >= 750, `Expected >= 750, got ${result}`);
+        assert.ok(result <= 1250, `Expected <= 1250, got ${result}`);
+      }
+    });
+
+    it('should return exact delay when jitterPercent is 0', () => {
+      assert.strictEqual(addJitter(1000, 0), 1000);
+      assert.strictEqual(addJitter(500, 0), 500);
+    });
+
+    it('should never return negative values', () => {
+      // Even with 100% jitter, Math.max(0, ...) prevents negatives
+      for (let i = 0; i < 50; i++) {
+        const result = addJitter(100, 1.0);
+        assert.ok(result >= 0, `Expected >= 0, got ${result}`);
+      }
+    });
+
+    it('should handle zero delay', () => {
+      const result = addJitter(0, 0.25);
+      assert.strictEqual(result, 0);
+    });
+
+    it('should use default jitterPercent of 0.25', () => {
+      // Just verify it runs without error and returns a number
+      const result = addJitter(1000);
+      assert.strictEqual(typeof result, 'number');
+      assert.ok(result >= 750);
+      assert.ok(result <= 1250);
+    });
+
+    it('should return rounded integer values', () => {
+      for (let i = 0; i < 10; i++) {
+        const result = addJitter(1000, 0.25);
+        assert.strictEqual(result, Math.round(result));
+      }
     });
   });
 

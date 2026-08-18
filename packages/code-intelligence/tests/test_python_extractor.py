@@ -7,6 +7,7 @@ Author: Cervella Tester (S342)
 Date: 2026-02-10
 """
 from unittest.mock import MagicMock
+
 from cervellaswarm_code_intelligence.python_extractor import PythonExtractor
 from cervellaswarm_code_intelligence.symbol_types import Symbol
 

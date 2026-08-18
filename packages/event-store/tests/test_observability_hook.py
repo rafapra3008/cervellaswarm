@@ -4,14 +4,15 @@
 """Tests for the observability hook transcript parser."""
 
 import json
+
+# Import hook functions -- hooks live in ~/.claude/hooks/ (not in repo).
+# Skip tests if hook is not installed locally (e.g. in CI).
+import sys
 import tempfile
 from pathlib import Path
 
 import pytest
 
-# Import hook functions -- hooks live in ~/.claude/hooks/ (not in repo).
-# Skip tests if hook is not installed locally (e.g. in CI).
-import sys
 sys.path.insert(0, str(Path.home() / ".claude" / "hooks"))
 
 observability_hook = pytest.importorskip(
@@ -219,7 +220,7 @@ class TestParseTranscript:
 
 class TestFindTranscript:
     def test_nonexistent_dir(self):
-        result = find_transcript("no-such-session", "/tmp/nonexistent-dir-xyz")
+        result = find_transcript("no-such-session", "/tmp/nonexistent-dir-xyz")  # nosec B108
         assert result is None
 
     def test_with_real_project_dir(self, tmp_path):
@@ -241,7 +242,7 @@ class TestFindTranscript:
             insiders_transcript = insiders_dir / "test-session-123.jsonl"
             insiders_transcript.write_text('{"type":"progress"}\n')
 
-            result = find_transcript("test-session-123", "/tmp/fakedir")
+            result = find_transcript("test-session-123", "/tmp/fakedir")  # nosec B108
             assert result is not None
             assert result.name == "test-session-123.jsonl"
 

@@ -7,7 +7,6 @@ import sqlite3
 from pathlib import Path
 
 import pytest
-
 from cervellaswarm_event_store.database import EventStore
 from cervellaswarm_event_store.writer import Event, Lesson
 
@@ -193,3 +192,101 @@ class TestEventStoreGetValidTypes:
         severities = event_store.get_valid_severities()
         assert isinstance(severities, frozenset)
         assert "critical" in severities
+
+
+# ---------------------------------------------------------------------------
+# Migration Framework Tests (S511)
+# ---------------------------------------------------------------------------
+
+class TestMigrationFramework:
+    """Tests for SCHEMA_VERSION, PRAGMA user_version, and migration loop."""
+
+    def test_new_db_has_correct_version(self):
+        """Fresh DB gets SCHEMA_VERSION set via PRAGMA user_version."""
+        from cervellaswarm_event_store.database import SCHEMA_VERSION, EventStore
+        es = EventStore(":memory:")
+        v = es._conn.execute("PRAGMA user_version").fetchone()[0]
+        assert v == SCHEMA_VERSION
+        es.close()
+
+    def test_schema_version_is_positive(self):
+        """SCHEMA_VERSION must be a positive integer."""
+        from cervellaswarm_event_store.database import SCHEMA_VERSION
+        assert isinstance(SCHEMA_VERSION, int)
+        assert SCHEMA_VERSION >= 1
+
+    def test_busy_timeout_set(self):
+        """PRAGMA busy_timeout should be 5000ms."""
+        from cervellaswarm_event_store.database import EventStore
+        es = EventStore(":memory:")
+        bt = es._conn.execute("PRAGMA busy_timeout").fetchone()[0]
+        assert bt == 5000
+        es.close()
+
+    def test_wal_mode_for_file_db(self, tmp_path):
+        """File-based DB uses WAL journal mode."""
+        from cervellaswarm_event_store.database import EventStore
+        db_path = tmp_path / "test.db"
+        es = EventStore(str(db_path))
+        jm = es._conn.execute("PRAGMA journal_mode").fetchone()[0]
+        assert jm == "wal"
+        es.close()
+
+    def test_idempotent_schema_init(self):
+        """Opening same DB twice doesn't fail or change version."""
+        from cervellaswarm_event_store.database import SCHEMA_VERSION, EventStore
+        es1 = EventStore(":memory:")
+        # Simulate re-init on same connection
+        es1._init_schema()
+        v = es1._conn.execute("PRAGMA user_version").fetchone()[0]
+        assert v == SCHEMA_VERSION
+        es1.close()
+
+    def test_migration_v2_adds_session_columns(self, tmp_path):
+        """Migration v1->v2 adds 6 session observability columns."""
+        db_path = tmp_path / "migrate.db"
+        # Create v1 DB manually (without new columns)
+        conn = sqlite3.connect(str(db_path))
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS token_usage (
+                id TEXT PRIMARY KEY, timestamp TEXT NOT NULL,
+                session_id TEXT NOT NULL UNIQUE, project TEXT, model TEXT,
+                input_tokens INTEGER DEFAULT 0, output_tokens INTEGER DEFAULT 0,
+                cache_read_tokens INTEGER DEFAULT 0, cache_creation_tokens INTEGER DEFAULT 0,
+                total_messages INTEGER DEFAULT 0, total_tool_calls INTEGER DEFAULT 0,
+                cost_usd REAL DEFAULT 0.0, created_at TEXT DEFAULT (datetime('now'))
+            )
+        """)
+        conn.execute("PRAGMA user_version = 1")
+        conn.commit()
+        conn.close()
+
+        # Open with EventStore -- migration should apply
+        es = EventStore(str(db_path))
+        v = es._conn.execute("PRAGMA user_version").fetchone()[0]
+        assert v == 2
+
+        # Verify new columns exist by inserting with them
+        es._conn.execute(
+            "INSERT INTO token_usage (id, timestamp, session_id, start_time, end_time, duration_seconds, agent_names, tasks_completed, errors_count) "
+            "VALUES ('t1', '2026-04-05', 's1', '2026-04-05T10:00:00Z', '2026-04-05T11:00:00Z', 3600, '[\"cervella-tester\"]', 5, 1)"
+        )
+        row = es._conn.execute("SELECT start_time, duration_seconds, agent_names, tasks_completed, errors_count FROM token_usage WHERE id='t1'").fetchone()
+        assert row[0] == "2026-04-05T10:00:00Z"
+        assert row[1] == 3600
+        assert row[2] == '["cervella-tester"]'
+        assert row[3] == 5
+        assert row[4] == 1
+        es.close()
+
+    def test_fresh_db_has_session_columns(self):
+        """New DB (no migration needed) has session columns from CREATE TABLE."""
+        es = EventStore(":memory:")
+        es._conn.execute(
+            "INSERT INTO token_usage (id, timestamp, session_id, start_time, duration_seconds) "
+            "VALUES ('t2', '2026-04-05', 's2', '2026-04-05T10:00:00Z', 1800)"
+        )
+        row = es._conn.execute("SELECT start_time, duration_seconds FROM token_usage WHERE id='t2'").fetchone()
+        assert row[0] == "2026-04-05T10:00:00Z"
+        assert row[1] == 1800
+        es.close()

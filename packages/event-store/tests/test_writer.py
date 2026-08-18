@@ -4,8 +4,14 @@
 """Tests for cervellaswarm_event_store.writer module."""
 
 import pytest
-
-from cervellaswarm_event_store.writer import Event, Lesson, _insert_event, _insert_lesson, _utc_now, _new_id
+from cervellaswarm_event_store.writer import (
+    Event,
+    Lesson,
+    _insert_event,
+    _insert_lesson,
+    _new_id,
+    _utc_now,
+)
 
 
 class TestNewId:

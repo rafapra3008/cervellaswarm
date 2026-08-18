@@ -10,7 +10,6 @@ from cervellaswarm_lingua_universale.types import (
     message_kind,
 )
 
-
 # ── AgentRole tier ────────────────────────────────────────────────────────────
 
 class TestAgentRoleTier:

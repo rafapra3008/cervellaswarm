@@ -11,7 +11,6 @@ DEFAULT_LOCALE/SUPPORTED_LOCALES constants, and __init__.py re-exports.
 from __future__ import annotations
 
 import pytest
-
 from cervellaswarm_lingua_universale.errors import (
     DEFAULT_LOCALE,
     SUPPORTED_LOCALES,
@@ -23,7 +22,6 @@ from cervellaswarm_lingua_universale.errors import (
     format_error,
     suggest_similar,
 )
-
 
 # ============================================================
 # ErrorCategory

@@ -10,12 +10,12 @@ build-backend = "hatchling.build"
 # ---------------------------------------------------------------------------
 [project]
 name = "cervellaswarm-agent-hooks"
-version = "0.1.0"
+version = "1.3.0"
 description = "Ready-to-use hooks for Claude Code: bash validation, git reminders, file limits, context injection, and session checkpoints."
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [
     {name = "CervellaSwarm Contributors"},
 ]
@@ -35,7 +35,6 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
@@ -55,6 +54,7 @@ cervella-git-reminder = "cervellaswarm_agent_hooks.git_reminder:main"
 cervella-file-limits = "cervellaswarm_agent_hooks.file_limits:main"
 cervella-context-inject = "cervellaswarm_agent_hooks.context_inject:main"
 cervella-session-checkpoint = "cervellaswarm_agent_hooks.session_checkpoint:main"
+cervella-quality-validator = "cervellaswarm_agent_hooks.quality_validator:main"
 cervella-hooks = "cervellaswarm_agent_hooks.cli:main"
 
 # ---------------------------------------------------------------------------

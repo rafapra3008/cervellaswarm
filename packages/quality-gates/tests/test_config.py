@@ -8,10 +8,9 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-
 from cervellaswarm_quality_gates.config import (
-    DEFAULTS,
     _DEFAULTS_RAW,
+    DEFAULTS,
     _deep_merge,
     _load_yaml,
     find_config_file,

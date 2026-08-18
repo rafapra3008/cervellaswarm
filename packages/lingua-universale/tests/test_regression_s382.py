@@ -8,7 +8,6 @@ Code Review + Bug Hunt. Tests verify the FIX is correct.
 """
 
 import pytest
-
 from cervellaswarm_lingua_universale.checker import (
     MessageRecord,
     ProtocolViolation,
@@ -16,10 +15,10 @@ from cervellaswarm_lingua_universale.checker import (
     SessionComplete,
 )
 from cervellaswarm_lingua_universale.protocols import (
+    STANDARD_PROTOCOLS,
     Protocol,
     ProtocolChoice,
     ProtocolStep,
-    STANDARD_PROTOCOLS,
 )
 from cervellaswarm_lingua_universale.types import (
     AuditRequest,
@@ -33,7 +32,6 @@ from cervellaswarm_lingua_universale.types import (
     TaskResult,
     TaskStatus,
 )
-
 
 # ── BUG-LU-001: Multi-choice checker fix ────────────────────────────────────
 
@@ -453,9 +451,9 @@ class TestReExports:
 
     def test_enums_importable(self):
         from cervellaswarm_lingua_universale import (
-            TaskStatus,
             AuditVerdictType,
             PlanComplexity,
+            TaskStatus,
         )
         assert TaskStatus.OK.value == "ok"
         assert AuditVerdictType.APPROVED.value == "approved"
@@ -463,9 +461,9 @@ class TestReExports:
 
     def test_exceptions_importable(self):
         from cervellaswarm_lingua_universale import (
+            MessageRecord,
             ProtocolViolation,
             SessionComplete,
-            MessageRecord,
         )
         assert issubclass(ProtocolViolation, Exception)
         assert issubclass(SessionComplete, Exception)

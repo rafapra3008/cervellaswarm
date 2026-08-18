@@ -9,10 +9,9 @@ Analyzes task descriptions using keyword matching, multi-file pattern
 detection, and file count estimation to produce a complexity score.
 """
 
+import re
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
-import re
 
 
 class TaskComplexity(Enum):
@@ -152,7 +151,7 @@ def has_multifile_pattern(task_description: str) -> bool:
 
 def classify_task(
     task_description: str,
-    estimated_files: Optional[int] = None,
+    estimated_files: int | None = None,
     has_breaking_changes: bool = False,
     force_architect: bool = False,
 ) -> ClassificationResult:

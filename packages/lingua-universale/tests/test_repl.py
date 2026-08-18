@@ -10,13 +10,11 @@ No stdin mocking, no readline dependency.
 from __future__ import annotations
 
 import pytest
-
 from cervellaswarm_lingua_universale._repl import (
     CommandResult,
     REPLSession,
     _looks_incomplete,
 )
-
 
 # ============================================================
 # Helper: build a session fed by a list of input lines
@@ -31,7 +29,7 @@ def _make_session(lines: list[str]) -> REPLSession:
         try:
             return next(it)
         except StopIteration:
-            raise EOFError
+            raise EOFError from None
 
     return REPLSession(input_fn=_input_fn)
 

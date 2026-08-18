@@ -67,7 +67,6 @@ from enum import Enum, auto
 from .protocols import Protocol, ProtocolChoice, ProtocolElement, ProtocolStep
 from .types import MessageKind
 
-
 # ============================================================
 # Errors
 # ============================================================

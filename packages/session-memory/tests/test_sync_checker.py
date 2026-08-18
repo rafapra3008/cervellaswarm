@@ -9,7 +9,6 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
-
 from cervellaswarm_session_memory.sync_checker import (
     CheckStatus,
     SyncResult,
@@ -20,7 +19,6 @@ from cervellaswarm_session_memory.sync_checker import (
     verify_all,
     verify_project,
 )
-
 
 # ---------------------------------------------------------------------------
 # CheckStatus enum values

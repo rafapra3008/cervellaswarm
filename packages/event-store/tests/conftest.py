@@ -4,7 +4,6 @@
 """Shared fixtures for cervellaswarm-event-store tests."""
 
 import pytest
-
 from cervellaswarm_event_store.database import EventStore
 from cervellaswarm_event_store.writer import Event, Lesson
 

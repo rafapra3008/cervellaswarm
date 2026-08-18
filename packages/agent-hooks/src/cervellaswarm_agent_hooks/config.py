@@ -12,6 +12,7 @@ Hooks look for configuration in this order:
 If no config file is found, hooks use sensible defaults.
 """
 
+import copy
 import os
 from pathlib import Path
 
@@ -51,6 +52,23 @@ DEFAULTS = {
         "extra_risky": [],
         "extra_safe_rm": [],
     },
+    "quality_validator": {
+        # SNCP 5.1 quality metrics thresholds (warning only, mai blocco)
+        "density_min": 0.30,
+        "density_max": 0.55,
+        "recency_max_old_pct": 0.30,   # max 30% entries >90gg in DOVE SIAMO + ProxStep
+        "recency_min_recent_h2": 2,    # min 2 H2 <=14gg in DOVE SIAMO
+        "recency_status_fallback": True,  # P1.2.A: fallback to status header date
+        "coverage_hard": ["status", "dove siamo", "puntator"],
+        "coverage_warn": ["prossim", "lezion"],
+        "actionability_min": 3,         # >=3 step con owner+effort in ProxStep
+        "anti_rot_min_pct": 0.80,       # >=80% path navigabili come markdown link
+        "anti_rot_min_pct_state_a": 0.20,  # P1.2.C: lenient for legacy state A
+        "self_sufficiency_lines": 50,   # prime 50 righe rispondono 3 boolean Q
+        "split_threshold_lines": 150,   # soglia minima per split 3-tier
+        "evergreen_scope_lookback_lines": 5,  # F2 (P4.6 R2): scope-marker lookback distance
+        "report_dir": ".sncp/reports/daily",
+    },
 }
 
 
@@ -81,36 +99,58 @@ def find_config_file() -> Path | None:
     return None
 
 
-def load_config() -> dict:
-    """Load hooks configuration, merging with defaults."""
-    config_file = find_config_file()
+def _deep_merge(base: dict, override: dict) -> dict:
+    """Deep merge override into base (recursive for nested dicts)."""
+    result = copy.deepcopy(base)
+    for key, value in override.items():
+        if key in result and isinstance(result[key], dict) and isinstance(value, dict):
+            result[key] = _deep_merge(result[key], value)
+        else:
+            result[key] = value
+    return result
+
+
+def load_config(config_path: Path | None = None) -> dict:
+    """Load hooks configuration, merging with defaults.
+
+    Args:
+        config_path: Explicit path to config file. If None, auto-discover.
+
+    Returns:
+        Merged configuration dictionary.
+    """
+    config_file = config_path if config_path else find_config_file()
 
     if config_file is None:
-        return dict(DEFAULTS)
+        return copy.deepcopy(DEFAULTS)
 
     try:
         with open(config_file, "r", encoding="utf-8") as f:
             user_config = yaml.safe_load(f) or {}
     except (OSError, yaml.YAMLError):
-        return dict(DEFAULTS)
+        return copy.deepcopy(DEFAULTS)
 
-    # Merge: user config overrides defaults (shallow per section)
-    merged = dict(DEFAULTS)
-    for section, values in user_config.items():
-        if section in merged and isinstance(values, dict):
-            merged[section] = {**merged[section], **values}
-        else:
-            merged[section] = values
+    if not isinstance(user_config, dict):
+        return copy.deepcopy(DEFAULTS)
 
-    return merged
+    return _deep_merge(DEFAULTS, user_config)
 
 
-def get_hook_config(hook_name: str) -> dict:
-    """Get configuration for a specific hook, with defaults."""
-    config = load_config()
+def get_hook_config(hook_name: str, config: dict | None = None) -> dict:
+    """Get configuration for a specific hook, with defaults.
+
+    Args:
+        hook_name: Hook name (e.g. "file_limits", "git_reminder").
+        config: Pre-loaded config. If None, loads automatically.
+
+    Returns:
+        Hook config dict with defaults merged in.
+    """
+    if config is None:
+        config = load_config()
     defaults = DEFAULTS.get(hook_name, {})
     hook_config = config.get(hook_name, {})
 
     if isinstance(hook_config, dict) and isinstance(defaults, dict):
-        return {**defaults, **hook_config}
-    return hook_config if hook_config else defaults
+        return _deep_merge(defaults, hook_config)
+    return hook_config if hook_config else copy.deepcopy(defaults)

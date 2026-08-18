@@ -4,7 +4,7 @@
 
 from unittest.mock import patch
 
-from cervellaswarm_lingua_universale._doctor import run_doctor, _ok, _warn, _err
+from cervellaswarm_lingua_universale._doctor import _err, _ok, _warn, run_doctor
 
 
 def test_run_doctor_returns_zero(capsys):
@@ -90,15 +90,16 @@ def test_run_doctor_failure_path(capsys):
     with patch.dict("sys.modules", {"cervellaswarm_lingua_universale._parser": None}):
         # Force ImportError on parser by patching the import inside run_doctor
         import importlib
+
         import cervellaswarm_lingua_universale._doctor as doc
 
         original = doc.run_doctor
 
         def _patched_doctor():
             # Simulate a compiler import failure
-            from cervellaswarm_lingua_universale._doctor import _err
             from cervellaswarm_lingua_universale import __version__
             from cervellaswarm_lingua_universale._colors import colors as c
+            from cervellaswarm_lingua_universale._doctor import _err
 
             print(f"\n{c.BOLD}lu doctor{c.RESET} -- Lingua Universale v{__version__}\n")
             _err("Compiler pipeline", "simulated import error")

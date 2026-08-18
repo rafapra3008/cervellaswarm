@@ -1,27 +1,23 @@
 /**
  * Config Module - Main Entry Point
  *
- * Re-exports all config functions for backward compatibility.
- * Import from here: import { getApiKey } from './config/index.js'
+ * Re-exports shared config from @cervellaswarm/core + CLI-specific modules.
+ * DRY refactor S508: eliminated 329 LOC of duplicated config code.
  *
  * Copyright 2026 CervellaSwarm Contributors
  * Licensed under the Apache License, Version 2.0
  */
 
-// Schema & Singleton
-export { getGlobalConfig, globalSchema, resetGlobalConfig } from './schema.js';
-
-// API Key Management
+// Shared config from core (schema, api-key, settings)
 export {
+  getGlobalConfig,
+  globalSchema,
+  resetGlobalConfig,
   getApiKey,
   setApiKey,
   hasApiKey,
   clearApiKey,
-  getApiKeySource
-} from './api-key.js';
-
-// Settings (Model, Preferences, Bulk)
-export {
+  getApiKeySource,
   getDefaultModel,
   setDefaultModel,
   getTimeout,
@@ -35,15 +31,15 @@ export {
   getAllConfig,
   resetConfig,
   getConfigPath
-} from './settings.js';
+} from '@cervellaswarm/core/config';
 
-// Diagnostics
+// CLI-specific: Diagnostics
 export {
   runDiagnostics,
   validateApiKey
 } from './diagnostics.js';
 
-// Billing & Subscription
+// CLI-specific: Billing & Subscription
 export {
   getBillingApiUrl,
   getTier,

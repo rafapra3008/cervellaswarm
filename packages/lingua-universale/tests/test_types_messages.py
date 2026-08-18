@@ -6,7 +6,6 @@ Includes valid creation, validation errors, immutability, and KIND field.
 """
 
 import pytest
-
 from cervellaswarm_lingua_universale.types import (
     AuditRequest,
     AuditVerdict,
@@ -22,7 +21,6 @@ from cervellaswarm_lingua_universale.types import (
     TaskResult,
     TaskStatus,
 )
-
 
 # ── TaskRequest ──────────────────────────────────────────────────────────────
 

@@ -22,7 +22,7 @@ __version_date__ = "2026-02-02"
 import logging
 from collections import OrderedDict
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 logger = logging.getLogger(__name__)
 
@@ -75,7 +75,7 @@ class SymbolCache:
         self._misses = 0
         logger.debug(f"SymbolCache initialized with maxsize={maxsize}")
 
-    def get(self, file_path: str, current_mtime: float) -> Optional[List[Any]]:
+    def get(self, file_path: str, current_mtime: float) -> List[Any] | None:
         """Get cached symbols if valid.
 
         Returns cached symbols only if:
@@ -195,7 +195,7 @@ class SymbolCache:
 
 
 # Default cache instance for convenience
-_default_cache: Optional[SymbolCache] = None
+_default_cache: SymbolCache | None = None
 
 
 def get_default_cache(maxsize: int = 1000) -> SymbolCache:

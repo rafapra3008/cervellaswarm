@@ -30,7 +30,6 @@ from typing import Any
 
 from ._colors import colors as _c
 
-
 # ============================================================
 # i18n strings for voice prompts
 # ============================================================

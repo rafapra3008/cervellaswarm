@@ -18,12 +18,10 @@ from __future__ import annotations
 import re
 
 import pytest
-
 from cervellaswarm_lingua_universale._grammar_export import (
     GRAMMAR_VERSION,
     GrammarExporter,
 )
-
 
 # =====================================================================
 # 1. BASIC OUTPUT

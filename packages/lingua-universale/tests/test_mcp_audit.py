@@ -5,23 +5,22 @@ import json
 from pathlib import Path
 
 import pytest
-
 from cervellaswarm_lingua_universale._mcp_audit import (
-    ToolDefinition,
-    InferredStep,
     AnnotationFinding,
-    load_manifest,
-    infer_protocol,
-    generate_lu_source,
-    audit_tools,
-    render_json,
-    render_terminal,
-    check_annotations,
+    InferredStep,
+    ToolDefinition,
     _categorize_tools,
-    _infer_orderings,
     _detect_cycles,
     _extract_id_fields,
     _extract_resource_prefix,
+    _infer_orderings,
+    audit_tools,
+    check_annotations,
+    generate_lu_source,
+    infer_protocol,
+    load_manifest,
+    render_json,
+    render_terminal,
 )
 
 FIXTURES_DIR = Path(__file__).parent / "fixtures" / "mcp_audit"
@@ -475,6 +474,7 @@ class TestCliMcpAuditErrorHandling:
     def test_nonexistent_manifest_returns_clean_error(self, capsys):
         """CLI prints 'Error loading manifest' instead of crashing with NameError."""
         import argparse
+
         from cervellaswarm_lingua_universale._cli import _cmd_mcp_audit
 
         args = argparse.Namespace(
@@ -490,6 +490,7 @@ class TestCliMcpAuditErrorHandling:
     def test_invalid_json_manifest_returns_clean_error(self, tmp_path, capsys):
         """CLI prints 'Error loading manifest' for malformed JSON, not NameError."""
         import argparse
+
         from cervellaswarm_lingua_universale._cli import _cmd_mcp_audit
 
         bad = tmp_path / "bad.json"
@@ -507,7 +508,9 @@ class TestCliMcpAuditErrorHandling:
 
     def test_empty_tools_manifest_returns_error(self, tmp_path, capsys):
         """CLI prints 'No tools found' for manifests with zero tools."""
-        import argparse, json
+        import argparse
+        import json
+
         from cervellaswarm_lingua_universale._cli import _cmd_mcp_audit
 
         empty = tmp_path / "empty.json"
@@ -525,7 +528,9 @@ class TestCliMcpAuditErrorHandling:
 
     def test_valid_manifest_json_output_is_serializable(self, tmp_path, capsys):
         """--json output round-trips through JSON without error."""
-        import argparse, json
+        import argparse
+        import json
+
         from cervellaswarm_lingua_universale._cli import _cmd_mcp_audit
 
         manifest = tmp_path / "ok.json"

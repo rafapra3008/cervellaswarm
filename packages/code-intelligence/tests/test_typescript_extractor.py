@@ -14,9 +14,8 @@ Date: 2026-02-10
 from unittest.mock import MagicMock
 
 import pytest
-
-from cervellaswarm_code_intelligence.typescript_extractor import TypeScriptExtractor
 from cervellaswarm_code_intelligence.symbol_types import Symbol
+from cervellaswarm_code_intelligence.typescript_extractor import TypeScriptExtractor
 
 
 def make_node(type_name, text=None, children=None, fields=None, parent=None):

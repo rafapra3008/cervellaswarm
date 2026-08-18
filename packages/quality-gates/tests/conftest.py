@@ -4,6 +4,7 @@
 """Shared fixtures for cervellaswarm-quality-gates tests."""
 
 import stat
+
 import pytest
 
 

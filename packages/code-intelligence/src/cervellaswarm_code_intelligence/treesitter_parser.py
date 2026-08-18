@@ -30,7 +30,7 @@ __version_date__ = "2026-01-19"
 
 import logging
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict
 
 from tree_sitter import Parser, Tree
 from tree_sitter_language_pack import get_language
@@ -64,7 +64,7 @@ class TreesitterParser:
 
         logger.debug("TreesitterParser initialized")
 
-    def parse_file(self, file_path: str) -> Optional[Tree]:
+    def parse_file(self, file_path: str) -> Tree | None:
         """Parse a source file and return its AST.
 
         Args:
@@ -169,7 +169,7 @@ class TreesitterParser:
 
         return ext_map[ext]
 
-    def get_parser(self, language: str) -> Optional[Parser]:
+    def get_parser(self, language: str) -> Parser | None:
         """Get or create a parser for the specified language.
 
         Parsers are cached after first creation for performance.
@@ -208,7 +208,7 @@ class TreesitterParser:
             logger.error(f"Failed to create parser for {language}: {e}")
             return None
 
-    def get_language(self, language: str) -> Optional[object]:
+    def get_language(self, language: str) -> object | None:
         """Get or create a Language object for the specified language.
 
         Language objects are needed for query operations.
@@ -298,7 +298,7 @@ class TreesitterParser:
 
 
 # Convenience function for simple usage
-def parse_file(file_path: str) -> Optional[Tree]:
+def parse_file(file_path: str) -> Tree | None:
     """Parse a file without managing a parser instance.
 
     This is a convenience function for one-off parsing. For repeated parsing,

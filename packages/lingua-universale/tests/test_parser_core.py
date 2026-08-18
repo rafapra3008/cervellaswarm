@@ -18,8 +18,6 @@ NOTE: No __init__.py in this directory (Package Shadowing Fix).
 from __future__ import annotations
 
 import pytest
-
-from cervellaswarm_lingua_universale._parser import ParseError, parse
 from cervellaswarm_lingua_universale._ast import (
     AllParticipate,
     AlwaysTerminates,
@@ -37,7 +35,7 @@ from cervellaswarm_lingua_universale._ast import (
     StepNode,
     TrustProp,
 )
-
+from cervellaswarm_lingua_universale._parser import ParseError, parse
 
 # ===========================================================================
 # 1. TestParseProtocol

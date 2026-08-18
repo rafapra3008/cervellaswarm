@@ -24,13 +24,13 @@ from typing import TYPE_CHECKING
 _log = logging.getLogger(__name__)
 
 from ._ast import (
-    AlwaysTerminates,
     AllParticipate,
+    AlwaysTerminates,
     ChoiceNode,
     ConfidenceProp,
     ExclusionProp,
-    NoDeletionProp,
     NoDeadlock,
+    NoDeletionProp,
     OrderingProp,
     ProgramNode,
     ProtocolNode,
@@ -38,7 +38,7 @@ from ._ast import (
     TrustProp,
 )
 from ._compiler import ASTCompiler, CompiledModule
-from ._interop import load_module, InteropError
+from ._interop import InteropError, load_module
 from ._parser import parse
 
 if TYPE_CHECKING:
@@ -83,7 +83,7 @@ def _parse_and_compile(
         program = parse(source)
     except Exception as exc:
         try:
-            from .errors import humanize, format_error
+            from .errors import format_error, humanize
             herr = humanize(exc)
             return None, None, [format_error(herr, source=source)]
         except Exception:
@@ -95,7 +95,7 @@ def _parse_and_compile(
         compiled = compiler.compile(program, source_file=source_file)
     except Exception as exc:
         try:
-            from .errors import humanize, format_error
+            from .errors import format_error, humanize
             herr = humanize(exc)
             return None, None, [format_error(herr, source=source)]
         except Exception:
@@ -309,7 +309,9 @@ def _safe_check_properties(protocol, spec):
     map to MessageKind values.  Those properties are SKIPPED with evidence.
     """
     from .spec import (
-        PropertyReport, PropertyResult, PropertyVerdict,
+        PropertyReport,
+        PropertyResult,
+        PropertyVerdict,
         check_properties,
     )
 

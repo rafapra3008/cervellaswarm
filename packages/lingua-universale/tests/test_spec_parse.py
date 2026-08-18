@@ -8,7 +8,6 @@ blank lines, triple-quoted strings with indentation, and all error paths.
 """
 
 import pytest
-
 from cervellaswarm_lingua_universale.spec import (
     PropertyKind,
     PropertySpec,
@@ -16,7 +15,6 @@ from cervellaswarm_lingua_universale.spec import (
     SpecParseError,
     parse_spec,
 )
-
 
 # ============================================================
 # Happy path tests

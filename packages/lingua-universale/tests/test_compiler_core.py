@@ -24,7 +24,6 @@ Protocol compilation tests: see test_compiler_protocol.py (C2.2.5).
 from __future__ import annotations
 
 import pytest
-
 from cervellaswarm_lingua_universale._ast import (
     AttrExpr,
     BinOpExpr,
@@ -847,7 +846,7 @@ class TestModuleMetadata:
         assert '__lu_source__ = "path/\\"weird\\".lu"' in result.python_source
         # Exec roundtrip: escaped path is valid Python (F4 fix)
         ns: dict[str, object] = {}
-        exec(result.python_source, ns)  # noqa: S102
+        exec(result.python_source, ns)  # noqa: S102  # nosec B102
         assert ns["__lu_source__"] == 'path/"weird".lu'
 
     def test_metadata_after_docstring(self, compiler: ASTCompiler) -> None:
@@ -868,7 +867,7 @@ class TestModuleMetadata:
         )
         result = compiler.compile(prog, source_file="meta.lu")
         ns: dict[str, object] = {}
-        exec(result.python_source, ns)  # noqa: S102
+        exec(result.python_source, ns)  # noqa: S102  # nosec B102
         assert ns["__lu_version__"] == "0.2"
         assert ns["__lu_source__"] == "meta.lu"
 
@@ -958,7 +957,10 @@ class TestAllGeneration:
     def test_mixed_program_all_order(self, compiler: ASTCompiler) -> None:
         """__all__ order: types first, then agents, then session classes."""
         from cervellaswarm_lingua_universale._ast import (
-            AgentNode, FieldNode, ProtocolNode, StepNode,
+            AgentNode,
+            FieldNode,
+            ProtocolNode,
+            StepNode,
         )
         step = StepNode("regina", "asks", "worker", "do task", LOC)
         prog = ProgramNode(
@@ -1008,7 +1010,7 @@ class TestAllGeneration:
         )
         result = compiler.compile(prog, source_file="test.lu")
         ns: dict[str, object] = {}
-        exec(result.python_source, ns)  # noqa: S102
+        exec(result.python_source, ns)  # noqa: S102  # nosec B102
         assert ns["__all__"] == ["Status"]
 
     def test_exports_default_empty(self) -> None:

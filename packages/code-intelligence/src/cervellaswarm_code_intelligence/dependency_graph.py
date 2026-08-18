@@ -36,7 +36,7 @@ __version__ = "1.0.0"
 __version_date__ = "2026-01-19"
 
 import logging
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 import networkx as nx
 
@@ -312,7 +312,7 @@ class DependencyGraph:
         """
         return f"{symbol.file}:{symbol.line}:{symbol.name}"
 
-    def export_graphviz(self, output_path: str, top_n: Optional[int] = None) -> None:
+    def export_graphviz(self, output_path: str, top_n: int | None = None) -> None:
         """Export graph to GraphViz DOT format for visualization.
 
         Args:

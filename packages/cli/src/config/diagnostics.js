@@ -7,8 +7,7 @@
  * Licensed under the Apache License, Version 2.0
  */
 
-import { getApiKey, getApiKeySource } from './api-key.js';
-import { getDefaultModel, getConfigPath } from './settings.js';
+import { getApiKey, getApiKeySource, getDefaultModel, getConfigPath } from '@cervellaswarm/core/config';
 
 /**
  * Run diagnostic checks

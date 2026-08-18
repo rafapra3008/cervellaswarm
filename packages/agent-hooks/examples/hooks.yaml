@@ -66,3 +66,42 @@ bash_validator:
   # Add your own safe rm -rf targets (regex)
   extra_safe_rm:
     # - ".angular/?"
+
+# ---------------------------------------------------------------------------
+# Quality Validator - SNCP 5.1 metrics (SessionEnd hook, S519 P4.4)
+# Validates PROMPT_RIPRESA quality (6 metrics, mai blocco, sempre warning).
+# State detection 3-state A/B/C (legacy 5.0 / partial split / complete 5.1).
+# Disable via env var: SNCP_QUALITY_VALIDATOR_DISABLE=1
+# ---------------------------------------------------------------------------
+quality_validator:
+  # Metric 1: Density (H2/H3 + action bullets) / righe totali
+  density_min: 0.30
+  density_max: 0.55
+
+  # Metric 2: Recency scope-restricted (DOVE SIAMO + ProxStep sezioni)
+  recency_max_old_pct: 0.30   # max 30% entries >90gg
+  recency_min_recent_h2: 2    # min 2 H2 <=14gg in DOVE SIAMO
+
+  # Metric 3: Coverage sezioni obbligatorie
+  coverage_hard:              # FAIL se mancano tutte 3
+    - "status"
+    - "dove siamo"
+    - "puntator"
+  coverage_warn:              # WARN se mancano
+    - "prossim"
+    - "lezion"
+
+  # Metric 4: Actionability (step con owner+effort in ProxStep)
+  actionability_min: 3
+
+  # Metric 5: Anti-rot (% path navigabili come markdown link)
+  anti_rot_min_pct: 0.80
+
+  # Metric 6: Self-sufficiency (prime N righe rispondono 3 boolean Q)
+  self_sufficiency_lines: 50
+
+  # Migration policy: PROMPT_RIPRESA < N righe restano single-file (SNCP 5.0)
+  split_threshold_lines: 150
+
+  # Report dir relativa a project root
+  report_dir: ".sncp/reports/daily"

@@ -9,25 +9,23 @@ and check_properties() static checker against DelegateTask and ArchitectFlow.
 """
 
 import pytest
-
+from cervellaswarm_lingua_universale.protocols import (
+    ArchitectFlow,
+    DelegateTask,
+    Protocol,
+    ProtocolChoice,
+    ProtocolStep,
+)
 from cervellaswarm_lingua_universale.spec import (
     PropertyKind,
-    PropertyVerdict,
-    PropertySpec,
-    ProtocolSpec,
-    PropertyResult,
     PropertyReport,
+    PropertyResult,
+    PropertySpec,
+    PropertyVerdict,
+    ProtocolSpec,
     check_properties,
 )
-from cervellaswarm_lingua_universale.protocols import (
-    DelegateTask,
-    ArchitectFlow,
-    Protocol,
-    ProtocolStep,
-    ProtocolChoice,
-)
 from cervellaswarm_lingua_universale.types import MessageKind
-
 
 # ============================================================
 # PropertySpec - dataclass validation

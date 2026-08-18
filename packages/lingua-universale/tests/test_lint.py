@@ -30,7 +30,6 @@ import textwrap
 from pathlib import Path
 
 import pytest
-
 from cervellaswarm_lingua_universale._ast import (
     AgentNode,
     AlwaysTerminates,
@@ -50,7 +49,6 @@ from cervellaswarm_lingua_universale._lint import (
     lint_program,
     lint_source,
 )
-
 
 # ============================================================
 # Helpers
@@ -944,6 +942,7 @@ class TestCLI:
             [sys.executable, "-m", "cervellaswarm_lingua_universale", *args],
             capture_output=True,
             text=True,
+            timeout=10,
         )
 
     def test_cli_lint_clean_file_exit_0(self, tmp_path):

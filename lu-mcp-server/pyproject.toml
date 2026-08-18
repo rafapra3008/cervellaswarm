@@ -8,7 +8,7 @@ version = "0.1.3"
 description = "MCP server for Lingua Universale protocol verification -- verify AI agent communication with session types"
 readme = "README.md"
 license = "Apache-2.0"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [{name = "CervellaSwarm", email = "noreply@cervellaswarm.com"}]
 keywords = ["mcp", "session-types", "protocol-verification", "ai-agents", "formal-methods"]
 classifiers = [

@@ -9,7 +9,6 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
-
 from cervellaswarm_event_store.budget import (
     BudgetAlert,
     BudgetConfig,
@@ -19,7 +18,6 @@ from cervellaswarm_event_store.budget import (
     save_config,
 )
 from cervellaswarm_event_store.cli import main_budget
-
 
 # ====================================================================
 # BudgetConfig dataclass

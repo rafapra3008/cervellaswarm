@@ -24,7 +24,6 @@ from __future__ import annotations
 import textwrap
 
 import pytest
-
 from cervellaswarm_lingua_universale._compiler import ASTCompiler, CompiledModule
 from cervellaswarm_lingua_universale._parser import parse
 
@@ -39,7 +38,7 @@ def _roundtrip(source: str, filename: str = "golden.lu") -> CompiledModule:
 def _exec_source(result: CompiledModule) -> dict:
     """Execute compiled Python and return the namespace."""
     ns: dict = {}
-    exec(compile(result.python_source, result.source_file, "exec"), ns)  # noqa: S102
+    exec(compile(result.python_source, result.source_file, "exec"), ns)  # noqa: S102  # nosec B102
     return ns
 
 

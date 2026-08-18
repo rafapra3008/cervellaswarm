@@ -5,13 +5,12 @@
 
 import json
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from io import StringIO
 from pathlib import Path
 from unittest.mock import MagicMock, call, patch
 
 import pytest
-
 from cervellaswarm_agent_hooks.git_reminder import (
     get_uncommitted_count,
     main,
@@ -19,7 +18,6 @@ from cervellaswarm_agent_hooks.git_reminder import (
     should_remind,
     update_reminder_state,
 )
-
 
 # ---------------------------------------------------------------------------
 # get_uncommitted_count
@@ -56,7 +54,7 @@ class TestGetUncommittedCount:
             assert get_uncommitted_count(str(tmp_path)) == 0
 
     def test_subprocess_exception_returns_zero(self, tmp_path):
-        with patch("subprocess.run", side_effect=Exception("git not found")):
+        with patch("subprocess.run", side_effect=OSError("git not found")):
             assert get_uncommitted_count(str(tmp_path)) == 0
 
     def test_timeout_exception_returns_zero(self, tmp_path):
@@ -80,7 +78,7 @@ class TestShouldRemind:
 
     def test_first_time_cwd_returns_true(self, tmp_path):
         state_file = tmp_path / "state.json"
-        state_file.write_text(json.dumps({"/other/project": datetime.now().isoformat()}))
+        state_file.write_text(json.dumps({"/other/project": datetime.now(tz=timezone.utc).isoformat()}))
         with patch(
             "cervellaswarm_agent_hooks.git_reminder.REMINDER_STATE_FILE", state_file
         ):
@@ -89,7 +87,7 @@ class TestShouldRemind:
     def test_recent_reminder_returns_false(self, tmp_path):
         state_file = tmp_path / "state.json"
         # Recent = 5 minutes ago
-        recent = (datetime.now() - timedelta(minutes=5)).isoformat()
+        recent = (datetime.now(tz=timezone.utc) - timedelta(minutes=5)).isoformat()
         state_file.write_text(json.dumps({"/some/project": recent}))
         with patch(
             "cervellaswarm_agent_hooks.git_reminder.REMINDER_STATE_FILE", state_file
@@ -99,7 +97,7 @@ class TestShouldRemind:
     def test_old_reminder_returns_true(self, tmp_path):
         state_file = tmp_path / "state.json"
         # Old = 60 minutes ago (past the 30-min interval)
-        old = (datetime.now() - timedelta(minutes=60)).isoformat()
+        old = (datetime.now(tz=timezone.utc) - timedelta(minutes=60)).isoformat()
         state_file.write_text(json.dumps({"/some/project": old}))
         with patch(
             "cervellaswarm_agent_hooks.git_reminder.REMINDER_STATE_FILE", state_file
@@ -133,7 +131,7 @@ class TestUpdateReminderState:
 
     def test_updates_existing_entry(self, tmp_path):
         state_file = tmp_path / "state.json"
-        old_time = (datetime.now() - timedelta(hours=2)).isoformat()
+        old_time = (datetime.now(tz=timezone.utc) - timedelta(hours=2)).isoformat()
         state_file.write_text(json.dumps({"/my/project": old_time}))
         with patch(
             "cervellaswarm_agent_hooks.git_reminder.REMINDER_STATE_FILE", state_file
@@ -141,7 +139,9 @@ class TestUpdateReminderState:
             update_reminder_state("/my/project")
         state = json.loads(state_file.read_text())
         new_time = datetime.fromisoformat(state["/my/project"])
-        assert (datetime.now() - new_time).total_seconds() < 5
+        if new_time.tzinfo is None:
+            new_time = new_time.replace(tzinfo=timezone.utc)
+        assert (datetime.now(tz=timezone.utc) - new_time).total_seconds() < 5
 
     def test_exception_does_not_raise(self, tmp_path):
         # Should fail silently
@@ -199,7 +199,7 @@ class TestSendNotification:
 
     def test_exception_in_notification_is_silent(self):
         # Both osascript and notify-send raise
-        with patch("subprocess.run", side_effect=Exception("no notification")):
+        with patch("subprocess.run", side_effect=OSError("no notification")):
             # Should not raise
             send_notification(1)
 

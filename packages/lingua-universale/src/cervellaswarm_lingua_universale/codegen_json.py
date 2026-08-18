@@ -30,7 +30,8 @@ Research: ``.sncp/.../reports/RESEARCH_20260315_JSON_SCHEMA_CODEGEN.md``
 from __future__ import annotations
 
 import json
-from typing import TYPE_CHECKING, Sequence
+from collections.abc import Sequence
+from typing import TYPE_CHECKING
 
 from ._codegen_common import used_message_kinds as _used_message_kinds
 from .protocols import Protocol, ProtocolChoice, ProtocolElement, ProtocolStep

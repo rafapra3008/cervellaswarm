@@ -9,13 +9,12 @@ an architect planning phase or directly to workers. Provides structured plan
 validation and a fallback mechanism after repeated rejections.
 """
 
-from dataclasses import dataclass, field
-from datetime import datetime
-from enum import Enum
-from pathlib import Path
-from typing import Optional
 import json
 import re
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from enum import Enum
+from pathlib import Path
 
 from cervellaswarm_task_orchestration.task_classifier import (
     ClassificationResult,
@@ -75,11 +74,11 @@ class ArchitectSession:
     task_id: str
     task_description: str
     status: PlanStatus = PlanStatus.DRAFT
-    plan_path: Optional[Path] = None
+    plan_path: Path | None = None
     revision_count: int = 0
-    created_at: datetime = field(default_factory=datetime.now)
-    approved_at: Optional[datetime] = None
-    approved_by: Optional[str] = None
+    created_at: datetime = field(default_factory=lambda: datetime.now(tz=timezone.utc))
+    approved_at: datetime | None = None
+    approved_by: str | None = None
     rejection_reasons: list[str] = field(default_factory=list)
 
 
@@ -102,7 +101,7 @@ _WORKER_KEYWORDS: dict[str, list[str]] = {
 
 def route_task(
     task_description: str,
-    task_id: Optional[str] = None,
+    task_id: str | None = None,
     force_architect: bool = False,
     force_direct: bool = False,
 ) -> RoutingDecision:
@@ -287,7 +286,7 @@ def validate_plan_file(plan_path: Path) -> PlanValidationResult:
     return validate_plan(content)
 
 
-def _extract_section(content: str, start_marker: str, end_marker: str) -> Optional[str]:
+def _extract_section(content: str, start_marker: str, end_marker: str) -> str | None:
     """Extract a section between two markers."""
     start_idx = content.find(start_marker)
     if start_idx == -1:
@@ -398,12 +397,12 @@ def create_session(task_id: str, task_description: str) -> ArchitectSession:
 def approve_plan(session: ArchitectSession, approved_by: str = "coordinator") -> ArchitectSession:
     """Approve a plan."""
     session.status = PlanStatus.APPROVED
-    session.approved_at = datetime.now()
+    session.approved_at = datetime.now(tz=timezone.utc)
     session.approved_by = approved_by
     return session
 
 
-def get_plan_path(task_id: str, base_dir: Optional[Path] = None) -> Path:
+def get_plan_path(task_id: str, base_dir: Path | None = None) -> Path:
     """Return the standard path for a plan file."""
     base = base_dir or Path(".swarm/plans")
     return base / f"PLAN_{task_id}.md"
@@ -411,7 +410,7 @@ def get_plan_path(task_id: str, base_dir: Optional[Path] = None) -> Path:
 
 def save_session_state(
     session: ArchitectSession,
-    output_dir: Optional[Path] = None,
+    output_dir: Path | None = None,
 ) -> Path:
     """
     Save session state to disk as JSON.

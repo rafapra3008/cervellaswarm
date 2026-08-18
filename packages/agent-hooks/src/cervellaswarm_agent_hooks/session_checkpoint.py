@@ -23,21 +23,13 @@ import json
 import os
 import subprocess
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
+from ._utils import find_project_root
 from .config import get_hook_config
 
 __version__ = "1.0.0"
-
-
-def find_project_root(cwd: str) -> Path | None:
-    """Find project root by walking up to the nearest .git directory."""
-    current = Path(cwd)
-    for parent in [current, *current.parents]:
-        if (parent / ".git").exists():
-            return parent
-    return None
 
 
 def git_command(args: list[str], cwd: str) -> str:
@@ -51,7 +43,7 @@ def git_command(args: list[str], cwd: str) -> str:
             timeout=10,
         )
         return result.stdout.strip() if result.returncode == 0 else ""
-    except Exception as e:
+    except (OSError, ValueError, KeyError) as e:
         print(f"session_checkpoint: git command failed: {e}", file=sys.stderr)
         return ""
 
@@ -93,7 +85,7 @@ def get_branch(cwd: str) -> str:
 
 def build_checkpoint(cwd: str, config: dict) -> str:
     """Build the checkpoint content."""
-    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+    now = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M")
     branch = get_branch(cwd)
     project_name = Path(cwd).name
 
@@ -168,7 +160,7 @@ def main():
     try:
         state_path.parent.mkdir(parents=True, exist_ok=True)
         state_path.write_text(checkpoint + "\n", encoding="utf-8")
-    except Exception as e:
+    except (OSError, ValueError, KeyError) as e:
         print(f"session_checkpoint: failed to write {state_path}: {e}", file=sys.stderr)
 
     print(json.dumps({"result": f"Checkpoint saved to {state_file}"}))

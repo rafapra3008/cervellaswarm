@@ -65,12 +65,11 @@ import os
 from pathlib import Path
 from typing import Dict, List
 
-
-from .treesitter_parser import TreesitterParser
-from .symbol_cache import SymbolCache
-from .symbol_types import Symbol
 from .language_builtins import PYTHON_BUILTINS, TS_BUILTINS
 from .python_extractor import PythonExtractor
+from .symbol_cache import SymbolCache
+from .symbol_types import Symbol
+from .treesitter_parser import TreesitterParser
 from .typescript_extractor import TypeScriptExtractor
 
 # Configure logging

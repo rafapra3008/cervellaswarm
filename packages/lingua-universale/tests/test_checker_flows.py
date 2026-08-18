@@ -6,7 +6,6 @@ with invalid branch, choose_branch when not at choice point.
 """
 
 import pytest
-
 from cervellaswarm_lingua_universale.checker import (
     ProtocolViolation,
     SessionChecker,
@@ -31,7 +30,6 @@ from cervellaswarm_lingua_universale.types import (
     TaskResult,
     TaskStatus,
 )
-
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 

@@ -5,17 +5,16 @@
 
 from __future__ import annotations
 
-import pytest
 from pathlib import Path
 
-from cervellaswarm_lingua_universale._init_project import (
-    init_project,
-    _template_protocol,
-    _template_test,
-    _template_readme,
-)
+import pytest
 from cervellaswarm_lingua_universale._eval import check_source, verify_source
-
+from cervellaswarm_lingua_universale._init_project import (
+    _template_protocol,
+    _template_readme,
+    _template_test,
+    init_project,
+)
 
 # ============================================================
 # Template generation

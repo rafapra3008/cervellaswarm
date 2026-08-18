@@ -22,18 +22,10 @@ import os
 import sys
 from pathlib import Path
 
+from ._utils import find_project_root
 from .config import get_hook_config
 
 __version__ = "1.0.0"
-
-
-def find_project_root(cwd: str) -> Path | None:
-    """Find project root by walking up to the nearest .git directory."""
-    current = Path(cwd)
-    for parent in [current, *current.parents]:
-        if (parent / ".git").exists():
-            return parent
-    return None
 
 
 def safe_read(path: Path, max_lines: int = 0) -> str | None:
@@ -48,7 +40,7 @@ def safe_read(path: Path, max_lines: int = 0) -> str | None:
                 content = "\n".join(lines[:max_lines])
                 content += f"\n\n... ({len(lines) - max_lines} more lines)"
         return content
-    except Exception as e:
+    except (OSError, UnicodeDecodeError, ValueError) as e:
         print(f"context_inject: failed to read {path}: {e}", file=sys.stderr)
         return None
 
@@ -126,7 +118,7 @@ def main():
         }
         print(json.dumps(result))
 
-    except Exception as e:
+    except (OSError, UnicodeDecodeError, ValueError) as e:
         print(f"context_inject: {e}", file=sys.stderr)
         print(json.dumps({}))
 

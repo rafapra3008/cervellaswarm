@@ -15,7 +15,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { existsSync } from 'fs';
 import { join } from 'path';
-import * as config from '../config/manager.js';
+import * as config from '../config/index.js';
 
 // Check symbols
 const CHECK_OK = chalk.green('✓');

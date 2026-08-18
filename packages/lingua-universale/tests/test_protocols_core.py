@@ -5,14 +5,12 @@ Protocol creation with valid/invalid roles, empty name, single role.
 """
 
 import pytest
-
 from cervellaswarm_lingua_universale.protocols import (
     Protocol,
     ProtocolChoice,
     ProtocolStep,
 )
 from cervellaswarm_lingua_universale.types import MessageKind
-
 
 # ── ProtocolStep ─────────────────────────────────────────────────────────────
 

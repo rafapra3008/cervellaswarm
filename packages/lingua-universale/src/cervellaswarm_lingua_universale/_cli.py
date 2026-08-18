@@ -33,8 +33,9 @@ import argparse
 import sys
 from pathlib import Path
 
-from ._colors import colors as _c, init_colors as _init_colors
-from ._eval import check_file, verify_file, run_file, EvalResult
+from ._colors import colors as _c
+from ._colors import init_colors as _init_colors
+from ._eval import EvalResult, check_file, run_file, verify_file
 
 
 def _print_result(result: EvalResult, *, verbose: bool = False) -> None:
@@ -271,6 +272,7 @@ def _cmd_chat(args: argparse.Namespace) -> int:
 def _cmd_demo(args: argparse.Namespace) -> int:
     """Handle ``lu demo``: run a scripted La Nonna demo autonomously."""
     import time
+
     from ._intent_bridge import ChatSession
 
     lang = args.lang
@@ -392,7 +394,7 @@ def _discover_lu_files(path: str) -> list[Path]:
 
 def _cmd_lint(args: argparse.Namespace) -> int:
     """Handle ``lu lint <path>`` (file or directory)."""
-    from ._lint import lint_file, LintSeverity
+    from ._lint import LintSeverity, lint_file
 
     ignore = frozenset(c.strip() for c in args.ignore.split(",") if c.strip()) if args.ignore else frozenset()
 
@@ -607,7 +609,8 @@ def _cmd_generate(args: argparse.Namespace) -> int:
 def _cmd_mcp_audit(args: argparse.Namespace) -> int:
     """Audit an MCP server for protocol safety."""
     import json as _json_mod
-    from ._mcp_audit import load_manifest, audit_tools, render_terminal, render_json
+
+    from ._mcp_audit import audit_tools, load_manifest, render_json, render_terminal
 
     try:
         server_name, tools = load_manifest(args.manifest)

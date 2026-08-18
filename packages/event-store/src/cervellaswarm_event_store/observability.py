@@ -11,20 +11,35 @@ Usage data is extracted from JSONL transcripts (assistant messages contain
 Anthropic API usage metadata: input_tokens, output_tokens, cache tokens).
 """
 
+import logging
 import sqlite3
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
-from typing import Optional
 
 from cervellaswarm_event_store.writer import _new_id, _utc_now
 
+logger = logging.getLogger(__name__)
+
 # ------------------------------------------------------------------
 # Pricing (per million tokens, USD)
-# Updated: March 2026 -- adjust when pricing changes
+# Updated: May 2026 (S526) -- added Opus 4.7/4.8. Adjust when pricing changes.
 # ------------------------------------------------------------------
 
 _MODEL_PRICING: dict[str, dict[str, float]] = {
-    # Pricing as of March 2026 -- https://docs.anthropic.com/en/docs/about-claude/pricing
+    # Pricing as of May 2026 -- https://docs.anthropic.com/en/docs/about-claude/pricing
+    # Opus 4.6/4.7/4.8 condividono $5/$25 (annuncio Opus 4.8: "unchanged from 4.7")
+    "claude-opus-4-8": {
+        "input": 5.0,
+        "output": 25.0,
+        "cache_read": 0.50,
+        "cache_write": 6.25,
+    },
+    "claude-opus-4-7": {
+        "input": 5.0,
+        "output": 25.0,
+        "cache_read": 0.50,
+        "cache_write": 6.25,
+    },
     "claude-opus-4-6": {
         "input": 5.0,
         "output": 25.0,
@@ -48,9 +63,14 @@ _MODEL_PRICING: dict[str, dict[str, float]] = {
 # Aliases for model names that may appear without date suffix or with context suffix
 _MODEL_PRICING["claude-haiku-4-5"] = _MODEL_PRICING["claude-haiku-4-5-20251001"]
 _MODEL_PRICING["claude-opus-4-6[1m]"] = _MODEL_PRICING["claude-opus-4-6"]
+_MODEL_PRICING["claude-opus-4-7[1m]"] = _MODEL_PRICING["claude-opus-4-7"]
+_MODEL_PRICING["claude-opus-4-8[1m]"] = _MODEL_PRICING["claude-opus-4-8"]
 
 # Fallback for unknown models (use Sonnet pricing as safe middle ground)
 _DEFAULT_PRICING = _MODEL_PRICING["claude-sonnet-4-6"]
+
+# Track unknown models already warned about (avoid log spam on hot paths)
+_warned_models: set[str] = set()
 
 
 def estimate_cost(
@@ -72,7 +92,16 @@ def estimate_cost(
     Returns:
         Estimated cost in USD.
     """
-    pricing = _MODEL_PRICING.get(model, _DEFAULT_PRICING)
+    pricing = _MODEL_PRICING.get(model)
+    if pricing is None:
+        if model not in _warned_models:
+            _warned_models.add(model)
+            logger.warning(
+                "Unknown model '%s' in estimate_cost; using Sonnet fallback "
+                "(under-reports Opus cost ~40%%). Add it to _MODEL_PRICING.",
+                model,
+            )
+        pricing = _DEFAULT_PRICING
     cost = (
         input_tokens * pricing["input"]
         + output_tokens * pricing["output"]
@@ -104,13 +133,19 @@ class TokenUsage:
         total_messages: Number of assistant messages in the session.
         total_tool_calls: Number of tool calls in the session.
         cost_usd: Estimated cost in USD.
+        start_time: ISO 8601 UTC string of first message (S512).
+        end_time: ISO 8601 UTC string of last message (S512).
+        duration_seconds: Session duration in seconds (S512).
+        agent_names: JSON-encoded list of agent types used (S512).
+        tasks_completed: Number of completed tasks (S512).
+        errors_count: Number of errors/failures (S512).
     """
 
     session_id: str
     id: str = field(default_factory=_new_id)
     timestamp: str = field(default_factory=_utc_now)
-    project: Optional[str] = None
-    model: Optional[str] = None
+    project: str | None = None
+    model: str | None = None
     input_tokens: int = 0
     output_tokens: int = 0
     cache_read_tokens: int = 0
@@ -118,12 +153,19 @@ class TokenUsage:
     total_messages: int = 0
     total_tool_calls: int = 0
     cost_usd: float = 0.0
+    start_time: str | None = None
+    end_time: str | None = None
+    duration_seconds: int = 0
+    agent_names: str | None = None
+    tasks_completed: int = 0
+    errors_count: int = 0
 
     def __post_init__(self) -> None:
         if not self.session_id or not self.session_id.strip():
             raise ValueError("session_id must be a non-empty string")
         for attr in ("input_tokens", "output_tokens", "cache_read_tokens",
-                      "cache_creation_tokens", "total_messages", "total_tool_calls"):
+                      "cache_creation_tokens", "total_messages", "total_tool_calls",
+                      "duration_seconds", "tasks_completed", "errors_count"):
             if getattr(self, attr) < 0:
                 raise ValueError(f"{attr} must be >= 0")
         if self.cost_usd < 0:
@@ -168,12 +210,16 @@ def _insert_token_usage(conn: sqlite3.Connection, usage: TokenUsage) -> str:
             id, timestamp, session_id, project, model,
             input_tokens, output_tokens,
             cache_read_tokens, cache_creation_tokens,
-            total_messages, total_tool_calls, cost_usd
+            total_messages, total_tool_calls, cost_usd,
+            start_time, end_time, duration_seconds,
+            agent_names, tasks_completed, errors_count
         ) VALUES (
             :id, :timestamp, :session_id, :project, :model,
             :input_tokens, :output_tokens,
             :cache_read_tokens, :cache_creation_tokens,
-            :total_messages, :total_tool_calls, :cost_usd
+            :total_messages, :total_tool_calls, :cost_usd,
+            :start_time, :end_time, :duration_seconds,
+            :agent_names, :tasks_completed, :errors_count
         )
         """,
         {
@@ -189,6 +235,12 @@ def _insert_token_usage(conn: sqlite3.Connection, usage: TokenUsage) -> str:
             "total_messages": usage.total_messages,
             "total_tool_calls": usage.total_tool_calls,
             "cost_usd": usage.cost_usd,
+            "start_time": usage.start_time,
+            "end_time": usage.end_time,
+            "duration_seconds": usage.duration_seconds,
+            "agent_names": usage.agent_names,
+            "tasks_completed": usage.tasks_completed,
+            "errors_count": usage.errors_count,
         },
     )
     conn.commit()
@@ -236,55 +288,21 @@ def _query_usage(
     cursor = conn.cursor()
 
     # Totals
-    cursor.execute(
-        f"""
-        SELECT
-            COUNT(*) as sessions,
-            COALESCE(SUM(input_tokens), 0) as inp,
-            COALESCE(SUM(output_tokens), 0) as out,
-            COALESCE(SUM(cache_read_tokens), 0) as cr,
-            COALESCE(SUM(cache_creation_tokens), 0) as cc,
-            COALESCE(SUM(cost_usd), 0) as cost
-        FROM token_usage
-        {where_sql}
-        """,
-        params,
-    )
+    q_totals = f"SELECT COUNT(*) as sessions, COALESCE(SUM(input_tokens), 0) as inp, COALESCE(SUM(output_tokens), 0) as out, COALESCE(SUM(cache_read_tokens), 0) as cr, COALESCE(SUM(cache_creation_tokens), 0) as cc, COALESCE(SUM(cost_usd), 0) as cost FROM token_usage {where_sql}"  # nosec B608
+    cursor.execute(q_totals, params)
     row = cursor.fetchone()
 
     # By model
-    cursor.execute(
-        f"""
-        SELECT
-            model,
-            SUM(input_tokens + output_tokens + cache_read_tokens + cache_creation_tokens) as tokens,
-            SUM(cost_usd) as cost
-        FROM token_usage
-        {where_sql}
-        GROUP BY model
-        ORDER BY cost DESC
-        """,
-        params,
-    )
+    q_model = f"SELECT model, SUM(input_tokens + output_tokens + cache_read_tokens + cache_creation_tokens) as tokens, SUM(cost_usd) as cost FROM token_usage {where_sql} GROUP BY model ORDER BY cost DESC"  # nosec B608
+    cursor.execute(q_model, params)
     by_model = {
         r["model"] or "unknown": {"tokens": r["tokens"], "cost": round(r["cost"], 4)}
         for r in cursor.fetchall()
     }
 
     # By project
-    cursor.execute(
-        f"""
-        SELECT
-            project,
-            SUM(input_tokens + output_tokens + cache_read_tokens + cache_creation_tokens) as tokens,
-            SUM(cost_usd) as cost
-        FROM token_usage
-        {where_sql}
-        GROUP BY project
-        ORDER BY cost DESC
-        """,
-        params,
-    )
+    q_project = f"SELECT project, SUM(input_tokens + output_tokens + cache_read_tokens + cache_creation_tokens) as tokens, SUM(cost_usd) as cost FROM token_usage {where_sql} GROUP BY project ORDER BY cost DESC"  # nosec B608
+    cursor.execute(q_project, params)
     by_project = {
         r["project"] or "unknown": {"tokens": r["tokens"], "cost": round(r["cost"], 4)}
         for r in cursor.fetchall()

@@ -20,13 +20,13 @@ from pathlib import Path
 from cervellaswarm_lingua_universale._ast import ProtocolNode
 from cervellaswarm_lingua_universale._eval import _protocol_node_to_runtime
 from cervellaswarm_lingua_universale._parser import parse
-from cervellaswarm_lingua_universale.checker import SessionChecker, ProtocolViolation
+from cervellaswarm_lingua_universale.checker import ProtocolViolation, SessionChecker
 from cervellaswarm_lingua_universale.types import (
+    Broadcast,
+    DirectMessage,
     TaskRequest,
     TaskResult,
     TaskStatus,
-    DirectMessage,
-    Broadcast,
 )
 
 LU_FILE = Path(__file__).parent / "dogfood_agent_orchestration.lu"

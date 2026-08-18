@@ -10,13 +10,29 @@ end-to-end round-trip (Guardiana F4 requirement).
 
 from __future__ import annotations
 
+import shutil
 import subprocess
 import sys
+
+import pytest
+
+# --- S622: DIPENDENZA ASSENTE = SKIP, NON FALLIMENTO ---------------------------------------
+# Questi test fallivano con `FileNotFoundError: [Errno 2] No such file or directory: 'lu'` -- cioe' perche' la CLI `lu` non
+# e' installato in questo ambiente, NON perche' il codice sia rotto. Sono due cose diverse:
+# "non l'ho verificato qui" e "e' guasto". Chiamarle uguali produce un FALSO ROSSO, che e' lo
+# specchio del falso verde: 34 rossi permanenti su 11.168 test insegnano a non leggere piu' la
+# suite -- e allora una regressione VERA passa inosservata nel rumore.
+# SKIP con la ragione scritta: chi legge "N skipped" sa QUALI dimensioni non sono state
+# verificate, e puo' installare la dipendenza se gli interessa. Stessa disciplina dello stato
+# SKIP introdotto oggi in swarm-doctor.
+_LU_CLI = shutil.which("lu")
+requires_lu_cli = pytest.mark.skipif(
+    _LU_CLI is None, reason="CLI `lu` non installata in questo ambiente (pip install -e packages/lingua-universale)"
+)
 import textwrap
 from pathlib import Path
 
 import pytest
-
 from cervellaswarm_lingua_universale._generate import (
     GenerateResult,
     _parse_to_protocols,
@@ -237,7 +253,7 @@ class TestEndToEndRoundTrip:
 
         # Execute the generated code
         namespace = {}
-        exec(code, namespace)
+        exec(code, namespace)  # nosec B102
 
         # Find the session class (codegen names it ProtocolSession)
         session_cls = namespace.get("ProtocolSession") or namespace.get("HelloWorldSession")
@@ -265,7 +281,7 @@ class TestEndToEndRoundTrip:
         code = results[0].source
 
         namespace = {}
-        exec(code, namespace)
+        exec(code, namespace)  # nosec B102
 
         # Find session class
         session_cls = namespace.get("ProtocolSession") or namespace.get("ApprovalFlowSession")
@@ -403,6 +419,7 @@ class TestTypeScriptViabridge:
 
 # -- CLI integration ---------------------------------------------------------
 
+@requires_lu_cli
 class TestCLIGenerate:
     """Tests for `lu generate` CLI command."""
 

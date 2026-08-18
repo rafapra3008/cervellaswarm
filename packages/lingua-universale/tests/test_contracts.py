@@ -17,9 +17,7 @@ from __future__ import annotations
 import pickle
 
 import pytest
-
 from cervellaswarm_lingua_universale._contracts import ContractViolation
-
 
 # ---------------------------------------------------------------------------
 # Construction & attributes
@@ -161,7 +159,7 @@ class TestContractViolationPickle:
 
     def test_pickle_round_trip_requires(self) -> None:
         exc = ContractViolation("input.valid", kind="requires", source="line 5, col 0")
-        restored = pickle.loads(pickle.dumps(exc))
+        restored = pickle.loads(pickle.dumps(exc))  # nosec B301
         assert str(restored) == str(exc)
         assert restored.condition == exc.condition
         assert restored.kind == exc.kind
@@ -169,14 +167,14 @@ class TestContractViolationPickle:
 
     def test_pickle_round_trip_ensures(self) -> None:
         exc = ContractViolation("result.ok", kind="ensures", source="line 12, col 4")
-        restored = pickle.loads(pickle.dumps(exc))
+        restored = pickle.loads(pickle.dumps(exc))  # nosec B301
         assert restored.condition == "result.ok"
         assert restored.kind == "ensures"
         assert restored.source == "line 12, col 4"
 
     def test_pickle_round_trip_no_source(self) -> None:
         exc = ContractViolation("x > 0")
-        restored = pickle.loads(pickle.dumps(exc))
+        restored = pickle.loads(pickle.dumps(exc))  # nosec B301
         assert restored.source == ""
 
 

@@ -12,8 +12,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Optional
-
 
 # ============================================================
 # Enums - The vocabulary of the swarm
@@ -225,9 +223,9 @@ class TaskResult:
     summary: str
     files_modified: tuple[str, ...] = ()
     files_created: tuple[str, ...] = ()
-    test_command: Optional[str] = None
-    next_steps: Optional[str] = None
-    blockers: Optional[str] = None
+    test_command: str | None = None
+    next_steps: str | None = None
+    blockers: str | None = None
 
     KIND: MessageKind = field(
         default=MessageKind.TASK_RESULT, init=False, repr=False
@@ -301,7 +299,7 @@ class PlanRequest:
 
     plan_id: str
     task_description: str
-    complexity_hint: Optional[PlanComplexity] = None
+    complexity_hint: PlanComplexity | None = None
     constraints: tuple[str, ...] = ()
 
     KIND: MessageKind = field(

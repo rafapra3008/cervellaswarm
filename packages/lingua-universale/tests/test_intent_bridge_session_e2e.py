@@ -16,14 +16,12 @@ Data model + render + i18n: test_intent_bridge_core.py
 from __future__ import annotations
 
 import pytest
-
 from cervellaswarm_lingua_universale._intent_bridge import (
     ChatPhase,
     ChatSession,
     IntentDraft,
     NLProcessor,
 )
-
 
 # ============================================================
 # Helper
@@ -43,7 +41,7 @@ def _session(inputs: list[str], *, lang: str = "en") -> tuple[ChatSession, list[
         try:
             return next(it)
         except StopIteration:
-            raise EOFError
+            raise EOFError from None
 
     def _output_fn(*args: object, **kwargs: object) -> None:
         output.append(" ".join(str(a) for a in args))
@@ -1049,7 +1047,8 @@ class TestViolationDemo:
     def test_render_violation_demo_empty_report(self) -> None:
         """Empty property report produces no violation output."""
         from cervellaswarm_lingua_universale._intent_bridge import (
-            ChatSession, IntentDraft,
+            ChatSession,
+            IntentDraft,
         )
         from cervellaswarm_lingua_universale.spec import PropertyReport
 
@@ -1069,7 +1068,8 @@ class TestViolationDemo:
     def test_render_violation_demo_none_report(self) -> None:
         """None report produces no violation output."""
         from cervellaswarm_lingua_universale._intent_bridge import (
-            ChatSession, IntentDraft,
+            ChatSession,
+            IntentDraft,
         )
         session = ChatSession(
             lang="en",
@@ -1088,11 +1088,15 @@ class TestViolationDemo:
     def test_role_exclusive_violation_demo(self) -> None:
         """ROLE_EXCLUSIVE violation demo shows wrong role attempting action."""
         from cervellaswarm_lingua_universale._intent_bridge import (
-            ChatSession, IntentDraft,
+            ChatSession,
+            IntentDraft,
         )
         from cervellaswarm_lingua_universale.spec import (
-            PropertyKind, PropertyReport, PropertyResult,
-            PropertySpec, PropertyVerdict,
+            PropertyKind,
+            PropertyReport,
+            PropertyResult,
+            PropertySpec,
+            PropertyVerdict,
         )
 
         session = ChatSession(
@@ -1126,11 +1130,15 @@ class TestViolationDemo:
     def test_role_exclusive_violation_demo_italian(self) -> None:
         """ROLE_EXCLUSIVE violation demo works in Italian."""
         from cervellaswarm_lingua_universale._intent_bridge import (
-            ChatSession, IntentDraft,
+            ChatSession,
+            IntentDraft,
         )
         from cervellaswarm_lingua_universale.spec import (
-            PropertyKind, PropertyReport, PropertyResult,
-            PropertySpec, PropertyVerdict,
+            PropertyKind,
+            PropertyReport,
+            PropertyResult,
+            PropertySpec,
+            PropertyVerdict,
         )
 
         session = ChatSession(
@@ -1164,11 +1172,15 @@ class TestViolationDemo:
     def test_role_exclusive_with_insufficient_params(self) -> None:
         """ROLE_EXCLUSIVE with < 2 params is skipped gracefully."""
         from cervellaswarm_lingua_universale._intent_bridge import (
-            ChatSession, IntentDraft,
+            ChatSession,
+            IntentDraft,
         )
         from cervellaswarm_lingua_universale.spec import (
-            PropertyKind, PropertyReport, PropertyResult,
-            PropertySpec, PropertyVerdict,
+            PropertyKind,
+            PropertyReport,
+            PropertyResult,
+            PropertySpec,
+            PropertyVerdict,
         )
 
         session = ChatSession(
@@ -1202,11 +1214,15 @@ class TestViolationDemo:
     def test_both_no_deletion_and_role_exclusive(self) -> None:
         """Both NO_DELETION and ROLE_EXCLUSIVE show in same violation demo."""
         from cervellaswarm_lingua_universale._intent_bridge import (
-            ChatSession, IntentDraft,
+            ChatSession,
+            IntentDraft,
         )
         from cervellaswarm_lingua_universale.spec import (
-            PropertyKind, PropertyReport, PropertyResult,
-            PropertySpec, PropertyVerdict,
+            PropertyKind,
+            PropertyReport,
+            PropertyResult,
+            PropertySpec,
+            PropertyVerdict,
         )
 
         session = ChatSession(

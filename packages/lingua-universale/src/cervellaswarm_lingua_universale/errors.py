@@ -47,15 +47,13 @@ import re
 from dataclasses import dataclass
 from enum import Enum
 from types import MappingProxyType
-from typing import Optional
 
+from ._parser import ParseError
+from ._tokenizer import TokenizeError
 from .checker import ProtocolViolation, SessionComplete
 from .dsl import DSLParseError
 from .intent import IntentParseError
 from .spec import SpecParseError
-from ._tokenizer import TokenizeError
-from ._parser import ParseError
-
 
 # ============================================================
 # Public constants
@@ -100,9 +98,9 @@ class ErrorSeverity(Enum):
 class ErrorLocation:
     """Optional location information within source text."""
 
-    line: Optional[int] = None
-    col: Optional[int] = None
-    source: Optional[str] = None  # e.g., "spec", "intent", "dsl"
+    line: int | None = None
+    col: int | None = None
+    source: str | None = None  # e.g., "spec", "intent", "dsl"
 
 
 @dataclass(frozen=True)
@@ -130,9 +128,9 @@ class HumanError:
     message: str
     suggestion: str
     technical: str
-    location: Optional[ErrorLocation] = None
-    got: Optional[str] = None
-    expected: Optional[str] = None
+    location: ErrorLocation | None = None
+    got: str | None = None
+    expected: str | None = None
     similar: tuple[str, ...] = ()
 
 
@@ -1492,7 +1490,7 @@ def suggest_similar(
 def humanize(
     exc: Exception,
     locale: str = DEFAULT_LOCALE,
-    context: Optional[dict[str, str]] = None,
+    context: dict[str, str] | None = None,
 ) -> HumanError:
     """Translate any Lingua Universale exception to a human-friendly message.
 
@@ -1783,9 +1781,9 @@ def _build(
     locale: str,
     technical: str,
     ctx: dict[str, str],
-    got: Optional[str] = None,
-    expected: Optional[str] = None,
-    location: Optional[ErrorLocation] = None,
+    got: str | None = None,
+    expected: str | None = None,
+    location: ErrorLocation | None = None,
     similar: tuple[str, ...] = (),
 ) -> HumanError:
     """Build a HumanError from catalog entry + context dict."""
@@ -2036,13 +2034,13 @@ def _classify_intent_error(exc: IntentParseError) -> tuple[str, dict[str, str]]:
 # ============================================================
 
 
-def _extract_quoted(text: str) -> Optional[str]:
+def _extract_quoted(text: str) -> str | None:
     """Extract first single- or double-quoted token from text."""
     m = re.search(r"['\"]([^'\"]+)['\"]", text)
     return m.group(1) if m else None
 
 
-def _extract_parenthesized(text: str) -> Optional[str]:
+def _extract_parenthesized(text: str) -> str | None:
     """Extract first parenthesized number from text, e.g. '(got 6)'."""
     m = re.search(r"\(got\s+([^\)]+)\)", text)
     if m:

@@ -24,7 +24,7 @@ import json
 import re
 import sys
 
-__version__ = "1.0.0"
+__version__ = "1.3.0"
 
 
 def _load_extra_patterns() -> tuple[list, list, list]:
@@ -58,7 +58,7 @@ def _load_extra_patterns() -> tuple[list, list, list]:
                 except re.error:
                     pass  # Skip invalid regex silently
         return extra_blocked, extra_risky, extra_safe
-    except Exception as e:
+    except (OSError, ValueError) as e:
         print(f"bash_validator: failed to load extra patterns: {e}", file=sys.stderr)
         return [], [], []
 
@@ -68,25 +68,49 @@ def _load_extra_patterns() -> tuple[list, list, list]:
 
 # BLOCK (deny) - IRREVERSIBLE commands, never execute
 BLOCKED_PATTERNS = [
-    # Filesystem destruction
+    # Filesystem destruction (original package style — not re-harmonized)
     (r"rm\s+(-[a-zA-Z]*f[a-zA-Z]*\s+)?/(\s|$)", "rm on root /"),
     (r"rm\s+(-[a-zA-Z]*f[a-zA-Z]*\s+)?~/", "rm on home ~/"),
     (r"rm\s+-[a-zA-Z]*rf[a-zA-Z]*\s+\.\s*$", "rm -rf . (current directory)"),
     (r"rm\s+-[a-zA-Z]*rf[a-zA-Z]*\s+\.\.", "rm -rf .. (parent directory)"),
+    # Filesystem destruction (rich style, ported from HOME v1.5.0 — S526)
+    # Prefix (?:^|[\s;&|`("']) anchors the rm at a command boundary so it also
+    # fires inside subshells/chains; flag-skip (-[-\w]+\s+)* tolerates -rf, etc.
+    # NOTE: 2 rm styles coexist by design (the 4 above are NOT re-harmonized —
+    # that would be an out-of-scope refactor).
+    (r"""(?:^|[\s;&|`("'])rm\s+(-[-\w]+\s+)*/\*""", "rm /* (glob root) -- S526"),
+    (r"""(?:^|[\s;&|`("'])rm\s+(-[-\w]+\s+)*\$\{?HOME\b""", "rm on $HOME -- S526"),
     # Git force push to main/master
     (r"git\s+push\s+.*--force\s+.*\b(main|master)\b", "force push to main/master"),
     (r"git\s+push\s+.*-f\s+.*\b(main|master)\b", "force push to main/master"),
     (r"git\s+push\s+--force\s+\S+\s+(main|master)", "force push to main/master"),
     (r"git\s+push\s+-f\s+\S+\s+(main|master)", "force push to main/master"),
+    # Git force push to main/master via +refspec (ported from HOME v1.5.0 — S526)
+    (r"git\s+push\s+\S+\s+\+(?:refs/heads/)?(?:\S*:)?(?:main|master)(?:\s|$|[;&|])", "force push +refspec to main/master -- S526"),
     # SQL destruction
     (r"DROP\s+TABLE", "DROP TABLE"),
     (r"DROP\s+DATABASE", "DROP DATABASE"),
     (r"TRUNCATE\s+TABLE", "TRUNCATE TABLE"),
+    # SQL DELETE FROM without WHERE (ported from HOME v1.5.0 — S519)
+    # anchor ^[^#]*\b (skip comments) + terminator multi (;|&&|\|\||\||$)
+    (r"^[^#]*\bDELETE\s+FROM\s+\w+\s*(?:;|&&|\|\||\||$)", "DELETE FROM without WHERE clause"),
     # System destruction
     (r"mkfs\.", "filesystem format"),
     (r"dd\s+if=.+of=/dev/", "raw write to device"),
     (r":\(\)\s*\{\s*:\s*\|\s*:\s*&\s*\}\s*;", "fork bomb"),
     (r">\s*/dev/sd[a-z]", "device overwrite"),
+    # Config overwrite via redirect (ported from HOME v1.5.0 — S519)
+    # S517 disaster scenario: settings.json overwrite = config + secret leak risk.
+    (r"^[^#]*>\s*~/\.claude/settings\.json", "overwrite ~/.claude/settings.json (config + potential leak)"),
+    (r"^[^#]*>\s*~/\.claude-insiders/settings\.json", "overwrite ~/.claude-insiders/settings.json"),
+    # Curl/wget pipe to shell (ported from HOME v1.5.0 — S519)
+    # Industry-wide anti-pattern: arbitrary code injection.
+    (r"(?:curl|wget)\s+.*\|\s*(?:bash|sh|zsh)\b", "curl/wget pipe to shell -- arbitrary code injection"),
+    # Remote main/master delete (ported from HOME v1.5.0 — S519)
+    (r"git\s+push\s+(?:origin|public)\s+--delete\s+(?:main|master)\b", "git push --delete main/master"),
+    # Mirror push overwrites ALL remote branches incl. protected (ported from HOME v1.5.0 — S519)
+    # Dual-repo workflows must use a sync script, never --mirror.
+    (r"git\s+push\s+--mirror\b", "git push --mirror overwrites ALL remote branches (incl. main). Use a sync script, never --mirror."),
 ]
 
 # ASK (confirm) - RISKY commands, ask for user confirmation
@@ -101,6 +125,17 @@ RISKY_PATTERNS = [
     (r"kill\s+-9\s+", "kill -9 forcefully terminates the process"),
     (r"docker\s+system\s+prune", "docker system prune removes Docker data"),
     (r"rm\s+-[a-zA-Z]*rf", "recursive forced removal"),
+    # ---- Ported from HOME v1.5.0 (S519 P2.3 sandbox-off extension) ----
+    # Regex copied VERBATIM (behaviour parity with the live hook); messages
+    # localised to EN for the public package. Known FPs are kept verbatim and
+    # NOT "improved" here (a fix belongs in HOME first): the `>` patterns also
+    # match `>>` (append) and `~/.zshrc.bak` (the `\b` sits at the `c`->`.`
+    # boundary). These are RISKY (ASK), so a FP costs one confirm, not a block.
+    # Lesson: bash_validator_regex_antipattern (S519).
+    (r"^[^#]*>\s*~/\.zshrc\b", "overwrite ~/.zshrc -- shell config (check backup first) -- S519"),
+    (r"^[^#]*>\s*~/\.bashrc\b", "overwrite ~/.bashrc -- shell config (check backup first) -- S519"),
+    (r"(?:curl|wget)\s+.*-[oO]\s+\S+\.sh\s+.*&&\s*(?:bash|sh|zsh)\s+\S+\.sh\b", "curl/wget download + shell exec -- review script before running -- S519"),
+    (r"sudo\s+rm\s+/etc/\w+", "sudo rm on critical /etc/ system file -- S519"),
 ]
 
 # SAFE rm -rf targets (no warning needed)
@@ -116,7 +151,7 @@ SAFE_RM_TARGETS = [
     r"\.pytest_cache/?",
     r"\.mypy_cache/?",
     r"tmp/?",
-    r"/tmp/",
+    r"/tmp/",  # nosec B108
     r"\.tsbuildinfo",
     r"\.parcel-cache/?",
     r"venv/?",
@@ -142,14 +177,31 @@ def _get_all_patterns() -> tuple[list, list, list]:
 
 
 def is_safe_rm_target(command: str, safe_targets: list | None = None) -> bool:
-    """Check if rm -rf targets a safe directory."""
+    """Check if rm -rf targets ONLY safe directories.
+
+    Every path token must match a safe pattern (not just one anywhere in
+    the line), and only the rm's own arguments are considered (parsing
+    stops at the first command terminator / redirect).
+    """
     match = re.search(r"rm\s+-[a-zA-Z]*rf[a-zA-Z]*\s+(.+)", command)
     if not match:
         return False
 
-    target = match.group(1).strip()
     targets = safe_targets if safe_targets is not None else SAFE_RM_TARGETS
-    return any(re.search(safe, target) for safe in targets)
+
+    # Only this rm's arguments: stop at the first terminator/redirect
+    target = re.split(r"[;|&<>]", match.group(1))[0]
+
+    # Path tokens only — drop flags like -v, --, etc.
+    tokens = [t for t in target.split() if not t.startswith("-")]
+    if not tokens:
+        return False
+
+    # EVERY token must be safe, otherwise the rm is NOT a safe target
+    return all(
+        any(re.search(safe, tok) for safe in targets)
+        for tok in tokens
+    )
 
 
 def check_blocked(command: str, patterns: list | None = None) -> str | None:

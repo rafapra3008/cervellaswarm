@@ -4,21 +4,20 @@
 """Tests for cervellaswarm_task_orchestration.output_validator."""
 
 import time
-import pytest
 from pathlib import Path
 
+import pytest
 from cervellaswarm_task_orchestration.output_validator import (
-    validate_output,
-    find_last_output,
-    find_task_output,
-    ValidationResult,
-    _check_corresponding_log,
-    MIN_OUTPUT_LENGTH,
     ERROR_MARKERS,
     INCOMPLETE_MARKERS,
+    MIN_OUTPUT_LENGTH,
     SUCCESS_INDICATORS,
+    ValidationResult,
+    _check_corresponding_log,
+    find_last_output,
+    find_task_output,
+    validate_output,
 )
-
 
 # ---------------------------------------------------------------------------
 # Helpers

@@ -30,16 +30,15 @@ import pytest
 
 # _voice.py has NO optional imports at module level, so this is safe.
 from cervellaswarm_lingua_universale._voice import (
-    VoiceProcessor,
-    VoiceProcessorError,
     _LANG_TO_WHISPER,
     _MODEL_SIZES,
     _VOICE_STRINGS,
+    VoiceProcessor,
+    VoiceProcessorError,
     _record_audio,
     _require_voice_deps,
     _transcribe,
 )
-
 
 # ============================================================
 # 1. Import and Structure
@@ -882,8 +881,9 @@ class TestCLIIntegration:
         assert args.mode == "nl"
 
     def test_cmd_chat_voice_missing_deps_returns_1(self) -> None:
-        from cervellaswarm_lingua_universale._cli import _cmd_chat
         import argparse
+
+        from cervellaswarm_lingua_universale._cli import _cmd_chat
 
         args = argparse.Namespace(
             voice=True,
@@ -904,8 +904,9 @@ class TestCLIIntegration:
         assert result == 1
 
     def test_cmd_chat_no_voice_does_not_import_voice(self) -> None:
-        from cervellaswarm_lingua_universale._cli import _cmd_chat
         import argparse
+
+        from cervellaswarm_lingua_universale._cli import _cmd_chat
 
         args = argparse.Namespace(
             voice=False,
@@ -930,8 +931,9 @@ class TestCLIIntegration:
         assert "input_fn" not in kwargs
 
     def test_cmd_chat_voice_creates_voice_processor(self) -> None:
-        from cervellaswarm_lingua_universale._cli import _cmd_chat
         import argparse
+
+        from cervellaswarm_lingua_universale._cli import _cmd_chat
 
         args = argparse.Namespace(
             voice=True,
@@ -966,8 +968,9 @@ class TestCLIIntegration:
         mock_vp_cls.assert_called_once_with(lang="it", model_size="tiny")
 
     def test_cmd_chat_voice_passes_lang_and_model(self) -> None:
-        from cervellaswarm_lingua_universale._cli import _cmd_chat
         import argparse
+
+        from cervellaswarm_lingua_universale._cli import _cmd_chat
 
         args = argparse.Namespace(
             voice=True,

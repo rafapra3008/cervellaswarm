@@ -292,7 +292,7 @@ def load_module(
     sys.modules[module_name] = mod
     try:
         code = compile(compiled.python_source, compiled.source_file, "exec")
-        exec(code, mod.__dict__)  # noqa: S102
+        exec(code, mod.__dict__)  # noqa: S102  # nosec B102
     except Exception as exc:
         raise InteropError(
             f"Failed to execute compiled module "

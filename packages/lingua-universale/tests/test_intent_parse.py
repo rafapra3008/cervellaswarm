@@ -9,7 +9,6 @@ and integration with downstream modules.
 """
 
 import pytest
-
 from cervellaswarm_lingua_universale.intent import (
     IntentParseError,
     IntentParseResult,
@@ -22,7 +21,6 @@ from cervellaswarm_lingua_universale.protocols import (
     ProtocolStep,
 )
 from cervellaswarm_lingua_universale.types import MessageKind
-
 
 # ============================================================
 # Basic parsing

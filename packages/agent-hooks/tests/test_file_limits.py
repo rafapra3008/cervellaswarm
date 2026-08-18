@@ -10,13 +10,11 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-
 from cervellaswarm_agent_hooks.file_limits import (
     count_lines,
     find_project_root,
     format_output,
 )
-
 
 # ---------------------------------------------------------------------------
 # count_lines
@@ -73,9 +71,9 @@ class TestFindProjectRoot:
         root = find_project_root(str(subdir))
         assert root == tmp_path
 
-    def test_no_git_returns_cwd(self, tmp_path):
+    def test_no_git_returns_none(self, tmp_path):
         root = find_project_root(str(tmp_path))
-        assert root == tmp_path
+        assert root is None
 
 
 # ---------------------------------------------------------------------------

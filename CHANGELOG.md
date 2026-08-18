@@ -7,6 +7,57 @@ adhering to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [Unreleased]
+
+### Changed
+- **Config alignment**: All 4 Python config packages (quality-gates, session-memory, event-store, agent-hooks) aligned on deep merge, consistent API (`config_path` param, `_deep_merge`). `dict(DEFAULTS)` bug fixed in agent-hooks (S509).
+- **Dep version align**: CLI `@anthropic-ai/sdk` ^0.39->^0.81 (match Core). `conf` dep removed from CLI (comes via Core) (S509).
+- **loader.py exception handling**: `except Exception` -> specific exceptions + `logging.warning`. Dict guard for empty/scalar YAML (S509).
+- **event-store broad except**: `(OSError, Exception)` -> `(OSError, ValueError, YAMLError)` with proper `_YAML_ERRORS` tuple (S509).
+- **Ruff codebase-wide**: 861 lint violations fixed (import sort, whitespace, f-strings, unused vars). Root config in pyproject.toml. 2 structural residuals.
+- **UTC datetime standardization**: ~28 source files migrated from `datetime.now()` to `datetime.now(tz=timezone.utc)`. DST risk eliminated.
+- **B904 raise-from**: 10 fix across cervella/cli + LU. Proper exception chaining.
+- **CI Node.js matrix**: 18.x/20.x -> 20.x/22.x (Node 18 EOL). `fail-fast: false` added (S508).
+- **DRY config CLI->Core**: CLI imports shared config from `@cervellaswarm/core/config` instead of local duplicates (-329 LOC) (S508).
+
+### Added
+- **+131 tests scripts/common/**: colors (33), paths (37), db (61) -- test coverage for most-imported shared modules (S509).
+- **+10 config tests**: deep merge, config_path param tests across 3 packages (S509).
+- **14 hardtest failures fixed**: S504 (10) + S498 (4) updated for monkeypatch, UTC, allowlist API (S509).
+- **+202 tests** across packages (S505 +155, S506 +47). Total: 9744.
+- **+194 JS tests** for packages/cli + packages/core (S508). CLI: 134->291, Core: 82->119. Total: 10,213.
+- `create_auto_pr.py`: 47 tests (was 0 for 360 LOC).
+- `memory_validator`: O(1) file index with PermissionError guard.
+- Il Sogno v2.5.0: atomic lock eviction via `os.rename`.
+- `patch-claude-sandbox-tls.py`: fix for gh CLI TLS in Claude Code sandbox.
+- Subprocess timeout on all 20 `subprocess.run()` calls (S507).
+- DRY `_utils.py` for agent-hooks: `find_project_root` shared across 3 modules (S507).
+- Pre-commit ruff lint check (warning, non-blocking) (S507).
+- `pytest-rerunfailures` for flaky test detection in CI (S507).
+- Bandit SAST security scan in CI (continue-on-error) (S507).
+- 3 new hook events: TaskCreated, TaskCompleted, StopFailure (S508).
+- DRY `findSncpDir` JS: 2 copies -> 1 in `sncp/utils.js` (S508).
+- DRY `extractFilesFromOutput`: CLI uses `@cervellaswarm/core/workers` (S508).
+- `test:coverage` script for packages/core (S508).
+
+### Fixed
+- 2 HIGH security fixes (S505): connection leak, unvalidated input.
+- 5 P1 fixes (S505): 0 warnings achieved.
+- Il Sogno lock race condition (S506): atomic rename replaces unlink+retry.
+- CI `--ignore=E501,E402` redundancy removed (S507).
+- Bandit SAST: 2 TRUE POSITIVE fixed (SQL f-string -> allowlist dict), 52->0 MEDIUM (S508).
+- `billing.js` falsy check: `if (data.tier)` -> `if (data.tier !== undefined)` (S508).
+
+### Removed
+- **SubagentStop double firing**: removed duplicate project-level hook wiring. Global hook updated with UTC (S509).
+- **Dead `_merge_config`**: removed from session-memory config (replaced by `_deep_merge`) (S509).
+- **Stale `config/claude-hooks/`**: 812 LOC dead archived code eliminated from disk (S509).
+- 395 LOC dead code (S505): unused imports, unreachable branches, stale utilities.
+- 12 LOC duplicate `find_project_root` across 3 files (S507).
+- 375 LOC duplicated code (S508): config CLI->Core dedup (-329), findSncpDir (-20), extractFiles (-26).
+
+---
+
 ## [0.1.0] - 2026-02-25
 
 First open source release of the CervellaSwarm Python package suite. 9 packages on PyPI.

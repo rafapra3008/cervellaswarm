@@ -25,8 +25,8 @@ from typing import List
 
 from tree_sitter import Node
 
-from .symbol_types import Symbol
 from .language_builtins import TS_BUILTINS
+from .symbol_types import Symbol
 
 logger = logging.getLogger(__name__)
 

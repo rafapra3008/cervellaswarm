@@ -10,7 +10,7 @@ and consistent with the project's git state.
 
 import subprocess
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 from pathlib import Path
 
@@ -63,8 +63,8 @@ def check_state_freshness(
     if not state_file.exists():
         return CheckStatus.ERROR, f"State file not found: {state_file}"
 
-    mtime = datetime.fromtimestamp(state_file.stat().st_mtime)
-    days_old = (datetime.now() - mtime).days
+    mtime = datetime.fromtimestamp(state_file.stat().st_mtime, tz=timezone.utc)
+    days_old = (datetime.now(tz=timezone.utc) - mtime).days
 
     if days_old <= warn_days:
         return CheckStatus.OK, f"Updated {days_old} day(s) ago"

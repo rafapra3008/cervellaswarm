@@ -42,13 +42,16 @@ from __future__ import annotations
 
 import re
 import typing
+from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum, auto
 from types import MappingProxyType
-from typing import Callable
 
-from ._colors import colors as _c, init_colors as _init_colors
+from ._colors import colors as _c
+from ._colors import init_colors as _init_colors
+from .codegen import generate_python
 from .intent import IntentParseResult, parse_intent
+from .protocols import Protocol, ProtocolChoice, ProtocolStep
 from .spec import (
     PropertyKind,
     PropertyReport,
@@ -56,9 +59,6 @@ from .spec import (
     check_properties,
     parse_spec,
 )
-from .codegen import generate_python
-from .protocols import Protocol, ProtocolStep, ProtocolChoice
-
 
 # ============================================================
 # Chat phases
@@ -1184,7 +1184,7 @@ class ChatSession:
         menu = _ACTION_MENU.get(self._lang, _ACTION_MENU["en"])
         header = _t("ask_message_action", self._lang, sender=sender)
         lines = [header]
-        for i, (key, label) in enumerate(menu.items(), 1):
+        for i, (_key, label) in enumerate(menu.items(), 1):
             lines.append(f"  {_c.CYAN}{i}{_c.RESET}. {label}")
         return "\n".join(lines)
 

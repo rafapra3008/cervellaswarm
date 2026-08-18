@@ -24,15 +24,14 @@ from __future__ import annotations
 from typing import Any
 
 from ._intent_bridge import (
+    _ACTION_VERBS,
+    _PROPERTY_NAMES,
     DraftChoice,
     DraftMessage,
     IntentDraft,
     NLClarificationNeeded,
     Turn,
-    _ACTION_VERBS,
-    _PROPERTY_NAMES,
 )
-
 
 # ============================================================
 # Tool schema for Claude API (structured output)

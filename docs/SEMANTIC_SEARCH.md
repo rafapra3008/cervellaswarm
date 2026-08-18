@@ -799,7 +799,7 @@ BEFORE modifying any symbol:
 
 ## Requirements
 
-- Python 3.10+
+- Python 3.11+
 - tree-sitter bindings (`tree-sitter`, `tree-sitter-python`, `tree-sitter-typescript`)
 - NetworkX (for PageRank)
 

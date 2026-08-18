@@ -11,11 +11,19 @@ cervella_reg_*/
 pytest-of-*/
 .claude/worktrees/
 
+# Per-machine Claude Code local settings (untracked S542, by-design upstream)
+.claude/settings.local.json
+
 # Data directory (operational data, logs, database, retro reports)
 data/
 !packages/lingua-universale/src/cervellaswarm_lingua_universale/stdlib/data/
 *.db
 *.sqlite
+# S633 (gate Qualita', P3-3): `*.db` copre il database ma NON i suoi sidecar SQLite.
+# Effetto: bastava lanciare pytest o swarm-doctor dalla root perche' `.cervella/` comparisse
+# come non tracciata -- rumore su un albero dove il dirty ALTRUI e' un pericolo vivo (D4).
+*.db-wal
+*.db-shm
 
 # Environment
 .env
@@ -60,11 +68,11 @@ coverage.xml
 
 # Private files (NEVER sync to public)
 .sncp/
+# S519 D3 P4.5 NC5: split_prompt_ripresa audit log (already covered by .sncp/
+# wildcard above; explicit pattern documents intent for future migrations).
+.sncp/reports/split_log_*.md
 NORD.md
 docs/studio/
-
-# Config with local paths
-config/claude-hooks/
 
 # VS Code extension with personal config
 cervellaswarm-extension/
@@ -72,3 +80,11 @@ cervellaswarm-extension/
 # VHS generated video files (regenerate from .tape source files)
 packages/lingua-universale/demo/*.gif
 packages/lingua-universale/demo/*.mp4
+
+# Backup files pattern (riusabile per ogni S### session)
+# S517: cattura *.sNNN-*-pre-edit-*, *.sNNN-dN-*, *.sNNN-pre-rotation-*
+*.s[0-9][0-9][0-9]-*-pre-edit*
+*.s[0-9][0-9][0-9]-pre-edit*
+*.s[0-9][0-9][0-9]-d[0-9]-*
+*.s[0-9][0-9][0-9]-pre-rotation-*
+*.bak-s[0-9][0-9][0-9]-*

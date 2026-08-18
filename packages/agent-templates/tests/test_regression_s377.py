@@ -8,7 +8,6 @@ import sys
 from unittest.mock import patch
 
 import pytest
-
 from cervellaswarm_agent_templates.validator import ValidationResult, validate_agent
 
 # ---------------------------------------------------------------------------

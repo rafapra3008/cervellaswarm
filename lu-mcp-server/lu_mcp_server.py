@@ -22,7 +22,7 @@ from __future__ import annotations
 
 import json
 import logging
-from importlib.metadata import version, PackageNotFoundError
+from importlib.metadata import PackageNotFoundError, version
 from typing import Any
 
 try:
@@ -150,12 +150,12 @@ async def lu_load_protocol(protocol_text: str) -> str:
         })
 
     # Also extract parse-level info via the _parser + _ast
-    from cervellaswarm_lingua_universale._parser import parse  # noqa: PLC0415
     from cervellaswarm_lingua_universale._ast import (  # noqa: PLC0415
-        ProtocolNode,
         AgentNode,
         ChoiceNode,
+        ProtocolNode,
     )
+    from cervellaswarm_lingua_universale._parser import parse  # noqa: PLC0415
 
     try:
         program = parse(protocol_text)
@@ -282,9 +282,9 @@ async def lu_verify_message(
     lu = _require_lu()
 
     # Step 1: Parse the protocol
-    from cervellaswarm_lingua_universale._parser import parse  # noqa: PLC0415
-    from cervellaswarm_lingua_universale._eval import _protocol_node_to_runtime  # noqa: PLC0415
     from cervellaswarm_lingua_universale._ast import ProtocolNode  # noqa: PLC0415
+    from cervellaswarm_lingua_universale._eval import _protocol_node_to_runtime  # noqa: PLC0415
+    from cervellaswarm_lingua_universale._parser import parse  # noqa: PLC0415
 
     try:
         program = parse(protocol_text)
@@ -321,7 +321,8 @@ async def lu_verify_message(
         if not isinstance(action, str):
             raise ValueError(f"action must be a string, got {type(action).__name__}")
         from cervellaswarm_lingua_universale.types import (  # noqa: PLC0415
-            TaskRequest, MessageKind,
+            MessageKind,
+            TaskRequest,
         )
 
         kind = action_map.get(action.lower())
@@ -423,23 +424,23 @@ async def lu_verify_message(
 def _kind_to_swarm_msg(kind: Any) -> Any:
     """Return the simplest valid SwarmMessage for a given MessageKind."""
     from cervellaswarm_lingua_universale.types import (  # noqa: PLC0415
-        MessageKind,
-        TaskRequest,
-        TaskResult,
         AuditRequest,
         AuditVerdict,
-        PlanRequest,
-        PlanProposal,
+        AuditVerdictType,
+        Broadcast,
+        ContextInject,
+        DirectMessage,
+        MessageKind,
+        PlanComplexity,
         PlanDecision,
+        PlanProposal,
+        PlanRequest,
         ResearchQuery,
         ResearchReport,
-        DirectMessage,
-        Broadcast,
-        ShutdownRequest,
         ShutdownAck,
-        ContextInject,
-        AuditVerdictType,
-        PlanComplexity,
+        ShutdownRequest,
+        TaskRequest,
+        TaskResult,
         TaskStatus,
     )
 
@@ -601,8 +602,8 @@ async def lu_list_templates(category: str = "") -> str:
 
     try:
         from cervellaswarm_lingua_universale._init_project import (  # noqa: PLC0415
-            list_templates,
             _STDLIB_DIR,
+            list_templates,
         )
     except ImportError as exc:
         return json.dumps({"ok": False, "error": str(exc)})

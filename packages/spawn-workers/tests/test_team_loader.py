@@ -4,7 +4,6 @@
 """Tests for team_loader.py - team configuration parsing."""
 
 import pytest
-
 from cervellaswarm_spawn_workers.team_loader import (
     AgentConfig,
     SpawnConfig,
@@ -13,7 +12,6 @@ from cervellaswarm_spawn_workers.team_loader import (
     load_team,
     load_team_string,
 )
-
 
 # ---------------------------------------------------------------------------
 # load_team (file-based)

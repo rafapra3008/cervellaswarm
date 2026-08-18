@@ -5,10 +5,10 @@ Author: Cervella Tester | Version: 1.0.0 | Date: 2026-02-10
 
 import logging
 from pathlib import Path
-from unittest.mock import MagicMock, Mock, patch, mock_open
+from unittest.mock import MagicMock, Mock, mock_open, patch
+
 import pytest
 from cervellaswarm_code_intelligence.treesitter_parser import TreesitterParser, parse_file
-
 
 # FIXTURES
 
@@ -224,7 +224,7 @@ def test_parse_file_returns_none_on_read_exception(mock_get_lang, mock_parser_cl
     with patch.object(Path, "exists", return_value=True):
         with patch("builtins.open", mock_open()) as m:
             m.side_effect = IOError("Permission denied")
-            assert parser.parse_file("/tmp/test.py") is None
+            assert parser.parse_file("/tmp/test.py") is None  # nosec B108
 
 @patch("cervellaswarm_code_intelligence.treesitter_parser.get_language")
 def test_parse_file_returns_none_when_get_parser_fails(mock_get_lang, parser, tmp_path):

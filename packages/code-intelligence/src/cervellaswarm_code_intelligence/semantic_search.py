@@ -64,7 +64,7 @@ v1.0.0 (2026-01-19) - W3 Day 1 (REQ-01 to REQ-04)
 
 import logging
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
 from .dependency_graph import DependencyGraph
 from .symbol_extractor import SymbolExtractor
@@ -202,7 +202,7 @@ class SemanticSearch:
             f"{cache_stats['cached_symbols']} cached symbols"
         )
 
-    def find_symbol(self, name: str) -> Optional[Tuple[str, int]]:
+    def find_symbol(self, name: str) -> Tuple[str, int] | None:
         """Find symbol definition location (REQ-01).
 
         Searches for a symbol by name in the entire codebase. If multiple
@@ -361,7 +361,7 @@ class SemanticSearch:
         logger.debug(f"Found {len(references)} references for: {symbol_name}")
         return references
 
-    def get_symbol_info(self, symbol_name: str) -> Optional[Symbol]:
+    def get_symbol_info(self, symbol_name: str) -> Symbol | None:
         """Get detailed information about a symbol.
 
         Returns the most important Symbol object with this name
@@ -434,7 +434,7 @@ class SemanticSearch:
 
 
 # Convenience function for one-off searches
-def find_symbol_in_repo(repo_root: str, symbol_name: str) -> Optional[Tuple[str, int]]:
+def find_symbol_in_repo(repo_root: str, symbol_name: str) -> Tuple[str, int] | None:
     """Find symbol in repository (convenience function).
 
     Creates a SemanticSearch instance, performs the search, and returns result.

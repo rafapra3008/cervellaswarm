@@ -9,7 +9,6 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
-
 from cervellaswarm_spawn_workers import __version__
 from cervellaswarm_spawn_workers.cli import (
     _cmd_kill,
@@ -22,7 +21,6 @@ from cervellaswarm_spawn_workers.cli import (
 )
 from cervellaswarm_spawn_workers.prompt_builder import SPECIALTIES
 from cervellaswarm_spawn_workers.spawner import SpawnResult, WorkerInfo, WorkerStatus
-
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -81,7 +79,7 @@ def test_main_kill_calls_cmd_kill():
 def test_main_team_calls_cmd_team():
     """main --team path calls _cmd_team."""
     with patch("cervellaswarm_spawn_workers.cli._cmd_team") as mock_team:
-        main(["--team", "/tmp/team.yaml"])
+        main(["--team", "/tmp/team.yaml"])  # nosec B108
     mock_team.assert_called_once()
 
 
@@ -260,7 +258,7 @@ def test_cmd_team_loads_team_config(tmp_path, capsys):
     mock_result = SpawnResult(spawned=0, failed=0, workers=[], errors=[])
     mock_manager.spawn_team.return_value = mock_result
 
-    from cervellaswarm_spawn_workers.team_loader import TeamConfig, SpawnConfig
+    from cervellaswarm_spawn_workers.team_loader import SpawnConfig, TeamConfig
     mock_team = TeamConfig(name="test-team", spawn=SpawnConfig())
 
     with patch("cervellaswarm_spawn_workers.cli.SpawnManager", return_value=mock_manager), \
@@ -280,7 +278,7 @@ def test_cmd_team_spawns_workers(tmp_path, capsys):
     mock_result = SpawnResult(spawned=2, failed=0, workers=[_make_worker("w1"), _make_worker("w2")], errors=[])
     mock_manager.spawn_team.return_value = mock_result
 
-    from cervellaswarm_spawn_workers.team_loader import TeamConfig, SpawnConfig
+    from cervellaswarm_spawn_workers.team_loader import SpawnConfig, TeamConfig
     mock_team = TeamConfig(name="test", spawn=SpawnConfig())
 
     with patch("cervellaswarm_spawn_workers.cli.SpawnManager", return_value=mock_manager), \
@@ -300,7 +298,7 @@ def test_cmd_team_shows_spawned_count(tmp_path, capsys):
     mock_result = SpawnResult(spawned=3, failed=0, workers=[_make_worker() for _ in range(3)], errors=[])
     mock_manager.spawn_team.return_value = mock_result
 
-    from cervellaswarm_spawn_workers.team_loader import TeamConfig, SpawnConfig
+    from cervellaswarm_spawn_workers.team_loader import SpawnConfig, TeamConfig
     mock_team = TeamConfig(name="test", spawn=SpawnConfig())
 
     with patch("cervellaswarm_spawn_workers.cli.SpawnManager", return_value=mock_manager), \
@@ -321,7 +319,7 @@ def test_cmd_team_shows_errors_on_failure(tmp_path, capsys):
     mock_result = SpawnResult(spawned=1, failed=1, workers=[_make_worker()], errors=["w2: max workers"])
     mock_manager.spawn_team.return_value = mock_result
 
-    from cervellaswarm_spawn_workers.team_loader import TeamConfig, SpawnConfig
+    from cervellaswarm_spawn_workers.team_loader import SpawnConfig, TeamConfig
     mock_team = TeamConfig(name="test", spawn=SpawnConfig())
 
     with patch("cervellaswarm_spawn_workers.cli.SpawnManager", return_value=mock_manager), \
@@ -351,7 +349,7 @@ def test_cmd_team_exits_1_on_invalid_yaml(tmp_path, capsys):
 
 def test_cmd_team_applies_all_spawn_config_fields(capsys):
     """_cmd_team creates manager with team.yaml dirs from the start (not post-override)."""
-    from cervellaswarm_spawn_workers.team_loader import TeamConfig, SpawnConfig
+    from cervellaswarm_spawn_workers.team_loader import SpawnConfig, TeamConfig
 
     mock_team = TeamConfig(
         name="test",

@@ -22,9 +22,6 @@ from __future__ import annotations
 import textwrap
 
 import pytest
-
-from cervellaswarm_lingua_universale._parser import ParseError, Parser, parse
-from cervellaswarm_lingua_universale._tokenizer import Tok, TokKind
 from cervellaswarm_lingua_universale._ast import (
     AgentNode,
     AttrExpr,
@@ -35,7 +32,8 @@ from cervellaswarm_lingua_universale._ast import (
     RecordTypeDecl,
     StepNode,
 )
-
+from cervellaswarm_lingua_universale._parser import ParseError, Parser, parse
+from cervellaswarm_lingua_universale._tokenizer import Tok, TokKind
 
 # ===========================================================================
 # Helpers

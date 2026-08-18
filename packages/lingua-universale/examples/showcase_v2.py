@@ -72,13 +72,12 @@ def info(label: str) -> None:
 # ---------------------------------------------------------------------------
 
 from cervellaswarm_lingua_universale import (
+    REPLSession,
+    __version__,
     check_file,
     run_file,
     verify_file,
-    REPLSession,
-    __version__,
 )
-
 
 # ---------------------------------------------------------------------------
 # SECTION 1 - Parse & Compile .lu files
@@ -257,7 +256,7 @@ def section_6_repl() -> None:
             captured.append(f"{prompt}{line}")
             return line
         except StopIteration:
-            raise EOFError
+            raise EOFError from None
 
     def mock_output(*args: object) -> None:
         text = " ".join(str(a) for a in args)

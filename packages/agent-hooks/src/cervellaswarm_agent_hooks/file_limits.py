@@ -20,6 +20,7 @@ import os
 import sys
 from pathlib import Path
 
+from ._utils import find_project_root
 from .config import get_hook_config
 
 __version__ = "1.0.0"
@@ -30,25 +31,16 @@ def count_lines(file_path: Path) -> int:
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             return sum(1 for _ in f)
-    except Exception as e:
+    except (OSError, UnicodeDecodeError) as e:
         print(f"file_limits: failed to count lines in {file_path}: {e}", file=sys.stderr)
         return 0
-
-
-def find_project_root(cwd: str) -> Path:
-    """Find project root by walking up to the nearest .git directory."""
-    current = Path(cwd)
-    for parent in [current, *current.parents]:
-        if (parent / ".git").exists():
-            return parent
-    return current
 
 
 def check_limits(cwd: str) -> list[dict]:
     """Check all configured limits and return violations."""
     config = get_hook_config("file_limits")
     checks = config.get("checks", [])
-    project_root = find_project_root(cwd)
+    project_root = find_project_root(cwd) or Path(cwd)
     violations = []
 
     for check in checks:

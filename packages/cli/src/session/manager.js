@@ -13,25 +13,7 @@
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, basename } from 'path';
-
-/**
- * Find .sncp directory
- */
-function findSncpDir() {
-  let dir = process.cwd();
-
-  for (let i = 0; i < 5; i++) {
-    const sncpPath = join(dir, '.sncp');
-    if (existsSync(sncpPath)) {
-      return sncpPath;
-    }
-    const parent = join(dir, '..');
-    if (parent === dir) break;
-    dir = parent;
-  }
-
-  return join(process.cwd(), '.sncp');
-}
+import { findSncpDir } from '../sncp/utils.js';
 
 /**
  * Get sessions directory path
